@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -20,20 +22,36 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        //
+    }
+
+    public function login(Request $request)
+    {
+        $this->validate($request,
+            [
+                'login'    => 'required',
+                'password' => 'required',
+            ],
+            [
+                'required' => 'Поле :attribute должно быть заполнено.',
+            ]
+        );
+
+        $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL )
+            ? 'email'
+            : 'login';
+
+        $request->merge([
+            $login_type => $request->input('login')
+        ]);
+
+        if (Auth::attempt($request->only($login_type, 'password'))) {
+            return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER']]);
+        }
+        else{
+            return response()->json(['success' => false, 'message' => 'Неверный логин или пароль']);
+        }
     }
 }

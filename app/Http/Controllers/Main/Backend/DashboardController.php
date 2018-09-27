@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Http\Controllers\Main\Backend;
+
+use App\Http\Controllers\Controller;
+use App\Models\Log;
+use App\Models\Message;
+use App\User;
+
+
+/**
+ * Created by PhpStorm.
+ * User: john
+ * Date: 16.08.2018
+ * Time: 0:54
+ *
+ * Class DashboardController
+ * @package App\Http\Controllers\Main\Backend
+ */
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        // $last_day_users = User::where('created_at', '>', Carbon::yesterday())->count();
+        // $message_count = Message::all()->count();
+        // $unread = Message::find(['readed' => 0]);
+
+        return response()->json([
+            'users'      => User::all()->count(),
+            'log'        => array_values(Log::all()->sortByDesc('id')->forPage(1, 50)->toArray()),
+            'messages'   => array_values(Message::all()->sortByDesc('created_at')->toArray())
+        ]);
+    }
+
+    public function deleteLog($id)
+    {
+        return response()->json([
+            'success' => Log::destroy($id),
+            'log' => array_values(Log::all()->sortByDesc('id')->forPage(1, 50)->toArray())
+        ]);
+    }
+
+    public function deleteMessage($id)
+    {
+        return response()->json([
+            'success'  => Message::destroy($id),
+            'messages' => array_values(Message::all()->sortByDesc('created_at')->toArray())
+        ]);
+    }
+
+    public function readMessage($id)
+    {
+        return response()->json(['success' =>  Message::find($id)->update(['readed' => 1])]);
+    }
+
+    public function sendmail()
+    {
+       // $mailer = new Mailer();
+
+      //  return response()->json(['success' =>   $mailer->reg()]);
+    }
+
+}

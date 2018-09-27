@@ -1,36 +1,21 @@
 <?php
 
-namespace Application\Models;
+namespace App\Models;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Session
- * @package Application\models
- *
- * Created by PhpStorm.
- * User: user
- * Date: 27.08.2016
- * Time: 19:56
+ * @package App\Models
  *
  * @property int $user_id
  * @property string $token
  * @property int $created_at
  * @property int $updated_at
- *
- * @property User $user
  */
-class Session extends Eloquent
+class Session extends Model
 {
     protected $table = 'sessions';
 
     protected $fillable = ['user_id', 'token'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('Application\Models\User');
-    }
 }

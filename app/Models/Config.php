@@ -1,7 +1,7 @@
 <?php
 
-namespace Application\Models;
-use Eloquent;
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Created by PhpStorm.
@@ -13,7 +13,7 @@ use Eloquent;
  * @package Application\Models
  */
 
-class Config extends Eloquent{
+class Config extends Model{
 
     protected $table = 'config';
     protected $fillable  = ['id', 'name', 'value'];

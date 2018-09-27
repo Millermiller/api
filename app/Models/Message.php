@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Models;
+namespace App\Models;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $created_at
  * @property int $updated_at
  */
-class Message extends Eloquent
+class Message extends Model
 {
     protected $table = 'messages';
 

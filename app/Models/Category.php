@@ -1,17 +1,16 @@
 <?php
 
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class Category
  * @package Application\Models
  */
-
-namespace Application\Models;
-
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Eloquent;
-
-class Category extends  Eloquent{
-
+class Category extends Model
+{
     protected $table = 'categories';
 
     protected $fillable = ['name'];
@@ -24,6 +23,6 @@ class Category extends  Eloquent{
 
     public function posts()
     {
-        return $this->hasMany('Application\Models\Post');
+        return $this->hasMany('App\Models\Post');
     }
 }

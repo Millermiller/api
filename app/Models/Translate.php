@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * Class Translate
+ * @package App\Models
+ *
+ * @property int $id
+ * @property string $value
+ * @property int $word_id
+ * @property bool $sentence
+ */
+class Translate extends Model
+{
+    use SoftDeletes;
+
+    protected $table = 'translate';
+
+    protected $fillable = ['id', 'value', 'word_id', 'sentence'];
+
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'variant', 'form'];
+
+    protected $appends = ['active'];
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function word()
+    {
+        return $this->belongsTo('App\Models\Word');
+    }
+
+    public function getActiveAttribute()
+    {
+        return $this->attributes['active'] = false;
+    }
+}

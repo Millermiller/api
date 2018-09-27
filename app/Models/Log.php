@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\Models;
+namespace App\Models;
 
 use Carbon\Carbon;
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Log
- * @package Application\models
+ * @package App\Models
  *
  * Created by PhpStorm.
  * User: user
@@ -20,7 +20,7 @@ use Eloquent;
  * @property int $created_at
  * @property int $updated_at
  */
-class Log extends Eloquent
+class Log extends Model
 {
     protected $table = 'log';
 
@@ -28,7 +28,8 @@ class Log extends Eloquent
 
     protected $appends = ['hours'];
 
-    public function getHoursAttribute() {
+    public function getHoursAttribute()
+    {
         return  Carbon::now()->diffInHours($this->created_at);
     }
 }

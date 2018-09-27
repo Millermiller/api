@@ -1,0 +1,365 @@
+html {
+    font-size: 14px;
+}
+
+a {
+    color: #00d1b2;
+    cursor: pointer;
+    text-decoration: none;
+    transition: none 86ms ease-out;
+}
+
+.is-title {
+    text-transform: capitalize;
+}
+
+.icon .fa {
+    font-size: 14px;
+    line-height: inherit;
+}
+
+.container .vue-bulma-tabs .tab-content {
+    margin: 10px 0;
+}
+
+.vue-bulma-tabs .tabs:not(:last-child) {
+    margin-bottom: 0;
+}
+
+.variant {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.variant.is-success {
+    color: #23d160;
+}
+
+.text-success {
+    color: #23d160;
+}
+
+.text-danger {
+    color: #ff3860;
+}
+
+.text-warning {
+    color: #ffdd57;
+}
+
+.text-info {
+    color: #3273dc;
+}
+
+.danger {
+    color: #ff3860;
+}
+
+.warning {
+    color: #ffdd57;
+}
+
+.info {
+    color: #3273dc;
+}
+
+.vue-bulma-tabs .tab-content {
+    margin: 0 !important;
+}
+
+.extra {
+    border-radius: 3px;
+    background-color: #ff3860;
+    color: #fff;
+}
+
+.file-cta {
+    background-color: whitesmoke;
+    color: #4a4a4a;
+}
+
+.file-cta, .file-name {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.25em;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: calc(0.625em - 1px);
+    padding-right: calc(0.625em - 1px);
+    padding-top: calc(0.375em - 1px);
+    position: relative;
+    vertical-align: top;
+    border-color: #dbdbdb;
+    border-radius: 3px;
+    font-size: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    white-space: nowrap;
+}
+
+.file-icon {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 1em;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-right: 0.5em;
+    width: 1em;
+}
+
+.file-label {
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    overflow: hidden;
+    position: relative;
+}
+
+.log {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
+.log > p {
+    margin: 0 !important;
+    padding: 0;
+}
+
+.today {
+    border-left: 5px solid;
+}
+
+span[tooltip]:hover:after {
+    content: attr(tooltip);
+    padding: 4px 8px;
+    color: #333;
+    position: absolute;
+    left: 0;
+    top: -20px;
+    white-space: nowrap;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #ff3860;
+    background-color: #fff;
+}
+
+.tag {
+    cursor: pointer;
+    position: relative;
+}
+
+.slideInDown {
+    animation-name: slideInDown;
+}
+
+.animated {
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+}
+
+.hero .nav {
+    background: none;
+    box-shadow: 0 1px 0 hsla(0, 0%, 86%, .3);
+}
+
+.nav, .nav > .container {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 3.5rem;
+}
+
+.nav {
+    background-color: #fff;
+    position: relative;
+    text-align: center;
+    z-index: 2;
+}
+
+.nav-center, .nav-left {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.nav-left {
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.nav-left, .nav-right {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.nav-center {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nav-item a, a.nav-item {
+    color: #7a7a7a;
+}
+
+.nav-item, .nav-item a {
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.nav-item {
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    font-size: 1rem;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: .5rem .75rem;
+}
+
+.nav-item img {
+    max-height: 1.75rem;
+}
+
+.hero {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    background-color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.menu-list a.is-active {
+    background-color: #00d1b2;
+    color: #fff;
+}
+
+.menu-list a:hover {
+    background-color: #f5f5f5;
+    color: #00d1b2;
+}
+
+.menu {
+    font-size: 14px;
+}
+
+.subtitle strong {
+    color: #363636;
+}
+
+.subtitle strong, .title strong {
+    font-weight: 500;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.breadcrumb a {
+    color: #00d1b2;
+}
+
+.title:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    color: #363636;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.125;
+}
+
+.input.is-active, .input.is-focused, .input:active, .input:focus, .textarea.is-active, .textarea.is-focused, .textarea:active, .textarea:focus {
+    border-color: #00d1b2;
+}
+
+.input.is-active, .input.is-focused, .input:active, .input:focus, .textarea.is-active, .textarea.is-focused, .textarea:active, .textarea:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.control:not(:last-child) {
+    margin-bottom: .75rem;
+}
+
+.control {
+    position: relative;
+    text-align: left;
+}
+
+.avatar-small {
+    height: 60px;
+    border-radius: 100%;
+}
+
+table td {
+    vertical-align: inherit !important;
+}
+
+.ql-editor {
+    min-height: 300px;
+}
+
+.fr-wrapper > div:first-child{
+    display:none;
+}
+.fr-wrapper{
+    min-height: 300px;
+}

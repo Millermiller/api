@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -32,11 +34,10 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        //$this->middleware('guest');
     }
 
     /**
@@ -48,10 +49,18 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'login' => 'required|string|alpha_num|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-        ]);
+        ],
+            [
+                'required' => 'Обязательное поле',
+                'alpha_num' => 'Только латинские буквы и цифры',
+                'confirmed' => 'Пароли не совпадают',
+                'unique' => 'Пользователь уже зарегистрирован',
+                'min' => 'Минимум :min символов',
+                'email' => 'Укажите корректный email',
+            ]);
     }
 
     /**
@@ -62,10 +71,49 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user =  User::create([
+            'login' => $data['login'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        //send verification mail to user
+        //---------------------------------------------------------
+        $data['verification_code']  = $user->verification_code;
+
+        Mail::send('emails.welcome', $data, function($message) use ($data)
+        {
+            $message->from('no-reply@site.com', "Site name");
+            $message->subject("Welcome to site name");
+            $message->to($data['email']);
+        });
+
+        return $user;
+    }
+
+    public function check()
+    {
+        $role = Input::get('role');
+        $value = Input::get('value');
+
+        $answer['success'] = false;
+
+        if ($role == 'reg-login') {
+            try {
+                User::where('login', $value)->firstOrFail();
+            } catch (ModelNotFoundException $e) {
+                $answer['success'] = true;
+            }
+        }
+
+        if ($role == 'reg-email') {
+            try {
+                User::where('email', $value)->firstOrFail();
+            } catch (ModelNotFoundException $e) {
+                $answer['success'] = true;
+            }
+        }
+
+        return response()->json($answer);
     }
 }

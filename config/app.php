@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Scandinaver'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://scandinaver.org'),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +107,17 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+    'CRIPTKEY' => 'vPnMEnkUUnKAPNjW',
+    'CRYPTIV' => 'vPnMEnkUUnKAPNjW',
+    'FORVO_LOGIN' => 'day_at_the_way@mail.ru',
+    'FORVO_PASSWORD' => '901018Marina',
+    'SHORTLANG' => 'is',
+    'SITE' => env('SITE', 'https://scandinaver.org'),
+    'DOMAIN' => env('DOMAIN','scandinaver.org'),
+    'MAIN_SITE' => env('MAIN_SITE','https://scandinaver.org'),
+
+    'lang' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -176,7 +187,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Eusonlito\LaravelMeta\MetaServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -225,7 +237,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Meta'    => Eusonlito\LaravelMeta\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

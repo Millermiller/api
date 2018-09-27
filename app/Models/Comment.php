@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Models;
+namespace App\Models;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  */
 
-class Comment extends Eloquent{
+class Comment extends Model{
 
     Use SoftDeletes;
 

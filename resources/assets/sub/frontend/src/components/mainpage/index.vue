@@ -1,0 +1,77 @@
+<template>
+    <el-container>
+        <el-main>
+            <el-row :gutter="20">
+
+              <!--  <wordsblock v-on:modal="modal"></wordsblock>
+                <sentencesblock v-on:modal="modal"></sentencesblock>
+                <personalblock></personalblock> -->
+
+                <account></account>
+
+                <el-col :span="18">
+                    <el-row :gutter="20">
+                        <wordwidget></wordwidget>
+                        <sentencewidget></sentencewidget>
+                        <textwidget></textwidget>
+                        <personalwidget></personalwidget>
+                    </el-row>
+                </el-col>
+            </el-row>
+            <el-dialog title="Это закрытая часть сайта" :visible.sync="dialogVisible">
+                    <span>
+                        <a href="scandinaver.local" target="_blank">Оплатите подписку</a> чтобы получить полный доступ
+                    </span>
+                    <span slot="footer" class="dialog-footer">
+                        <el-button @click="dialogVisible = false">Закрыть</el-button>
+                    </span>
+            </el-dialog>
+
+            <el-dialog title="Привет!" :visible.sync="greetingVisible">
+                    <span>
+                        Добро пожаловать!
+                        <span class="blue">Помощь</span> и <span class="blue">Обратная связь</span>
+                    </span>
+                <span slot="footer" class="dialog-footer">
+                        <el-button @click="greetingVisible = false">Закрыть</el-button>
+                    </span>
+            </el-dialog>
+        </el-main>
+    </el-container>
+</template>
+
+<script type="text/babel">
+
+    import Account from './account-block.vue';
+    import Wordwidget from './widgets/word-widget.vue';
+    import Sentencewidget from './widgets/sentence-widget.vue';
+    import Textwidget from './widgets/text-widget.vue';
+    import Personalwidget from './widgets/personal-widget.vue';
+
+    export default {
+        name: 'Main',
+        metaInfo: {
+            title: 'Icelandic | Scandinaver',
+        },
+        data(){
+            return {
+                dialogVisible: false,
+                greetingVisible: false
+            }
+        },
+        components: {
+            Account, Wordwidget, Sentencewidget, Textwidget, Personalwidget
+        },
+        methods: {
+            modal(){
+                this.dialogVisible = true
+            }
+        },
+        mounted(){
+            if (!localStorage.getItem('myFirstAdventure')) {
+                this.greetingVisible = true;
+                localStorage.setItem('myFirstAdventure', true)
+            }
+        }
+    };
+</script>

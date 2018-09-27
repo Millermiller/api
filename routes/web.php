@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+include 'subdomains_routes.php';
+
+include 'main_routes.php';

@@ -1,10 +1,14 @@
 <?php
 
-namespace Application\Models;
+namespace App\Models;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-class Options extends Eloquent{
+/**
+ * Class Options
+ * @package App\Models
+ */
+class Options extends Model{
 
     protected $table = 'options';
     protected $fillable  = ['id', 'name', 'value', 'type'];

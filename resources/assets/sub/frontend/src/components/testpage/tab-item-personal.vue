@@ -1,0 +1,85 @@
+<template>
+    <el-row :class="['list-item', 'pointer', 'open', {'selected': item.selected}]" >
+
+        <el-col :span="24">
+            <p class="asset-title" style="height: 57px;">{{item.title}}</p>
+        </el-col>
+
+        <el-row>
+            <el-col :span="9" :md="8">
+                <span :class="['small', 'text-muted']">
+                     <i :class="['ion', 'ion-speedometer', 'ion-small']"></i>
+                </span>
+                <span
+                        :class="[
+                    'small',
+                    {
+                      success: item.result.result > 80,
+                      warning: (item.result.result > 50 && item.result.result < 80),
+                      danger: item.result.result < 50
+                    }
+                ]">
+                    {{item.result.result}}%
+                </span>
+                <span :class="['small', 'text-muted']" style="padding-left: 15px;">
+                     <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
+                    {{item.cards.length}}
+                </span>
+            </el-col>
+            <el-col :span="15" :md="16" class="text-right">
+                <template>
+                    <span :class="[isActive ? 'text-primary' : 'text-muted', 'pointer', 'small']"
+                          @click="cardspage()">
+                        <i :class="['ion', 'ion-edit', 'ion-small']"></i>
+                        изменить
+                    </span>
+                    <span :class="['text-primary', 'small']">|</span>
+                    <span :class="['text-primary', 'pointer', 'small']" @click="learn()">
+                        <i :class="['ion', 'ion-ios-redo', 'ion-small']"></i>
+                        учить
+                    </span>
+                    <span :class="['text-primary', 'small']">|</span>
+                    <span :class="['text-primary', 'pointer', 'small']" @click="test()">
+                         <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"></i>
+                        тест
+                    </span>
+                </template>
+            </el-col>
+        </el-row>
+    </el-row>
+</template>
+
+<script type="text/babel">
+    export default{
+        props:['item', 'type', 'index'],
+        data(){
+            return{
+                words: [],
+                sentences: [],
+                personal: []
+            }
+        },
+        computed: {
+            isActive(){
+                return this.$store.getters.isActive || this.item.type === 3
+            }
+        },
+        methods: {
+            cardspage(){
+                if (this.isActive) {
+                    this.$store.dispatch('loadAsset', {asset: this.item, index: this.index})
+                    this.$store.commit('setActiveAssetEdit', true)
+                    this.$router.push('/cards')
+                }
+            },
+            learn: function () {
+                // this.$store.commit('setSelection', {asset: this.item, index: this.index})
+                this.$router.push('/learn/' + this.item.id);
+            },
+            test(){
+                //  this.$store.commit('setSelection', {asset: this.item, index: this.index})
+                this.$router.push('/test/' + this.item.id);
+            },
+        }
+    }
+</script>

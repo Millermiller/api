@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Models;
+namespace App\Models;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Created by PhpStorm.
@@ -16,7 +16,7 @@ use Eloquent;
  * @property string $keywords
  */
 
-class Meta extends Eloquent{
+class Meta extends Model{
 
     protected $table = 'meta';
 
