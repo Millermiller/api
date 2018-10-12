@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegistered;
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -64,6 +65,24 @@ class RegisterController extends Controller
     }
 
     /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?:  response()->json(['success' => false, 'message' => 'Произошла ошибка']);
+    }
+
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -77,43 +96,22 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        //send verification mail to user
-        //---------------------------------------------------------
-        $data['verification_code']  = $user->verification_code;
+        event(new UserRegistered($data));
 
-        Mail::send('emails.welcome', $data, function($message) use ($data)
-        {
-            $message->from('no-reply@site.com', "Site name");
-            $message->subject("Welcome to site name");
-            $message->to($data['email']);
-        });
+        activity()->causedBy($user)->log('Зарегистрирован пользователь');
 
         return $user;
     }
 
-    public function check()
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
     {
-        $role = Input::get('role');
-        $value = Input::get('value');
-
-        $answer['success'] = false;
-
-        if ($role == 'reg-login') {
-            try {
-                User::where('login', $value)->firstOrFail();
-            } catch (ModelNotFoundException $e) {
-                $answer['success'] = true;
-            }
-        }
-
-        if ($role == 'reg-email') {
-            try {
-                User::where('email', $value)->firstOrFail();
-            } catch (ModelNotFoundException $e) {
-                $answer['success'] = true;
-            }
-        }
-
-        return response()->json($answer);
+        return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER']]);
     }
 }

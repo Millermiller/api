@@ -6751,8 +6751,11 @@ fieldset[disabled] .navbar .btn-link:focus {
   color: #009688;
 }
 .alert {
-  border: 0;
-  border-radius: 0;
+    border-radius: 2px;
+    border: 0;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    margin-top: 50px;
 }
 .alert,
 .alert.alert-default {
@@ -6782,8 +6785,9 @@ fieldset[disabled] .navbar .btn-link:focus {
   color: rgba(255,255,255, 0.84);
 }
 .alert.alert-success {
-  background-color: #4caf50;
-  color: rgba(255,255,255, 0.84);
+    color: #4caf50;
+    margin: 20px auto;
+    width: 1170px;
 }
 .alert.alert-success a,
 .alert.alert-success .alert-link {
@@ -8214,4 +8218,7 @@ span[tooltip]:hover::after {
 #loginform, #registrationform, #feedbackform{
     padding: 0 15px;
     position: relative;
+}
+.user_details{
+    padding:10px;
 }

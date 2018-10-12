@@ -21,6 +21,8 @@ Route::group(['middleware' => ['touchUser'], 'as' => 'frontend::', 'namespace' =
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::get('/profile/settings', 'ProfileController@settings')->name('profile-settings');
+    Route::post('/profile/uploadImage', 'ProfileController@uploadImage');
+    Route::post('/profile/update', 'ProfileController@update')->name('profile-update');
 
     Route::get('/pay', 'PaymentController@index')->name('payment');
 

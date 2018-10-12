@@ -116,6 +116,7 @@ return [
     'SITE' => env('SITE', 'https://scandinaver.org'),
     'DOMAIN' => env('DOMAIN','scandinaver.org'),
     'MAIN_SITE' => env('MAIN_SITE','https://scandinaver.org'),
+    'FORUM' => env('FORUM','https://forum.scandinaver.org'),
 
     'lang' => false,
 

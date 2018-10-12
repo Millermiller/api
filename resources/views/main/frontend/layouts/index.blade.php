@@ -21,6 +21,8 @@
 <div id="panel">
     @include('main.frontend.layouts.navigation')
 
+    @include('main.frontend.layouts.flash')
+
     @yield('content')
 
     @include('main.frontend.layouts.footer')

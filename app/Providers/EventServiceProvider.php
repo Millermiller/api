@@ -16,8 +16,17 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+        'App\Events\UserRegistered' => [
+            'App\Handlers\Events\UserRegisteredListener',
+        ],
+        'App\Events\UserUpdated' => [
+            'App\Handlers\Events\UserUpdatedListener',
+        ],
+        'App\Events\UserPhotoUpdated' => [
+            'App\Handlers\Events\UserPhotoUpdatedListener',
+        ],
         'App\Events\MessageEvent' => [
-            'App\Listeners\MessageEventListener',
+            'App\Handlers\Events\MessageEventListener',
         ],
         'App\Events\MessageRecieved' => [
             'App\Handlers\Events\MessageRecievedListener',

@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Support\Facades\Input;
 use Meta;
-use Route;
 
 /**
  * Class IndexController

@@ -55,7 +55,6 @@
         }
         a {
             color: #0a8cce;
-            text-decoration: none;
             text-decoration: none !important;
         }
         /*STYLES*/
@@ -310,7 +309,7 @@
                                         <!-- Title -->
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 30px; color: #333333; text-align:center; line-height: 30px;">
-                                                Halló, {{user}}
+                                                Halló, {{$login}}
                                             </td>
                                         </tr>
                                         <!-- End of Title -->
@@ -325,11 +324,11 @@
                                         <!-- content -->
                                         <tr>
                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #666666; text-align:center; line-height: 30px;">
-                                                <p>Благодарим регистрацию на сайте scandinaver.org</p>
+                                                <p>Благодарим за регистрацию на сайте scandinaver.org</p>
                                                 <br>
-                                                <b>Ваши данные для входа:</b>
-                                                <p>логин: {{login}}</p>
-                                                <p>пароль: {{password}}</p>
+                                                <span style="font-weight: bold;">Ваши данные для входа:</span>
+                                                <p>логин: {{$login}}</p>
+                                                <p>пароль: {{$password}}</p>
                                             </td>
                                         </tr>
                                         <!-- End of content -->

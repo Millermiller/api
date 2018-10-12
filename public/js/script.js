@@ -111,36 +111,18 @@ $(function(){
                     location.reload()
                 }
                 else {
-                    switch (data.code) {
-                        case 1:
-                            $('#badLoginMess p').text(data.msg);
-                            $('#badLoginMess').removeClass('hidden');
-                            break;
-                        case 2:
-                            $('#badEmailMess p').text(data.msg);
-                            $('#badEmailMess').removeClass('hidden');
-                            break;
-                        case 3:
-                            $.fancybox.close();
-                            toastr[(data.success == true) ? 'success' : 'error'](data.msg);
-                            toastr.options = TOASTR_OPTIONS
-                            break;
-                    }
+                    $.fancybox.close();
+                    toastr.error(data.message);
+                    toastr.options = TOASTR_OPTIONS
+                    return false;
                 }
+
             },
             error: function (data) {
-                let errors = data.responseJSON.errors;
-                $.each(errors, function (key, value) {
-                    $('#registrationform input[name="'+key+'"]').parents('.form-group').addClass('has-error');
-                    $('#registrationform input[name="'+key+'"]').siblings('.help-block').text(value)
-
-                    if(key === 'password') {
-                        $('[name="password_confirmation"]').parents('.form-group').addClass('has-error');
-                        $('[name="password_confirmation"]').siblings('.help-block').text(value)
-                    }
-                });
-
-                $('#registrationform .form-group').not('.has-error').addClass('has-success')
+                $.fancybox.close();
+                toastr.error('Ошибка');
+                toastr.options = TOASTR_OPTIONS
+                return false;
             }
         })
     });
@@ -149,5 +131,41 @@ $(function(){
         e.preventDefault()
         $('#loginform').hide();
         $('#remindform').show();
+    });
+
+    /**** PROFILE *****/
+    $('.avatar-wrapper-large').on('click', function(){
+        $('#uploadPhoto').toggle();
+    });
+
+    $('#inputFile').on('change', function(){
+        if (this.files && this.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $('.avatar p').hide();
+                $('.avatar').css('background-image', 'url('+e.target.result+')');
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    $('#uploadPhotoForm').on('submit', function(e){
+        e.preventDefault();
+
+        let form = new FormData(this);
+
+        $.ajax({
+            type: 'post',
+            url: '/profile/uploadImage',
+            data: form,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(data) {
+                $('#uploadPhoto').toggle();
+                toastr[(data.success === true) ? 'success' : 'error'](data.msg);
+                toastr.options = TOASTR_OPTIONS
+            }
+        })
     });
 })

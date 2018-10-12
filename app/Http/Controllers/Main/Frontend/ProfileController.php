@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Main\Frontend;
 
+use App\Events\UserPhotoUpdated;
+use App\Http\Controllers\Controller;
 use App\Services\Requester;
 use Auth;
-use Illuminate\Support\Facades\Input;
-use Intervention\Image\ImageManagerStatic as Image;
-use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Meta;
+use Session;
 use Upload\File;
 use Upload\Storage\FileSystem;
 use Upload\Validation\Mimetype;
@@ -19,6 +21,8 @@ use Upload\Validation\Size;
  */
 class ProfileController extends Controller
 {
+    use ValidatesRequests;
+
     public function index()
     {
         Meta::set('title', 'Профиль');
@@ -32,71 +36,77 @@ class ProfileController extends Controller
         return view('main.frontend.profile.settings', ['user' => Auth::user()]);
     }
 
-    public function uploadImage(){
-        $storage = new FileSystem(public_path('/uploads/photo/'));
-        $file = new File('img', $storage);
+    public function uploadImage()
+    {
+        $storage = new FileSystem(public_path('/uploads/u/'));
+        $file = new File('photo', $storage);
         $new_filename = uniqid();
         $file->setName($new_filename);
         $file->addValidations(array(
-            new Mimetype(array('image/png','image/jpg','image/jpeg')),
-            new Size('5M')
+            new Mimetype(array('image/png', 'image/jpg', 'image/jpeg')),
+            new Size('2M')
         ));
 
         $msg['msg'] = 'Фотография профиля изменена';
-        $msg['success']  = true;
+        $msg['success'] = true;
 
         try {
             $file->upload();
-            $url = '/uploads/photo/'.$file->getNameWithExtension();
 
-           // Image::configure(array('driver' => 'GD'));
-            $img = Image::make(public_path($url));
+            Auth::user()->photo = $file->getNameWithExtension();
 
-            if($img->getWidth() > 1000)
-                $img->widen(600);
-
-            if($img->getHeight() > 1000)
-                $img->heighten(600);
-
-            $img->save(null, 100);
-
-            $thumb = Image::make(public_path($url));
-            $thumb->widen(150);
-            $thumb->save(public_path('/uploads/thumbs/'.$file->getNameWithExtension()));
-
-            Auth::user()->photo = $url;
-            Auth::user()->avatar ='/uploads/thumbs/'.$file->getNameWithExtension();
-
-            if(Auth::user()->save())
-                Requester::updateForumUser(Auth::user(), false);
+            if (Auth::user()->save())
+                event(new UserPhotoUpdated(Auth::user()));
 
         } catch (\Exception $e) {
             $errors = $file->getErrors();
-            $message = implode(', ',$errors);
+            $message = implode(', ', $errors);
             $msg['msg'] = $message;
-            $msg['success']  = false;
-            $msg['mess']  = $e->getMessage();
+            $msg['success'] = false;
+            $msg['mess'] = $e->getMessage();
         }
 
         return response()->json($msg);
     }
 
-    public function update()
+    /**
+     * @param  Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request)
     {
-        Auth::user()->email = Input::get('lk-email');
-        Auth::user()->login = Input::get('lk-login');
-        Auth::user()->name  = Input::get('lk-name');
-        $pass1 = Input::get('pass', null);
-        $pass2 = Input::get('pass-repeat', null);
+        $this->validate($request, [
+            'login' => 'required|string|alpha_num|max:255|unique:users,login,' . Auth::user()->id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->id,
+            'password' => 'nullable|string|min:6|confirmed',
+        ],
+            [
+                'required' => 'Обязательное поле',
+                'alpha_num' => 'Только латинские буквы и цифры',
+                'confirmed' => 'Пароли не совпадают',
+                'unique' => 'Пользователь уже зарегистрирован',
+                'min' => 'Минимум :min символов',
+                'email' => 'Укажите корректный email',
+            ]
+        );
 
-        if($pass1 != null && $pass1 != null && $pass1 == $pass2){
-            $data['pass'] = md5($pass1);
-            $data['openpass'] = $pass1;
-        }
+        $oldemail = Auth::user()->email;
 
-        if(Auth::user()->save())
-            Requester::updateForumUser(Auth::user(), Auth::user()->email);
+        Auth::user()->update([
+            'login' => $request->post('login'),
+            'email' => $request->post('email'),
+            'password' => bcrypt($request->post('password'))
+        ]);
 
-       return redirect()->route('cabinet');
+        $data['login'] = $request->post('login');
+        $data['email'] = $request->post('email');
+        $data['password'] = $request->post('password');
+
+        Session::flash('message', 'Пользовательские данные обновлены');
+        Session::flash('alert-class', 'alert-success');
+
+        Requester::updateForumUser($data, $oldemail);
+
+        return redirect()->route('frontend::profile');
     }
 }

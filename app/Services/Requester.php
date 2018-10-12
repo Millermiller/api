@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+
 use App\User;
 use \GuzzleHttp\Client;
 
@@ -11,24 +12,6 @@ use \GuzzleHttp\Client;
  * Time: 16:44
  */
 class Requester {
-
-    public static function sendRegInfo($uid)
-    {
-        //ICELANDIC.SCANDINAVER.ORG//
-        $client = new Client([
-            'base_uri' => Options::$icelandic,
-            'curl' => [CURLOPT_SSL_VERIFYPEER => false, CURLOPT_SSL_VERIFYHOST => false]
-        ]);
-
-        $response = $client->request('POST', '/api/setNewUser', ['form_params' => ['uid' => $uid]]);
-
-        if($response->getBody()->getContents() == 'success')
-            l(' на ' .Options::$icelandic. ' отправлены данные о регистрации пользователя '.$uid, 'success');
-        else
-            l($response, 'danger');
-
-        return true;
-    }
 
     public static function sendRemoveUser($id)
     {
@@ -49,52 +32,74 @@ class Requester {
     public static function createForumUser($params)
     {
         $client = new Client([
-            'base_uri' => Options::$_forum,
+            'base_uri' => config('app.FORUM'),
             'curl' => [CURLOPT_SSL_VERIFYPEER => false, CURLOPT_SSL_VERIFYHOST => false]
         ]);
 
         $response = $client->request('POST', '/api/adduser.php', [
             'form_params' => [
-                'username' => $params['login'],
-                'email' => $params['email'],
-                'password' => $params['openpass'],
-                ]
+                'username' => $params->data['login'],
+                'email' => $params->data['email'],
+                'password' => $params->data['password'],
+            ]
         ]);
 
         if($response->getBody()->getContents() == 'success')
-            l('forum user created email - '.$params['email'],'success');
+            activity()->log('Пользователь '.$params->data['login'].' зарегистрирован на форуме');
         else
-            l($response, 'danger');
-
-        return true;
+            activity()->log('Пользователь '.$params->data['login'].' - ошибка регистрации на форуме');
     }
 
     /**
-     * @param User $user
-     * @param $newemail
+     * @param array $data
+     * @param $oldemail
      * @return bool
+     * @internal param User $user
      */
-    public static function updateForumUser(User $user, $newemail)
+    public static function updateForumUser(Array $data, $oldemail)
     {
         $client = new Client([
-            'base_uri' => Options::$_forum,
+            'base_uri' => config('app.FORUM'),
             'curl' => [CURLOPT_SSL_VERIFYPEER => false, CURLOPT_SSL_VERIFYHOST => false]
         ]);
 
         $response = $client->request('POST', '/api/updateuser.php', [
             'form_params' => [
-                'username' => $user->login,
-                'email'    => $user->email,
-                'newemail' => $user->email,
-                'password' => $user->password,
-                'avatar'   => ($user->avatar) ? Options::$_main_site.$user->avatar : null,
+                'username' => $data['login'],
+                'email'    => $data['email'],
+                'oldemail' => $oldemail,
+                'password' => $data['password'],
             ]
         ]);
 
         if($response->getBody()->getContents() == 'success')
-            l('forum user updated email - '.$user->email,'success');
+            activity()->log('forum user updated email - '.$data['email']);
         else
-            l($response, 'danger');
+            activity()->log($response->getBody());
+
+
+        return true;
+    }
+
+
+    public static function updateForumUserAvatar(User $user)
+    {
+        $client = new Client([
+            'base_uri' => config('app.FORUM'),
+            'curl' => [CURLOPT_SSL_VERIFYPEER => false, CURLOPT_SSL_VERIFYHOST => false]
+        ]);
+
+        $response = $client->request('POST', '/api/updateuserphoto.php', [
+            'form_params' => [
+                'email'    => $user->email,
+                'avatar'   => config('app.SITE').'/uploads/u/'.$user->photo,
+            ]
+        ]);
+
+        if($response->getBody()->getContents() == 'success')
+            activity()->log('forum user updated email - '.$user->email);
+        else
+            activity()->log($response->getBody());
 
 
         return true;
@@ -103,7 +108,7 @@ class Requester {
     public static function loginForumUser($params)
     {
         $client = new Client([
-            'base_uri' => Options::$_forum,
+            'base_uri' => config('app.FORUM'),
             'curl' => [CURLOPT_SSL_VERIFYPEER => false, CURLOPT_SSL_VERIFYHOST => false]
         ]);
 
@@ -117,7 +122,7 @@ class Requester {
         ]);
        // print($response->getBody()->getContents());die();
         $cookies = $response->getHeader('set-cookie');
-        d($cookies);
+      //  d($cookies);
         foreach ($cookies as $cookie) {
             $newCookie =\GuzzleHttp\Cookie\SetCookie::fromString($cookie);
             setcookie($newCookie->getName(), $newCookie->getValue(), time() + (365 * 86400), '/', '.'.Options::$site);

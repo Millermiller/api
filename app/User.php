@@ -106,7 +106,11 @@ class User extends Authenticatable
                 return '/uploads/u/a/' . $this->photo;
             } else {
                 $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
-                $avatar->resize(300, 300);
+                $avatar->resize(
+                    300, null, function ($constraint) {
+                    /** @var \Intervention\Image\Constraint $constraint */
+                    $constraint->aspectRatio();
+                });
                 $avatar->save(public_path('/uploads/u/a/' . $this->photo));
                 return public_path('/uploads/u/a/' . $this->photo);
             }
