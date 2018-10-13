@@ -8,16 +8,18 @@
  */
 
 /******************************** MAIN - PUBLIC *****************************************/
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::post('/login', 'Auth\LoginController@login');
 Route::post('/signup', 'Auth\RegisterController@register');
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('restore');
+Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::group(['middleware' => ['touchUser'], 'as' => 'frontend::', 'namespace' => 'Main\Frontend'], function(){
 
     Route::get('/', 'IndexController@index')->name('home');
-
-    Route::post('/register', 'Auth\RegisterController@register')->name('register');
-    Route::post('/checkregdata', 'Auth\RegisterController@check')->name('checkregdata');
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::get('/profile/settings', 'ProfileController@settings')->name('profile-settings');

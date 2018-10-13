@@ -7566,7 +7566,7 @@ p.copyright {
 #login input:first-child{
     margin-bottom: 10px;
 }
-#login{
+#loginmodal{
     width: 400px;
 }
 #registration{
@@ -8215,7 +8215,7 @@ span[tooltip]:hover::after {
 .ql-container.ql-snow{
     min-height: 400px;
 }
-#loginform, #registrationform, #feedbackform{
+#loginform, #registrationform, #feedbackform, #remindform{
     padding: 0 15px;
     position: relative;
 }

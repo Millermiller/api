@@ -1,12 +1,12 @@
 <template>
     <div class="columns">
-        <div class="column is-4">
+        <div class="column is-4 asset-column">
             <div class="box">
                 <b-tabs>
                     <b-tab-item label="слова">
                         <button class="button is-small" style="margin: 10px 0;" @click="addAsset(1)">Добавить</button>
                         <ul>
-                            <asset v-for="word in words" :item="word" @change="load" @remove="removeAsset"></asset>
+                            <asset v-for="word in words" :item="word" @edit="assetEdit" @remove="removeAsset"></asset>
                         </ul>
                     </b-tab-item>
                     <b-tab-item label="предложения">
@@ -18,7 +18,7 @@
                 </b-tabs>
             </div>
         </div>
-        <div class="column is-4">
+        <div class="column is-4 cards-column">
             <div class="box">
                 <card
                         v-for="(card, index) in cards"
@@ -30,7 +30,7 @@
                 </card>
             </div>
         </div>
-        <div class="column is-4">
+        <div class="column is-4 translate-column">
             <div class="box">
                 <div class="block">
                     <p class="control has-addons">
@@ -51,6 +51,21 @@
                 </div>
             </div>
         </div>
+
+        <b-modal :active.sync="isComponentModalActive" @close="close">
+            <div class="box">
+                <div class="translate-section">
+                    <p>
+                        Asset id={{editedAsset.id}} basic={{editedAsset.basic}} type={{editedAsset.type}} level={{editedAsset.level}} favorite={{editedAsset.favorite}}</p>
+                    <p class="control has-addons">
+                        <input class="input" type="text" placeholder="text" v-model="editedAsset.title"
+                               style="width: 490px;">
+                        <a class="button is-success" @click="updateTitle">Сохранить</a>
+                        <a class="button is-warning" @click="close">Отмена</a>
+                    </p>
+                </div>
+            </div>
+        </b-modal>
     </div>
 </template>
 
@@ -63,7 +78,7 @@
         components: {
             Asset,
             Card,
-            Translate
+            Translate,
         },
         data () {
             return {
@@ -73,10 +88,23 @@
                 translates: [],
                 sentence: 0,
                 searchloaded: false,
-                sentencesloaded: false
+                sentencesloaded: false,
+                isComponentModalActive: false,
+                editedAsset: {
+                    id:'',
+                    basic:'',
+                    type:'',
+                    level:'',
+                    title:'',
+                }
             }
         },
         methods: {
+            assetEdit(item){
+                console.log(item)
+                this.editedAsset = item
+                this.isComponentModalActive = true
+            },
             load () {
                 this.$http.get('/admin/assets').then((response) => {
                     this.words = response.body.words
@@ -160,6 +188,20 @@
                     if(item.id === aid)
                         item.cards_count--
                 });
+            },
+            updateTitle () {
+                this.$http.post('/admin/asset/' + this.editedAsset.id, {text: this.editedAsset.title}).then((response) => {
+                    if (response.body.success) {
+                        this.$snackbar.open('Обновлено')
+                        this.isComponentModalActive = false
+                    }
+                    else{
+                        this.$snackbar.open('Ошибка')
+                    }
+                    this.close()
+                }, (response) => {
+                    console.log(response)
+                })
             }
         },
         mounted () {

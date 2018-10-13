@@ -79,11 +79,6 @@ class User extends Authenticatable
         return $this->hasMany('Application\Models\Comment');
     }
 
-    public function delete()
-    {
-        return parent::delete();
-    }
-
     public function getPremiumAttribute()
     {
         return (Carbon::parse($this->active_to) > Carbon::now()) ? true : false;

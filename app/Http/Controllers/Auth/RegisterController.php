@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Events\UserRegistered;
+use App\Models\Asset;
 use App\User;
 use App\Http\Controllers\Controller;
+use DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -94,6 +96,19 @@ class RegisterController extends Controller
             'login' => $data['login'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+        ]);
+
+        $favourite = Asset::create([
+            'title' => 'Избранное',
+            'basic'=> false,
+            'favorite' => true,
+            'type' => Asset::TYPE_FAVORITES
+        ]);
+
+        DB::table('assets_to_users')->insert([
+            ['asset_id' => 1, 'user_id' => $user->id],
+            ['asset_id' => 2, 'user_id' => $user->id],
+            ['asset_id' => $favourite->id, 'user_id' => $user->id],
         ]);
 
         event(new UserRegistered($data));

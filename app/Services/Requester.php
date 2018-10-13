@@ -13,22 +13,10 @@ use \GuzzleHttp\Client;
  */
 class Requester {
 
-    public static function sendRemoveUser($id)
-    {
-        //ICELANDIC.SCANDINAVER.ORG//
-        $client = new Client([
-            'base_uri' => Options::$icelandic,
-            'curl' => [CURLOPT_SSL_VERIFYPEER => false, CURLOPT_SSL_VERIFYHOST => false]
-        ]);
-
-        $response = $client->delete('/api/removeUser/'.$id);
-        $response = json_decode($response->getBody());
-        l(' на ' .Options::$icelandic. ' отправлены данные об удалении пользователя '.$id, 'success');
-
-        if($response->success == '3')
-            l(' ' .Options::$icelandic. ' пользователь ' . $id . ' удален ', 'success');
-    }
-
+    /**
+     *  создание пользователя на форуме
+     * @param $params
+     */
     public static function createForumUser($params)
     {
         $client = new Client([
@@ -38,19 +26,20 @@ class Requester {
 
         $response = $client->request('POST', '/api/adduser.php', [
             'form_params' => [
-                'username' => $params->data['login'],
-                'email' => $params->data['email'],
-                'password' => $params->data['password'],
+                'username' => $params['login'],
+                'email' => $params['email'],
+                'password' => $params['password'],
             ]
         ]);
 
         if($response->getBody()->getContents() == 'success')
-            activity()->log('Пользователь '.$params->data['login'].' зарегистрирован на форуме');
+            activity()->log('Пользователь '.$params['login'].' зарегистрирован на форуме');
         else
-            activity()->log('Пользователь '.$params->data['login'].' - ошибка регистрации на форуме');
+            activity()->log('Пользователь '.$params['login'].' - ошибка регистрации на форуме');
     }
 
     /**
+     * обновление пользователя на форуме
      * @param array $data
      * @param $oldemail
      * @return bool
@@ -77,11 +66,15 @@ class Requester {
         else
             activity()->log($response->getBody());
 
-
         return true;
     }
 
 
+    /**
+     * создание аватарки пользователя на форуме
+     * @param User $user
+     * @return bool
+     */
     public static function updateForumUserAvatar(User $user)
     {
         $client = new Client([

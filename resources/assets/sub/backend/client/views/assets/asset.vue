@@ -5,7 +5,7 @@
         </p>
 
         <p :class="['column control-block', 'is-5']">
-            <a :class="['button', 'is-small']" @click="showSettingsModal">
+            <a :class="['button', 'is-small']" @click="$emit('edit', item)">
                 <span class="icon">
                       <i class="fa fa-pencil"></i>
                 </span>
@@ -25,7 +25,6 @@
                 </span>
             </a>
         </p>
-        <modal :visible="settingsModal" :asset="item" @change="$emit('change')" @close="closeSettingsModal"></modal>
     </li>
 </template>
 
@@ -36,18 +35,12 @@
 </style>
 
 <script>
-    import Modal from './Assetmodal.vue'
-
     export default{
         props: ['item'],
         data () {
             return {
                 loaded: false,
-                settingsModal: false
             }
-        },
-        components: {
-            Modal
         },
         methods: {
             load (id) {
@@ -77,12 +70,6 @@
                 }, (response) => {
                     console.log(response)
                 })
-            },
-            showSettingsModal () {
-                this.settingsModal = true
-            },
-            closeSettingsModal () {
-                this.settingsModal = false
             },
         },
         computed: {

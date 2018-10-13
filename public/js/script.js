@@ -111,18 +111,36 @@ $(function(){
                     location.reload()
                 }
                 else {
-                    $.fancybox.close();
-                    toastr.error(data.message);
-                    toastr.options = TOASTR_OPTIONS
-                    return false;
+                    switch (data.code) {
+                        case 1:
+                            $('#badLoginMess p').text(data.msg);
+                            $('#badLoginMess').removeClass('hidden');
+                            break;
+                        case 2:
+                            $('#badEmailMess p').text(data.msg);
+                            $('#badEmailMess').removeClass('hidden');
+                            break;
+                        case 3:
+                            $.fancybox.close();
+                            toastr[(data.success == true) ? 'success' : 'error'](data.msg);
+                            toastr.options = TOASTR_OPTIONS
+                            break;
+                    }
                 }
-
             },
             error: function (data) {
-                $.fancybox.close();
-                toastr.error('Ошибка');
-                toastr.options = TOASTR_OPTIONS
-                return false;
+                let errors = data.responseJSON.errors;
+                $.each(errors, function (key, value) {
+                    $('#registrationform input[name="'+key+'"]').parents('.form-group').addClass('has-error');
+                    $('#registrationform input[name="'+key+'"]').siblings('.help-block').text(value)
+
+                    if(key === 'password') {
+                        $('[name="password_confirmation"]').parents('.form-group').addClass('has-error');
+                        $('[name="password_confirmation"]').siblings('.help-block').text(value)
+                    }
+                });
+
+                $('#registrationform .form-group').not('.has-error').addClass('has-success')
             }
         })
     });
@@ -165,6 +183,22 @@ $(function(){
                 $('#uploadPhoto').toggle();
                 toastr[(data.success === true) ? 'success' : 'error'](data.msg);
                 toastr.options = TOASTR_OPTIONS
+            }
+        })
+    });
+
+    $('#remindform').on('submit', function (e) {
+        e.preventDefault();
+        let form = $(this)
+        $.ajax({
+            url: '/password/email',
+            type: 'post',
+            data: form.serialize(),
+            dataType: 'json',
+            success: function (data) {
+                toastr[(data.success === true) ? 'success' : 'error'](data.msg);
+                toastr.options = TOASTR_OPTIONS
+                $.fancybox.close();
             }
         })
     });

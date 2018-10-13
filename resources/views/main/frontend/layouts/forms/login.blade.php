@@ -1,34 +1,34 @@
-<div id="login" style="display: none;">
-    <form id="loginform" action="">
+<div id="loginmodal" style="display: none;">
+    {!! Form::open(['id' => 'loginform']) !!}
         {!! csrf_field() !!}
         <a class="closeModal" data-dismiss="modal"></a>
         <div class="form-group bmd-form-group">
-            <label for="log" class="bmd-label-floating control-label">Логин/ email</label>
-            <input id="log" name="login" class="form-control" type="text"/>
+            {!! Form::label('login', 'Логин/ email', ['class'=> 'bmd-label-floating control-label']) !!}
+            {!! Form::text('login', '', ['class'=> 'form-control']) !!}
         </div>
         <div class="form-group bmd-form-group">
-            <label for="pass" class="bmd-label-floating control-label">Пароль</label>
-            <input id="pass" name="password" class="form-control" type="password"/>
+            {!! Form::label('password', 'Пароль', ['class'=> 'bmd-label-floating control-label']) !!}
+            {!! Form::password('password', ['class'=> 'form-control']) !!}
         </div>
         <div class="form-group text-center">
             <div class="row no-margin">
-                <button type="submit" class="btn">Вход</button>
+                {!! Form::submit('Вход', ['class' => 'btn']) !!}
             </div>
             <div class="row no-margin">
                 <a id="restore" class="text-muted small text-center" href="#">Восстановить пароль</a>
             </div>
         </div>
-    </form>
-    <form id="remindform" action="" style="display:none">
+    {!! Form::close() !!}
+    {!! Form::open(['id' => 'remindform', 'style' => 'display:none', 'route' => 'restore']) !!}
         <a class="closeModal" data-dismiss="modal"></a>
         <div class="form-group bmd-form-group">
-            <label for="remindlog" class="bmd-label-floating control-label">Email</label>
-            <input id="remindlog" class="form-control" type="email" required/>
+            {!! Form::label('email', 'Email', ['class'=> 'bmd-label-floating control-label']) !!}
+            {!! Form::email('email', '', ['class'=> 'form-control']) !!}
         </div>
         <div class="form-group text-center">
             <div class="row no-margin">
-                <button type="submit" class="btn">Восстановить</button>
+                {!! Form::submit('Восстановить', ['class' => 'btn']) !!}
             </div>
         </div>
-    </form>
+    {!! Form::close() !!}
 </div>

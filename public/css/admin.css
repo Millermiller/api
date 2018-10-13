@@ -363,3 +363,7 @@ table td {
 .fr-wrapper{
     min-height: 300px;
 }
+.asset-column .tab-content, .cards-column .box, .translate-column .box{
+    max-height: 70vh;
+    overflow-y: scroll;
+}

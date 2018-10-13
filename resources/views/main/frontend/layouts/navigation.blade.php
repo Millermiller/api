@@ -34,7 +34,7 @@
                   </li> -->
                 @if (!Auth::check())
                     <li>
-                        <a href="#login" class="fancybox">Вход</a>
+                        <a href="#loginmodal" class="fancybox">Вход</a>
                     </li>
                     <li>
                         <a href="#registration" class="fancybox">Регистрация</a>

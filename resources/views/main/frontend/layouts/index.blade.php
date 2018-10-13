@@ -36,36 +36,7 @@
 <script>
     $(document).ready(function () {
 
-        $('#remindform').on('submit', function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: '/remind',
-                type: 'post',
-                data: {email: $('#remindlog').val()},
-                dataType: 'json',
-                success: function (data) {
-                    toastr[(data.success === true) ? 'success' : 'error'](data.msg);
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "10",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "linear",
-                        "hideEasing": "linear",
-                        "showMethod": "slideDown",
-                        "hideMethod": "fadeOut"
-                    };
-                    $.fancybox.close();
-                }
-            })
-        });
+
 
         $('#feedbackform').on('submit', function(e){
 
