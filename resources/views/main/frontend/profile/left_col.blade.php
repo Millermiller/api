@@ -1,12 +1,11 @@
 <div class="col-md-3 col-xs-12 " style="border-right: 1px solid #eee;">
     <div class="row">
         <div class="avatar-wrapper-large center-block">
-            <div class="avatar"
-                 style="background-image: url({{ '/uploads/u/'.$user->photo}})">
+            <img src="{{ '/uploads/u/'.$user->photo}}" alt="">
                 @if(!$user->photo)
                     <p>Загрузить изображение профиля</p>
                 @endif
-            </div>
+
         </div>
     </div>
     <div class="row">

@@ -1,6 +1,6 @@
 $(function(){
 
-    const TOASTR_OPTIONS = {
+    toastr.options = {
         "closeButton": true,
         "debug": false,
         "newestOnTop": false,
@@ -79,7 +79,6 @@ $(function(){
                 else{
                     form.find('.form-group').addClass('has-error');
                     toastr.error(data.message);
-                    toastr.options = TOASTR_OPTIONS
                     return false;
                 }
             },
@@ -122,8 +121,7 @@ $(function(){
                             break;
                         case 3:
                             $.fancybox.close();
-                            toastr[(data.success == true) ? 'success' : 'error'](data.msg);
-                            toastr.options = TOASTR_OPTIONS
+                            toastr[(data.success == true) ? 'info' : 'error'](data.msg);
                             break;
                     }
                 }
@@ -161,7 +159,7 @@ $(function(){
             let reader = new FileReader();
             reader.onload = function(e) {
                 $('.avatar p').hide();
-                $('.avatar').css('background-image', 'url('+e.target.result+')');
+                $('.avatar-wrapper-large img, .avatar-wrapper-small img').attr('src', e.target.result);
             };
             reader.readAsDataURL(this.files[0]);
         }
@@ -181,8 +179,7 @@ $(function(){
             dataType: 'json',
             success: function(data) {
                 $('#uploadPhoto').toggle();
-                toastr[(data.success === true) ? 'success' : 'error'](data.msg);
-                toastr.options = TOASTR_OPTIONS
+                toastr[(data.success === true) ? 'info' : 'error'](data.msg);
             }
         })
     });
@@ -196,8 +193,7 @@ $(function(){
             data: form.serialize(),
             dataType: 'json',
             success: function (data) {
-                toastr[(data.success === true) ? 'success' : 'error'](data.msg);
-                toastr.options = TOASTR_OPTIONS
+                toastr[(data.success === true) ? 'info' : 'error'](data.msg);
                 $.fancybox.close();
             }
         })

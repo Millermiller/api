@@ -44,7 +44,7 @@
                         <a href="{{ route('frontend::profile') }}"><?= Auth::user()->login ?></a>
                     </li>
                     <li class="avatar-wrapper-small">
-                        <div class="avatar" style="background-image: url(<?= Auth::user()->avatar; ?>)"></div>
+                        <img src="<?= Auth::user()->avatar; ?>" alt="">
                     </li>
                     <li><a href="{{ route('frontend::logout') }}">Выход</a></li>
                 @endif
