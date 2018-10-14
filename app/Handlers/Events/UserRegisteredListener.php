@@ -3,6 +3,7 @@
 namespace App\Handlers\Events;
 
 use App\Events\UserRegistered;
+use App\Mail\Welcome;
 use App\Services\Requester;
 use GuzzleHttp\Client;
 use Illuminate\Queue\InteractsWithQueue;
@@ -28,13 +29,7 @@ class UserRegisteredListener
      */
     public function handle(UserRegistered $event)
     {
-        Mail::send('mails.registration', $event->data, function($message) use ($event)
-        {
-            /** @var \Illuminate\Mail\Message $message */
-            $message->from('support@scandinaver.org', "Scandinaver");
-            $message->subject("Регистрация на сайте Scandinaver.org");
-            $message->to($event->data['email']);
-        });
+        Mail::to($event->user)->send(new Welcome($event->data));
 
         Requester::createForumUser($event->data);
     }

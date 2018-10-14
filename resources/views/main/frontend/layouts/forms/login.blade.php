@@ -1,4 +1,4 @@
-<div id="loginmodal" style="display: none;">
+<div id="loginmodal" style="display: none;position:relative;">
     {!! Form::open(['id' => 'loginform']) !!}
         {!! csrf_field() !!}
         <a class="closeModal" data-dismiss="modal"></a>
@@ -24,6 +24,7 @@
         <div class="form-group bmd-form-group">
             {!! Form::label('email', 'Email', ['class'=> 'bmd-label-floating control-label']) !!}
             {!! Form::email('email', '', ['class'=> 'form-control']) !!}
+            <p class="help-block"></p>
         </div>
         <div class="form-group text-center">
             <div class="row no-margin">
@@ -31,4 +32,12 @@
             </div>
         </div>
     {!! Form::close() !!}
+
+    <div class="el-loading-mask" style="display: none">
+        <div class="el-loading-spinner">
+            <svg viewBox="25 25 50 50" class="circular">
+                <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
+            </svg><!---->
+        </div>
+    </div>
 </div>

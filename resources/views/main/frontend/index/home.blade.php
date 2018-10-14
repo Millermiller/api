@@ -256,7 +256,7 @@
                 <div class="col-lg-12 text-center">
                     <a href="#registration"  class="btn btn-default btn-lg fancybox">
                         <span class="network-name">Регистрация</span></a>
-                    <a href="#login"  class="btn btn-default btn-lg fancybox">
+                    <a href="#loginmodal"  class="btn btn-default btn-lg fancybox">
                         <span class="network-name">Вход</span></a>
                 </div>
             </div>

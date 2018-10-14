@@ -65,6 +65,8 @@ $(function(){
     $('#loginform').on('submit', function (e) {
         e.preventDefault();
 
+        $('.el-loading-mask').show()
+
         let form = $(this)
 
         $.ajax({
@@ -77,12 +79,14 @@ $(function(){
                     location.reload()
                 }
                 else{
+                    $('.el-loading-mask').hide()
                     form.find('.form-group').addClass('has-error');
                     toastr.error(data.message);
                     return false;
                 }
             },
             error: function (data) {
+                $('.el-loading-mask').hide()
                 let errors = data.responseJSON.errors;
                 $.each(errors, function (key, value) {
                     $('#loginform input[name="'+key+'"]').parents('.form-group').addClass('has-error');
@@ -94,6 +98,8 @@ $(function(){
     $('#registrationform').on('submit', function (e) {
 
         e.preventDefault();
+
+        $('.el-loading-mask').show()
 
         let form = $(this)
 
@@ -110,6 +116,8 @@ $(function(){
                     location.reload()
                 }
                 else {
+                    $('.el-loading-mask').hide()
+
                     switch (data.code) {
                         case 1:
                             $('#badLoginMess p').text(data.msg);
@@ -127,6 +135,7 @@ $(function(){
                 }
             },
             error: function (data) {
+                $('.el-loading-mask').hide()
                 let errors = data.responseJSON.errors;
                 $.each(errors, function (key, value) {
                     $('#registrationform input[name="'+key+'"]').parents('.form-group').addClass('has-error');
@@ -185,16 +194,32 @@ $(function(){
     });
 
     $('#remindform').on('submit', function (e) {
+
         e.preventDefault();
+
+        $('.el-loading-mask').show()
+
         let form = $(this)
+
         $.ajax({
             url: '/password/email',
             type: 'post',
             data: form.serialize(),
             dataType: 'json',
             success: function (data) {
-                toastr[(data.success === true) ? 'info' : 'error'](data.msg);
+                toastr[(data.success === true) ? 'info' : 'error'](data.message);
                 $.fancybox.close();
+                $('.el-loading-mask').hide()
+            },
+            error: function(data){
+                $('.el-loading-mask').hide()
+                let errors = data.responseJSON.errors;
+                $.each(errors, function (key, value) {
+                    $('#remindform input[name="'+key+'"]').parents('.form-group').addClass('has-error');
+                    $('#remindform input[name="'+key+'"]').siblings('.help-block').text(value)
+                });
+
+                $('#registrationform .form-group').not('.has-error').addClass('has-success')
             }
         })
     });

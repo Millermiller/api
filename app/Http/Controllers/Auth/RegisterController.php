@@ -51,14 +51,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        Validator::extend('login', function($attribute, $value, $parameters)
+        {
+            return preg_match('/^[a-zA-Z0-9_-]+$/u', $value);
+        });
+
         return Validator::make($data, [
-            'login' => 'required|string|alpha_num|max:255|unique:users',
+            'login' => 'required|string|login|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ],
             [
                 'required' => 'Обязательное поле',
-                'alpha_num' => 'Только латинские буквы и цифры',
+                'login' => 'Только латинские символы и цифры',
                 'confirmed' => 'Пароли не совпадают',
                 'unique' => 'Пользователь уже зарегистрирован',
                 'min' => 'Минимум :min символов',
@@ -111,7 +116,7 @@ class RegisterController extends Controller
             ['asset_id' => $favourite->id, 'user_id' => $user->id],
         ]);
 
-        event(new UserRegistered($data));
+        event(new UserRegistered($user, $data));
 
         activity()->causedBy($user)->log('Зарегистрирован пользователь');
 

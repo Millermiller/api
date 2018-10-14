@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Mail\ResetPassword;
 use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Intro;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Image;
+use Mail;
 
 /**
  * Class UsersModel
@@ -139,5 +141,10 @@ class User extends Authenticatable
             return true;
         else
             return false;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        Mail::to($this)->send(new ResetPassword($this, $token));
     }
 }
