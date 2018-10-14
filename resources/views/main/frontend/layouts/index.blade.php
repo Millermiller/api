@@ -33,48 +33,6 @@
 @include('main.frontend.layouts.forms.registration')
 
 @include('main.frontend.layouts.forms.feedback')
-<script>
-    $(document).ready(function () {
 
-
-
-        $('#feedbackform').on('submit', function(e){
-
-            e.preventDefault();
-
-            let name = $('#name').val()
-            /* var contact = $('#contact').val();*/
-            let message = $('#message').val()
-
-            $.ajax({
-                url: '/ajaxFeedback',
-                type: 'post',
-                data: {name: name,/* contact:contact,*/ message:message},
-                dataType: 'json',
-                success: function(data){
-                    toastr[(data.success === true) ? 'success' : 'error'](data.msg);
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "10",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "linear",
-                        "hideEasing": "linear",
-                        "showMethod": "slideDown",
-                        "hideMethod": "fadeOut"
-                    };
-                    $.fancybox.close();
-                }
-            })
-        })
-    });
-</script>
 </body>
 </html>

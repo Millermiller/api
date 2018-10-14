@@ -5935,6 +5935,7 @@ fieldset[disabled] .form-group .form-control {
 }
 .form-group textarea {
   resize: none;
+    font-family: Arial;
 }
 .form-group textarea ~ .form-control-highlight {
   margin-top: -11px;
@@ -8280,4 +8281,7 @@ span[tooltip]:hover::after {
         stroke-dasharray: 90, 150;
         stroke-dashoffset: -120px;
     }
+}
+#feedback{
+    width: 600px;
 }

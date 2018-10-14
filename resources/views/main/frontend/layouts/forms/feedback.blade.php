@@ -1,17 +1,26 @@
-<div id="feedback" style="display: none;">
-    <form id="feedbackform" action="">
+<div id="feedback" style="display: none;position: relative;">
+    {!! Form::open(['id' => 'feedbackform']) !!}
         {!! csrf_field() !!}
-        <a class="closeModal" data-dismiss="modal">×</a>
+        <a class="closeModal" data-dismiss="modal"></a>
         <div class="form-group bmd-form-group">
-            <label for="name" class="bmd-label-floating control-label">Представьтесь:</label>
-            <input id="name" class="form-control" type="text" required/>
+            {!! Form::label('name', 'Представьтесь:', ['class'=> 'bmd-label-floating control-label']) !!}
+            {!! Form::text('name', '', ['class'=> 'form-control']) !!}
+            <p class="help-block"></p>
         </div>
         <div class="form-group bmd-form-group">
-            <label for="message" class="bmd-label-floating control-label">Ваше сообщение:</label>
-            <textarea name="message" id="message" cols="50" rows="10" class="form-control"></textarea>
+            {!! Form::label('message', 'Ваше сообщение:', ['class'=> 'bmd-label-floating control-label']) !!}
+            {!! Form::textarea('message', '', ['class'=> 'form-control']) !!}
+            <p class="help-block"></p>
         </div>
         <div class="form-group text-center">
-            <button type="submit" class="btn">Отправить</button>
+            {!! Form::submit('Отправить', ['class' => 'btn']) !!}
         </div>
-    </form>
+    {!! Form::close() !!}
+    <div class="el-loading-mask" style="display: none">
+        <div class="el-loading-spinner">
+            <svg viewBox="25 25 50 50" class="circular">
+                <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
+            </svg><!---->
+        </div>
+    </div>
 </div>

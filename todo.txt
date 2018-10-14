@@ -3,9 +3,6 @@
 создание словарей по умолчанию при регистрации пользователя (и другие действия)
 
 восстановление пароля синхронизировать с форумом
-русифицировать письмо восстановления
-
-заменить flash на toastr
 
 Тесты:
 5. Подгруэать случайные варианты ответа с сервера
@@ -23,7 +20,7 @@ PHP:
     выбрать правильный вариант;
     вписать нужную форму слова.
 
-https://packalyst.com/packages/package/laravelbook/ardent - валидация в моделях
+
 ++ https://packalyst.com/packages/package/rap2hpoutre/laravel-log-viewer - логи
 ++ https://packalyst.com/packages/package/itsgoingd/clockwork - отладчик в браузере
 ++ https://packalyst.com/packages/package/laravelcollective/html - конструктор html

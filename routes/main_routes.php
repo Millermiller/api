@@ -31,6 +31,8 @@ Route::group(['middleware' => ['touchUser'], 'as' => 'frontend::', 'namespace' =
     Route::get('/logout', 'LogoutController@logout')->name('logout');
 });
 
+Route::post('/feedback', 'Main\Frontend\IndexController@feedback');
+
 /******************************** MAIN - ADMIN *****************************************/
 
 Route::get('/admin/login', 'Auth\LoginAdminController@showLoginForm');

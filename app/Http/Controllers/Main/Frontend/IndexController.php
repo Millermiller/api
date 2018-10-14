@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main\Frontend;
 use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Meta;
 
@@ -31,20 +32,19 @@ class IndexController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajaxFeedback()
+    public function feedback(Request $request)
     {
-        $name = Input::get('name', '');
-        $message = Input::get('message', '');
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'message' => 'required',
+        ],[
+            'required' => 'Поле обязательно для заполнения'
+        ]);
 
-        $message = new Message(['name' => $name, 'message' => $message, 'readed' => 0]);
-
-        if ($message->save())
-            $msg = ['success' => true, 'msg' => 'Сообщение отправлено'];
-        else
-            $msg = ['success' => false, 'msg' => 'Произошла ошибка'];
+        $message = Message::create($request->all());
 
         event(new MessageEvent($message));
 
-        return response()->json($msg);
+        return response()->json(['success' => true, 'msg' => 'Сообщение отправлено']);
     }
 }

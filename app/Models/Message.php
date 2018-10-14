@@ -19,9 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Message extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'messages';
 
-    protected $fillable = ['name', 'contact', 'message'];
+    protected $fillable = ['name', 'message'];
 
-    use SoftDeletes;
 }

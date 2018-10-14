@@ -53,7 +53,7 @@ $(function(){
     $.material.init();
 
 
-    $('input.form-control').on('input', function(){
+    $('input.form-control, textarea.form-control').on('input', function(){
         let input = $(this)
 
         if(input.val().length > 0)
@@ -223,4 +223,34 @@ $(function(){
             }
         })
     });
+
+    $('#feedbackform').on('submit', function(e){
+
+        e.preventDefault();
+
+        $('.el-loading-mask').show()
+
+        let form = $(this)
+
+        $.ajax({
+            url: '/feedback',
+            type: 'post',
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(data){
+                $('.el-loading-mask').hide()
+                toastr[(data.success === true) ? 'success' : 'error'](data.msg);
+                $.fancybox.close();
+                document.getElementById("feedbackform").reset()
+            },
+            error: function(data){
+                $('.el-loading-mask').hide()
+                let errors = data.responseJSON.errors;
+                $.each(errors, function (key, value) {
+                    $('#feedbackform [name="'+key+'"]').parents('.form-group').addClass('has-error');
+                    $('#feedbackform [name="'+key+'"]').siblings('.help-block').text(value)
+                });
+            }
+        })
+    })
 })

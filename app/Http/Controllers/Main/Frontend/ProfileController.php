@@ -103,7 +103,7 @@ class ProfileController extends Controller
         $data['password'] = $request->post('password');
 
         Session::flash('message', 'Пользовательские данные обновлены');
-        Session::flash('alert-class', 'alert-success');
+        Session::flash('alert-class', 'success');
 
         Requester::updateForumUser($data, $oldemail);
 
