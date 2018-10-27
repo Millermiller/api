@@ -16,7 +16,7 @@ export default new Router({
                 icon: 'fa-tachometer',
                 link: 'texts/textedit/index.vue'
             },
-            component: require('../views/texts/textedit/index.vue').default
+            component: require('../views/texts/textedit/index')
         },
         {
             name: 'Intro',

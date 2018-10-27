@@ -7798,7 +7798,7 @@ a > .avatar-wrapper-small{
 .norwegian p.lead{
     padding: 10px;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
 }
 .sweden .illustrate{
     width: 300px;
@@ -8284,4 +8284,7 @@ span[tooltip]:hover::after {
 }
 #feedback{
     width: 600px;
+}
+.swiper-container{
+    padding: 10px 0;
 }

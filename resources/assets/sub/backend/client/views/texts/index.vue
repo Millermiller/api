@@ -40,7 +40,7 @@
                                     <b-icon icon="account-edit" size="is-small"></b-icon>
                                 </button>
                                 <button class="button  is-warning" @click="setVisibility(props.row)">
-                                    <b-icon :icon="[{'eye': props.row.published, 'eye-off': !props.row.published}]" size="is-small"></b-icon>
+                                    <b-icon :icon="icon(props.row)" size="is-small"></b-icon>
                                 </button>
                                 <button class="button  is-danger" @click="remove(props.row)">
                                     <b-icon icon="account-remove" size="is-small"></b-icon>
@@ -68,8 +68,8 @@
                     </div>
                     <div class="column is-6">
                         <b-field label="перевод">
-                            <b-input type="textarea"v-model="form.translate"  style="height: 500px;"></textarea>
-                        </b-input>
+                            <b-input type="textarea" v-model="form.translate"  style="height: 500px;"></b-input>
+                        </b-field>
                     </div>
                 </div>
                 <div class="columns">
@@ -80,7 +80,7 @@
             </div>
         </b-modal>
     </div>
-    <router-view></router-view>
+
 </template>
 
 <script>
@@ -101,7 +101,13 @@
                 isComponentModalActive: false
             }
         },
+        computed: {
+
+        },
         methods: {
+            icon(row){
+                return (row.published) ? 'eye' : 'eye-off'
+            },
             load(){
                 this.$http.get('/admin/texts').then((response) => {
                     this.texts = response.body

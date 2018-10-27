@@ -56,13 +56,17 @@
             <div class="box">
                 <div class="translate-section">
                     <p>
-                        Asset id={{editedAsset.id}} basic={{editedAsset.basic}} type={{editedAsset.type}} level={{editedAsset.level}} favorite={{editedAsset.favorite}}</p>
-                    <p class="control has-addons">
-                        <input class="input" type="text" placeholder="text" v-model="editedAsset.title"
-                               style="width: 490px;">
-                        <a class="button is-success" @click="updateTitle">Сохранить</a>
-                        <a class="button is-warning" @click="close">Отмена</a>
+                        Asset id={{editedAsset.id}} basic={{editedAsset.basic}} type={{editedAsset.type}} level={{editedAsset.level}} favorite={{editedAsset.favorite}}
                     </p>
+                    <b-field>
+                        <b-input type="text" placeholder="text" v-model="editedAsset.title" style="width: 430px;"></b-input>
+                        <p class="control">
+                            <button  class="button is-success" @click="updateTitle">Сохранить</button >
+                        </p>
+                        <p class="control">
+                            <button  class="button is-warning" @click="close">Отмена</button >
+                        </p>
+                    </b-field>
                 </div>
             </div>
         </b-modal>
@@ -193,7 +197,6 @@
                 this.$http.post('/admin/asset/' + this.editedAsset.id, {text: this.editedAsset.title}).then((response) => {
                     if (response.body.success) {
                         this.$snackbar.open('Обновлено')
-                        this.isComponentModalActive = false
                     }
                     else{
                         this.$snackbar.open('Ошибка')
@@ -202,6 +205,9 @@
                 }, (response) => {
                     console.log(response)
                 })
+            },
+            close(){
+                this.isComponentModalActive = false
             }
         },
         mounted () {

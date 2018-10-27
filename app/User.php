@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Image;
+use Laravel\Passport\HasApiTokens;
 use Mail;
 
 /**
@@ -36,7 +37,7 @@ use Mail;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     protected $table = 'users';
 
@@ -50,6 +51,10 @@ class User extends Authenticatable
 
     const ROLE_ADMIN = 1;
     const ROLE_USER  = 0;
+
+    public function findForPassport($username) {
+        return $this->where('email', $username)->orWhere('login', $username)->first();
+    }
 
     public function state()
     {

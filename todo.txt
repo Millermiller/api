@@ -1,8 +1,12 @@
-проверить создание и удаление форумов (?)
+﻿проверить создание и удаление форумов (?)
 
 создание словарей по умолчанию при регистрации пользователя (и другие действия)
 
 восстановление пароля синхронизировать с форумом
+
+выделение примеров разными цветами (добваить в админку)
+
+страница восстановления пароля
 
 Тесты:
 5. Подгруэать случайные варианты ответа с сервера
@@ -24,3 +28,11 @@ PHP:
 ++ https://packalyst.com/packages/package/rap2hpoutre/laravel-log-viewer - логи
 ++ https://packalyst.com/packages/package/itsgoingd/clockwork - отладчик в браузере
 ++ https://packalyst.com/packages/package/laravelcollective/html - конструктор html
+https://github.com/beyondcode/laravel-self-diagnosis
+https://github.com/beyondcode/laravel-er-diagram-generator - Generate entity relation diagrams from your Laravel model files.
+
+
+SUB ADMIN UPDATE:
+
+-> /public/sub/backend
+-> /resources/views/sub/backend

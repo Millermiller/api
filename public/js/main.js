@@ -233,7 +233,7 @@ $(function(){
                 else {
                     this.question = {}
                     this.variants = []
-                    this.$Progress.set(0)
+                  //  this.$Progress.set(0)
                     var self = this;
                     setTimeout(function(){self.result = self.success}, 1000);
 
