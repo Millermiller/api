@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dee077529e9a3a7c1c131d16aa34b26b",
+    "content-hash": "abd74a729c0ad6c571e0f73fed99d79f",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -183,12 +183,12 @@
             "version": "1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/codeguy/Upload.git",
+                "url": "https://github.com/brandonsavage/Upload.git",
                 "reference": "6a9e5e1fb58d65346d0e557db2d46fb25efd3e37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeguy/Upload/zipball/6a9e5e1fb58d65346d0e557db2d46fb25efd3e37",
+                "url": "https://api.github.com/repos/brandonsavage/Upload/zipball/6a9e5e1fb58d65346d0e557db2d46fb25efd3e37",
                 "reference": "6a9e5e1fb58d65346d0e557db2d46fb25efd3e37",
                 "shasum": ""
             },
@@ -5522,6 +5522,58 @@
                 "xunit"
             ],
             "time": "2018-08-09T05:50:03+00:00"
+        },
+        {
+            "name": "reliese/laravel",
+            "version": "v0.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reliese/laravel.git",
+                "reference": "10075c5f5e67efba18d781216ff5a0ffa3fc2d7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reliese/laravel/zipball/10075c5f5e67efba18d781216ff5a0ffa3fc2d7f",
+                "reference": "10075c5f5e67efba18d781216ff5a0ffa3fc2d7f",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.5",
+                "illuminate/console": "~5.1",
+                "illuminate/contracts": "~5.1",
+                "illuminate/database": "~5.1",
+                "illuminate/filesystem": "~5.1",
+                "illuminate/support": "~5.1",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Reliese\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Llanos",
+                    "email": "cristianllanos@outlook.com"
+                }
+            ],
+            "description": "Reliese Components for Laravel Framework code generation.",
+            "homepage": "http://cristianllanos.com",
+            "keywords": [
+                "laravel",
+                "reliese"
+            ],
+            "time": "2017-02-04T15:50:39+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

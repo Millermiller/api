@@ -290,7 +290,7 @@ class Card extends Model{
                 $canopen = false;
             }
 
-            if($counter < 10 || Auth::user()->active)
+            if($counter < 10 || Auth::user()->premium)
                 $r['available'] = true;
             else
                 $r['available'] = false;

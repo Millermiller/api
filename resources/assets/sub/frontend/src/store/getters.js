@@ -12,6 +12,14 @@ export default{
         return state.user.email;
     },
 
+    plan: state => {
+        return state.user.plan;
+    },
+
+    active_to: state => {
+        return state.user.active_to;
+    },
+
     words: state => {
         return state.assets.words;
     },

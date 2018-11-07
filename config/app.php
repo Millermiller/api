@@ -190,6 +190,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Eusonlito\LaravelMeta\MetaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Reliese\Coders\CodersServiceProvider::class,
     ],
 
     /*

@@ -62,6 +62,8 @@ class ApiController extends Controller
             $cards = [];
 
             foreach ($item->cards as $card) {
+                if(! $card->word) continue;
+
                 $cards[] = [
                     'id' => $card->id,
                     'word' => $card->word->word,

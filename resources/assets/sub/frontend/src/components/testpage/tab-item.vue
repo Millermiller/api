@@ -73,8 +73,8 @@
         },
         methods: {
             loadTest(){
-               // this.$store.commit('setSelection', {asset: this.item, index: this.index})
-                this.$router.push('/test/' + this.item.id);
+                this.$store.commit('setSelection', {asset: this.item, index: this.index})
+                this.$router.push('/learn/' + this.item.id);
             },
             test(){
                 //  this.$store.commit('setSelection', {asset: this.item, index: this.index})

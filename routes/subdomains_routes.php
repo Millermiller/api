@@ -18,7 +18,7 @@ Route::group([
 
 Route::group([
     'domain' => '{subdomain}.' . config('app.DOMAIN'),
-    'middleware' => ['checkDomain', 'touchUser', 'checkAuth'],
+    'middleware' => ['checkDomain', 'touchUser', 'checkAuth', 'checkPlan'],
     'namespace' => 'Sub\Frontend',
     'as' => 'sub_frontend::'
 ], function () {
@@ -31,7 +31,7 @@ Route::group([
     Route::get('/cards', 'IndexController@index');
     Route::get('/translates', 'IndexController@index');
     Route::get('/translates', 'IndexController@index');
-    Route::get('/translates{id}', 'IndexController@index');
+    Route::get('/translates/{id}', 'IndexController@index');
     Route::get('/check', 'IndexController@check');
     Route::get('/state', 'IndexController@getState');
     Route::get('/user', 'IndexController@getUser');
@@ -48,8 +48,6 @@ Route::group([
     Route::delete('/favourite/{id}', 'TestController@deleteFavorite');
     Route::post('/saveTestResult', 'TestController@saveTestResult');
     Route::post('/nextLevel', 'TestController@nextLevel');
-    Route::get('/test/{id}', 'TestController@index');
-    Route::get('/test', 'TestController@index');
     Route::delete('/asset/{id}', 'CardsController@deleteAsset');
     Route::post('/asset', 'CardsController@createAsset');
     Route::get('/cards/{id}', 'CardsController@showAsset');

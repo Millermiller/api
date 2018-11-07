@@ -17,7 +17,7 @@ Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetFor
 Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::group(['middleware' => ['touchUser'], 'as' => 'frontend::', 'namespace' => 'Main\Frontend'], function(){
+Route::group(['middleware' => ['touchUser', 'checkPlan'], 'as' => 'frontend::', 'namespace' => 'Main\Frontend'], function(){
 
     Route::get('/', 'IndexController@index')->name('home');
 
@@ -75,6 +75,8 @@ Route::group([
     Route::resource('/meta', 'MetaController',
         ['except' => ['edit', 'create']]
     );
+
+    Route::resource('/plan', 'PlanController');
 
     Route::post('/send', 'VueController@testmail');
 });

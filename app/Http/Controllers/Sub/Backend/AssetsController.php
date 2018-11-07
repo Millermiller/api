@@ -218,6 +218,8 @@ class AssetsController extends Controller
      */
     public function deleteTranslate($id)
     {
+        Card::where('word_id', '=', $id)->delete();
+
         if (Word::destroy($id))
             return response()->json(['success' => Translate::where('word_id', '=', $id)->delete()]);
     }

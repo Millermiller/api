@@ -17,11 +17,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::get('/assets/{language}', 'Main\Frontend\ApiController@assets')->middleware('auth:api');
-
-Route::get('/test',function(){
-    return "ok";
-});
-
 Route::get('/languages', 'Main\Frontend\ApiController@languages')->name('languages');
 
+Route::get('/assets/{language}', 'Main\Frontend\ApiController@assets')->middleware('auth:api');

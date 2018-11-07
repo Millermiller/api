@@ -1066,20 +1066,13 @@ span.warning-text{
 }
 .main-menu .el-menu-item{
     border-bottom: none;
-    padding: 0 5px;
     height: 50px;
     line-height: 50px;
 }
 .main-menu .el-menu-item i{
     font-size:26px;
 }
-.el-menu-item.home,
-.el-menu-item.learn,
-.el-menu-item.test,
-.el-menu-item.cards,
-.el-menu-item.translates{
-    padding: 0 20px;
-}
+
 .main-menu .el-menu-item:hover,
 .main-menu .el-menu-item:hover > i{
     background: none;
@@ -1101,26 +1094,6 @@ span.warning-text{
     float: right;
 }
 
-.main-menu .home.router-link-active ~ hr {
-    left: 31px;
-    width: 36px;
-}
-.main-menu .learn.router-link-active ~ hr {
-    left: 87px;
-    width: 46px;
-}
-.main-menu .test.router-link-active ~ hr {
-    left: 149px;
-    width: 49px;
-}
-.main-menu .cards.router-link-active ~ hr {
-    left: 214px;
-    width: 43px;
-}
-.main-menu .translates.router-link-active ~ hr {
-    left: 276px;
-    width: 43px;
-}
 .asset_level{
     position: absolute;
     top: 5px;
@@ -1445,7 +1418,7 @@ span[tooltip]:hover:after {
     font-family: Segoe UI Light, Helvetica, Arial, sans-serif;
     color: #AD1457;
 }
-.username{
+.account-card p{
     font-family: Segoe UI, Helvetica, Arial, sans-serif;
 }
 .plan-title{
@@ -1468,3 +1441,21 @@ span[tooltip]:hover:after {
     object-fit: cover;
     overflow: hidden;
 }
+.green-plan{
+    color: #4c7737;
+}
+.red-plan{
+    color: #e13c4c;
+}
+.blue-plan{
+    color: #3f4bb8;
+}
+.bold{
+    font-weight:600;
+}
+.normal{
+    font-weight:400;
+}
+.light{
+     font-weight:200;
+ }

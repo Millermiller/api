@@ -39,6 +39,10 @@
                                 {{ props.row.email }}
                             </b-table-column>
 
+                            <b-table-column field="plan.name" label="plan" sortable>
+                                <span :class="color(props.row.plan.id)">{{ props.row.plan.name }}</span>
+                            </b-table-column>
+
                             <b-table-column field="date" label="active_to" sortable centered>
                                 <span class="tag"  :class="type(props.row.active_to)">
                                     {{ new Date(props.row.active_to).toLocaleDateString() }}
@@ -119,6 +123,17 @@
                     return 'is-warning'
                 } else {
                     return 'is-success'
+                }
+            },
+            color(value) {
+                if(value === 1){
+                    return 'green-plan'
+                }
+                if(value === 2){
+                    return 'red-plan'
+                }
+                if(value === 3){
+                    return 'blue-plan'
                 }
             }
         }

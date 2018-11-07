@@ -1,5 +1,5 @@
 <template>
-    <div :class="['navbar', 'navbar-static-top', 'navbar-fixed-left']" role="navigation">
+    <div :class="['navbar', 'navbar-static-top', 'navbar-fixed-left']" role="navigation" ref="menu">
         <a id="left-menu" @click="showLeftMenu">
             <button :class="['navbar-toggle', 'collapsed']">
                 <span class="icon-bar"></span>
@@ -7,25 +7,25 @@
                 <span class="icon-bar"></span>
             </button>
         </a>
-        <el-menu :class="['el-menu-demo', 'main-menu', 'hidden-xs-only']" mode="horizontal">
+        <el-menu :class="['el-menu-demo', 'main-menu', 'hidden-xs-only']" mode="horizontal" >
             <router-link tag="li" :class="['el-menu-item', 'home']" to="/" exact>
                 <i class="menu-icon icon ion-ios-home-outline"></i>
             </router-link>
             <router-link tag="li" :class="['el-menu-item', 'learn']" to="/learn">
-                <i class="menu-icon icon ion-ios-albums-outline"></i>
+                Словари
             </router-link>
             <router-link tag="li" :class="['el-menu-item', 'test']" to="/test">
-                <i class="menu-icon icon ion-ios-speedometer-outline"></i>
+               Тесты
             </router-link>
             <router-link tag="li" :class="['el-menu-item', 'cards']" to="/cards">
-                <i class="menu-icon icon ion-ios-star-outline"></i>
+                Мои словари
             </router-link>
             <router-link tag="li" :class="['el-menu-item', 'translates']" to="/translates">
-                <i class="menu-icon icon ion-ios-bookmarks-outline"></i>
+               Тексты
             </router-link>
 
             <router-link tag="li" :class="['el-menu-item', 'puzzle']" to="/puzzle">
-                <i class="menu-icon icon  ion-android-hand"></i>
+                Паззлы
             </router-link>
 
             <el-menu-item class="logout" index="3">
@@ -49,7 +49,7 @@
                     </el-option>
                 </el-select>
             </li>
-            <hr>
+            <hr :style="{ left: offset + 'px', width: width + 'px'  }">
         </el-menu>
     </div>
 </template>
@@ -62,6 +62,8 @@
         name: 'Header',
         data(){
             return{
+                offset: 30,
+                width: 40,
                 sites: [{
                     value: 'https://icelandic.scandinaver.org',
                     flag: '/img/flag_left_is.png',
@@ -95,6 +97,18 @@
             },
             gotosite(){
                window.location = this.url.value
+            },
+            setUnderline(target){
+                let clickedElement = target;
+                this.offset = clickedElement.getBoundingClientRect().left
+                this.width = clickedElement.getBoundingClientRect().width
+            },
+            onClassChange(classAttrValue, target) {
+                const classList = classAttrValue.split(' ');
+
+                if (classList.includes('router-link-active')) {
+                    this.setUnderline(target)
+                }
             }
         },
         computed: {
@@ -104,6 +118,21 @@
             username(){
                 return this.$store.getters.login
             }
-        }
+        },
+        mounted() {
+            this.observer = new MutationObserver(mutations => {
+                for (const m of mutations) {
+                    const newValue = m.target.getAttribute(m.attributeName);
+                    this.$nextTick(() => {
+                        this.onClassChange(newValue, m.target);
+                    });
+                }
+            });
+
+            this.observer.observe(this.$refs.menu, {
+                attributeFilter: ['class'],
+                subtree: true,
+            });
+        },
     }
 </script>

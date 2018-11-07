@@ -6,6 +6,7 @@ use App\Mail\ResetPassword;
 use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Intro;
+use App\Models\Plan;
 use App\Models\Result;
 use App\Models\Text;
 use App\Models\TextResult;
@@ -34,6 +35,7 @@ use Mail;
  * @property int $active_to
  * @property bool $premium
  * @property string $avatar
+ * @property Plan $plan
  */
 class User extends Authenticatable
 {
@@ -83,7 +85,12 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany('Application\Models\Comment');
+        return $this->hasMany('App\Models\Comment');
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo('App\Models\Plan');
     }
 
     public function getPremiumAttribute()
@@ -128,7 +135,9 @@ class User extends Authenticatable
             'login' => $this->login,
             'avatar' => $this->avatar,
             'email' => $this->email,
-            'active' => $this->active
+            'active' => $this->premium,
+            'plan' => $this->plan,
+            'active_to' => $this->active_to
         ];
     }
 

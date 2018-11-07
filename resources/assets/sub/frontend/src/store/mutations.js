@@ -18,44 +18,45 @@ export default {
         state.user.id = data.user.id
         state.user.login = data.user.login
         state.user.active = data.user.active
+        state.user.active_to = new Date(data.user.active_to.date).toLocaleDateString()
+        state.user.plan = data.user.plan
+        state.info.site = data.site
 
-        state.info.site = data.site;
+        state.assets.words = data.words
+        state.assets.sentences = data.sentences
+        state.assets.favourites = data.favourites
+        state.assets.personal = data.personal
 
-        state.assets.words = data.words;
-        state.assets.sentences = data.sentences;
-        state.assets.favourites = data.favourites;
-        state.assets.personal = data.personal;
-
-        state.texts = data.texts;
+        state.texts = data.texts
         state.intro = data.intro
     },
 
     setTexts(state, data){
-        state.texts = data;
+        state.texts = data
     },
 
     setAuth(state, auth){
-        state.user.authenticated = auth;
+        state.user.authenticated = auth
     },
 
     setWords(state, data){
-        state.assets.words = data;
+        state.assets.words = data
     },
 
     setSentences(state, data){
-        state.assets.sentences = data;
+        state.assets.sentences = data
     },
 
     setPercent(state, data){
-        state.percent = data;
+        state.percent = data
     },
 
     setQuantity(state, data){
-        state.quantity = data;
+        state.quantity = data
     },
 
     setError(state, data){
-        state.errors.splice(0, 0, data);
+        state.errors.splice(0, 0, data)
     },
 
     removeError(state, id){

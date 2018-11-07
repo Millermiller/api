@@ -367,3 +367,12 @@ table td {
     max-height: 70vh;
     overflow-y: scroll;
 }
+.green-plan{
+    color: #4c7737;
+}
+.red-plan{
+    color: #e13c4c;
+}
+.blue-plan{
+    color: #3f4bb8;
+}
