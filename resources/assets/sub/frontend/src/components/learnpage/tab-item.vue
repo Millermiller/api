@@ -13,7 +13,7 @@
 
         <el-col :span="24">
             <p class="asset-title">{{item.title}}</p>
-            <p class="asset-description">описание</p>
+            <p class="asset-description">{{item.description}}</p>
         </el-col>
 
         <el-row>
@@ -73,11 +73,19 @@
         },
         methods: {
             loadTest(){
+                if( window.innerWidth <= 910){
+                    this.$emit('closeMenu')
+                }
+
                 this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/learn/' + this.item.id);
             },
             test(){
-              //  this.$store.commit('setSelection', {asset: this.item, index: this.index})
+                if( window.innerWidth <= 910){
+                    this.$emit('closeMenu')
+                }
+
+                //  this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/test/' + this.item.id);
             },
             showModal(){

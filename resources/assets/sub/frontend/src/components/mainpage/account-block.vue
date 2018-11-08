@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="6">
+    <el-col :md="6" :sm="8" :class="['hidden-xs-only']">
         <el-card :class="['box-card', 'account-card']" shadow="hover">
             <div class="avatar-wrapper-big">
                 <img :class="['avatar-small']" :src="avatar" >

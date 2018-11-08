@@ -16,6 +16,14 @@ export default{
         return state.user.plan;
     },
 
+    backdrop: state => {
+        return state.backdrop;
+    },
+
+    rightMenuOpen: state => {
+        return state.rightMenuOpen;
+    },
+
     active_to: state => {
         return state.user.active_to;
     },

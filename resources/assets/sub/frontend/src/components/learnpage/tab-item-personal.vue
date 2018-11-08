@@ -34,7 +34,7 @@
                         изменить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
-                    <span :class="['text-primary', 'pointer', 'small']" @click="learn()">
+                    <span :class="['text-primary', 'pointer', 'small']" @click="loadTest()">
                         <i :class="['ion', 'ion-ios-redo', 'ion-small']"></i>
                         учить
                     </span>
@@ -66,6 +66,9 @@
         },
         methods: {
             loadTest(){
+                if( window.innerWidth <= 910){
+                    this.$emit('closeMenu')
+                }
                 this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/learn/' + this.item.id);
             },
@@ -76,11 +79,10 @@
                     this.$router.push('/cards')
                 }
             },
-            learn: function () {
-                // this.$store.commit('setSelection', {asset: this.item, index: this.index})
-                this.$router.push('/learn/' + this.item.id);
-            },
             test(){
+                if( window.innerWidth <= 910){
+                    this.$emit('closeMenu')
+                }
                 //  this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/test/' + this.item.id);
             },

@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8">
+    <el-col :span="8" :xs="24">
         <el-card shadow="hover" :class="['widget-block', 'personal-widget-block', 'pointer']"  @click.native="personal()">
             <p :class="['widget-title']">Мои словари</p>
             <p :class="['widget-description']">{{all}}</p>

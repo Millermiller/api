@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" class="hidden-xs-only">
+    <el-col :span="8" :class="['hidden-sm-and-down']">
         <el-card :class="['box-card', 'result-card']">
             <div slot="header" class="clearfix">
                 <el-row :gutter="20">

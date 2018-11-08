@@ -37558,7 +37558,8 @@ exports.default = {
         favourites: {},
         personal: []
     },
-
+    backdrop: 0,
+    rightMenuOpen: false,
     percent: 0,
     quantity: 0,
     errors: [],
@@ -37677,6 +37678,12 @@ exports.default = {
         if (data === 1) type = 'words';else if (data === 2) type = 'sentences';else type = 'personal';
 
         context.commit('setActiveAssetType', type);
+    },
+    toggleBackdrop: function toggleBackdrop(context) {
+        if (context.state.backdrop === 0 && context.state.rightMenuOpen) context.commit('setBackdrop', 1);else context.commit('setBackdrop', 0);
+    },
+    toggleMenuOpen: function toggleMenuOpen(context) {
+        if (context.state.rightMenuOpen) context.commit('setMenuOpen', false);else context.commit('setMenuOpen', true);
     }
 };
 
@@ -37706,6 +37713,14 @@ exports.default = {
 
     plan: function plan(state) {
         return state.user.plan;
+    },
+
+    backdrop: function backdrop(state) {
+        return state.backdrop;
+    },
+
+    rightMenuOpen: function rightMenuOpen(state) {
+        return state.rightMenuOpen;
     },
 
     active_to: function active_to(state) {
@@ -37950,6 +37965,12 @@ exports.default = {
     },
     setActiveAssetEdit: function setActiveAssetEdit(state, data) {
         state.setActiveAssetEdit = data;
+    },
+    setBackdrop: function setBackdrop(state, data) {
+        state.backdrop = data;
+    },
+    setMenuOpen: function setMenuOpen(state, data) {
+        state.rightMenuOpen = data;
     }
 };
 
@@ -38147,8 +38168,10 @@ exports.default = {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
+    class: ['hidden-xs-only'],
     attrs: {
-      "span": 6
+      "md": 6,
+      "sm": 8
     }
   }, [_c('el-card', {
     class: ['box-card', 'account-card'],
@@ -38260,7 +38283,8 @@ exports.default = {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
     attrs: {
-      "span": 8
+      "span": 8,
+      "xs": 24
     }
   }, [_c('el-card', {
     class: ['widget-block', 'pointer'],
@@ -38372,7 +38396,8 @@ exports.default = {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
     attrs: {
-      "span": 8
+      "span": 8,
+      "xs": 24
     }
   }, [_c('el-card', {
     class: ['widget-block', 'pointer'],
@@ -38483,7 +38508,8 @@ exports.default = {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
     attrs: {
-      "span": 8
+      "span": 8,
+      "xs": 24
     }
   }, [_c('el-card', {
     class: ['widget-block', 'pointer'],
@@ -38588,7 +38614,8 @@ exports.default = {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
     attrs: {
-      "span": 8
+      "span": 8,
+      "xs": 24
     }
   }, [_c('el-card', {
     class: ['widget-block', 'personal-widget-block', 'pointer'],
@@ -38625,7 +38652,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('account'), _vm._v(" "), _c('el-col', {
     attrs: {
-      "span": 18
+      "md": 18,
+      "xs": 24,
+      "sm": 16
     }
   }, [_c('el-row', {
     attrs: {
@@ -38758,7 +38787,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            dialogVisible: false
+            dialogVisible: false,
+            visible: false
         };
     },
 
@@ -38769,7 +38799,15 @@ exports.default = {
     methods: {
         modal: function modal() {
             this.dialogVisible = true;
+        },
+        toggleRightMenu: function toggleRightMenu() {
+            this.visible = !this.visible;
+            this.$store.dispatch('toggleMenuOpen');
+            this.$store.dispatch('toggleBackdrop');
         }
+    },
+    mounted: function mounted() {
+        this.visible = window.innerWidth > 910;
     },
     beforeDestroy: function beforeDestroy() {
         this.$store.dispatch('onCardsPageClose');
@@ -38867,6 +38905,9 @@ exports.default = {
         handleClick: function handleClick(tab, event) {},
         modal: function modal() {
             this.$emit('modal');
+        },
+        closeMenu: function closeMenu() {
+            this.$emit('closeMenu');
         }
     },
     mounted: function mounted() {
@@ -38939,10 +38980,18 @@ exports.default = {
 
     methods: {
         loadTest: function loadTest() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
+
             this.$store.commit('setSelection', { asset: this.item, index: this.index });
             this.$router.push('/learn/' + this.item.id);
         },
         test: function test() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
+
             this.$router.push('/test/' + this.item.id);
         },
         showModal: function showModal() {
@@ -38974,7 +39023,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "asset-title"
   }, [_vm._v(_vm._s(_vm.item.title))]), _vm._v(" "), _c('p', {
     staticClass: "asset-description"
-  }, [_vm._v("описание")])]), _vm._v(" "), _c('el-row', [_c('el-col', {
+  }, [_vm._v(_vm._s(_vm.item.description))])]), _vm._v(" "), _c('el-row', [_c('el-col', {
     attrs: {
       "span": 6
     }
@@ -39112,6 +39161,9 @@ exports.default = {
     },
     methods: {
         loadTest: function loadTest() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
             this.$store.commit('setSelection', { asset: this.item, index: this.index });
             this.$router.push('/learn/' + this.item.id);
         },
@@ -39122,11 +39174,11 @@ exports.default = {
                 this.$router.push('/cards');
             }
         },
-
-        learn: function learn() {
-            this.$router.push('/learn/' + this.item.id);
-        },
         test: function test() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
+
             this.$router.push('/test/' + this.item.id);
         }
     }
@@ -39197,7 +39249,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       class: ['text-primary', 'pointer', 'small'],
       on: {
         "click": function($event) {
-          _vm.learn()
+          _vm.loadTest()
         }
       }
     }, [_c('i', {
@@ -41929,6 +41981,7 @@ function detachStyle() {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
+    class: ['right-panel'],
     attrs: {
       "span": 8,
       "xs": {
@@ -41965,7 +42018,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "asset"
       },
       on: {
-        "modal": _vm.modal
+        "modal": _vm.modal,
+        "closeMenu": _vm.closeMenu
       }
     })
   }))])]), _vm._v(" "), _c('el-tab-pane', {
@@ -41988,7 +42042,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "asset"
       },
       on: {
-        "modal": _vm.modal
+        "modal": _vm.modal,
+        "closeMenu": _vm.closeMenu
       }
     })
   }))])]), _vm._v(" "), _c('el-tab-pane', {
@@ -42009,6 +42064,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "item": personal,
         "index": index,
         "type": "personal"
+      },
+      on: {
+        "closeMenu": _vm.closeMenu
       }
     })
   }))])])], 1)], 1)], 1)
@@ -42401,15 +42459,43 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('el-container', [_c('el-main', [_c('el-row', {
+  return _c('el-container', [_c('a', {
+    attrs: {
+      "id": "right-menu"
+    },
+    on: {
+      "click": _vm.toggleRightMenu
+    }
+  }, [_c('button', {
+    class: ['navbar-toggle', 'collapsed']
+  }, [_c('span', {
+    staticClass: "icon-bar"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "icon-bar"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "icon-bar"
+  })])]), _vm._v(" "), _c('el-main', [_c('el-row', {
     attrs: {
       "gutter": 20
     }
-  }, [_c('slider'), _vm._v(" "), _c('tabs', {
-    on: {
-      "modal": _vm.modal
+  }, [_c('slider'), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "custom-classes-transition",
+      "enter-active-class": "animated slideInRight",
+      "leave-active-class": "animated slideOutRight"
     }
-  })], 1)], 1), _vm._v(" "), _c('el-dialog', {
+  }, [_c('tabs', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.visible),
+      expression: "visible"
+    }],
+    on: {
+      "modal": _vm.modal,
+      "closeMenu": _vm.toggleRightMenu
+    }
+  })], 1)], 1)], 1), _vm._v(" "), _c('el-dialog', {
     attrs: {
       "title": "Это закрытая часть сайта",
       "visible": _vm.dialogVisible
@@ -42514,7 +42600,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            dialogVisible: false
+            dialogVisible: false,
+            visible: false
         };
     },
 
@@ -42526,7 +42613,15 @@ exports.default = {
     methods: {
         modal: function modal() {
             this.dialogVisible = true;
+        },
+        toggleRightMenu: function toggleRightMenu() {
+            this.visible = !this.visible;
+            this.$store.dispatch('toggleMenuOpen');
+            this.$store.dispatch('toggleBackdrop');
         }
+    },
+    mounted: function mounted() {
+        this.visible = window.innerWidth > 910;
     },
     beforeDestroy: function beforeDestroy() {
         this.$store.dispatch('onCardsPageClose');
@@ -42813,7 +42908,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
-    staticClass: "hidden-xs-only",
+    class: ['hidden-sm-and-down'],
     attrs: {
       "span": 8
     }
@@ -43279,6 +43374,9 @@ exports.default = {
         handleClick: function handleClick(tab, event) {},
         modal: function modal() {
             this.$emit('modal');
+        },
+        closeMenu: function closeMenu() {
+            this.$emit('closeMenu');
         }
     },
     mounted: function mounted() {
@@ -43351,10 +43449,17 @@ exports.default = {
 
     methods: {
         loadTest: function loadTest() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
             this.$store.commit('setSelection', { asset: this.item, index: this.index });
             this.$router.push('/learn/' + this.item.id);
         },
         test: function test() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
+
             this.$router.push('/test/' + this.item.id);
         },
         showModal: function showModal() {
@@ -43386,7 +43491,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "asset-title"
   }, [_vm._v(_vm._s(_vm.item.title))]), _vm._v(" "), _c('p', {
     staticClass: "asset-description"
-  }, [_vm._v("описание")])]), _vm._v(" "), _c('el-row', [_c('el-col', {
+  }, [_vm._v(_vm._s(_vm.item.description))])]), _vm._v(" "), _c('el-row', [_c('el-col', {
     attrs: {
       "span": 6
     }
@@ -43530,11 +43635,18 @@ exports.default = {
                 this.$router.push('/cards');
             }
         },
-
-        learn: function learn() {
+        loadTest: function loadTest() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
+            this.$store.commit('setSelection', { asset: this.item, index: this.index });
             this.$router.push('/learn/' + this.item.id);
         },
         test: function test() {
+            if (window.innerWidth <= 910) {
+                this.$emit('closeMenu');
+            }
+
             this.$router.push('/test/' + this.item.id);
         }
     }
@@ -43605,7 +43717,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       class: ['text-primary', 'pointer', 'small'],
       on: {
         "click": function($event) {
-          _vm.learn()
+          _vm.loadTest()
         }
       }
     }, [_c('i', {
@@ -43638,6 +43750,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('el-col', {
+    class: ['right-panel'],
     attrs: {
       "span": 8,
       "xs": 24
@@ -43671,7 +43784,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "asset"
       },
       on: {
-        "modal": _vm.modal
+        "modal": _vm.modal,
+        "closeMenu": _vm.closeMenu
       }
     })
   }))])]), _vm._v(" "), _c('el-tab-pane', {
@@ -43694,7 +43808,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "asset"
       },
       on: {
-        "modal": _vm.modal
+        "modal": _vm.modal,
+        "closeMenu": _vm.closeMenu
       }
     })
   }))])]), _vm._v(" "), _c('el-tab-pane', {
@@ -43715,6 +43830,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "item": personal,
         "index": index,
         "type": "personal"
+      },
+      on: {
+        "closeMenu": _vm.closeMenu
       }
     })
   }))])])], 1)], 1)], 1)
@@ -43732,15 +43850,43 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('el-container', [_c('el-main', [_c('el-row', {
+  return _c('el-container', [_c('a', {
+    attrs: {
+      "id": "right-menu"
+    },
+    on: {
+      "click": _vm.toggleRightMenu
+    }
+  }, [_c('button', {
+    class: ['navbar-toggle', 'collapsed']
+  }, [_c('span', {
+    staticClass: "icon-bar"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "icon-bar"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "icon-bar"
+  })])]), _vm._v(" "), _c('el-main', [_c('el-row', {
     attrs: {
       "gutter": 20
     }
-  }, [_c('result'), _vm._v(" "), _c('test'), _vm._v(" "), _c('tabs', {
-    on: {
-      "modal": _vm.modal
+  }, [_c('result'), _vm._v(" "), _c('test'), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "custom-classes-transition",
+      "enter-active-class": "animated slideInRight",
+      "leave-active-class": "animated slideOutRight"
     }
-  })], 1)], 1), _vm._v(" "), _c('el-dialog', {
+  }, [_c('tabs', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.visible),
+      expression: "visible"
+    }],
+    on: {
+      "modal": _vm.modal,
+      "closeMenu": _vm.toggleRightMenu
+    }
+  })], 1)], 1)], 1), _vm._v(" "), _c('el-dialog', {
     attrs: {
       "title": "Это закрытая часть сайта",
       "visible": _vm.dialogVisible
@@ -46817,7 +46963,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('span', {
     staticClass: "icon-bar"
   })])]), _vm._v(" "), _c('el-menu', {
-    class: ['el-menu-demo', 'main-menu', 'hidden-xs-only'],
+    class: ['el-menu-demo', 'main-menu', 'hidden-sm-and-down'],
     attrs: {
       "mode": "horizontal"
     }
@@ -47236,36 +47382,36 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: function data() {
         return {
-            visible: false,
-            backdrop: {
-                opacity: 0
-            }
+            visible: false
         };
     },
 
     computed: {
         avatar: function avatar() {
-            return 'url(' + this.$store.getters.avatar + ')';
+            return this.$store.getters.avatar;
         },
         login: function login() {
             return this.$store.getters.login;
         },
         email: function email() {
             return this.$store.getters.email;
+        },
+        backdrop: function backdrop() {
+            return this.$store.getters.backdrop;
         }
     },
-    created: function created() {},
     methods: {
         toggle: function toggle() {
             this.visible = !this.visible;
-            this.backdrop.opacity = 0;
+
+            if (!this.$store.getters.rightMenuOpen) this.$store.commit('setBackdrop', 0);
         }
     },
     mounted: function mounted() {
         var data = this;
         this.$root.$on('show', function () {
             data.visible = true;
-            data.backdrop.opacity = 1;
+            this.$store.commit('setBackdrop', 1);
         });
     }
 };
@@ -47292,12 +47438,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "sidemenu-toolbar"
   }, [_c('div', {
-    staticClass: "avatar-wrapper-big pull-left"
-  }, [_c('div', {
-    staticClass: "avatar",
-    style: ({
-      background: _vm.avatar
-    })
+    staticClass: "avatar-wrapper-small pull-left"
+  }, [_c('img', {
+    class: ['avatar-small'],
+    attrs: {
+      "src": _vm.avatar
+    }
   })]), _vm._v(" "), _c('div', {
     staticClass: "userinfo pull-left"
   }, [_c('p', {
@@ -47305,7 +47451,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.login))]), _vm._v(" "), _c('p', {
     staticClass: "useremail"
   }, [_vm._v(_vm._s(_vm.email))])]), _vm._v(" "), _c('i', {
-    staticClass: "ion-ios-close-empty ion-big pull-right",
+    staticClass: "ion-ios-close-empty ion-big",
     on: {
       "click": _vm.toggle
     }
@@ -47363,7 +47509,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Словари")])], 1)], 1)], 1)])]), _vm._v(" "), _c('div', {
     staticClass: "sidenav-backdrop",
-    style: (_vm.backdrop)
+    style: ({
+      opacity: _vm.backdrop
+    })
   })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true

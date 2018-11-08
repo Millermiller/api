@@ -13,7 +13,8 @@ export default {
         favourites: {},
         personal: [],
     },
-
+    backdrop: 0,
+    rightMenuOpen: false,
     percent: 0,
     quantity: 0,
     errors: [],

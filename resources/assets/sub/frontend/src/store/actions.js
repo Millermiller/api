@@ -111,5 +111,19 @@ export default{
           type = 'personal'
 
       context.commit('setActiveAssetType', type)
+    },
+
+    toggleBackdrop(context){
+        if(context.state.backdrop === 0 && context.state.rightMenuOpen)
+            context.commit('setBackdrop', 1)
+        else
+            context.commit('setBackdrop', 0)
+    },
+
+    toggleMenuOpen(context){
+        if(context.state.rightMenuOpen)
+            context.commit('setMenuOpen', false)
+        else
+            context.commit('setMenuOpen', true)
     }
 }

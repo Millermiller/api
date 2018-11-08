@@ -5,14 +5,14 @@
                     leave-active-class="animated slideOutLeft">
             <div class="sidemenu" v-show="visible">
                 <div class="sidemenu-toolbar">
-                    <div class="avatar-wrapper-big pull-left">
-                        <div class="avatar" :style = "{background: avatar}"></div>
+                    <div class="avatar-wrapper-small pull-left">
+                        <img :class="['avatar-small']" :src="avatar" >
                     </div>
                     <div class="userinfo pull-left">
                         <p class="userlogin">{{login}}</p>
                         <p class="useremail">{{email}}</p>
                     </div>
-                    <i class="ion-ios-close-empty ion-big pull-right" @click="toggle"></i>
+                    <i class="ion-ios-close-empty ion-big" @click="toggle"></i>
                 </div>
                 <div class="sidemenu-content" @click="toggle">
                     <el-menu mode="vertical" default-active="1" class="el-menu-vertical">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </transition>
-        <div class="sidenav-backdrop" :style="backdrop"></div>
+        <div class="sidenav-backdrop" :style="{opacity: backdrop}"></div>
     </div>
 </template>
 
@@ -46,36 +46,35 @@
         data(){
             return {
                 visible: false,
-                backdrop: {
-                    opacity: 0
-                }
             }
         },
         computed:{
             avatar(){
-                return 'url(' +this.$store.getters.avatar + ')'
+                return this.$store.getters.avatar
             },
             login(){
                 return this.$store.getters.login;
             },
             email(){
                 return this.$store.getters.email;
+            },
+            backdrop(){
+                return this.$store.getters.backdrop;
             }
-        },
-        created: function () {
-
         },
         methods: {
             toggle(){
                 this.visible = !this.visible;
-                this.backdrop.opacity = 0;
+
+                if(!this.$store.getters.rightMenuOpen)
+                    this.$store.commit('setBackdrop', 0)
             }
         },
         mounted(){
             var data = this;
             this.$root.$on('show', function () {
                 data.visible = true;
-                data.backdrop.opacity = 1;
+                this.$store.commit('setBackdrop', 1)
             })
         }
     }

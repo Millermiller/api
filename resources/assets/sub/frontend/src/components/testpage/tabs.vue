@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" :xs="24">
+    <el-col :span="8" :xs="24" :class="['right-panel']">
         <el-card :class="['box-card', 'tab-navigation']">
             <el-tabs :value="active" @tab-click="handleClick">
                 <el-tab-pane label="Слова" name="words">
@@ -11,6 +11,7 @@
                                     :index="index"
                                     :key="word.id"
                                     v-on:modal="modal"
+                                    v-on:closeMenu="closeMenu"
                                     type="asset">
                             </tabitem>
                         </div>
@@ -25,6 +26,7 @@
                                     :index="index"
                                     :key="sentence.id"
                                     v-on:modal="modal"
+                                    v-on:closeMenu="closeMenu"
                                     type="asset">
                             </tabitem>
                         </div>
@@ -38,6 +40,7 @@
                                     :item="personal"
                                     :index="index"
                                     :key="personal.id"
+                                    v-on:closeMenu="closeMenu"
                                     type="personal">
                             </tabitempersonal>
                         </div>
@@ -82,6 +85,9 @@
             modal(){
                 this.$emit('modal')
             },
+            closeMenu(){
+                this.$emit('closeMenu')
+            }
         },
         mounted(){
             Scrollbar.initAll({

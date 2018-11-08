@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
             </button>
         </a>
-        <el-menu :class="['el-menu-demo', 'main-menu', 'hidden-xs-only']" mode="horizontal" >
+        <el-menu :class="['el-menu-demo', 'main-menu', 'hidden-sm-and-down']" mode="horizontal" >
             <router-link tag="li" :class="['el-menu-item', 'home']" to="/" exact>
                 <i class="menu-icon icon ion-ios-home-outline"></i>
             </router-link>

@@ -144,5 +144,13 @@ export default {
 
     setActiveAssetEdit(state, data){
         state.setActiveAssetEdit = data
+    },
+
+    setBackdrop(state, data){
+        state.backdrop = data
+    },
+
+    setMenuOpen(state, data){
+        state.rightMenuOpen = data
     }
 }

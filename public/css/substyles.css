@@ -558,7 +558,7 @@ textarea:focus {
 .navbar-toggle{
     background: none;
 }
-.navbar .navbar-toggle .icon-bar{
+.navbar-toggle .icon-bar{
     border: 1px solid #1D8CE0;
 }
 .ion{
@@ -636,7 +636,9 @@ a, a:active, a:focus{
     will-change: opacity;
 }
 .userinfo{
-    padding: 15px;
+    padding: 0 15px;
+    font-size: 14px;
+    line-height: 20px;
 }
 .userinfo .userlogin{
     color: #fff;
@@ -714,6 +716,53 @@ ul.el-menu.el-menu-vertical li i{
     -webkit-animation-name: slideOutLeft;
     animation-name: slideOutLeft;
 }
+
+@-webkit-keyframes slideInRight {
+    from {
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+@keyframes slideInRight {
+    from {
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@-webkit-keyframes slideOutRight {
+    from {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+}
+@keyframes slideOutRight {
+    from {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
 .animated {
     -webkit-animation-duration: 0.4s;
     animation-duration: 0.4s;
@@ -1333,7 +1382,6 @@ span.warning-text{
     position:relative;
     float:left;
     padding: 9px 10px;
-    background: rgba(255, 255, 255, 0.2);
     background-image: none;
     border: 0 none;
     top:0px;
@@ -1367,13 +1415,42 @@ span.warning-text{
     font-family: Segoe UI Light, Helvetica, Arial, sans-serif;
     font-size: 17px;
 }
-@media (min-width: 768px) {
+@media (min-width: 991px) {
     .navbar-toggle {
         display: none
     }
     .navbar-static-top {
         border-radius: 0
     }
+}
+@media (max-width: 991px){
+    .navbar{
+        height: 0px;
+    }
+    .right-panel{
+        position: absolute;
+        z-index: 9999;
+        width: 70%;
+        right: 0;
+    }
+    .slideInRight {
+        -webkit-animation-name: slideInRight;
+        animation-name: slideInRight;
+    }
+    .slideOutRight {
+        -webkit-animation-name: slideOutRight;
+        animation-name: slideOutRight;
+    }
+}
+@media (max-width: 420px){
+    .right-panel{
+        width: 95%;
+    }
+}
+.sidemenu-toolbar .ion-ios-close-empty{
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 span[tooltip]:hover:after {
     content: attr(tooltip);
@@ -1459,3 +1536,17 @@ span[tooltip]:hover:after {
 .light{
      font-weight:200;
  }
+#left-menu{
+    position: absolute;
+}
+#right-menu{
+    position: absolute;
+    top: 0;
+    right:0;
+    z-index: 999;
+}
+.asset-description:after {
+    content:"";
+    display:inline-block;
+    width:0px;
+}

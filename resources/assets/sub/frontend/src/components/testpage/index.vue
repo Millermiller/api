@@ -1,10 +1,21 @@
 <template>
     <el-container>
+        <a id="right-menu" @click="toggleRightMenu">
+            <button :class="['navbar-toggle', 'collapsed']">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </a>
         <el-main>
             <el-row :gutter="20">
                 <result></result>
                 <test></test>
-                <tabs v-on:modal="modal"></tabs>
+                <transition name="custom-classes-transition"
+                            enter-active-class="animated slideInRight"
+                            leave-active-class="animated slideOutRight">
+                    <tabs v-on:modal="modal" v-on:closeMenu="toggleRightMenu" v-show="visible"></tabs>
+                </transition>
             </el-row>
         </el-main>
         <el-dialog title="Это закрытая часть сайта" :visible.sync="dialogVisible">
@@ -27,6 +38,7 @@
         data(){
             return {
                 dialogVisible: false,
+                visible: false,
             }
         },
         components: {
@@ -37,7 +49,15 @@
         methods: {
             modal(){
                 this.dialogVisible = true
+            },
+            toggleRightMenu(){
+                this.visible = !this.visible;
+                this.$store.dispatch('toggleMenuOpen')
+                this.$store.dispatch('toggleBackdrop')
             }
+        },
+        mounted(){
+            this.visible = window.innerWidth > 910
         },
         beforeDestroy(){
             this.$store.dispatch('onCardsPageClose')

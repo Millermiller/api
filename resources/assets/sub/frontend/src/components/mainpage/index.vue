@@ -9,7 +9,7 @@
 
                 <account></account>
 
-                <el-col :span="18">
+                <el-col :md="18" :xs="24" :sm="16">
                     <el-row :gutter="20">
                         <wordwidget></wordwidget>
                         <sentencewidget></sentencewidget>
