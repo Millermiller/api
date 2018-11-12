@@ -39,7 +39,7 @@ class Asset extends Model
 
     protected $table = 'assets';
 
-    protected $fillable = ['title', 'basic', 'favorite', 'type'];
+    protected $fillable = ['title', 'basic', 'favorite', 'type', 'level'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 

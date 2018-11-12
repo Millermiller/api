@@ -12,7 +12,7 @@
                     <b-tab-item label="предложения">
                         <button class="button is-small" style="margin: 10px 0;" @click="addAsset(2)">Добавить</button>
                         <ul>
-                            <asset v-for="sentence in sentences" :item="sentence"  @change="load" @remove="removeAsset"></asset>
+                            <asset v-for="sentence in sentences" :item="sentence" @edit="assetEdit" @remove="removeAsset"></asset>
                         </ul>
                     </b-tab-item>
                 </b-tabs>
@@ -59,7 +59,8 @@
                         Asset id={{editedAsset.id}} basic={{editedAsset.basic}} type={{editedAsset.type}} level={{editedAsset.level}} favorite={{editedAsset.favorite}}
                     </p>
                     <b-field>
-                        <b-input type="text" placeholder="text" v-model="editedAsset.title" style="width: 430px;"></b-input>
+                        <b-input type="text" placeholder="text" v-model="editedAsset.title" style="width: 380px;"></b-input>
+                        <b-input type="text" placeholder="text" v-model="editedAsset.level" style="width: 80px;"></b-input>
                         <p class="control">
                             <button  class="button is-success" @click="updateTitle">Сохранить</button >
                         </p>
@@ -105,7 +106,6 @@
         },
         methods: {
             assetEdit(item){
-                console.log(item)
                 this.editedAsset = item
                 this.isComponentModalActive = true
             },
@@ -194,9 +194,10 @@
                 });
             },
             updateTitle () {
-                this.$http.post('/admin/asset/' + this.editedAsset.id, {text: this.editedAsset.title}).then((response) => {
+                this.$http.post('/admin/asset/' + this.editedAsset.id, {text: this.editedAsset.title, level: this.editedAsset.level}).then((response) => {
                     if (response.body.success) {
                         this.$snackbar.open('Обновлено')
+                        this.load()
                     }
                     else{
                         this.$snackbar.open('Ошибка')
