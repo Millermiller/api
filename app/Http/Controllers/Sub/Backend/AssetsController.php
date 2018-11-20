@@ -294,7 +294,7 @@ class AssetsController extends Controller
     public function changeAsset($id)
     {
         return response()->json([
-            'success' => Asset::find($id)->update(['title' => Input::get('text')])
+            'success' => Asset::find($id)->update(['title' => Input::get('text'), 'level' => Input::get('level')])
         ]);
     }
 }

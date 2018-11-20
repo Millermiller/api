@@ -22,8 +22,7 @@ $(function(){
         return this;
     };
 
-    Vue.use(VueAwesomeSwiper)
-    Vue.use(RadialProgressBar)
+
 
     const options = {
         color: '#20A0FF',
@@ -63,7 +62,8 @@ $(function(){
         }
     ]
 
-    Vue.use(VueProgressBar, options)
+    Vue.use(VueAwesomeSwiper)
+    Vue.use(RadialProgressBar)
 
     new Vue({
         el: '#slider_view',
@@ -189,7 +189,8 @@ $(function(){
             fail: 0,        // количество неправильных ответов
             errors: [],      // массив ошибок
             result: 0,
-            speed: 10
+            speed: 10,
+            progress: 0,
         },
         methods: {
             reload(){
@@ -205,21 +206,19 @@ $(function(){
                 this.errors = []
                 this.percent = 0
                 this.cards.forEach((el) => { this.translates.push(el.value) })
-                this.$Progress.set(0)
+                this.progress = 0
                 this.createTest()
                 this.result = 0
             },
             check(variant){
                 this.answers++
-                this.$Progress.set(Math.floor((this.answers * 100) / this.quantity))
+                this.progress = (Math.floor((this.answers * 100) / this.quantity))
                 if (variant.correct) {
-                    this.$Progress.setColor('#20A0FF')
                     this.success++
                     this.percent = Math.floor((this.success * 100) / this.quantity)
                     this.next()
                 }
                 else {
-                    this.$Progress.setColor('#FF4949')
                     this.fail++
                     this.errors.push(this.question) // todo: use store
                     this.next()
@@ -233,7 +232,7 @@ $(function(){
                 else {
                     this.question = {}
                     this.variants = []
-                  //  this.$Progress.set(0)
+                    this.progress = 0
                     var self = this;
                     setTimeout(function(){self.result = self.success}, 1000);
 
@@ -325,8 +324,6 @@ $(function(){
 
                 this.progress = Math.floor((c * 100) / this.text.words_count);
 
-                //this.$Progress.set(this.progress)
-
                 if (this.progress > 99) this.showSuccess = true
 
                 return this.text.computed
@@ -359,6 +356,89 @@ $(function(){
         }
     })
 
+    new Vue({
+        el: '#puzzle_view',
+        data:{
+            translate: 'Я уже видел этого человека',
+            sentence: 'Ég hef séð þennan mann nú þegar',
+            words: [],
+            shufflewords: [],
+            dropzones: [],
+            progress: 0,
+            success: 0,
+            words_count: 0,
+            isRotate: false
+        },
+        created(){
+            this.words = this.sentence.split(" ")
+            this.shufflewords = this.sentence.split(" ").shuffle()
+            this.words_count = this.words.length
+
+            for (let i = 0; i < this.words.length; i++) {
+                this.dropzones.push({
+                    'for': this.words[i],
+                    'content': [],
+                    'class': 'dragover'
+                })
+            }
+        },
+        methods:{
+            handleDrop(toList, data) {
+
+                const fromList = data.list;
+                if (data.item === toList.for) {
+                    toList.content.push(data.item);
+                    fromList.splice(fromList.indexOf(data.item), 1);
+                    this.success++
+                    this.progress = Math.floor((this.success * 100) / this.words_count)
+                }
+                else{
+                    toList.class = 'dragover'
+                }
+            },
+            handleBackDrop(toList, data){
+                const fromList = data.list;
+
+                if(data.zone){
+                    toList.push(data.item);
+                    fromList.splice(fromList.indexOf(data.item), 1);
+                    data.zone.class = 'dragover'
+                    this.success--
+                    this.progress = Math.floor((this.success * 100) / this.words_count)
+                }
+            },
+            handleDragEnter(ev, data){
+                ev.class = 'dragenter'
+            },
+            handleDragLeave(ev, data){
+                if(!ev.content.length)
+                    ev.class = 'dragover'
+            },
+            refresh(){
+                let self = this
+                this.isRotate = true
+                this.words = this.sentence.split(" ")
+                this.shufflewords = this.sentence.split(" ").shuffle()
+                this.dropzones = []
+                this.progress = 0
+                this.success = 0
+                this.words_count = this.words.length
+
+                for (let i = 0; i < this.words.length; i++) {
+                    this.dropzones.push({
+                        'for': this.words[i],
+                        'content': [],
+                        'class': 'dragover'
+                    })
+                }
+
+                setTimeout(function(){
+                    self.isRotate = false
+                }, 1000)
+            }
+        }
+    })
+
     $('#slider_view').boxLoader({
         direction:"x",
         position: "5%",
@@ -367,6 +447,22 @@ $(function(){
         windowarea: "100%"
     });
     $('#test_view').boxLoader({
+        direction:"x",
+        position: "-5%",
+        effect: "fadeIn",
+        duration: "1s",
+        windowarea: "100%"
+    });
+    /* иначе будет баг перетаскивания в хроме
+    $('#puzzle_view').boxLoader({
+        direction:"x",
+        position: "5%",
+        effect: "fadeIn",
+        duration: "1s",
+        windowarea: "100%"
+    });
+    */
+    $('#text_view').boxLoader({
         direction:"x",
         position: "-5%",
         effect: "fadeIn",
@@ -397,6 +493,34 @@ $(function(){
     $('.finnish').boxLoader({
         direction:"y",
         position: "20%",
+        effect: "fadeIn",
+        duration: "1s",
+        windowarea: "70%"
+    });
+    $('.p-yel').boxLoader({
+        direction:"x",
+        position: "-5%",
+        effect: "fadeIn",
+        duration: "1s",
+        windowarea: "70%"
+    });
+    $('.p-green').boxLoader({
+        direction:"y",
+        position: "20%",
+        effect: "fadeIn",
+        duration: "1s",
+        windowarea: "70%"
+    });
+    $('.p-red').boxLoader({
+        direction:"y",
+        position: "20%",
+        effect: "fadeIn",
+        duration: "1s",
+        windowarea: "70%"
+    });
+    $('.p-blue').boxLoader({
+        direction:"x",
+        position: "5%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "70%"

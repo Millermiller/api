@@ -14,6 +14,7 @@
 
     <link href="{{ url('css/style.css') }}" rel="stylesheet">
     <script src="{{ url('js/libs.min.js') }}"></script>
+
     <script src="{{ url('js/script.js') }}"></script>
 </head>
 <body>
@@ -33,6 +34,9 @@
 @include('main.frontend.layouts.forms.registration')
 
 @include('main.frontend.layouts.forms.feedback')
-
+<div id="scroller">
+    <i class="ion ion-ios-arrow-up"></i>
+</div>
+<script src="{{ url('js/libs/side-nav.js') }}"></script>
 </body>
 </html>

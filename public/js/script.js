@@ -43,6 +43,13 @@ $(function(){
         side: 'left' // By default
     });
 
+    $('a[href="/#prices"]').on('click', function (e) {
+        $('html,body').stop().animate({
+            scrollTop: $('#prices').offset().top
+        }, 800);
+        e.preventDefault();
+    });
+
     $('a[href="/#langauges"]').on('click', function (e) {
         $('html,body').stop().animate({
             scrollTop: $('#langauges').offset().top
@@ -52,6 +59,20 @@ $(function(){
 
     $.material.init();
 
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 0) {
+            $('#scroller').fadeIn();
+        } else {
+            $('#scroller').fadeOut();
+        }
+    });
+
+    $('#scroller').click(function () {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 400);
+        return false;
+    });
 
     $('input.form-control, textarea.form-control').on('input', function(){
         let input = $(this)
@@ -252,5 +273,9 @@ $(function(){
                 });
             }
         })
+    })
+
+    $('.hidesidebar').on('click', function(){
+        window.sidenav.showSideNav()
     })
 })

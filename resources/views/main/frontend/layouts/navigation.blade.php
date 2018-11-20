@@ -5,15 +5,10 @@
         </a>
     </div>
     <div class="container">
-        <div class="navbar-header pull-left">
-            <a id="left-menu" href="#left-menu">
-                <button type="button" class="navbar-toggle collapsed">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </a>
+        <div class="js-menu-show-wrapper hidden-lg">
+            <button class="js-menu-show header__menu-toggle">
+                <i class="ion ion-android-menu"></i>
+            </button>
         </div>
         <div class="collapse navbar-collapse" id="">
             <ul class="nav navbar-nav navbar-right">
@@ -24,14 +19,17 @@
                     <a href="/#langauges">Языки</a>
                 </li>
                 <li>
+                    <a href="/#prices">Цены</a>
+                </li>
+                <li>
                     <a href="{{ env('FORUM') }}">Форум</a>
                 </li>
-                <!--  <li>
+                <?php /* <li>
                       <a href="/downloads">Материалы</a>
                   </li>
                   <li>
                       <a href="/blog">Блог</a>
-                  </li> -->
+                  </li> */?>
                 @if (!Auth::check())
                     <li>
                         <a href="#loginmodal" class="fancybox">Вход</a>

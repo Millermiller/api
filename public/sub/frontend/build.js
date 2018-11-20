@@ -33919,7 +33919,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\node_modules\\vue-progressbar\\vue-progressbar.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\node_modules\\vue-progressbar\\vue-progressbar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] vue-progressbar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -37991,7 +37991,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\index.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38092,7 +38092,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\account-block.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\account-block.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] account-block.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38220,7 +38220,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\word-widget.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\word-widget.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] word-widget.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38332,7 +38332,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\sentence-widget.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\sentence-widget.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] sentence-widget.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38445,7 +38445,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\text-widget.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\text-widget.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] text-widget.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38557,7 +38557,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\personal-widget.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\mainpage\\widgets\\personal-widget.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] personal-widget.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38740,7 +38740,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\index.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38831,7 +38831,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\tabs.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\tabs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] tabs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -38935,7 +38935,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\tab-item.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\tab-item.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] tab-item.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -39111,7 +39111,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\tab-item-personal.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\tab-item-personal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] tab-item-personal.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42096,7 +42096,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\slider.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\slider.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] slider.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42227,7 +42227,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\slide.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\learnpage\\slide.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] slide.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42549,7 +42549,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\index.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42645,7 +42645,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\result.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\result.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] result.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42761,7 +42761,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\erroritem.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\erroritem.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] erroritem.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42992,7 +42992,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\test.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\test.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] test.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -43298,7 +43298,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\tabs.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\tabs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] tabs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -43404,7 +43404,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\tab-item.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\tab-item.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] tab-item.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -43579,7 +43579,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\tab-item-personal.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\testpage\\tab-item-personal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] tab-item-personal.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -43940,7 +43940,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\login.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] login.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44908,7 +44908,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\index.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45012,7 +45012,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\assets.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\assets.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] assets.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45120,7 +45120,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\asset.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\asset.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] asset.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45372,7 +45372,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\cards.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\cards.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] cards.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45448,7 +45448,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\card.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\card.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] card.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45602,7 +45602,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\dictionary.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\dictionary.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] dictionary.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45736,7 +45736,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\translate.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\cardspage\\translate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] translate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46046,7 +46046,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\textpage\\index.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\textpage\\index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46117,7 +46117,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\textpage\\textcard.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\textpage\\textcard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] textcard.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46268,7 +46268,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\textpage\\text.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\textpage\\text.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] text.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46572,7 +46572,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\puzzle\\index.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\puzzle\\index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46634,7 +46634,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\puzzle\\item.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\puzzle\\item.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 
 module.exports = Component.exports
@@ -46676,7 +46676,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\App.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46758,7 +46758,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\header.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\header.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] header.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47092,7 +47092,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\footer.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\footer.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] footer.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47346,7 +47346,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "C:\\OpenServer\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\sidemenu.vue"
+Component.options.__file = "C:\\OSPanel\\domains\\scandinaver\\scandinaver\\resources\\assets\\sub\\frontend\\src\\components\\sidemenu.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] sidemenu.vue: functional components are not supported with templates, they should use render functions.")}
 
