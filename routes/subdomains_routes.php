@@ -102,11 +102,6 @@ Route::group([
     Route::post('/wordfile', 'AssetsController@uploadSentences');
     Route::post('/card', 'AssetsController@addPair');
 
-    Route::get('/intros', 'IntroController@index');
-    Route::post('/intro/{id}', 'IntroController@edit');
-    Route::post('/intro', 'IntroController@create');
-    Route::delete('/intro/{id}', 'IntroController@delete');
-
     Route::get('/texts', 'TextController@index');
     Route::post('/text/publish', 'TextController@publish');
     Route::post('/text/{id}', 'TextController@textedit');
@@ -122,4 +117,5 @@ Route::group([
     Route::post('/text/description/{id}', 'TextController@updateDescription');
 
     Route::resource('/puzzle', 'PuzzleController');
+    Route::resource('/intro', 'IntroController');
 });

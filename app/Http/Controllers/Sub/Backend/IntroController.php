@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Sub\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Intro;
 use Illuminate\Support\Facades\Input;
-
+use \Illuminate\Http\Request;
 /**
  * Created by PhpStorm.
  * User: john
@@ -22,33 +22,49 @@ class IntroController extends Controller
      */
     public function index()
     {
-        return response()->json(Intro::all()->sortBy('page'));
+        return response()->json(Intro::all());
     }
 
-    public function edit($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        /** @var Intro $intro */
-        $intro = Intro::find($id)->update([
-            'page'     => Input::get('page'),
-            'element'  => Input::get('element'),
-            'position' => Input::get('position'),
-            'sort'     => Input::get('sort'),
-            'tooltipClass' => Input::get('tooltipClass'),
-            'intro'  => Input::get('content'),
-            'active' => Input::get('active'),
-        ]);
-
-        return response()->json(['success' => $intro]);
+        return response()->json(Intro::findOrFail($id));
     }
 
-    public function delete($id)
-    {
-        return response()->json(['success' => Intro::destroy($id)]);
-    }
-
-    public function create()
+    public function store()
     {
         $intro =  new Intro();
-        if($intro->save()) return response()->json(['success' => true, 'intro' => $intro]);
+
+        return response()->json(['success' => true, 'intro' => $intro]);
     }
+
+    public function update(Request $request, $id)
+    {
+        $intro = Intro::findOrFail($id);
+        $intro->update($request->all());
+
+        return response()->json($intro, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $puzzle = Intro::findOrFail($id);
+        $puzzle->delete();
+
+        return response()->json(null, 204);
+    }
+
+
 }

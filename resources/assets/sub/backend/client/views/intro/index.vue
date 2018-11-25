@@ -67,11 +67,11 @@
             }
         },
         components: {
-            Intro
+
         },
         methods: {
             load(){
-                this.$http.get('/admin/intros').then((response) => {
+                this.$http.get('/admin/intro').then((response) => {
                     this.intros = response.body
                 }, (response) => {
                     console.log(response)
@@ -80,9 +80,9 @@
             edit(row){
                 this.$router.push({ name: 'Intro', params: { id: row.id}})
             },
-            remove(id){
+            remove(row){
                 if (confirm('удалить?')) {
-                    this.$http.delete('/admin/intro/' + id).then((response) => {
+                    this.$http.delete('/admin/intro/' + row.id).then((response) => {
                         this.load()
                     }, (response) => {
                         console.log(response)

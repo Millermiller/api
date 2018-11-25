@@ -3,7 +3,7 @@
         <div class="tile is-parent">
             <div class="tile is-child box">
 
-                <div class="header">Intro №{{intro.id}}</div>
+                <div class="header">Intro №{{form.id}}</div>
 
                 <froala :tag="'textarea'" :config="config" v-model="form.content"></froala>
 
@@ -106,9 +106,7 @@
                 })
             },
             save(){
-
-                this.$http.put('/admin/intro/' + this.post.id, this.post).then((response) => {
-                    console.log(response)
+                this.$http.put('/admin/intro/' + this.form.id, this.form).then((response) => {
                     if(response.status === 200)
                         this.$router.go(-1)
                     else
@@ -121,7 +119,6 @@
                 this.$router.go(-1)
             }
         },
-
         mounted() {
             this.load(this.$route.params.id)
         }
