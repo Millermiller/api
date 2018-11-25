@@ -2,7 +2,7 @@
     <div id="app">
 
         <navbar :show="true"></navbar>
-        <sidebar :show="sidebar.opened && !sidebar.hidden"></sidebar>
+        <sidebar :show="true"></sidebar>
         <app-main></app-main>
     </div>
 </template>

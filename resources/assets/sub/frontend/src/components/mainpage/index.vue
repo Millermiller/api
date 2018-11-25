@@ -15,6 +15,7 @@
                         <sentencewidget></sentencewidget>
                         <textwidget></textwidget>
                         <personalwidget></personalwidget>
+                        <puzzlewidget></puzzlewidget>
                     </el-row>
                 </el-col>
             </el-row>
@@ -47,6 +48,7 @@
     import Sentencewidget from './widgets/sentence-widget.vue';
     import Textwidget from './widgets/text-widget.vue';
     import Personalwidget from './widgets/personal-widget.vue';
+    import Puzzlewidget from './widgets/puzzle-widget.vue';
 
     export default {
         name: 'Main',
@@ -60,7 +62,7 @@
             }
         },
         components: {
-            Account, Wordwidget, Sentencewidget, Textwidget, Personalwidget
+            Account, Wordwidget, Sentencewidget, Textwidget, Personalwidget, Puzzlewidget
         },
         methods: {
             modal(){

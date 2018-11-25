@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Puzzle;
-use Illuminate\Support\Facades\Input;
+use \Illuminate\Http\Request;
 
 /**
  * Created by PhpStorm.
@@ -20,39 +20,58 @@ class PuzzleController extends Controller
 
     public function index()
     {
-        return response()->json(Puzzle::paginate());
-      //  return response()->json([
-      //      'total' => Puzzle::all()->count(),
-      //      'per_page' => 1,
-      //      'current_page' => 1,
-      //      'last_page' =>1,
-      //      'next_page_url' => "/admin/puzzles?page=2",
-      //      'prev_page_url' => null,
-      //      'from' => 1,
-      //      'to' => 15,
-      //      'data' => Puzzle::all()
-      //  ]);
+        return response()->json(Puzzle::all());
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function add()
+    public function show($id)
     {
-        /** @var Puzzle $puzzle */
-        $puzzle = new Puzzle();
-
-        $text  = $this->cleartext(Input::get('text'));
-        $translate = $this->cleartext(Input::get('translate'));
-
-        $puzzle->text = $text;
-        $puzzle->translate = $translate;
-
-        return response()->json(['success' => $puzzle->save()]);
+        return response()->json(Puzzle::findOrFail($id));
     }
 
-    protected function cleartext($text)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        return  str_replace(array("\r\n", "\r", "\n"), '', strip_tags(trim($text)));
+        return response()->json(Puzzle::create($request->all()), 201);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $puzzle = Puzzle::findOrFail($id);
+        $puzzle->update($request->all());
+
+        return response()->json($puzzle, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $puzzle = Puzzle::findOrFail($id);
+        $puzzle->delete();
+
+        return response()->json(null, 204);
     }
 }

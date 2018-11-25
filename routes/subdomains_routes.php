@@ -18,24 +18,19 @@ Route::group([
 
 Route::group([
     'domain' => '{subdomain}.' . config('app.DOMAIN'),
-    'middleware' => ['checkDomain', 'touchUser', 'checkAuth', 'checkPlan'],
+    'middleware' => ['checkDomain', 'touchUser', 'checkPlan'],
     'namespace' => 'Sub\Frontend',
     'as' => 'sub_frontend::'
 ], function () {
     Route::post('/logout', 'LogoutController@index');
+
     Route::get('/', 'IndexController@index');
-    Route::get('/learn', 'IndexController@index');
-    Route::get('/learn/{id}', 'IndexController@index');
-    Route::get('/test', 'IndexController@index');
-    Route::get('/test/{id}', 'IndexController@index');
-    Route::get('/cards', 'IndexController@index');
-    Route::get('/translates', 'IndexController@index');
-    Route::get('/translates', 'IndexController@index');
-    Route::get('/translates/{id}', 'IndexController@index');
+
     Route::get('/check', 'IndexController@check');
     Route::get('/state', 'IndexController@getState');
     Route::get('/user', 'IndexController@getUser');
     Route::get('/info', 'IndexController@getInfo');
+
     Route::get('/words', 'IndexController@getWords');
     Route::get('/sentences', 'IndexController@getSentences');
     Route::get('/favourites', 'IndexController@getFavourites');
@@ -58,6 +53,8 @@ Route::group([
     Route::get('/text/{id}', 'TextController@getText');
     Route::get('/syns/{id}', 'TextController@getSyns');
     Route::post('/nextTLevel', 'TextController@nextLevel');
+
+    Route::resource('/puzzle', 'PuzzleController', ['except' => ['create', 'delete']]);
 });
 
 /******************************** SUBDOMAIN - ADMIN ***********************************/
@@ -124,6 +121,5 @@ Route::group([
     Route::post('/text/image/{id}', 'TextController@uploadImage');
     Route::post('/text/description/{id}', 'TextController@updateDescription');
 
-    Route::get('/puzzles', 'PuzzleController@index');
-    Route::post('/puzzle', 'PuzzleController@add');
+    Route::resource('/puzzle', 'PuzzleController');
 });

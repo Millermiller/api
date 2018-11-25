@@ -12,19 +12,20 @@
     export default {
         data(){
             return {
-
+                active: 0,
+                all: 1
             }
         },
         computed:{
             percent(){
-                return Math.round(100 * this.$store.getters.activeWords / this.$store.getters.words.length);
-            },
-            active(){
-                return this.$store.getters.activeWords
-            },
-            all(){
-                return this.$store.getters.words.length
+                return Math.round(100 * this.active / this.all);
             }
+        },
+        created(){
+            setTimeout(() => {
+                this.active = this.$store.getters.activeWords
+                this.all = this.$store.getters.words.length
+            }, 500)
         },
         methods:{
             words(){

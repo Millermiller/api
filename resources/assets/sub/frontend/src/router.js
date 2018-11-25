@@ -12,14 +12,11 @@ import Puzzle from './components/puzzle/index.vue';
 import store from './store'
 
 const requireAuth = (to, _from, next) => {
-    if(store.getters.auth == false){
-
+    if(store.getters.auth === false){
         Vue.http.get('/check').then((response) => {
-
             store.commit('setAuth', response.body.auth)
-
-            if(response.body.auth == false){
-                next({ path: '/login', })
+            if(response.body.auth === false){
+                next({ name: 'login', })
             }
             else{
                 store.commit('setStore', response.body.state);
@@ -36,7 +33,7 @@ const requireAuth = (to, _from, next) => {
 };
 
 export const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     routes: [
         {
             path: '/',
@@ -104,6 +101,10 @@ export const router = new VueRouter({
             component: Puzzle,
             beforeEnter: requireAuth
         },
+        {
+            path: '*',
+            redirect: '/'
+        }
         // {
           //  path: '/logout',
           //  beforeEnter (to, from, next) {

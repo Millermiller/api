@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: './resources/assets/sub/frontend/src/main.js',
@@ -72,15 +73,14 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
+        new UglifyJsPlugin({
             sourceMap: true,
-            compress: {
-                warnings: false
-            }
+            parallel: true
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
-        })
+        }),
+        new BundleAnalyzerPlugin()
     ])
 }
 

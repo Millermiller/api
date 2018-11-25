@@ -34,7 +34,7 @@ class IndexController extends Controller
 
     public function getState()
     {
-        return Auth::user()->state();
+        return Auth::check() ? Auth::user()->state() : [];
     }
 
     public function getUser()

@@ -880,7 +880,7 @@ ul.el-menu.el-menu-vertical li i{
     color:#20a0ff;
 }
 .__cov-progress{
-    position: absolute;
+    position: absolute !important;
     z-index: 100;
 }
 .el-card__header{
@@ -1549,4 +1549,95 @@ span[tooltip]:hover:after {
     content:"";
     display:inline-block;
     width:0px;
+}
+.drag,
+.drop {
+    font-family: sans-serif;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+}
+.drag {
+    padding: 5px 10px;
+    cursor: grab;
+}
+.drop {
+    background: #fff;
+    border: 1px solid #ccc;
+    height: 50px;
+    min-width: 50px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dragenter {
+    border-color: rgb(32, 160, 255);
+}
+.bounce-enter-active {
+    animation: bounce-in .5s;
+}
+.bounce-leave-active {
+    animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes loading-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.rotating{
+    animation: loading-rotate 0.5s linear 1;
+}
+.drop-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.drag.elem {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 5px;
+}
+.gray-bordered{
+    border: 1px solid #e7e7e7;
+}
+.ion-android-refresh{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.ion-android-refresh:hover{
+    color: #FF4949;
+}
+.puzzle-wrapper > .el-card__body{
+    display: flex;
+    flex-wrap: wrap;
+}
+.puzzle-item{
+    border: 1px solid #cecece;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.puzzle-item.success{
+    color: #13CE66;
+}
+.puzzle-item.active{
+    color: #FF4949;
 }

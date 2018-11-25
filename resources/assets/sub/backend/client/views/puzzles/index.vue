@@ -11,7 +11,7 @@
                     </b-field>
 
                     <b-table
-                            :data="categories"
+                            :data="puzzles"
                             paginated
                             narrowed=""
                             :loading="loading"
@@ -23,8 +23,12 @@
                                 {{ props.row.id }}
                             </b-table-column>
 
-                            <b-table-column field="name" label="Name" sortable>
-                                {{ props.row.name }}
+                            <b-table-column field="text" label="Text" sortable>
+                                {{ props.row.text }}
+                            </b-table-column>
+
+                            <b-table-column field="translate" label="translate" sortable>
+                                {{ props.row.translate }}
                             </b-table-column>
 
                             <b-table-column custom-key="actions">
@@ -43,16 +47,16 @@
 
         <b-modal :active.sync="isComponentModalActive" has-modal-card>
             <form action="">
-                <div class="modal-card" style="width: auto">
+                <div class="modal-card" style="width: 400px">
 
                     <section class="modal-card-body">
-                        <b-field label="оригинал">
+                        <b-field label="На русском">
                             <b-input type="textarea" v-model="edited.text"></b-input>
                         </b-field>
                     </section>
 
                     <section class="modal-card-body">
-                        <b-field label="перевод">
+                        <b-field label="На нерусском">
                             <b-input type="textarea" v-model="edited.translate"></b-input>
                         </b-field>
                     </section>
@@ -90,7 +94,7 @@
         },
         methods: {
             load(){
-                this.$http.get('/admin/puzzles').then((response) => {
+                this.$http.get('/admin/puzzle').then((response) => {
                     this.puzzles = response.body
                 }, (response) => {
                     console.log(response)
@@ -99,6 +103,7 @@
             add(form){
                 this.$http.post('/admin/puzzle', this.edited).then((response) => {
                     if(response.body.success){
+                        this.load()
                         this.$snackbar.open('Загружено!')
                         this.closeSettingsModal()
                     }
@@ -108,6 +113,15 @@
                 }, (response) => {
                     console.log(response)
                 })
+            },
+            remove(row){
+                if (confirm('удалить?')) {
+                    this.$http.delete('/admin/puzzle/' + row.id).then((response) => {
+                        this.load()
+                    }, (response) => {
+                        console.log(response)
+                    })
+                }
             },
             showSettingsModal () {
                 this.isComponentModalActive = true

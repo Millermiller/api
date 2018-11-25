@@ -22,7 +22,7 @@ export default {
             context.$http.post('/login', creds)
                 .then(resp => {
                     if(resp.body.success){
-                        window.localStorage.setItem('id_token', resp.body.jwt)
+                       // window.localStorage.setItem('id_token', resp.body.jwt)
                         store.commit('setAuth', true);
                         store.commit('setStore', resp.body.state);
                         store.commit('setSelection', 0)

@@ -1,5 +1,23 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["transform-runtime"],
-  "comments": false
+  "presets": [
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ]
+  ],
+  "comments": false,
+  "plugins": [
+    [
+      "component",
+      {
+        "libraryName": "element-ui",
+        "styleLibraryName": "theme-chalk"
+      }
+    ],
+    [
+      "transform-runtime"
+    ]
+  ]
 }

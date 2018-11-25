@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\StringHelper;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use DB;
@@ -23,12 +24,24 @@ class Puzzle extends Model
 
     protected $fillable = ['text', 'translate'];
 
-    /**
-     * @return Result|\Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function result()
+    protected $appends = ['success'];
+
+    public function setTextAttribute($value){
+        $this->attributes['text'] = StringHelper::cleartext($value);
+    }
+
+    public function setTranslateAttribute($value){
+        $this->attributes['translate'] = StringHelper::cleartext($value);
+    }
+
+    public function getSuccessAttribute()
     {
-        return $this->belongsTo('App\Models\PuzzleResult', 'id', 'puzzle_id');
+        return $this->users()->exists();
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'puzzles_users')->withTimestamps();
     }
 
     /**

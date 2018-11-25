@@ -10,7 +10,37 @@ import store from './store'
 import { router } from './router'
 
 import App from './components/App.vue'
-import Element from 'element-ui';
+
+import {
+    Button,
+    Select,
+    Dialog,
+    Dropdown,
+    Input,
+    Checkbox,
+    Menu,
+    MenuItem,
+    Option,
+    Tooltip,
+    Form,
+    Tabs,
+    TabPane,
+    Row,
+    Col,
+    FormItem,
+    Card,
+    Collapse,
+    CollapseItem,
+    Container,
+    Main,
+    Progress,
+    MessageBox,
+    Loading,
+    Notification,
+    Message
+} from 'element-ui';
+
+import VueDragDrop from 'vue-drag-drop';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
@@ -31,12 +61,46 @@ const options = {
 }
 
 Vue.use(VueProgressBar, options)
-Vue.use(Vuex);
-Vue.use(VueAwesomeSwiper);
-Vue.use(Element);
+Vue.use(Vuex)
+Vue.use(VueAwesomeSwiper)
+
+Vue.use(Button);
+Vue.use(Select)
+Vue.use(Dialog)
+Vue.use(Dropdown)
+Vue.use(Input)
+Vue.use(Checkbox)
+Vue.use(Menu)
+Vue.use(MenuItem)
+Vue.use(Option)
+Vue.use(Tooltip)
+Vue.use(Form)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(FormItem)
+Vue.use(Card)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
+Vue.use(Container)
+Vue.use(Main)
+Vue.use(Progress)
+
+Vue.use(Loading.directive);
+
+Vue.prototype.$loading = Loading.service;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
+Vue.prototype.$notify = Notification;
+Vue.prototype.$message = Message;
+
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(Meta)
+Vue.use(VueDragDrop);
 
 Vue.http.options.emulateJSON = true
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content;
