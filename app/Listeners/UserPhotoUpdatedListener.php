@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Handlers\Events;
+namespace App\Listeners;
 
 use App\Events\UserPhotoUpdated;
 use App\Services\Requester;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UserPhotoUpdatedListener
 {

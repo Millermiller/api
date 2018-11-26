@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Handlers\Events;
+namespace App\Listeners;
 
 use App\Events\AssetCreated;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AssetCreatedListener
 {

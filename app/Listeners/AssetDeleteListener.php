@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Handlers\Events;
+namespace App\Listeners;
 
 use App\Events\AssetDelete;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AssetDeleteListener
 {

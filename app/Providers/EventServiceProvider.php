@@ -17,31 +17,31 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\EventListener',
         ],
         'App\Events\UserRegistered' => [
-            'App\Handlers\Events\UserRegisteredListener',
+            'App\Listeners\UserRegisteredListener',
         ],
         'App\Events\UserUpdated' => [
-            'App\Handlers\Events\UserUpdatedListener',
+            'App\Listeners\UserUpdatedListener',
         ],
         'App\Events\UserPhotoUpdated' => [
-            'App\Handlers\Events\UserPhotoUpdatedListener',
+            'App\Listeners\UserPhotoUpdatedListener',
         ],
         'App\Events\MessageEvent' => [
-            'App\Handlers\Events\MessageEventListener',
+            'App\Listeners\MessageEventListener',
         ],
         'App\Events\MessageRecieved' => [
-            'App\Handlers\Events\MessageRecievedListener',
+            'App\Listeners\MessageRecievedListener',
         ],
         'App\Events\AssetCreated' => [
-            'App\Handlers\Events\AssetCreatedListener',
+            'App\Listeners\AssetCreatedListener',
         ],
         'App\Events\AssetDelete' => [
-            'App\Handlers\Events\AssetDeleteListener',
+            'App\Listeners\AssetDeleteListener',
         ],
         'App\Events\NextLevel' => [
-            'App\Handlers\Events\NextLevelListener',
+            'App\Listeners\NextLevelListener',
         ],
         'App\Events\NextTextLevel' => [
-            'App\Handlers\Events\NextTextLevelListener',
+            'App\Listeners\NextTextLevelListener',
         ],
     ];
 

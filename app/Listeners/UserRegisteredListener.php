@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Handlers\Events;
+namespace App\Listeners;
 
 use App\Events\UserRegistered;
 use App\Mail\Welcome;
 use App\Services\Requester;
-use GuzzleHttp\Client;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
 class UserRegisteredListener
