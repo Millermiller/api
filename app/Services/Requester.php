@@ -16,6 +16,7 @@ class Requester {
     /**
      *  создание пользователя на форуме
      * @param $params
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function createForumUser($params)
     {
@@ -44,6 +45,7 @@ class Requester {
      * @param $oldemail
      * @return bool
      * @internal param User $user
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function updateForumUser(Array $data, $oldemail)
     {
@@ -54,10 +56,10 @@ class Requester {
 
         $response = $client->request('POST', '/api/updateuser.php', [
             'form_params' => [
-                'username' => $data['login'],
-                'email'    => $data['email'],
+                'username' => (isset($data['login'])) ? $data['login'] : null,
+                'email'    => (isset($data['email'])) ? $data['email'] : null,
                 'oldemail' => $oldemail,
-                'password' => $data['password'],
+                'password' => (isset($data['password'])) ? $data['password'] : null,
             ]
         ]);
 
@@ -69,11 +71,11 @@ class Requester {
         return true;
     }
 
-
     /**
      * создание аватарки пользователя на форуме
      * @param User $user
      * @return bool
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function updateForumUserAvatar(User $user)
     {
@@ -98,6 +100,11 @@ class Requester {
         return true;
     }
 
+    /**
+     * @param $params
+     * @return bool
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public static function loginForumUser($params)
     {
         $client = new Client([
@@ -118,7 +125,7 @@ class Requester {
       //  d($cookies);
         foreach ($cookies as $cookie) {
             $newCookie =\GuzzleHttp\Cookie\SetCookie::fromString($cookie);
-            setcookie($newCookie->getName(), $newCookie->getValue(), time() + (365 * 86400), '/', '.'.Options::$site);
+            setcookie($newCookie->getName(), $newCookie->getValue(), time() + (365 * 86400), '/', '.'.config('app.DOMAIN'));
         }
 
         return true;

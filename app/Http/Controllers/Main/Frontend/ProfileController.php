@@ -72,6 +72,7 @@ class ProfileController extends Controller
     /**
      * @param  Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function update(Request $request)
     {

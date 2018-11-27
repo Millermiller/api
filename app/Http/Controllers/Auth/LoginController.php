@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\Requester;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -27,6 +28,11 @@ class LoginController extends Controller
         //
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function login(Request $request)
     {
         $this->validate($request,
@@ -48,6 +54,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($request->only($login_type, 'password'))) {
+            Requester::loginForumUser(['username' => $request->input('login'), 'password' => $request->input('password')]);
             return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER']]);
         }
         else{

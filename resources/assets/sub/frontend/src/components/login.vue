@@ -49,15 +49,26 @@
             }
         },
         created(){
+            this.loading = true
 
+            this.$http.get('/check').then((response) => {
+                if(response.body.auth === true){
+                    this.$router.push({name: 'main'})
+                }
+                else{
+                    this.loading = false
+                }
+            }, (response) => {
+                console.log(response);
+            });
         },
         methods: {
             submit(formName){
 
-                var v = this;
-                var login = v.form.login
-                var password = v.form.password
-                var error = v.error
+                let v = this;
+                let login = v.form.login
+                let password = v.form.password
+                let error = v.error
 
                 this.$refs[formName].validate((valid) => {
                     if (valid) {

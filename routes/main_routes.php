@@ -11,7 +11,10 @@
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::post('/login', 'Auth\LoginController@login');
+Route::get('/logout', 'Auth\LoginController@logout')->name('frontend::logout');
+
 Route::post('/signup', 'Auth\RegisterController@register');
+
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('restore');
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -28,7 +31,6 @@ Route::group(['middleware' => ['touchUser', 'checkPlan'], 'as' => 'frontend::', 
 
     Route::get('/pay', 'PaymentController@index')->name('payment');
 
-    Route::get('/logout', 'LogoutController@logout')->name('logout');
 });
 
 Route::post('/feedback', 'Main\Frontend\IndexController@feedback');

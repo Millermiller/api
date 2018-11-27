@@ -63620,11 +63620,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             loading: false
         };
     },
-    created: function created() {},
+    created: function created() {
+        var _this = this;
+
+        this.loading = true;
+
+        this.$http.get('/check').then(function (response) {
+            if (response.body.auth === true) {
+                _this.$router.push({ name: 'main' });
+            } else {
+                _this.loading = false;
+            }
+        }, function (response) {
+            console.log(response);
+        });
+    },
 
     methods: {
         submit: function submit(formName) {
-            var _this = this;
+            var _this2 = this;
 
             var v = this;
             var login = v.form.login;
@@ -63634,7 +63648,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$refs[formName].validate(function (valid) {
                 if (valid) {
                     v.loading = true;
-                    __WEBPACK_IMPORTED_MODULE_0__auth___default.a.login(_this, { 'login': login, 'password': password }, '/').then(function (data) {}).catch(function (data) {
+                    __WEBPACK_IMPORTED_MODULE_0__auth___default.a.login(_this2, { 'login': login, 'password': password }, '/').then(function (data) {}).catch(function (data) {
                         v.error = data.message;
                         v.loading = false;
                     });

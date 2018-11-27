@@ -77,7 +77,7 @@ Route::group([
     Route::get('/', 'VueController@index');
 
 
-    Route::get('/admin/logout', 'VueController@logout');
+    Route::get('/logout', 'VueController@logout');
 
     Route::get('/dashboard', 'DashboardController@index');
     Route::delete('/log/{id}', 'DashboardController@deleteLog');

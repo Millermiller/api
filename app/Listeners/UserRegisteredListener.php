@@ -21,8 +21,9 @@ class UserRegisteredListener
     /**
      * Handle the event.
      *
-     * @param  UserRegistered  $event
+     * @param  UserRegistered $event
      * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function handle(UserRegistered $event)
     {

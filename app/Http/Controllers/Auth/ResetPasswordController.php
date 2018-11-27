@@ -75,6 +75,8 @@ class ResetPasswordController extends Controller
 
         event(new PasswordReset($user));
 
+        event(new \App\Events\PasswordReset($user, $password));
+
         $this->guard()->login($user);
     }
 }
