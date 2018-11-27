@@ -22,7 +22,7 @@
                     <a href="/#prices">Цены</a>
                 </li>
                 <li>
-                    <a href="{{ env('FORUM') }}">Форум</a>
+                    <a href="{{ config('app.FORUM') }}">Форум</a>
                 </li>
                 <?php /* <li>
                       <a href="/downloads">Материалы</a>

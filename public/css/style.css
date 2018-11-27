@@ -437,6 +437,7 @@ pre {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+    flex: 1 0 auto;
 }
 @media (min-width: 768px) {
     .container {
@@ -11187,6 +11188,7 @@ h2 {
 footer {
     padding: 20px 0;
     background-color: #ebebeb;
+    flex: 0 0 auto;
 }
 p.copyright {
     margin: 15px 0 0;
