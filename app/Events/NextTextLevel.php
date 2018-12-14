@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\TextResult;
+use App\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -12,13 +14,25 @@ class NextTextLevel
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
+     * @var User
+     */
+    public $user;
+
+    /**
+     * @var TextResult
+     */
+    public $result;
+
+    /**
      * Create a new event instance.
      *
-     * @return void
+     * @param User $user
+     * @param TextResult $result
      */
-    public function __construct()
+    public function __construct(User $user, TextResult $result)
     {
-        //
+        $this->user = $user;
+        $this->result = $result;
     }
 
     /**

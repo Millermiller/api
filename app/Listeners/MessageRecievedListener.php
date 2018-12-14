@@ -24,6 +24,6 @@ class MessageRecievedListener
      */
     public function handle(MessageRecieved $event)
     {
-        //
+        activity()->causedBy($event->user)->performedOn($event->message)->log('Получено сообщение');
     }
 }

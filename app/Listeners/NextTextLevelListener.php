@@ -24,6 +24,6 @@ class NextTextLevelListener
      */
     public function handle(NextTextLevel $event)
     {
-        //
+        activity()->causedBy($event->user)->performedOn($event->result)->log('Новый уровень');
     }
 }

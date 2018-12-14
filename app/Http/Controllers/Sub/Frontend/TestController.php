@@ -50,7 +50,8 @@ class TestController extends Controller
             $result = new Result(['asset_id' => $next_asset_id, 'user_id' => Auth::user()->id,]);
 
             if ($result->save()) {
-                event(new NextLevel(['uid' => Auth::user()->id, 'next_asset_id' => $asset_id]));
+
+                event(new NextLevel(Auth::user(), $result));
 
                 return response()->json([
                     'success' => true,
@@ -97,7 +98,7 @@ class TestController extends Controller
         if($card->save())
             return response()->json(['success' => true, 'card' => Card::with('word', 'translate')->where('id', $card->id)->get()[0]]);
         else
-            return response()->json($this->answer = ['success' => false]);
+            return response()->json(['success' => false]);
     }
 
     public function deleteFavorite($id)

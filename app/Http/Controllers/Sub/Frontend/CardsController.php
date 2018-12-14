@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sub\Frontend;
 use App\Events\AssetCreated;
 use App\Events\AssetDelete;
 use App\Http\Controllers\Controller;
+use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Translate;
 use App\Models\Word;
@@ -76,10 +77,11 @@ class CardsController extends Controller
     /**
      * @param $id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function deleteAsset($id)
     {
-        event(new AssetDelete($id));
+        event(new AssetDelete(Auth::user(), Asset::find($id)->first()));
 
         return response()->json(['success' => Card::deleteAsset($id)]);
     }

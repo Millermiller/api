@@ -24,6 +24,6 @@ class AssetDeleteListener
      */
     public function handle(AssetDelete $event)
     {
-        //
+        activity()->causedBy($event->user)->performedOn($event->asset)->log('Словарь удален');
     }
 }

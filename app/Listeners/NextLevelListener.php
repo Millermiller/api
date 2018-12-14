@@ -24,6 +24,6 @@ class NextLevelListener
      */
     public function handle(NextLevel $event)
     {
-        //
+        activity()->causedBy($event->user)->performedOn($event->result)->log('Новый уровень');
     }
 }

@@ -51,10 +51,8 @@ class TextController extends Controller
             $result = new TextResult(['text_id' => $next_text_id, 'user_id' => Auth::user()->id,]);
 
             if ($result->save()) {
-                event(new NextTextLevel([
-                    'uid' => Auth::user()->id,
-                    'next_text_id' => $next_text_id
-                ]));
+
+                event(new NextTextLevel(Auth::user(),$result));
 
                 return response()->json([
                     'success' => true,

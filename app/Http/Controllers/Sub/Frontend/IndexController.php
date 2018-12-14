@@ -93,7 +93,7 @@ class IndexController extends Controller
         $message = new Message(['user' => Auth::user()->id, 'name' => Auth::user()->login, 'subject' => $subject, 'message' => $message]);
 
         if ($message->save()){
-            event(new MessageRecieved($message));
+            event(new MessageRecieved(Auth::user(), $message));
             return response()->json(['success' => true, 'msg' => 'Сообщение отправлено']);
         }
         else
