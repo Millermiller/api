@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Sub\Frontend;
+
 use App\Events\NextLevel;
 use App\Http\Controllers\Controller;
 use App\Models\Card;
 use App\Models\Result;
 use Auth;
 use Illuminate\Support\Facades\Input;
-
 
 /**
  * Created by PhpStorm.
@@ -89,7 +89,8 @@ class TestController extends Controller
     {
         $word_id = Input::get('word_id');
         $translate_id = Input::get('translate_id');
-        $asset_id =  Auth::user()->favourite_id;
+
+        $asset_id =  Auth::user()->favourite->id;
 
         $card = new Card(['asset_id' => $asset_id, 'word_id' => $word_id, 'translate_id' => $translate_id]);
 
@@ -102,12 +103,12 @@ class TestController extends Controller
     public function deleteFavorite($id)
     {
         return response()->json([
-            'success' => Card::whereRaw('word_id = ? and asset_id = ?', [$id, Auth::user()->favourite_id])->forceDelete()
+            'success' => Card::whereRaw('word_id = ? and asset_id = ?', [$id, Auth::user()->favourite->id])->forceDelete()
         ]);
     }
 
     public function getFavorite()
     {
-        return response()->json(Card::getCards(Auth::user()->favourite_id));
+        return response()->json(Card::getCards(Auth::user()->favourite->id));
     }
 }

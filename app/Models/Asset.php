@@ -68,6 +68,11 @@ class Asset extends Model
         return $this->belongsTo('App\Models\Result', 'id', 'asset_id');
     }
 
+  // public function user()
+  // {
+  //     return $this->belongsTo('App\Models\User', 'role_user', 'user_id', 'role_id');
+  // }
+
     /**
      * @param int $uid User Id
      * @return array

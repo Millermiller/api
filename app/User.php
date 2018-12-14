@@ -29,6 +29,7 @@ use Mail;
  * @property string $restore_link
  * @property string $email
  * @property int $active
+ * @property Asset $favourite
  * @property string $role
  * @property Carbon $created_at
  * @property int $last_online
@@ -49,7 +50,7 @@ class User extends Authenticatable
 
     protected $dates = ['active_to'];
 
-    protected $appends = ['premium', 'avatar'];
+    protected $appends = ['premium', 'avatar', 'favourite'];
 
     const ROLE_ADMIN = 1;
     const ROLE_USER  = 0;
@@ -86,6 +87,11 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany('App\Models\Comment');
+    }
+
+    public function assets()
+    {
+        return $this->belongsToMany('App\Models\Asset', 'assets_to_users', 'user_id', 'asset_id');
     }
 
     public function plan()
@@ -160,5 +166,14 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         Mail::to($this)->send(new ResetPassword($this, $token));
+    }
+
+    public function getFavouriteAttribute()
+    {
+        return Asset::domain()->whereHas(
+            'result', function ($q){
+            /** @var \Illuminate\Database\Eloquent\Builder $q */
+            $q->where('user_id', $this->id);
+        })->where('type', Asset::TYPE_FAVORITES)->first();
     }
 }

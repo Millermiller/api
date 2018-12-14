@@ -121,7 +121,7 @@ class Card extends Model{
                         ', [$asset_id, config('app.lang')]);
 
 
-        $favourites = DB::table('cards')->where('asset_id', Auth::user()->favourite_id)->pluck('word_id')->toArray();
+        $favourites = DB::table('cards')->where('asset_id', Auth::user()->favourite->id)->pluck('word_id')->toArray();
         $type = DB::table('assets')->where('id', $asset_id)->value('type');
         $title = DB::table('assets')->where('id', $asset_id)->value('title');
 
@@ -143,6 +143,7 @@ class Card extends Model{
      *
      * @param  int $id Asset Id
      * @return bool
+     * @throws \Exception
      */
     public static function deleteAsset($id)
     {
