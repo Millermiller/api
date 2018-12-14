@@ -174,6 +174,7 @@ class Card extends Model{
      * @param $user_id
      * @param $asset_title
      * @return Asset | bool
+     * @throws \Exception
      */
     public static function createAsset($user_id, $asset_title)
     {

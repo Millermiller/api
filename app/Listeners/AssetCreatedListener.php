@@ -24,6 +24,6 @@ class AssetCreatedListener
      */
     public function handle(AssetCreated $event)
     {
-        //
+        activity()->causedBy($event->user)->performedOn($event->asset)->log('Создан словарь');
     }
 }

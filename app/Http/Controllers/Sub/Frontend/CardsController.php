@@ -60,6 +60,7 @@ class CardsController extends Controller
 
     /**
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function createAsset()
     {
@@ -67,7 +68,7 @@ class CardsController extends Controller
 
         $asset = Card::createAsset(Auth::user()->id, $asset_title);
 
-        event(new AssetCreated($asset));
+        event(new AssetCreated(Auth::user(), $asset));
 
         return response()->json(['success' => true, 'id' => $asset->id, 'title' => $asset->title]);
     }

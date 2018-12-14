@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Log;
 use App\Models\Message;
 use App\User;
+use Spatie\Activitylog\Models\Activity;
 
 
 /**
@@ -27,7 +28,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'users'      => User::all()->count(),
-            'log'        => array_values(Log::all()->sortByDesc('id')->forPage(1, 50)->toArray()),
+            'log'        => Activity::with('causer', 'subject')->get(),
             'messages'   => array_values(Message::all()->sortByDesc('created_at')->toArray())
         ]);
     }

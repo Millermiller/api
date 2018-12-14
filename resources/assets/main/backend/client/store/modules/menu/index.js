@@ -109,6 +109,16 @@ const state = {
             },
             component: lazyLoading('plans', true)
         }
+        ,
+        {
+            name: 'Сообщения',
+            path: '/messages',
+            meta: {
+                icon: 'fa-sliders',
+                link: 'messages/index.vue'
+            },
+            component: lazyLoading('messages', true)
+        }
     ]
 }
 
