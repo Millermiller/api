@@ -84,6 +84,7 @@
                 this.$http.post('/admin/audio', this.fileUploadFormData).then((response) => {
                     if (response.body.success) {
                         this.$store.commit('changeAssetAudio', {index: this.index, url: response.body.url})
+                        this.close()
                     }
                 }, (response) => {
                     console.log(response)

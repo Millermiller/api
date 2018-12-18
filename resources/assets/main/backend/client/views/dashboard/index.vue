@@ -75,7 +75,7 @@
 
                             <b-table-column field="created_at" label="created_at" sortable centered>
                                 <span class="tag"  :class="['light']">
-                                    {{ new Date(props.row.created_at).toLocaleTimeString() }}
+                                    {{ new Date(props.row.created_at).toLocaleDateString()}} | {{new Date(props.row.created_at).toLocaleTimeString()}}
                                 </span>
                             </b-table-column>
 
