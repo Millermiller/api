@@ -181,7 +181,7 @@ $(function(){
 
     /**** PROFILE *****/
     $('.avatar-wrapper-large').on('click', function(){
-        $('#uploadPhoto').toggle();
+        $('#uploadPhoto').toggle('slow');
     });
 
     $('#inputFile').on('change', function(){
@@ -198,6 +198,20 @@ $(function(){
     $('#uploadPhotoForm').on('submit', function(e){
         e.preventDefault();
 
+        if(!$('#inputFile').val()){
+            toastr['error']('Выберите изображение');
+            return false
+        }
+
+
+        let label = $(this).find('label')
+        let button = $(this).find('button')
+
+        $('.el-loading-mask').show()
+
+        label.attr('disabled', true)
+        button.attr('disabled', true)
+
         let form = new FormData(this);
 
         $.ajax({
@@ -208,8 +222,11 @@ $(function(){
             contentType: false,
             dataType: 'json',
             success: function(data) {
-                $('#uploadPhoto').toggle();
+                $('#uploadPhoto').toggle('slow');
                 toastr[(data.success === true) ? 'info' : 'error'](data.msg);
+                $('.el-loading-mask').hide()
+                label.attr('disabled', false)
+                button.attr('disabled', false)
             }
         })
     });

@@ -1,17 +1,23 @@
 <div class="col-md-3 col-xs-12 " style="border-right: 1px solid #eee;">
     <div class="row">
-        <div class="avatar-wrapper-large center-block">
+        <div class="avatar-wrapper-large center-block" style="position: relative;">
             <img src="{{ '/uploads/u/'.$user->photo}}" alt="">
                 @if(!$user->photo)
                     <p>Загрузить изображение профиля</p>
                 @endif
-
+            <div class="el-loading-mask" style="display: none">
+                <div class="el-loading-spinner">
+                    <svg viewBox="25 25 50 50" class="circular">
+                        <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
+                    </svg><!---->
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div id="uploadPhoto" style="display: none">
-                <form method="post" id="uploadPhotoForm" enctype="multipart/form-data">
+                <form method="post" id="uploadPhotoForm" enctype="multipart/form-data" style="margin-bottom: 20px;">
                     {{ csrf_field() }}
                     <fieldset>
                         <div class="form-group">

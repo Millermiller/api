@@ -42,10 +42,10 @@ class ProfileController extends Controller
         $file = new File('photo', $storage);
         $new_filename = uniqid();
         $file->setName($new_filename);
-        $file->addValidations(array(
-            new Mimetype(array('image/png', 'image/jpg', 'image/jpeg')),
+        $file->addValidations([
+            new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
             new Size('2M')
-        ));
+        ]);
 
         $msg['msg'] = 'Фотография профиля изменена';
         $msg['success'] = true;
