@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -88,6 +89,9 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         $this->guard()->login($user);
+
+        Session::flash('message', 'Добро пожаловать, '.$user->login.'.');
+        Session::flash('alert-class', 'success');
 
         return $this->registered($request, $user)
             ?:  response()->json(['success' => false, 'message' => 'Произошла ошибка']);
