@@ -15,7 +15,7 @@
                         Понимай, как хочешь, то ли божья кара, то ли благодать.</p>
                     <div class="clearfix"></div>
                     <div class="card-footer text-right">
-                        <a href="https://is.scandinaver.org">перейти</a>
+                        <a href="https://is.{{config('app.DOMAIN')}}">перейти</a>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                         Швеция, страна с самыми крупными на свете комарами и с самой гадкой на свете едой.</p>
                     <div class="clearfix"></div>
                     <div class="card-footer text-right">
-                        <a href="https://sw.scandinaver.org">перейти</a>
+                        <a href="https://sw.{{config('app.DOMAIN')}}">перейти</a>
                     </div>
                 </div>
             </div>
