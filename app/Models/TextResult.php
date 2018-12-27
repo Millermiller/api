@@ -25,7 +25,7 @@ class TextResult extends Model
 {
     protected $table = 'texts_to_users';
 
-    protected $fillable = ['text_id', 'user_id'];
+    protected $fillable = ['text_id', 'user_id', 'lang'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 

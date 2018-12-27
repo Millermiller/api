@@ -22,7 +22,7 @@ class Result extends Model
 {
     protected $table = 'assets_to_users';
 
-    protected $fillable = ['asset_id', 'user_id', 'result'];
+    protected $fillable = ['asset_id', 'user_id', 'result', 'lang'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 

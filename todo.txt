@@ -1,8 +1,7 @@
-﻿проверить создание и удаление форумов (?)
-
-создание словарей по умолчанию при регистрации пользователя (и другие действия)
-
+﻿
 общий вход на форум
+
+флэшка после регистрации (вроде делал)
 
 выделение примеров разными цветами (добавить в админку)
 
@@ -14,13 +13,18 @@
 
 почистить /public/js/libs.min.js (убрать sidr)
 
-вывести в админку новые логи
+вывести в админку новые логи. детальный просмотр лога
+
+добавить спиннер предзагрузки паззлов
+убрать задержку прогресса паззлов на главной?
 
 tests
 
 переделать создание пользовательских карточек
 
 обновление laravel
+
+проверить индексы в бд
 
 Тесты:
 5. Подгруэать случайные варианты ответа с сервера
@@ -44,13 +48,17 @@ PHP:
 ++ https://packalyst.com/packages/package/laravelcollective/html - конструктор html
 https://github.com/beyondcode/laravel-self-diagnosis
 https://github.com/beyondcode/laravel-er-diagram-generator - Generate entity relation diagrams from your Laravel model files.
-
+https://github.com/anlutro/laravel-settings
 
 SUB ADMIN UPDATE:
 
 -> /public/sub/backend
 -> /resources/views/sub/backend
 
+MAIN ADMIN UPDATE:
+
+-> /public/main/backend
+-> /resources/views/main/backend
 
 ********************************BITBUCKET***************************
 john@scandinaver.org

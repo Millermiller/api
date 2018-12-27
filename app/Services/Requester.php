@@ -117,7 +117,6 @@ class Requester {
                 '_xfToken'=> '1518553156,7fbce47c7ede95773cee960ebcb2fa9d',
                 'login' => $params['username'],
                 'password' => $params['password'],
-
             ]
         ]);
        // print($response->getBody()->getContents());die();

@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserUpdated' => [
             'App\Listeners\UserUpdatedListener',
         ],
+        'App\Events\UserDeleted' => [
+            'App\Listeners\UserDeletedListener',
+        ],
         'App\Events\PasswordReset' => [
             'App\Listeners\PasswordResetListener',
         ],

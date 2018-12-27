@@ -54,7 +54,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($request->only($login_type, 'password'))) {
-            Requester::loginForumUser(['username' => $request->input('login'), 'password' => $request->input('password')]);
+           // Requester::loginForumUser(['username' => $request->input('login'), 'password' => $request->input('password')]);
             return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER']]);
         }
         else{

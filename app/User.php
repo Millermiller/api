@@ -55,6 +55,20 @@ class User extends Authenticatable
     const ROLE_ADMIN = 1;
     const ROLE_USER  = 0;
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($user) {
+            /** @var User $user */
+            activity()->log('Удален пользователь id:'.$user->id.' login: '.$user->login);
+
+            Result::where('user_id', $user->id)->delete();
+            TextResult::where('user_id', $user->id)->delete();
+            $user->puzzles()->detach();
+        });
+    }
+
     public function findForPassport($username) {
         return $this->where('email', $username)->orWhere('login', $username)->first();
     }
@@ -97,6 +111,11 @@ class User extends Authenticatable
     public function plan()
     {
         return $this->belongsTo('App\Models\Plan');
+    }
+
+    public function puzzles()
+    {
+        return $this->belongsToMany('App\Models\Puzzle', 'puzzles_users')->withTimestamps();
     }
 
     public function getPremiumAttribute()

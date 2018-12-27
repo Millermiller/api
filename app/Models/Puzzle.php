@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Helpers\StringHelper;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Puzzle
@@ -17,6 +17,7 @@ use DB;
  * @property string $created_at
  * @property string $updated_at
  *
+ * @method static Builder domain()
  */
 class Puzzle extends Model
 {
@@ -25,6 +26,15 @@ class Puzzle extends Model
     protected $fillable = ['text', 'translate'];
 
     protected $appends = ['success'];
+
+    /**
+     * @param Builder $query
+     * @return mixed
+     */
+    public function scopeDomain($query)
+    {
+        return $query->where('lang',  config('app.lang'));
+    }
 
     public function setTextAttribute($value){
         $this->attributes['text'] = StringHelper::cleartext($value);
@@ -36,42 +46,11 @@ class Puzzle extends Model
 
     public function getSuccessAttribute()
     {
-        return $this->users()->exists();
+        return $this->users()->where('users.id', Auth::user()->id)->exists();
     }
 
     public function users()
     {
         return $this->belongsToMany('App\User', 'puzzles_users')->withTimestamps();
-    }
-
-    /**
-     * @param  int $id User Id
-     * @return array
-     */
-    public static function getPuzzlesByUser($id)
-    {
-        $activeArray = PuzzleResult::where('user_id', $id)->pluck('puzzle_id')->toArray();
-
-        $rez = DB::select('SELECT id, text, translate FROM puzzles WHERE  1 order by id asc');
-
-        $counter = 0;
-
-        foreach($rez as &$r) {
-
-            $counter++;
-
-            if (in_array($r->id, $activeArray))
-                $r = ['id' => $r->id, 'text'=> $r->text,'active' => true];
-             else
-                $r = ['id' => $r->id, 'text'=> $r->text,'active' => false];
-
-
-            if($counter <= 20 || Auth::user()->active)
-                $r['available'] = true;
-            else
-                $r['available'] = false;
-        }
-
-        return $rez;
     }
 }

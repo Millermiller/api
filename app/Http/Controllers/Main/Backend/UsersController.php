@@ -12,6 +12,7 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
+use App\Events\UserDeleted;
 use App\User;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -71,8 +72,9 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {

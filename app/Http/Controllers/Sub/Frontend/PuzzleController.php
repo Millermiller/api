@@ -15,7 +15,7 @@ class PuzzleController
 {
     public function index()
     {
-        return response()->json(Puzzle::all());
+        return response()->json(Puzzle::domain()->get());
     }
 
     /**

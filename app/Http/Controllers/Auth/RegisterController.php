@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Events\UserRegistered;
 use App\Models\Asset;
+use App\Models\Language;
+use App\Models\Result;
+use App\Models\Text;
+use App\Models\TextResult;
 use App\User;
 use App\Http\Controllers\Controller;
 use DB;
@@ -103,18 +107,48 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        $favourite = Asset::create([
-            'title' => 'Избранное',
-            'basic'=> false,
-            'favorite' => true,
-            'type' => Asset::TYPE_FAVORITES
-        ]);
+        $languages = Language::all();
 
-        DB::table('assets_to_users')->insert([
-            ['asset_id' => 1, 'user_id' => $user->id],
-            ['asset_id' => 2, 'user_id' => $user->id],
-            ['asset_id' => $favourite->id, 'user_id' => $user->id],
-        ]);
+        foreach($languages as $language){
+            //создаем избранное
+            $favourite = Asset::create([
+                'title' => 'Избранное',
+                'basic'=> false,
+                'favorite' => true,
+                'type' => Asset::TYPE_FAVORITES,
+                'lang' => $language->name
+            ]);
+            //даем избранное пользователю
+            Result::create([
+                'asset_id' => $favourite->id,
+                'user_id' => $user->id,
+                'lang' => $language->name
+            ]);
+
+            //находим первый словарь слов
+            $words = Asset::where(['lang' => $language->name, 'type' => Asset::TYPE_WORDS, 'level' => 1])->first();
+            Result::create([
+                'asset_id' => $words->id,
+                'user_id' => $user->id,
+                'lang' => $language->name
+            ]);
+
+            //находим первый словарь предложений
+            $sentences = Asset::where(['lang' => $language->name, 'type' => Asset::TYPE_SENTENCES, 'level' => 1])->first();
+            Result::create([
+                'asset_id' => $sentences->id,
+                'user_id' => $user->id,
+                'lang' => $language->name
+            ]);
+
+            //находим первый текст
+            $text = Text::where(['lang' => $language->name,'level' => 1])->first();
+            TextResult::create([
+                'text_id' => $text->id,
+                'user_id' => $user->id,
+                'lang' => $language->name
+            ]);
+        }
 
         event(new UserRegistered($user, $data));
 

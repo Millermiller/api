@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property string $title
+ * @property string $lang
  * @property bool $basic
  * @property int $level
  * @property int $type
@@ -39,7 +40,7 @@ class Asset extends Model
 
     protected $table = 'assets';
 
-    protected $fillable = ['title', 'basic', 'favorite', 'type', 'level'];
+    protected $fillable = ['title', 'basic', 'favorite', 'type', 'level', 'lang'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
