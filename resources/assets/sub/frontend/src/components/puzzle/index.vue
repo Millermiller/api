@@ -60,7 +60,7 @@
                     </el-card>
                 </el-col>
                 <el-col :span="8" :xs="{span: 24, offset: 0}" :class="['right-panel']">
-                    <el-card :class="['box-card', 'puzzle-wrapper']">
+                    <el-card :class="['box-card', 'puzzle-wrapper']" v-loading.body="loading">
                         <template>
                             <el-tooltip v-for="(puzzle, index) in puzzles" :key="index" class="item" effect="dark" :content="puzzle.text" placement="top-start">
                                 <div  :class="['puzzle-item', {active: puzzle.active, success: puzzle.success}]"
@@ -69,11 +69,9 @@
                                 </div>
                             </el-tooltip>
                         </template>
-
                     </el-card>
                 </el-col>
             </el-row>
-
         </el-main>
     </el-container>
 </template>
@@ -99,7 +97,8 @@
                 dropzones: [],
                 success: 0,
                 words_count: 0,
-                isRotate: false
+                isRotate: false,
+                loading: false
             }
         },
         created(){
@@ -107,8 +106,10 @@
         },
         methods:{
             load(){
+                this.loading = true
                 this.$http.get('/puzzle').then((response) => {
                     this.puzzles = response.body
+                    this.loading = false
                 }, (response) => {
                     console.log(response)
                 })

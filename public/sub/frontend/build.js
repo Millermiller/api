@@ -66043,7 +66043,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dropzones: [],
             success: 0,
             words_count: 0,
-            isRotate: false
+            isRotate: false,
+            loading: false
         };
     },
     created: function created() {
@@ -66054,8 +66055,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         load: function load() {
             var _this = this;
 
+            this.loading = true;
             this.$http.get('/puzzle').then(function (response) {
                 _this.puzzles = response.body;
+                _this.loading = false;
             }, function (response) {
                 console.log(response);
             });
@@ -66350,6 +66353,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('el-card', {
+    directives: [{
+      name: "loading",
+      rawName: "v-loading.body",
+      value: (_vm.loading),
+      expression: "loading",
+      modifiers: {
+        "body": true
+      }
+    }],
     class: ['box-card', 'puzzle-wrapper']
   }, [_vm._l((_vm.puzzles), function(puzzle, index) {
     return _c('el-tooltip', {
