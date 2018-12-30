@@ -66,7 +66,7 @@ class Asset extends Model
      */
     public function result()
     {
-        return $this->belongsTo('App\Models\Result', 'id', 'asset_id');
+        return $this->belongsTo('App\Models\Result', 'id', 'asset_id')->where('user_id', \Auth::id());
     }
 
   // public function user()
