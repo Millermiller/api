@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Request;
 use Mail;
+
 /**
  * Class IndexController
  * @package Application\Controllers\Admin
@@ -40,11 +41,14 @@ class VueController extends Controller
         return response()->json(['success' => true, 'url' => config('app.SITE') . '/admin']);
     }
 
+    /**
+     *
+     */
     public function testmail()
     {
-        return Mail::send('mails.registration', [], function ($message){
-            $message->from('support@scandinaver.org', 'Sender');
-            $message->to('day_at_the_way@mail.ru')->subject('Test message');
-        });
+        //Mail::send('mails.registration', [], function ($message){
+        //    $message->from('support@scandinaver.org', 'Sender');
+        //    $message->to('day_at_the_way@mail.ru')->subject('Test message');
+        //});
     }
 }

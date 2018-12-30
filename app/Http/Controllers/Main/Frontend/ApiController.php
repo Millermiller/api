@@ -6,10 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Asset;
 use App\Models\Example;
 use App\Models\Result;
-use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Http\Request;
 
 /**
  * Created by PhpStorm.
@@ -18,7 +14,7 @@ use Illuminate\Http\Request;
  * Time: 23:08
  *
  * Class ApiController
- * @package Application\Controllers
+ * @package App\Http\Controllers\Main\Frontend
  *
  */
 class ApiController extends Controller
@@ -50,6 +46,7 @@ class ApiController extends Controller
         $activeArray = Result::domain()->where('user_id', $user->id)->pluck('result', 'asset_id')->toArray();
 
         $personaldata = Asset::domain()->whereHas('result', function ($q) use ($user) {
+            /** @var \Illuminate\Database\Eloquent\Builder $q*/
             $q->where('user_id', $user->id);
         })->with('cards', 'cards.word', 'cards.translate', 'result')->get();
 

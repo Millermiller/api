@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use Exception;
 use Illuminate\Http\Request;
 
 /**

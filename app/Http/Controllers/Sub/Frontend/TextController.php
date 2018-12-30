@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Input;
 
 /**
  * Class TextController
- * @package Application\Controllers
+ * @package App\Http\Controllers\Sub\Frontend
  */
 class TextController extends Controller
 {

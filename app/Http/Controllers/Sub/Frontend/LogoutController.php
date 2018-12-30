@@ -12,7 +12,7 @@ use Auth;
  * Time: 0:52
  *
  * Class LogoutController
- * @package Application\Controllers
+ * @package App\Http\Controllers\Sub\Frontend
  */
 class LogoutController extends Controller {
 

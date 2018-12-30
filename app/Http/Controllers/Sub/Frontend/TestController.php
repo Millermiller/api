@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Events\NextLevel;
 use App\Http\Controllers\Controller;
+use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Result;
 use Auth;
@@ -16,9 +17,8 @@ use Illuminate\Support\Facades\Input;
  * Time: 3:10
  *
  * Class TestController
- * @package Application\Controllers
+ * @package App\Http\Controllers\Sub\Frontend
  */
-
 class TestController extends Controller
 {
     /**
@@ -37,7 +37,7 @@ class TestController extends Controller
     {
         $asset_id = Input::get('asset_id');
 
-        $next_asset_id = Card::getNextLevel($asset_id)->id;// получаем id следующего набора
+        $next_asset_id = Asset::getNextLevel($asset_id)->id;// получаем id следующего набора
 
         if ($next_asset_id > 0 &&
             !Result::where('asset_id', $next_asset_id)

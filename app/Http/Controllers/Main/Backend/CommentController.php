@@ -41,6 +41,7 @@ class CommentController extends Controller
         return response()->json([
             'success' => true,
             'comments' => Comment::with(['author', 'post'])->where(function ($query) use ($search) {
+                /** @var \Illuminate\Database\Eloquent\Builder $query*/
                 $query->where('text', 'LIKE', "%{$search}%");
             })->get()
         ]);
@@ -60,8 +61,9 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {

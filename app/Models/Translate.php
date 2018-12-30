@@ -25,6 +25,7 @@ class Translate extends Model
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'variant', 'form'];
 
     protected $appends = ['active'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

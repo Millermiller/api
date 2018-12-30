@@ -70,6 +70,7 @@ class ArticleController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -86,6 +87,7 @@ class ArticleController extends Controller
         return response()->json([
             'success' => true,
             'articles' => Post::with(['category', 'comments'])->where(function ($query) use ($search) {
+                /** @var \Illuminate\Database\Eloquent\Builder $query*/
                 $query->where('post_name', 'LIKE', "%{$search}%");
             })->get()
         ]);

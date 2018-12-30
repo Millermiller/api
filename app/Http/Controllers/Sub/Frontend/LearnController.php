@@ -7,15 +7,15 @@ use App\Models\Asset;
 use App\Models\Card;
 
 /**
+ * Class LearnController
+ * @package App\Http\Controllers\Sub\Frontend
+ *
  * Created by PhpStorm.
  * User: whiskey
  * Date: 10.03.15
  * Time: 1:44
  *
- * Class LearnController
- * @package Application\Controllers
  */
-
 class LearnController extends Controller
 {
     public function getAsset($id)

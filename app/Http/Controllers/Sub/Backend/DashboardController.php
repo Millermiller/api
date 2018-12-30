@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
-use App\Models\Log;
 use App\Models\Message;
 use App\Models\Text;
 use App\Models\Word;
@@ -31,20 +30,7 @@ class DashboardController extends Controller
             'assets'     => Asset::all()->count(),
             'audiofiles' => Word::where('audio', '!=', null)->count(),
             'texts'      => Text::all()->count(),
-            'log'        => array_values(Log::all()->sortByDesc('id')->forPage(1, 50)->toArray()),
             'messages'   => array_values(Message::all()->sortByDesc('created_at')->toArray())
-        ]);
-    }
-
-    /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function deleteLog($id)
-    {
-        return response()->json([
-            'success' => Log::destroy($id),
-            'log' => array_values(Log::all()->sortByDesc('id')->forPage(1, 50)->toArray())
         ]);
     }
 

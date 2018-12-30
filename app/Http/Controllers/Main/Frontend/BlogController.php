@@ -40,12 +40,10 @@ class BlogController extends Controller
             return redirect('blog/' . $post_id);
         }
 
-
         /** @var Post $post */
         $post = Post::with('comments.author')->findOrFail($post_id);
         $post->views++;
         $post->save();
         return view('frontend.blog.post', ['post' => $post]);
-
     }
 }

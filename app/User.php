@@ -78,9 +78,9 @@ class User extends Authenticatable
         return [
             'user'      => $this->info(),
             'site'      => config('app.MAIN_SITE'),
-            'words'     => Card::getAssetsByType(Asset::TYPE_WORDS, $this->id),
-            'sentences' => Card::getAssetsByType(Asset::TYPE_SENTENCES, $this->id),
-            'favourites'=> Card::getAssetsByType(Asset::TYPE_FAVORITES, $this->id)[0],
+            'words'     => Asset::getAssetsByType(Asset::TYPE_WORDS, $this->id),
+            'sentences' => Asset::getAssetsByType(Asset::TYPE_SENTENCES, $this->id),
+            'favourites'=> Asset::getAssetsByType(Asset::TYPE_FAVORITES, $this->id)[0],
             'personal'  => Asset::domain()->whereHas(
                 'result', function ($q){
                 /** @var \Illuminate\Database\Eloquent\Builder $q */

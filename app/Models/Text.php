@@ -61,7 +61,7 @@ class Text extends Model
      */
     public function result()
     {
-        return $this->belongsTo('App\Models\TextResult', 'id', 'text_id');
+        return $this->belongsTo('App\Models\TextResult', 'id', 'text_id')->where('user_id', \Auth::id());
     }
 
     /**

@@ -1,27 +1,23 @@
 <?php
 
+namespace App\Http\Controllers\Main\Backend;
+
+use App\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use \Illuminate\Http\Request;
+
 /**
  * Class UsersController
- * @package Application\Controllers\Admin
+ * @package App\Http\Controllers\Main\Backend
  *
  * Created by PhpStorm.
  * User: whiskey
  * Date: 29.11.14
  * Time: 18:47
  */
-
-namespace App\Http\Controllers\Main\Backend;
-
-use App\Events\UserDeleted;
-use App\User;
-use Carbon\Carbon;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-use \Illuminate\Http\Request;
-
 class UsersController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -98,6 +94,7 @@ class UsersController extends Controller
         $search = Input::get('q');
 
         return User::where(function ($query) use ($search) {
+            /** @var \Illuminate\Database\Eloquent\Builder $query*/
             $query->where('login', 'LIKE', "%{$search}%")
                 ->orWhere('email', 'LIKE', "%{$search}%");
         })->get();

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Log;
 use App\Models\Message;
 use App\User;
 use Spatie\Activitylog\Models\Activity;
-
 
 /**
  * Created by PhpStorm.
@@ -33,14 +31,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function deleteLog($id)
-    {
-        return response()->json([
-            'success' => Log::destroy($id),
-            'log' => array_values(Log::all()->sortByDesc('id')->forPage(1, 50)->toArray())
-        ]);
-    }
-
     public function deleteMessage($id)
     {
         return response()->json([
@@ -60,5 +50,4 @@ class DashboardController extends Controller
 
       //  return response()->json(['success' =>   $mailer->reg()]);
     }
-
 }

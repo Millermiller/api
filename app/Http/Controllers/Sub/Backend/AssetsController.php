@@ -209,12 +209,13 @@ class AssetsController extends Controller
     public function addBasicAssetLevel()
     {
         $asset_id = Input::get('asset_id');
-        return response()->json(['success' => true, 'msg' => Card::addLevel($asset_id)]);
+        return response()->json(['success' => true, 'msg' => Asset::addLevel($asset_id)]);
     }
 
     /**
      * @param $id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function deleteTranslate($id)
     {
@@ -264,6 +265,7 @@ class AssetsController extends Controller
     /**
      * @param $file
      * @return \Illuminate\Http\JsonResponse
+     * @throws \PHPExcel_Reader_Exception
      */
     protected function parseSentense($file)
     {

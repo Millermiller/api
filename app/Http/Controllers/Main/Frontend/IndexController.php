@@ -6,7 +6,6 @@ use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Meta;
 
 /**
@@ -15,7 +14,6 @@ use Meta;
  */
 class IndexController extends Controller
 {
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -28,8 +26,8 @@ class IndexController extends Controller
         return view('main.frontend.index.home');
     }
 
-
     /**
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function feedback(Request $request)

@@ -50,7 +50,6 @@ Route::group([
     Route::get('/', 'VueController@index')->name('admin');
 
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-   // Route::delete('/log/{id}', 'DashboardController@deleteLog');
     Route::delete('/message/{id}', 'DashboardController@deleteMessage');
     Route::post('/message/read/{id}', 'DashboardController@readMessage');
 

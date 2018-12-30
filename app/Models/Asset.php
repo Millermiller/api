@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -93,5 +94,159 @@ class Asset extends Model
                 group by a.id
                 order by a.favorite desc', [$uid]
         );
+    }
+
+    /**
+     * Удаляет набор и все с ним связанное
+     * TODO: объединить запрос. использовать внешние ключи.
+     *
+     * @param  int $id Asset Id
+     * @return bool
+     * @throws \Exception
+     */
+    public static function deleteAsset($id)
+    {
+        if(!Auth::user()->hasAsset($id) && !Auth::user()->_admin)
+            return false;
+
+        DB::beginTransaction();
+
+        try {
+            DB::delete('DELETE FROM assets WHERE id = ?', [$id]);
+
+            DB::delete('DELETE FROM cards WHERE asset_id = ?', [$id]);
+
+            DB::delete('DELETE FROM assets_to_users WHERE asset_id = ?', [$id]);
+
+            DB::commit();
+
+            return true;
+        }
+        catch(\Exception $e){
+
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+     * Получить наборы карточек для юзера
+     *
+     * @param  int $user_id int User Id
+     * @return array
+     */
+    public static function getAssets($user_id)
+    {
+        return DB::select('
+                                 SELECT COUNT(wta.word_id) as num, a.title, a.id, a.basic, a.level, atu.result
+                                 FROM assets AS a
+                                 LEFT JOIN assets_to_users as atu
+                                    ON a.id = atu.asset_id
+                                 LEFT JOIN cards AS wta
+                                    ON a.id = wta.asset_id
+                                 WHERE user_id = ?
+                                -- AND a.basic IN(1)
+                                 GROUP BY a.id
+                                 ORDER BY a.level
+                                 ', [$user_id]);
+    }
+
+    /**
+     * Проверяет наличие следующего уровня basic-набора
+     * Возвращает его id или false если не находит
+     * TODO: сократить вложенные запросы
+     * @param  int $asset_id Asset Id
+     *
+     * @return int
+     */
+    public static function getNextLevel($asset_id)
+    {
+        return DB::select('
+                   SELECT id
+                   FROM assets as a
+                   WHERE a.basic = 1
+                   AND a.type = (SELECT a1.type from assets as a1 where a1.id = ?)
+                   AND a.level = (SELECT a1.level from assets as a1 where a1.id = ?) + 1
+                   ', [$asset_id, $asset_id])[0];
+    }
+
+    /**
+     * Добавляет basic набор следующего уровня
+     * возвращает инфу о новом наборе
+     * @param $asset_id
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public static function addLevel($asset_id)
+    {
+        DB::insert('
+                   INSERT INTO assets
+                   SET title = ?,
+                       basic = 1,
+                       type = ?,
+                       created_at = NOW(),
+                       updated_at = NOW(),
+                       level = (select max(a2.level)
+                               from assets as a2
+                               where a2.type = ?) + 1
+                   ', [$asset_id, $asset_id, $asset_id]);
+
+
+        return Asset::find(DB::getPdo()->lastInsertId());
+    }
+
+    /**
+     * Возвращает массив словарей определенного типа для пользователя с id = $uid
+     *
+     * @param string $type 'Предложения' || 'Слова' || 'Избранное'
+     * @param int $uid User Id
+     *
+     * @return array
+     */
+    public static function getAssetsByType($type, $uid)
+    {
+        $activeArray = Result::domain()->where('user_id', $uid)->pluck('result', 'asset_id')->toArray();
+
+        $rez = DB::select('SELECT id, level, title, type FROM assets WHERE type = ? AND lang = ? order by level asc', [$type, config('app.lang')]);
+
+        $canopen = true;
+        $testlink = 0;
+        $counter = 0;
+
+        foreach($rez as &$r) {
+            $counter++;
+            if (in_array($r->id, array_keys($activeArray))) {
+                $r = ['count' => Card::where('asset_id', $r->id)->count(),
+                    'title' => $r->title,
+                    'id' => $r->id,
+                    'level' => $r->level,
+                    'active' => true,
+                    'canopen' => false,
+                    'result' => $activeArray[$r->id],
+                    'type' => $r->type
+                ];
+            } else {
+                $r = ['count' => Card::where('asset_id', $r->id)->count(),
+                    'title' => $r->title,
+                    'id' => $r->id,
+                    'level' => $r->level,
+                    'active' => false,
+                    'canopen' => $canopen,
+                    'testlink' => $testlink,
+                    'result' => 0,
+                    'type' => $r->type
+                ];
+                $canopen = false;
+            }
+
+            if($counter < 10 || Auth::user()->premium)
+                $r['available'] = true;
+            else
+                $r['available'] = false;
+
+            $testlink = $r['id'];
+        }
+
+        return $rez;
     }
 }

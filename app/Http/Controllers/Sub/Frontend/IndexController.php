@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Input;
 
 /**
  * Class IndexController
- * @package Application\Controllers
+ * @package App\Http\Controllers\Sub\Frontend
  */
 class IndexController extends Controller
 {
@@ -49,22 +49,22 @@ class IndexController extends Controller
 
     public function getWords()
     {
-        return response()->json(Card::getAssetsByType(Asset::TYPE_WORDS, Auth::user()->id));
+        return response()->json(Asset::getAssetsByType(Asset::TYPE_WORDS, Auth::user()->id));
     }
 
     public function getSentences()
     {
-        return response()->json(Card::getAssetsByType(Asset::TYPE_SENTENCES, Auth::user()->id));
+        return response()->json(Asset::getAssetsByType(Asset::TYPE_SENTENCES, Auth::user()->id));
     }
 
     public function getFavourites()
     {
-        return response()->json(Card::getAssetsByType(Asset::TYPE_FAVORITES, Auth::user()->id));
+        return response()->json(Asset::getAssetsByType(Asset::TYPE_FAVORITES, Auth::user()->id));
     }
 
     public function getPersonal()
     {
-        return response()->json(Card::getAssets(Auth::user()->id));
+        return response()->json(Asset::getAssets(Auth::user()->id));
     }
 
     public function getUserAssets()

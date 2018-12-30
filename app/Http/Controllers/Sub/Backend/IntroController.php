@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Intro;
-use Illuminate\Support\Facades\Input;
 use \Illuminate\Http\Request;
+
 /**
  * Created by PhpStorm.
  * User: john
@@ -65,6 +65,4 @@ class IntroController extends Controller
 
         return response()->json(null, 204);
     }
-
-
 }

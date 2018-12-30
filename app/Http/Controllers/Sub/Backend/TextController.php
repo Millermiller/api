@@ -133,6 +133,7 @@ class TextController extends Controller
 
     /**
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function addExtras()
     {
@@ -157,6 +158,7 @@ class TextController extends Controller
 
     /**
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function saveSentences()
     {

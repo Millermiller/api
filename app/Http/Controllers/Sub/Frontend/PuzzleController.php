@@ -1,16 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john_
- * Date: 22.11.2018
- * Time: 4:35
- */
 
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Models\Puzzle;
 use \Illuminate\Http\Request;
 
+/**
+ * Class PuzzleController
+ * @package App\Http\Controllers\Sub\Frontend
+ *
+ * Created by PhpStorm.
+ * User: john_
+ * Date: 22.11.2018
+ * Time: 4:35
+ */
 class PuzzleController
 {
     public function index()

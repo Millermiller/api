@@ -7,6 +7,7 @@ use App\Events\AssetDelete;
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
 use App\Models\Card;
+use App\Models\Result;
 use App\Models\Translate;
 use App\Models\Word;
 use Auth;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Input;
  */
 class CardsController extends Controller
 {
-
     /**
      * @param $id
      * @return \Illuminate\Http\JsonResponse
@@ -67,7 +67,18 @@ class CardsController extends Controller
     {
         $asset_title = Input::get('title');
 
-        $asset = Card::createAsset(Auth::user()->id, $asset_title);
+        $asset = Asset::create([
+            'title' => $asset_title,
+            'basic' => false,
+            'level' => 0,
+            'lang' => config('app.lang')
+        ]);
+
+        Result::create([
+            'asset_id' => $asset->id,
+            'user_id' => Auth::user()->id,
+            'lang' => $asset->lang
+        ]);
 
         event(new AssetCreated(Auth::user(), $asset));
 
@@ -83,7 +94,7 @@ class CardsController extends Controller
     {
         event(new AssetDelete(Auth::user(), Asset::find($id)->first()));
 
-        return response()->json(['success' => Card::deleteAsset($id)]);
+        return response()->json(['success' => Asset::deleteAsset($id)]);
     }
 
     public function addWordToAsset()
