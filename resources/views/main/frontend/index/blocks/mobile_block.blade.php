@@ -13,8 +13,10 @@
                     vel.
                     Vestibulum tristique eros risus, eu laoreet lectus fringilla ac.</p>
             </div>
-            <div class="col-lg-5 col-sm-6">
-
+            <div class="col-lg-7 col-sm-6">
+                <div class="text-center" id="mobileview">
+                    <img src="{{ url('img/1.png') }}" alt="mobile" style="height: 400px;">
+                </div>
             </div>
         </div>
     </div>

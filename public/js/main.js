@@ -469,6 +469,13 @@ $(function(){
         duration: "1s",
         windowarea: "100%"
     });
+    $('#mobileview').boxLoader({
+        direction:"x",
+        position: "5%",
+        effect: "fadeIn",
+        duration: "1s",
+        windowarea: "100%"
+    });
     $('.icelandic').boxLoader({
         direction:"y",
         position: "5%",
