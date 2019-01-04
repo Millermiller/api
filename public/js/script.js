@@ -32,6 +32,8 @@ $(function(){
         },
     });
 
+    $('[data-toggle="tooltip"]').tooltip()
+
     $('.closeModal').on('click', function () {
         $.fancybox.close();
         $('#loginform').show();

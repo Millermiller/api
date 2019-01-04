@@ -34,9 +34,9 @@ class Requester {
         ]);
 
         if($response->getBody()->getContents() == 'success')
-            activity()->log('Пользователь '.$params['login'].' зарегистрирован на форуме');
+            activity('admin')->log('Пользователь '.$params['login'].' зарегистрирован на форуме');
         else
-            activity()->log('Пользователь '.$params['login'].' - ошибка регистрации на форуме');
+            activity('admin')->log('Пользователь '.$params['login'].' - ошибка регистрации на форуме');
     }
 
     /**
@@ -64,9 +64,9 @@ class Requester {
         ]);
 
         if($response->getBody()->getContents() == 'success')
-            activity()->log('forum user updated email - '.$data['email']);
+            activity('admin')->log('forum user updated email - '.$data['email']);
         else
-            activity()->log($response->getBody());
+            activity('admin')->log($response->getBody());
 
         return true;
     }
@@ -92,9 +92,9 @@ class Requester {
         ]);
 
         if($response->getBody()->getContents() == 'success')
-            activity()->log('forum user updated email - '.$user->email);
+            activity('admin')->log('forum user updated email - '.$user->email);
         else
-            activity()->log($response->getBody());
+            activity('admin')->log($response->getBody());
 
 
         return true;

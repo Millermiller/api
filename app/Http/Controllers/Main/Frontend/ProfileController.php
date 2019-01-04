@@ -10,6 +10,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Meta;
 use Session;
+use Spatie\Activitylog\Models\Activity;
 use Upload\File;
 use Upload\Storage\FileSystem;
 use Upload\Validation\Mimetype;
@@ -109,5 +110,16 @@ class ProfileController extends Controller
         Requester::updateForumUser($data, $oldemail);
 
         return redirect()->route('frontend::profile');
+    }
+
+    public function log()
+    {
+        $logs = Activity::where([
+            'causer_id' => Auth::user()->id,
+            'log_name'  => 'public'
+        ])->orderBy('id', 'DESC')
+            ->paginate(5);
+
+        return view('main.frontend.profile.logs', ['logs' => $logs, 'user' => Auth::user()]);
     }
 }

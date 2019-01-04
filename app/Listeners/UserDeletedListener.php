@@ -24,6 +24,6 @@ class UserDeletedListener
      */
     public function handle(UserUpdated $event)
     {
-        activity()->causedBy($event->user)->performedOn($event->asset)->log('Создан словарь');
+       // activity('admin')->causedBy($event->user)->performedOn($event->asset)->log('Создан словарь');
     }
 }

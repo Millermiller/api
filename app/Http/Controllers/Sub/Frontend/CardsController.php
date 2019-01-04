@@ -74,6 +74,8 @@ class CardsController extends Controller
             'lang' => config('app.lang')
         ]);
 
+        Auth::user()->increment('assets_created');
+
         Result::create([
             'asset_id' => $asset->id,
             'user_id' => Auth::user()->id,

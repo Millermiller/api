@@ -29,6 +29,8 @@ use Mail;
  * @property string $restore_link
  * @property string $email
  * @property int $active
+ * @property int $assets_opened
+ * @property int $assets_created
  * @property Asset $favourite
  * @property string $role
  * @property Carbon $created_at
@@ -61,7 +63,7 @@ class User extends Authenticatable
 
         static::deleted(function ($user) {
             /** @var User $user */
-            activity()->log('Удален пользователь id:'.$user->id.' login: '.$user->login);
+            activity('admin')->causedBy($user)->log('Удален пользователь id:'.$user->id.' login: '.$user->login);
 
             Result::where('user_id', $user->id)->delete();
             TextResult::where('user_id', $user->id)->delete();

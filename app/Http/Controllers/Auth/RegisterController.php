@@ -156,7 +156,7 @@ class RegisterController extends Controller
 
         event(new UserRegistered($user, $data));
 
-        activity()->causedBy($user)->log('Зарегистрирован пользователь');
+        activity('public')->causedBy($user)->log('Зарегистрирован пользователь');
 
         return $user;
     }

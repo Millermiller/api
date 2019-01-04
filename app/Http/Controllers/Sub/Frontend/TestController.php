@@ -47,7 +47,7 @@ class TestController extends Controller
         ) {
 
             /** @var Result $result */
-            $result = new Result(['asset_id' => $next_asset_id, 'user_id' => Auth::user()->id,]);
+            $result = new Result(['asset_id' => $next_asset_id, 'user_id' => Auth::user()->id, 'lang' => config('app.lang')]);
 
             if ($result->save()) {
 
@@ -71,8 +71,8 @@ class TestController extends Controller
         $result   = Input::get('result');
 
         Result::updateOrCreate(
-            ['asset_id' => $asset_id],
-            ['result' => $result, 'user_id'  => Auth::user()->id]
+            ['asset_id' => $asset_id, 'user_id'  => Auth::user()->id, 'lang' => config('app.lang')],
+            ['result' => $result, 'user_id'  => Auth::user()->id, 'lang' => config('app.lang')]
         );
 
         return response()->json([

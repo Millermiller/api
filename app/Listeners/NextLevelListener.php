@@ -24,6 +24,12 @@ class NextLevelListener
      */
     public function handle(NextLevel $event)
     {
-        activity()->causedBy($event->user)->performedOn($event->result)->log('Новый уровень');
+        $event->user->increment('assets_opened');
+
+        activity('public')
+            ->causedBy($event->user)
+            ->performedOn($event->result)
+            ->withProperties(['lang' => config('app.lang')])
+            ->log('Получен новый уровень');
     }
 }

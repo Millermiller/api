@@ -47,6 +47,11 @@
                         <i class="ion ion-settings"></i>Настройки
                     </a>
                 </li>
+                <li class="{{ request()->is('profile/log') ? 'active' : '' }}">
+                    <a href="{{ route('frontend::profile-log') }}">
+                        <i class="ion  ion-ios-time-outline"></i>Активность
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
