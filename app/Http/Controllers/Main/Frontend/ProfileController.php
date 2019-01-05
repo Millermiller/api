@@ -97,7 +97,7 @@ class ProfileController extends Controller
         Auth::user()->update([
             'login' => $request->post('login'),
             'email' => $request->post('email'),
-            'password' => bcrypt($request->post('password'))
+            'password' => ($request->post('password')) ? bcrypt($request->post('password')) : Auth::user()->password
         ]);
 
         $data['login'] = $request->post('login');
