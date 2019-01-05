@@ -86,7 +86,7 @@ export default{
     },
 
     onCardsPageClose(context){
-        //context.commit('setSelection', {})
+        context.commit('setSelection', {})
         context.commit('setActiveAssetEdit', false)
     },
     /**

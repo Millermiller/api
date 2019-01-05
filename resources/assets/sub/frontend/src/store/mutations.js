@@ -143,7 +143,7 @@ export default {
     },
 
     setActiveAssetEdit(state, data){
-        state.setActiveAssetEdit = data
+        state.activePersonalAssetEdit = data
     },
 
     setBackdrop(state, data){

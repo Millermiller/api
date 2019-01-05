@@ -57,7 +57,7 @@
             this.visible = window.innerWidth > 910
         },
         beforeDestroy(){
-            this.$store.dispatch('onCardsPageClose')
+           // this.$store.dispatch('onCardsPageClose')
         }
     }
 </script>

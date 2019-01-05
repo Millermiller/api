@@ -57222,6 +57222,7 @@ exports.default = {
         if (!context.state.activePersonalAssetEdit) context.commit('setSelection', { asset: asset, index: 0 });
     },
     onCardsPageClose: function onCardsPageClose(context) {
+        context.commit('setSelection', {});
         context.commit('setActiveAssetEdit', false);
     },
     findAndRemoveFavorite: function findAndRemoveFavorite(context, data) {
@@ -57521,7 +57522,7 @@ exports.default = {
         state.activeAssetType = data;
     },
     setActiveAssetEdit: function setActiveAssetEdit(state, data) {
-        state.setActiveAssetEdit = data;
+        state.activePersonalAssetEdit = data;
     },
     setBackdrop: function setBackdrop(state, data) {
         state.backdrop = data;
@@ -58490,9 +58491,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.visible = window.innerWidth > 910;
     },
-    beforeDestroy: function beforeDestroy() {
-        this.$store.dispatch('onCardsPageClose');
-    }
+    beforeDestroy: function beforeDestroy() {}
 });
 
 /***/ }),
@@ -62278,9 +62277,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.visible = window.innerWidth > 910;
     },
-    beforeDestroy: function beforeDestroy() {
-        this.$store.dispatch('onCardsPageClose');
-    }
+    beforeDestroy: function beforeDestroy() {}
 });
 
 /***/ }),
