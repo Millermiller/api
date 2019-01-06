@@ -34,12 +34,12 @@
                         изменить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
-                    <span :class="['text-primary', 'pointer', 'small']" @click="loadTest()">
+                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.cards.length < 1}]" @click="loadTest()">
                         <i :class="['ion', 'ion-ios-redo', 'ion-small']"></i>
                         учить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
-                    <span :class="['text-primary', 'pointer', 'small']" @click="test()">
+                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.cards.length < 1}]" @click="test()">
                          <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"></i>
                         тест
                     </span>
@@ -66,6 +66,10 @@
         },
         methods: {
             loadTest(){
+                if(this.item.cards.length < 1){
+                    return false
+                }
+
                 if( window.innerWidth <= 910){
                     this.$emit('closeMenu')
                 }
@@ -80,6 +84,10 @@
                 }
             },
             test(){
+                if(this.item.cards.length < 1){
+                    return false
+                }
+
                 if( window.innerWidth <= 910){
                     this.$emit('closeMenu')
                 }

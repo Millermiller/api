@@ -58845,6 +58845,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         loadTest: function loadTest() {
+            if (this.item.cards.length < 1) {
+                return false;
+            }
+
             if (window.innerWidth <= 910) {
                 this.$emit('closeMenu');
             }
@@ -58859,6 +58863,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         test: function test() {
+            if (this.item.cards.length < 1) {
+                return false;
+            }
+
             if (window.innerWidth <= 910) {
                 this.$emit('closeMenu');
             }
@@ -58930,7 +58938,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v("\n                    изменить\n                ")]), _vm._v(" "), _c('span', {
       class: ['text-primary', 'small']
     }, [_vm._v("|")]), _vm._v(" "), _c('span', {
-      class: ['text-primary', 'pointer', 'small'],
+      class: ['text-primary', 'pointer', 'small', {
+        'muted': _vm.item.cards.length < 1
+      }],
       on: {
         "click": function($event) {
           _vm.loadTest()
@@ -58941,7 +58951,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v("\n                    учить\n                ")]), _vm._v(" "), _c('span', {
       class: ['text-primary', 'small']
     }, [_vm._v("|")]), _vm._v(" "), _c('span', {
-      class: ['text-primary', 'pointer', 'small'],
+      class: ['text-primary', 'pointer', 'small', {
+        'muted': _vm.item.cards.length < 1
+      }],
       on: {
         "click": function($event) {
           _vm.test()
@@ -63279,13 +63291,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         loadTest: function loadTest() {
+            if (this.item.cards.length < 1) {
+                return false;
+            }
+
             if (window.innerWidth <= 910) {
                 this.$emit('closeMenu');
             }
+
             this.$store.commit('setSelection', { asset: this.item, index: this.index });
             this.$router.push('/learn/' + this.item.id);
         },
         test: function test() {
+            if (this.item.cards.length < 1) {
+                return false;
+            }
+
             if (window.innerWidth <= 910) {
                 this.$emit('closeMenu');
             }
@@ -63357,7 +63378,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v("\n                    изменить\n                ")]), _vm._v(" "), _c('span', {
       class: ['text-primary', 'small']
     }, [_vm._v("|")]), _vm._v(" "), _c('span', {
-      class: ['text-primary', 'pointer', 'small'],
+      class: ['text-primary', 'pointer', 'small', {
+        'muted': _vm.item.cards.length < 1
+      }],
       on: {
         "click": function($event) {
           _vm.loadTest()
@@ -63368,7 +63391,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v("\n                    учить\n                ")]), _vm._v(" "), _c('span', {
       class: ['text-primary', 'small']
     }, [_vm._v("|")]), _vm._v(" "), _c('span', {
-      class: ['text-primary', 'pointer', 'small'],
+      class: ['text-primary', 'pointer', 'small', {
+        'muted': _vm.item.cards.length < 1
+      }],
       on: {
         "click": function($event) {
           _vm.test()
@@ -66971,7 +66996,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Обратная связь")])], 1)], 1), _vm._v(" "), _c('el-dialog', {
     attrs: {
-      "title": "Ваше сообщение",
+      "title": "Ваше сообщение:",
       "visible": _vm.dialogFormVisible
     },
     on: {
