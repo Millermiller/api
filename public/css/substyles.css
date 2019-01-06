@@ -1641,3 +1641,6 @@ span[tooltip]:hover:after {
 .puzzle-item.active{
     color: #FF4949;
 }
+#feedback_message{
+    min-height: 240px!important;
+}

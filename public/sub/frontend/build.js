@@ -66869,7 +66869,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$refs.messageform.validate(function (valid) {
                 if (valid) {
-                    _this.$http.post('feedback', { subject: _this.form.subject, message: _this.form.message }).then(function (response) {
+                    _this.$http.post('feedback', { message: _this.form.message }).then(function (response) {
                         _this.dialogFormVisible = false;
                         _this.$notify.success({
                             title: '',
@@ -66987,27 +66987,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('el-form-item', {
     attrs: {
-      "prop": "subject"
-    }
-  }, [_c('el-input', {
-    attrs: {
-      "placeholder": "Тема"
-    },
-    model: {
-      value: (_vm.form.subject),
-      callback: function($$v) {
-        _vm.$set(_vm.form, "subject", $$v)
-      },
-      expression: "form.subject"
-    }
-  })], 1), _vm._v(" "), _c('el-form-item', {
-    attrs: {
       "prop": "message"
     }
   }, [_c('el-input', {
     attrs: {
       "type": "textarea",
-      "placeholder": "Сообщение"
+      "placeholder": "Сообщение",
+      "id": "feedback_message"
     },
     model: {
       value: (_vm.form.message),

@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\MessageEvent;
+use App\Mail\Message;
+use Mail;
 
 class MessageEventListener
 {
@@ -24,6 +26,8 @@ class MessageEventListener
      */
     public function handle(MessageEvent $event)
     {
-        //
+        activity('admin')->performedOn($event->message)->log('Получено сообщение');
+
+        Mail::send(new Message($event->message));
     }
 }

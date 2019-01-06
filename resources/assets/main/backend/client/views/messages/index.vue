@@ -29,12 +29,18 @@
                                 {{ props.row.readed }}
                             </b-table-column>
 
+                            <b-table-column field="created_at" label="created_at" sortable centered>
+                                <span class="tag"  :class="['light']">
+                                    {{ new Date(props.row.created_at).toLocaleDateString()}} | {{new Date(props.row.created_at).toLocaleTimeString()}}
+                                </span>
+                            </b-table-column>
+
                             <b-table-column custom-key="actions">
-                                <button class="button  is-warning" @click="see(props.row)">
-                                    <b-icon icon="account-edit" size="is-small"></b-icon>
+                                <button class="button  is-success" @click="see(props.row)">
+                                    <b-icon icon="eye-outline" size="is-small"></b-icon>
                                 </button>
                                 <button class="button  is-danger" @click="remove(props.row)">
-                                    <b-icon icon="account-remove" size="is-small"></b-icon>
+                                    <b-icon icon="close-circle" size="is-small"></b-icon>
                                 </button>
                             </b-table-column>
                         </template>
@@ -61,7 +67,7 @@
         methods: {
             load() {
                 this.loading = true
-                this.$http.get('/admin/messages').then((response) => {
+                this.$http.get('/admin/message').then((response) => {
                     this.messages = response.body
                     this.loading = false
                 }, (response) => {
@@ -72,7 +78,7 @@
 
             },
             remove(row) {
-                this.$http.delete('/admin/messages/' + row.id).then((response) => {
+                this.$http.delete('/admin/message/' + row.id).then((response) => {
                     if (response.status === 204) {
                         this.$snackbar.open('Сообщение удалено!')
                         this.load()

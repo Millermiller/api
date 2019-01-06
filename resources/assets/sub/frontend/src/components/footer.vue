@@ -10,13 +10,10 @@
             </el-col>
         </el-row>
 
-        <el-dialog title="Ваше сообщение" :visible.sync="dialogFormVisible">
+        <el-dialog title="Ваше сообщение:" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="messageform">
-                <el-form-item prop="subject">
-                    <el-input v-model="form.subject"  placeholder="Тема"></el-input>
-                </el-form-item>
                 <el-form-item prop="message">
-                    <el-input type="textarea" v-model="form.message"  placeholder="Сообщение"></el-input>
+                    <el-input type="textarea" v-model="form.message"  placeholder="Сообщение" id="feedback_message"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -50,7 +47,7 @@
             submit(){
                 this.$refs.messageform.validate((valid) => {
                     if (valid) {
-                        this.$http.post('feedback', {subject: this.form.subject, message: this.form.message}).
+                        this.$http.post('feedback', {message: this.form.message}).
                         then(
                             (response) => {
                                 this.dialogFormVisible = false

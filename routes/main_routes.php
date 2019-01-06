@@ -51,7 +51,7 @@ Route::group([
     Route::get('/', 'VueController@index')->name('admin');
 
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::delete('/message/{id}', 'DashboardController@deleteMessage');
+
     Route::post('/message/read/{id}', 'DashboardController@readMessage');
 
     Route::get('/users/search', 'UsersController@search')->name('search');
@@ -83,5 +83,7 @@ Route::group([
     Route::post('/send', 'VueController@testmail');
 
     Route::resource('/log', 'LogController', ['except' => ['edit', 'create']]);
+
+    Route::resource('/message', 'MessageController', ['except' => ['edit', 'create']]);
 });
 

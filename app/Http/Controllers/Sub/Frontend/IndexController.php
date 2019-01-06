@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
+use App\Events\MessageEvent;
 use App\Events\MessageRecieved;
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
@@ -87,13 +88,14 @@ class IndexController extends Controller
 
     public function feedback()
     {
-        $subject = Input::get('subject', '');
         $message = Input::get('message', '');
 
-        $message = new Message(['user' => Auth::user()->id, 'name' => Auth::user()->login, 'subject' => $subject, 'message' => $message]);
+        $message = new Message(['name' => Auth::user()->login, 'message' => $message]);
 
         if ($message->save()){
-            event(new MessageRecieved(Auth::user(), $message));
+
+            event(new MessageEvent($message));
+
             return response()->json(['success' => true, 'msg' => 'Сообщение отправлено']);
         }
         else

@@ -31,14 +31,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function deleteMessage($id)
-    {
-        return response()->json([
-            'success'  => Message::destroy($id),
-            'messages' => array_values(Message::all()->sortByDesc('created_at')->toArray())
-        ]);
-    }
-
     public function readMessage($id)
     {
         return response()->json(['success' =>  Message::find($id)->update(['readed' => 1])]);
