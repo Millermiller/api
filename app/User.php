@@ -6,6 +6,7 @@ use App\Mail\ResetPassword;
 use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Intro;
+use App\Models\Language;
 use App\Models\Plan;
 use App\Models\Result;
 use App\Models\Text;
@@ -93,7 +94,10 @@ class User extends Authenticatable
 
             //'texts'     => Text::select(['id', 'title'])->where('published', '=', '1')->get(),
             'texts'     => Text::getTextsByUser($this->id),
-            'intro'     => Intro::where('active', '=', '1')->get()->sortBy('sort')->groupBy('page')
+            'intro'     => Intro::where('active', '=', '1')->get()->sortBy('sort')->groupBy('page'),
+            'sites'     => Language::all(),
+            'currentsite' => Language::where('name', config('app.lang'))->first(),
+            'domain'    => config('app.lang'),
         ];
     }
 

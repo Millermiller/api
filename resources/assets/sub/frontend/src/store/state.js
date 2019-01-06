@@ -5,6 +5,10 @@ export default {
         active: false
     },
 
+    sites: [],
+    currentsite: {},
+    domain: '',
+
     info: {},
 
     assets: {

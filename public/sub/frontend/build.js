@@ -57107,6 +57107,10 @@ exports.default = {
         active: false
     },
 
+    sites: [],
+    currentsite: {},
+    domain: '',
+
     info: {},
 
     assets: {
@@ -57259,6 +57263,14 @@ exports.default = {
 
     avatar: function avatar(state) {
         return state.user.avatar;
+    },
+
+    sites: function sites(state) {
+        return state.sites;
+    },
+
+    currentsite: function currentsite(state) {
+        return state.currentsite;
     },
 
     login: function login(state) {
@@ -57436,6 +57448,10 @@ exports.default = {
 
         state.texts = data.texts;
         state.intro = data.intro;
+
+        state.sites = data.sites;
+        state.currentsite = data.currentsite;
+        state.domain = data.domain;
     },
     setTexts: function setTexts(state, data) {
         state.texts = data;
@@ -66525,27 +66541,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             offset: 30,
             width: 40,
-            sites: [{
-                value: 'https://icelandic.scandinaver.org',
-                flag: '/img/flag_left_is.png',
-                label: 'Исландский'
-            }, {
-                value: 'https://swedish.scandinaver.org',
-                flag: '/img/flag_left_sw.png',
-                label: 'Шведский'
-            }, {
-                value: 'https://norvegian.scandinaver.org',
-                flag: '/img/flag_left_no.png',
-                label: 'Норвежский'
-            }, {
-                value: 'https://finnish.scandinaver.org',
-                flag: '/img/flag_left_fi.png',
-                label: 'Финский'
-            }],
+
             url: {
-                value: 'https://icelandic.scandinaver.org',
-                title: 'Исландский',
-                label: 'Beijing'
+                value: 'https://is.scandinaver.local',
+                title: 'Исландский'
             }
         };
     },
@@ -66579,10 +66578,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         username: function username() {
             return this.$store.getters.login;
+        },
+        sites: function sites() {
+            return this.$store.getters.sites;
         }
     },
     mounted: function mounted() {
         var _this = this;
+
+        this.url = this.$store.getters.currentsite;
 
         this.observer = new MutationObserver(function (mutations) {
             var _iteratorNormalCompletion = true;

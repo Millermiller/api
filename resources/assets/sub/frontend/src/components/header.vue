@@ -64,27 +64,10 @@
             return{
                 offset: 30,
                 width: 40,
-                sites: [{
-                    value: 'https://icelandic.scandinaver.org',
-                    flag: '/img/flag_left_is.png',
-                    label: 'Исландский'
-                },{
-                    value: 'https://swedish.scandinaver.org',
-                    flag: '/img/flag_left_sw.png',
-                    label: 'Шведский'
-                },{
-                    value: 'https://norvegian.scandinaver.org',
-                    flag: '/img/flag_left_no.png',
-                    label: 'Норвежский'
-                },{
-                    value: 'https://finnish.scandinaver.org',
-                    flag: '/img/flag_left_fi.png',
-                    label: 'Финский'
-                }],
+
                 url: {
-                    value: 'https://icelandic.scandinaver.org',
+                    value: 'https://is.scandinaver.local',
                     title: 'Исландский',
-                    label: 'Beijing'
                 }
             }
         },
@@ -117,9 +100,14 @@
             },
             username(){
                 return this.$store.getters.login
+            },
+            sites(){
+                return this.$store.getters.sites
             }
         },
         mounted() {
+            this.url = this.$store.getters.currentsite
+
             this.observer = new MutationObserver(mutations => {
                 for (const m of mutations) {
                     const newValue = m.target.getAttribute(m.attributeName);

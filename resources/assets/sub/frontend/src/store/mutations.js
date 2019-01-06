@@ -29,6 +29,10 @@ export default {
 
         state.texts = data.texts
         state.intro = data.intro
+
+        state.sites = data.sites
+        state.currentsite = data.currentsite
+        state.domain = data.domain
     },
 
     setTexts(state, data){

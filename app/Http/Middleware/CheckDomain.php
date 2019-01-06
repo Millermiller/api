@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Carbon\Carbon;
 use Closure;
 
 class CheckDomain
@@ -18,6 +17,9 @@ class CheckDomain
     {
         if(request('subdomain') === 'is')
             config(['app.lang' => 'is']);
+
+        if(request('subdomain') === 'sw')
+            config(['app.lang' => 'sw']);
 
         $request->route()->forgetParameter('subdomain');
 

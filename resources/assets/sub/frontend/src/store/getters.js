@@ -4,6 +4,14 @@ export default{
         return state.user.avatar;
     },
 
+    sites: state => {
+        return state.sites;
+    },
+
+    currentsite: state => {
+        return state.currentsite;
+    },
+
     login: state => {
         return state.user.login;
     },
