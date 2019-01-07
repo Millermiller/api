@@ -81,7 +81,7 @@ class Card extends Model{
         }
 
         $cards = DB::select('
-                        SELECT DISTINCT wta.id as card_id, t.id as translate_id,  w.id, w.word, w.transcription, t.value, w.audio, w.creator 
+                        SELECT DISTINCT wta.id as card_id, t.id as translate_id,  w.id, w.word, w.transcription, t.value, w.audio, w.creator, u.login as login
                         FROM assets as a
 
                         JOIN cards as wta
@@ -93,6 +93,9 @@ class Card extends Model{
                         JOIN translate as t
                           ON t.id = wta.translate_id
 
+                        left join users as u 
+                            on u.id = w.creator
+                                  
                         WHERE a.id = ?
                           AND a.lang = ?
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use DB;
@@ -26,6 +27,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string deleted_at
  * @property int sentence
  * @property int is_public
+ *
+ * @property User user
  */
 class Word extends Model {
 
@@ -35,9 +38,9 @@ class Word extends Model {
 
     protected $fillable = ['word', 'transcription', 'audio', 'sentence', 'is_public', 'creator'];
 
-    protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'transcription'];
+    protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'transcription', 'user'];
 
-    protected $appends = ['variants'];
+    protected $appends = ['variants', 'login'];
 
     /**
      * @return int
@@ -48,11 +51,24 @@ class Word extends Model {
     }
 
     /**
+     * @return string
+     */
+    public function getLoginAttribute()
+    {
+        return ($this->user) ? $this->user->login : '';
+    }
+
+    /**
      * @return Card|\Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function translates()
     {
         return $this->hasMany('App\Models\Translate');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'creator');
     }
 
     /**
@@ -68,11 +84,13 @@ class Word extends Model {
     public static function translate($word, $sentence)
     {
         return DB::select('
-                            select t.value, t.id as translate_id, w.word, w.transcription, w.id, w.creator, 
+                            select t.value, t.id as translate_id, w.word, w.transcription, w.id, u.login as creator, w.is_public as public,
                             MATCH (t.value) AGAINST (? IN NATURAL LANGUAGE MODE) as score
                               from translate as t
                                 left join words as w
                                   on t.word_id = w.id
+                                left join users as u 
+                                  on u.id = w.creator
                             where (MATCH(t.value) AGAINST(? IN BOOLEAN MODE)
                             or t.value like ?
                             or t.value = ?
@@ -80,8 +98,9 @@ class Word extends Model {
                             and t.sentence = ?
                             and w.deleted_at is null 
                             and (w.is_public = 1 or (w.is_public = 0 and w.creator = ?))
+                            and w.lang = ?
                             order by score desc;
-                            ', [$word, $word, $word.",%", $word, $sentence, Auth::user()->login]);
+                            ', [$word, $word, $word."%", $word, $sentence, Auth::user()->id, config('app.lang')]);
     }
 
     /**

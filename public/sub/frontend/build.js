@@ -62043,9 +62043,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "innerHTML": _vm._s(example.value)
       }
     })]
-  }), _vm._v(" "), (_vm.item.creator) ? _c('p', {
-    class: ['danger', 'text-right', 'small']
-  }, [_vm._v("\n                        Добавлено: " + _vm._s(_vm.item.creator) + "\n                    ")]) : _vm._e()], 2)] : _c('i', {
+  })], 2), _vm._v(" "), (_vm.item.creator) ? _c('p', {
+    class: ['danger', 'text-right', 'small', 'creator']
+  }, [_vm._v("\n                    Добавлено: " + _vm._s(_vm.item.login) + "\n                ")]) : _vm._e()] : _c('i', {
     staticClass: "ion-help"
   })], 2), _vm._v(" "), _c('audio', {
     ref: "player",
@@ -64994,7 +64994,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('p', {
     class: ['no-margin', 'danger', 'text-right', 'small']
-  }, [_vm._v("Добавлено: " + _vm._s(_vm.card.word.creator))])]) : _vm._e()], 1)
+  }, [_vm._v("Добавлено: " + _vm._s(_vm.card.word.login))])]) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -65121,7 +65121,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 orig: '',
                 translate: '',
                 is_public: false
-            }
+            },
+            loading: false
         };
     },
 
@@ -65139,7 +65140,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (this.word === '') return false;
 
+            this.loading = true;
+
             this.$http.get('/translate', { params: { word: this.word, sentence: +this.sentence } }).then(function (response) {
+
+                _this.loading = false;
+
                 if (!response.body.success) {
                     _this.message = response.body.message;
                     _this.cards = [];
@@ -65246,6 +65252,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
             this.$emit('add', data);
         }
+    },
+    computed: {
+        login: function login() {
+            return this.$store.getters.login;
+        }
     }
 });
 
@@ -65287,7 +65298,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('p', {
     class: ['no-margin', 'danger', 'text-right', 'small']
-  }, [_vm._v("Добавлено: " + _vm._s(_vm.card.creator))])]) : _vm._e()], 1)
+  }, [_vm._v("\n            Добавлено: " + _vm._s(_vm.card.creator) + "\n            "), (_vm.login === _vm.card.creator) ? [(_vm.card.public) ? _c('el-tooltip', {
+    staticClass: "text-muted",
+    attrs: {
+      "effect": "light",
+      "placement": "top-start"
+    }
+  }, [_c('div', {
+    attrs: {
+      "slot": "content"
+    },
+    slot: "content"
+  }, [_vm._v("Эта карточка видна всем пользователям")]), _vm._v(" "), _c('i', {
+    class: ['ion-ios-people', 'ion-small']
+  })]) : _c('el-tooltip', {
+    staticClass: "text-muted",
+    attrs: {
+      "effect": "light",
+      "placement": "top-start"
+    }
+  }, [_c('div', {
+    attrs: {
+      "slot": "content"
+    },
+    slot: "content"
+  }, [_vm._v("Эта карточка видна только вам")]), _vm._v(" "), _c('i', {
+    class: ['ion-ios-person', 'ion-small']
+  })])] : _vm._e()], 2)]) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -65348,9 +65385,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "placeholder": "слово для поиска.."
     },
-    on: {
-      "change": _vm.livesearch
-    },
     model: {
       value: (_vm.word),
       callback: function($$v) {
@@ -65370,6 +65404,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 1), _vm._v(" "), (_vm.message) ? _c('p', {
     staticClass: "text-muted"
   }, [_vm._v(_vm._s(_vm.message))]) : _vm._e(), _vm._v(" "), _c('section', {
+    directives: [{
+      name: "loading",
+      rawName: "v-loading.body",
+      value: (_vm.loading),
+      expression: "loading",
+      modifiers: {
+        "body": true
+      }
+    }],
     staticStyle: {
       "height": "65vh"
     },
@@ -65443,7 +65486,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('p', {
     staticClass: "small"
-  }, [_vm._v("\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                    Aliquam eros mi, hendrerit sed lacinia ac, semper sed libero.\n                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n                    Donec dignissim a elit eget vestibulum. Duis lacinia euismod mauris eu suscipit.\n                    Nulla facilisi. Vivamus non pharetra leo. Sed at dolor pretium, rutrum enim at, tincidunt ipsum.\n                    Aenean dictum faucibus lectus, nec commodo justo.\n                ")])])], 1), _vm._v(" "), _c('span', {
+  }, [_vm._v("\n                   Вы можете добавить в наш словарь собственные карточки. При установленном "), _c('span', {
+    staticClass: "danger"
+  }, [_vm._v("\"виден для всех\"")]), _vm._v(" ваша карточка будет\n                    подписана вашим логином и видна всем пользователям.\n                    Оставьте эту опцию отключенной, если не уверены в правильности перевода, ваша карточка не соответствует тематике сайта или вы просто не хотите, чтобы вашу карточку\n                    видели другие пользователи.\n                    Для удаления/редактирования пользовательских карточек обратитесь к администрации сайта.\n                ")])])], 1), _vm._v(" "), _c('span', {
     staticClass: "dialog-footer",
     attrs: {
       "slot": "footer"

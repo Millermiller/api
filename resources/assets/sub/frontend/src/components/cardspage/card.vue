@@ -11,7 +11,7 @@
             <p :class="['no-margin', 'card-value']" >{{card.translate.value}}</p>
         </el-col>
         <el-col :span="24" v-if="card.word.creator">
-            <p :class="['no-margin', 'danger', 'text-right', 'small']" >Добавлено: {{card.word.creator}}</p>
+            <p :class="['no-margin', 'danger', 'text-right', 'small']" >Добавлено: {{card.word.login}}</p>
         </el-col>
     </div>
 </template>

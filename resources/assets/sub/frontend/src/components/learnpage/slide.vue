@@ -12,10 +12,10 @@
                             <p v-html="example.text" class="example-text"></p>
                             <p v-html="example.value" class="example-value"></p>
                         </template>
-                        <p v-if="item.creator" :class="['danger', 'text-right', 'small']">
-                            Добавлено: {{item.creator}}
-                        </p>
                     </div>
+                    <p v-if="item.creator" :class="['danger', 'text-right', 'small', 'creator']">
+                        Добавлено: {{item.login}}
+                    </p>
                 </template>
                 <i v-else class="ion-help"></i>
             </div>

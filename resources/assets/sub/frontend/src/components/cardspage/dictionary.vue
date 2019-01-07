@@ -14,11 +14,11 @@
                     </el-col>
                 </el-row>
             </div>
-                <el-input placeholder="слово для поиска.." v-model="word" @change="livesearch">
+                <el-input placeholder="слово для поиска.." v-model="word">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                 </el-input>
             <p v-if="message" class="text-muted">{{message}}</p>
-            <section data-scrollbar style="height: 65vh;">
+            <section data-scrollbar style="height: 65vh;" v-loading.body="loading">
                 <transition-group name="cards" tag="div">
                     <translate v-for="(card, index) in cards"
                                :key="card.id"
@@ -47,12 +47,11 @@
             <el-collapse>
                 <el-collapse-item title="Что это?" name="1">
                     <p class="small">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Aliquam eros mi, hendrerit sed lacinia ac, semper sed libero.
-                        Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                        Donec dignissim a elit eget vestibulum. Duis lacinia euismod mauris eu suscipit.
-                        Nulla facilisi. Vivamus non pharetra leo. Sed at dolor pretium, rutrum enim at, tincidunt ipsum.
-                        Aenean dictum faucibus lectus, nec commodo justo.
+                       Вы можете добавить в наш словарь собственные карточки. При установленном <span class="danger">"виден для всех"</span> ваша карточка будет
+                        подписана вашим логином и видна всем пользователям.
+                        Оставьте эту опцию отключенной, если не уверены в правильности перевода, ваша карточка не соответствует тематике сайта или вы просто не хотите, чтобы вашу карточку
+                        видели другие пользователи.
+                        Для удаления/редактирования пользовательских карточек обратитесь к администрации сайта.
                     </p>
                 </el-collapse-item>
             </el-collapse>
@@ -80,7 +79,8 @@
                     orig: '',
                     translate: '',
                     is_public: false
-                }
+                },
+                loading: false
             }
         },
         components:{
@@ -93,8 +93,13 @@
             search(){
                 if(this.word === '') return false
 
+                this.loading = true
+
                 this.$http.get('/translate', {params:  {word: this.word, sentence: +this.sentence}}).then(
                     (response) => {
+
+                        this.loading = false
+
                         if(!response.body.success){
                             this.message = response.body.message
                             this.cards = []

@@ -42,7 +42,7 @@ class CardsController extends Controller
         $translate = Input::get('translate');
         $is_public = Input::get('is_public');
 
-        $word = new Word(['word' => $orig, 'sentence' => 0, 'is_public' => $is_public, 'creator' => Auth::user()->login]);
+        $word = new Word(['word' => $orig, 'sentence' => 0, 'is_public' => $is_public, 'creator' => Auth::user()->id, 'lang' => config('app.lang')]);
 
         if ($word->save())
             $translate = new Translate(['value' => $translate, 'sentence' => 0, 'word_id' => $word->id, 'is_public' => $is_public]);

@@ -1644,3 +1644,7 @@ span[tooltip]:hover:after {
 #feedback_message{
     min-height: 240px!important;
 }
+p.creator{
+    position: absolute;
+    bottom: 0;
+}
