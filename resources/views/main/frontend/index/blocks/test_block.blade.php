@@ -4,20 +4,16 @@
             <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
-                <h2 class="section-heading">Lorem ipsum dolor sit amet</h2>
-                <p class="lead">Sed vel mi ac felis aliquam lobortis.
-                    Vivamus iaculis mauris faucibus tortor lobortis tempor.
-                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                    Aenean sit amet placerat neque, in faucibus turpis. Sed sagittis eleifend lacinia.
-                    Nam ut commodo velit, sit amet rutrum nulla. Fusce malesuada enim arcu, et vehicula nibh commodo
-                    vel.
-                    Vestibulum tristique eros risus, eu laoreet lectus fringilla ac.</p>
+                <h2 class="section-heading">Новые уровни</h2>
+                <p class="lead">
+                   Проверяйте свои знания и открывайте новые словари, проходя тесты.
+                </p>
             </div>
             <div class="col-lg-5 col-sm-pull-6  col-sm-6">
                 <div id="test_view" v-cloak>
 
                     <div slot="header">
-                        <div class="cov-progress" :style="{width: progress + '%'}"></div>
+                        <div :class="['cov-progress', {'cov-error': error}]" :style="{width: progress + '%'}"></div>
                         <h3 style="height: 76px;" class="text-center" v-if="question.word">@{{question.word}}
                             <hr>
                         </h3>
@@ -32,16 +28,19 @@
                                                  timing-func="ease-in"
                                                  :total-steps="quantity">
                                 <p class="demo-result">@{{percent}}%</p>
-                                <p @click="getAsset">еще раз</p>
+                                <p class="btn btn-success" @click="getAsset">еще раз</p>
                             </radial-progress-bar>
-                            <div class="errors" v-if="errors">
+                           <!-- <div class="errors" v-if="errors">
                                 <p v-for="error in errors">@{{error.word}} - @{{error.value}}</p>
-                            </div>
+                            </div> -->
                         </template>
                     </div>
-                    <div class="variants" v-if="question.word">
-                        <p class="pointer" v-for="variant in variants" @click="check(variant)">@{{variant.text}}</p>
-                    </div>
+                    <ul class="variants" v-if="question.word">
+                        <li class="pointer" v-for="(variant, index) in variants" @click="check(variant)">
+                            <span class="counter">@{{ index + 1 }}.</span>
+                            @{{variant.text}}
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

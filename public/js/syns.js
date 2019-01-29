@@ -2,10 +2,13 @@ const syns = {
     "алисе": [
         "Lísa"
     ],
+    "алиса": [
+        "Lísa"
+    ],
     "было": [
-        "hafði voru",
+
         "hafði",
-        "voru"
+
     ],
     "скучно": [
         "ekkert fyrir stafni"
@@ -57,11 +60,6 @@ const syns = {
     ],
     "скамье": [
         "bekknum"
-    ],
-    "в": [
-        "til",
-        "Í",
-        "eru í"
     ],
     "иногда": [
         "Öðru hvoru"
@@ -128,20 +126,19 @@ const syns = {
         "hugsaði"
     ],
     "вдруг": [
-        "Skyndilega kom"
+        "Skyndilega"
     ],
     "внезапно": [
-        "Skyndilega kom"
+        "Skyndilega"
     ],
     "увидела": [
-        "auga"
+        "sá"
     ],
     "заметила": [
-        "auga"
+        "sá"
     ],
     "белого": [
-        "á hvíta",
-        '<span class="success-text" tooltip=на>á</span> hvíta'
+        "hvíta",
     ],
     "кролика": [
         "kanínu"
@@ -154,6 +151,9 @@ const syns = {
     ],
     "пробежал": [
         "hljóp"
+    ],
+    "пробежавшего": [
+        "sem hljóp"
     ],
     "мимо": [
         "fram hjá"

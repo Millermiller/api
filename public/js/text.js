@@ -1,12 +1,10 @@
 
 const text =  {
     "text": "Lísa hafði ekkert fyrir stafni og hún sat á bekknum við hlið systur sinnar. " +
-    "Öðru hvoru hún augunum til bókarinnar, sem systir sinnar var að lesa.  " +
-    "Í bókinni voru engar myndir. „ Og hvað er gaman að bókum, sem engar myndir eru í “, hugsaði Lísa. " +
    // "Það var sólbjartur sumardagur og hita gerði Lísu ákaflega lata.Hún var að hugsa um, hvort hún ætti að standa á fætur og búa til fíflafesti, en hún var svo löt, að hún nennti varla að tína fíflana. " +
-    "Skyndilega kom hún auga á hvíta kanínu, sem hljóp fram hjá.",
+    "Skyndilega hún sá hvíta kanínu, sem hljóp fram hjá.",
   //  "words_count": 82,
-    "words_count": 44,
+    "words_count": 23,
     "text_extra": [
         {
             "id": 47,

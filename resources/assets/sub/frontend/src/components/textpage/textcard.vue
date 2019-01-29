@@ -1,5 +1,5 @@
 <template>
-    <el-col :lg="6" :sm="12" :xs="24">
+    <el-col :lg="6" :sm="12" :xs="24" id="textblock">
         <el-card :class="['text', {'open': text.active, 'not-available': !text.available}]"
                  :body-style="{ padding: '0px' }">
 

@@ -48,6 +48,13 @@ PHP:
 https://github.com/beyondcode/laravel-self-diagnosis
 https://github.com/beyondcode/laravel-er-diagram-generator - Generate entity relation diagrams from your Laravel model files.
 https://github.com/anlutro/laravel-settings
+https://github.com/spatie/laravel-collection-macros A set of useful Laravel collection macros
+https://github.com/spatie/laravel-medialibrary Associate files with Eloquent models
+https://github.com/flugger/laravel-responder A Laravel Fractal package for building API responses, giving you the power of Fractal with Laravel's elegancy.
+https://github.com/cviebrock/eloquent-sluggable Easy creation of slugs for your Eloquent models in Laravel
+https://github.com/beyondcode/laravel-tag-helper Add powerful HTML tag helpers to your Laravel application
+https://github.com/appstract/laravel-blade-directives A collection of nice Laravel Blade directives
+https://github.com/appstract/laravel-options Global key-value store in the database
 
 SUB ADMIN UPDATE:
 

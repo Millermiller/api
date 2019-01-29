@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" :xs="24">
+    <el-col :span="8" :xs="24" id="dictblock">
         <el-card class="box-card" id="dictionary_block">
             <div slot="header" class="clearfix">
                 <el-row>

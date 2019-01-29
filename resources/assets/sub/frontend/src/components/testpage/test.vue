@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" :xs="24">
+    <el-col :span="8" :xs="24" id="testblock">
         <el-card class="box-card" v-loading.body="loading">
             <div slot="header" class="clearfix">
                 <vue-progress-bar></vue-progress-bar>

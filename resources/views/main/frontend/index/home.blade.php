@@ -11,6 +11,8 @@
     <script src="{{ url('js/main.js') }}"></script>
     <script src="{{ url('js/text.js') }}"></script>
     <script src="{{ url('js/syns.js') }}"></script>
+    <script src="{{ url('js/cards.js') }}"></script>
+    <script src="{{ url('js/test.js') }}"></script>
 
     <div class=" parallax-window" data-parallax="scroll" data-image-src="/img/head-bg.jpg">
         <div class="container">

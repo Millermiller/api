@@ -3,11 +3,11 @@
         <el-main>
             <el-row :gutter="20">
                 <el-col :span="12">
-                    <el-card style="position: relative;">
+                    <el-card style="position: relative;" id="origtext">
                         <vue-progress-bar></vue-progress-bar>
                         <p class="origtext" v-html="output"></p>
                     </el-card>
-                    <el-collapse>
+                    <el-collapse id="helpblock">
                         <el-collapse-item title="Помощь">
                             <template v-for="extra in text.text_extra">
                                 <el-col :span="12">
@@ -21,7 +21,7 @@
                         </el-collapse-item>
                     </el-collapse>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="12" id="textarea">
                     <textarea
                             style="height: 280px"
                             class="panel"

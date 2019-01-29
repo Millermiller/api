@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" :xs="24">
+    <el-col :span="8" :xs="24" id="assetsblock">
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span style="line-height: 24px;">Мои словари</span>

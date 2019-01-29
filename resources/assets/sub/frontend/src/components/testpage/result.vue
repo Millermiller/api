@@ -1,7 +1,7 @@
 <template>
     <el-col :span="8" :class="['hidden-sm-and-down']">
         <el-card :class="['box-card', 'result-card']">
-            <div slot="header" class="clearfix">
+            <div slot="header" class="clearfix" id="infoblock">
                 <el-row :gutter="20">
                     <el-col :span="8" class="diagram">
                         <el-progress type="circle" :percentage="percent" :width="100"></el-progress>
@@ -15,7 +15,7 @@
                     </el-col>
                 </el-row>
             </div>
-            <section data-scrollbar style="height: 55vh; overflow: hidden">
+            <section data-scrollbar style="height: 55vh; overflow: hidden" id="errorsblock">
                 <transition-group name="splash" tag="div">
                     <erroritem
                             v-for="(error, index) in errors"

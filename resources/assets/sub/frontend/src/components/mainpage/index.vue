@@ -10,7 +10,7 @@
                 <account></account>
 
                 <el-col :md="18" :xs="24" :sm="16">
-                    <el-row :gutter="20">
+                    <el-row :gutter="20" :id="widgetblock">
                         <wordwidget></wordwidget>
                         <sentencewidget></sentencewidget>
                         <textwidget></textwidget>
@@ -30,8 +30,7 @@
 
             <el-dialog title="Привет!" :visible.sync="greetingVisible">
                     <span>
-                        Добро пожаловать!
-                        <span class="blue">Помощь</span> и <span class="blue">Обратная связь</span>
+                        Добро пожаловать, {{username}}!
                     </span>
                 <span slot="footer" class="dialog-footer">
                         <el-button @click="greetingVisible = false">Закрыть</el-button>
@@ -69,10 +68,15 @@
                 this.dialogVisible = true
             }
         },
+        computed:{
+            username(){
+                return this.$store.getters.login
+            },
+        },
         mounted(){
             if (!localStorage.getItem('myFirstAdventure')) {
-                this.greetingVisible = true;
-                localStorage.setItem('myFirstAdventure', true)
+             //   this.greetingVisible = true;
+             //   localStorage.setItem('myFirstAdventure', true)
             }
         }
     };

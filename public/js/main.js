@@ -22,46 +22,6 @@ $(function(){
         return this;
     };
 
-
-
-    const options = {
-        color: '#20A0FF',
-        failedColor: '#874b4b',
-        thickness: '5px',
-        transition: {
-            speed: '0.2s',
-            opacity: '0.6s'
-        },
-        location: 'top',
-    }
-
-    const d = [
-        {
-            "card_id": 1129,
-            "translate_id": 44617,
-            "id": 36497,
-            "word": "þú",
-            "transcription": "[þu:]",
-            "value": "ты",
-            "audio": "/audio/8a92d6307e10fb2e247d59176ae16400.mp3",
-            "creator": null,
-            "examples": [],
-            "favourite": false
-        },
-        {
-            "card_id": 1130,
-            "translate_id": 5793,
-            "id": 4592,
-            "word": "ég",
-            "transcription": "[jε:q̌, jεq̌, jε:, jε]",
-            "value": "я",
-            "audio": "/audio/b85e6433287a7b4440cf80a767e63fb3.mp3",
-            "creator": null,
-            "examples": [],
-            "favourite": false
-        }
-    ]
-
     Vue.use(VueAwesomeSwiper)
     Vue.use(RadialProgressBar)
 
@@ -75,62 +35,7 @@ $(function(){
             activeClass: 'ion-ios-star',
             defaultClass: 'ion-ios-star-outline',
             cards: [
-                {
-                    audio: '/audio/hpmmXF4aGW3GCGHWd8R42q0B7Hh6USZx.mp3',
-                    show: false,
-                    word: 'word1',
-                    value: 'value1',
-                    favourite: false,
-                    examples: [
-                        {
-                            text: 'text1',
-                            value: 'value1',
-                        }
-                    ],
-                    player: 'p1'
-                },
-                {
-                    audio: '/audio/hpmmXF4aGW3GCGHWd8R42q0B7Hh6USZx.mp3',
-                    show: false,
-                    word: 'word2',
-                    value: 'value2',
-                    favourite: false,
-                    examples: [
-                        {
-                            text: 'text2',
-                            value: 'value2',
-                        }
-                    ],
-                    player: 'p2'
-                },
-                {
-                    audio: '/audio/hpmmXF4aGW3GCGHWd8R42q0B7Hh6USZx.mp3',
-                    show: false,
-                    word: 'word3',
-                    value: 'value3',
-                    favourite: false,
-                    examples: [
-                        {
-                            text: 'text1',
-                            value: 'value1',
-                        }
-                    ],
-                    player: 'p3'
-                },
-                {
-                    audio: '/audio/hpmmXF4aGW3GCGHWd8R42q0B7Hh6USZx.mp3',
-                    show: false,
-                    word: 'word4',
-                    value: 'value4',
-                    favourite: false,
-                    examples: [
-                        {
-                            text: 'text2',
-                            value: 'value2',
-                        }
-                    ],
-                    player: 'p4'
-                }
+
             ],
             swiperOptionA: {
                 pagination: {
@@ -166,8 +71,9 @@ $(function(){
                 this.cards[index].favourite = !this.cards[index].favourite
             }
         },
-        mounted() {
-
+        created: function() {
+            this.cards = cards
+            this.cards.shuffle()
         }
     })
 
@@ -197,7 +103,7 @@ $(function(){
                 this.getAsset()
             },
             getAsset(){
-                this.cards = JSON.parse(JSON.stringify(d))
+                this.cards = cards.slice()
                 this.loading = true;
                 this.quantity = this.cards.length
                 this.translates = []
@@ -209,16 +115,19 @@ $(function(){
                 this.progress = 0
                 this.createTest()
                 this.result = 0
+                this.error = false
             },
             check(variant){
                 this.answers++
                 this.progress = (Math.floor((this.answers * 100) / this.quantity))
                 if (variant.correct) {
+                    this.error = false
                     this.success++
                     this.percent = Math.floor((this.success * 100) / this.quantity)
                     this.next()
                 }
                 else {
+                    this.error = true
                     this.fail++
                     this.errors.push(this.question) // todo: use store
                     this.next()
@@ -232,13 +141,13 @@ $(function(){
                 else {
                     this.question = {}
                     this.variants = []
-                    this.progress = 0
+                    this.progress = 100
                     var self = this;
                     setTimeout(function(){self.result = self.success}, 1000);
-
                 }
             },
             createTest(){
+                console.log(this.cards)
                 this.question = this.cards.pop()
                 this.variants = [{'text': this.question.value, 'correct': true}]
                 let indexes = []
@@ -308,14 +217,20 @@ $(function(){
                     let word = arr[0].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
                     let tooltip = arr[1]
 
+                    var re = new RegExp("(^|\\s)(" + word.trim() + ")([^\\w]|$)", 'gi');
+                    let result = this.text.computed.match(re);
+
                     this.text.computed = this.text.computed.replace(
-                        new RegExp("(^|\\s)(" + word.trim() + ")([^\\w]|$)", 'gi'),
-                        '$1<span class="success-text" tooltip='+tooltip+'>$2</span>$3'
+                        re, '$1<span class="success-text" tooltip='+tooltip+'>$2</span>$3'
                     );
-                    c++;
+
+                    if(result)
+                        c += (word.split(' ').length) * result.length
+                    else
+                        c += word.split(' ').length
                 }
 
-                if (this.showedExtra != '') {
+                if (this.showedExtra !== '') {
                     this.text.computed = this.text.computed.replace(
                         new RegExp("(^|\\s|>)(" + this.showedExtra.trim() + ")([^\\w]|$|<)", 'gi'),
                         '$1<span class="warning-text">$2</span>$3'
@@ -359,8 +274,8 @@ $(function(){
     new Vue({
         el: '#puzzle_view',
         data:{
-            translate: 'Я уже видел этого человека',
-            sentence: 'Ég hef séð þennan mann nú þegar',
+            translate: 'Вдруг она увидела белого кролика',
+            sentence: 'skyndilega hún sá á hvíta kanínu',
             words: [],
             shufflewords: [],
             dropzones: [],
@@ -384,8 +299,8 @@ $(function(){
         },
         methods:{
             handleDrop(toList, data) {
+                const fromList = data.list
 
-                const fromList = data.list;
                 if (data.item === toList.for) {
                     toList.content.push(data.item);
                     fromList.splice(fromList.indexOf(data.item), 1);

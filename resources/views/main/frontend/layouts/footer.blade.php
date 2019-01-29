@@ -1,31 +1,52 @@
 <footer>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-10">
+            <div class="col-lg-8">
                 <ul class="list-inline">
+                    <!--
                     <li>
                         <a href="#home">Instagram</a>
                     </li>
                     <li class="footer-menu-divider">&sdot;</li>
+                    -->
                     <li>
-                        <a href="#about">VK</a>
+                        <a href="https://vk.com/scandinaver" target="_blank">VK</a>
                     </li>
                     <li class="footer-menu-divider">&sdot;</li>
+                    <!--
                     <li>
                         <a href="#feedback">twitter</a>
                     </li>
                     <li class="footer-menu-divider">&sdot;</li>
+                     -->
                     <li>
                         <a href="#feedback" class="fancybox">Письмо администрации</a>
                     </li>
                     <li class="footer-menu-divider">&sdot;</li>
                 </ul>
-                <p class="copyright text-muted small">Copyright &copy; Scandinaver <?= \Carbon\Carbon::now()->year?>. All Rights Reserved</p>
+                <p class="copyright text-muted small">Copyright &copy; Scandinaver <?= \Carbon\Carbon::now()->year?> | All Rights Reserved | support@scandinaver.org</p>
             </div>
-            <div class="col-lg-2">
-                <a href="//www.free-kassa.ru/">
-                    <img src="//www.free-kassa.ru/img/fk_btn/6.png">
-                </a>
+            <div class="col-lg-4 text-center icon-block">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="//www.free-kassa.ru/">
+                            <img src="//www.free-kassa.ru/img/fk_btn/6.png">
+                        </a>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img style="height: 30px;" src="{{url('/img/ivona_tts_amzn.png')}}">
+                            </div>
+                            <div class="col-md-12">
+                                <img style="height: 30px;" src="{{url('/img/forvo-logo.png')}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img style="height: 60px;" src="{{url('/img/google-play-badge.png')}}">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

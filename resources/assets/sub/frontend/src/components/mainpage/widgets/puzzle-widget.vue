@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" :xs="24">
+    <el-col :span="8" :xs="24" id="puzzlewidget">
         <el-card shadow="hover" :class="['widget-block', 'pointer']"  @click.native="words()">
             <p :class="['widget-title']">Паззлы</p>
             <p :class="['widget-description']">{{active}}/{{all}}</p>

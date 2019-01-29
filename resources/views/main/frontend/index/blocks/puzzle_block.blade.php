@@ -4,14 +4,8 @@
             <div class="col-lg-5 col-sm-6">
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
-                <h2 class="section-heading">Lorem ipsum dolor sit amet</h2>
-                <p class="lead">Sed vel mi ac felis aliquam lobortis.
-                    Vivamus iaculis mauris faucibus tortor lobortis tempor.
-                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                    Aenean sit amet placerat neque, in faucibus turpis. Sed sagittis eleifend lacinia.
-                    Nam ut commodo velit, sit amet rutrum nulla. Fusce malesuada enim arcu, et vehicula nibh commodo
-                    vel.
-                    Vestibulum tristique eros risus, eu laoreet lectus fringilla ac.</p>
+                <h2 class="section-heading">Словарные паззлы</h2>
+                <p class="lead">Разместите слова в правильном порядке.</p>
             </div>
             <div class="col-lg-5 col-lg-offset-2 col-sm-6">
                 <div id="puzzle_view" class="row" v-cloak>

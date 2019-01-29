@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" :xs="24">
+    <el-col :span="8" :xs="24" id="cardsblock">
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                Карточки в словаре <span class="danger">{{name}}</span>

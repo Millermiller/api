@@ -4,13 +4,12 @@
             <div class="col-lg-5 col-sm-6">
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
-                <h2 class="section-heading">Lorem ipsum dolor sit amet</h2>
-                <p class="lead">Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit. Donec id lectus sit amet felis ultrices eleifend.
-                    Suspendisse accumsan mauris a sem ultricies faucibus. Cras pharetra metus nec tempor interdum.
-                    Proin tristique porta ultricies. Cras et sollicitudin nulla.
-                    Pellentesque consequat nisl nec felis rutrum, sit amet dictum ligula iaculis.
-                    Praesent ut dolor pulvinar mauris sodales egestas in eu ligula. </p>
+                <h2 class="section-heading">Слова и предложения</h2>
+                <p class="lead">
+                    Мы приготовили сотни словарных карточек для каждого языка.
+                    Карточка содержит слово, перевод, пример использования и произношение.
+                    Также, вы можете создавать личные словари со своими карточками.
+                </p>
             </div>
             <div class="col-lg-5 col-lg-offset-2 col-sm-6">
                 <div id="slider_view" v-cloak>
@@ -25,12 +24,12 @@
                                             <p class="slide-value">@{{card.value}}</p>
                                             <div class="example-area">
                                                 <template v-for="example in card.examples">
-                                                    <p v-html="example.text" class="example-text"></p>
-                                                    <p v-html="example.value" class="example-value"></p>
+                                                    <div class="example-item">
+                                                        <p v-html="example.text" class="example-text"></p>
+                                                        <i v-html="example.value" class="example-value"></i>
+                                                        <i class="icon ion-bookmark text-danger"></i>
+                                                    </div>
                                                 </template>
-                                                <p v-if="card.creator" :class="['danger', 'text-right', 'small']">
-                                                    Добавлено: @{{card.creator}}
-                                                </p>
                                             </div>
                                         </template>
                                         <i v-else class="ion-help"></i>

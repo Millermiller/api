@@ -57635,11 +57635,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.dialogVisible = true;
         }
     },
-    mounted: function mounted() {
-        if (!localStorage.getItem('myFirstAdventure')) {
-            this.greetingVisible = true;
-            localStorage.setItem('myFirstAdventure', true);
+    computed: {
+        username: function username() {
+            return this.$store.getters.login;
         }
+    },
+    mounted: function mounted() {
+        if (!localStorage.getItem('myFirstAdventure')) {}
     }
 });
 
@@ -57737,7 +57739,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: ['hidden-xs-only'],
     attrs: {
       "md": 6,
-      "sm": 8
+      "sm": 8,
+      "id": _vm.accountblock
     }
   }, [_c('el-card', {
     class: ['box-card', 'account-card'],
@@ -57854,7 +57857,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "wordwidget"
     }
   }, [_c('el-card', {
     class: ['widget-block', 'pointer'],
@@ -57971,7 +57975,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "sentencewidget"
     }
   }, [_c('el-card', {
     class: ['widget-block', 'pointer'],
@@ -58087,7 +58092,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "textwidget"
     }
   }, [_c('el-card', {
     class: ['widget-block', 'pointer'],
@@ -58314,7 +58320,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "puzzlewidget"
     }
   }, [_c('el-card', {
     class: ['widget-block', 'pointer'],
@@ -58362,7 +58369,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('el-row', {
     attrs: {
-      "gutter": 20
+      "gutter": 20,
+      "id": _vm.widgetblock
     }
   }, [_c('wordwidget'), _vm._v(" "), _c('sentencewidget'), _vm._v(" "), _c('textwidget'), _vm._v(" "), _c('personalwidget'), _vm._v(" "), _c('puzzlewidget')], 1)], 1)], 1), _vm._v(" "), _c('el-dialog', {
     attrs: {
@@ -58401,11 +58409,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.greetingVisible = $event
       }
     }
-  }, [_c('span', [_vm._v("\n                    Добро пожаловать!\n                    "), _c('span', {
-    staticClass: "blue"
-  }, [_vm._v("Помощь")]), _vm._v(" и "), _c('span', {
-    staticClass: "blue"
-  }, [_vm._v("Обратная связь")])]), _vm._v(" "), _c('span', {
+  }, [_c('span', [_vm._v("\n                    Добро пожаловать, " + _vm._s(_vm.username) + "!\n                ")]), _vm._v(" "), _c('span', {
     staticClass: "dialog-footer",
     attrs: {
       "slot": "footer"
@@ -61683,7 +61687,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "xs": {
         span: 24,
         offset: 0
-      }
+      },
+      "id": _vm.cardsblock
     }
   }, [_c('el-card', {
     class: ['box-card', 'tab-navigation']
@@ -62587,7 +62592,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "clearfix",
     attrs: {
-      "slot": "header"
+      "slot": "header",
+      "id": "infoblock"
     },
     slot: "header"
   }, [_c('el-row', {
@@ -62616,7 +62622,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "overflow": "hidden"
     },
     attrs: {
-      "data-scrollbar": ""
+      "data-scrollbar": "",
+      "id": "errorsblock"
     }
   }, [_c('transition-group', {
     attrs: {
@@ -62857,7 +62864,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "testblock"
     }
   }, [_c('el-card', {
     directives: [{
@@ -63421,7 +63429,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: ['right-panel'],
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "cardsblock"
     }
   }, [_c('el-card', {
     class: ['box-card', 'tab-navigation']
@@ -64322,11 +64331,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "slot": "header"
     },
     slot: "header"
-  }, [_c('span', {
-    staticStyle: {
-      "line-height": "36px"
-    }
-  }, [_vm._v("icelandic.scandinaver.org")])]), _vm._v(" "), _c('el-form', {
+  }), _vm._v(" "), _c('el-form', {
     ref: "loginform",
     attrs: {
       "model": _vm.form,
@@ -64753,7 +64758,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "assetsblock"
     }
   }, [_c('el-card', {
     staticClass: "box-card"
@@ -65012,7 +65018,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "cardsblock"
     }
   }, [_c('el-card', {
     staticClass: "box-card"
@@ -65342,7 +65349,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('el-col', {
     attrs: {
       "span": 8,
-      "xs": 24
+      "xs": 24,
+      "id": "dictblock"
     }
   }, [_c('el-card', {
     staticClass: "box-card",
@@ -65679,7 +65687,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "lg": 6,
       "sm": 12,
-      "xs": 24
+      "xs": 24,
+      "id": "textblock"
     }
   }, [_c('el-card', {
     class: ['text', {
@@ -65972,13 +65981,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('el-card', {
     staticStyle: {
       "position": "relative"
+    },
+    attrs: {
+      "id": "origtext"
     }
   }, [_c('vue-progress-bar'), _vm._v(" "), _c('p', {
     staticClass: "origtext",
     domProps: {
       "innerHTML": _vm._s(_vm.output)
     }
-  })], 1), _vm._v(" "), _c('el-collapse', [_c('el-collapse-item', {
+  })], 1), _vm._v(" "), _c('el-collapse', {
+    attrs: {
+      "id": "helpblock"
+    }
+  }, [_c('el-collapse-item', {
     attrs: {
       "title": "Помощь"
     }
@@ -65998,7 +66014,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('span', [_vm._v(_vm._s(extra.orig))]), _vm._v(" - " + _vm._s(extra.extra) + "\n                                ")])])]
   })], 2)], 1)], 1), _vm._v(" "), _c('el-col', {
     attrs: {
-      "span": 12
+      "span": 12,
+      "id": "textarea"
     }
   }, [_c('textarea', {
     directives: [{

@@ -3,7 +3,7 @@
         <div class="form-wrapper">
             <el-card v-loading.body="loading">
                 <div slot="header" class="clearfix">
-                    <span style="line-height: 36px;">icelandic.scandinaver.org</span>
+
                 </div>
                 <el-form ref="loginform" :model="form" :rules="rules">
                     <small v-if="error" style="color:#ff4949">{{error}}</small>
