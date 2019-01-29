@@ -27,13 +27,14 @@ class ProfileController extends Controller
     public function index()
     {
         Meta::set('title', 'Профиль');
-        Meta::set('description', 'This is my home. Enjoy!');
 
         return view('main.frontend.profile.info', ['user' => Auth::user()]);
     }
 
     public function settings()
     {
+        Meta::set('title', 'Профиль');
+
         return view('main.frontend.profile.settings', ['user' => Auth::user()]);
     }
 
@@ -74,6 +75,7 @@ class ProfileController extends Controller
      * @param  Request $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request)
     {
@@ -112,8 +114,13 @@ class ProfileController extends Controller
         return redirect()->route('frontend::profile');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function log()
     {
+        Meta::set('title', 'Профиль');
+
         $logs = Activity::where([
             'causer_id' => Auth::user()->id,
             'log_name'  => 'public'

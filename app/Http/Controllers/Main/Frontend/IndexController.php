@@ -19,9 +19,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-        Meta::set('title', 'You are at home');
-        Meta::set('description', 'This is my home. Enjoy!');
-        Meta::set('image', asset('images/home-logo.png'));
+        Meta::set('title', 'Scandinaver');
+        Meta::set('description', 'Scandinaver');
+        //Meta::set('image', asset('images/home-logo.png'));
 
         return view('main.frontend.index.home');
     }
