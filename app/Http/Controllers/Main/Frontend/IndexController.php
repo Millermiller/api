@@ -29,6 +29,7 @@ class IndexController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function feedback(Request $request)
     {

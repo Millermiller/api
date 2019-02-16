@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $name
- * @property string $title
+ * @property string $label
  * @property string $flag
+ * @property string $image
  */
 class Language extends Model
 {
@@ -16,7 +17,7 @@ class Language extends Model
 
     protected $fillable = [];
 
-    protected $appends = ['value'];
+    protected $appends = ['value', 'image'];
 
     /**
      * @return int
@@ -24,5 +25,13 @@ class Language extends Model
     public function getValueAttribute()
     {
         return 'https://'.$this->name.'.'.config('app.DOMAIN');
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageAttribute()
+    {
+        return config('app.SITE').$this->flag;
     }
 }

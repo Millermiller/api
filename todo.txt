@@ -7,6 +7,8 @@
 
 доделать ЛК!
 
+очистить переводы для мобильного
+
 доделать introjs
 
 выделение примеров разными цветами (добавить в админку)
@@ -70,3 +72,7 @@ MAIN ADMIN UPDATE:
 john@scandinaver.org
 John
 CNhcAZeXeqEm
+
+******************************** FIX IDE HELPER ON 5.7 ********************
+https://github.com/barryvdh/laravel-ide-helper/issues/625
+

@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
+use App\Models\Card;
 use App\Models\Example;
+use App\Models\Language;
 use App\Models\Result;
+use App\User;
 
 /**
  * Created by PhpStorm.
@@ -21,24 +24,30 @@ class ApiController extends Controller
 {
     public function languages()
     {
-        return response()->json([
-            [
-                'name' => 'Исландский',
-                'flag' => 'https://scandinaver.org/img/is_round.png',
-                'letter' => 'is'
-            ],
-            [
-                'name' => 'Шведский',
-                'flag' => 'https://scandinaver.org/img/sw_round.png',
-                'letter' => 'sw'
-            ],
-        ]);
+        $languages = Language::all();
+
+        $response = [];
+
+        foreach($languages as $language){
+            $response[] = [
+                'name' => $language->label,
+                'flag' => $language->image,
+                'letter' => $language->name,
+                'cards' => Card::whereHas('asset', function($q) use ($language) {
+                    /** @var \Illuminate\Database\Eloquent\Builder $q*/
+                    $q->where('lang', $language->name);
+                })->count()
+            ];
+        }
+
+        return response()->json($response);
     }
 
     public function assets($language)
     {
         config(['app.lang' => $language]);
 
+        /** @var User $user */
         $user = auth('api')->user();
 
         $assets = [];
@@ -54,6 +63,12 @@ class ApiController extends Controller
 
         $data = $personaldata->merge($publicdata);
 
+        $counter = [
+            Asset::TYPE_WORDS => 0,
+            Asset::TYPE_SENTENCES => 0,
+            Asset::TYPE_PERSONAL => 0,
+            Asset::TYPE_FAVORITES => 0,
+        ];
 
         foreach ($data as $item) {
             $cards = [];
@@ -72,7 +87,7 @@ class ApiController extends Controller
 
             $asset = [
                 'id' => $item->id,
-                'active' => (in_array($item->id, array_keys($activeArray))) ? 1 : 0,
+                'active' => in_array($item->id, array_keys($activeArray)),
                 'count' => $item->cards->count(),
                 'result' => 0,
                 'level' => $item->level,
@@ -81,6 +96,13 @@ class ApiController extends Controller
                 'basic' => $item->basic,
                 'cards' => $cards
             ];
+
+            $counter[$item->type] = $counter[$item->type] + 1;
+
+            if((in_array($item->type, [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]) && $counter[$item->type] < 10) || $user->premium || in_array($item->type, [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]))
+                $asset['available'] = true;
+            else
+                $asset['available'] = false;
 
             $assets[] = $asset;
         }
