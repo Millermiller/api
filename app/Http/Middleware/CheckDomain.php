@@ -15,6 +15,9 @@ class CheckDomain
      */
     public function handle($request, Closure $next)
     {
+        if(request('subdomain') === 'www')
+           return redirect(config('app.SITE'));
+
         if(request('subdomain') === 'is')
             config(['app.lang' => 'is']);
 
