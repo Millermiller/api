@@ -44,7 +44,9 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <img style="height: 60px;" src="{{url('/img/google-play-badge.png')}}">
+                        <a href="https://play.google.com/store/apps/details?id=ru.scandinaver" target="_blank">
+                            <img style="height: 60px;" src="{{url('/img/google-play-badge.png')}}">
+                        </a>
                     </div>
                 </div>
             </div>
