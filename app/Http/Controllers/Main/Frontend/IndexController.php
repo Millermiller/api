@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Main\Frontend;
 
 use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FeedbackRequest;
 use App\Models\Message;
-use Illuminate\Http\Request;
 use Meta;
 
 /**
@@ -21,25 +21,16 @@ class IndexController extends Controller
     {
         Meta::set('title', 'Scandinaver');
         Meta::set('description', 'Scandinaver');
-        //Meta::set('image', asset('images/home-logo.png'));
 
         return view('main.frontend.index.home');
     }
 
     /**
-     * @param Request $request
+     * @param FeedbackRequest $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function feedback(Request $request)
+    public function feedback(FeedbackRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'message' => 'required',
-        ],[
-            'required' => 'Поле обязательно для заполнения'
-        ]);
-
         $message = Message::create($request->all());
 
         event(new MessageEvent($message));

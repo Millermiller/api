@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use app\Services\UserService;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -22,9 +23,11 @@ class LoginSubController extends Controller
 
     use AuthenticatesUsers;
 
-    public function __construct()
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
-       //
+        $this->userService = $userService;
     }
 
     public function login(Request $request)
@@ -43,7 +46,7 @@ class LoginSubController extends Controller
         ]);
 
         if (Auth::attempt($request->only($login_type, 'password'))) {
-            return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER'], 'state' => Auth::user()->state()]);
+            return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER'], 'state' =>  $this->userService->getState()]);
         }
         else{
             return response()->json(['success' => false, 'message' => 'Пользователь не найден, попробуйте еще раз.']);

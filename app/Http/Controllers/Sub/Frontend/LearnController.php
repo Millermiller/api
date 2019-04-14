@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
-use App\Models\Card;
+use App\Services\CardService;
 
 /**
  * Class LearnController
@@ -18,9 +18,18 @@ use App\Models\Card;
  */
 class LearnController extends Controller
 {
+    protected $cardService;
+
+    public function __construct(CardService $cardService)
+    {
+        $this->cardService = $cardService;
+    }
+
     public function getAsset($id)
     {
-        return response()->json(Card::getCards($id));
+        $cards = $this->cardService->getCards($id);
+
+        return response()->json($cards);
     }
 
     public function assetInfo($id)

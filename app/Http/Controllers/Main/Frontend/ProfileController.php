@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Main\Frontend;
 
 use App\Events\UserPhotoUpdated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequest;
 use App\Services\Requester;
 use Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
 use Meta;
 use Session;
 use Spatie\Activitylog\Models\Activity;
@@ -73,28 +73,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param  Request $request
+     * @param ProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
-        $this->validate($request, [
-            'login' => 'required|string|alpha_num|max:255|unique:users,login,' . Auth::user()->id,
-            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->id,
-            'password' => 'nullable|string|min:6|confirmed',
-        ],
-            [
-                'required' => 'Обязательное поле',
-                'alpha_num' => 'Только латинские буквы и цифры',
-                'confirmed' => 'Пароли не совпадают',
-                'unique' => 'Пользователь уже зарегистрирован',
-                'min' => 'Минимум :min символов',
-                'email' => 'Укажите корректный email',
-            ]
-        );
-
         $oldemail = Auth::user()->email;
 
         Auth::user()->update([

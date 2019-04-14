@@ -76,27 +76,6 @@ class Asset extends Model
   // }
 
     /**
-     * @param int $uid User Id
-     * @return array
-     */
-    static function getUserAssets($uid)
-    {
-        return DB::select(
-            'select a.id, a.title, a.basic, a.level, a.favorite, 
-		            atu.result, count(wta.id) as count
-              from assets_to_users as atu
-                join assets as a
-                  on atu.asset_id = a.id
-         	    left join cards as wta
-         		  on wta.asset_id = a.id
-                where atu.user_id = ?
-                  and a.basic = 0
-                group by a.id
-                order by a.favorite desc', [$uid]
-        );
-    }
-
-    /**
      * Удаляет набор и все с ним связанное
      * TODO: объединить запрос. использовать внешние ключи.
      *
@@ -128,28 +107,6 @@ class Asset extends Model
 
             return false;
         }
-    }
-
-    /**
-     * Получить наборы карточек для юзера
-     *
-     * @param  int $user_id int User Id
-     * @return array
-     */
-    public static function getAssets($user_id)
-    {
-        return DB::select('
-                                 SELECT COUNT(wta.word_id) as num, a.title, a.id, a.basic, a.level, atu.result
-                                 FROM assets AS a
-                                 LEFT JOIN assets_to_users as atu
-                                    ON a.id = atu.asset_id
-                                 LEFT JOIN cards AS wta
-                                    ON a.id = wta.asset_id
-                                 WHERE user_id = ?
-                                -- AND a.basic IN(1)
-                                 GROUP BY a.id
-                                 ORDER BY a.level
-                                 ', [$user_id]);
     }
 
     /**
@@ -195,60 +152,5 @@ class Asset extends Model
 
 
         return Asset::find(DB::getPdo()->lastInsertId());
-    }
-
-    /**
-     * Возвращает массив словарей определенного типа для пользователя с id = $uid
-     *
-     * @param string $type 'Предложения' || 'Слова' || 'Избранное'
-     * @param int $uid User Id
-     *
-     * @return array
-     */
-    public static function getAssetsByType($type, $uid)
-    {
-        $activeArray = Result::domain()->where('user_id', $uid)->pluck('result', 'asset_id')->toArray();
-
-        $rez = DB::select('SELECT id, level, title, type FROM assets WHERE type = ? AND lang = ? order by level asc', [$type, config('app.lang')]);
-
-        $canopen = true;
-        $testlink = 0;
-        $counter = 0;
-
-        foreach($rez as &$r) {
-            $counter++;
-            if (in_array($r->id, array_keys($activeArray))) {
-                $r = ['count' => Card::where('asset_id', $r->id)->count(),
-                    'title' => $r->title,
-                    'id' => $r->id,
-                    'level' => $r->level,
-                    'active' => true,
-                    'canopen' => false,
-                    'result' => $activeArray[$r->id],
-                    'type' => $r->type
-                ];
-            } else {
-                $r = ['count' => Card::where('asset_id', $r->id)->count(),
-                    'title' => $r->title,
-                    'id' => $r->id,
-                    'level' => $r->level,
-                    'active' => false,
-                    'canopen' => $canopen,
-                    'testlink' => $testlink,
-                    'result' => 0,
-                    'type' => $r->type
-                ];
-                $canopen = false;
-            }
-
-            if($counter < 10 || Auth::user()->premium)
-                $r['available'] = true;
-            else
-                $r['available'] = false;
-
-            $testlink = $r['id'];
-        }
-
-        return $rez;
     }
 }

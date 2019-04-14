@@ -33,14 +33,17 @@ Route::group([
 
     Route::get('/words', 'IndexController@getWords');
     Route::get('/sentences', 'IndexController@getSentences');
-    Route::get('/favourites', 'IndexController@getFavourites');
+
     Route::get('/personal', 'IndexController@getPersonal');
     Route::get('/userassets', 'IndexController@getUserAssets');
     Route::post('/feedback', 'IndexController@feedback');
     Route::get('/asset/{id}', 'LearnController@getAsset');
     Route::get('/assetInfo/{id}', 'LearnController@assetInfo');
-    Route::post('/favourite', 'TestController@addToFavorite');
-    Route::delete('/favourite/{id}', 'TestController@deleteFavorite');
+
+    Route::get('/favourites', 'FavouriteController@getFavourites');
+    Route::post('/favourite', 'FavouriteController@addToFavourite');
+    Route::delete('/favourite/{id}', 'FavouriteController@deleteFavourite');
+
     Route::post('/saveTestResult', 'TestController@saveTestResult');
     Route::post('/nextLevel', 'TestController@nextLevel');
     Route::delete('/asset/{id}', 'CardsController@deleteAsset');

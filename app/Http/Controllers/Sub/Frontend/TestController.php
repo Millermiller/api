@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Result;
+use App\Services\CardService;
 use Auth;
 use Illuminate\Support\Facades\Input;
 
@@ -21,12 +22,22 @@ use Illuminate\Support\Facades\Input;
  */
 class TestController extends Controller
 {
+    protected $cardService;
+
+    public function __construct(CardService $cardService)
+    {
+        $this->cardService = $cardService;
+    }
+
     /**
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAsset()
+    public function getAsset($id)
     {
-        return response()->json(Card::getCards(Input::get('asset_id')));
+        $cards = $this->cardService->getCards($id);
+
+        return response()->json($cards);
     }
 
     /**
@@ -84,32 +95,5 @@ class TestController extends Controller
                  "result"   => $result
             ]
         ]);
-    }
-
-    public function addToFavorite()
-    {
-        $word_id = Input::get('word_id');
-        $translate_id = Input::get('translate_id');
-
-        $asset_id =  Auth::user()->favourite->id;
-
-        $card = new Card(['asset_id' => $asset_id, 'word_id' => $word_id, 'translate_id' => $translate_id]);
-
-        if($card->save())
-            return response()->json(['success' => true, 'card' => Card::with('word', 'translate')->where('id', $card->id)->get()[0]]);
-        else
-            return response()->json(['success' => false]);
-    }
-
-    public function deleteFavorite($id)
-    {
-        return response()->json([
-            'success' => Card::whereRaw('word_id = ? and asset_id = ?', [$id, Auth::user()->favourite->id])->forceDelete()
-        ]);
-    }
-
-    public function getFavorite()
-    {
-        return response()->json(Card::getCards(Auth::user()->favourite->id));
     }
 }

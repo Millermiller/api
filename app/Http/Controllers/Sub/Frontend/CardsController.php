@@ -10,6 +10,7 @@ use App\Models\Card;
 use App\Models\Result;
 use App\Models\Translate;
 use App\Models\Word;
+use App\Services\CardService;
 use Auth;
 use Illuminate\Support\Facades\Input;
 
@@ -24,13 +25,22 @@ use Illuminate\Support\Facades\Input;
  */
 class CardsController extends Controller
 {
+    protected $cardService;
+
+    public function __construct(CardService $cardService)
+    {
+        $this->cardService = $cardService;
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function showAsset($id)
     {
-        return response()->json(Card::getCards($id));
+        $asset = $this->cardService->getCards($id);
+
+        return response()->json($asset);
     }
 
     /**

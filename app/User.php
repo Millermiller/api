@@ -77,31 +77,6 @@ class User extends Authenticatable
         return $this->where('email', $username)->orWhere('login', $username)->first();
     }
 
-    public function state()
-    {
-        return [
-            'user'      => $this->info(),
-            'site'      => config('app.MAIN_SITE'),
-            'words'     => Asset::getAssetsByType(Asset::TYPE_WORDS, $this->id),
-            'sentences' => Asset::getAssetsByType(Asset::TYPE_SENTENCES, $this->id),
-            'favourites'=> Asset::getAssetsByType(Asset::TYPE_FAVORITES, $this->id)[0],
-            'personal'  => Asset::domain()->whereHas(
-                'result', function ($q){
-                /** @var \Illuminate\Database\Eloquent\Builder $q */
-                $q->where('user_id', $this->id);
-            })->with('cards', 'cards.word', 'cards.translate', 'result')
-                ->where('basic', 0)
-                ->get(),
-
-            //'texts'     => Text::select(['id', 'title'])->where('published', '=', '1')->get(),
-            'texts'     => Text::getTextsByUser($this->id),
-            'intro'     => Intro::where('active', '=', '1')->get()->sortBy('sort')->groupBy('page'),
-            'sites'     => Language::all(),
-            'currentsite' => Language::where('name', config('app.lang'))->first(),
-            'domain'    => config('app.lang'),
-        ];
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -159,18 +134,6 @@ class User extends Authenticatable
         else{
             return Avatar::create($this->login)->toBase64()->encoded;
         }
-    }
-
-    public function info(){
-        return [
-            'id' => $this->id,
-            'login' => $this->login,
-            'avatar' => $this->avatar,
-            'email' => $this->email,
-            'active' => $this->premium,
-            'plan' => $this->plan,
-            'active_to' => $this->active_to
-        ];
     }
 
     public function hasAsset($asset_id)
