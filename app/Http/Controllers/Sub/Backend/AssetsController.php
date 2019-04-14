@@ -32,14 +32,14 @@ class AssetsController extends Controller
     public function index()
     {
         return response()->json([
-            'words' => array_values(Asset::withCount('cards')
+            'words' => array_values(Asset::domain()->withCount('cards')
                 ->where('basic', '=', '1')
                 ->where('type', '=', Asset::TYPE_WORDS)
                 ->get()
                 ->sortBy('level')
                 ->toArray()
             ),
-            'sentences' => array_values(Asset::withCount('cards')
+            'sentences' => array_values(Asset::domain()->withCount('cards')
                 ->where('basic', '=', '1')
                 ->where('type', '=', Asset::TYPE_SENTENCES)
                 ->get()

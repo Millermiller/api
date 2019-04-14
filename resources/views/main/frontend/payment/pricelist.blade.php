@@ -99,7 +99,7 @@
                 </li>
                 @if(Auth::check())
                     <li>
-                        <button class="btn btn-danger">Выбрать</button>
+                        <a href="{{route('frontend::plan', ['name' => 'medium'])}}" class="btn btn-danger">Выбрать</a>
                     </li>
                 @endif
             </ul>
@@ -145,7 +145,7 @@
                 </li>
                 @if(Auth::check())
                     <li>
-                        <button class="btn btn-danger">Выбрать</button>
+                        <a href="{{route('frontend::plan', ['name' => 'large'])}}" class="btn btn-danger">Выбрать</a>
                     </li>
                 @endif
             </ul>

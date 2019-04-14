@@ -9,7 +9,8 @@
                             <td>Подписка:</td>
                             <td>
                                 @if($user->premium)
-                                    premium еще <?= \Carbon\Carbon::today()->diffInDays($user->active_to);?> дней <a href="{{ route('frontend::payment') }}">продлить</a>
+                                    premium еще {{ \Carbon\Carbon::today()->diffInDays($user->active_to)}} {{Lang::choice('день|дня|дней', \Carbon\Carbon::today()->diffInDays($user->active_to), [], 'ru')}}
+                                    <a href="{{ route('frontend::payment') }}">продлить</a>
                                 @else
                                     базовая <a href="{{ route('frontend::payment') }}">улучшить</a>
                                 @endif

@@ -66,6 +66,7 @@ class ProfileController extends Controller
             $msg['msg'] = $message;
             $msg['success'] = false;
             $msg['mess'] = $e->getMessage();
+            $msg['mess1'] = $e->getTraceAsString();
         }
 
         return response()->json($msg);

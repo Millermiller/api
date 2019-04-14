@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -118,6 +118,10 @@ return [
     'MAIN_SITE' => env('MAIN_SITE','https://scandinaver.org'),
     'FORUM' => env('FORUM','https://forum.scandinaver.org'),
 
+    'ysecret' => '+Jmfs1bsSCHx7+GNQnzyFqcF',
+    'yreceiver' => '410018910260978',
+    'yandex_successUrl' => env('YANDEX_SUCCESS_URL', 'https://scandinaver.org/profile'),
+
     'lang' => false,
 
     /*
@@ -158,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Package Service Providers...

@@ -28,24 +28,15 @@
             </div>
             <div class="col-lg-4 text-center icon-block">
                 <div class="row">
-                    <div class="col-md-4">
-                        <a href="//www.free-kassa.ru/">
-                            <img src="//www.free-kassa.ru/img/fk_btn/6.png">
-                        </a>
+                    <div class="col-md-3 col-md-offset-3">
+                        <img style="height: 40px;padding: 5px;" src="{{url('/img/ivona_tts_amzn.png')}}">
                     </div>
-                    <div class="col-md-4 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img style="height: 30px;" src="{{url('/img/ivona_tts_amzn.png')}}">
-                            </div>
-                            <div class="col-md-12">
-                                <img style="height: 30px;" src="{{url('/img/forvo-logo.png')}}">
-                            </div>
-                        </div>
+                    <div class="col-md-3 text-center">
+                        <img style="height: 40px;padding: 5px;" src="{{url('/img/forvo-logo.png')}}">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <a href="https://play.google.com/store/apps/details?id=ru.scandinaver" target="_blank">
-                            <img style="height: 60px;" src="{{url('/img/google-play-badge.png')}}">
+                            <img style="height: 40px;" src="{{url('/img/google-play-badge.png')}}">
                         </a>
                     </div>
                 </div>

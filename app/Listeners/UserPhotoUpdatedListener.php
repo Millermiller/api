@@ -20,8 +20,9 @@ class UserPhotoUpdatedListener
     /**
      * Handle the event.
      *
-     * @param  UserPhotoUpdated  $event
+     * @param  UserPhotoUpdated $event
      * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function handle(UserPhotoUpdated $event)
     {

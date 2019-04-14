@@ -36,7 +36,8 @@ use Mail;
  * @property string $role
  * @property Carbon $created_at
  * @property int $last_online
- * @property int $active_to
+ * @property int $plan_id
+ * @property Carbon $active_to
  * @property bool $premium
  * @property string $avatar
  * @property Plan $plan
@@ -47,7 +48,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    protected $fillable = ['name', 'login', 'email', 'password', 'openpass', 'role', 'active_to'];
+    protected $fillable = ['name', 'login', 'email', 'password', 'openpass', 'role', 'active_to', 'plan_id'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -136,14 +137,14 @@ class User extends Authenticatable
 
     public function setActiveToAttribute($value)
     {
-        $this->attributes['active_to'] = Carbon::createFromFormat('D M d Y-H:i', $value.'-23:59');
+        $this->attributes['active_to'] = Carbon::createFromFormat('D M d Y', $value);
     }
 
     public function getAvatarAttribute()
     {
         if($this->photo){
             if (file_exists( public_path('/uploads/u/a/') . $this->photo)) {
-                return '/uploads/u/a/' . $this->photo;
+                return url('/uploads/u/a/' . $this->photo);
             } else {
                 $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
                 $avatar->resize(
@@ -152,7 +153,7 @@ class User extends Authenticatable
                     $constraint->aspectRatio();
                 });
                 $avatar->save(public_path('/uploads/u/a/' . $this->photo));
-                return public_path('/uploads/u/a/' . $this->photo);
+                return url('/uploads/u/a/' . $this->photo);
             }
         }
         else{

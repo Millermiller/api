@@ -32,6 +32,11 @@ Route::group(['middleware' => ['touchUser', 'checkPlan'], 'as' => 'frontend::', 
 
     Route::get('/pay', 'PaymentController@index')->name('payment');
 
+    Route::post('/pay/success', 'PaymentController@handlePayment')->name('paymentcallback');
+
+    Route::get('/pay/{name}', 'PaymentController@plan')->name('plan');
+    Route::post('/pay', 'PaymentController@process')->name('process');
+
 });
 
 Route::post('/feedback', 'Main\Frontend\IndexController@feedback');

@@ -281,13 +281,13 @@ small, .small {
     white-space: nowrap;
 }
 .text-lowercase {
-    text-transform: lowercase;
+    text-transform: lowercase !important;
 }
 .text-uppercase {
-    text-transform: uppercase;
+    text-transform: uppercase !important;
 }
 .text-capitalize {
-    text-transform: capitalize;
+    text-transform: capitalize !important;
 }
 .text-muted {
     color: #777;
@@ -1279,8 +1279,8 @@ textarea.form-control {
 .checkbox {
     position: relative;
     display: block;
-    margin-top: 10px;
-    margin-bottom: 10px;
+
+    margin: 10px;
 }
 .radio label,
 .checkbox label {
@@ -1672,9 +1672,9 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-    outline: thin dotted;
+   /* outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
-    outline-offset: -2px;
+    outline-offset: -2px; */
 }
 .btn:hover,
 .btn:focus,
@@ -4616,6 +4616,7 @@ body .container-fluid .well-danger {
     cursor: pointer;
     text-decoration: none;
     background: transparent;
+    outline: none;
 }
 .btn::-moz-focus-inner,
 .input-group-btn .btn::-moz-focus-inner {
@@ -5560,7 +5561,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 .radio label {
     cursor: pointer;
-    padding-left: 45px;
+    padding-left: 30px;
     position: relative;
     color: rgba(0, 0, 0, 0.26);
 }
@@ -5634,10 +5635,13 @@ fieldset[disabled] .form-group.is-focused .radio label {
     opacity: 1;
 }
 .radio input[type=radio]:checked ~ .check {
-    background-color: #009688;
+    background-color: #FF4949;
 }
 .radio input[type=radio]:checked ~ .circle {
-    border-color: #009688;
+    border-color: #FF4949;
+}
+.radio input[type=radio]:checked ~ .radiolabel {
+   color: #FF4949;
 }
 .radio input[type=radio]:checked ~ .check {
     -webkit-transform: scale3d(0.55, 0.55, 1);
@@ -6308,12 +6312,45 @@ select.form-control[multiple],
 .list-group {
     border-radius: 0;
 }
+.list-group-item:focus, .list-group-item:hover {
+    z-index: 1;
+    text-decoration: none;
+}
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.list-group-item:hover, .list-group-item:focus {
+    z-index: 1;
+    text-decoration: none;
+}
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.list-group-item {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 1rem;
+    line-height: 1;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: inherit;
+    border: 0 solid rgba(0, 0, 0, .125);
+}
+.list-group-item :first-child {
+    margin-right: 1rem;
+}
 .list-group .list-group-item {
     background-color: transparent;
     overflow: hidden;
     border: 0;
     border-radius: 0;
-    padding: 0 16px;
 }
 .list-group .list-group-item.baseline {
     border-bottom: 1px solid #cecece;
@@ -10426,13 +10463,43 @@ i.text-danger {
 .p-yel h3 {
     color: #ffbb42;
 }
+.color-Medium,
+.btn.color-Medium,
 .p-red big,
 .p-red h3 {
     color: #e13c4c;
 }
+.color-Large,
+.btn.color-Large,
 .p-blue big,
 .p-blue h3 {
     color: #3f4bb8;
+}
+.btn.btn-raised.color-Large{
+    color:#fff;
+    background-color: #3f4bb8;
+    border-color: #3f4bb8;
+}
+.btn.btn-raised.color-Large:hover,
+.btn.btn-raised.color-Large:focus,
+.btn.btn-raised.color-Large:active
+{
+    background-color: #495bc0;
+    border-color: #3f4bb8;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+}
+.btn.btn-raised.color-Medium{
+    color:#fff;
+    background-color: #e13c4c;
+    border-color: #e13c4c;
+}
+.btn.btn-raised.color-Medium:hover,
+.btn.btn-raised.color-Medium:focus,
+.btn.btn-raised.color-Medium:active
+{
+    background-color: #e44d5c;
+    border-color: #e13c4c;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
 }
 .rub {
     font-family: ALSRubl, serif;
@@ -10978,4 +11045,10 @@ span[tooltip]:hover::after {
 }
 .icon-block > *{
     margin: 0 10px;
+}
+.flex-wrapper{
+    display:flex;
+}
+.flex-center{
+    justify-content: center;
 }

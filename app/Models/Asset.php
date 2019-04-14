@@ -184,12 +184,14 @@ class Asset extends Model
                    SET title = ?,
                        basic = 1,
                        type = ?,
+                       lang = ?,
                        created_at = NOW(),
                        updated_at = NOW(),
                        level = (select max(a2.level)
-                               from assets as a2
-                               where a2.type = ?) + 1
-                   ', [$asset_id, $asset_id, $asset_id]);
+                                    from assets as a2
+                                        where a2.type = ?
+                                        and a2.lang = ?) + 1
+                   ', [$asset_id, $asset_id,  config('app.lang'), $asset_id,  config('app.lang')]);
 
 
         return Asset::find(DB::getPdo()->lastInsertId());
