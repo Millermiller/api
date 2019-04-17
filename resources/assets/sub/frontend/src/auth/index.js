@@ -19,9 +19,8 @@ export default {
 
     login(context, creds, redirect) {
         return new Promise(function(resolve, reject) {
-            context.$http.post('/login', creds)
-                .then(resp => {
-                    if(resp.body.success){
+            context.$http.post('/login', creds).then((response) => {
+                    if(response.body.success){
                        // window.localStorage.setItem('id_token', resp.body.jwt)
                         store.commit('setAuth', true);
                         store.commit('setStore', resp.body.state);
@@ -42,8 +41,8 @@ export default {
 
     currentUser (context) {
         context.$http.get(CURRENT_USER_URL, {headers: this.getAuthHeader()})
-            .then(resp => {
-                context.user = resp.body.user
+            .then((response) => {
+                context.user = response.body.user
             }, error => {
                 console.log(error)
             })
@@ -51,7 +50,7 @@ export default {
 
     logout (context, options) {
         context.$http.post('/logout', options)
-            .then(data => {
+            .then((data) => {
                 window.localStorage.removeItem('id_token')
                 this.user.authenticated = false
                 store.commit('setAuth', false);

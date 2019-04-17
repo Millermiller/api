@@ -2,7 +2,11 @@ export default {
 
     user: {
         authenticated: false,
-        active: false
+        active: false,
+        plan: {
+            name: '',
+            id: ''
+        }
     },
 
     sites: [],

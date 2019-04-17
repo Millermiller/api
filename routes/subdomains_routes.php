@@ -33,12 +33,15 @@ Route::group([
 
     Route::get('/words', 'IndexController@getWords');
     Route::get('/sentences', 'IndexController@getSentences');
-
     Route::get('/personal', 'IndexController@getPersonal');
     Route::get('/userassets', 'IndexController@getUserAssets');
+
     Route::post('/feedback', 'IndexController@feedback');
-    Route::get('/asset/{id}', 'LearnController@getAsset');
-    Route::get('/assetInfo/{id}', 'LearnController@assetInfo');
+
+    Route::get('/asset/{id}', 'AssetController@show');
+    Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
+    Route::delete('/asset/{id}', 'AssetController@destroy');
+    Route::post('/asset', 'AssetController@store');
 
     Route::get('/favourites', 'FavouriteController@getFavourites');
     Route::post('/favourite', 'FavouriteController@addToFavourite');
@@ -46,8 +49,7 @@ Route::group([
 
     Route::post('/saveTestResult', 'TestController@saveTestResult');
     Route::post('/nextLevel', 'TestController@nextLevel');
-    Route::delete('/asset/{id}', 'CardsController@deleteAsset');
-    Route::post('/asset', 'CardsController@createAsset');
+
     Route::get('/cards/{id}', 'CardsController@showAsset');
     Route::delete('/card/{id}/{asset_id}', 'CardsController@deleteWordFromAsset');
     Route::get('/translate', 'CardsController@getTranslate');

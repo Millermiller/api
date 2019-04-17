@@ -10,7 +10,7 @@
                 <account></account>
 
                 <el-col :md="18" :xs="24" :sm="16">
-                    <el-row :gutter="20" :id="widgetblock">
+                    <el-row :gutter="20" :id="['widgetblock']">
                         <wordwidget></wordwidget>
                         <sentencewidget></sentencewidget>
                         <textwidget></textwidget>

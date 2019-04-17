@@ -279,7 +279,7 @@ $(function(){
             dataType: 'json',
             success: function(data){
                 $('.el-loading-mask').hide()
-                toastr[(data.success === true) ? 'success' : 'error'](data.msg);
+                toastr['success']("Сообщение отправлено");
                 $.fancybox.close();
                 document.getElementById("feedbackform").reset()
             },

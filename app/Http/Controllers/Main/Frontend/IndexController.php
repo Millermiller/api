@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Main\Frontend;
 
-use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FeedbackRequest;
-use App\Models\Message;
+use App\Services\FeedbackService;
 use Meta;
 
 /**
@@ -14,6 +13,13 @@ use Meta;
  */
 class IndexController extends Controller
 {
+    protected $feedbackService;
+
+    public function __construct(FeedbackService $feedbackService)
+    {
+        $this->feedbackService = $feedbackService;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -31,10 +37,8 @@ class IndexController extends Controller
      */
     public function feedback(FeedbackRequest $request)
     {
-        $message = Message::create($request->all());
+        $message = $this->feedbackService->saveFeedback($request);
 
-        event(new MessageEvent($message));
-
-        return response()->json(['success' => true, 'msg' => 'Сообщение отправлено']);
+        return response()->json($message, 201);
     }
 }

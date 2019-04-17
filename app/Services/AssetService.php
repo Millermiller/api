@@ -2,10 +2,15 @@
 
 namespace App\Services;
 
+use App\Events\AssetCreated;
+use App\Events\AssetDelete;
+use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Result;
 use App\User;
+use Auth;
 use DB;
+use Illuminate\Http\Request;
 
 /**
  * Class AssetService
@@ -13,6 +18,44 @@ use DB;
  */
 class AssetService
 {
+    /**
+     * @param Request $request
+     * @return Asset|\Illuminate\Database\Eloquent\Model
+     */
+    public function create(Request $request)
+    {
+        $asset = Asset::create([
+            'title' => $request->get('title'),
+            'basic' => false,
+            'level' => 0,
+            'lang' => config('app.lang')
+        ]);
+
+        Auth::user()->increment('assets_created');
+
+        Result::create([
+            'asset_id' => $asset->id,
+            'user_id' => Auth::user()->id,
+            'lang' => $asset->lang
+        ]);
+
+        event(new AssetCreated(Auth::user(), $asset));
+
+        return $asset;
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function delete($id)
+    {
+        event(new AssetDelete(Auth::user(), Asset::find($id)->first()));
+
+        return response()->json(['success' => Asset::deleteAsset($id)]);
+    }
+
     /**
      * Возвращает массив словарей определенного типа для пользователя с id = $uid
      *

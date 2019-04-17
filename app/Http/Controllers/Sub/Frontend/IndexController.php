@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubdomainFeedbackRequest;
 use App\Models\Asset;
 use App\Models\Message;
 use App\Services\AssetService;
 use App\Services\CardService;
+use App\Services\FeedbackService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Auth;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class IndexController
@@ -25,13 +26,17 @@ class IndexController extends Controller
 
     protected $cardService;
 
-    public function __construct(AssetService $assetService, UserService $userService, CardService $cardService)
+    protected $feedbackService;
+
+    public function __construct(AssetService $assetService, UserService $userService, CardService $cardService, FeedbackService $feedbackService)
     {
         $this->assetService = $assetService;
 
         $this->userService = $userService;
 
         $this->cardService = $cardService;
+
+        $this->feedbackService = $feedbackService;
     }
 
     public function index()
@@ -103,19 +108,10 @@ class IndexController extends Controller
         ]);
     }
 
-    public function feedback()
+    public function feedback(SubdomainFeedbackRequest $request)
     {
-        $message = Input::get('message', '');
+        $message = $this->feedbackService->saveSubdomainFeedback($request);
 
-        $message = new Message(['name' => Auth::user()->login, 'message' => $message]);
-
-        if ($message->save()){
-
-            event(new MessageEvent($message));
-
-            return response()->json(['success' => true, 'msg' => 'Сообщение отправлено']);
-        }
-        else
-            return response()->json(['success' => false, 'msg' => 'Произошла ошибка']);
+        return response()->json($message, 201);
     }
 }

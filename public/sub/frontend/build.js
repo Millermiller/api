@@ -15901,8 +15901,8 @@ exports.default = {
 
     login: function login(context, creds, redirect) {
         return new _promise2.default(function (resolve, reject) {
-            context.$http.post('/login', creds).then(function (resp) {
-                if (resp.body.success) {
+            context.$http.post('/login', creds).then(function (response) {
+                if (response.body.success) {
                     _store2.default.commit('setAuth', true);
                     _store2.default.commit('setStore', resp.body.state);
                     _store2.default.commit('setSelection', 0);
@@ -15919,8 +15919,8 @@ exports.default = {
         });
     },
     currentUser: function currentUser(context) {
-        context.$http.get(CURRENT_USER_URL, { headers: this.getAuthHeader() }).then(function (resp) {
-            context.user = resp.body.user;
+        context.$http.get(CURRENT_USER_URL, { headers: this.getAuthHeader() }).then(function (response) {
+            context.user = response.body.user;
         }, function (error) {
             console.log(error);
         });
@@ -24390,7 +24390,7 @@ var options = {
     },
     location: 'top'
 };
-
+_vue2.default.config.devtools = true;
 _vue2.default.use(_vueProgressbar2.default, options);
 _vue2.default.use(_vuex2.default);
 _vue2.default.use(_vueAwesomeSwiper2.default);
@@ -57104,7 +57104,11 @@ exports.default = {
 
     user: {
         authenticated: false,
-        active: false
+        active: false,
+        plan: {
+            name: '',
+            id: ''
+        }
     },
 
     sites: [],
@@ -57187,7 +57191,7 @@ exports.default = {
     removePersonalAsset: function removePersonalAsset(context, data) {
 
         _vue2.default.http.delete('/asset/' + data.asset.id).then(function (response) {
-            if (response.body.success) context.commit('removePersonal', data.index);
+            if (response.status === 204) context.commit('removePersonal', data.index);
         }, function (response) {
             console.log(response.body);
         });
@@ -57195,17 +57199,19 @@ exports.default = {
     addPersonalAsset: function addPersonalAsset(context, title) {
 
         _vue2.default.http.post('/asset', { title: title }).then(function (response) {
-            context.commit('addPersonal', {
-                basic: 0,
-                favorite: 0,
-                id: response.body.id,
-                level: 0,
-                result: {},
-                title: title,
-                cards: [],
-                selected: true
-            });
-            context.commit('setSelection', 1);
+            if (response.status === 201) {
+                context.commit('addPersonal', {
+                    basic: 0,
+                    favorite: 0,
+                    id: response.body.id,
+                    level: 0,
+                    result: {},
+                    title: response.body.title,
+                    cards: [],
+                    selected: true
+                });
+                context.commit('setSelection', 1);
+            }
         }, function (responce) {
             console.log(response.body);
         });
@@ -57215,7 +57221,7 @@ exports.default = {
     },
     removeCard: function removeCard(context, data) {
         _vue2.default.http.delete('/card/' + data.card.id + '/' + context.state.activePersonalAsset).then(function (response) {
-            if (response.body.success) context.commit('removeCard', data.index);
+            if (response.status === 204) context.commit('removeCard', data.index);
         }, function (responce) {
             console.log(response.body);
         });
@@ -57740,7 +57746,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "md": 6,
       "sm": 8,
-      "id": _vm.accountblock
+      "id": ['accountblock']
     }
   }, [_c('el-card', {
     class: ['box-card', 'account-card'],
@@ -58370,7 +58376,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('el-row', {
     attrs: {
       "gutter": 20,
-      "id": _vm.widgetblock
+      "id": ['widgetblock']
     }
   }, [_c('wordwidget'), _vm._v(" "), _c('sentencewidget'), _vm._v(" "), _c('textwidget'), _vm._v(" "), _c('personalwidget'), _vm._v(" "), _c('puzzlewidget')], 1)], 1)], 1), _vm._v(" "), _c('el-dialog', {
     attrs: {
@@ -61688,7 +61694,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         span: 24,
         offset: 0
       },
-      "id": _vm.cardsblock
+      "id": ['cardsblock']
     }
   }, [_c('el-card', {
     class: ['box-card', 'tab-navigation']
@@ -61983,14 +61989,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             if (!this.item.favourite) {
                 this.$http.post('/favourite', { 'word_id': this.item.id, 'translate_id': this.item.translate_id }).then(function (response) {
-                    if (response.body.success) {
+                    if (response.status === 201) {
                         self.item.favourite = true;
                         self.$notify.success({
                             title: self.item.word,
                             message: 'Добавлено в Избранное',
                             duration: 2000
                         });
-                        _this.$store.commit('addCardToFavorite', response.body.card);
+                        _this.$store.commit('addCardToFavorite', response.body);
                     } else {
                         console.log(response.body);
                     }
@@ -62488,14 +62494,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             if (!this.item.favourite) {
                 this.$http.post('/favourite', { 'word_id': this.item.id, 'translate_id': this.item.translate_id }).then(function (response) {
-                    if (response.body.success) {
+                    if (response.status === 201) {
                         self.item.favourite = true;
                         self.$notify.success({
                             title: self.item.word,
                             message: 'Добавлено в Избранное',
                             duration: 2000
                         });
-                        _this.$store.commit('addCardToFavorite', response.body.card);
+                        _this.$store.commit('addCardToFavorite', response.body);
                     } else {
                         console.log(response.body);
                     }
@@ -66957,13 +66963,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$refs.messageform.validate(function (valid) {
                 if (valid) {
                     _this.$http.post('feedback', { message: _this.form.message }).then(function (response) {
-                        _this.dialogFormVisible = false;
-                        _this.$notify.success({
-                            title: '',
-                            message: response.body.msg,
-                            duration: 2000
-                        });
-                        _this.form.subject = _this.form.message = '';
+                        if (response.status === 201) {
+                            _this.dialogFormVisible = false;
+                            _this.$notify.success({
+                                title: '',
+                                message: "Сообщение отправлено",
+                                duration: 2000
+                            });
+                            _this.form.subject = _this.form.message = '';
+                        }
                     }, function (response) {
                         _this.dialogFormVisible = false;
                         console.log(response.body);

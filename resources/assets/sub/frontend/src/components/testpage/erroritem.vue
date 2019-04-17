@@ -36,14 +36,14 @@
                     this.$http.post('/favourite', {'word_id': this.item.id, 'translate_id': this.item.translate_id})
                         .then(
                             response => {
-                                if (response.body.success) {
+                                if (response.status === 201) {
                                     self.item.favourite = true
                                     self.$notify.success({
                                         title: self.item.word,
                                         message: 'Добавлено в Избранное',
                                         duration: 2000
                                     });
-                                    this.$store.commit('addCardToFavorite', response.body.card)
+                                    this.$store.commit('addCardToFavorite', response.body)
                                 }
                                 else {
                                     console.log(response.body)

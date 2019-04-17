@@ -69,46 +69,6 @@ class CardsController extends Controller
         ]);
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
-    public function createAsset()
-    {
-        $asset_title = Input::get('title');
-
-        $asset = Asset::create([
-            'title' => $asset_title,
-            'basic' => false,
-            'level' => 0,
-            'lang' => config('app.lang')
-        ]);
-
-        Auth::user()->increment('assets_created');
-
-        Result::create([
-            'asset_id' => $asset->id,
-            'user_id' => Auth::user()->id,
-            'lang' => $asset->lang
-        ]);
-
-        event(new AssetCreated(Auth::user(), $asset));
-
-        return response()->json(['success' => true, 'id' => $asset->id, 'title' => $asset->title]);
-    }
-
-    /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
-    public function deleteAsset($id)
-    {
-        event(new AssetDelete(Auth::user(), Asset::find($id)->first()));
-
-        return response()->json(['success' => Asset::deleteAsset($id)]);
-    }
-
     public function addWordToAsset()
     {
         $word_id = Input::get('word_id');
@@ -146,11 +106,9 @@ class CardsController extends Controller
      */
     public function deleteWordFromAsset($id, $asset_id)
     {
-       if (!Auth::user()->hasAsset($asset_id) && !Auth::user()->_admin)
-           return response()->json(['success'=> false]);
-       else
-           return response()->json(['success'=> Card::whereRaw('id = ? and asset_id = ?', [$id, $asset_id])->forceDelete()]);
+        $this->cardService->delete($id, $asset_id);
 
+        return response()->json(null, 204);
     }
 
     public function getTranslate()

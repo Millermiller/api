@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
-use App\Models\Card;
 use App\Services\AssetService;
 use App\Services\FavouriteService;
 use Auth;
@@ -39,9 +38,9 @@ class FavouriteController extends Controller
 
     public function addToFavourite(Request $request)
     {
-        $this->favouriteService->create($request);
+        $card = $this->favouriteService->create($request);
 
-        return response()->json(['success' => true]);
+        return response()->json($card, 201);
     }
 
     public function deleteFavourite($id)

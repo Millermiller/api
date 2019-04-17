@@ -1,6 +1,5 @@
 <div id="feedback" style="display: none;position: relative;">
     {!! Form::open(['id' => 'feedbackform']) !!}
-        {!! csrf_field() !!}
         <a class="closeModal" data-dismiss="modal"></a>
         <div class="form-group bmd-form-group">
             {!! Form::label('name', 'Представьтесь:', ['class'=> 'bmd-label-floating control-label']) !!}

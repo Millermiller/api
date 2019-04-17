@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Card;
 use App\Models\Example;
 use Auth;
 use DB;
@@ -12,6 +13,12 @@ use DB;
  */
 class CardService
 {
+    public function delete($id, $asset_id)
+    {
+        if (Auth::user()->hasAsset($asset_id) || Auth::user()->isAdmin())
+            Card::whereRaw('id = ? and asset_id = ?', [$id, $asset_id])->forceDelete();
+    }
+
     /**
      * возвращает слова набора, транскрипцию и один вариант перевода
      * принимает id набора

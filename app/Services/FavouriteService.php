@@ -35,14 +35,19 @@ class FavouriteService
 
     /**
      * @param Request $request
+     * @return Card|\Illuminate\Database\Eloquent\Model
      */
     public function create(Request $request)
     {
-        Card::create([
+        $card = Card::create([
             'asset_id' =>  Auth::user()->favourite->id,
             'word_id' => $request->get('word_id'),
             'translate_id' =>  $request->get('translate_id')
         ]);
+
+        $card->load(['word', 'translate']);
+
+        return $card;
     }
 
     /**

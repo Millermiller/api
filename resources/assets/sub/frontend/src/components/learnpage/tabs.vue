@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="8" :xs="{span: 24, offset: 0}" :class="['right-panel']" :id="cardsblock">
+    <el-col :span="8" :xs="{span: 24, offset: 0}" :class="['right-panel']" :id="['cardsblock']">
         <el-card :class="['box-card', 'tab-navigation']">
             <el-tabs  @tab-click="handleClick" :value="active">
                 <el-tab-pane label="Слова" name="words">

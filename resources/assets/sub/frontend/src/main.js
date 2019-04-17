@@ -59,7 +59,7 @@ const options = {
     },
     location: 'top',
 }
-
+Vue.config.devtools = true
 Vue.use(VueProgressBar, options)
 Vue.use(Vuex)
 Vue.use(VueAwesomeSwiper)

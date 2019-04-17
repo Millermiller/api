@@ -29,7 +29,7 @@ export default{
 
         Vue.http.delete('/asset/' + data.asset.id).then(
             (response) => {
-                if(response.body.success)
+                if(response.status === 204)
                     context.commit('removePersonal', data.index)
             },
             (response) => {
@@ -42,19 +42,21 @@ export default{
 
         Vue.http.post('/asset', {title: title}).then(
             (response) => {
-                context.commit('addPersonal',
-                    {
-                        basic:0,
-                        favorite:0,
-                        id: response.body.id,
-                        level: 0,
-                        result: {},
-                        title: title,
-                        cards: [],
-                        selected: true
-                    }
-                )
-                context.commit('setSelection', 1)
+                if(response.status === 201){
+                    context.commit('addPersonal',
+                        {
+                            basic:0,
+                            favorite:0,
+                            id: response.body.id,
+                            level: 0,
+                            result: {},
+                            title: response.body.title,
+                            cards: [],
+                            selected: true
+                        }
+                    )
+                    context.commit('setSelection', 1)
+                }
             },
             (responce) => {
                 console.log(response.body)
@@ -69,7 +71,7 @@ export default{
     removeCard(context, data){
         Vue.http.delete('/card/' + data.card.id + '/' + context.state.activePersonalAsset).then(
             (response) => {
-                if(response.body.success)
+                if(response.status === 204)
                     context.commit('removeCard', data.index)
             },
             (responce) => {

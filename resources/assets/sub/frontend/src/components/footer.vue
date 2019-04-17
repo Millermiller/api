@@ -50,13 +50,15 @@
                         this.$http.post('feedback', {message: this.form.message}).
                         then(
                             (response) => {
-                                this.dialogFormVisible = false
-                                this.$notify.success({
-                                    title: '',
-                                    message: response.body.msg,
-                                    duration: 2000
-                                });
-                                this.form.subject = this.form.message = ''
+                                if(response.status === 201){
+                                    this.dialogFormVisible = false
+                                    this.$notify.success({
+                                        title: '',
+                                        message: "Сообщение отправлено",
+                                        duration: 2000
+                                    });
+                                    this.form.subject = this.form.message = ''
+                                }
                             },
                             (response) => {
                                 this.dialogFormVisible = false
