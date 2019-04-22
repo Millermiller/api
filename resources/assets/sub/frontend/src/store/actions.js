@@ -25,6 +25,17 @@ export default{
         )
     },
 
+    reloadPersonal(context) {
+        Vue.http.get('/personal').then(
+            (response) => {
+                context.commit('setPersonal', response.body)
+            },
+            (response) => {
+                console.log(response.body)
+            }
+        )
+    },
+
     removePersonalAsset(context, data){
 
         Vue.http.delete('/asset/' + data.asset.id).then(

@@ -2,7 +2,8 @@
     <el-col :span="8" :xs="24" id="cardsblock">
         <el-card class="box-card">
             <div slot="header" class="clearfix">
-               Карточки в словаре <span class="danger">{{name}}</span>
+                <span class="h3" style="line-height: 38px;">Карточки в словаре</span>
+                <el-tag type="info">{{name}}</el-tag>
             </div>
             <section data-scrollbar  style="height: 65vh;">
                 <transition-group name="cards" tag="div">

@@ -81,7 +81,7 @@ class IndexController extends Controller
 
     public function getPersonal()
     {
-        $personal = $this->assetService->getAssets(Auth::user()->id);
+        $personal = $this->assetService->getPersonalAssets(Auth::user()->id);
 
         return response()->json($personal);
     }

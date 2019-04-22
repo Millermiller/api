@@ -33,13 +33,7 @@ class UserService
             'words'     => $this->assetService->getAssetsByType(Asset::TYPE_WORDS, Auth::user()->id),
             'sentences' => $this->assetService->getAssetsByType(Asset::TYPE_SENTENCES, Auth::user()->id),
             'favourites'=> $this->assetService->getAssetsByType(Asset::TYPE_FAVORITES, Auth::user()->id)[0],
-            'personal'  => Asset::domain()->whereHas(
-                'result', function ($q){
-                /** @var \Illuminate\Database\Eloquent\Builder $q */
-                $q->where('user_id', Auth::user()->id);
-            })->with('cards', 'cards.word', 'cards.translate', 'result')
-                ->where('basic', 0)
-                ->get(),
+            'personal'  => $this->assetService->getPersonalAssets(Auth::user()->id),
 
             //'texts'     => Text::select(['id', 'title'])->where('published', '=', '1')->get(),
             'texts'     => Text::getTextsByUser(Auth::user()->id),

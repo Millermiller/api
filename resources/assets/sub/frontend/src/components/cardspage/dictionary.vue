@@ -4,13 +4,23 @@
             <div slot="header" class="clearfix">
                 <el-row>
                     <el-col :span="7">
-                        <p>Поиск</p>
+                        <span class="h3">Поиск</span>
                     </el-col>
                     <el-col :span="11">
                         <el-checkbox v-model="sentence">В предложениях</el-checkbox>
                     </el-col>
                     <el-col :span="6">
-                        <el-button @click="dialogFormVisible = true">Добавить</el-button>
+
+
+                        <el-popover
+                                placement="top-start"
+                                width="200"
+                                trigger="click"
+                                :disabled="isActive"
+                                popper-class="text-left"
+                                content="Создание карточек недоступно базовым аккаунтам">
+                            <el-button slot="reference" @click="openform">Добавить</el-button>
+                        </el-popover>
                     </el-col>
                 </el-row>
             </div>
@@ -46,7 +56,7 @@
 
             <el-collapse>
                 <el-collapse-item title="Что это?" name="1">
-                    <p class="small">
+                    <p>
                        Вы можете добавить в наш словарь собственные карточки. При установленном <span class="danger">"виден для всех"</span> ваша карточка будет
                         подписана вашим логином и видна всем пользователям.
                         Оставьте эту опцию отключенной, если не уверены в правильности перевода, ваша карточка не соответствует тематике сайта или вы просто не хотите, чтобы вашу карточку
@@ -86,6 +96,11 @@
         components:{
             'translate': Translate
         },
+        computed:{
+            isActive(){
+                return this.$store.getters.isActive;
+            }
+        },
         methods:{
             livesearch(){
                if(this.word.length > 2) {this.search()}
@@ -124,6 +139,11 @@
                         console.log(response)
                     }
                 )
+            },
+            openform(){
+                if(this.isActive){
+                    this.dialogFormVisible = true
+                }
             },
             add(data){
                 this.$http.post('/card', data).then(

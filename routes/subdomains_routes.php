@@ -38,10 +38,15 @@ Route::group([
 
     Route::post('/feedback', 'IndexController@feedback');
 
-    Route::get('/asset/{id}', 'AssetController@show');
+
     Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
-    Route::delete('/asset/{id}', 'AssetController@destroy');
-    Route::post('/asset', 'AssetController@store');
+
+    //Route::get('/asset/{id}', 'AssetController@show');
+    //Route::delete('/asset/{id}', 'AssetController@destroy');
+    //Route::post('/asset', 'AssetController@store');
+    //Route::put('/asset', 'AssetController@update');
+
+    Route::resource('/asset', 'AssetController');
 
     Route::get('/favourites', 'FavouriteController@getFavourites');
     Route::post('/favourite', 'FavouriteController@addToFavourite');

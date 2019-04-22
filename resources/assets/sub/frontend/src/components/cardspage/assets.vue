@@ -2,8 +2,18 @@
     <el-col :span="8" :xs="24" id="assetsblock">
         <el-card class="box-card">
             <div slot="header" class="clearfix">
-                <span style="line-height: 24px;">Мои словари</span>
-                <i :class="['ion', 'ion-ios-plus-empty', 'pull-right', 'pointer']" @click="add"></i>
+                <el-row type="flex" justify="space-between">
+                    <span class="h3">Мои словари</span>
+                    <el-popover
+                            placement="top-start"
+                            width="200"
+                            trigger="click"
+                            :disabled="isActive"
+                            popper-class="text-left"
+                            content="Создание словарей недоступно базовым аккаунтам">
+                        <el-button slot="reference" @click="add">Создать</el-button>
+                    </el-popover>
+                </el-row>
             </div>
             <section data-scrollbar style="height: 65vh;overflow: visible !important;">
                 <transition-group name="splash" tag="div">
@@ -18,14 +28,6 @@
                 </transition-group>
             </section>
         </el-card>
-        <el-dialog title="Использование пользовательских словарей недоступно базовым аккаунтам" :visible.sync="dialogVisible">
-            <span>
-                <a href="scandinaver.local" target="_blank">Оплатите подписку</a> чтобы получить полный доступ
-            </span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">Закрыть</el-button>
-            </span>
-        </el-dialog>
     </el-col>
 </template>
 
@@ -34,16 +36,11 @@
     import Scrollbar from 'smooth-scrollbar'
     export default{
         data(){
-            return{
-                dialogVisible: false
-            }
+            return{}
         },
         methods:{
             add(){
-                if(!this.$store.getters.isActive){
-                    this.dialogVisible = true
-                }
-                else{
+                if(this.isActive){
                     this.$prompt('Название:', 'Новый словарь', {
                         confirmButtonText: 'Создать',
                         cancelButtonText: 'Назад',
@@ -57,10 +54,7 @@
                 }
             },
             remove(data){
-                if(!this.$store.getters.isActive)
-                    this.dialogVisible = true
-                else
-                    this.$store.dispatch('removePersonalAsset', data)
+                this.$store.dispatch('removePersonalAsset', data)
             },
             modal(){
                 this.dialogVisible = true
@@ -72,6 +66,9 @@
         computed:{
             assets(){
                 return this.$store.getters.personal;
+            },
+            isActive(){
+                return this.$store.getters.isActive;
             }
         },
         mounted(){

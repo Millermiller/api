@@ -1,11 +1,15 @@
 <template>
     <div :class="['list-item', 'list-item-card', 'el-row']">
-        <el-col :span="20">
+        <el-col :span="22">
             <p>{{card.word.word}}</p>
         </el-col>
-        <el-col :span="4">
-            <i :class="['ion', 'ion-ios-close-empty', 'pointer']"
-               @click="$emit('remove', {card:card, index:index})"></i>
+        <el-col :span="2">
+            <el-button
+                       type="default"
+                       icon="el-icon-delete"
+                       size="mini"
+                       @click.stop="$emit('remove', {card:card, index:index})"
+                       plain></el-button>
         </el-col>
         <el-col :span="24">
             <p :class="['no-margin', 'card-value']" >{{card.translate.value}}</p>

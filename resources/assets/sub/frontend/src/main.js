@@ -37,7 +37,9 @@ import {
     MessageBox,
     Loading,
     Notification,
-    Message
+    Message,
+    Popover,
+    Tag
 } from 'element-ui';
 
 import VueDragDrop from 'vue-drag-drop';
@@ -86,6 +88,8 @@ Vue.use(CollapseItem)
 Vue.use(Container)
 Vue.use(Main)
 Vue.use(Progress)
+Vue.use(Popover)
+Vue.use(Tag)
 
 Vue.use(Loading.directive);
 

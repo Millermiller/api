@@ -35,6 +35,10 @@ export default {
         state.domain = data.domain
     },
 
+    setPersonal(state, data){
+        state.assets.personal = data
+    },
+
     setTexts(state, data){
         state.texts = data
     },
@@ -72,7 +76,7 @@ export default {
     },
 
     addPersonal(state, asset){
-        state.assets.personal.splice(1, 0, asset)
+        state.assets.personal.push(1, 0, asset)
     },
 
     resetError(state){
@@ -156,5 +160,9 @@ export default {
 
     setMenuOpen(state, data){
         state.rightMenuOpen = data
+    },
+
+    setActivePersonalAssetName(state, data){
+        state.activePersonalAssetName = data
     }
 }

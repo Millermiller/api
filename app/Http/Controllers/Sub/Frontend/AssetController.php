@@ -58,6 +58,14 @@ class AssetController extends Controller
         return response()->json($asset, 201);
     }
 
+    public function update(Request $request, $id)
+    {
+        $asset = Asset::findOrFail($id);
+        $asset->update($request->all());
+
+        return response()->json($asset, 200);
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Http\JsonResponse
@@ -67,6 +75,6 @@ class AssetController extends Controller
     {
         $this->assetService->delete($id);
 
-        return response()->json(204);
+        return response()->json(null, 204);
     }
 }

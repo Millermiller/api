@@ -72,8 +72,9 @@ body {
     line-height: 1.428571429;
     -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;
     /*font-family: 'Roboto', sans-serif;*/
+    font-family: Segoe UI Light, Helvetica, Arial, sans-serif;
     background-color: #F1F4F9!important;
     width: 100%;
     height: 100%;
@@ -192,7 +193,7 @@ small, .small {
     text-align: center
 }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
     font-weight: 500;
     line-height: 1.1;
     color: inherit
@@ -1063,11 +1064,11 @@ span.warning-text{
     color: #F7BA2A;
 }
 .muted{
-    background-color: #EFF2F7;
-    color: #C0CCDA;
+    background-color: #f4f4f5;
+    color: #bcbec2;
 }
 .muted p{
-    color: #C0CCDA;
+    color: #e9e9eb;
 }
 .introjs-tooltip.wide{
     width:700px;
@@ -1117,6 +1118,7 @@ span.warning-text{
     border-bottom: none;
     height: 50px;
     line-height: 50px;
+    font-size: 16px;
 }
 .main-menu .el-menu-item i{
     font-size:26px;
@@ -1166,6 +1168,15 @@ span.warning-text{
     border: 1px solid #ddd;
     margin-bottom: 10px;
     padding: 10px;
+}
+.list-item .el-input{
+
+}
+.list-item .el-input-group__append{
+    padding: 0;
+}
+.list-item .el-input-group__append .el-button{
+    margin: -10px 0px;
 }
 .list-item-card{
     height: auto;
@@ -1243,7 +1254,9 @@ span.warning-text{
 .el-dialog__body .el-collapse{
     border: none;
 }
-#dictionary_block .el-card__header{
+#dictionary_block .el-card__header,
+#cardsblock .el-card__header,
+#assetsblock .el-card__header{
     padding: 11px 20px;
 }
 #dictionary_block .el-card__header p{
@@ -1647,4 +1660,16 @@ span[tooltip]:hover:after {
 p.creator{
     position: absolute;
     bottom: 0;
+}
+.el-button + .el-button{
+    margin-left: 0;
+}
+.list-item.muted .el-button.is-disabled{
+    background-color: #f4f4f5;
+}
+.list-item.muted .text-muted {
+    color: #c0c4cc;
+}
+.list-item.muted .small {
+    color: #c0c4cc;
 }

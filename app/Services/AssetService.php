@@ -152,4 +152,20 @@ class AssetService
                 order by a.favorite desc', [$uid]
         );
     }
+
+    /**
+     * @param $uid
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getPersonalAssets($uid)
+    {
+        return Asset::domain()->whereHas(
+            'result', function ($q) use ($uid) {
+            /** @var \Illuminate\Database\Eloquent\Builder $q */
+            $q->where('user_id', $uid);
+        })->with('cards', 'cards.word', 'cards.translate', 'result')
+            ->where('basic', 0)
+            ->orderBy('id')
+            ->get();
+    }
 }
