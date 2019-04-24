@@ -138,18 +138,12 @@ class User extends Authenticatable
 
     public function hasAsset($asset_id)
     {
-        if(count(Result::where('asset_id', '=', $asset_id)->where('user_id', '=', $this->id)->get()))
-            return true;
-        else
-            return false;
+        return Result::where(['asset_id' => $asset_id, 'user_id' =>  $this->id])->exists();
     }
 
     public function hasText($text_id)
     {
-        if(count(TextResult::where('text_id', '=', $text_id)->where('user_id', '=', $this->id)->get()))
-            return true;
-        else
-            return false;
+        return TextResult::where(['text_id' =>$text_id, 'user_id' =>  $this->id])->exists();
     }
 
     public function sendPasswordResetNotification($token)

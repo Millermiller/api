@@ -81,10 +81,10 @@ class Word extends Model {
      * @param $sentence
      * @return array
      */
-    public static function translate($word, $sentence)
+    public static function tr($word, $sentence)
     {
         return DB::select('
-                            select t.value, t.id as translate_id, w.word, w.transcription, w.id, u.login as creator, w.is_public as public,
+                            select t.id,
                             MATCH (t.value) AGAINST (? IN NATURAL LANGUAGE MODE) as score
                               from translate as t
                                 left join words as w

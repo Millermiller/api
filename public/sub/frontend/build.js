@@ -57885,7 +57885,7 @@ exports.default = {
         context.commit('setSelection', data);
     },
     removeCard: function removeCard(context, data) {
-        _vue2.default.http.delete('/card/' + data.card.id + '/' + context.state.activePersonalAsset).then(function (response) {
+        _vue2.default.http.delete('/card/' + data.card.id).then(function (response) {
             if (response.status === 204) context.commit('removeCard', data.index);
         }, function (responce) {
             console.log(response.body);
@@ -65928,14 +65928,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 _this.loading = false;
 
-                if (!response.body.success) {
-                    _this.message = response.body.message;
+                if (!response.body.length) {
+                    _this.message = 'Ничего не найдено';
                     _this.cards = [];
                     return false;
                 }
 
                 _this.message = false;
-                _this.cards = response.body.translate;
+                _this.cards = response.body;
 
                 var word_ids = [];
 
@@ -65959,8 +65959,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.$http.post('/card', data).then(function (response) {
-                if (response.body.success) {
-                    _this2.$store.commit('addCard', response.body.card);
+                if (response.status === 201) {
+                    _this2.$store.commit('addCard', response.body);
                 }
             }, function (response) {});
         },
@@ -65969,9 +65969,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.form.is_public = this.form.is_public ? 1 : 0;
 
-            this.$http.post('/createCard', this.form).then(function (response) {
-                if (response.body.success) {
-                    _this3.cards = [response.body.card];
+            this.$http.post('/word', this.form).then(function (response) {
+                if (response.status === 201) {
+                    _this3.cards = [response.body];
                     _this3.dialogFormVisible = false;
                 }
             }, function (response) {});
@@ -66032,8 +66032,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         add: function add() {
             var data = {
-                word_id: this.card.id,
-                translate_id: this.card.translate_id,
+                word_id: this.card.word.id,
+                translate_id: this.card.id,
                 asset_id: this.$store.getters.activeAsset,
                 index: this.index
             };
@@ -66062,7 +66062,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: ['asset_title', {
       'text-success': _vm.card.exist
     }]
-  }, [_vm._v(_vm._s(_vm.card.word))])]), _vm._v(" "), _c('el-col', {
+  }, [_vm._v(_vm._s(_vm.card.word.word))])]), _vm._v(" "), _c('el-col', {
     attrs: {
       "span": 4
     }
@@ -66079,13 +66079,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: ['no-margin', 'card-value', {
       'text-success': _vm.card.exist
     }]
-  }, [_vm._v(_vm._s(_vm.card.value))])]), _vm._v(" "), (_vm.card.creator) ? _c('el-col', {
+  }, [_vm._v(_vm._s(_vm.card.value))])]), _vm._v(" "), (_vm.card.word.creator) ? _c('el-col', {
     attrs: {
       "span": 24
     }
   }, [_c('p', {
     class: ['no-margin', 'danger', 'text-right', 'small']
-  }, [_vm._v("\n            Добавлено: " + _vm._s(_vm.card.creator) + "\n            "), (_vm.login === _vm.card.creator) ? [(_vm.card.public) ? _c('el-tooltip', {
+  }, [_vm._v("\n            Добавлено: " + _vm._s(_vm.card.word.login) + "\n            "), (_vm.login === _vm.card.word.creator) ? [(_vm.card.word.is_public) ? _c('el-tooltip', {
     staticClass: "text-muted",
     attrs: {
       "effect": "light",

@@ -115,14 +115,14 @@
 
                         this.loading = false
 
-                        if(!response.body.success){
-                            this.message = response.body.message
+                        if(!response.body.length){
+                            this.message = 'Ничего не найдено'
                             this.cards = []
                             return false
                         }
 
                         this.message = false
-                        this.cards = response.body.translate
+                        this.cards = response.body
 
                         let word_ids = []
 
@@ -148,8 +148,8 @@
             add(data){
                 this.$http.post('/card', data).then(
                     (response) => {
-                        if(response.body.success){
-                            this.$store.commit('addCard', response.body.card)
+                        if(response.status === 201){
+                            this.$store.commit('addCard', response.body)
                         }
                     },
                     (response) => {
@@ -160,10 +160,10 @@
             submit(){
                 this.form.is_public = this.form.is_public ? 1 : 0;
 
-                this.$http.post('/createCard', this.form).then(
+                this.$http.post('/word', this.form).then(
                     (response) => {
-                        if(response.body.success){
-                            this.cards = [response.body.card]
+                        if(response.status === 201){
+                            this.cards = [response.body]
                             this.dialogFormVisible = false
                         }
                     },

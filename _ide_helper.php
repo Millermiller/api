@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.28 on 2019-03-23 15:20:22.
+ * Generated for Laravel 5.7.28 on 2019-04-24 11:14:52.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1495,7 +1495,7 @@ namespace Illuminate\Support\Facades {
      * @method static void shouldUse(string $name);
      * @method static bool check()
      * @method static bool guest()
-
+     * @method static \Illuminate\Contracts\Auth\Authenticatable|null user()
      * @method static int|null id()
      * @method static bool validate(array $credentials = [])
      * @method static void setUser(\Illuminate\Contracts\Auth\Authenticatable $user)

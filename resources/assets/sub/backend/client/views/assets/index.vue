@@ -140,12 +140,12 @@
                 this.searchloaded = true
                 this.$http.get('/translate', {params: {word: this.text, sentence: +this.sentence}}).then(
                     (response) => {
-                        if (!response.body.success) {
+                        if (!response.body.length) {
                             console.log(response.body.message)
                             this.translates = []
                             this.searchloaded = false
                         }
-                        this.translates = response.body.translate
+                        this.translates = response.body
                         this.searchloaded = false
                     },
                     (response) => {

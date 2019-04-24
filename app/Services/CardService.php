@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\CreateCardRequest;
 use App\Models\Card;
 use App\Models\Example;
 use Auth;
@@ -13,10 +14,13 @@ use DB;
  */
 class CardService
 {
-    public function delete($id, $asset_id)
+    public function create(CreateCardRequest $request)
     {
-        if (Auth::user()->hasAsset($asset_id) || Auth::user()->isAdmin())
-            Card::whereRaw('id = ? and asset_id = ?', [$id, $asset_id])->forceDelete();
+        $card = Card::create($request->all());
+
+        $card->load(['word', 'translate', 'asset', 'examples']);
+
+        return $card;
     }
 
     /**

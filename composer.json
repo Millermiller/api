@@ -21,6 +21,7 @@
         "laravolt/avatar": "^2.1",
         "profideo-ci/phpexcel": "1.8.0",
         "rap2hpoutre/laravel-log-viewer": "^0.22.1",
+        "sngrl/sphinxsearch": "dev-master",
         "spatie/laravel-activitylog": "^2.8",
         "sunra/php-simple-html-dom-parser": "1.5.2"
     },

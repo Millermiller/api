@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60dbbbfb36224749c499de9f25937982",
+    "content-hash": "227b5480d6d17859274e30801730690a",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -913,6 +913,57 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2017-06-27T22:17:23+00:00"
+        },
+        {
+            "name": "gigablah/sphinxphp",
+            "version": "2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gigablah/sphinxphp.git",
+                "reference": "6d5e97fdd33c1129ca372203d1330827c1cbc46c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gigablah/sphinxphp/zipball/6d5e97fdd33c1129ca372203d1330827c1cbc46c",
+                "reference": "6d5e97fdd33c1129ca372203d1330827c1cbc46c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sphinx": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Aksyonoff",
+                    "homepage": "http://sphinxsearch.com/"
+                }
+            ],
+            "description": "Sphinx Search PHP API",
+            "homepage": "http://sphinxsearch.com/",
+            "keywords": [
+                "api",
+                "search",
+                "sphinx"
+            ],
+            "time": "2013-08-22T08:05:44+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3272,6 +3323,51 @@
                 "lumen"
             ],
             "time": "2018-10-01T09:01:30+00:00"
+        },
+        {
+            "name": "sngrl/sphinxsearch",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sngrl/sphinxsearch.git",
+                "reference": "dc50f1b629d3e7e686afb1c9cf32b5c9b27f590c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sngrl/sphinxsearch/zipball/dc50f1b629d3e7e686afb1c9cf32b5c9b27f590c",
+                "reference": "dc50f1b629d3e7e686afb1c9cf32b5c9b27f590c",
+                "shasum": ""
+            },
+            "require": {
+                "gigablah/sphinxphp": "2.0.8",
+                "illuminate/support": "~5.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "sngrl\\SphinxSearch": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "sngrl",
+                    "email": "reserved@mail.ru"
+                }
+            ],
+            "description": "Laravel package to query Sphinxsearch in Laravel 5",
+            "homepage": "http://github.com/sngrl/sphinxsearch",
+            "keywords": [
+                "laravel",
+                "laravel 5",
+                "sphinx",
+                "sphinxsearch"
+            ],
+            "time": "2017-11-03T07:09:56+00:00"
         },
         {
             "name": "spatie/laravel-activitylog",
@@ -7140,6 +7236,115 @@
             "time": "2015-10-13T18:44:15+00:00"
         },
         {
+            "name": "sofa/eloquence-base",
+            "version": "v5.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jarektkaczyk/eloquence-base.git",
+                "reference": "46f885cde97704bb263faa237fba6760b838bb5a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jarektkaczyk/eloquence-base/zipball/46f885cde97704bb263faa237fba6760b838bb5a",
+                "reference": "46f885cde97704bb263faa237fba6760b838bb5a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.5",
+                "php": ">=7.0.0",
+                "sofa/hookable": "^5.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.4",
+                "phpunit/phpunit": "4.5.0",
+                "squizlabs/php_codesniffer": "2.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sofa\\Eloquence\\BaseServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sofa\\Eloquence\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jarek Tkaczyk",
+                    "email": "jarek@softonsofa.com",
+                    "homepage": "https://softonsofa.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Flexible Searchable, Mappable, Metable, Validation and more extensions for Laravel Eloquent ORM.",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "mappable",
+                "metable",
+                "mutable",
+                "searchable"
+            ],
+            "time": "2019-04-22T09:48:42+00:00"
+        },
+        {
+            "name": "sofa/hookable",
+            "version": "5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jarektkaczyk/hookable.git",
+                "reference": "c6f03e5e742d539755f8c7993ee96e907593a668"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jarektkaczyk/hookable/zipball/c6f03e5e742d539755f8c7993ee96e907593a668",
+                "reference": "c6f03e5e742d539755f8c7993ee96e907593a668",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.3",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "crysalead/kahlan": "~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sofa\\Hookable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jarek Tkaczyk",
+                    "email": "jarek@softonsofa.com",
+                    "homepage": "http://softonsofa.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Eloquent hooks system.",
+            "keywords": [
+                "eloquent",
+                "laravel"
+            ],
+            "time": "2018-03-03T02:55:49+00:00"
+        },
+        {
             "name": "symfony/filesystem",
             "version": "v4.2.4",
             "source": {
@@ -7327,6 +7532,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "sngrl/sphinxsearch": 20,
         "barryvdh/laravel-ide-helper": 20
     },
     "prefer-stable": false,

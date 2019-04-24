@@ -80,7 +80,7 @@ export default{
     },
 
     removeCard(context, data){
-        Vue.http.delete('/card/' + data.card.id + '/' + context.state.activePersonalAsset).then(
+        Vue.http.delete('/card/' + data.card.id).then(
             (response) => {
                 if(response.status === 204)
                     context.commit('removeCard', data.index)

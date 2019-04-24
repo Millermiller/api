@@ -38,13 +38,7 @@ Route::group([
 
     Route::post('/feedback', 'IndexController@feedback');
 
-
     Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
-
-    //Route::get('/asset/{id}', 'AssetController@show');
-    //Route::delete('/asset/{id}', 'AssetController@destroy');
-    //Route::post('/asset', 'AssetController@store');
-    //Route::put('/asset', 'AssetController@update');
 
     Route::resource('/asset', 'AssetController');
 
@@ -55,11 +49,11 @@ Route::group([
     Route::post('/saveTestResult', 'TestController@saveTestResult');
     Route::post('/nextLevel', 'TestController@nextLevel');
 
-    Route::get('/cards/{id}', 'CardsController@showAsset');
-    Route::delete('/card/{id}/{asset_id}', 'CardsController@deleteWordFromAsset');
-    Route::get('/translate', 'CardsController@getTranslate');
-    Route::post('/card', 'CardsController@addWordToAsset');
-    Route::post('/createCard', 'CardsController@createCard');
+    Route::resource('/card', 'CardsController', ['except' => []]);
+
+    Route::get('/translate', 'WordController@search');
+    Route::resource('/word', 'WordController', ['except' => ['delete', 'update']]);
+
     Route::get('/text/{id}', 'TextController@getText');
     Route::get('/syns/{id}', 'TextController@getSyns');
     Route::post('/nextTLevel', 'TextController@nextLevel');

@@ -1,7 +1,7 @@
 <template>
     <div class="columns">
         <div class="column">
-            <span class="asset_title">{{item.word}}</span>
+            <span class="asset_title">{{item.word.word}}</span>
         </div>
         <div class="column">
             <span class="asset_title">{{item.value}}</span>
@@ -34,8 +34,8 @@
     methods: {
       add(){
         let data = {
-          word_id: this.item.id,
-          translate_id: this.item.translate_id,
+          word_id: this.item.word.id,
+          translate_id: this.item.id,
           asset_id: this.$store.getters.activeAssetId,
           index: this.index,
         }
