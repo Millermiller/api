@@ -1,5 +1,5 @@
 <template>
-    <b-modal :active.sync="visible" @close="close">
+    <b-modal :active.sync="visible" @close="close" :width="960" class="w960">
         <div class="box">
             <div class="header">{{card.id}} - {{card.word.word}}</div>
             <div class="translate-section">
@@ -22,7 +22,11 @@
             <hr>
             <div class="example-section">
                 <h2 class="subtitle is-5">
-                    Примеры: <span @click="addExample" class="button is-success pull-right">добавить</span>
+                    Примеры:
+                    <button class="colorbutton red" @click="color('#e13c4c')"></button>#e13c4c
+                    <button class="colorbutton green" @click="color('#4c7737')"></button>#4c7737
+                    <button class="colorbutton blue" @click="color('#3f4bb8')"></button>#3f4bb8
+                    <span @click="addExample" class="button is-success pull-right">добавить</span>
                 </h2>
                 <div>
                     <example
@@ -72,6 +76,9 @@
         },
         props: ['visible', 'card', 'index'],
         methods: {
+            color(color){
+                console.log(color)
+            },
             bindFile (e) {
                 e.preventDefault();
                 this.fileUploadFormData.append('audiofile', e.target.files[0]);

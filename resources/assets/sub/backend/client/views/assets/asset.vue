@@ -1,6 +1,6 @@
 <template>
     <li class="columns">
-        <p :class="['column', 'is-7', {'info': item.id == activeAssetId}]">
+        <p :class="['column', 'is-7', 'pointer', {'info': item.id == activeAssetId}]" @click="load(item.id)">
             {{item.level}}. {{item.title}} <span class="text-success">({{item.cards_count}})</span>
         </p>
 
