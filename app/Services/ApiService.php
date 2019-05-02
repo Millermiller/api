@@ -79,7 +79,7 @@ class ApiService
                 $cards[] = [
                     'id' => $card->id,
                     'word' => $card->word->word,
-                    'trans' => $card->translate->value,
+                    'trans' =>  preg_replace('/^(\d\\)\s)/', '',  $card->translate->value),
                     'asset_id' => $card->asset_id,
                     'examples' => Example::where('card_id', '=', $card->id)->get()
                 ];
