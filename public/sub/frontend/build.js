@@ -57932,6 +57932,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
 
+    user: function user(state) {
+        return state.user;
+    },
+
     avatar: function avatar(state) {
         return state.user.avatar;
     },
@@ -58389,14 +58393,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     computed: {
-        avatar: function avatar() {
-            return this.$store.getters.avatar;
-        },
-        username: function username() {
-            return this.$store.getters.login;
-        },
-        email: function email() {
-            return this.$store.getters.email;
+        user: function user() {
+            return this.$store.getters.user;
         },
         plan: function plan() {
             return this.$store.getters.plan;
@@ -58429,13 +58427,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     class: ['avatar-small'],
     attrs: {
-      "src": _vm.avatar
+      "src": _vm.user.avatar
     }
   })]), _vm._v(" "), _c('p', {
     class: ['text-center']
-  }, [_vm._v(_vm._s(_vm.username))]), _vm._v(" "), _c('p', {
+  }, [_vm._v(_vm._s(_vm.user.login))]), _vm._v(" "), _c('p', {
     class: ['text-center']
-  }, [_vm._v(_vm._s(_vm.email))]), _vm._v(" "), _c('p', {
+  }, [_vm._v(_vm._s(_vm.user.email))]), _vm._v(" "), _c('p', {
     class: _vm.color(_vm.plan.id)
   }, [_vm._v(_vm._s(_vm.plan.name))]), _vm._v(" "), (_vm.plan.name != 'Basic') ? _c('p', {
     class: ['text-center']
@@ -62663,7 +62661,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (response.status === 201) {
                         self.item.favourite = true;
                         self.$notify.success({
-                            title: self.item.word,
+                            title: self.item.word.word,
                             message: 'Добавлено в Избранное',
                             duration: 2000
                         });
@@ -62704,14 +62702,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "slide"
   }, [_c('p', {
     staticClass: "word"
-  }, [_vm._v(_vm._s(_vm.item.word))]), _vm._v(" "), (!_vm.item.nocontrols) ? [_c('div', {
+  }, [_vm._v(_vm._s(_vm.item.word.word))]), _vm._v(" "), (!_vm.item.nocontrols) ? [_c('div', {
     class: ['translate-area', 'pointer'],
     on: {
       "click": _vm.showTranslate
     }
   }, [(_vm.show) ? [_c('p', {
     staticClass: "slide-value"
-  }, [_vm._v(_vm._s(_vm.item.value))]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.item.translate.value))]), _vm._v(" "), _c('div', {
     staticClass: "example-area"
   }, [_vm._l((_vm.item.examples), function(example) {
     return [_c('p', {
@@ -62725,14 +62723,46 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "innerHTML": _vm._s(example.value)
       }
     })]
-  })], 2), _vm._v(" "), (_vm.item.creator) ? _c('p', {
+  })], 2), _vm._v(" "), (_vm.item.word.creator) ? _c('el-row', {
     class: ['danger', 'text-right', 'small', 'creator']
-  }, [_vm._v("\n                    Добавлено: " + _vm._s(_vm.item.login) + "\n                ")]) : _vm._e()] : _c('i', {
+  }, [_c('el-popover', {
+    attrs: {
+      "placement": "top-start",
+      "width": "250",
+      "trigger": "hover"
+    }
+  }, [_c('el-row', [_c('el-col', {
+    attrs: {
+      "span": 6
+    }
+  }, [_c('div', {
+    staticClass: "avatar-wrapper-small pull-left"
+  }, [_c('div', {
+    staticClass: "avatar"
+  }, [_c('img', {
+    class: ['avatar-small'],
+    attrs: {
+      "src": _vm.item.word.user.avatar,
+      "alt": ""
+    }
+  })])])]), _vm._v(" "), _c('el-col', {
+    attrs: {
+      "span": 18
+    }
+  }, [_c('p', {
+    class: ['text-danger']
+  }, [_vm._v(_vm._s(_vm.item.word.user.login))]), _vm._v(" "), _c('p', [_vm._v("Создано карточек: " + _vm._s(_vm.item.word.user.cardsCreated))])])], 1), _vm._v(" "), _c('span', {
+    class: ['no-margin', 'danger', 'pull-right', 'small'],
+    attrs: {
+      "slot": "reference"
+    },
+    slot: "reference"
+  }, [_vm._v("Добавлено: " + _vm._s(_vm.item.word.user.login))])], 1)], 1) : _vm._e()] : _c('i', {
     staticClass: "ion-help"
   })], 2), _vm._v(" "), _c('audio', {
     ref: "player",
     attrs: {
-      "src": _vm.item.audio,
+      "src": _vm.item.word.audio,
       "preload": "none"
     }
   }), _vm._v(" "), _c('i', {
@@ -63168,7 +63198,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (response.status === 201) {
                         self.item.favourite = true;
                         self.$notify.success({
-                            title: self.item.word,
+                            title: self.item.word.word,
                             message: 'Добавлено в Избранное',
                             duration: 2000
                         });
@@ -63222,13 +63252,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('h4', {
     staticClass: "no-margin"
-  }, [_vm._v(_vm._s(_vm.item.word))])]), _vm._v(" "), _c('el-row', {
+  }, [_vm._v(_vm._s(_vm.item.word.word))])]), _vm._v(" "), _c('el-row', {
     staticClass: "error-translate",
     attrs: {
       "type": "flex",
       "align": "bottom"
     }
-  }, [_c('p', [_vm._v(_vm._s(_vm.item.value))])])], 1), _vm._v(" "), _c('el-col', {
+  }, [_c('p', [_vm._v(_vm._s(_vm.item.translate.value))])])], 1), _vm._v(" "), _c('el-col', {
     attrs: {
       "span": 4
     }
@@ -63452,7 +63482,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.percent = 0;
 
                     _this.cards.forEach(function (el) {
-                        _this.translates.push(el.value);
+                        _this.translates.push(el.translate.value);
                     });
 
                     _this.$Progress.set(0);
@@ -63494,10 +63524,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         createTest: function createTest() {
             this.question = this.cards.pop();
-            this.variants = [{ 'text': this.question.value, 'correct': true }];
+            this.variants = [{ 'text': this.question.translate.value, 'correct': true }];
             var indexes = [];
             var translates = this.translates.slice();
-            translates.remove(this.question.value);
+            translates.remove(this.question.translate.value);
 
             while (this.variants.length < (this.quantity > 4 ? 4 : this.quantity)) {
 
@@ -63566,7 +63596,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "height": "76px"
     }
-  }, [_vm._v(_vm._s(_vm.question.word ? _vm.question.word : 'Выберите словарь'))])], 1), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.question.word ? _vm.question.word.word : 'Выберите словарь'))])], 1), _vm._v(" "), _c('div', {
     staticClass: "variants"
   }, _vm._l((_vm.variants), function(variant) {
     return _c('p', {
@@ -65729,7 +65759,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: ['list-item', 'list-item-card', 'el-row']
   }, [_c('el-col', {
     attrs: {
-      "span": 22
+      "span": 21
     }
   }, [_c('p', [_vm._v(_vm._s(_vm.card.word.word))])]), _vm._v(" "), _c('el-col', {
     attrs: {
@@ -65761,9 +65791,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "span": 24
     }
+  }, [_c('el-popover', {
+    attrs: {
+      "placement": "top-start",
+      "width": "250",
+      "trigger": "hover"
+    }
+  }, [_c('el-row', [_c('el-col', {
+    attrs: {
+      "span": 6
+    }
+  }, [_c('div', {
+    staticClass: "avatar-wrapper-small pull-left"
+  }, [_c('div', {
+    staticClass: "avatar"
+  }, [_c('img', {
+    class: ['avatar-small'],
+    attrs: {
+      "src": _vm.card.word.user.avatar,
+      "alt": ""
+    }
+  })])])]), _vm._v(" "), _c('el-col', {
+    attrs: {
+      "span": 18
+    }
   }, [_c('p', {
-    class: ['no-margin', 'danger', 'text-right', 'small']
-  }, [_vm._v("Добавлено: " + _vm._s(_vm.card.word.login))])]) : _vm._e()], 1)
+    class: ['text-danger']
+  }, [_vm._v(_vm._s(_vm.card.word.user.login))]), _vm._v(" "), _c('p', [_vm._v("Создано карточек: " + _vm._s(_vm.card.word.user.cardsCreated))])])], 1), _vm._v(" "), _c('span', {
+    class: ['no-margin', 'danger', 'pull-right', 'small'],
+    attrs: {
+      "slot": "reference"
+    },
+    slot: "reference"
+  }, [_vm._v("Добавлено: " + _vm._s(_vm.card.word.user.login))])], 1)], 1) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -66041,8 +66101,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     computed: {
-        login: function login() {
-            return this.$store.getters.login;
+        user: function user() {
+            return this.$store.getters.user;
         }
     }
 });
@@ -66083,9 +66143,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "span": 24
     }
+  }, [_c('el-popover', {
+    attrs: {
+      "placement": "top-start",
+      "width": "250",
+      "trigger": "hover"
+    }
+  }, [_c('el-row', [_c('el-col', {
+    attrs: {
+      "span": 6
+    }
+  }, [_c('div', {
+    staticClass: "avatar-wrapper-small pull-left"
+  }, [_c('div', {
+    staticClass: "avatar"
+  }, [_c('img', {
+    class: ['avatar-small'],
+    attrs: {
+      "src": _vm.card.word.user.avatar,
+      "alt": ""
+    }
+  })])])]), _vm._v(" "), _c('el-col', {
+    attrs: {
+      "span": 18
+    }
   }, [_c('p', {
-    class: ['no-margin', 'danger', 'text-right', 'small']
-  }, [_vm._v("\n            Добавлено: " + _vm._s(_vm.card.word.login) + "\n            "), (_vm.login === _vm.card.word.creator) ? [(_vm.card.word.is_public) ? _c('el-tooltip', {
+    class: ['text-danger']
+  }, [_vm._v(_vm._s(_vm.card.word.user.login))]), _vm._v(" "), _c('p', [_vm._v("Создано карточек: " + _vm._s(_vm.card.word.user.cardsCreated))])])], 1), _vm._v(" "), _c('span', {
+    class: ['no-margin', 'danger', 'pull-right', 'small'],
+    attrs: {
+      "slot": "reference"
+    },
+    slot: "reference"
+  }, [_vm._v("Добавлено: " + _vm._s(_vm.card.word.user.login))])], 1), _vm._v(" "), (_vm.user.id === _vm.card.word.user.id) ? [(_vm.card.word.is_public) ? _c('el-tooltip', {
     staticClass: "text-muted",
     attrs: {
       "effect": "light",
@@ -66111,7 +66201,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     slot: "content"
   }, [_vm._v("Эта карточка видна только вам")]), _vm._v(" "), _c('i', {
     class: ['ion-ios-person', 'ion-small']
-  })])] : _vm._e()], 2)]) : _vm._e()], 1)
+  })])] : _vm._e()], 2) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -67451,11 +67541,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     computed: {
-        avatar: function avatar() {
-            return 'url(' + this.$store.getters.avatar + ')  no-repeat scroll center / cover';
-        },
-        username: function username() {
-            return this.$store.getters.login;
+        user: function user() {
+            return this.$store.getters.user;
         },
         sites: function sites() {
             return this.$store.getters.sites;
@@ -67619,11 +67706,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "avatar-wrapper-small pull-left"
   }, [_c('div', {
-    staticClass: "avatar",
-    style: ({
-      background: _vm.avatar
-    })
-  })]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.username))])]), _vm._v(" "), _c('li', {
+    staticClass: "avatar"
+  }, [_c('img', {
+    class: ['avatar-small'],
+    attrs: {
+      "src": _vm.user.avatar,
+      "alt": ""
+    }
+  })])]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.user.login))])]), _vm._v(" "), _c('li', {
     staticClass: "el-menu-item pull-right"
   }, [_c('el-select', {
     attrs: {

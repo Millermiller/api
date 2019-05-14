@@ -52,7 +52,12 @@ class WordService
 
         $tempStr = implode(',', $ids);
 
-        $words = Translate::with(['word'])->whereIn("translate.id", $ids)->orderByRaw(DB::raw("FIELD(id, $tempStr)"))->get();
+        $wordquery = Translate::with(['word'])->whereIn("translate.id", $ids);
+
+        if(count($ids) > 1)
+            $wordquery->orderByRaw(DB::raw("FIELD(id, $tempStr)"));
+
+        $words = $wordquery->get();
 
         return $words;
     }

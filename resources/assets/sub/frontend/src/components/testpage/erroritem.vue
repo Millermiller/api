@@ -3,10 +3,10 @@
         <el-row class="errorcard">
             <el-col :span="20">
                 <el-row type="flex" align="middle">
-                    <h4 class="no-margin">{{item.word}}</h4>
+                    <h4 class="no-margin">{{item.word.word}}</h4>
                 </el-row>
                 <el-row type="flex" align="bottom" class="error-translate">
-                    <p>{{item.value}}</p>
+                    <p>{{item.translate.value}}</p>
                 </el-row>
             </el-col>
             <el-col :span="4">
@@ -39,7 +39,7 @@
                                 if (response.status === 201) {
                                     self.item.favourite = true
                                     self.$notify.success({
-                                        title: self.item.word,
+                                        title: self.item.word.word,
                                         message: 'Добавлено в Избранное',
                                         duration: 2000
                                     });

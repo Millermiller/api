@@ -1,6 +1,6 @@
 <template>
     <div :class="['list-item', 'list-item-card', 'el-row']">
-        <el-col :span="22">
+        <el-col :span="21">
             <p>{{card.word.word}}</p>
         </el-col>
         <el-col :span="2">
@@ -15,7 +15,25 @@
             <p :class="['no-margin', 'card-value']" >{{card.translate.value}}</p>
         </el-col>
         <el-col :span="24" v-if="card.word.creator">
-            <p :class="['no-margin', 'danger', 'text-right', 'small']" >Добавлено: {{card.word.login}}</p>
+            <el-popover
+                    placement="top-start"
+                    width="250"
+                    trigger="hover">
+                <el-row>
+                    <el-col :span="6">
+                        <div class="avatar-wrapper-small pull-left">
+                            <div class="avatar">
+                                <img :class="['avatar-small']" :src="card.word.user.avatar" alt="">
+                            </div>
+                        </div>
+                    </el-col>
+                    <el-col :span="18">
+                        <p :class="['text-danger']" >{{card.word.user.login}}</p>
+                        <p>Создано карточек: {{card.word.user.cardsCreated}}</p>
+                    </el-col>
+                </el-row>
+                <span slot="reference" :class="['no-margin', 'danger', 'pull-right', 'small']" >Добавлено: {{card.word.user.login}}</span>
+            </el-popover>
         </el-col>
     </div>
 </template>

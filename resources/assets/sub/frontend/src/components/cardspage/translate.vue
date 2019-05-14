@@ -10,9 +10,26 @@
             <p :class="['no-margin', 'card-value', {'text-success' : card.exist}]">{{card.value}}</p>
         </el-col>
         <el-col :span="24" v-if="card.word.creator">
-            <p :class="['no-margin', 'danger', 'text-right', 'small']" >
-                Добавлено: {{card.word.login}}
-                <template v-if="login === card.word.creator">
+                <el-popover
+                        placement="top-start"
+                        width="250"
+                        trigger="hover">
+                    <el-row>
+                        <el-col :span="6">
+                            <div class="avatar-wrapper-small pull-left">
+                                <div class="avatar">
+                                    <img :class="['avatar-small']" :src="card.word.user.avatar" alt="">
+                                </div>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <p :class="['text-danger']" >{{card.word.user.login}}</p>
+                            <p>Создано карточек: {{card.word.user.cardsCreated}}</p>
+                        </el-col>
+                    </el-row>
+                    <span slot="reference" :class="['no-margin', 'danger', 'pull-right', 'small']" >Добавлено: {{card.word.user.login}}</span>
+                </el-popover>
+                <template v-if="user.id === card.word.user.id">
                     <el-tooltip v-if="card.word.is_public" class="text-muted" effect="light"  placement="top-start">
                         <div slot="content">Эта карточка видна всем пользователям</div>
                         <i :class="['ion-ios-people', 'ion-small']"></i>
@@ -22,7 +39,6 @@
                         <i :class="['ion-ios-person', 'ion-small']"></i>
                     </el-tooltip>
                 </template>
-            </p>
         </el-col>
     </div>
 </template>
@@ -42,8 +58,8 @@
             }
         },
         computed:{
-            login(){
-                return this.$store.getters.login
+            user(){
+                return this.$store.getters.user
             }
         }
     }

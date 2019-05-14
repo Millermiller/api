@@ -3,7 +3,7 @@
         <el-card class="box-card" v-loading.body="loading">
             <div slot="header" class="clearfix">
                 <vue-progress-bar></vue-progress-bar>
-                <h3 style="height: 76px;" class="text-center">{{question.word ? question.word : 'Выберите словарь'}}</h3>
+                <h3 style="height: 76px;" class="text-center">{{question.word ? question.word.word : 'Выберите словарь'}}</h3>
             </div>
             <div class="variants">
                 <p class="pointer" v-for="variant in variants" @click="check(variant)">{{variant.text}}</p>
@@ -110,7 +110,7 @@
                         this.errors = []
                         this.percent = 0
 
-                        this.cards.forEach((el) => { this.translates.push(el.value) })
+                        this.cards.forEach((el) => { this.translates.push(el.translate.value) })
 
                         this.$Progress.set(0)
                         this.createTest()
@@ -157,10 +157,10 @@
             },
             createTest(){
                 this.question = this.cards.pop()
-                this.variants = [{'text': this.question.value, 'correct': true}]
+                this.variants = [{'text': this.question.translate.value, 'correct': true}]
                 let indexes = []
                 let translates = this.translates.slice()
-                translates.remove(this.question.value)
+                translates.remove(this.question.translate.value)
 
                 while (this.variants.length < ((this.quantity > 4 ) ? 4 : this.quantity)) {
 

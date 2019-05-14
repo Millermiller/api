@@ -38,7 +38,7 @@ class Word extends Model {
 
     protected $fillable = ['word', 'transcription', 'audio', 'sentence', 'is_public', 'creator'];
 
-    protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'transcription', 'user'];
+    protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'transcription'];
 
     protected $appends = ['variants', 'login'];
 

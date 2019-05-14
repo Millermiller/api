@@ -33,9 +33,11 @@
             </el-menu-item>
             <li class="el-menu-item pull-right userblock">
                 <div class="avatar-wrapper-small pull-left">
-                    <div class="avatar" :style="{background: avatar}"></div>
+                    <div class="avatar">
+                        <img :class="['avatar-small']" :src="user.avatar" alt="">
+                    </div>
                 </div>
-                <span>{{username}}</span>
+                <span>{{user.login}}</span>
             </li>
             <li class="el-menu-item pull-right">
                 <el-select v-model="url" @change="gotosite" size="small" >
@@ -95,11 +97,8 @@
             }
         },
         computed: {
-            avatar(){
-                return 'url(' + this.$store.getters.avatar + ')  no-repeat scroll center / cover'
-            },
-            username(){
-                return this.$store.getters.login
+            user(){
+                return this.$store.getters.user
             },
             sites(){
                 return this.$store.getters.sites

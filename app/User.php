@@ -4,13 +4,10 @@ namespace App;
 
 use App\Mail\ResetPassword;
 use App\Models\Asset;
-use App\Models\Card;
-use App\Models\Intro;
-use App\Models\Language;
 use App\Models\Plan;
 use App\Models\Result;
-use App\Models\Text;
 use App\Models\TextResult;
+use App\Models\Word;
 use Avatar;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
@@ -54,7 +51,7 @@ class User extends Authenticatable
 
     protected $dates = ['active_to'];
 
-    protected $appends = ['premium', 'avatar', 'favourite'];
+    protected $appends = ['premium', 'avatar', 'favourite', 'cardsCreated'];
 
     const ROLE_ADMIN = 1;
     const ROLE_USER  = 0;
@@ -103,6 +100,11 @@ class User extends Authenticatable
     public function getPremiumAttribute()
     {
         return (Carbon::parse($this->active_to) > Carbon::now()) ? true : false;
+    }
+
+    public function getCardsCreatedAttribute()
+    {
+        return Word::where('creator', $this->id)->count();
     }
 
     public function isAdmin()

@@ -1,26 +1,44 @@
 <template>
     <div class="slide">
-        <p class="word">{{item.word}}</p>
+        <p class="word">{{item.word.word}}</p>
 
         <template v-if="!item.nocontrols">
 
             <div :class="['translate-area', 'pointer']"  @click="showTranslate">
                 <template v-if="show">
-                    <p class="slide-value">{{item.value}}</p>
+                    <p class="slide-value">{{item.translate.value}}</p>
                     <div class="example-area">
                         <template v-for="example in item.examples">
                             <p v-html="example.text" class="example-text"></p>
                             <p v-html="example.value" class="example-value"></p>
                         </template>
                     </div>
-                    <p v-if="item.creator" :class="['danger', 'text-right', 'small', 'creator']">
-                        Добавлено: {{item.login}}
-                    </p>
+                    <el-row v-if="item.word.creator" :class="['danger', 'text-right', 'small', 'creator']">
+                        <el-popover
+                                placement="top-start"
+                                width="250"
+                                trigger="hover">
+                            <el-row>
+                                <el-col :span="6">
+                                    <div class="avatar-wrapper-small pull-left">
+                                        <div class="avatar">
+                                            <img :class="['avatar-small']" :src="item.word.user.avatar" alt="">
+                                        </div>
+                                    </div>
+                                </el-col>
+                                <el-col :span="18">
+                                    <p :class="['text-danger']" >{{item.word.user.login}}</p>
+                                    <p>Создано карточек: {{item.word.user.cardsCreated}}</p>
+                                </el-col>
+                            </el-row>
+                            <span slot="reference" :class="['no-margin', 'danger', 'pull-right', 'small']" >Добавлено: {{item.word.user.login}}</span>
+                        </el-popover>
+                    </el-row>
                 </template>
                 <i v-else class="ion-help"></i>
             </div>
 
-            <audio :src="item.audio" preload="none" ref="player"></audio>
+            <audio :src="item.word.audio" preload="none" ref="player"></audio>
 
             <i :class="['ion favourite-button pointer', item.favourite ? activeClass : defaultClass]" @click="favourite"></i>
 
@@ -61,7 +79,7 @@
                                 if(response.status === 201){
                                     self.item.favourite = true
                                     self.$notify.success({
-                                        title: self.item.word,
+                                        title: self.item.word.word,
                                         message: 'Добавлено в Избранное',
                                         duration: 2000
                                     });

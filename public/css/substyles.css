@@ -1180,6 +1180,7 @@ span.warning-text{
 }
 .list-item-card{
     height: auto;
+    width: 99%;
 }
 .list-item.selected{
     border: 1px solid #FF494999;
@@ -1657,7 +1658,7 @@ span[tooltip]:hover:after {
 #feedback_message{
     min-height: 240px!important;
 }
-p.creator{
+p.creator, div.creator{
     position: absolute;
     bottom: 0;
 }
@@ -1672,4 +1673,7 @@ p.creator{
 }
 .list-item.muted .small {
     color: #c0c4cc;
+}
+.el-menu-item * {
+    vertical-align: inherit !important;
 }
