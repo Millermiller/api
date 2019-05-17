@@ -123,7 +123,7 @@ return [
     'yandex_successUrl' => env('YANDEX_SUCCESS_URL', 'https://scandinaver.org/profile'),
 
     'lang' => false,
-
+    'write_eloquent_model_mixins' => true,
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

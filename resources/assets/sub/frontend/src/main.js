@@ -9,7 +9,7 @@ import Meta from 'vue-meta'
 import store from './store'
 import { router } from './router'
 
-import App from './components/App.vue'
+import App from './components/app.vue'
 
 import {
     Button,
