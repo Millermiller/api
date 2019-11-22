@@ -1,6 +1,6 @@
 /node_modules
-/public/hot
-/public/storage
+/public/main
+/public/sub
 /storage/*.key
 /vendor
 /.idea
@@ -9,3 +9,4 @@ npm-debug.log
 yarn-error.log
 
 /.env.example
+/.env
