@@ -11,7 +11,10 @@ folders:
         to: /home/vagrant/code
 sites:
     -
-        map: homestead.test
+        map: scandinaver.local
+        to: /home/vagrant/code/public
+    -
+        map: is.scandinaver.local
         to: /home/vagrant/code/public
 databases:
     - homestead

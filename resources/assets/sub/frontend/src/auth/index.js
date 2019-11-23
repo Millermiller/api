@@ -13,29 +13,28 @@ const CURRENT_USER_URL = `${API_URL}/current_user/`
 export default {
 
     user: {
-        authenticated: window.localStorage.getItem('id_token') ? true : false,
+        authenticated: !!window.localStorage.getItem('id_token'),
         info: {}
     },
 
     login(context, creds, redirect) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             context.$http.post('/login', creds).then((response) => {
-                    if(response.body.success){
-                       // window.localStorage.setItem('id_token', resp.body.jwt)
-                        store.commit('setAuth', true);
-                        store.commit('setStore', resp.body.state);
-                        store.commit('setSelection', 0)
-                        if (redirect) {
-                            router.push({path: redirect})
-                        }
-                        resolve(resp.body)
+                if (response.status === 200) {
+                    window.localStorage.setItem('id_token', response.body.token)
+                    store.commit('setAuth', true);
+                    store.commit('setStore', response.body.state);
+                    store.commit('setSelection', 0)
+                    if (redirect) {
+                        router.push({path: redirect})
                     }
-                    else{
-                        reject(resp.body)
-                    }
-                }, error => {
-                    reject(resp.body)
-                })
+                    resolve(response.body)
+                } else {
+                    reject(response.body)
+                }
+            }, (response) => {
+                reject(response.body.message)
+            })
         });
     },
 
@@ -61,8 +60,8 @@ export default {
     },
 
     checkAuth () {
-        const jwt = window.localStorage.getItem('id_token')
-        this.user.authenticated = jwt ? true : false
+        const id_token = window.localStorage.getItem('id_token')
+        this.user.authenticated = !!id_token
     },
 
     getAuthHeader () {

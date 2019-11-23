@@ -9,6 +9,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free-webfonts": "1.0.3",
     "@vue/test-utils": "1.0.0-beta.15",
+    "@websanova/vue-auth": "2.21.14-beta",
     "autoprefixer": "7.1.1",
     "axios": "^0.17",
     "babel-core": "6.25.0",

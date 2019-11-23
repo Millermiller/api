@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
+use App\User;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -46,11 +47,16 @@ class LoginSubController extends Controller
         ]);
 
         if (Auth::attempt($request->only($login_type, 'password'))) {
-            return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER'], 'state' =>  $this->userService->getState()]);
+
+            /** @var User $user */
+            $user = Auth::user();
+
+            $token = $user->createToken('subdomain')->accessToken;
+
+            return response()->json(['token' => $token, 'state' => $this->userService->getState()], 200);
         }
         else{
-            return response()->json(['success' => false, 'message' => 'Пользователь не найден, попробуйте еще раз.']);
+            return response()->json(['message' => 'Пользователь не найден, попробуйте еще раз.'], 401);
         }
     }
-
 }

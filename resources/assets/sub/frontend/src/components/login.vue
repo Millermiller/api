@@ -78,7 +78,7 @@
                                 //nothing
                             }
                         ).catch(function (data) {
-                            v.error = data.message
+                            v.error = data
                             v.loading = false;
                         });
                     }
