@@ -30,6 +30,8 @@
         "barryvdh/laravel-ide-helper": "2.5.3",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
+        "laravel/browser-kit-testing": "^5.1",
+        "laravel/dusk": "^5.6",
         "laravel/homestead": "^8.4",
         "mockery/mockery": "~1.0",
         "phpunit/phpunit": "^7.0",
@@ -77,11 +79,5 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/iPaat/laravel-ide-helper"
-        }
-    ]
+    }
 }
