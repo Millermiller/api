@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Main\Frontend;
 use App\Events\UserPhotoUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
+use App\Services\FeedbackService;
 use App\Services\Requester;
+use App\Services\UserService;
 use Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Meta;
@@ -23,6 +25,13 @@ use Upload\Validation\Size;
 class ProfileController extends Controller
 {
     use ValidatesRequests;
+
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
 
     public function index()
     {

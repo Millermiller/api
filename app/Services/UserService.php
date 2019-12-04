@@ -6,6 +6,7 @@ use App\Models\Asset;
 use App\Models\Intro;
 use App\Models\Language;
 use App\Models\Text;
+use App\Repositories\User\UserRepositoryInterface;
 use Auth;
 
 /**
@@ -18,9 +19,13 @@ class UserService
 
     protected $assetService;
 
-    public function __construct(AssetService $assetService)
+    protected $userRepository;
+
+    public function __construct(AssetService $assetService, UserRepositoryInterface $userRepository)
     {
+        $this->userRepository = $userRepository;
         $this->assetService = $assetService;
+        //dd($this->userRepository->get(1)->getPlan());
     }
 
     public function getState()
