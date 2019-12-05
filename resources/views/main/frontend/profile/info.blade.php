@@ -8,7 +8,7 @@
                         <tr>
                             <td>Подписка:</td>
                             <td>
-                                @if($user->premium)
+                                @if($user->isPremium())
                                     premium еще {{ \Carbon\Carbon::today()->diffInDays($user->active_to)}} {{Lang::choice('день|дня|дней', \Carbon\Carbon::today()->diffInDays($user->active_to), [], 'ru')}}
                                     <a href="{{ route('frontend::payment') }}">продлить</a>
                                 @else
@@ -19,7 +19,7 @@
                         <tr>
                             <td>Зарегистрирован:</td>
                             <td>
-                                {{$user->created_at->format('d.m.Y  в H:i')}}
+                                {{$user->getCreatedAt()->format('d.m.Y  в H:i')}}
                             </td>
 
                         </tr>
@@ -27,17 +27,17 @@
                             <td>Дней в сервисе:</td>
                             <td>
                                 <span class="badge badge-success">
-                                    <?php echo round((date(time())-strtotime($user->created_at)) / 86400)?>
+                                    <?php echo round((date(time())-strtotime($user->getCreatedAt())) / 86400)?>
                                 </span>
                             </td>
                         </tr>
                         <tr>
                             <td>Словарей открыто:</td>
-                            <td><span class="badge badge-success">{{$user->assets_opened}}</span></td>
+                            <td><span class="badge badge-success">{{$user->getAssetsOpened()}}</span></td>
                         </tr>
                         <tr>
                             <td>Словарей создано:</td>
-                            <td><span class="badge badge-success">{{$user->assets_created}}</span></td>
+                            <td><span class="badge badge-success">{{$user->getAssetsCreated()}}</span></td>
                         </tr>
                     </table>
                 </div>

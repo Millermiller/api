@@ -3,11 +3,19 @@
 namespace App\Http\Middleware;
 
 use App\Models\Plan;
+use App\Services\UserService;
 use Carbon\Carbon;
 use Closure;
 
 class CheckPlan
 {
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -18,13 +26,7 @@ class CheckPlan
     public function handle($request, Closure $next)
     {
         if (\Auth::check()) {
-            // The user is logged in...
-            $user = \Auth::user();
-            if(Carbon::parse($user->active_to) < Carbon::now()){
-                $plan = Plan::where('name', 'Basic')->first()->id;
-                $user->plan()->associate($plan);
-                $user->save();
-            }
+            $this->userService->updatePlan(\Auth::user());
         }
         return $next($request);
     }

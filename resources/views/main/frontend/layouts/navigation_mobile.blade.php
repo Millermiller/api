@@ -42,7 +42,7 @@
                 </li>
             @else
                 <li class="{{ request()->is('profile*') ? 'active' : '' }}">
-                    <a href="{{ route('frontend::profile') }}"><?= Auth::user()->login ?></a>
+                    <a href="{{ route('frontend::profile') }}"><?= Auth::user()->getLogin() ?></a>
                 </li>
                 <li><a href="{{ route('frontend::logout') }}">Выход</a></li>
             @endif

@@ -2,7 +2,10 @@
 
 namespace  App\Entities;
 
+use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Assets
@@ -12,6 +15,28 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Asset
 {
+    const TYPE_PERSONAL = 0;
+    const TYPE_WORDS = 1;
+    const TYPE_SENTENCES = 2;
+    const TYPE_FAVORITES = 3;
+
+    /**
+     * Asset constructor.
+     * @param string $title
+     * @param int $basic
+     * @param int $type
+     * @param int|null $favorite
+     * @param string|null $lang
+     */
+    public function __construct(string $title, int $basic, int $type, ?int $favorite, ?string $lang)
+    {
+        $this->title = $title;
+        $this->basic = $basic;
+        $this->type = $type;
+        $this->favorite = $favorite;
+        $this->lang = $lang;
+    }
+
     /**
      * @var int
      *
@@ -64,25 +89,40 @@ class Asset
     private $lang;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @var Collection|User[]
+     *
+     * @ManyToMany(targetEntity="User", mappedBy="assets")
+     */
+    private $users;
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 
     /**
      * @return int
@@ -189,9 +229,9 @@ class Asset
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }

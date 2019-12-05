@@ -2,6 +2,7 @@
 
 namespace  App\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -77,25 +78,25 @@ class Order
     }
 
     /**
-     * @param \DateTime|null $updatedAt
+     * @param DateTime|null $updatedAt
      */
-    public function setUpdatedAt(?\DateTime $updatedAt): void
+    public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @param \Plans $plan
+     * @param Plan $plan
      */
-    public function setPlan(\Plans $plan): void
+    public function setPlan(Plan $plan): void
     {
         $this->plan = $plan;
     }
 
     /**
-     * @param \Users $user
+     * @param User $user
      */
-    public function setUser(\Users $user): void
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }
@@ -172,25 +173,25 @@ class Order
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @return \Plans
+     * @return Plan
      */
-    public function getPlan(): \Plans
+    public function getPlan(): Plan
     {
         return $this->plan;
     }
 
     /**
-     * @return \Users
+     * @return User
      */
-    public function getUser(): \Users
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -260,21 +261,21 @@ class Order
     private $label;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
@@ -283,7 +284,7 @@ class Order
     /**
      * @var Plan
      *
-     * @ORM\ManyToOne(targetEntity="Plans")
+     * @ORM\ManyToOne(targetEntity="Plan")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="plan_id", referencedColumnName="id")
      * })
@@ -293,7 +294,7 @@ class Order
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

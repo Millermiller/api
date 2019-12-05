@@ -2,6 +2,7 @@
 
 namespace  App\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,25 +30,25 @@ class Example
     }
 
     /**
-     * @param \DateTime|null $updatedAt
+     * @param DateTime|null $updatedAt
      */
-    public function setUpdatedAt(?\DateTime $updatedAt): void
+    public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @param \DateTime|null $deletedAt
+     * @param DateTime|null $deletedAt
      */
-    public function setDeletedAt(?\DateTime $deletedAt): void
+    public function setDeletedAt(?DateTime $deletedAt): void
     {
         $this->deletedAt = $deletedAt;
     }
 
     /**
-     * @param \Cards $card
+     * @param Card $card
      */
-    public function setCard(\Cards $card): void
+    public function setCard(Card $card): void
     {
         $this->card = $card;
     }
@@ -76,17 +77,17 @@ class Example
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @return \Cards
+     * @return Card
      */
-    public function getCard(): \Cards
+    public function getCard(): Card
     {
         return $this->card;
     }
@@ -114,21 +115,21 @@ class Example
     private $value;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
@@ -137,7 +138,7 @@ class Example
     /**
      * @var Card
      *
-     * @ORM\ManyToOne(targetEntity="Cards")
+     * @ORM\ManyToOne(targetEntity="Card")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="card_id", referencedColumnName="id")
      * })

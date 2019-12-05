@@ -2,6 +2,7 @@
 
 namespace  App\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,21 +51,21 @@ class Translate
     private $sentence = '0';
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
@@ -73,7 +74,7 @@ class Translate
     /**
      * @var Word
      *
-     * @ORM\ManyToOne(targetEntity="Words")
+     * @ORM\ManyToOne(targetEntity="Word")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="word_id", referencedColumnName="id")
      * })

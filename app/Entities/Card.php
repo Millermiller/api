@@ -2,6 +2,7 @@
 
 namespace  App\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,17 +14,17 @@ use Doctrine\ORM\Mapping as ORM;
 class Card
 {
     /**
-     * @param \DateTime|null $updatedAt
+     * @param DateTime|null $updatedAt
      */
-    public function setUpdatedAt(?\DateTime $updatedAt): void
+    public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @param \DateTime|null $deletedAt
+     * @param DateTime|null $deletedAt
      */
-    public function setDeletedAt(?\DateTime $deletedAt): void
+    public function setDeletedAt(?DateTime $deletedAt): void
     {
         $this->deletedAt = $deletedAt;
     }
@@ -60,9 +61,9 @@ class Card
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
@@ -100,21 +101,21 @@ class Card
     private $id;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
@@ -123,7 +124,7 @@ class Card
     /**
      * @var Word
      *
-     * @ORM\ManyToOne(targetEntity="Words")
+     * @ORM\ManyToOne(targetEntity="Word")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="word_id", referencedColumnName="id")
      * })
@@ -133,7 +134,7 @@ class Card
     /**
      * @var Asset
      *
-     * @ORM\ManyToOne(targetEntity="Assets")
+     * @ORM\ManyToOne(targetEntity="Asset")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * })

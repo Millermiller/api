@@ -19,8 +19,8 @@ class TouchUser
         if (\Auth::check()) {
             // The user is logged in...
             $user = \Auth::user();
-            $user->last_online = Carbon::now();
-            $user->save();
+           // $user->last_online = Carbon::now();
+           // $user->save();
         }
         return $next($request);
     }

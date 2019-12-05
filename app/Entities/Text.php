@@ -2,7 +2,10 @@
 
 namespace  App\Entities;
 
+use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Text
@@ -71,14 +74,14 @@ class Text
     private $published = '0';
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
@@ -91,5 +94,18 @@ class Text
      */
     private $image;
 
+    /**
+     * @var Collection|User[]
+     *
+     * @ManyToMany(targetEntity="User", mappedBy="texts")
+     */
+    private $users;
 
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

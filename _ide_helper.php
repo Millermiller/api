@@ -11,7 +11,9 @@
  * @see https://github.com/barryvdh/laravel-ide-helper
  */
 
-namespace Illuminate\Support\Facades { 
+namespace Illuminate\Support\Facades {
+
+    use App\Entities\User;
 
     /**
      * 
@@ -1644,7 +1646,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \App\User|null 
+         * @return User
          * @static 
          */ 
         public static function user()

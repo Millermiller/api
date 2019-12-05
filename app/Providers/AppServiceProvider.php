@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\Repositories\User\UserRepository;
-use App\Repositories\User\UserRepositoryInterface;
-use app\Services\UserService;
-
-use Auth;
+use App\Entities\{Plan, User, Language, Asset, Text};
+use App\Repositories\Plan\{PlanRepository, PlanRepositoryInterface};
+use App\Repositories\User\{UserRepository, UserRepositoryInterface};
+use App\Repositories\Asset\{AssetRepository, AssetRepositoryInterface};
+use App\Repositories\Language\{LanguageRepository, LanguageRepositoryInterface};
+use App\Repositories\Text\{TextRepository, TextRepositoryInterface};
 use Illuminate\Support\ServiceProvider;
-use App\Entities\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +33,34 @@ class AppServiceProvider extends ServiceProvider
             return new UserRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(User::class)
+            );
+        });
+
+        $this->app->bind(PlanRepositoryInterface::class, function () {
+            return new PlanRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Plan::class)
+            );
+        });
+
+        $this->app->bind(LanguageRepositoryInterface::class, function () {
+            return new LanguageRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Language::class)
+            );
+        });
+
+        $this->app->bind(AssetRepositoryInterface::class, function () {
+            return new AssetRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Asset::class)
+            );
+        });
+
+        $this->app->bind(TextRepositoryInterface::class, function () {
+            return new TextRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Text::class)
             );
         });
     }

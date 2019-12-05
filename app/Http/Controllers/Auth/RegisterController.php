@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\UserRegistered;
-use App\Models\Asset;
-use App\Models\Language;
-use App\Models\Result;
-use App\Models\Text;
-use App\Models\TextResult;
-use App\User;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\ValidationException;
 use Session;
 
 class RegisterController extends Controller
@@ -39,12 +35,17 @@ class RegisterController extends Controller
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
-     *
+     * @var UserService
      */
-    public function __construct()
+    protected $userService;
+
+    /**
+     * RegisterController constructor.
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
     {
-        //$this->middleware('guest');
+        $this->userService = $userService;
     }
 
     /**
@@ -61,8 +62,8 @@ class RegisterController extends Controller
         });
 
         return Validator::make($data, [
-            'login' => 'required|string|login|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'login' => 'required|string|login|max:255|unique:App\Entities\User,login',
+            'email' => 'required|string|email|max:255|unique:App\Entities\User,email',
             'password' => 'required|string|min:6|confirmed',
         ],
             [
@@ -78,9 +79,9 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @return Response
+     * @throws ValidationException
      */
     public function register(Request $request)
     {
@@ -90,7 +91,7 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        Session::flash('message', 'Добро пожаловать, '.$user->login.'.');
+        Session::flash('message', 'Добро пожаловать, '.$user->getLogin().'.');
         Session::flash('alert-class', 'success');
 
         return $this->registered($request, $user)
@@ -101,71 +102,17 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Entities\User
      */
     protected function create(array $data)
     {
-        $user =  User::create([
-            'login' => $data['login'],
-            'email' => $data['email'],
-            'plan_id' => 1,
-            'password' => bcrypt($data['password']),
-        ]);
-
-        $languages = Language::all();
-
-        foreach($languages as $language){
-            //создаем избранное
-            $favourite = Asset::create([
-                'title' => 'Избранное',
-                'basic'=> false,
-                'favorite' => true,
-                'type' => Asset::TYPE_FAVORITES,
-                'lang' => $language->name
-            ]);
-            //даем избранное пользователю
-            Result::create([
-                'asset_id' => $favourite->id,
-                'user_id' => $user->id,
-                'lang' => $language->name
-            ]);
-
-            //находим первый словарь слов
-            $words = Asset::where(['lang' => $language->name, 'type' => Asset::TYPE_WORDS, 'level' => 1])->first();
-            Result::create([
-                'asset_id' => $words->id,
-                'user_id' => $user->id,
-                'lang' => $language->name
-            ]);
-
-            //находим первый словарь предложений
-            $sentences = Asset::where(['lang' => $language->name, 'type' => Asset::TYPE_SENTENCES, 'level' => 1])->first();
-            Result::create([
-                'asset_id' => $sentences->id,
-                'user_id' => $user->id,
-                'lang' => $language->name
-            ]);
-
-            //находим первый текст
-            $text = Text::where(['lang' => $language->name,'level' => 1])->first();
-            TextResult::create([
-                'text_id' => $text->id,
-                'user_id' => $user->id,
-                'lang' => $language->name
-            ]);
-        }
-
-        event(new UserRegistered($user, $data));
-
-        activity('public')->causedBy($user)->log('Зарегистрирован пользователь');
-
-        return $user;
+        return $this->userService->registration($data);
     }
 
     /**
      * The user has been registered.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  mixed  $user
      * @return mixed
      */

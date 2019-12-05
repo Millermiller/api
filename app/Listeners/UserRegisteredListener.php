@@ -27,7 +27,7 @@ class UserRegisteredListener
      */
     public function handle(UserRegistered $event)
     {
-        Mail::to($event->user)->send(new Welcome($event->data));
+        Mail::to($event->user->getEmail())->send(new Welcome($event->data));
 
         try{
             Requester::createForumUser($event->data);

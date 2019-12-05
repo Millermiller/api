@@ -31,7 +31,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function save($object)
+    public function save(object $object)
     {
         $this->_em->persist($object);
         $this->_em->flush($object);

@@ -11,7 +11,7 @@ interface BaseRepositoryInterface
 
     public function get($id);
 
-    public function save($data);
+    public function save(object $data);
 
     public function update($data, $id);
 
