@@ -342,4 +342,20 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     {
         $this->photo = $photo;
     }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param string $login
+     */
+    public function setLogin(string $login): void
+    {
+        $this->login = $login;
+    }
 }

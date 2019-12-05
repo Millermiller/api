@@ -24,9 +24,11 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
+        $id = Auth::user()->getKey();
+
         return [
-            'login' => 'required|string|alpha_num|max:255|unique:users,login,' . Auth::user()->id,
-            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->id,
+            'login' => "required|string|alpha_num|max:255|unique:App\Entities\User,login,$id",
+            'email' => "required|string|email|max:255|unique:App\Entities\User,email,$id",
             'password' => 'nullable|string|min:6|confirmed',
         ];
     }

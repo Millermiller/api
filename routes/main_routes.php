@@ -28,7 +28,7 @@ Route::group(['middleware' => ['touchUser', 'checkPlan'], 'as' => 'frontend::', 
     Route::get('/profile/settings', 'ProfileController@settings')->name('profile-settings');
     Route::get('/profile/log', 'ProfileController@log')->name('profile-log');
     Route::post('/profile/uploadImage', 'ProfileController@uploadImage');
-    Route::post('/profile/update', 'ProfileController@update')->name('profile-update');
+    Route::post('/profile/update', 'ProfileController@edit')->name('profile-update');
 
     Route::get('/pay', 'PaymentController@index')->name('payment');
 

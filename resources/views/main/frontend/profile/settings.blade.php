@@ -8,25 +8,16 @@
                         {{ csrf_field() }}
                         <fieldset>
                             <h4>Настройки профиля:</h4>
-                            <div class="form-group bmd-form-group
-                                        @if($user->email) is-filled @endif
-                                        @if ($errors->has('email'))has-error @endif">
-                                <label for="email" class="bmd-label-floating control-label">Email:</label>
-                                <input class="form-control"
-                                       id="email"
-                                       name="email"
-                                       type="text"
-                                       value="{{$user->email}}"/>
+                            <div class="form-group bmd-form-group @if($user->getEmail()) is-filled @endif @if ($errors->has('email'))has-error @endif">
+                                {!! Form::label('email', 'Email:', ['class'=> 'bmd-label-floating control-label']) !!}
+                                {!! Form::text('email', $user->getEmail(), ['class'=> 'form-control', 'id' => 'email']) !!}
                                 @if ($errors->has('email'))
                                     <p class="help-block">{{ $errors->first('email') }}</p>
                                 @endif
                             </div>
-                            <div class="form-group bmd-form-group
-                                        @if($user->login) is-filled @endif
-                                        @if ($errors->has('login'))has-error @endif">
-                                <label for="log" class="bmd-label-floating control-label">Login:</label>
-                                <input class="form-control" id="log" type="text" name="login"
-                                       value="{{$user->login}}"/>
+                            <div class="form-group bmd-form-group @if($user->getLogin()) is-filled @endif @if ($errors->has('login'))has-error @endif">
+                                {!! Form::label('login', 'Login:', ['class'=> 'bmd-label-floating control-label']) !!}
+                                {!! Form::text('login', $user->getLogin(), ['class'=> 'form-control', 'id' => 'log']) !!}
                                 @if ($errors->has('login'))
                                     <p class="help-block">{{ $errors->first('login') }}</p>
                                 @endif

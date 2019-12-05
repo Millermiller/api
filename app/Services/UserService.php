@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Plan;
 use Carbon\Carbon;
 use App\Entities\{User, Asset, Language};
-use App\Events\UserRegistered;
 use App\Models\Intro;
 use App\Models\Text;
 use App\Repositories\Asset\AssetRepositoryInterface;
@@ -155,5 +153,20 @@ class UserService
             $plan = $this->planRepository->findByName('Basic');
             $user->setPlan($plan);
         }
+    }
+
+    /**
+     * @param $request
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function updateUserInfo(array $request) : void
+    {
+        $user = Auth::user();
+
+        //Requester::updateForumUser($request, $user->getEmail());
+
+        $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->getPassword();
+
+        $this->userRepository->update($user, $request);
     }
 }

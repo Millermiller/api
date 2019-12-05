@@ -3,11 +3,12 @@
 
 namespace App\Repositories;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\EntityRepository;
 
 class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 {
+
     /**
      * @return array
      */
@@ -38,9 +39,21 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
         return $object;
     }
 
-    public function update($data, $id)
+    /**
+     * @param object $entity
+     * @param array $data
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function update($entity, array $data)
     {
-        // TODO: Implement update() method.
+        foreach ($data as $key => $value) {
+            $key = Inflector::camelize($key);
+            if (property_exists($entity, $key)) {
+                $entity->{'set'.ucfirst($key)}($value);
+            }
+        }
+        $this->_em->flush($entity);
     }
 
     /**
