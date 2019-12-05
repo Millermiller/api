@@ -88,3 +88,5 @@ CNhcAZeXeqEm
 ******************************** FIX IDE HELPER ON 5.7 ********************
 https://github.com/barryvdh/laravel-ide-helper/issues/625
 
+поменять версию php в homestead
+sudo update-alternatives --config php

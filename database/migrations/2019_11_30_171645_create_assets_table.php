@@ -20,7 +20,7 @@ class CreateAssetsTable extends Migration {
 			$table->integer('type')->default(0);
 			$table->integer('level')->default(0);
 			$table->integer('favorite')->nullable()->default(0);
-			$table->string('lang', 50)->nullable()->index('lang');
+			$table->integer('language_id')->index('lang');
 			$table->timestamps();
 			$table->softDeletes();
 		});

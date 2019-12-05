@@ -13,9 +13,11 @@ sites:
     -
         map: scandinaver.local
         to: /home/vagrant/code/public
+        php: "7.3"
     -
         map: is.scandinaver.local
         to: /home/vagrant/code/public
+        php: "7.3"
 databases:
     - homestead
     - homestead_test

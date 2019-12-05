@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function assets()
     {
-        return $this->belongsToMany('App\Models\Asset', 'assets_to_users', 'user_id', 'asset_id');
+        return $this->belongsToMany('App\Models\Asset', 'assets_users', 'user_id', 'asset_id');
     }
 
     public function plan()

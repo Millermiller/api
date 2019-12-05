@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Result extends Model
 {
-    protected $table = 'assets_to_users';
+    protected $table = 'assets_users';
 
     protected $fillable = ['asset_id', 'user_id', 'result', 'lang'];
 

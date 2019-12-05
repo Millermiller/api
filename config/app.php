@@ -231,6 +231,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Meta'    => Eusonlito\LaravelMeta\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
+        'Registry'      => LaravelDoctrine\ORM\Facades\Registry::class,
+        'Doctrine'      => LaravelDoctrine\ORM\Facades\Doctrine::class,
     ],
 
 ];

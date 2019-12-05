@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAssetsToUsersTable extends Migration {
+class CreateAssetsUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateAssetsToUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('assets_to_users', function(Blueprint $table)
+		Schema::create('assets_users', function(Blueprint $table)
 		{
 			$table->integer('id', true);
 			$table->integer('asset_id');

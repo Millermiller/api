@@ -3,17 +3,19 @@
 namespace  App\Entities;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
+use JsonSerializable;
 
 /**
  * Assets
  *
- * @ORM\Table(name="assets", indexes={@ORM\Index(name="lang", columns={"lang"})})
+ * @ORM\Table(name="assets", indexes={@ORM\Index(name="id", columns={"id"})})
  * @ORM\Entity
  */
-class Asset
+class Asset implements JsonSerializable
 {
     const TYPE_PERSONAL = 0;
     const TYPE_WORDS = 1;
@@ -34,7 +36,7 @@ class Asset
         $this->basic = $basic;
         $this->type = $type;
         $this->favorite = $favorite;
-        $this->lang = $lang;
+        $this->languageId = $lang;
     }
 
     /**
@@ -84,9 +86,9 @@ class Asset
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lang", type="string", length=50, nullable=true)
+     * @ORM\Column(name="language_id", type="integer", length=50, nullable=true)
      */
-    private $lang;
+    private $languageId;
 
     /**
      * @var DateTime|null
@@ -217,7 +219,7 @@ class Asset
      */
     public function getLang(): ?string
     {
-        return $this->lang;
+        return $this->languageId;
     }
 
     /**
@@ -225,7 +227,7 @@ class Asset
      */
     public function setLang(?string $lang): void
     {
-        $this->lang = $lang;
+        $this->languageId = $lang;
     }
 
     /**
@@ -234,5 +236,50 @@ class Asset
     public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @var Language
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="assets")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     */
+    private $language;
+
+    /**
+     * @var Collection|Card[]
+     *
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="asset")
+     *
+     */
+    private $cards;
+
+    /**
+     * @var Collection|Result[]
+     *
+     * @ORM\OneToMany(targetEntity="Result", mappedBy="asset")
+     *
+     */
+    private $results;
+
+    /**
+     * @return Collection|Card[]
+     */
+    public function getCards() : Collection
+    {
+        return $this->cards;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'title' => $this->title,
+            'basic' => $this->basic,
+            'language_id' => $this->languageId,
+            'cards' => $this->cards->toArray(),
+        );
     }
 }

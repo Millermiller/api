@@ -30,6 +30,14 @@ class Translate
     private $value;
 
     /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="variant", type="string", length=255, nullable=true)

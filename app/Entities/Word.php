@@ -30,6 +30,14 @@ class Word
     private $word;
 
     /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->word;
+    }
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="transcription", type="string", length=255, nullable=true)

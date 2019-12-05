@@ -2,7 +2,14 @@
 
 namespace  App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use JsonSerializable;
 
 /**
  * Languages
@@ -10,8 +17,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="languages", indexes={@ORM\Index(name="name", columns={"name"}), @ORM\Index(name="id", columns={"id"})})
  * @ORM\Entity
  */
-class Language
+class Language implements JsonSerializable
 {
+    public function __construct(int $id, string $name)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->assets = new ArrayCollection();
+        $this->cards = new ArrayCollection();
+    }
+
     /**
      * @param string|null $name
      */
@@ -96,5 +111,44 @@ class Language
      */
     private $flag;
 
+    /**
+     * @var Collection|Asset[]
+     *
+     * @ORM\OneToMany(targetEntity="Asset", mappedBy="language")
+     */
+    private $assets;
 
+    /**
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'name' => $this->label,
+            'flag'=> $this->flag,
+            'letter'=> $this->name,
+            'cards' => $this->getCards()->count(),
+        );
+    }
+
+    public function getAssets()
+    {
+        return $this->assets;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCards()
+    {
+        $cardsCollection = new ArrayCollection();
+
+        foreach($this->assets as $asset){
+            foreach($asset->getCards() as $card){
+                $cardsCollection->add($card);
+            }
+        }
+
+        return $cardsCollection;
+    }
 }

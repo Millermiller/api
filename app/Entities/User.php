@@ -4,6 +4,7 @@ namespace  App\Entities;
 
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
@@ -358,4 +359,20 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     {
         $this->login = $login;
     }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @var Collection|Result[]
+     *
+     * @ORM\OneToMany(targetEntity="Result", mappedBy="user")
+     *
+     */
+    private $results;
 }

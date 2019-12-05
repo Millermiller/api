@@ -12,6 +12,6 @@ $factory->define(App\Models\Asset::class, function (Faker $faker) {
         'type' => 1, //array_rand([0, 1, 2, 3]),
         'level' => $level++,
         'favorite' =>  array_random([0, 1]),
-        'lang' =>  'is',
+        'language_id' =>  1,
     ];
 });

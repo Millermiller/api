@@ -49,5 +49,13 @@ class Plan
      */
     private $costPerMonth;
 
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
 
 }

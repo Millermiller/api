@@ -3,7 +3,9 @@
 namespace  App\Entities;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Cards
@@ -11,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="cards", indexes={@ORM\Index(name="word_id", columns={"word_id"}), @ORM\Index(name="translate_id", columns={"translate_id"}), @ORM\Index(name="asset_id", columns={"asset_id"})})
  * @ORM\Entity
  */
-class Card
+class Card implements JsonSerializable
 {
     /**
      * @param DateTime|null $updatedAt
@@ -151,5 +153,29 @@ class Card
      */
     private $translate;
 
+    /**
+     * @var Collection|Example[]
+     *
+     * @ORM\OneToMany(targetEntity="Example", mappedBy="card")
+     *
+     */
+    private $examples;
 
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId()
+        ];
+    }
+
+    /**
+     * @return Example[]|Collection
+     */
+    public function getExamples() : Collection
+    {
+        return $this->examples;
+    }
 }

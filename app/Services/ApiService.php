@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Asset;
-use App\Models\Card;
+use App\Models\Asset;;
 use App\Models\Example;
-use App\Models\Language;
 use App\Models\Result;
+use App\Repositories\Asset\AssetRepositoryInterface;
+use App\Repositories\Language\LanguageRepositoryInterface;
 use App\User;
 
 /**
@@ -16,27 +16,27 @@ use App\User;
 class ApiService
 {
     /**
+     * @var LanguageRepositoryInterface
+     */
+    protected $languageRepository;
+
+    /**
+     * @var AssetRepositoryInterface
+     */
+    protected $assetsRepository;
+
+    public function __construct(LanguageRepositoryInterface $languageRepository, AssetRepositoryInterface $assetsRepository)
+    {
+        $this->languageRepository = $languageRepository;
+        $this->assetsRepository = $assetsRepository;
+    }
+
+    /**
      * @return array
      */
-    public function getLanguagesList()
+    public function getLanguagesList() : array
     {
-        $languages = Language::all();
-
-        $list = [];
-
-        foreach($languages as $language){
-            $list[] = [
-                'name' => $language->label,
-                'flag' => $language->image,
-                'letter' => $language->name,
-                'cards' => Card::whereHas('asset', function($q) use ($language) {
-                    /** @var \Illuminate\Database\Eloquent\Builder $q*/
-                    $q->where('lang', $language->name);
-                })->count()
-            ];
-        }
-
-        return $list;
+        return $this->languageRepository->all();
     }
 
     /**
@@ -47,21 +47,29 @@ class ApiService
     {
         config(['app.lang' => $language]);
 
-        /** @var User $user */
+        $language = $this->languageRepository->getByName($language);
+
+        /** @var \App\Entities\User $user */
         $user = auth('api')->user();
 
         $assets = [];
 
-        $activeArray = Result::domain()->where('user_id', $user->id)->pluck('result', 'asset_id')->toArray();
+      //  $activeArray = Result::domain()->where('user_id', $user->id)->pluck('result', 'asset_id')->toArray();
+        $activeArray = [];
 
-        $personaldata = Asset::domain()->whereHas('result', function ($q) use ($user) {
-            /** @var \Illuminate\Database\Eloquent\Builder $q*/
-            $q->where('user_id', $user->id);
-        })->with('cards', 'cards.word', 'cards.translate', 'result')->get();
+    //    $personaldata = Asset::domain()->whereHas('result', function ($q) use ($user) {
+    //        /** @var \Illuminate\Database\Eloquent\Builder $q*/
+    //        $q->where('user_id', $user->id);
+    //    })->with('cards', 'cards.word', 'cards.translate', 'result')->get();
+    //      $publicdata = Asset::domain()->with('cards', 'cards.word', 'cards.translate', 'result')->where('basic', 1)->get();
 
-        $publicdata = Asset::domain()->with('cards', 'cards.word', 'cards.translate', 'result')->where('basic', 1)->get();
 
-        $data = $personaldata->merge($publicdata);
+       // $personaldata = $this->assetsRepository->getPersonalAssets($language, $user);
+        $publicdata = $this->assetsRepository->getPublicAssets($language);
+        var_dump($publicdata);die;
+      //  $data = array_merge($personaldata, $publicdata);
+
+        $data = $publicdata;
 
         $counter = [
             Asset::TYPE_WORDS => 0,
@@ -73,33 +81,34 @@ class ApiService
         foreach ($data as $item) {
             $cards = [];
 
-            foreach ($item->cards as $card) {
-                if(! $card->word) continue;
+            /** @var \App\Entities\Asset $item */
+            foreach ($item->getCards() as $card) {
+                if(! $card->getWord()->getValue()) continue;
 
                 $cards[] = [
-                    'id' => $card->id,
-                    'word' => $card->word->word,
-                    'trans' =>  preg_replace('/^(\d\\)\s)/', '',  $card->translate->value),
-                    'asset_id' => $card->asset_id,
-                    'examples' => Example::where('card_id', '=', $card->id)->get()
+                    'id' => $card->getId(),
+                    'word' => $card->getWord()->getValue(),
+                    'trans' =>  preg_replace('/^(\d\\)\s)/', '',  $card->getTranslate()->getValue()),
+                    'asset_id' => $card->getAsset()->getId(),
+                    'examples' => $card->getExamples()
                 ];
             }
 
             $asset = [
-                'id' => $item->id,
-                'active' => in_array($item->id, array_keys($activeArray)),
-                'count' => $item->cards->count(),
+                'id' => $item->getId(),
+                'active' => in_array($item->getId(), array_keys($activeArray)),
+                'count' => $item->getCards()->count(),
                 'result' => 0,
-                'level' => $item->level,
-                'title' => $item->title,
-                'type' => $item->type,
-                'basic' => $item->basic,
+                'level' => $item->getLevel(),
+                'title' => $item->getTitle(),
+                'type' => $item->getType(),
+                'basic' => $item->getBasic(),
                 'cards' => $cards
             ];
 
-            $counter[$item->type] = $counter[$item->type] + 1;
+            $counter[$item->getType()] = $counter[$item->getType()] + 1;
 
-            if((in_array($item->type, [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]) && $counter[$item->type] < 10) || $user->premium || in_array($item->type, [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]))
+            if((in_array($item->getType(), [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]) && $counter[$item->getType()] < 10) || $user->isPremium() || in_array($item->getType(), [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]))
                 $asset['available'] = true;
             else
                 $asset['available'] = false;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Services\ApiService;
+use Validator;
 
 /**
  * Created by PhpStorm.
@@ -31,8 +32,23 @@ class ApiController extends Controller
         return response()->json($languages);
     }
 
+    /**
+     * @param $language
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function assets($language)
     {
+        $validator = Validator::make(['language' => $language], [
+            'language' => 'exists:App\Entities\Language,name'
+        ], [
+            'exist' => 'Неверный параметр'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([$validator->errors()], 400);
+        }
+
         $assets = $this->apiService->getAssets($language);
 
         return response()->json($assets);
