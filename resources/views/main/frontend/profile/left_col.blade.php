@@ -1,7 +1,7 @@
 <div class="col-md-3 col-xs-12 " style="border-right: 1px solid #eee;">
     <div class="row">
         <div class="avatar-wrapper-large center-block" style="position: relative;">
-            <img src="{{ '/uploads/u/'.$user->getPhoto()}}" alt="">
+            <img src="{{ Auth::user()->getAvatar() }}" alt="">
                 @if(!$user->hasPhoto())
                     <p>Загрузить изображение профиля</p>
                 @endif

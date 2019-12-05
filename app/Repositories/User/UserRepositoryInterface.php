@@ -15,5 +15,7 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
 
     public function addText(User $user, Text $text) : void;
 
-    public function setPlan(User $user, Plan $plan) : void ;
+    public function setPlan(User $user, Plan $plan) : void;
+
+    public function setAvatar(User $user, string $file);
 }

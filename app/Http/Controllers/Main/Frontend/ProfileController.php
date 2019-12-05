@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Main\Frontend;
 use App\Events\UserPhotoUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\UploadAvatarRequest;
 use App\Services\FeedbackService;
+use App\Services\FileService;
 use App\Services\Requester;
 use App\Services\UserService;
 use Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Meta;
 use Session;
 use Spatie\Activitylog\Models\Activity;
@@ -26,17 +29,27 @@ class ProfileController extends Controller
 {
     use ValidatesRequests;
 
+    /**
+     * @var UserService
+     */
     protected $userService;
 
-    public function __construct(UserService $userService)
+    /**
+     * @var FileService
+     */
+    protected $fileService;
+
+    public function __construct(UserService $userService, FileService $fileService)
     {
         $this->userService = $userService;
+        $this->fileService = $fileService;
     }
 
     public function index()
     {
         Meta::set('title', 'Профиль');
 
+      //  dd(Auth::user()->getAvatar());
         return view('main.frontend.profile.info', ['user' => Auth::user()]);
     }
 
@@ -47,38 +60,13 @@ class ProfileController extends Controller
         return view('main.frontend.profile.settings', ['user' => Auth::user()]);
     }
 
-    public function uploadImage()
+    public function uploadImage(UploadAvatarRequest $request)
     {
-        $storage = new FileSystem(public_path('/uploads/u/'));
-        $file = new File('photo', $storage);
-        $new_filename = uniqid();
-        $file->setName($new_filename);
-        $file->addValidations([
-            new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
-            new Size('2M')
-        ]);
+        $request->validated();
 
-        $msg['msg'] = 'Фотография профиля изменена';
-        $msg['success'] = true;
+        $this->fileService->uploadAvatar($request);
 
-        try {
-            $file->upload();
-
-            Auth::user()->photo = $file->getNameWithExtension();
-
-            if (Auth::user()->save())
-                event(new UserPhotoUpdated(Auth::user()));
-
-        } catch (\Exception $e) {
-            $errors = $file->getErrors();
-            $message = implode(', ', $errors);
-            $msg['msg'] = $message;
-            $msg['success'] = false;
-            $msg['mess'] = $e->getMessage();
-            $msg['mess1'] = $e->getTraceAsString();
-        }
-
-        return response()->json($msg);
+        return response()->json(['success' => true, 'msg' => 'Фотография успешно загружена']);
     }
 
     /**

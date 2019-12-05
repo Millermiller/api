@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use File;
 use Image;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
@@ -277,7 +278,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     {
         if($this->photo){
             if (file_exists( public_path('/uploads/u/a/') . $this->photo)) {
-                return url('/uploads/u/a/' . $this->photo);
+                return asset('/uploads/u/a/' . $this->photo);
             } else {
                 $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
                 $avatar->resize(
@@ -332,5 +333,13 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     public function getPhoto(): ?string
     {
         return $this->photo;
+    }
+
+    /**
+     * @param string|null $photo
+     */
+    public function setPhoto(?string $photo): void
+    {
+        $this->photo = $photo;
     }
 }

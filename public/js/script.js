@@ -226,6 +226,14 @@ $(function(){
             success: function(data) {
                 $('#uploadPhoto').toggle('slow');
                 toastr[(data.success === true) ? 'info' : 'error'](data.msg);
+            },
+            error: function (data) {
+                let errors = data.responseJSON.errors.photo;
+                $.each(errors, function (key, value) {
+                    toastr['error'](value);
+                });
+            },
+            complete: function(){
                 $('.el-loading-mask').hide()
                 label.attr('disabled', false)
                 button.attr('disabled', false)

@@ -49,4 +49,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user->setPlan($plan);
         $this->_em->flush();
     }
+
+    /**
+     * @param User $user
+     * @param string $file
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function setAvatar(User $user, string $file)
+    {
+        $user->setPhoto($file);
+        $this->_em->flush();
+    }
 }

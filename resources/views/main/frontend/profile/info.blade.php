@@ -9,7 +9,7 @@
                             <td>Подписка:</td>
                             <td>
                                 @if($user->isPremium())
-                                    premium еще {{ \Carbon\Carbon::today()->diffInDays($user->active_to)}} {{Lang::choice('день|дня|дней', \Carbon\Carbon::today()->diffInDays($user->active_to), [], 'ru')}}
+                                    premium еще {{ \Carbon\Carbon::today()->diffInDays($user->getActiveTo())}} {{Lang::choice('день|дня|дней', \Carbon\Carbon::today()->diffInDays($user->getActiveTo()), [], 'ru')}}
                                     <a href="{{ route('frontend::payment') }}">продлить</a>
                                 @else
                                     базовая <a href="{{ route('frontend::payment') }}">улучшить</a>
