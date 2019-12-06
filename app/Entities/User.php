@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Entities\Traits\UsesPasswordGrant;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +25,7 @@ use LaravelDoctrine\ORM\Notifications\Notifiable;
  */
 class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable
 {
-    use Authenticatable, CanResetPassword, Notifiable, HasApiTokens, \App\Entities\Traits\UsesPasswordGrant;
+    use Authenticatable, CanResetPassword, Notifiable, HasApiTokens, UsesPasswordGrant;
 
     const ROLE_ADMIN = 1;
     const ROLE_USER = 0;

@@ -9,11 +9,18 @@ trait UsesPasswordGrant
 {
     /**
      * @param string $userIdentifier
-     * @return User
+     * @return User|object
      */
     public function findForPassport($userIdentifier)
     {
         $userRepository = EntityManager::getRepository(get_class($this));
-        return $userRepository->findOneByEmail($userIdentifier);
+
+        $login_type = filter_var($userIdentifier, FILTER_VALIDATE_EMAIL )
+            ? 'email'
+            : 'login';
+
+        return $userRepository->findOneBy([
+            $login_type => $userIdentifier
+        ]);
     }
 }
