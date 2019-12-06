@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Result\{ResultRepository, ResultRepositoryInterface};
 use Laravel\Passport\Passport;
-use App\Entities\{Plan, User, Language, Asset, Text};
+use App\Entities\{Plan, Result, User, Language, Asset, Text};
 use App\Repositories\Plan\{PlanRepository, PlanRepositoryInterface};
 use App\Repositories\User\{UserRepository, UserRepositoryInterface};
 use App\Repositories\Asset\{AssetRepository, AssetRepositoryInterface};
@@ -64,6 +65,13 @@ class AppServiceProvider extends ServiceProvider
             return new TextRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Text::class)
+            );
+        });
+
+        $this->app->bind(ResultRepositoryInterface::class, function () {
+            return new ResultRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Result::class)
             );
         });
     }

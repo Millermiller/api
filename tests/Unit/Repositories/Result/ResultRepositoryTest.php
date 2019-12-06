@@ -7,9 +7,10 @@ use App\Entities\Language;
 use App\Entities\Plan;
 use App\Entities\User;
 use App\Repositories\Asset\AssetRepositoryInterface;
+use App\Repositories\Result\ResultRepositoryInterface;
 use Tests\TestCase;
 
-class AssetRepositoryTest extends TestCase
+class ResultRepositoryTest extends TestCase
 {
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -27,29 +28,11 @@ class AssetRepositoryTest extends TestCase
 
         $this->entityManager = app('Doctrine\ORM\EntityManager');
 
-        $this->repository = $this->app->make(AssetRepositoryInterface::class);
+        $this->repository = $this->app->make(ResultRepositoryInterface::class);
 
     }
 
-    public function testGetFirstAsset()
-    {
-        $language = new Language(1, 'is');
-
-        $this->assertInstanceOf( Asset::class, $this->repository->getFirstAsset($language, Asset::TYPE_WORDS));
-    }
-
-    public function testGetPublicAssets()
-    {
-        $language = new Language(1, 'is');
-
-        $assets = $this->repository->getPublicAssets($language);
-
-        $this->assertIsArray($assets);
-
-        $this->assertInstanceOf(Asset::class, $assets[0]);
-    }
-
-    public function testGetPersonalAssets()
+    public function testGetActiveIds()
     {
         $language = new Language(1, 'is');
 
@@ -63,10 +46,8 @@ class AssetRepositoryTest extends TestCase
         $user->setPassword('$2y$10$wHzJJzCmyoI0hZUgoHGOI.6IXwc7p289G4DIbhpzvRiGCc5fZRt8W');
         $user->setPlan($plan);
 
-        $assets = $this->repository->getPersonalAssets($language, $user);
+        $assets = $this->repository->getActiveIds($user, $language);
 
         $this->assertIsArray($assets);
-
-        $this->assertInstanceOf(Asset::class, $assets[0]);
     }
 }

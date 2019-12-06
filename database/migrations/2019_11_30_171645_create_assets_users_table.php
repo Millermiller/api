@@ -18,7 +18,7 @@ class CreateAssetsUsersTable extends Migration {
 			$table->integer('asset_id');
 			$table->integer('user_id');
 			$table->integer('result')->default(0);
-			$table->string('lang', 50)->nullable()->index('lang');
+			$table->integer('language_id')->nullable();
 			$table->timestamps();
 		});
 	}

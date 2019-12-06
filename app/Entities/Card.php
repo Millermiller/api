@@ -93,6 +93,7 @@ class Card implements JsonSerializable
     {
         return $this->translate;
     }
+
     /**
      * @var int
      *
@@ -174,8 +175,8 @@ class Card implements JsonSerializable
     /**
      * @return Example[]|Collection
      */
-    public function getExamples() : Collection
+    public function getExamples()
     {
-        return $this->examples;
+        return $this->examples->toArray();
     }
 }

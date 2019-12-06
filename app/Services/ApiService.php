@@ -2,12 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Asset;;
-use App\Models\Example;
-use App\Models\Result;
+use App\Models\Asset;
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
-use App\User;
+use App\Repositories\Result\ResultRepositoryInterface;
 
 /**
  * Class ApiService
@@ -25,10 +23,16 @@ class ApiService
      */
     protected $assetsRepository;
 
-    public function __construct(LanguageRepositoryInterface $languageRepository, AssetRepositoryInterface $assetsRepository)
+    /**
+     * @var ResultRepositoryInterface
+     */
+    protected $resultRepository;
+
+    public function __construct(LanguageRepositoryInterface $languageRepository, AssetRepositoryInterface $assetsRepository, ResultRepositoryInterface $resultRepository)
     {
         $this->languageRepository = $languageRepository;
         $this->assetsRepository = $assetsRepository;
+        $this->resultRepository = $resultRepository;
     }
 
     /**
@@ -45,8 +49,6 @@ class ApiService
      */
     public function getAssets($language)
     {
-        config(['app.lang' => $language]);
-
         $language = $this->languageRepository->getByName($language);
 
         /** @var \App\Entities\User $user */
@@ -54,22 +56,13 @@ class ApiService
 
         $assets = [];
 
-      //  $activeArray = Result::domain()->where('user_id', $user->id)->pluck('result', 'asset_id')->toArray();
-        $activeArray = [];
+        $activeArray  = $this->resultRepository->getActiveIds($user, $language);
 
-    //    $personaldata = Asset::domain()->whereHas('result', function ($q) use ($user) {
-    //        /** @var \Illuminate\Database\Eloquent\Builder $q*/
-    //        $q->where('user_id', $user->id);
-    //    })->with('cards', 'cards.word', 'cards.translate', 'result')->get();
-    //      $publicdata = Asset::domain()->with('cards', 'cards.word', 'cards.translate', 'result')->where('basic', 1)->get();
+        $personaldata = $this->assetsRepository->getPersonalAssets($language, $user);
 
+        $publicdata   = $this->assetsRepository->getPublicAssets($language);
 
-       // $personaldata = $this->assetsRepository->getPersonalAssets($language, $user);
-        $publicdata = $this->assetsRepository->getPublicAssets($language);
-        var_dump($publicdata);die;
-      //  $data = array_merge($personaldata, $publicdata);
-
-        $data = $publicdata;
+        $data = $publicdata + $personaldata;
 
         $counter = [
             Asset::TYPE_WORDS => 0,
@@ -83,11 +76,13 @@ class ApiService
 
             /** @var \App\Entities\Asset $item */
             foreach ($item->getCards() as $card) {
-                if(! $card->getWord()->getValue()) continue;
+                $word = $card->getWord();
+
+                if($word === null) continue;
 
                 $cards[] = [
                     'id' => $card->getId(),
-                    'word' => $card->getWord()->getValue(),
+                    'word' => $word->getValue(),
                     'trans' =>  preg_replace('/^(\d\\)\s)/', '',  $card->getTranslate()->getValue()),
                     'asset_id' => $card->getAsset()->getId(),
                     'examples' => $card->getExamples()
@@ -96,7 +91,7 @@ class ApiService
 
             $asset = [
                 'id' => $item->getId(),
-                'active' => in_array($item->getId(), array_keys($activeArray)),
+                'active' => in_array($item->getId(), $activeArray),
                 'count' => $item->getCards()->count(),
                 'result' => 0,
                 'level' => $item->getLevel(),

@@ -89,7 +89,7 @@ class UserService
         foreach($languages as $language){
 
             //даем пользователю избранное
-            $favourite = new Asset('Избранное', false, true, Asset::TYPE_FAVORITES, $language->getName());
+            $favourite = new Asset('Избранное', false, true, Asset::TYPE_FAVORITES, $language->getId());
             $favourite = $this->assetRepository->save($favourite);
             $this->userRepository->addAsset($user, $favourite);
 

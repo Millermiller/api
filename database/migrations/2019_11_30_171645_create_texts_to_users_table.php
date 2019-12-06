@@ -15,7 +15,7 @@ class CreateTextsToUsersTable extends Migration {
 		Schema::create('texts_to_users', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('lang', 50)->nullable();
+			$table->integer('language_id')->nullable();
 			$table->integer('text_id')->nullable()->index('text_id');
 			$table->integer('user_id')->nullable()->index('user_id');
 			$table->timestamps();

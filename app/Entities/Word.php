@@ -3,6 +3,7 @@
 namespace  App\Entities;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -96,9 +97,31 @@ class Word
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lang", type="string", length=50, nullable=true)
+     * @ORM\Column(name="language_id", type="string", length=50, nullable=true)
      */
-    private $lang;
+    private $languageId;
 
+    /**
+     * @var Collection|Result[]
+     *
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="word")
+     *
+     */
+    private $cards;
 
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return Result[]|Collection
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
 }

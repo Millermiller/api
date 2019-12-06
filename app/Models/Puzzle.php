@@ -33,7 +33,7 @@ class Puzzle extends Model
      */
     public function scopeDomain($query)
     {
-        return $query->where('lang',  config('app.lang'));
+        return $query->where('language_id',  config('app.lang'));
     }
 
     public function setTextAttribute($value){

@@ -22,7 +22,7 @@ class Result extends Model
 {
     protected $table = 'assets_users';
 
-    protected $fillable = ['asset_id', 'user_id', 'result', 'lang'];
+    protected $fillable = ['asset_id', 'user_id', 'result', 'language_id'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
@@ -32,7 +32,7 @@ class Result extends Model
      */
     public function scopeDomain($query)
     {
-        return $query->where('lang',  config('app.lang'));
+        return $query->where('language_id',  config('app.lang'));
     }
 
     /**

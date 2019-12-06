@@ -21,9 +21,9 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
            ->select('a')
            ->from($this->getEntityName(), 'a')
            ->where('a.level = :level')
-           ->andWhere('a.lang = :language')
+           ->andWhere('a.languageId = :language')
            ->setParameter('level', 1)
-           ->setParameter('language', $language->getName())
+           ->setParameter('language', $language->getId())
            ->getQuery()
            ->getSingleResult();
     }

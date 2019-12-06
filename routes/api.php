@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
-
 Route::get('/languages', 'Main\Frontend\ApiController@languages')->name('languages');
 
 Route::get('/assets/{language}', 'Main\Frontend\ApiController@assets')->middleware('auth:api');

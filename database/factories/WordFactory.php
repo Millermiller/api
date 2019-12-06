@@ -9,6 +9,6 @@ $factory->define(App\Models\Word::class, function (Faker $faker) {
         'audio' => '/files/audio/36b7148acc1b607c473a15a47fa17706.mp3',
         'sentence' => 0,
         'is_public' => 1,
-        'lang' => 'is',
+        'language_id' => 1,
     ];
 });

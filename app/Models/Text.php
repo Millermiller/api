@@ -98,7 +98,7 @@ class Text extends Model
     {
         $activeArray = TextResult::domain()->where('user_id', $id)->pluck('text_id')->toArray();
 
-        $rez = DB::select('SELECT id, title, image, description  FROM text WHERE published = 1 AND lang = ? order by id asc', [config('app.lang')]);
+        $rez = DB::select('SELECT id, title, image, description  FROM text WHERE published = 1 AND language_id = ? order by id asc', [config('app.lang')]);
 
         $counter = 0;
 

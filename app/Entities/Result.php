@@ -29,11 +29,25 @@ class Result
     private $result = '0';
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     */
+    private $userId;
+
+    /**
      * @var string|null
      *
-     * @ORM\Column(name="lang", type="string", length=50, nullable=true)
+     * @ORM\Column(name="language_id", type="string", length=50, nullable=true)
      */
-    private $lang;
+    private $languageId;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="asset_id", type="string", length=50, nullable=true)
+     */
+    private $assetId;
 
     /**
      * @var \DateTime|null
@@ -69,5 +83,10 @@ class Result
      */
     private $user;
 
-
+    /**
+     * @var Language
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="result")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     */
+    private $language;
 }

@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property string $title
- * @property string $lang
+ * @property string $language_id
  * @property bool $basic
  * @property int $level
  * @property int $type
@@ -41,7 +41,7 @@ class Asset extends Model
 
     protected $table = 'assets';
 
-    protected $fillable = ['title', 'basic', 'favorite', 'type', 'level', 'lang'];
+    protected $fillable = ['title', 'basic', 'favorite', 'type', 'level', 'language_id'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
@@ -51,7 +51,7 @@ class Asset extends Model
      */
     public function scopeDomain($query)
     {
-        return $query->where('lang',  config('app.lang'));
+        return $query->where('language_id',  config('app.lang'));
     }
 
     /**
@@ -141,13 +141,13 @@ class Asset extends Model
                    SET title = ?,
                        basic = 1,
                        type = ?,
-                       lang = ?,
+                       language_id = ?,
                        created_at = NOW(),
                        updated_at = NOW(),
                        level = (select max(a2.level)
                                     from assets as a2
                                         where a2.type = ?
-                                        and a2.lang = ?) + 1
+                                        and a2.language_id = ?) + 1
                    ', [$asset_id, $asset_id,  config('app.lang'), $asset_id,  config('app.lang')]);
 
 

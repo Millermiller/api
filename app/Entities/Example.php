@@ -4,6 +4,7 @@ namespace  App\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Examples
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="examples", indexes={@ORM\Index(name="card_id", columns={"card_id"})})
  * @ORM\Entity
  */
-class Example
+class Example implements JsonSerializable
 {
     /**
      * @param string $text
@@ -101,6 +102,13 @@ class Example
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="card_id", type="integer", nullable=false)
+     */
+    private $cardId;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="text", type="text", length=65535, nullable=false)
@@ -145,5 +153,16 @@ class Example
      */
     private $card;
 
-
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+       return [
+         'id' => $this->id,
+         'card_id' => $this->cardId,
+         'text' => $this->text,
+         'value' => $this->value,
+       ];
+    }
 }

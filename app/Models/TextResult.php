@@ -25,7 +25,7 @@ class TextResult extends Model
 {
     protected $table = 'texts_to_users';
 
-    protected $fillable = ['text_id', 'user_id', 'lang'];
+    protected $fillable = ['text_id', 'user_id', 'language_id'];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
@@ -35,7 +35,7 @@ class TextResult extends Model
      */
     public function scopeDomain($query)
     {
-        return $query->where('lang',  config('app.lang'));
+        return $query->where('language_id',  config('app.lang'));
     }
 
     /**

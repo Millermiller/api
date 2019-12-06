@@ -29,13 +29,13 @@ class Asset implements JsonSerializable
      * @param int|null $favorite
      * @param string|null $lang
      */
-    public function __construct(string $title, int $basic, int $type, ?int $favorite, ?string $lang)
+    public function __construct(string $title, int $basic, int $type, ?int $favorite, ?string $language_id)
     {
         $this->title = $title;
         $this->basic = $basic;
         $this->type = $type;
         $this->favorite = $favorite;
-        $this->languageId = $lang;
+        $this->languageId = $language_id;
     }
 
     /**
@@ -224,9 +224,9 @@ class Asset implements JsonSerializable
     /**
      * @param string|null $lang
      */
-    public function setLang(?string $lang): void
+    public function setLang(?string $language_id): void
     {
-        $this->languageId = $lang;
+        $this->languageId = $language_id;
     }
 
     /**

@@ -21,6 +21,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user->getAssets()->add($asset);
      //   $asset->getUsers()->add($user);
 
+
         $this->_em->flush();
     }
 

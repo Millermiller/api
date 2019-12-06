@@ -98,7 +98,7 @@ class Word extends Model {
                             and t.sentence = ?
                             and w.deleted_at is null 
                             and (w.is_public = 1 or (w.is_public = 0 and w.creator = ?))
-                            and w.lang = ?
+                            and w.language_id = ?
                             order by score desc;
                             ', [$word, $word, $word."%", $word, $sentence, Auth::user()->id, config('app.lang')]);
     }

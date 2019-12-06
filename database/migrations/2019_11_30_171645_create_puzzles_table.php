@@ -17,7 +17,7 @@ class CreatePuzzlesTable extends Migration {
 			$table->integer('id', true);
 			$table->string('text')->nullable();
 			$table->string('translate')->nullable();
-			$table->string('lang', 10)->nullable();
+			$table->integer('language_id')->nullable();
 			$table->timestamps();
 		});
 	}

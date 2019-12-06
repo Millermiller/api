@@ -32,7 +32,7 @@ class Translate
     /**
      * @return string
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }
@@ -88,6 +88,4 @@ class Translate
      * })
      */
     private $word;
-
-
 }

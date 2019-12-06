@@ -15,7 +15,7 @@ class CreateTextTable extends Migration {
 		Schema::create('text', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('lang', 50)->nullable()->index('lang');
+			$table->integer('language_id')->nullable();
 			$table->integer('level')->nullable();
 			$table->string('title')->index('title');
 			$table->text('description', 65535)->nullable();

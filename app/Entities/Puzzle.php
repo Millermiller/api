@@ -39,9 +39,9 @@ class Puzzle
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lang", type="string", length=10, nullable=true)
+     * @ORM\Column(name="language_id", type="string", length=10, nullable=true)
      */
-    private $lang;
+    private $languageId;
 
     /**
      * @var DateTime|null
