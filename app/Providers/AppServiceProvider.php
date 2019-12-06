@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Laravel\Passport\Passport;
 use App\Entities\{Plan, User, Language, Asset, Text};
 use App\Repositories\Plan\{PlanRepository, PlanRepositoryInterface};
 use App\Repositories\User\{UserRepository, UserRepositoryInterface};
@@ -29,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Passport::ignoreMigrations();
+
         $this->app->bind(UserRepositoryInterface::class, function () {
             return new UserRepository(
                 $this->app['em'],

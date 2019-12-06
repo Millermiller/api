@@ -1,19 +1,20 @@
 <?php
 
-namespace  App\Entities;
+namespace App\Entities;
 
 use Carbon\Carbon;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
-use File;
 use Image;
+use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use Avatar;
-
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use LaravelDoctrine\ORM\Notifications\Notifiable;
 
 /**
  * Users
@@ -21,35 +22,21 @@ use Avatar;
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})}, indexes={@ORM\Index(name="restore_link", columns={"restore_link"}), @ORM\Index(name="plan_id", columns={"plan_id"}), @ORM\Index(name="last_online", columns={"last_online"})})
  * @ORM\Entity
  */
-class User implements \Illuminate\Contracts\Auth\Authenticatable
+class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable
 {
-    use Authenticatable, HasApiTokens;
+    use Authenticatable, CanResetPassword, Notifiable, HasApiTokens, \App\Entities\Traits\UsesPasswordGrant;
 
     const ROLE_ADMIN = 1;
-    const ROLE_USER  = 0;
-
-
-    /**
-     * User constructor.
-     * @param string $login
-     * @param string $email
-     * @param string $password
-     * @param Plan $plan
-     */
-    public function __construct(string $login, string $email, string $password, Plan $plan)
-    {
-        $this->login = $login;
-        $this->email = $email;
-        $this->password = $password;
-        $this->plan = $plan;
-        $this->assets = new ArrayCollection();
-        $this->texts = new ArrayCollection();
-        $this->setCreatedAt(date('Y-m-d H:i:s', time()));
-    }
+    const ROLE_USER = 0;
 
     public function getKey()
     {
         return $this->id;
+    }
+
+    public function getName()
+    {
+        return 'name';
     }
 
     /**
@@ -88,8 +75,6 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
-
-
 
     /**
      * @var string|null
@@ -235,7 +220,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     /**
      * @return string
      */
-    public function getEmail() : string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -267,7 +252,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     /**
      * @return bool
      */
-    public function isAdmin() : bool
+    public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;
     }
@@ -277,8 +262,8 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
      */
     public function getAvatar()
     {
-        if($this->photo){
-            if (file_exists( public_path('/uploads/u/a/') . $this->photo)) {
+        if ($this->photo) {
+            if (file_exists(public_path('/uploads/u/a/') . $this->photo)) {
                 return asset('/uploads/u/a/' . $this->photo);
             } else {
                 $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
@@ -290,8 +275,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
                 $avatar->save(public_path('/uploads/u/a/' . $this->photo));
                 return url('/uploads/u/a/' . $this->photo);
             }
-        }
-        else{
+        } else {
             return Avatar::create($this->login)->toBase64()->encoded;
         }
     }
@@ -299,7 +283,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     /**
      * @return bool
      */
-    public function isPremium() : bool
+    public function isPremium(): bool
     {
         return (Carbon::parse($this->activeTo) > Carbon::now()) ? true : false;
     }
@@ -323,7 +307,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     /**
      * @return bool
      */
-    public function hasPhoto() : bool
+    public function hasPhoto(): bool
     {
         return $this->photo !== '';
     }
@@ -375,4 +359,24 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
      *
      */
     private $results;
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'login' => $this->login,
+            'email' => $this->email,
+            'active_to' => $this->getActiveTo()->format("Y-m-d H:i:s"),
+            'plan_id' => $this->getPlan()->getId(),
+            'name' => $this->name,
+            'photo' => $this->photo,
+            'assets_opened' => $this->assetsOpened,
+            'assets_created' => $this->assetsCreated,
+            'premium' => $this->isPremium(),
+            'avatar' => $this->getAvatar()
+        ];
+    }
 }

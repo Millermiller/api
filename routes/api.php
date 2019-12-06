@@ -20,3 +20,7 @@ Route::get('/user', function (Request $request) {
 Route::get('/languages', 'Main\Frontend\ApiController@languages')->name('languages');
 
 Route::get('/assets/{language}', 'Main\Frontend\ApiController@assets')->middleware('auth:api');
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return response()->json($request->user());
+});

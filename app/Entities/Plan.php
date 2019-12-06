@@ -57,5 +57,13 @@ class Plan
         $this->id = $id;
     }
 
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
 
 }

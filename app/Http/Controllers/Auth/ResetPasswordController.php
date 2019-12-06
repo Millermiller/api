@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\PasswordReset;
 use App\Http\Controllers\Controller;
-use App\User;
+use EntityManager;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\PasswordReset;
 
 class ResetPasswordController extends Controller
 {
@@ -43,6 +42,26 @@ class ResetPasswordController extends Controller
     }
 
     /**
+     * @param \App\Entities\User $user
+     * @param $password
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->setPassword(bcrypt($password));
+        $user->setRememberToken(Str::random(60));
+
+        EntityManager::persist($user);
+        EntityManager::flush();
+
+
+        event(new PasswordReset($user));
+
+        event(new \App\Events\PasswordReset($user, $password));
+
+        $this->guard()->login($user);
+    }
+
+    /**
      * Display the password reset view for the given token.
      *
      * If no token is present, display the link request form.
@@ -56,27 +75,5 @@ class ResetPasswordController extends Controller
         return view('main.frontend.layouts.forms.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
-    }
-
-    /**
-     * Reset the given user's password.
-     *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword | User  $user
-     * @param  string  $password
-     * @return void
-     */
-    protected function resetPassword($user, $password)
-    {
-        $user->password = Hash::make($password);
-
-        $user->setRememberToken(Str::random(60));
-
-        $user->save();
-
-        event(new PasswordReset($user));
-
-        event(new \App\Events\PasswordReset($user, $password));
-
-        $this->guard()->login($user);
     }
 }
