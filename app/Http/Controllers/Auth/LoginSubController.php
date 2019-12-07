@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
-use App\User;
+use App\Entities\User;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -31,6 +31,12 @@ class LoginSubController extends Controller
         $this->userService = $userService;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Doctrine\ORM\Query\QueryException
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -51,9 +57,9 @@ class LoginSubController extends Controller
             /** @var User $user */
             $user = Auth::user();
 
-            $token = $user->createToken('subdomain')->accessToken;
+            //$token = $user->createToken('Scandinaver Password Grant Client')->accessToken;
 
-            return response()->json(['token' => $token, 'state' => $this->userService->getState()], 200);
+            return response()->json(['token' => '', 'state' => $this->userService->getState($user)], 200);
         }
         else{
             return response()->json(['message' => 'Пользователь не найден, попробуйте еще раз.'], 401);

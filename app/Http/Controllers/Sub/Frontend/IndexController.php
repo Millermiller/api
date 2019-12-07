@@ -16,6 +16,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Auth;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 /**
  * Class IndexController
@@ -109,10 +110,13 @@ class IndexController extends Controller
      */
     public function check()
     {
-        return response()->json([
-            'auth' => Auth::check(),
-            'state' => $this->userService->getState(Auth::user())
-        ]);
+        try {
+            $responce = ['auth' => true, 'state' => $this->userService->getState(Auth::user())];
+        }catch ( \Throwable $e){
+            $responce = ['auth' => false, 'state' => []];
+        }
+
+        return response()->json($responce);
     }
 
     public function feedback(SubdomainFeedbackRequest $request)
