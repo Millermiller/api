@@ -2,19 +2,20 @@
 
 namespace App\Providers;
 
-
-use App\Repositories\Intro\IntroRepository;
-use App\Repositories\Intro\IntroRepositoryInterface;
-use App\Repositories\Puzzle\PuzzleRepository;
-use App\Repositories\Puzzle\PuzzleRepositoryInterface;
+use App\Repositories\Card\{CardRepository, CardRepositoryInterface};
+use App\Repositories\Intro\{IntroRepository, IntroRepositoryInterface};
+use App\Repositories\Puzzle\{PuzzleRepository, PuzzleRepositoryInterface};
+use App\Repositories\Translate\{TranslateRepository, TranslateRepositoryInterface};
+use App\Repositories\Word\{WordRepository, WordRepositoryInterface};
 use App\Repositories\Result\{ResultRepository, ResultRepositoryInterface};
-use Laravel\Passport\Passport;
-use App\Entities\{Plan, Puzzle, Result, User, Language, Asset, Text, Intro};
 use App\Repositories\Plan\{PlanRepository, PlanRepositoryInterface};
 use App\Repositories\User\{UserRepository, UserRepositoryInterface};
 use App\Repositories\Asset\{AssetRepository, AssetRepositoryInterface};
 use App\Repositories\Language\{LanguageRepository, LanguageRepositoryInterface};
 use App\Repositories\Text\{TextRepository, TextRepositoryInterface};
+use Laravel\Passport\Passport;
+use App\Entities\{Card, Plan, Puzzle, Result, Translate, User, Language, Asset, Text, Intro, Word};
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -91,6 +92,27 @@ class AppServiceProvider extends ServiceProvider
             return new PuzzleRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Puzzle::class)
+            );
+        });
+
+        $this->app->bind(CardRepositoryInterface::class, function () {
+            return new CardRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Card::class)
+            );
+        });
+
+        $this->app->bind(TranslateRepositoryInterface::class, function () {
+            return new TranslateRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Translate::class)
+            );
+        });
+
+        $this->app->bind(WordRepositoryInterface::class, function () {
+            return new WordRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Word::class)
             );
         });
     }

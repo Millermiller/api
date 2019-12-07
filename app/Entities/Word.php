@@ -5,6 +5,7 @@ namespace  App\Entities;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Words
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="words", indexes={@ORM\Index(name="word", columns={"word"})})
  * @ORM\Entity
  */
-class Word
+class Word implements JsonSerializable
 {
     /**
      * @var int
@@ -22,6 +23,13 @@ class Word
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="creator_id", type="integer", nullable=false)
+     */
+    private $creatorId;
 
     /**
      * @var string
@@ -88,11 +96,24 @@ class Word
     private $deletedAt;
 
     /**
-     * @var int|null
+     * @var User
      *
-     * @ORM\Column(name="creator", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="creator_id", referencedColumnName="id")
+     * })
      */
     private $creator;
+
+    /**
+     * @var Language
+     *
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     * })
+     */
+    private $language;
 
     /**
      * @var string|null
@@ -123,5 +144,29 @@ class Word
     public function getCards()
     {
         return $this->cards;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'word' => $this->word,
+            'audio' => $this->audio,
+            'sentence' => $this->sentence,
+            'is_public' => $this->isPublic,
+            'creator' => $this->creator,
+            'language' => $this->language,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getWord(): string
+    {
+        return $this->word;
     }
 }

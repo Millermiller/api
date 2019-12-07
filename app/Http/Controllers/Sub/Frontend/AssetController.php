@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use App\Events\AssetCreated;
-use App\Events\AssetDelete;
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
-use App\Models\Result;
-use App\Services\AssetService;
-use App\Services\CardService;
-use Auth;
+use App\Services\{AssetService, CardService};
 use Illuminate\Http\Request;
 
 /**
@@ -35,9 +30,16 @@ class AssetController extends Controller
         $this->cardService = $cardService;
     }
 
-    public function show($id)
+    /**
+     * @param \App\Entities\Asset $asset
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(\App\Entities\Asset $asset)
     {
-        $cards = $this->cardService->getCards($id);
+        $this->authorize('view', $asset);
+
+        $cards = $this->cardService->getCards($asset);
 
         return response()->json($cards);
     }

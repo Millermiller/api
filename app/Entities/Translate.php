@@ -4,6 +4,7 @@ namespace  App\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Translate
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="translate", indexes={@ORM\Index(name="word_id_2", columns={"word_id"}), @ORM\Index(name="word_id", columns={"word_id"}), @ORM\Index(name="fulltext", columns={"value"})})
  * @ORM\Entity
  */
-class Translate
+class Translate implements JsonSerializable
 {
     /**
      * @var int
@@ -21,6 +22,13 @@ class Translate
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="word_id", type="integer", nullable=false)
+     */
+    private $wordId;
 
     /**
      * @var string
@@ -88,4 +96,26 @@ class Translate
      * })
      */
     private $word;
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'value' => $this->value,
+            'word_id' => $this->wordId,
+            'sentence' => $this->sentence,
+            'active' => $this->id,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getWordId(): int
+    {
+        return $this->wordId;
+    }
 }

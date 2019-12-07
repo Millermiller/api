@@ -95,12 +95,12 @@ export default {
         state.assets.personal[state.activePersonalAssetIndex].cards.splice(0, 0, data)
     },
 
-    addCardToFavorite(state, data){
-        state.assets.personal[0].cards.splice(0, 0, data)
+    addCardToFavorite(state){
+        state.assets.personal[0].count++
     },
 
-    removeCardFromFavorite(state, id){
-        state.assets.personal[0].cards.splice(id, 1)
+    removeCardFromFavorite(state){
+        state.assets.personal[0].count--
     },
 
     setSelection(state, data){

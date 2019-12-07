@@ -22,7 +22,7 @@ class CreateWordsTable extends Migration {
 			$table->integer('is_public')->nullable()->default(0);
 			$table->timestamps();
 			$table->softDeletes();
-			$table->integer('creator')->nullable();
+			$table->integer('creator_id')->nullable();
 			$table->integer('language_id')->nullable();
 		});
 	}

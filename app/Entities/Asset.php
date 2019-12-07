@@ -278,9 +278,31 @@ class Asset implements JsonSerializable
             'title' => $this->title,
             'type' => $this->type,
             'level' => $this->level,
+            'result' => $this->level,
             'basic' => $this->basic,
             'language_id' => $this->languageId,
             'count' => $this->cards->count(),
+            'cards' => [],
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getCardsIds() : array
+    {
+        return array_map(function($card){
+            return $card->getId();
+        }, $this->cards->toArray());
+    }
+
+    /**
+     * @return array
+     */
+    public function getWordsIds() : array
+    {
+        return array_map(function($card){
+            return $card->getWord()->getId();
+        }, $this->cards->toArray());
     }
 }

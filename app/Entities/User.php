@@ -421,4 +421,18 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         }
         return false;
     }
+
+    /**
+     * @param Asset $asset
+     * @return bool
+     */
+    public function hasAsset(Asset $asset) : bool
+    {
+        foreach ($this->assets as $a) {
+            if ($a->getId() === $asset->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

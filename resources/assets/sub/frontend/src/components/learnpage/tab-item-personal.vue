@@ -23,7 +23,7 @@
                 </span>
                 <span :class="['text-muted', 'small']" style="padding-left: 15px;">
                      <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
-                    {{item.cards.length}}
+                    {{item.count}}
                 </span>
             </el-col>
             <el-col :span="15" :md="16" class="text-right">
@@ -34,12 +34,12 @@
                         изменить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
-                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.cards.length < 1}]" @click="loadTest()">
+                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.count < 1}]" @click="loadTest()">
                         <i :class="['ion', 'ion-ios-redo', 'ion-small']"></i>
                         учить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
-                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.cards.length < 1}]" @click="test()">
+                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.count < 1}]" @click="test()">
                          <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"></i>
                         тест
                     </span>
@@ -66,7 +66,7 @@
         },
         methods: {
             loadTest(){
-                if(this.item.cards.length < 1){
+                if(this.item.count < 1){
                     return false
                 }
 
@@ -84,7 +84,7 @@
                 }
             },
             test(){
-                if(this.item.cards.length < 1){
+                if(this.item.count < 1){
                     return false
                 }
 

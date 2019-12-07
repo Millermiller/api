@@ -2,6 +2,7 @@
 /public/main
 /public/sub
 /public/uploads
+/public/audio
 /storage/*.key
 /vendor
 /.idea

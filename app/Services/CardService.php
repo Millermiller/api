@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
+use App\Entities\Asset;
 use App\Http\Requests\CreateCardRequest;
 use App\Models\Card;
-use App\Models\Example;
+use App\Repositories\Asset\AssetRepositoryInterface;
+use App\Repositories\Language\LanguageRepositoryInterface;
 use Auth;
-use DB;
 
 /**
  * Class CardService
@@ -14,6 +15,22 @@ use DB;
  */
 class CardService
 {
+    /**
+     * @var AssetRepositoryInterface
+     */
+    private $assetRepository;
+
+    /**
+     * @var LanguageRepositoryInterface
+     */
+    private $languageRepository;
+
+    public function __construct(AssetRepositoryInterface $assetRepository, LanguageRepositoryInterface $languageRepository)
+    {
+        $this->assetRepository = $assetRepository;
+        $this->languageRepository = $languageRepository;
+    }
+
     public function create(CreateCardRequest $request)
     {
         $card = Card::create($request->all());
@@ -25,35 +42,23 @@ class CardService
 
     /**
      * возвращает слова набора, транскрипцию и один вариант перевода
-     * принимает id набора
      *
      * используется  при редактировании набора на /cards/
-     * @param  int $asset_id Asset Id
+     * @param Asset $asset
      * @return array
      */
-    public function getCards($asset_id)
+    public function getCards(Asset $asset)
     {
-        if(!Auth::user()->hasAsset($asset_id) && !Auth::user()->isAdmin()){
-            return ['success' => false, 'message' => 'Этот словарь недоступен'];
-        }
+        $language = $this->languageRepository->get(config('app.lang'));
 
+        $favouriteAsset = $this->assetRepository->getFavouriteAsset($language, Auth::user());
 
-
-
-        $favourites = DB::table('cards')->where('asset_id', Auth::user()->favourite->id)->pluck('word_id')->toArray();
-
-        $type = DB::table('assets')->where('id', $asset_id)->value('type');
-        $title = DB::table('assets')->where('id', $asset_id)->value('title');
-
-        $cards = Card::with(['word', 'translate', 'asset', 'examples'])->where('asset_id', $asset_id)->get();
+        $cards = $asset->getCards()->toArray();
 
         foreach($cards as &$c){
-            if(in_array($c->id, $favourites))
-                $c->favourite = true;
-            else
-                $c->favourite = false;
+            $c->setFavourite(in_array($c->getWord()->getId(), $favouriteAsset->getWordsIds()));
         }
 
-        return ['type' => $type, 'cards' => $cards, 'title' => $title];
+        return ['type' => $asset->getType(), 'cards' => $cards, 'title' => $asset->getTitle()];
     }
 }

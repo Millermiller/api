@@ -2,7 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Card;
+use App\Repositories\Asset\AssetRepositoryInterface;
+use App\Repositories\Card\CardRepositoryInterface;
+use App\Repositories\Language\LanguageRepositoryInterface;
+use App\Repositories\Translate\TranslateRepositoryInterface;
+use App\Repositories\Word\WordRepositoryInterface;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -13,11 +17,51 @@ use Illuminate\Http\Request;
  */
 class FavouriteService
 {
-    protected $cardService;
+    /**
+     * @var CardService
+     */
+    private $cardService;
 
-    public function __construct(CardService $cardService)
+    /**
+     * @var CardRepositoryInterface
+     */
+    private $cardRepository;
+
+    /**
+     * @var WordRepositoryInterface
+     */
+    private $wordRepository;
+
+    /**
+     * @var TranslateRepositoryInterface
+     */
+    private $translateRepository;
+
+    /**
+     * @var AssetRepositoryInterface
+     */
+    private $assetRepository;
+
+    /**
+     * @var LanguageRepositoryInterface
+     */
+    private $languageRepository;
+
+    public function __construct(
+        CardService $cardService,
+        CardRepositoryInterface $cardRepository,
+        WordRepositoryInterface $wordRepository,
+        TranslateRepositoryInterface $translateRepository,
+        AssetRepositoryInterface $assetRepository,
+        LanguageRepositoryInterface $languageRepository
+    )
     {
         $this->cardService = $cardService;
+        $this->cardRepository = $cardRepository;
+        $this->wordRepository = $wordRepository;
+        $this->translateRepository = $translateRepository;
+        $this->assetRepository = $assetRepository;
+        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -35,26 +79,34 @@ class FavouriteService
 
     /**
      * @param Request $request
-     * @return Card|\Illuminate\Database\Eloquent\Model
+     * @return \App\Entities\Card
      */
     public function create(Request $request)
     {
-        $card = Card::create([
-            'asset_id' =>  Auth::user()->favourite->id,
-            'word_id' => $request->get('word_id'),
-            'translate_id' =>  $request->get('translate_id')
-        ]);
+        $language  = $this->languageRepository->get(config('app.lang'));
+        $asset     = $this->assetRepository->getFavouriteAsset($language, Auth::user());
+        $word      = $this->wordRepository->get($request->get('word_id'));
+        $translate = $this->translateRepository->get($request->get('translate_id'));
 
-        $card->load(['word', 'translate']);
+        $card = new \App\Entities\Card($word, $asset, $translate);
+
+        $card = $this->cardRepository->save($card);
 
         return $card;
     }
 
     /**
      * @param $id
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function delete($id)
     {
-        Card::whereRaw('word_id = ? and asset_id = ?', [$id, Auth::user()->favourite->id])->forceDelete();
+        $language  = $this->languageRepository->get(config('app.lang'));
+        $asset     = $this->assetRepository->getFavouriteAsset($language, Auth::user());
+        $card      = $this->cardRepository->findOneBy(['wordId' => $id, 'assetId' => $asset->getId()]);
+
+        app('em')->remove($card);
+        app('em')->flush();
     }
 }

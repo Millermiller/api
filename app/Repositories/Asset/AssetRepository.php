@@ -95,7 +95,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
     {
         $q =  $this->createQueryBuilder('asset');
 
-        return $q->select('a')
+        return $q->select('a', 'r')
             ->from($this->getEntityName(), 'a')
             ->join('a.results', 'r', 'WITH')
             ->where($q->expr()->eq('a.language', ':language'))
@@ -120,6 +120,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
         return $q->select('a')
             ->from($this->getEntityName(), 'a')
             ->join('a.results', 'r', 'WITH')
+         //   ->join('a.cards', 'c', 'WITH')
             ->where('a.languageId = :language_id')
             ->andWhere($q->expr()->eq('r.user', ':user'))
             ->andWhere('a.basic = :basic')

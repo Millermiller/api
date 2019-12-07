@@ -16,6 +16,19 @@ use JsonSerializable;
 class Card implements JsonSerializable
 {
     /**
+     * Card constructor.
+     * @param Word $word
+     * @param Asset $asset
+     * @param Translate $translate
+     */
+    public function __construct(Word $word, Asset $asset, Translate $translate)
+    {
+        $this->word = $word;
+        $this->asset = $asset;
+        $this->translate = $translate;
+    }
+
+    /**
      * @param DateTime|null $updatedAt
      */
     public function setUpdatedAt(?DateTime $updatedAt): void
@@ -104,6 +117,27 @@ class Card implements JsonSerializable
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="asset_id", type="integer", nullable=false)
+     */
+    private $assetId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="word_id", type="integer", nullable=false)
+     */
+    private $wordId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="translate_id", type="integer", nullable=false)
+     */
+    private $translateId;
+
+    /**
      * @var DateTime|null
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
@@ -168,7 +202,15 @@ class Card implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'id' => $this->getId()
+            'id' => $this->id,
+            'asset_id' => $this->assetId,
+            'word_id' => $this->wordId,
+            'translate_id' => $this->translateId,
+            'favourite' => $this->favourite,
+            'word' => $this->word,
+            'translate' => $this->translate,
+            'asset' => $this->asset,
+            'examples' => $this->examples,
         ];
     }
 
@@ -178,5 +220,23 @@ class Card implements JsonSerializable
     public function getExamples()
     {
         return $this->examples->toArray();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFavourite() : bool
+    {
+        return (bool) $this->asset->getFavorite();
+    }
+
+    private $favourite;
+
+    /**
+     * @param mixed $favourite
+     */
+    public function setFavourite($favourite): void
+    {
+        $this->favourite = $favourite;
     }
 }
