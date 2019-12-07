@@ -2,15 +2,11 @@
 
 namespace App\Services;
 
-use App\Events\AssetCreated;
-use App\Events\AssetDelete;
-use App\Models\Asset;
-use App\Models\Card;
-use App\Models\Result;
+use App\Events\{AssetCreated, AssetDelete};
+use App\Models\{Asset, Result};
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Result\ResultRepositoryInterface;
-use App\User;
 use Auth;
 use DB;
 use Illuminate\Http\Request;

@@ -28,7 +28,7 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
             ->setParameter('user', $user)
             ->setParameter('language', $language)
             ->getQuery()
-            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+            ->getResult('ColumnHydrator');
     }
 
     /**
@@ -38,11 +38,11 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getResult(User $user, Asset $asset): Result
+    public function getResult(User $user, Asset $asset) : Result
     {
         $q = $this->_em->createQueryBuilder();
 
-        return $q->select('r.assetId')
+        return $q->select('r')
             ->from($this->getEntityName(), 'r')
             ->where($q->expr()->eq('r.user', ':user'))
             ->andWhere($q->expr()->eq('r.asset', ':asset'))
