@@ -3,7 +3,9 @@
 namespace  App\Entities;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Puzzles
@@ -11,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="puzzles")
  * @ORM\Entity
  */
-class Puzzle
+class Puzzle implements JsonSerializable
 {
     /**
      * @var int
@@ -56,4 +58,51 @@ class Puzzle
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @var Collection|User[]
+     *
+     * @ORM\ManytoMany(targetEntity="User", mappedBy="puzzles")
+     */
+    private $users;
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'translate' => $this->translate,
+            'success' => (bool) $this->users->count()
+        ];
+    }
+
+    /**
+     * @return User[]|Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addUser(User $user) : Puzzle
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

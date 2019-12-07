@@ -166,6 +166,14 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     private $assets;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection|Puzzle[]
+     *
+     * @ManyToMany(targetEntity="Puzzle", inversedBy="users")
+     * @JoinTable(name="puzzles_users")
+     */
+    private $puzzles;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection|Text[]
      *
      * @ManyToMany(targetEntity="Text", inversedBy="users")
@@ -387,5 +395,30 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     public function getActive(): int
     {
         return $this->active;
+    }
+
+    /**
+     * @param Puzzle $puzzle
+     * @return $this
+     */
+    public function addPuzzle(Puzzle $puzzle) : User
+    {
+        $this->hasPuzzle($puzzle) ?: $this->puzzles[] = $puzzle;
+
+        return $this;
+    }
+
+    /**
+     * @param Puzzle $puzzle
+     * @return bool
+     */
+    public function hasPuzzle(Puzzle $puzzle) : bool
+    {
+        foreach ($this->puzzles as $p) {
+            if ($p->getId() === $puzzle->getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use App\Models\Puzzle;
+use App\Repositories\Puzzle\PuzzleRepositoryInterface;
+use Auth;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Illuminate\Http\JsonResponse;
 use \Illuminate\Http\Request;
 
 /**
@@ -16,24 +20,43 @@ use \Illuminate\Http\Request;
  */
 class PuzzleController
 {
-    public function index()
+    private $puzzleRepository;
+
+    /**
+     * PuzzleController constructor.
+     * @param PuzzleRepositoryInterface $puzzleRepository
+     */
+    public function __construct(PuzzleRepositoryInterface $puzzleRepository)
     {
-        return response()->json(Puzzle::domain()->get());
+        $this->puzzleRepository = $puzzleRepository;
     }
 
     /**
-     * Update the specified resource in storage.
+     * @return JsonResponse
+     */
+    public function index()
+    {
+        $puzzles = $this->puzzleRepository->getForUser(Auth::user());
+
+        return response()->json($puzzles);
+    }
+
+    /**
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function update(Request $request, $id)
     {
-        $puzzle = Puzzle::find($id);
+        /** @var \App\Entities\Puzzle $puzzle */
+        $puzzle = $this->puzzleRepository->get($id);
 
-        if($puzzle->users()->where('users.id', \Auth::id())->count() == 0)
-            $puzzle->users()->attach(\Auth::id());
+        Auth::user()->addPuzzle($puzzle);
+
+        app('em')->flush();
 
         return response()->json($puzzle, 200);
     }

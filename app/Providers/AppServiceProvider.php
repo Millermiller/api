@@ -5,9 +5,11 @@ namespace App\Providers;
 
 use App\Repositories\Intro\IntroRepository;
 use App\Repositories\Intro\IntroRepositoryInterface;
+use App\Repositories\Puzzle\PuzzleRepository;
+use App\Repositories\Puzzle\PuzzleRepositoryInterface;
 use App\Repositories\Result\{ResultRepository, ResultRepositoryInterface};
 use Laravel\Passport\Passport;
-use App\Entities\{Plan, Result, User, Language, Asset, Text, Intro};
+use App\Entities\{Plan, Puzzle, Result, User, Language, Asset, Text, Intro};
 use App\Repositories\Plan\{PlanRepository, PlanRepositoryInterface};
 use App\Repositories\User\{UserRepository, UserRepositoryInterface};
 use App\Repositories\Asset\{AssetRepository, AssetRepositoryInterface};
@@ -82,6 +84,13 @@ class AppServiceProvider extends ServiceProvider
             return new IntroRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Intro::class)
+            );
+        });
+
+        $this->app->bind(PuzzleRepositoryInterface::class, function () {
+            return new PuzzleRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Puzzle::class)
             );
         });
     }
