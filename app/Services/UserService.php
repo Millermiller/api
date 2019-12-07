@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
+use App\Repositories\Intro\IntroRepositoryInterface;
 use Carbon\Carbon;
-use App\Entities\{User, Asset, Language};
-use App\Models\Intro;
-use App\Models\Text;
+use App\Entities\{User, Asset};
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Plan\PlanRepositoryInterface;
@@ -51,13 +50,36 @@ class UserService
      */
     protected $textRepository;
 
+    /**
+     * @var IntroRepositoryInterface
+     */
+    protected $introRepository;
+
+    /**
+     * @var
+     */
+    private $textService;
+
+    /**
+     * UserService constructor.
+     * @param AssetRepositoryInterface $assetRepository
+     * @param AssetService $assetService
+     * @param UserRepositoryInterface $userRepository
+     * @param PlanRepositoryInterface $planRepository
+     * @param LanguageRepositoryInterface $languageRepository
+     * @param TextRepositoryInterface $textRepository
+     * @param IntroRepositoryInterface $introRepository
+     * @param TextService $textService
+     */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         AssetService $assetService,
         UserRepositoryInterface $userRepository,
         PlanRepositoryInterface $planRepository,
         LanguageRepositoryInterface $languageRepository,
-        TextRepositoryInterface $textRepository
+        TextRepositoryInterface $textRepository,
+        IntroRepositoryInterface $introRepository,
+        TextService $textService
     )
     {
         $this->userRepository = $userRepository;
@@ -65,9 +87,9 @@ class UserService
         $this->languageRepository = $languageRepository;
         $this->assetRepository = $assetRepository;
         $this->textRepository = $textRepository;
-
+        $this->introRepository = $introRepository;
         $this->assetService = $assetService;
-        //dd($this->userRepository->get(1)->getPlan());
+        $this->textService = $textService;
     }
 
     /**
@@ -82,14 +104,17 @@ class UserService
         $languages = $this->languageRepository->all();
 
         /** @var \App\Entities\User $user */
-        $user = new User($data['login'], $data['email'], bcrypt($data['password']), $plan);
-
+        $user = new User();
+        $user->setLogin($data['login']);
+        $user->setEmail($data['email']);
+        $user->setPassword(bcrypt($data['password']));
+        $user->setPlan($plan);
         $user = $this->userRepository->save($user);
 
         foreach($languages as $language){
 
             //даем пользователю избранное
-            $favourite = new Asset('Избранное', false, true, Asset::TYPE_FAVORITES, $language->getId());
+            $favourite = new Asset('Избранное', false, Asset::TYPE_FAVORITES, 1, $language->getId());
             $favourite = $this->assetRepository->save($favourite);
             $this->userRepository->addAsset($user, $favourite);
 
@@ -108,42 +133,49 @@ class UserService
 
       //  event(new UserRegistered($user, $data));
 
-      //  activity('public')->causedBy($user)->log('Зарегистрирован пользователь');
+      //  activity('public')->causedBy($user)->log('Зарегистрирован пользователь'); //TODO: не работает с доктриной
 
         return $user;
     }
 
-    public function getState()
+    /**
+     * @param \Illuminate\Contracts\Auth\Authenticatable|User $user
+     * @return array
+     * @throws \Doctrine\ORM\Query\QueryException
+     */
+    public function getState(\Illuminate\Contracts\Auth\Authenticatable $user)
     {
-        if(!Auth::check()) return [];
+        $language = $this->languageRepository->get(config('app.lang'));
 
         return [
             'user'      => $this->getInfo(),
             'site'      => config('app.MAIN_SITE'),
-            'words'     => $this->assetService->getAssetsByType(Asset::TYPE_WORDS, Auth::user()->id),
-            'sentences' => $this->assetService->getAssetsByType(Asset::TYPE_SENTENCES, Auth::user()->id),
-            'favourites'=> $this->assetService->getAssetsByType(Asset::TYPE_FAVORITES, Auth::user()->id)[0],
-            'personal'  => $this->assetService->getPersonalAssets(Auth::user()->id),
+            'words'     => $this->assetService->getAssetsByType($user, Asset::TYPE_WORDS),
+            'sentences' => $this->assetService->getAssetsByType($user, Asset::TYPE_SENTENCES),
+            'favourites'=> $this->assetRepository->getFavouriteAsset($language, $user),
+            'personal'  => $this->assetRepository->getCreatedAssets($language, $user),
 
-            //'texts'     => Text::select(['id', 'title'])->where('published', '=', '1')->get(),
-            'texts'     => Text::getTextsByUser(Auth::user()->id),
-            'intro'     => Intro::where('active', '=', '1')->get()->sortBy('sort')->groupBy('page'),
-            'sites'     => Language::all(),
-            'currentsite' => Language::where('name', config('app.lang'))->first(),
-            'domain'    => config('app.lang'),
+            'texts'       => $this->textService->getTextsForUser($user),
+            'intro'       => $this->introRepository->getGrouppedIntro(),
+            'sites'       => $this->languageRepository->all(),
+            'currentsite' => $this->languageRepository->findOneBy(['name' => config('app.lang')]),
+            'domain'      => config('app.lang'),
         ];
     }
 
+    /**
+     * @return array|\Illuminate\Contracts\Auth\Authenticatable|null
+     */
     public function getInfo()
     {
         return [
-            'id' => Auth::user()->id,
-            'login' => Auth::user()->login,
-            'avatar' => Auth::user()->avatar,
-            'email' => Auth::user()->email,
-            'active' => Auth::user()->premium,
-            'plan' => Auth::user()->plan,
-            'active_to' => Auth::user()->active_to
+            'id' => Auth::user()->getKey(),
+            'login' => Auth::user()->getLogin(),
+            'avatar' => Auth::user()->getAvatar(),
+            'email' => Auth::user()->getEmail(),
+            'active' => Auth::user()->getActive(),
+            'plan' => Auth::user()->getPlan(),
+            'active_to' => Auth::user()->getActiveTo()
         ];
     }
 

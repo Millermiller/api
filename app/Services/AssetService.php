@@ -7,6 +7,9 @@ use App\Events\AssetDelete;
 use App\Models\Asset;
 use App\Models\Card;
 use App\Models\Result;
+use App\Repositories\Asset\AssetRepositoryInterface;
+use App\Repositories\Language\LanguageRepositoryInterface;
+use App\Repositories\Result\ResultRepositoryInterface;
 use App\User;
 use Auth;
 use DB;
@@ -18,6 +21,28 @@ use Illuminate\Http\Request;
  */
 class AssetService
 {
+    /**
+     * @var LanguageRepositoryInterface
+     */
+    protected $languageRepository;
+
+    /**
+     * @var AssetRepositoryInterface
+     */
+    protected $assetsRepository;
+
+    /**
+     * @var ResultRepositoryInterface
+     */
+    protected $resultRepository;
+
+    public function __construct(LanguageRepositoryInterface $languageRepository, AssetRepositoryInterface $assetsRepository, ResultRepositoryInterface $resultRepository)
+    {
+        $this->languageRepository = $languageRepository;
+        $this->assetsRepository = $assetsRepository;
+        $this->resultRepository = $resultRepository;
+    }
+
     /**
      * @param Request $request
      * @return Asset|\Illuminate\Database\Eloquent\Model
@@ -57,57 +82,63 @@ class AssetService
     }
 
     /**
-     * Возвращает массив словарей определенного типа для пользователя с id = $uid
+     * Возвращает массив словарей определенного типа для пользователя
      *
-     * @param string $type 'Предложения' || 'Слова' || 'Избранное'
-     * @param $user_id
+     * @param \App\Entities\User $user
+     * @param int $type
      * @return array
      */
-    public function getAssetsByType($type, $user_id)
+    public function getAssetsByType(\App\Entities\User $user, int $type)
     {
-        $activeArray = Result::domain()->where('user_id', $user_id)->pluck('result', 'asset_id')->toArray();
+        $language = $this->languageRepository->get(config('app.lang'));
 
-        $rez = DB::select('SELECT id, level, title, type FROM assets WHERE type = ? AND lang = ? order by level asc', [$type, config('app.lang')]);
+        $activeArray  = $this->resultRepository->getActiveIds($user,  $language);
+
+        $assets = $this->assetsRepository->getAssetsByType($language, $type);
 
         $canopen = true;
-        $testlink = 0;
+        $testlink = false;
         $counter = 0;
 
-        foreach($rez as &$r) {
+        /** @var \App\Entities\Asset $asset */
+        foreach($assets as &$asset) {
             $counter++;
-            if (in_array($r->id, array_keys($activeArray))) {
-                $r = ['count' => Card::where('asset_id', $r->id)->count(),
-                    'title' => $r->title,
-                    'id' => $r->id,
-                    'level' => $r->level,
+            if (in_array($asset->getId(), $activeArray)) {
+                $asset = [
+                    'count' => $asset->getCards()->count(),
+                    'title' => $asset->getTitle(),
+                    'id' => $asset->getId(),
+                    'level' => $asset->getLevel(),
                     'active' => true,
+                    'testlink' => false,
                     'canopen' => false,
-                    'result' => $activeArray[$r->id],
-                    'type' => $r->type
+                    'result' => $this->resultRepository->getResult($user,  $asset)->getValue(),
+                    'type' => $asset->getType()
                 ];
             } else {
-                $r = ['count' => Card::where('asset_id', $r->id)->count(),
-                    'title' => $r->title,
-                    'id' => $r->id,
-                    'level' => $r->level,
+                $asset = [
+                    'count' => $asset->getCards()->count(),
+                    'title' => $asset->getTitle(),
+                    'id' => $asset->getId(),
+                    'level' => $asset->getLevel(),
                     'active' => false,
                     'canopen' => $canopen,
                     'testlink' => $testlink,
                     'result' => 0,
-                    'type' => $r->type
+                    'type' => $asset->getType()
                 ];
                 $canopen = false;
             }
 
-            if($counter < 10 || User::find($user_id)->premium)
-                $r['available'] = true;
+            if($counter < 10 || $user->isPremium())
+                $asset['available'] = true;
             else
-                $r['available'] = false;
+                $asset['available'] = false;
 
-            $testlink = $r['id'];
+            $testlink = $asset['id'];
         }
 
-        return $rez;
+        return $assets;
     }
 
     /**
@@ -157,7 +188,7 @@ class AssetService
      * @param $uid
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getPersonalAssets($uid)
+    public function getPersonalAssets(\App\Entities\User $user)
     {
         return Asset::domain()->whereHas(
             'result', function ($q) use ($uid) {

@@ -89,4 +89,12 @@ class Result
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;
+
+    /**
+     * @return int
+     */
+    public function getValue(): int
+    {
+        return $this->result;
+    }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Repositories\Text;
 
-use App\Entities\Text;
-use App\Entities\Language;
+use App\Entities\{Text, Language, User};
 use App\Repositories\BaseRepositoryInterface;
 
 /**
@@ -17,4 +16,23 @@ interface TextRepositoryInterface extends BaseRepositoryInterface
      * @return Text
      */
     public function getFirstText(Language $language) : Text;
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function getForUser(User $user): array;
+
+    /**
+     * @param User $user
+     * @param Language $language
+     * @return array
+     */
+    public function getActiveIds(User $user, Language $language) : array;
+
+    /**
+     * @param Language $language
+     * @return array
+     */
+    public function getByLanguage(Language $language) : array;
 }

@@ -7,10 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SubdomainFeedbackRequest;
 use App\Models\Asset;
 use App\Models\Message;
+use App\Services\ApiService;
 use App\Services\AssetService;
 use App\Services\CardService;
 use App\Services\FeedbackService;
 use App\Services\UserService;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -100,11 +103,15 @@ class IndexController extends Controller
         return response()->json($asset);
     }
 
+    /**
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\Query\QueryException
+     */
     public function check()
     {
         return response()->json([
             'auth' => Auth::check(),
-            'state' => $this->userService->getState()
+            'state' => $this->userService->getState(Auth::user())
         ]);
     }
 

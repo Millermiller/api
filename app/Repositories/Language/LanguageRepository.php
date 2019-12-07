@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Repositories\Language;
 
 use App\Entities\Language;
@@ -24,5 +23,4 @@ class LanguageRepository extends BaseRepository implements LanguageRepositoryInt
             ->getQuery()
             ->getSingleResult();
     }
-
 }

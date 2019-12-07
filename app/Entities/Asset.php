@@ -66,21 +66,21 @@ class Asset implements JsonSerializable
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
      */
-    private $type = '0';
+    private $type;
 
     /**
      * @var int
      *
      * @ORM\Column(name="level", type="integer", nullable=false)
      */
-    private $level = '0';
+    private $level;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="favorite", type="integer", nullable=true)
      */
-    private $favorite = '0';
+    private $favorite;
 
     /**
      * @var string|null
@@ -276,9 +276,11 @@ class Asset implements JsonSerializable
         return array(
             'id' => $this->id,
             'title' => $this->title,
+            'type' => $this->type,
+            'level' => $this->level,
             'basic' => $this->basic,
             'language_id' => $this->languageId,
-            'cards' => $this->cards->toArray(),
+            'count' => $this->cards->count(),
         );
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-
 namespace App\Repositories;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 
-interface BaseRepositoryInterface
+interface BaseRepositoryInterface extends ObjectRepository
 {
     public function all();
 

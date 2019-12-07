@@ -19,10 +19,10 @@ class CheckDomain
            return redirect(config('app.SITE'));
 
         if(request('subdomain') === 'is')
-            config(['app.lang' => 'is']);
+            config(['app.lang' => 1]);
 
         if(request('subdomain') === 'sw')
-            config(['app.lang' => 'sw']);
+            config(['app.lang' => 2]);
 
         $request->route()->forgetParameter('subdomain');
 

@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Repositories\Result;
 
-use App\Entities\User;
-use App\Entities\Language;
+use App\Entities\{Asset, Result, User, Language};
 use App\Repositories\BaseRepository;
+use Doctrine\ORM\AbstractQuery;
 
 class ResultRepository extends BaseRepository implements ResultRepositoryInterface
 {
@@ -29,6 +28,27 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
             ->setParameter('user', $user)
             ->setParameter('language', $language)
             ->getQuery()
-            ->getResult('ColumnHydrator');
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+    }
+
+    /**
+     * @param User $user
+     * @param Asset $asset
+     * @return Result
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getResult(User $user, Asset $asset): Result
+    {
+        $q = $this->_em->createQueryBuilder();
+
+        return $q->select('r.assetId')
+            ->from($this->getEntityName(), 'r')
+            ->where($q->expr()->eq('r.user', ':user'))
+            ->andWhere($q->expr()->eq('r.asset', ':asset'))
+            ->setParameter('user', $user)
+            ->setParameter('asset', $asset)
+            ->getQuery()
+            ->getSingleResult();
     }
 }

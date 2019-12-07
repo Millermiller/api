@@ -380,4 +380,12 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
             'avatar' => $this->getAvatar()
         ];
     }
+
+    /**
+     * @return int
+     */
+    public function getActive(): int
+    {
+        return $this->active;
+    }
 }
