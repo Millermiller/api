@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use JsonSerializable;
+use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 
 /**
  * Assets
@@ -14,7 +15,7 @@ use JsonSerializable;
  * @ORM\Table(name="assets", indexes={@ORM\Index(name="id", columns={"id"})})
  * @ORM\Entity
  */
-class Asset implements JsonSerializable
+class Asset implements JsonSerializable, UrlRoutable
 {
     const TYPE_PERSONAL = 0;
     const TYPE_WORDS = 1;
@@ -278,7 +279,7 @@ class Asset implements JsonSerializable
             'title' => $this->title,
             'type' => $this->type,
             'level' => $this->level,
-            'result' => $this->level,
+            'result' => $this->results->toArray()[0]->getValue(),
             'basic' => $this->basic,
             'language_id' => $this->languageId,
             'count' => $this->cards->count(),
@@ -304,5 +305,13 @@ class Asset implements JsonSerializable
         return array_map(function($card){
             return $card->getWord()->getId();
         }, $this->cards->toArray());
+    }
+
+    /**
+     * @return string
+     */
+    public static function getRouteKeyName(): string
+    {
+        return 'id';
     }
 }

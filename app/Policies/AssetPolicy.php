@@ -22,6 +22,16 @@ class AssetPolicy
     }
 
     /**
+     * @param User $user
+     * @param Asset $asset
+     * @return bool
+     */
+    public function updateResult(User $user, Asset $asset)
+    {
+        return $user->hasAsset($asset);
+    }
+
+    /**
      * Determine whether the user can create assets.
      *
      * @param  \App\Entities\User  $user
@@ -52,30 +62,6 @@ class AssetPolicy
      * @return mixed
      */
     public function delete(User $user, Asset $asset)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the asset.
-     *
-     * @param  \App\Entities\User  $user
-     * @param   \App\Entities\Asset  $asset
-     * @return mixed
-     */
-    public function restore(User $user, Asset $asset)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the asset.
-     *
-     * @param  \App\Entities\User  $user
-     * @param   \App\Entities\Asset  $asset
-     * @return mixed
-     */
-    public function forceDelete(User $user, Asset $asset)
     {
         //
     }

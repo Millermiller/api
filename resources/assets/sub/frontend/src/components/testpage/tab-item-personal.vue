@@ -14,16 +14,16 @@
                         :class="[
                     'small',
                     {
-                      success: item.result.result > 80,
-                      warning: (item.result.result > 50 && item.result.result < 80),
-                      danger: item.result.result < 50
+                      success: item.result > 80,
+                      warning: (item.result > 50 && item.result < 80),
+                      danger: item.result < 50
                     }
                 ]">
-                    {{item.result.result}}%
+                    {{item.result}}%
                 </span>
                 <span :class="['small', 'text-muted']" style="padding-left: 15px;">
                      <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
-                    {{item.cards.length}}
+                    {{item.count}}
                 </span>
             </el-col>
             <el-col :span="15" :md="16" class="text-right">
@@ -34,12 +34,12 @@
                         изменить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
-                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.cards.length < 1}]" @click="loadTest()">
+                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.count < 1}]" @click="loadTest()">
                         <i :class="['ion', 'ion-ios-redo', 'ion-small']"></i>
                         учить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
-                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.cards.length < 1}]" @click="test()">
+                    <span :class="['text-primary', 'pointer', 'small', {'muted': item.count < 1}]" @click="test()">
                          <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"></i>
                         тест
                     </span>
@@ -73,7 +73,7 @@
                 }
             },
             loadTest(){
-                if(this.item.cards.length < 1){
+                if(this.item.count < 1){
                     return false
                 }
 
@@ -85,7 +85,7 @@
                 this.$router.push('/learn/' + this.item.id);
             },
             test(){
-                if(this.item.cards.length < 1){
+                if(this.item.count < 1){
                     return false
                 }
 

@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Events\{AssetCreated, AssetDelete};
-use App\Models\{Asset, Result};
+use Illuminate\Contracts\Auth\Authenticatable;
+use App\Entities\{Result, User, Asset};
+use App\Events\{AssetCreated, AssetDelete, NextLevel};
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Result\ResultRepositoryInterface;
@@ -194,5 +195,46 @@ class AssetService
             ->where('basic', 0)
             ->orderBy('id')
             ->get();
+    }
+
+    /**
+     * @param Authenticatable|User $user
+     * @param Asset $asset
+     * @return Asset
+     */
+    public function giveNextLevel(Authenticatable $user, Asset $asset) : Asset
+    {
+        $language  = $this->languageRepository->get(config('app.lang'));
+
+        $nextAsset = $this->assetsRepository->getNextAsset($asset, $language);
+
+        $result = $this->resultRepository->findOneBy(['user' => $user, 'asset' => $asset]);
+
+        if($result === null) $result = new Result($nextAsset, $user, $language);
+
+        $result = $this->resultRepository->save($result);
+
+        event(new NextLevel(Auth::user(), $result));
+
+        return $nextAsset;
+    }
+
+    /**
+     * @param Asset $asset
+     * @param Authenticatable|User $user
+     * @param int $resultValue
+     * @return Result
+     */
+    public function saveTestResult(Asset $asset, Authenticatable $user, int $resultValue) : Result
+    {
+        $language  = $this->languageRepository->get(config('app.lang'));
+
+        $result = $this->resultRepository->findOneBy(['user' => $user, 'asset' => $asset]);
+
+        if($result === null) $result = new Result($asset, $user, $language);
+
+        $result->setValue($resultValue);
+
+        return $this->resultRepository->save($result);
     }
 }

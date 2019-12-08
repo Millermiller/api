@@ -46,8 +46,8 @@ Route::group([
     Route::post('/favourite', 'FavouriteController@addToFavourite');
     Route::delete('/favourite/{id}', 'FavouriteController@deleteFavourite');
 
-    Route::post('/saveTestResult', 'TestController@saveTestResult');
-    Route::post('/nextLevel', 'TestController@nextLevel');
+    Route::post('/result/{asset}', 'TestController@result');
+    Route::post('/complete/{asset}', 'TestController@complete');
 
     Route::resource('/card', 'CardsController', ['except' => []]);
 

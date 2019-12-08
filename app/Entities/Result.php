@@ -3,6 +3,7 @@
 namespace  App\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Result
@@ -10,8 +11,21 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="assets_users", indexes={@ORM\Index(name="lang", columns={"lang"}), @ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="asset_id", columns={"asset_id"})})
  * @ORM\Entity
  */
-class Result
+class Result implements JsonSerializable
 {
+    /**
+     * Result constructor.
+     * @param Asset $asset
+     * @param User $user
+     * @param Language $language
+     */
+    public function __construct(Asset $asset, User $user, Language $language)
+    {
+        $this->asset = $asset;
+        $this->user = $user;
+        $this->language = $language;
+    }
+
     /**
      * @var int
      *
@@ -96,5 +110,25 @@ class Result
     public function getValue(): int
     {
         return $this->result;
+    }
+
+    /**
+     * @param int $value
+     * @return void
+     */
+    public function setValue(int $value) : void
+    {
+        $this->result = $value;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'value' => $this->result
+        ];
     }
 }

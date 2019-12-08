@@ -24,7 +24,7 @@
             <template v-if="fail > 0">
                 <el-row>
                     <p>Ошибки:</p>
-                    <p v-for="error in errors">{{error.word}} - {{error.value}}</p>
+                    <p v-for="error in errors">{{error.word.word}} - {{error.translate.value}}</p>
                 </el-row>
             </template>
             <span slot="footer" class="dialog-footer">
@@ -177,7 +177,7 @@
                 this.variants.shuffle()
             },
             save(){
-                this.$http.post('/saveTestResult', {'asset_id' : this.asset.id, 'result': this.percent}).then(
+                this.$http.post('/result/' + this.asset.id, {'result': this.percent}).then(
                     (responce) => {
                         this.$store.dispatch('reloadStore')
                     },
@@ -187,7 +187,7 @@
                 )
             },
             nextLevel(){
-                this.$http.post('/nextLevel', {'asset_id' : this.asset.id}).then(
+                this.$http.post('/complete/' + this.asset.id).then(
                     (responce) => {
                         this.$store.dispatch('reloadStore')
                     },

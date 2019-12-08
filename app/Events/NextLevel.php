@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\Models\Result;
-use App\User;
+use App\Entities\{Result, User};
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -26,10 +26,10 @@ class NextLevel
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param Authenticatable $user
      * @param Result $result
      */
-    public function __construct(User $user, Result $result)
+    public function __construct(Authenticatable $user, Result $result)
     {
         $this->user = $user;
         $this->result = $result;

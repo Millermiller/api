@@ -130,4 +130,26 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @param Asset $asset
+     * @return Asset
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getNextAsset(Asset $asset, Language $language): Asset
+    {
+        $q = $this->_em->createQueryBuilder();
+
+        return $q->select('a')
+            ->from($this->getEntityName(), 'a')
+            ->where('a.level = :level')
+            ->andWhere('a.type = :type')
+            ->andWhere('a.language = :language')
+            ->setParameter('level', $asset->getLevel() + 1)
+            ->setParameter('type', $asset->getType())
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

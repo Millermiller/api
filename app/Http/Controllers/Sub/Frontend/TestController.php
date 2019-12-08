@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use App\Events\NextLevel;
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
-use App\Models\Card;
-use App\Models\Result;
-use App\Services\CardService;
+use App\Entities\Asset;
+use App\Services\{AssetService, CardService};
 use Auth;
+use Doctrine\ORM\NoResultException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
 
 /**
@@ -22,16 +22,25 @@ use Illuminate\Support\Facades\Input;
  */
 class TestController extends Controller
 {
-    protected $cardService;
+    /**
+     * @var CardService
+     */
+    private $cardService;
 
-    public function __construct(CardService $cardService)
+    /**
+     * @var AssetService
+     */
+    private $assetService;
+
+    public function __construct(CardService $cardService, AssetService $assetService)
     {
         $this->cardService = $cardService;
+        $this->assetService = $assetService;
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function getAsset($id)
     {
@@ -41,59 +50,34 @@ class TestController extends Controller
     }
 
     /**
-     * Даем юзеру следующий уровень данного набора (если есть)
-     * todo: допилить!
+     * @param Asset $asset
+     * @return JsonResponse
      */
-    public function nextLevel()
+    public function complete(Asset $asset)
     {
-        $asset_id = Input::get('asset_id');
-
-        $next_asset_id = Asset::getNextLevel($asset_id)->id;// получаем id следующего набора
-
-        if ($next_asset_id > 0 &&
-            !Result::where('asset_id', $next_asset_id)
-                ->where('user_id', Auth::user()->id)
-                ->get()
-                ->count()
-        ) {
-
-            /** @var Result $result */
-            $result = new Result(['asset_id' => $next_asset_id, 'user_id' => Auth::user()->id, 'lang' => config('app.lang')]);
-
-            if ($result->save()) {
-
-                event(new NextLevel(Auth::user(), $result));
-
-                return response()->json([
-                    'success' => true,
-                    'new level' => $next_asset_id,
-                    'msg' => $result->asset->title . $result->asset->level
-                ]);
-            }
+        try{
+            $asset = $this->assetService->giveNextLevel(Auth::user(), $asset);
+        }catch(NoResultException $e){
+            //
         }
+
+        return response()->json($asset);
     }
 
     /**
      * Сохранить результат
+     * @param Asset $asset
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function saveTestResult()
+    public function result(Asset $asset)
     {
-        $asset_id = Input::get('asset_id');
-        $result   = Input::get('result');
+        $this->authorize('updateResult', $asset);
 
-        Result::updateOrCreate(
-            ['asset_id' => $asset_id, 'user_id'  => Auth::user()->id, 'lang' => config('app.lang')],
-            ['result' => $result, 'user_id'  => Auth::user()->id, 'lang' => config('app.lang')]
-        );
+        $resultValue = Input::get('result');
 
-        return response()->json([
-            "success" => true,
-            "msg" => 'result saved',
-            "data" => [
-                 "user_id"  => Auth::user()->id,
-                 "asset_id" => $asset_id,
-                 "result"   => $result
-            ]
-        ]);
+        $result = $this->assetService->saveTestResult($asset, Auth::user(), $resultValue);
+
+        return response()->json($result);
     }
 }

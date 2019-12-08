@@ -43,7 +43,7 @@
                                         message: 'Добавлено в Избранное',
                                         duration: 2000
                                     });
-                                    this.$store.commit('addCardToFavorite', response.body)
+                                    this.$store.commit('addCardToFavorite')
                                 }
                                 else {
                                     console.log(response.body)
@@ -61,11 +61,11 @@
                                 if (response.body.success) {
                                     self.item.favourite = false
                                     self.$notify.success({
-                                        title: self.item.word,
+                                        title: self.item.word.word,
                                         message: 'Удалено из Избранного',
                                         duration: 2000
                                     });
-                                    this.$store.dispatch('findAndRemoveFavorite', {key: 'word_id', value: this.item.id})
+                                    this.$store.commit('removeCardFromFavorite')
                                 }
                                 else {
                                     console.log(response.body)
