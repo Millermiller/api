@@ -106,6 +106,7 @@ class Translate implements JsonSerializable
             'id' => $this->id,
             'value' => $this->value,
             'word_id' => $this->wordId,
+            'word' => $this->word,
             'sentence' => $this->sentence,
             'active' => $this->id,
         ];

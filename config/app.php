@@ -167,7 +167,7 @@ return [
         LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-
+        LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
         /*
          * Package Service Providers...
          */
