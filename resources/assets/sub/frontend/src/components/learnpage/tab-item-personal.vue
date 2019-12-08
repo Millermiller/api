@@ -14,12 +14,12 @@
                         :class="[
                     'small',
                     {
-                      success: item.result.result > 80,
-                      warning: (item.result.result > 50 && item.result.result < 80),
-                      danger: item.result.result < 50
+                      success: item.result > 80,
+                      warning: (item.result > 50 && item.result < 80),
+                      danger: item.result < 50
                     }
                 ]">
-                    {{item.result.result}}%
+                    {{item.result}}%
                 </span>
                 <span :class="['text-muted', 'small']" style="padding-left: 15px;">
                      <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
