@@ -202,7 +202,7 @@ class AssetService
      * @param Asset $asset
      * @return Asset
      */
-    public function giveNextLevel(Authenticatable $user, Asset $asset) : Asset
+    public function giveNextLevel(Authenticatable $user, Asset $asset): Asset
     {
         $language  = $this->languageRepository->get(config('app.lang'));
 
@@ -225,7 +225,7 @@ class AssetService
      * @param int $resultValue
      * @return Result
      */
-    public function saveTestResult(Asset $asset, Authenticatable $user, int $resultValue) : Result
+    public function saveTestResult(Asset $asset, Authenticatable $user, int $resultValue): Result
     {
         $language  = $this->languageRepository->get(config('app.lang'));
 

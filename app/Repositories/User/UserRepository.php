@@ -16,10 +16,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function addAsset(User $user, Asset $asset) : void
+    public function addAsset(User $user, Asset $asset): void
     {
         $user->getAssets()->add($asset);
-     //   $asset->getUsers()->add($user);
+        //   $asset->getUsers()->add($user);
 
 
         $this->_em->flush();
@@ -31,7 +31,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function addText(User $user, Text $text) : void
+    public function addText(User $user, Text $text): void
     {
         $user->getTexts()->add($text);
         $text->getUsers()->add($user);

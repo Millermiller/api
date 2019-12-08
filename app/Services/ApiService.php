@@ -38,7 +38,7 @@ class ApiService
     /**
      * @return array
      */
-    public function getLanguagesList() : array
+    public function getLanguagesList(): array
     {
         return $this->languageRepository->all();
     }

@@ -7,5 +7,5 @@ use App\Repositories\BaseRepositoryInterface;
 
 interface PuzzleRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getForUser(User $user) : array;
+    public function getForUser(User $user): array;
 }

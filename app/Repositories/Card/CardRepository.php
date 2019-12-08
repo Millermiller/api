@@ -19,7 +19,7 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
      * @param Language $language
      * @return array | Text[]
      */
-    public function getByLanguage(Language $language) : array
+    public function getByLanguage(Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
 

@@ -264,7 +264,7 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @return Collection|Card[]
      */
-    public function getCards() : Collection
+    public function getCards(): Collection
     {
         return $this->cards;
     }
@@ -290,21 +290,27 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @return array
      */
-    public function getCardsIds() : array
+    public function getCardsIds(): array
     {
-        return array_map(function($card){
-            return $card->getId();
-        }, $this->cards->toArray());
+        return array_map(
+            function ($card) {
+                return $card->getId();
+            },
+            $this->cards->toArray()
+        );
     }
 
     /**
      * @return array
      */
-    public function getWordsIds() : array
+    public function getWordsIds(): array
     {
-        return array_map(function($card){
-            return $card->getWord()->getId();
-        }, $this->cards->toArray());
+        return array_map(
+            function ($card) {
+                return $card->getWord()->getId();
+            },
+            $this->cards->toArray()
+        );
     }
 
     /**

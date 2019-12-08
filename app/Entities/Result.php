@@ -116,7 +116,7 @@ class Result implements JsonSerializable
      * @param int $value
      * @return void
      */
-    public function setValue(int $value) : void
+    public function setValue(int $value): void
     {
         $this->result = $value;
     }

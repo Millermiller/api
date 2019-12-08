@@ -225,7 +225,7 @@ class Card implements JsonSerializable
     /**
      * @return bool
      */
-    public function isFavourite() : bool
+    public function isFavourite(): bool
     {
         return (bool) $this->asset->getFavorite();
     }

@@ -191,7 +191,7 @@ class UserService
      * @param $request
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function updateUserInfo(array $request) : void
+    public function updateUserInfo(array $request): void
     {
         $user = Auth::user();
 

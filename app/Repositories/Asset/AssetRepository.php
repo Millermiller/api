@@ -14,19 +14,19 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getFirstAsset(Language $language, int $type) : Asset
+    public function getFirstAsset(Language $language, int $type): Asset
     {
-       return  $this->createQueryBuilder('asset')
-           ->select('a')
-           ->from($this->getEntityName(), 'a')
-           ->where('a.level = :level')
-           ->andWhere('a.languageId = :language_id')
-           ->andWhere('a.type = :type')
-           ->setParameter('level', 1)
-           ->setParameter('type', $type)
-           ->setParameter('language_id', $language->getId())
-           ->getQuery()
-           ->getSingleResult();
+        return $this->createQueryBuilder('asset')
+            ->select('a')
+            ->from($this->getEntityName(), 'a')
+            ->where('a.level = :level')
+            ->andWhere('a.languageId = :language_id')
+            ->andWhere('a.type = :type')
+            ->setParameter('level', 1)
+            ->setParameter('type', $type)
+            ->setParameter('language_id', $language->getId())
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**
@@ -35,7 +35,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      */
     public function getPublicAssets(Language $language): array
     {
-        return  $this->createQueryBuilder('asset')
+        return $this->createQueryBuilder('asset')
             ->select('a')
             ->from($this->getEntityName(), 'a')
             ->where('a.languageId = :language_id')
@@ -53,7 +53,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      */
     public function getPersonalAssets(Language $language, User $user): array
     {
-        $q =  $this->createQueryBuilder('asset');
+        $q = $this->createQueryBuilder('asset');
 
         return $q->select('a')
             ->from($this->getEntityName(), 'a')
@@ -72,7 +72,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      */
     public function getAssetsByType($language, int $type)
     {
-        return  $this->createQueryBuilder('asset')
+        return $this->createQueryBuilder('asset')
             ->select('a')
             ->from($this->getEntityName(), 'a')
             ->where('a.languageId = :language_id')
@@ -93,7 +93,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      */
     public function getFavouriteAsset(Language $language, User $user): Asset
     {
-        $q =  $this->createQueryBuilder('asset');
+        $q = $this->createQueryBuilder('asset');
 
         return $q->select('a', 'r')
             ->from($this->getEntityName(), 'a')
@@ -113,14 +113,14 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      * @param User $user
      * @return array
      */
-    public function getCreatedAssets(Language $language, User $user) : array
+    public function getCreatedAssets(Language $language, User $user): array
     {
-        $q =  $this->createQueryBuilder('asset');
+        $q = $this->createQueryBuilder('asset');
 
         return $q->select('a')
             ->from($this->getEntityName(), 'a')
             ->join('a.results', 'r', 'WITH')
-         //   ->join('a.cards', 'c', 'WITH')
+            //   ->join('a.cards', 'c', 'WITH')
             ->where('a.languageId = :language_id')
             ->andWhere($q->expr()->eq('r.user', ':user'))
             ->andWhere('a.basic = :basic')

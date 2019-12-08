@@ -7,5 +7,5 @@ use App\Repositories\BaseRepositoryInterface;
 
 interface LanguageRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getByName(string $name) : Language;
+    public function getByName(string $name): Language;
 }

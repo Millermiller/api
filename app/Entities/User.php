@@ -277,10 +277,13 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
             } else {
                 $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
                 $avatar->resize(
-                    300, null, function ($constraint) {
-                    /** @var \Intervention\Image\Constraint $constraint */
-                    $constraint->aspectRatio();
-                });
+                    300,
+                    null,
+                    function ($constraint) {
+                        /** @var \Intervention\Image\Constraint $constraint */
+                        $constraint->aspectRatio();
+                    }
+                );
                 $avatar->save(public_path('/uploads/u/a/' . $this->photo));
                 return url('/uploads/u/a/' . $this->photo);
             }
@@ -394,14 +397,14 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
      */
     public function getActive(): bool
     {
-        return (bool) $this->active;
+        return (bool)$this->active;
     }
 
     /**
      * @param Puzzle $puzzle
      * @return $this
      */
-    public function addPuzzle(Puzzle $puzzle) : User
+    public function addPuzzle(Puzzle $puzzle): User
     {
         $this->hasPuzzle($puzzle) ?: $this->puzzles[] = $puzzle;
 
@@ -412,7 +415,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
      * @param Puzzle $puzzle
      * @return bool
      */
-    public function hasPuzzle(Puzzle $puzzle) : bool
+    public function hasPuzzle(Puzzle $puzzle): bool
     {
         foreach ($this->puzzles as $p) {
             if ($p->getId() === $puzzle->getId()) {
@@ -426,7 +429,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
      * @param Asset $asset
      * @return bool
      */
-    public function hasAsset(Asset $asset) : bool
+    public function hasAsset(Asset $asset): bool
     {
         foreach ($this->assets as $a) {
             if ($a->getId() === $asset->getId()) {

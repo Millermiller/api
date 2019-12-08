@@ -15,7 +15,7 @@ interface TextRepositoryInterface extends BaseRepositoryInterface
      * @param Language $language
      * @return Text
      */
-    public function getFirstText(Language $language) : Text;
+    public function getFirstText(Language $language): Text;
 
     /**
      * @param User $user
@@ -28,11 +28,11 @@ interface TextRepositoryInterface extends BaseRepositoryInterface
      * @param Language $language
      * @return array
      */
-    public function getActiveIds(User $user, Language $language) : array;
+    public function getActiveIds(User $user, Language $language): array;
 
     /**
      * @param Language $language
      * @return array
      */
-    public function getByLanguage(Language $language) : array;
+    public function getByLanguage(Language $language): array;
 }

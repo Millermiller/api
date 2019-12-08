@@ -14,17 +14,17 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getFirstText(Language $language) : Text
+    public function getFirstText(Language $language): Text
     {
-       return $this->createQueryBuilder('asset')
-           ->select('a')
-           ->from($this->getEntityName(), 'a')
-           ->where('a.level = :level')
-           ->andWhere('a.languageId = :language')
-           ->setParameter('level', 1)
-           ->setParameter('language', $language->getId())
-           ->getQuery()
-           ->getSingleResult();
+        return $this->createQueryBuilder('asset')
+            ->select('a')
+            ->from($this->getEntityName(), 'a')
+            ->where('a.level = :level')
+            ->andWhere('a.languageId = :language')
+            ->setParameter('level', 1)
+            ->setParameter('language', $language->getId())
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**
@@ -33,7 +33,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
      * @return array
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getActiveIds(User $user, Language $language) : array
+    public function getActiveIds(User $user, Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
 
@@ -63,7 +63,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
      * @param Language $language
      * @return array | Text[]
      */
-    public function getByLanguage(Language $language) : array
+    public function getByLanguage(Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
 
