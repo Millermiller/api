@@ -12,20 +12,20 @@
                         <p class="userlogin">{{login}}</p>
                         <p class="useremail">{{email}}</p>
                     </div>
-                    <i class="ion-ios-close-empty ion-big" @click="toggle"></i>
+                    <i class="ion-ios-close-empty ion-big" @click="toggle"/>
                 </div>
                 <div class="sidemenu-content" @click="toggle">
                     <el-menu mode="vertical" default-active="1" class="el-menu-vertical">
                         <el-menu-item index="1">
-                            <i class="ion-ios-home-outline ion"></i>
+                            <i class="ion-ios-home-outline ion"/>
                             <router-link to="/" exact>На главную</router-link>
                         </el-menu-item>
                         <el-menu-item index="2">
-                            <i class="ion-university ion"></i>
+                            <i class="ion-university ion"/>
                             <router-link to="/learn">Обучение</router-link>
                         </el-menu-item>
                         <el-menu-item index="3">
-                            <i class="ion-android-checkbox-outline ion"></i>
+                            <i class="ion-android-checkbox-outline ion"/>
                             <router-link to="/test">Тесты</router-link>
                         </el-menu-item>
                         <el-menu-item index="4">

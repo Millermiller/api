@@ -30,17 +30,17 @@
                 <template>
                     <span :class="[isActive ? 'text-primary' : 'text-muted', 'pointer', 'small']"
                           @click="cardspage()">
-                        <i :class="['ion', 'ion-edit', 'ion-small']"></i>
+                        <i :class="['ion', 'ion-edit', 'ion-small']"/>
                         изменить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
                     <span :class="['text-primary', 'pointer', 'small', {'muted': item.count < 1}]" @click="loadTest()">
-                        <i :class="['ion', 'ion-ios-redo', 'ion-small']"></i>
+                        <i :class="['ion', 'ion-ios-redo', 'ion-small']"/>
                         учить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
                     <span :class="['text-primary', 'pointer', 'small', {'muted': item.count < 1}]" @click="test()">
-                         <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"></i>
+                         <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"/>
                         тест
                     </span>
                 </template>
@@ -71,7 +71,7 @@
                 }
 
                 if( window.innerWidth <= 910){
-                    this.$emit('closeMenu')
+                    this.$eventHub.$emit('closeMenu')
                 }
                 this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/learn/' + this.item.id);
@@ -89,7 +89,7 @@
                 }
 
                 if( window.innerWidth <= 910){
-                    this.$emit('closeMenu')
+                    this.$eventHub.$emit('closeMenu')
                 }
                 //  this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/test/' + this.item.id);

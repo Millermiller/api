@@ -2,7 +2,7 @@
     <el-col :span="8" :xs="24" id="testblock">
         <el-card class="box-card" v-loading.body="loading">
             <div slot="header" class="clearfix">
-                <vue-progress-bar></vue-progress-bar>
+                <vue-progress-bar/>
                 <h3 style="height: 76px;" class="text-center">{{question.word ? question.word.word : 'Выберите словарь'}}</h3>
             </div>
             <div class="variants">

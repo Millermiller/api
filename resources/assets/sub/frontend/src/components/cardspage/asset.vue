@@ -8,32 +8,34 @@
             <el-col :span="22"  style="height: 57px;">
                 <span v-if="edited === false" class="asset-title h4" style="height: 57px;display:inline-block">{{assetname}}</span>
                 <el-input v-if="edited === true" size="small" placeholder="Название словаря" v-model="assetname">
-                    <el-button slot="append" type="danger"  icon="el-icon-close" size="mini" @click.stop="closeedit" plain></el-button>
-                    <el-button slot="append" type="success" icon="el-icon-check" size="mini" @click.stop="applyedit" plain></el-button>
+                    <el-button slot="append" type="danger" icon="el-icon-close" size="mini" @click.stop="closeedit" plain/>
+                    <el-button slot="append" type="success" icon="el-icon-check" size="mini" @click.stop="applyedit" plain/>
                 </el-input>
-                <el-button v-if="asset.title !== 'Избранное' && edited === false"
+                <el-button
+                        v-if="asset.title !== 'Избранное' && edited === false"
                            type="default"
                            icon="el-icon-edit"
                            size="mini"
                            @click.stop="openedit"
                            :disabled="!isActive"
-                           plain></el-button>
+                           plain/>
             </el-col>
 
             <el-col :span="2">
-                <el-button v-if="asset.title !== 'Избранное'"
+                <el-button
+                        v-if="asset.title !== 'Избранное'"
                            type="default"
                            icon="el-icon-delete"
                            size="mini"
                            @click.stop="confirm(asset)"
                            :disabled="!isActive"
-                           plain></el-button>
+                           plain/>
             </el-col>
         </el-row>
             <el-row>
                 <el-col :span="9">
                     <span :class="['text-muted', 'small']">
-                         <i :class="['ion', 'ion-speedometer', 'ion-small']"></i>
+                         <i :class="['ion', 'ion-speedometer', 'ion-small']"/>
                     </span>
                     <span :class="[ 'small',
                                 {
@@ -46,7 +48,7 @@
                     {{asset.result}}%
                 </span>
                      <span :class="['text-muted', 'small']" style="padding-left: 15px;">
-                     <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
+                     <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"/>
                     {{asset.count}}
                 </span>
                 </el-col>
@@ -74,26 +76,24 @@
         },
         methods: {
             confirm(asset) {
-                if (!this.isActive) {
-                    this.$emit('modal')
-                }
-                else {
+                if(this.isActive){
                     this.$confirm('Удалить словарь?', asset.title, {
                         confirmButtonText: 'Да',
                         cancelButtonText: 'Нет',
                         type: 'warning'
                     }).then(() => {
-                        this.$emit('removeItem', {asset: this.asset, index: this.index})
+                        this.$eventHub.$emit('removeItem', {asset: this.asset, index: this.index})
                     }).catch(() => {
                         //
                     });
                 }
             },
             loadAsset(){
-                if (!this.isActive) {
+                if(!this.isActive){
                     return false
                 }
                 else {
+                    this.$eventHub.$emit('assetSelect', this.asset);
                     this.$store.commit('showDictionary')
                     this.$store.dispatch('loadAsset', {asset: this.asset, index: this.index})
                 }
@@ -117,7 +117,7 @@
                         }
                     },
                     (response) => {
-                        //
+                        console.log(response);
                     }
                 )
             }

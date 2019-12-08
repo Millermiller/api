@@ -32,11 +32,11 @@
                 <template v-if="user.id === card.word.user.id">
                     <el-tooltip v-if="card.word.is_public" class="text-muted" effect="light"  placement="top-start">
                         <div slot="content">Эта карточка видна всем пользователям</div>
-                        <i :class="['ion-ios-people', 'ion-small']"></i>
+                        <i :class="['ion-ios-people', 'ion-small']"/>
                     </el-tooltip>
                     <el-tooltip v-else class="text-muted" effect="light"  placement="top-start">
                         <div slot="content">Эта карточка видна только вам</div>
-                        <i :class="['ion-ios-person', 'ion-small']"></i>
+                        <i :class="['ion-ios-person', 'ion-small']"/>
                     </el-tooltip>
                 </template>
         </el-col>
@@ -54,7 +54,7 @@
                     asset_id: this.$store.getters.activeAsset,
                     index: this.index,
                 }
-                this.$emit('add', data)
+                this.$eventHub.$emit('addCardToAsset', data)
             }
         },
         computed:{

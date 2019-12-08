@@ -8,12 +8,11 @@
                 <el-form ref="loginform" :model="form" :rules="rules">
                     <small v-if="error" style="color:#ff4949">{{error}}</small>
                     <el-form-item prop="login">
-                        <el-input v-model="form.login" placeholder="Login" auto-complete="on"></el-input>
+                        <el-input v-model="form.login" placeholder="Login" auto-complete="on"/>
                     </el-form-item>
 
                     <el-form-item prop="password">
-                        <el-input v-model="form.password" type="password" placeholder="Password"
-                                  auto-complete="on"></el-input>
+                        <el-input v-model="form.password" type="password" placeholder="Password" auto-complete="on"/>
                     </el-form-item>
 
                     <el-form-item>

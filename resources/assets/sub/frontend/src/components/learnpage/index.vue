@@ -2,18 +2,18 @@
     <el-container>
         <a id="right-menu" @click="toggleRightMenu">
             <button :class="['navbar-toggle', 'collapsed']">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar"/>
+                <span class="icon-bar"/>
+                <span class="icon-bar"/>
             </button>
         </a>
         <el-main>
             <el-row :gutter="20">
-                <slider></slider>
+                <slider/>
                 <transition name="custom-classes-transition"
                             enter-active-class="animated slideInRight"
                             leave-active-class="animated slideOutRight">
-                    <tabs v-on:modal="modal" v-on:closeMenu="toggleRightMenu" v-show="visible"></tabs>
+                    <tabs/>
                 </transition>
             </el-row>
         </el-main>
@@ -39,6 +39,10 @@
                 visible: false,
             }
         },
+        created() {
+            this.$eventHub.$on('closeMenu', this.closeMenu);
+            this.$eventHub.$on('paidModal', this.modal);
+        },
         components: {
             'slider': Slider,
             'tabs': Tabs
@@ -58,6 +62,8 @@
         },
         beforeDestroy(){
            // this.$store.dispatch('onCardsPageClose')
+            this.$eventHub.$off('closeMenu');
+            this.$eventHub.$off('paidModal');
         }
     }
 </script>

@@ -21,10 +21,7 @@
                             v-for="(asset, index) in assets"
                             :asset="asset"
                             :index="index"
-                            :key="asset.id"
-                            v-on:removeItem="remove"
-                            v-on:modal="modal"
-                    ></asset>
+                            :key="asset.id"/>
                 </transition-group>
             </section>
         </el-card>
@@ -37,6 +34,9 @@
     export default{
         data(){
             return{}
+        },
+        created() {
+            this.$eventHub.$on('removeItem', this.remove);
         },
         methods:{
             add(){
@@ -55,9 +55,6 @@
             },
             remove(data){
                 this.$store.dispatch('removePersonalAsset', data)
-            },
-            modal(){
-                this.dialogVisible = true
             }
         },
         components: {
@@ -76,6 +73,9 @@
                 alwaysShowTracks: true,
                 overscrollEffect: 'bounce'
             });
+        },
+        beforeDestroy(){
+            this.$eventHub.$off('removeItem');
         }
     }
 </script>

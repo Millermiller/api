@@ -7,7 +7,7 @@
             <p :class="['text-center']">{{user.login}}</p>
             <p :class="['text-center']">{{user.email}}</p>
             <p :class="color(plan.id)">{{plan.name}}</p>
-            <p :class="['text-center']" v-if="plan.name != 'Basic'">активен до: {{active_to}}</p>
+            <p :class="['text-center']" v-if="plan.name !== 'Basic'">активен до: {{active_to}}</p>
         </el-card>
     </el-col>
 </template>

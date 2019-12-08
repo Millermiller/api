@@ -13,7 +13,7 @@
         <el-dialog title="Ваше сообщение:" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="messageform">
                 <el-form-item prop="message">
-                    <el-input type="textarea" v-model="form.message"  placeholder="Сообщение" id="feedback_message"></el-input>
+                    <el-input type="textarea" v-model="form.message" placeholder="Сообщение" id="feedback_message"/>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">

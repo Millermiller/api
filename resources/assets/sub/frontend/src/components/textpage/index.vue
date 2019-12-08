@@ -2,7 +2,7 @@
     <el-container>
         <el-main>
             <el-row :gutter="20">
-                <textcard v-for="text in texts" :text="text" :key="text.id"></textcard>
+                <textcard v-for="text in texts" :text="text" :key="text.id"/>
             </el-row>
         </el-main>
     </el-container>

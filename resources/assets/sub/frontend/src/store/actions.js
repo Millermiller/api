@@ -79,18 +79,6 @@ export default{
         context.commit('setSelection', data)
     },
 
-    removeCard(context, data){
-        Vue.http.delete('/card/' + data.card.id).then(
-            (response) => {
-                if(response.status === 204)
-                    context.commit('removeCard', data.index)
-            },
-            (responce) => {
-                console.log(response.body)
-            }
-        )
-    },
-
     onCardsPageOpen(context){
         let asset = {type: 3}
 

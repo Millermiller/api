@@ -4,7 +4,7 @@
             <div slot="header" class="clearfix" id="infoblock">
                 <el-row :gutter="20">
                     <el-col :span="8" class="diagram">
-                        <el-progress type="circle" :percentage="percent" :width="100"></el-progress>
+                        <el-progress type="circle" :percentage="percent" :width="100"/>
                     </el-col>
                     <el-col :span="16" class="asset-info">
                         <template v-if="asset.title">
@@ -22,8 +22,7 @@
                             :item="error"
                             :index="index"
                             :key="error.id"
-                            class="splash-item"
-                            v-on:removeErrorItem="removeErrorItem"></erroritem>
+                            class="splash-item"/>
                 </transition-group>
             </section>
         </el-card>
@@ -41,6 +40,12 @@
         },
         components:{
             'erroritem': erroritem
+        },
+        created: function () {
+            if (this.$route.params.id > 0)
+                this.getInfo(this.$route.params.id)
+
+            this.$eventHub.$on('removeErrorItem', this.removeErrorItem);
         },
         computed:{
             percent(){
@@ -79,15 +84,14 @@
                 this.$store.commit('removeError', id)
             }
         },
-        created: function () {
-            if (this.$route.params.id > 0)
-                this.getInfo(this.$route.params.id)
-        },
         mounted(){
             Scrollbar.initAll({
                 alwaysShowTracks: true,
                 overscrollEffect: 'bounce'
             });
+        },
+        beforeDestroy(){
+            this.$eventHub.$off('removeErrorItem');
         }
     }
 </script>

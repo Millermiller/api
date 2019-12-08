@@ -1,11 +1,9 @@
 <template>
     <div id="app">
-        <appheader v-if="auth"></appheader>
-        <sidemenu v-if="auth"></sidemenu>
-
-        <router-view></router-view>
-
-        <appfooter v-if="auth"></appfooter>
+        <appheader v-if="auth"/>
+        <sidemenu v-if="auth"/>
+        <router-view/>
+        <appfooter v-if="auth"/>
     </div>
 </template>
 

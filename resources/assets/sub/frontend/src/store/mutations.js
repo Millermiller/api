@@ -141,10 +141,6 @@ export default {
         }
     },
 
-    removeCard(state, id){
-        state.assets.personal[state.activePersonalAssetIndex].cards.splice(id, 1)
-    },
-
     showDictionary(state){
         state.showDictionary = true
     },

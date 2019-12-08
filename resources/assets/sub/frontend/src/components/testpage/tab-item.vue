@@ -22,7 +22,7 @@
             </el-col>
             <el-col :span="9">
                 <span :class="['small', 'text-muted']">
-                     <i :class="['ion', 'ion-speedometer', 'ion-small']"></i>
+                     <i :class="['ion', 'ion-speedometer', 'ion-small']"/>
                 </span>
                 <span
                         :class="[
@@ -36,19 +36,19 @@
                     {{item.result}}%
                 </span>
                 <span :class="['small', 'text-muted']" style="padding-left: 15px;">
-                     <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
+                     <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"/>
                     {{item.count}}
                 </span>
             </el-col>
             <el-col :span="9">
                 <template v-if="item.active">
                     <span :class="['text-primary', 'pointer', 'small']" @click="loadTest()">
-                        <i :class="['ion', 'ion-ios-redo', 'ion-small']"></i>
+                        <i :class="['ion', 'ion-ios-redo', 'ion-small']"/>
                         учить
                     </span>
                     <span :class="['text-primary', 'small']">|</span>
                     <span :class="['text-primary', 'pointer', 'small']" @click="test()">
-                         <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"></i>
+                         <i :class="['ion', 'ion-ios-checkmark-outline', 'ion-small']"/>
                         тест
                     </span>
                 </template>
@@ -57,7 +57,7 @@
                 </template>
             </el-col>
         </el-row>
-        <i @click="showModal" class="ion-locked" v-if="!item.available"></i>
+        <i @click="showModal" class="ion-locked" v-if="!item.available"/>
     </el-row>
 </template>
 
@@ -74,20 +74,20 @@
         methods: {
             loadTest(){
                 if( window.innerWidth <= 910){
-                    this.$emit('closeMenu')
+                    this.$eventHub.$emit('closeMenu')
                 }
                 this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/learn/' + this.item.id);
             },
             test(){
                 if( window.innerWidth <= 910){
-                    this.$emit('closeMenu')
+                    this.$eventHub.$emit('closeMenu')
                 }
                 //  this.$store.commit('setSelection', {asset: this.item, index: this.index})
                 this.$router.push('/test/' + this.item.id);
             },
             showModal(){
-                this.$emit('modal')
+                this.$eventHub.$emit('modal')
             }
         }
     }

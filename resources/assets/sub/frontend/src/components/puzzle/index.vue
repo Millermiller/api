@@ -3,18 +3,18 @@
         <el-main>
             <a id="right-menu" @click="toggleRightMenu">
                 <button :class="['navbar-toggle', 'collapsed']">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar"/>
+                    <span class="icon-bar"/>
+                    <span class="icon-bar"/>
                 </button>
             </a>
             <el-row :gutter="20" type="flex" justify="center">
                 <el-col :lg="{span: 12}" :xs="{span: 24, offset: 0}">
                     <el-card :style="{position: 'relative'}" :class="['box-card']">
-                        <vue-progress-bar></vue-progress-bar>
+                        <vue-progress-bar/>
 
                         <h3 class="text-center">{{text}}
-                            <i @click="refresh"  v-if="activePuzzle" :class="['ion', 'ion-android-refresh', 'pointer', {'rotating': isRotate}]"></i>
+                            <i @click="refresh" v-if="activePuzzle" :class="['ion', 'ion-android-refresh', 'pointer', {'rotating': isRotate}]"/>
                         </h3>
 
                         <div class="drop-wrapper">

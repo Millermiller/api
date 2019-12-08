@@ -10,8 +10,6 @@
                                     :item="word"
                                     :index="index"
                                     :key="word.id"
-                                    v-on:modal="modal"
-                                    v-on:closeMenu="closeMenu"
                                     type="asset">
                             </tabitem>
                         </div>
@@ -25,8 +23,6 @@
                                     :item="sentence"
                                     :index="index"
                                     :key="sentence.id"
-                                    v-on:modal="modal"
-                                    v-on:closeMenu="closeMenu"
                                     type="asset">
                             </tabitem>
                         </div>
@@ -40,7 +36,6 @@
                                     :item="personal"
                                     :index="index"
                                     :key="personal.id"
-                                    v-on:closeMenu="closeMenu"
                                     type="personal">
                             </tabitempersonal>
                         </div>
@@ -81,12 +76,6 @@
         methods: {
             handleClick(tab, event) {
 
-            },
-            modal(){
-                this.$emit('modal')
-            },
-            closeMenu(){
-                this.$emit('closeMenu')
             }
         },
         mounted(){

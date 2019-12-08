@@ -3,7 +3,7 @@
         <el-card shadow="hover" :class="['widget-block', 'pointer']"  @click.native="words()">
             <p :class="['widget-title']">Слова</p>
             <p :class="['widget-description']">{{active}}/{{all}}</p>
-            <el-progress type="circle" :percentage="percent"></el-progress>
+            <el-progress type="circle" :percentage="percent"/>
         </el-card>
     </el-col>
 </template>

@@ -7,15 +7,15 @@
                 <sentencesblock v-on:modal="modal"></sentencesblock>
                 <personalblock></personalblock> -->
 
-                <account></account>
+                <account/>
 
                 <el-col :md="18" :xs="24" :sm="16">
                     <el-row :gutter="20" :id="['widgetblock']">
-                        <wordwidget></wordwidget>
-                        <sentencewidget></sentencewidget>
-                        <textwidget></textwidget>
-                        <personalwidget></personalwidget>
-                        <puzzlewidget></puzzlewidget>
+                        <wordwidget/>
+                        <sentencewidget/>
+                        <textwidget/>
+                        <personalwidget/>
+                        <puzzlewidget/>
                     </el-row>
                 </el-col>
             </el-row>

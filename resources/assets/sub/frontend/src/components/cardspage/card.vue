@@ -5,11 +5,11 @@
         </el-col>
         <el-col :span="2">
             <el-button
-                       type="default"
-                       icon="el-icon-delete"
-                       size="mini"
-                       @click.stop="$emit('remove', {card:card, index:index})"
-                       plain></el-button>
+                    type="default"
+                    icon="el-icon-delete"
+                    size="mini"
+                    @click.stop="removeCard"
+                    plain/>
         </el-col>
         <el-col :span="24">
             <p :class="['no-margin', 'card-value']" >{{card.translate.value}}</p>
@@ -40,6 +40,11 @@
 
 <script>
     export default{
-        props:['card', 'index']
+        props:['card', 'index'],
+        methods:{
+            removeCard(){
+                this.$eventHub.$emit('deleteCardFromAsset', {card: this.card, index: this.index});
+            }
+        }
     }
 </script>

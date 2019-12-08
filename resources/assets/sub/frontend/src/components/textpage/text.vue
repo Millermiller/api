@@ -4,8 +4,8 @@
             <el-row :gutter="20">
                 <el-col :span="12">
                     <el-card style="position: relative;" id="origtext">
-                        <vue-progress-bar></vue-progress-bar>
-                        <p class="origtext" v-html="output"></p>
+                        <vue-progress-bar/>
+                        <p class="origtext" v-html="output"/>
                     </el-card>
                     <el-collapse id="helpblock">
                         <el-collapse-item title="Помощь">
@@ -29,7 +29,7 @@
                             placeholder="Поле для перевода"
                             v-model="input"
                             v-on:input="separate"
-                    ></textarea>
+                    />
 
                     <el-row>
                         <el-col :span="24">

@@ -2,14 +2,14 @@
     <div :class="['navbar', 'navbar-static-top', 'navbar-fixed-left']" role="navigation" ref="menu">
         <a id="left-menu" @click="showLeftMenu">
             <button :class="['navbar-toggle', 'collapsed']">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar"/>
+                <span class="icon-bar"/>
+                <span class="icon-bar"/>
             </button>
         </a>
         <el-menu :class="['el-menu-demo', 'main-menu', 'hidden-sm-and-down']" mode="horizontal" >
             <router-link tag="li" :class="['el-menu-item', 'home']" to="/" exact>
-                <i class="menu-icon icon ion-ios-home-outline"></i>
+                <i class="menu-icon icon ion-ios-home-outline"/>
             </router-link>
             <router-link tag="li" :class="['el-menu-item', 'learn']" to="/learn">
                 Словари

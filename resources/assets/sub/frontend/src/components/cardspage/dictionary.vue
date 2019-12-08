@@ -10,8 +10,6 @@
                         <el-checkbox v-model="sentence">В предложениях</el-checkbox>
                     </el-col>
                     <el-col :span="6">
-
-
                         <el-popover
                                 placement="top-start"
                                 width="200"
@@ -25,17 +23,16 @@
                 </el-row>
             </div>
                 <el-input placeholder="слово для поиска.." v-model="word">
-                    <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <el-button slot="append" icon="el-icon-search" @click="search"/>
                 </el-input>
             <p v-if="message" class="text-muted">{{message}}</p>
             <section data-scrollbar style="height: 65vh;" v-loading.body="loading">
                 <transition-group name="cards" tag="div">
-                    <translate v-for="(card, index) in cards"
-                               :key="card.id"
-                               :card="card"
-                               :index="index"
-                               v-on:add="add"
-                    ></translate>
+                    <translate
+                            v-for="(card, index) in cards"
+                            :key="card.id"
+                            :card="card"
+                            :index="index"/>
                 </transition-group>
             </section>
         </el-card>
@@ -44,10 +41,10 @@
 
             <el-form :model="form">
                 <el-form-item>
-                    <el-input v-model="form.orig"  placeholder="Оригинал"></el-input>
+                    <el-input v-model="form.orig" placeholder="Оригинал"/>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="form.translate" placeholder="Перевод"></el-input>
+                    <el-input v-model="form.translate" placeholder="Перевод"/>
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox v-model="form.is_public">Виден для всех</el-checkbox>
@@ -92,6 +89,9 @@
                 },
                 loading: false
             }
+        },
+        created() {
+            this.$eventHub.$on('addCardToAsset', this.add);
         },
         components:{
             'translate': Translate
@@ -153,7 +153,7 @@
                         }
                     },
                     (response) => {
-
+                        console.log(response);
                     }
                 )
             },
@@ -168,10 +168,13 @@
                         }
                     },
                     (response) => {
-
+                        console.log(response);
                     }
                 )
             }
+        },
+        beforeDestroy(){
+            this.$eventHub.$off('addCardToAsset');
         }
     }
 </script>
