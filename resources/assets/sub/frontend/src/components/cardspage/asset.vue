@@ -47,7 +47,7 @@
                 </span>
                      <span :class="['text-muted', 'small']" style="padding-left: 15px;">
                      <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
-                    {{asset.cards.length}}
+                    {{asset.count}}
                 </span>
                 </el-col>
                 <el-col :span="9">

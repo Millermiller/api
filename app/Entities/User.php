@@ -392,9 +392,9 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     /**
      * @return int
      */
-    public function getActive(): int
+    public function getActive(): bool
     {
-        return $this->active;
+        return (bool) $this->active;
     }
 
     /**
