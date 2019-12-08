@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCardRequest;
-use App\Models\Card;
+use App\Entities\Card;
 use App\Models\Translate;
 use App\Models\Word;
 use App\Services\CardService;
 use Auth;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
 
 /**
@@ -37,23 +39,21 @@ class CardsController extends Controller
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @param Card $card
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function destroy($id)
+    public function destroy(Card $card)
     {
-        $card = Card::findOrFail($id);
-
         $this->authorize('delete', $card);
 
-        $card->forceDelete();
+        $this->cardService->destroyCard($card);
 
         return response()->json(null, 204);
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function createCard()
     {

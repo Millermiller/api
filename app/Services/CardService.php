@@ -4,8 +4,9 @@ namespace App\Services;
 
 use App\Entities\Asset;
 use App\Http\Requests\CreateCardRequest;
-use App\Models\Card;
+use App\Entities\Card;
 use App\Repositories\Asset\AssetRepositoryInterface;
+use App\Repositories\Card\CardRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use Auth;
 
@@ -25,10 +26,16 @@ class CardService
      */
     private $languageRepository;
 
-    public function __construct(AssetRepositoryInterface $assetRepository, LanguageRepositoryInterface $languageRepository)
+    /**
+     * @var CardRepositoryInterface
+     */
+    private $cardRepository;
+
+    public function __construct(AssetRepositoryInterface $assetRepository, LanguageRepositoryInterface $languageRepository, CardRepositoryInterface $cardRepository)
     {
         $this->assetRepository = $assetRepository;
         $this->languageRepository = $languageRepository;
+        $this->cardRepository = $cardRepository;
     }
 
     public function create(CreateCardRequest $request)
@@ -38,6 +45,14 @@ class CardService
         $card->load(['word', 'translate', 'asset', 'examples']);
 
         return $card;
+    }
+
+    /**
+     * @param Card $card
+     */
+    public function destroyCard(Card $card)
+    {
+        $this->cardRepository->delete($card);
     }
 
     /**

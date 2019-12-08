@@ -114,6 +114,18 @@ export default {
         state.assets.personal[0].count--
     },
 
+    /**
+     *
+     * @param state
+     * @param card
+     * @param card.id
+     * @param card.asset_id
+     */
+    removeCard(state, card){
+        let personalAssetIndex = state.assets.personal.findIndex(item => item.id === card.asset_id)
+        state.assets.personal[personalAssetIndex].count--
+    },
+
     setSelection(state, data){
         state.assets.personal.forEach(function(element, index, array){
             Vue.set(element, 'selected', element.id === data)

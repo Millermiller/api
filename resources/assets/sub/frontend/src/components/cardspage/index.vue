@@ -15,6 +15,7 @@
     import Cards from './cards.vue'
     import Dictionary from './dictionary.vue'
     import introJs from 'intro.js/intro'
+    import store from "../../store";
 
     export default{
         data(){
@@ -61,6 +62,7 @@
                     (response) => {
                         if(response.status === 204)
                             this.cards.splice(data.index, 1)
+                            this.$store.commit('removeCard', data.card)
                     },
                     (response) => {
                         console.log(response.body)

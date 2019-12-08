@@ -68,6 +68,5 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     {
         $this->_em->remove($object);
         $this->_em->flush($object);
-        return true;
     }
 }

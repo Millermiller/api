@@ -14,6 +14,6 @@ interface BaseRepositoryInterface extends ObjectRepository
 
     public function update(object $entity, array $data);
 
-    public function delete($id);
+    public function delete($object);
 
 }

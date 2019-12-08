@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Models\Card;
+use App\Entities\User;
+use App\Entities\Card;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CardPolicy
@@ -13,7 +13,7 @@ class CardPolicy
     /**
      * Determine whether the user can view the card.
      *
-     * @param  \App\User $user
+     * @param User $user
      * @param Card $card
      * @return mixed
      */
@@ -25,7 +25,7 @@ class CardPolicy
     /**
      * Determine whether the user can create cards.
      *
-     * @param  \App\User  $user
+     * @param User $user
      * @return mixed
      */
     public function create(User $user)
@@ -36,7 +36,7 @@ class CardPolicy
     /**
      * Determine whether the user can update the card.
      *
-     * @param  \App\User $user
+     * @param User $user
      * @param Card $card
      * @return mixed
      */
@@ -48,13 +48,13 @@ class CardPolicy
     /**
      * Determine whether the user can delete the card.
      *
-     * @param  \App\User $user
+     * @param User $user
      * @param Card $card
      * @return mixed
      */
     public function delete(User $user, Card $card)
     {
-        return $user->hasAsset($card->asset_id) || $user->isAdmin();
+        return $user->hasAsset($card->getAsset()) || $user->isAdmin();
     }
 
     /**
