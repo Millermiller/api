@@ -37,13 +37,13 @@
                     </span>
                     <span :class="[ 'small',
                                 {
-                                    success: asset.result.result > 80,
-                                    warning: (asset.result.result > 50 && asset.result.result < 80),
-                                    danger: asset.result.result < 50
+                                    success: asset.result > 80,
+                                    warning: (asset.result > 50 && asset.result < 80),
+                                    danger: asset.result < 50
                                 }
                             ]"
                     >
-                    {{asset.result.result}}%
+                    {{asset.result}}%
                 </span>
                      <span :class="['text-muted', 'small']" style="padding-left: 15px;">
                      <i :class="['ion', 'ion-ios-browsers-outline', 'ion-small']"></i>
