@@ -42,6 +42,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     /**
      * @param object $entity
      * @param array $data
+     * @return object
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -54,6 +55,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
             }
         }
         $this->_em->flush($entity);
+        return $entity;
     }
 
     /**

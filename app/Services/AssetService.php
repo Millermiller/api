@@ -33,11 +33,22 @@ class AssetService
      */
     protected $resultRepository;
 
-    public function __construct(LanguageRepositoryInterface $languageRepository, AssetRepositoryInterface $assetsRepository, ResultRepositoryInterface $resultRepository)
+    /**
+     * @var AssetRepositoryInterface
+     */
+    private $assetRepository;
+
+    public function __construct(
+        LanguageRepositoryInterface $languageRepository,
+        AssetRepositoryInterface $assetsRepository,
+        ResultRepositoryInterface $resultRepository,
+        AssetRepositoryInterface $assetRepository
+    )
     {
         $this->languageRepository = $languageRepository;
         $this->assetsRepository = $assetsRepository;
         $this->resultRepository = $resultRepository;
+        $this->assetRepository = $assetRepository;
     }
 
     /**
@@ -187,14 +198,9 @@ class AssetService
      */
     public function getPersonalAssets(\App\Entities\User $user)
     {
-        return Asset::domain()->whereHas(
-            'result', function ($q) use ($uid) {
-            /** @var \Illuminate\Database\Eloquent\Builder $q */
-            $q->where('user_id', $uid);
-        })->with('cards', 'cards.word', 'cards.translate', 'result')
-            ->where('basic', 0)
-            ->orderBy('id')
-            ->get();
+        $language  = $this->languageRepository->get(config('app.lang'));
+
+        $this->assetRepository->getCreatedAssets($language, $user);
     }
 
     /**
@@ -236,5 +242,15 @@ class AssetService
         $result->setValue($resultValue);
 
         return $this->resultRepository->save($result);
+    }
+
+    /**
+     * @param Asset $asset
+     * @param array $data
+     * @return Asset
+     */
+    public function updateAsset(Asset $asset, array $data): Asset
+    {
+        return $this->assetsRepository->update($asset, $data);
     }
 }

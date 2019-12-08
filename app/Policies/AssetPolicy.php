@@ -51,7 +51,7 @@ class AssetPolicy
      */
     public function update(User $user, Asset $asset)
     {
-        //
+        return $user->hasAsset($asset);
     }
 
     /**

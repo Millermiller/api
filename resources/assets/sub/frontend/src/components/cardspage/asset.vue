@@ -108,8 +108,7 @@
                 this.$http.put('/asset/' + this.asset.id, {title: this.assetname}).then(
                     (response) => {
                         if(response.status === 200){
-                            this.$store.dispatch('reloadPersonal')
-
+                            this.$store.commit('patchPersonal', {asset: response.body, index: this.index})
                             if(this.asset.selected){
                                 this.$store.commit('setActivePersonalAssetName', this.assetname)
                             }

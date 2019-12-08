@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
+use App\Entities\Asset;
 use App\Services\{AssetService, CardService};
-use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\{JsonResponse, Request};
 
 /**
  * Class LearnController
@@ -31,11 +33,11 @@ class AssetController extends Controller
     }
 
     /**
-     * @param \App\Entities\Asset $asset
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param Asset $asset
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function show(\App\Entities\Asset $asset)
+    public function show(Asset $asset)
     {
         $this->authorize('view', $asset);
 
@@ -51,7 +53,7 @@ class AssetController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
@@ -60,18 +62,25 @@ class AssetController extends Controller
         return response()->json($asset, 201);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param Asset $asset
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function update(Request $request, Asset $asset)
     {
-        $asset = Asset::findOrFail($id);
-        $asset->update($request->all());
+        $this->authorize('update', $asset);
+
+        $asset = $this->assetService->updateAsset($asset, $request->toArray());
 
         return response()->json($asset, 200);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function destroy($id)
     {

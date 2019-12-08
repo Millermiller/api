@@ -79,6 +79,17 @@ export default {
         state.assets.personal.push(1, 0, asset)
     },
 
+    /**
+     *
+     * @param state
+     * @param data
+     * @param data.index
+     * @param data.asset
+     */
+    patchPersonal(state, data){
+        state.assets.personal[data.index] = data.asset
+    },
+
     resetError(state){
         state.errors = []
     },
