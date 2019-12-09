@@ -42,8 +42,8 @@ Route::group([
 
     Route::resource('/asset', 'AssetController');
 
-    Route::post('/favourite', 'FavouriteController@store');
-    Route::delete('/favourite/{id}', 'FavouriteController@delete');
+    Route::post('/favourite', 'FavouriteController@store')->name('add-favorite');
+    Route::delete('/favourite/{id}', 'FavouriteController@delete')->name('delete-favorite');
 
     Route::post('/result/{asset}', 'TestController@result');
     Route::post('/complete/{asset}', 'TestController@complete');
