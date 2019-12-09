@@ -47,7 +47,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
             ->setParameter('user', $user)
             ->setParameter('language', $language)
             ->getQuery()
-            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+            ->getResult('ColumnHydrator');
     }
 
 
