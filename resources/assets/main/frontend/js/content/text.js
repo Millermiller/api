@@ -1,5 +1,5 @@
 
-const text =  {
+export const text =  {
     "text": "Lísa hafði ekkert fyrir stafni og hún sat á bekknum við hlið systur sinnar. " +
    // "Það var sólbjartur sumardagur og hita gerði Lísu ákaflega lata.Hún var að hugsa um, hvort hún ætti að standa á fætur og búa til fíflafesti, en hún var svo löt, að hún nennti varla að tína fíflana. " +
     "Skyndilega hún sá hvíta kanínu, sem hljóp fram hjá.",

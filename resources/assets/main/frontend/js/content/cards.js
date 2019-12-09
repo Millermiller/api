@@ -1,4 +1,4 @@
-const cards = [
+export const cards = [
     {
         audio: '/audio/fyrir_stafni.mp3',
         show: false,

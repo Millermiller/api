@@ -1,6 +1,14 @@
-$(function(){
+import Vue from 'vue'
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.css'
+import RadialProgressBar from 'vue-radial-progress'
+import VueDragDrop from 'vue-drag-drop';
+import {cards} from "./content/cards";
+import {syns} from "./content/syns";
+import {text} from "./content/text";
 
-    Array.prototype.remove = function(value) {
+window.onload = function (e) {
+    Array.prototype.remove = function (value) {
         let idx = this.indexOf(value);
         if (idx !== -1) {
             return this.splice(idx, 1);
@@ -24,7 +32,7 @@ $(function(){
 
     Vue.use(VueAwesomeSwiper)
     Vue.use(RadialProgressBar)
-
+    Vue.use(VueDragDrop);
     new Vue({
         el: '#slider_view',
         components: {
@@ -34,9 +42,7 @@ $(function(){
         data: {
             activeClass: 'ion-ios-star',
             defaultClass: 'ion-ios-star-outline',
-            cards: [
-
-            ],
+            cards: [],
             swiperOptionA: {
                 pagination: {
                     el: '.swiper-pagination'
@@ -48,7 +54,7 @@ $(function(){
                 spaceBetween: 30,
                 centeredSlides: true,
                 slidesPerView: 1.5,
-                loop: true
+                loop: false
             }
         },
         computed: {
@@ -60,18 +66,18 @@ $(function(){
             onSetTranslate() {
                 console.log('onSetTranslate')
             },
-            showTranslate(index){
+            showTranslate(index) {
                 this.cards[index].show = !this.cards[index].show
             },
-            play(index){
+            play(index) {
                 //this.$refs[index].play()
-                $('#'+index).trigger("play");
+                $('#' + index).trigger("play");
             },
-            favourite(index){
+            favourite(index) {
                 this.cards[index].favourite = !this.cards[index].favourite
             }
         },
-        created: function() {
+        created: function () {
             this.cards = cards
             this.cards.shuffle()
         }
@@ -82,7 +88,7 @@ $(function(){
         components: {
             RadialProgressBar
         },
-        data:{
+        data: {
             title: '',
             cards: [],
             translates: [], // массив всех translates
@@ -99,10 +105,10 @@ $(function(){
             progress: 0,
         },
         methods: {
-            reload(){
+            reload() {
                 this.getAsset()
             },
-            getAsset(){
+            getAsset() {
                 this.cards = cards.slice()
                 this.loading = true;
                 this.quantity = this.cards.length
@@ -111,13 +117,15 @@ $(function(){
                 this.answers = 0
                 this.errors = []
                 this.percent = 0
-                this.cards.forEach((el) => { this.translates.push(el.value) })
+                this.cards.forEach((el) => {
+                    this.translates.push(el.value)
+                })
                 this.progress = 0
                 this.createTest()
                 this.result = 0
                 this.error = false
             },
-            check(variant){
+            check(variant) {
                 this.answers++
                 this.progress = (Math.floor((this.answers * 100) / this.quantity))
                 if (variant.correct) {
@@ -125,8 +133,7 @@ $(function(){
                     this.success++
                     this.percent = Math.floor((this.success * 100) / this.quantity)
                     this.next()
-                }
-                else {
+                } else {
                     this.error = true
                     this.fail++
                     this.errors.push(this.question) // todo: use store
@@ -135,7 +142,7 @@ $(function(){
                 }
 
             },
-            next(){
+            next() {
                 if (this.cards.length > 0)
                     this.createTest()
                 else {
@@ -143,21 +150,22 @@ $(function(){
                     this.variants = []
                     this.progress = 100
                     var self = this;
-                    setTimeout(function(){self.result = self.success}, 1000);
+                    setTimeout(function () {
+                        self.result = self.success
+                    }, 1000);
                 }
             },
-            createTest(){
-                console.log(this.cards)
+            createTest() {
                 this.question = this.cards.pop()
                 this.variants = [{'text': this.question.value, 'correct': true}]
                 let indexes = []
                 let translates = this.translates.slice()
                 translates.remove(this.question.value)
 
-                while (this.variants.length < ((this.quantity > 4 ) ? 4 : this.quantity)) {
+                while (this.variants.length < ((this.quantity > 4) ? 4 : this.quantity)) {
                     let l = Math.floor(Math.random() * translates.length)
 
-                    if(indexes.indexOf(l) != -1)
+                    if (indexes.indexOf(l) != -1)
                         continue
 
                     indexes.push(l)
@@ -198,7 +206,7 @@ $(function(){
             dictionaryLength: 0
         },
         computed: {
-            output(){
+            output() {
                 let c = 0;
                 let origs = []
                 this.dictionaryLength = this.dictionary.length;
@@ -207,7 +215,9 @@ $(function(){
                 this.inputWords.forEach((el) => {
                     el = el.toLowerCase()
                     if (el !== '' && el in this.dictionary)
-                        origs = origs.concat(this.dictionary[el].map((item) => { return item = item + '|' + el }))
+                        origs = origs.concat(this.dictionary[el].map((item) => {
+                            return item = item + '|' + el
+                        }))
                 })
 
                 origs = origs.filter((v, i, a) => a.indexOf(v) === i)
@@ -221,10 +231,10 @@ $(function(){
                     let result = this.text.computed.match(re);
 
                     this.text.computed = this.text.computed.replace(
-                        re, '$1<span class="success-text" tooltip='+tooltip+'>$2</span>$3'
+                        re, '$1<span class="success-text" tooltip=' + tooltip + '>$2</span>$3'
                     );
 
-                    if(result)
+                    if (result)
                         c += (word.split(' ').length) * result.length
                     else
                         c += word.split(' ').length
@@ -244,26 +254,26 @@ $(function(){
                 return this.text.computed
             }
         },
-        created(){
+        created() {
             this.loadText()
         },
         methods: {
-            loadText(){
+            loadText() {
                 this.clear()
-                this.text =  JSON.parse(JSON.stringify(text))
+                this.text = JSON.parse(JSON.stringify(text))
                 this.text.computed = this.text.text
                 this.dictionary = JSON.parse(JSON.stringify(syns))
             },
-            separate(){
+            separate() {
                 this.inputWords = this.input.replace(/\s+/g, " ").replace(/\./g, ' ').replace(/\,/g, '').trim().split(" ");
             },
-            showExtra(extra){
+            showExtra(extra) {
                 this.showedExtra = extra.orig
             },
-            clearExtra(){
+            clearExtra() {
                 this.showedExtra = ''
             },
-            clear(){
+            clear() {
                 this.input = ''
                 this.inputWords = []
                 this.progress = 0
@@ -273,7 +283,7 @@ $(function(){
 
     new Vue({
         el: '#puzzle_view',
-        data:{
+        data: {
             translate: 'Вдруг она увидела белого кролика',
             sentence: 'skyndilega hún sá á hvíta kanínu',
             words: [],
@@ -284,7 +294,7 @@ $(function(){
             words_count: 0,
             isRotate: false
         },
-        created(){
+        created() {
             this.words = this.sentence.split(" ")
             this.shufflewords = this.sentence.split(" ").shuffle()
             this.words_count = this.words.length
@@ -297,7 +307,7 @@ $(function(){
                 })
             }
         },
-        methods:{
+        methods: {
             handleDrop(toList, data) {
                 const fromList = data.list
 
@@ -306,15 +316,14 @@ $(function(){
                     fromList.splice(fromList.indexOf(data.item), 1);
                     this.success++
                     this.progress = Math.floor((this.success * 100) / this.words_count)
-                }
-                else{
+                } else {
                     toList.class = 'dragover'
                 }
             },
-            handleBackDrop(toList, data){
+            handleBackDrop(toList, data) {
                 const fromList = data.list;
 
-                if(data.zone){
+                if (data.zone) {
                     toList.push(data.item);
                     fromList.splice(fromList.indexOf(data.item), 1);
                     data.zone.class = 'dragover'
@@ -322,14 +331,14 @@ $(function(){
                     this.progress = Math.floor((this.success * 100) / this.words_count)
                 }
             },
-            handleDragEnter(ev, data){
+            handleDragEnter(ev, data) {
                 ev.class = 'dragenter'
             },
-            handleDragLeave(ev, data){
-                if(!ev.content.length)
+            handleDragLeave(ev, data) {
+                if (!ev.content.length)
                     ev.class = 'dragover'
             },
-            refresh(){
+            refresh() {
                 let self = this
                 this.isRotate = true
                 this.words = this.sentence.split(" ")
@@ -347,7 +356,7 @@ $(function(){
                     })
                 }
 
-                setTimeout(function(){
+                setTimeout(function () {
                     self.isRotate = false
                 }, 1000)
             }
@@ -355,14 +364,14 @@ $(function(){
     })
 
     $('#slider_view').boxLoader({
-        direction:"x",
+        direction: "x",
         position: "5%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "100%"
     });
     $('#test_view').boxLoader({
-        direction:"x",
+        direction: "x",
         position: "-5%",
         effect: "fadeIn",
         duration: "1s",
@@ -378,77 +387,77 @@ $(function(){
     });
     */
     $('#text_view').boxLoader({
-        direction:"x",
+        direction: "x",
         position: "-5%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "100%"
     });
     $('#mobileview').boxLoader({
-        direction:"x",
+        direction: "x",
         position: "5%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "100%"
     });
     $('.icelandic').boxLoader({
-        direction:"y",
+        direction: "y",
         position: "5%",
         effect: "fadeIn",
         duration: "0.3s",
         windowarea: "70%"
     });
     $('.sweden').boxLoader({
-        direction:"y",
+        direction: "y",
         position: "10%",
         effect: "fadeIn",
         duration: "0.5s",
         windowarea: "70%"
     });
     $('.norwegian').boxLoader({
-        direction:"y",
+        direction: "y",
         position: "15%",
         effect: "fadeIn",
         duration: "0.7s",
         windowarea: "70%"
     });
     $('.finnish').boxLoader({
-        direction:"y",
+        direction: "y",
         position: "20%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "70%"
     });
     $('.p-yel').boxLoader({
-        direction:"x",
+        direction: "x",
         position: "-5%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "70%"
     });
     $('.p-green').boxLoader({
-        direction:"y",
+        direction: "y",
         position: "20%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "70%"
     });
     $('.p-red').boxLoader({
-        direction:"y",
+        direction: "y",
         position: "20%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "70%"
     });
     $('.p-blue').boxLoader({
-        direction:"x",
+        direction: "x",
         position: "5%",
         effect: "fadeIn",
         duration: "1s",
         windowarea: "70%"
     });
-    $(window).scroll(function(){
+    $(window).scroll(function () {
         var offset = 255 - $(window).scrollTop();
-        $('.intro-message').css('color', 'rgb('+offset+', '+offset+', '+offset+')');
+        $('.intro-message').css('color', 'rgb(' + offset + ', ' + offset + ', ' + offset + ')');
     });
-})
+}

@@ -2,18 +2,7 @@
 
 @section('content')
 
-    <script src="{{ url('js/libs/vue.min.js') }}"></script>
-    <link href="{{ url('css/swiper.min.css') }}" rel="stylesheet">
-    <script src="{{ url('js/libs/swiper.min.js') }}"></script>
-    <script src="{{ url('js/libs/vue-awesome-swiper.js') }}"></script>
-    <script src="{{ url('js/libs/vue-radial-progress.min.js') }}"></script>
-    <script src="{{ url('js/libs/vue-drag-drop.browser.js') }}"></script>
-    <script src="{{ url('js/main.js') }}"></script>
-    <script src="{{ url('js/text.js') }}"></script>
-    <script src="{{ url('js/syns.js') }}"></script>
-    <script src="{{ url('js/cards.js') }}"></script>
-    <script src="{{ url('js/test.js') }}"></script>
-
+    <script src="{{ mix('/js/demo.min.js') }}"></script>
     <div class=" parallax-window" data-parallax="scroll" data-image-src="/img/head-bg.jpg">
         <div class="container">
             <div class="row">

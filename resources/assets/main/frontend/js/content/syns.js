@@ -1,4 +1,4 @@
-const syns = {
+export const syns = {
     "алисе": [
         "Lísa"
     ],
