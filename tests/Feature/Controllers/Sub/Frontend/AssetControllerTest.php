@@ -79,9 +79,27 @@ class AssetControllerTest extends TestCase
 
     public function testStore()
     {
-      //  $response = $this->post(route('sub_frontend::asset.store', ['domain' => 'is', 'title' => 'TEST CREATE ASSET']));
+        $user  = app('em')->getRepository(User::class)->find(1);
+        $this->actingAs($user);
 
-      //  $response->assertJsonStructure(['title', 'basic', 'level', 'lang', 'id']);
+        $response = $this->post(route('sub_frontend::asset.store', ['domain' => 'is', 'title' => 'TEST CREATE ASSET']));
+
+        $response->assertJsonStructure(
+            [
+                'id',
+                'title',
+                'type',
+                'level',
+                'result',
+                'basic',
+                'language_id',
+                'count',
+                'cards'
+            ]
+        );
+
+        $data = $response->decodeResponseJson();
+        $this->assertEquals('TEST CREATE ASSET', $data['title']);
     }
 
     public function testUpdate()

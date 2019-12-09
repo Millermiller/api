@@ -163,7 +163,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     /**
      * @var \Doctrine\Common\Collections\Collection|Asset[]
      *
-     * @ManyToMany(targetEntity="Asset", inversedBy="users")
+     * @ManyToMany(targetEntity="Asset", inversedBy="users", cascade={"persist"})
      * @JoinTable(name="assets_users")
      */
     private $assets;
@@ -430,6 +430,17 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @param Asset $asset
+     * @return $this
+     */
+    public function addAsset(Asset $asset): User
+    {
+        $this->assets->add($asset);
+
+        return $this;
+    }
+
+    /**
+     * @param Asset $asset
      * @return bool
      */
     public function hasAsset(Asset $asset): bool
@@ -454,5 +465,13 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
             }
         }
         return false;
+    }
+
+    /**
+     *
+     */
+    public function incrementAssetCounter(): void
+    {
+        $this->assetsCreated++;
     }
 }

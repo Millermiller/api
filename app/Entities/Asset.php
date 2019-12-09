@@ -3,6 +3,7 @@
 namespace  App\Entities;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
@@ -28,15 +29,18 @@ class Asset implements JsonSerializable, UrlRoutable
      * @param int $basic
      * @param int $type
      * @param int|null $favorite
-     * @param string|null $lang
+     * @param string $language_id
      */
-    public function __construct(string $title, int $basic, int $type, ?int $favorite, ?string $language_id)
+    public function __construct(string $title, int $basic, int $type, ?int $favorite, Language $language)
     {
         $this->title = $title;
         $this->basic = $basic;
         $this->type = $type;
         $this->favorite = $favorite;
-        $this->languageId = $language_id;
+        $this->language = $language;
+        $this->users = New ArrayCollection();
+        $this->results = New ArrayCollection();
+        $this->cards = New ArrayCollection();
     }
 
     /**
@@ -74,7 +78,7 @@ class Asset implements JsonSerializable, UrlRoutable
      *
      * @ORM\Column(name="level", type="integer", nullable=false)
      */
-    private $level;
+    private $level = 1;
 
     /**
      * @var int|null
@@ -84,9 +88,9 @@ class Asset implements JsonSerializable, UrlRoutable
     private $favorite;
 
     /**
-     * @var string|null
+     * @var int
      *
-     * @ORM\Column(name="language_id", type="integer", length=50, nullable=true)
+     * @ORM\Column(name="language_id", type="integer", length=50)
      */
     private $languageId;
 
@@ -279,10 +283,10 @@ class Asset implements JsonSerializable, UrlRoutable
             'title' => $this->title,
             'type' => $this->type,
             'level' => $this->level,
-            'result' => $this->results->toArray()[0]->getValue(),
+            'result' => $this->results->count() ?  $this->results->toArray()[0]->getValue() : 0,
             'basic' => $this->basic,
             'language_id' => $this->languageId,
-            'count' => $this->cards->count(),
+            'count' => $this->cards ? $this->cards->count() : 0,
             'cards' => [],
         );
     }
@@ -319,5 +323,14 @@ class Asset implements JsonSerializable, UrlRoutable
     public static function getRouteKeyName(): string
     {
         return 'id';
+    }
+
+    /**
+     * @param User $user
+     */
+    public function addUser($user): void
+    {
+        $user->getAssets()->add($this);
+        $this->users->add($user);
     }
 }

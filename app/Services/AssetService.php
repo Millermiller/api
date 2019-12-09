@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use App\Entities\{Result, User, Asset};
 use App\Events\{AssetCreated, AssetDelete, NextLevel};
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Result\ResultRepositoryInterface;
 use Auth;
-use DB;
-use Illuminate\Http\Request;
 
 /**
  * Class AssetService
@@ -39,41 +39,47 @@ class AssetService
      */
     private $assetRepository;
 
+    /**
+     * @var AssetRepositoryInterface
+     */
+    private $userRepository;
+
     public function __construct(
         LanguageRepositoryInterface $languageRepository,
         AssetRepositoryInterface $assetsRepository,
         ResultRepositoryInterface $resultRepository,
-        AssetRepositoryInterface $assetRepository
+        AssetRepositoryInterface $assetRepository,
+        AssetRepositoryInterface $userRepository
     )
     {
         $this->languageRepository = $languageRepository;
         $this->assetsRepository = $assetsRepository;
         $this->resultRepository = $resultRepository;
         $this->assetRepository = $assetRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
-     * @param Request $request
-     * @return Asset|\Illuminate\Database\Eloquent\Model
+     * @param array $data
+     * @return Asset|Model
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
-    public function create(Request $request)
+    public function create(array $data)
     {
-        $asset = Asset::create([
-            'title' => $request->get('title'),
-            'basic' => false,
-            'level' => 0,
-            'lang' => config('app.lang')
-        ]);
+        $language = $this->languageRepository->get(config('app.lang'));
 
-        Auth::user()->increment('assets_created');
+        $user = Auth::user();
 
-        Result::create([
-            'asset_id' => $asset->id,
-            'user_id' => Auth::user()->id,
-            'lang' => $asset->lang
-        ]);
+        $asset = new Asset($data['title'], 0, Asset::TYPE_PERSONAL, 0, $language);
+        $result = new Result($asset, $user, $language);
+        $user->incrementAssetCounter();
 
-        event(new AssetCreated(Auth::user(), $asset));
+        app('em')->persist($asset);
+        app('em')->persist($result);
+        app('em')->flush();
+
+      //  event(new AssetCreated(Auth::user(), $asset));
 
         return $asset;
     }

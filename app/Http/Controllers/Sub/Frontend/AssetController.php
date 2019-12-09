@@ -63,7 +63,7 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        $asset = $this->assetService->create($request);
+        $asset = $this->assetService->create($request->toArray());
 
         return response()->json($asset, 201);
     }
