@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Sub\Frontend;
 use App\Http\Controllers\Controller;
 use App\Entities\Asset;
 use App\Services\{AssetService, CardService};
-use Exception;
+use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
 
@@ -60,6 +60,8 @@ class AssetController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function store(Request $request)
     {
@@ -84,13 +86,15 @@ class AssetController extends Controller
     }
 
     /**
-     * @param $id
+     * @param Asset $asset
      * @return JsonResponse
-     * @throws Exception
+     * @throws AuthorizationException
      */
-    public function destroy($id)
+    public function destroy(Asset $asset)
     {
-        $this->assetService->delete($id);
+        $this->authorize('delete', $asset);
+
+        $this->assetService->delete($asset);
 
         return response()->json(null, 204);
     }

@@ -1,5 +1,6 @@
 <template>
     <el-row @click.native="loadAsset"
+            v-loading.body="loading"
          :class="['list-item', 'pointer', 'open',
          {'selected': asset.selected,'muted': (!isActive && asset.title !== 'Избранное') }
          ]">
@@ -66,7 +67,8 @@
         data(){
             return {
                 edited: false,
-                assetname: ''
+                assetname: '',
+                loading: false
             }
         },
         computed: {
@@ -82,6 +84,7 @@
                         cancelButtonText: 'Нет',
                         type: 'warning'
                     }).then(() => {
+                        this.loading = true
                         this.$eventHub.$emit('removeItem', {asset: this.asset, index: this.index})
                     }).catch(() => {
                         //

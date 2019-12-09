@@ -36,19 +36,6 @@ export default{
         )
     },
 
-    removePersonalAsset(context, data){
-
-        Vue.http.delete('/asset/' + data.asset.id).then(
-            (response) => {
-                if(response.status === 204)
-                    context.commit('removePersonal', data.index)
-            },
-            (response) => {
-                console.log(response.body)
-            }
-        )
-    },
-
     addPersonalAsset(context, title){
 
         Vue.http.post('/asset', {title: title}).then(
@@ -60,7 +47,8 @@ export default{
                             favorite:0,
                             id: response.body.id,
                             level: 0,
-                            result: {},
+                            result: 0,
+                            count: 0,
                             title: response.body.title,
                             cards: [],
                             selected: true

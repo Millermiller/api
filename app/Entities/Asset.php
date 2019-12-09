@@ -252,7 +252,7 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @var Collection|Card[]
      *
-     * @ORM\OneToMany(targetEntity="Card", mappedBy="asset")
+     * @ORM\OneToMany(targetEntity="Card", mappedBy="asset", cascade="remove")
      *
      */
     private $cards;
@@ -260,7 +260,7 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @var Collection|Result[]
      *
-     * @ORM\OneToMany(targetEntity="Result", mappedBy="asset")
+     * @ORM\OneToMany(targetEntity="Result", mappedBy="asset", cascade="remove")
      *
      */
     private $results;

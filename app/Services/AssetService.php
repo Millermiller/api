@@ -85,15 +85,15 @@ class AssetService
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @param Asset $asset
+     * @return void
      */
-    public function delete($id)
+    public function delete(Asset $asset)
     {
-        event(new AssetDelete(Auth::user(), Asset::find($id)->first()));
+        $this->assetsRepository->delete($asset);
 
-        return response()->json(['success' => Asset::deleteAsset($id)]);
+        event(new AssetDelete(Auth::user(), $asset));
+
     }
 
     /**

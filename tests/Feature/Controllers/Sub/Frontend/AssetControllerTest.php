@@ -120,9 +120,20 @@ class AssetControllerTest extends TestCase
     public function testDestroy()
     {
         $asset = app('em')->getRepository(Asset::class)->find(1);
+        $user  = app('em')->getRepository(User::class)->find(1);
+        $this->actingAs($user);
 
         $response = $this->delete(route('sub_frontend::asset.destroy', ['domain' => 'is', 'asset' => $asset->getId()]));
 
         $this->assertEquals(204, $response->getStatusCode());
+    }
+
+    public function testDestroyUnauthorized()
+    {
+        $asset = app('em')->getRepository(Asset::class)->find(1);
+
+        $response = $this->delete(route('sub_frontend::asset.destroy', ['domain' => 'is', 'asset' => $asset->getId()]));
+
+        $this->assertEquals(403, $response->getStatusCode());
     }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Events;
 
-use App\Entities\Asset;
-use App\Entities\User;
+use App\Entities\{User, Asset};
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

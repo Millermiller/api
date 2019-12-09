@@ -76,7 +76,7 @@ export default {
     },
 
     addPersonal(state, asset){
-        state.assets.personal.push(1, 0, asset)
+        state.assets.personal.push(asset)
     },
 
     /**

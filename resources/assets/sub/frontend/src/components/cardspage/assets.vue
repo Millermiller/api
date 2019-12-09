@@ -31,6 +31,7 @@
 <script>
     import Asset from './asset.vue'
     import Scrollbar from 'smooth-scrollbar'
+    import Vue from "vue";
     export default{
         data(){
             return{}
@@ -48,13 +49,32 @@
                         inputErrorMessage: 'Введите название'
                     }).then(input => {
                         this.$store.dispatch('addPersonalAsset', input.value)
+                        this.$notify.success({
+                            title: 'Словарь создан',
+                            message: input.value,
+                            duration: 4000
+                        });
                     }).catch(() => {
                         //
                     });
                 }
             },
             remove(data){
-                this.$store.dispatch('removePersonalAsset', data)
+                Vue.http.delete('/asset/' + data.asset.id).then(
+                    (response) => {
+                        if(response.status === 204){
+                            this.$notify.success({
+                                title: 'Словарь удален',
+                                message: data.asset.title,
+                                duration: 4000
+                            });
+                        }
+                        this.$store.commit('removePersonal', data.index)
+                    },
+                    (response) => {
+                        console.log(response.body)
+                    }
+                )
             }
         },
         components: {
