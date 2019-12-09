@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Created by PhpStorm.
@@ -16,6 +17,9 @@ use Auth;
  */
 class LogoutController extends Controller {
 
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         setcookie('token', 'w', time()-1000, '/', '.'.config('app.DOMAIN'));

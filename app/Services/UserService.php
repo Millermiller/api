@@ -4,7 +4,8 @@ namespace App\Services;
 
 use App\Repositories\Intro\IntroRepositoryInterface;
 use Carbon\Carbon;
-use App\Entities\{User, Asset};
+use Illuminate\Contracts\Auth\Authenticatable;
+use App\Entities\{Language, User, Asset};
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Plan\PlanRepositoryInterface;
@@ -18,8 +19,6 @@ use Auth;
  */
 class UserService
 {
-    protected $user;
-
     /**
      * @var AssetService
      */
@@ -100,10 +99,9 @@ class UserService
     {
         $plan = $this->planRepository->get(1);
 
-        /** @var \App\Entities\Language[] $languages */
+        /** @var Language[] $languages */
         $languages = $this->languageRepository->all();
 
-        /** @var \App\Entities\User $user */
         $user = new User();
         $user->setLogin($data['login']);
         $user->setEmail($data['email']);
@@ -139,11 +137,10 @@ class UserService
     }
 
     /**
-     * @param \Illuminate\Contracts\Auth\Authenticatable|User $user
+     * @param Authenticatable|User $user
      * @return array
-     * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getState(\Illuminate\Contracts\Auth\Authenticatable $user)
+    public function getState(Authenticatable $user)
     {
         $language = $this->languageRepository->get(config('app.lang'));
 
@@ -164,7 +161,7 @@ class UserService
     }
 
     /**
-     * @return array|\Illuminate\Contracts\Auth\Authenticatable|null
+     * @return array|Authenticatable|null
      */
     public function getInfo()
     {
@@ -179,6 +176,9 @@ class UserService
         ];
     }
 
+    /**
+     * @param User $user
+     */
     public function updatePlan(User $user)
     {
         if($user->getActiveTo() < Carbon::now()){
@@ -189,7 +189,6 @@ class UserService
 
     /**
      * @param $request
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function updateUserInfo(array $request): void
     {

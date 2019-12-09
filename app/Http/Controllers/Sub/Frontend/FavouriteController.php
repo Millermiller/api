@@ -3,18 +3,28 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
-use App\Services\AssetService;
-use App\Services\FavouriteService;
-use Auth;
-use Illuminate\Http\Request;
+use App\Services\{AssetService, FavouriteService};
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Illuminate\Http\{JsonResponse, Request};
 
 class FavouriteController extends Controller
 {
+    /**
+     * @var FavouriteService
+     */
     protected $favouriteService;
 
+    /**
+     * @var AssetService
+     */
     protected $assetService;
 
+    /**
+     * FavouriteController constructor.
+     * @param AssetService $assetService
+     * @param FavouriteService $favouriteService
+     */
     public function __construct(AssetService $assetService, FavouriteService $favouriteService)
     {
         $this->favouriteService = $favouriteService;
@@ -22,28 +32,24 @@ class FavouriteController extends Controller
         $this->assetService = $assetService;
     }
 
-    public function getFavourites()
-    {
-        $favorites = $this->assetService->getAssetsByType(Asset::TYPE_FAVORITES, Auth::user()->id);
-
-        return response()->json($favorites);
-    }
-
-    public function getFavourite()
-    {
-        $cards =  $this->favouriteService->getByUser(Auth::user()->id);
-
-        return response()->json($cards);
-    }
-
-    public function addToFavourite(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function store(Request $request)
     {
         $card = $this->favouriteService->create($request);
 
         return response()->json($card, 201);
     }
 
-    public function deleteFavourite($id)
+    /**
+     * @param $id
+     * @return JsonResponse
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete($id)
     {
         $this->favouriteService->delete($id);
 

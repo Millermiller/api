@@ -2,20 +2,20 @@
 
 namespace App\Http\Middleware;
 
-use App\User;
 use Auth;
-use Carbon\Carbon;
 use Closure;
+use Illuminate\Http\Request;
 
-use DB;
-use Illuminate\Support\Facades\Cookie;
-
+/**
+ * Class CheckAuth
+ * @package App\Http\Middleware
+ */
 class CheckAuth
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  \Closure  $next
      * @return mixed
      */

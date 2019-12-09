@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use App\Entities\{Result, User, Asset};
 use App\Events\{AssetCreated, AssetDelete, NextLevel};
 use App\Repositories\Asset\AssetRepositoryInterface;
@@ -149,58 +150,16 @@ class AssetService
         return $assets;
     }
 
-    /**
-     * Получить наборы карточек для юзера
-     *
-     * @param  int $user_id int User Id
-     * @return array
-     */
-    public function getAssets($user_id)
-    {
-        return DB::select('
-                                 SELECT COUNT(wta.word_id) as num, a.title, a.id, a.basic, a.level, atu.result
-                                 FROM assets AS a
-                                 LEFT JOIN assets_to_users as atu
-                                    ON a.id = atu.asset_id
-                                 LEFT JOIN cards AS wta
-                                    ON a.id = wta.asset_id
-                                 WHERE user_id = ?
-                                -- AND a.basic IN(1)
-                                 GROUP BY a.id
-                                 ORDER BY a.level
-                                 ', [$user_id]);
-    }
 
     /**
-     * @param int $uid User Id
+     * @param User $user
      * @return array
      */
-    static function getUserAssets($uid)
-    {
-        return DB::select(
-            'select a.id, a.title, a.basic, a.level, a.favorite, 
-		            atu.result, count(wta.id) as count
-              from assets_to_users as atu
-                join assets as a
-                  on atu.asset_id = a.id
-         	    left join cards as wta
-         		  on wta.asset_id = a.id
-                where atu.user_id = ?
-                  and a.basic = 0
-                group by a.id
-                order by a.favorite desc', [$uid]
-        );
-    }
-
-    /**
-     * @param $uid
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getPersonalAssets(\App\Entities\User $user)
+    public function getPersonalAssets(User $user)
     {
         $language  = $this->languageRepository->get(config('app.lang'));
 
-        $this->assetRepository->getCreatedAssets($language, $user);
+        return $this->assetRepository->getCreatedAssets($language, $user);
     }
 
     /**

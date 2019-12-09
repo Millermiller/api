@@ -21,10 +21,21 @@ use Illuminate\Http\{JsonResponse, Request};
  */
 class AssetController extends Controller
 {
+    /**
+     * @var CardService
+     */
     protected $cardService;
 
+    /**
+     * @var AssetService
+     */
     protected $assetService;
 
+    /**
+     * AssetController constructor.
+     * @param AssetService $assetService
+     * @param CardService $cardService
+     */
     public function __construct(AssetService $assetService, CardService $cardService)
     {
         $this->assetService = $assetService;

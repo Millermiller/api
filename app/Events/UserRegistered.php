@@ -10,7 +10,9 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 
 class UserRegistered
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @var array
@@ -31,7 +33,6 @@ class UserRegistered
     public function __construct(User $user, Array $data)
     {
         $this->user = $user;
-
         $this->data = $data;
     }
 

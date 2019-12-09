@@ -1,16 +1,22 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Repositories\User\UserRepositoryInterface;
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class FileService
 {
+    /**
+     * @var UserRepositoryInterface
+     */
     private $userRepository;
 
+    /**
+     * FileService constructor.
+     * @param UserRepositoryInterface $userRepository
+     */
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;

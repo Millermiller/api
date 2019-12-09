@@ -1,21 +1,27 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Entities\User;
 use Exception;
-use \Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Hashing\Hasher;
 
+/**
+ * Class PasswordService
+ * @package App\Services
+ */
 class PasswordService
 {
+    /**
+     * @var Hasher
+     */
     private $hasher;
-    private $passwordStrengthValidator;
 
     /**
      * @param Hasher $hasher
      */
-    public function __construct( Hasher $hasher) {
+    public function __construct(Hasher $hasher)
+    {
         $this->hasher = $hasher;
     }
 

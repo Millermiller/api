@@ -2,18 +2,19 @@
 
 namespace App\Services;
 
-use App\Entities\Language;
-use App\Entities\Result;
-use App\Entities\Text;
-use App\Entities\User;
+use PDO;
+use Auth;
+use App\Entities\{Language, Result, Text, User};
 use App\Events\NextTextLevel;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Text\TextRepositoryInterface;
-use Auth;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Contracts\Auth\Authenticatable;
-use PDO;
 
+/**
+ * Class TextService
+ * @package App\Services
+ */
 class TextService
 {
     /**
@@ -26,18 +27,20 @@ class TextService
      */
     private $languageRepository;
 
-    public function __construct(
-        TextRepositoryInterface $textRepository,
-        LanguageRepositoryInterface $languageRepository
-    ) {
+    /**
+     * TextService constructor.
+     * @param TextRepositoryInterface $textRepository
+     * @param LanguageRepositoryInterface $languageRepository
+     */
+    public function __construct(TextRepositoryInterface $textRepository, LanguageRepositoryInterface $languageRepository)
+    {
         $this->textRepository = $textRepository;
         $this->languageRepository = $languageRepository;
     }
 
     /**
      * @param User $user
-     * @return mixed
-     * @throws \Doctrine\ORM\Query\QueryException
+     * @return array
      */
     public function getTextsForUser(User $user)
     {

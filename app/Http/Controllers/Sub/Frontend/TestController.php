@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
+use Auth;
 use App\Http\Controllers\Controller;
 use App\Entities\Asset;
 use App\Services\{AssetService, CardService};
-use Auth;
 use Doctrine\ORM\NoResultException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
@@ -32,6 +32,11 @@ class TestController extends Controller
      */
     private $assetService;
 
+    /**
+     * TestController constructor.
+     * @param CardService $cardService
+     * @param AssetService $assetService
+     */
     public function __construct(CardService $cardService, AssetService $assetService)
     {
         $this->cardService = $cardService;

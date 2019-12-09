@@ -57,9 +57,7 @@ class ApiService
         $assets = [];
 
         $activeArray  = $this->resultRepository->getActiveIds($user, $language);
-
         $personaldata = $this->assetsRepository->getPersonalAssets($language, $user);
-
         $publicdata   = $this->assetsRepository->getPublicAssets($language);
 
         $data = $publicdata + $personaldata;

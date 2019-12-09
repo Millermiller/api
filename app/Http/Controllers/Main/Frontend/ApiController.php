@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Services\ApiService;
+use Illuminate\Http\JsonResponse;
 use Validator;
 
 /**
@@ -18,13 +19,23 @@ use Validator;
  */
 class ApiController extends Controller
 {
+    /**
+     * @var ApiService
+     */
     protected $apiService;
 
+    /**
+     * ApiController constructor.
+     * @param ApiService $apiService
+     */
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function languages()
     {
         $languages = $this->apiService->getLanguagesList();
@@ -34,8 +45,7 @@ class ApiController extends Controller
 
     /**
      * @param $language
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @return JsonResponse
      */
     public function assets($language)
     {

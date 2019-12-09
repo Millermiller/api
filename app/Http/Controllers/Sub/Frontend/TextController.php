@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
+use Auth;
 use App\Entities\{Text};
 use App\Http\Controllers\Controller;
 use App\Services\TextService;
-use Auth;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\NoResultException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -23,6 +23,10 @@ class TextController extends Controller
      */
     private $textService;
 
+    /**
+     * TextController constructor.
+     * @param TextService $textService
+     */
     public function __construct(TextService $textService)
     {
         $this->textService = $textService;

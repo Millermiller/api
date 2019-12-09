@@ -34,7 +34,7 @@ Route::group([
     Route::get('/words', 'IndexController@getWords');
     Route::get('/sentences', 'IndexController@getSentences');
     Route::get('/personal', 'IndexController@getPersonal');
-    Route::get('/userassets', 'IndexController@getUserAssets');
+
 
     Route::post('/feedback', 'IndexController@feedback');
 
@@ -42,9 +42,8 @@ Route::group([
 
     Route::resource('/asset', 'AssetController');
 
-    Route::get('/favourites', 'FavouriteController@getFavourites');
-    Route::post('/favourite', 'FavouriteController@addToFavourite');
-    Route::delete('/favourite/{id}', 'FavouriteController@deleteFavourite');
+    Route::post('/favourite', 'FavouriteController@store');
+    Route::delete('/favourite/{id}', 'FavouriteController@delete');
 
     Route::post('/result/{asset}', 'TestController@result');
     Route::post('/complete/{asset}', 'TestController@complete');

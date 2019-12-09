@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\Models\Message;
-use App\User;
+use Illuminate\Broadcasting\Channel;
+use App\Entities\{User, Message};
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -11,7 +11,9 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 
 class MessageRecieved extends Event
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @var User
@@ -26,6 +28,7 @@ class MessageRecieved extends Event
     /**
      * Create a new event instance.
      *
+     * @param User $user
      * @param Message $message
      */
     public function __construct(User $user, Message $message)
@@ -37,7 +40,7 @@ class MessageRecieved extends Event
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {

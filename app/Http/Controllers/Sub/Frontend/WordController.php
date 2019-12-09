@@ -3,15 +3,26 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateWordRequest;
-use App\Http\Requests\SearchRequest;
+use App\Http\Requests\{SearchRequest, CreateWordRequest};
 use App\Services\WordService;
-use Illuminate\Http\Request;
+use Doctrine\DBAL\DBALException;
+use Illuminate\Http\{Request, JsonResponse};
 
+/**
+ * Class WordController
+ * @package App\Http\Controllers\Sub\Frontend
+ */
 class WordController extends Controller
 {
+    /**
+     * @var WordService
+     */
     protected $wordService;
 
+    /**
+     * WordController constructor.
+     * @param WordService $wordService
+     */
     public function __construct(WordService $wordService)
     {
         $this->wordService = $wordService;
@@ -20,7 +31,7 @@ class WordController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -31,7 +42,7 @@ class WordController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateWordRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(CreateWordRequest $request)
     {
@@ -43,8 +54,8 @@ class WordController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
     public function show($id)
     {
@@ -54,9 +65,9 @@ class WordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return void
      */
     public function update(Request $request, $id)
     {
@@ -66,14 +77,19 @@ class WordController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
     public function destroy($id)
     {
         //
     }
 
+    /**
+     * @param SearchRequest $request
+     * @return JsonResponse
+     * @throws DBALException
+     */
     public function search(SearchRequest $request)
     {
         $words = $this->wordService->translate($request);

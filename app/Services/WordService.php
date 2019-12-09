@@ -23,6 +23,10 @@ class WordService
      */
     private $translateRepository;
 
+    /**
+     * WordService constructor.
+     * @param TranslateRepositoryInterface $translateRepository
+     */
     public function __construct(TranslateRepositoryInterface $translateRepository)
     {
         $this->translateRepository = $translateRepository;

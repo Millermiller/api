@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use App\Http\Requests\{ProfileRequest, UploadAvatarRequest};
 use App\Services\{FileService, UserService};
 use Auth;
@@ -41,7 +45,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * @return array|Factory|View|mixed
      */
     public function index()
     {
@@ -51,7 +55,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * @return array|Factory|View|mixed
      */
     public function settings()
     {
@@ -75,8 +79,8 @@ class ProfileController extends Controller
 
     /**
      * @param ProfileRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return RedirectResponse
+     * @throws GuzzleException
      */
     public function edit(ProfileRequest $request)
     {
@@ -89,7 +93,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function log()
     {

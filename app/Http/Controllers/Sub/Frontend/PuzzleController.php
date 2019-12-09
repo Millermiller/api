@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use App\Repositories\Puzzle\PuzzleRepositoryInterface;
 use Auth;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Illuminate\Http\JsonResponse;
-use \Illuminate\Http\Request;
+use Illuminate\Http\{JsonResponse, Request};
+use App\Repositories\Puzzle\PuzzleRepositoryInterface;
 
 /**
  * Class PuzzleController
@@ -20,6 +19,9 @@ use \Illuminate\Http\Request;
  */
 class PuzzleController
 {
+    /**
+     * @var PuzzleRepositoryInterface
+     */
     private $puzzleRepository;
 
     /**
@@ -51,7 +53,6 @@ class PuzzleController
      */
     public function update(Request $request, $id)
     {
-        /** @var \App\Entities\Puzzle $puzzle */
         $puzzle = $this->puzzleRepository->get($id);
 
         Auth::user()->addPuzzle($puzzle);
