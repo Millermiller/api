@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Text;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use App\Entities\{Text, Language, TextsUsers, User};
 use App\Repositories\BaseRepository;
 use Doctrine\ORM\AbstractQuery;
@@ -11,8 +13,8 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
     /**
      * @param Language $language
      * @return Text
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function getFirstText(Language $language): Text
     {
@@ -76,5 +78,27 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
             ->orderBy('t.level', 'asc')
             ->getQuery()
             ->getResult();
+    }
+
+
+    /**
+     * @param Text $text
+     * @param Language $language
+     * @return Text
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getNextText(Text $text, Language $language): Text
+    {
+        $q = $this->_em->createQueryBuilder();
+
+        return $q->select('t')
+            ->from($this->getEntityName(), 't')
+            ->where('a.level = :level')
+            ->andWhere('a.language = :language')
+            ->setParameter('level', $text->getLevel() + 1)
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleResult();
     }
 }

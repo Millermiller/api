@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Entities\{Asset, Card};
-use App\Policies\{AssetPolicy, CardPolicy};
+use App\Entities\{Asset, Card, Text};
+use App\Policies\{AssetPolicy, CardPolicy, textPolicy};
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 
@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Card::class => CardPolicy::class,
         Asset::class => AssetPolicy::class,
+        Text::class => TextPolicy::class,
     ];
 
     /**

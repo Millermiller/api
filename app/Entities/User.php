@@ -6,8 +6,7 @@ use App\Entities\Traits\UsesPasswordGrant;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\{JoinTable, ManyToMany};
 use Image;
 use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
@@ -25,7 +24,11 @@ use LaravelDoctrine\ORM\Notifications\Notifiable;
  */
 class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable
 {
-    use Authenticatable, CanResetPassword, Notifiable, HasApiTokens, UsesPasswordGrant;
+    use Authenticatable;
+    use CanResetPassword;
+    use HasApiTokens;
+    use Notifiable;
+    use UsesPasswordGrant;
 
     const ROLE_ADMIN = 1;
     const ROLE_USER = 0;
@@ -433,6 +436,20 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     {
         foreach ($this->assets as $a) {
             if ($a->getId() === $asset->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param Text $text
+     * @return bool
+     */
+    public function hasText(Text $text): bool
+    {
+        foreach ($this->texts as $t) {
+            if ($t->getId() === $text->getId()) {
                 return true;
             }
         }

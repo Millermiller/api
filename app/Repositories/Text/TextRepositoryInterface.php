@@ -35,4 +35,11 @@ interface TextRepositoryInterface extends BaseRepositoryInterface
      * @return array
      */
     public function getByLanguage(Language $language): array;
+
+    /**
+     * @param Text $text
+     * @param Language $language
+     * @return Text
+     */
+    public function getNextText(Text $text, Language $language): Text;
 }

@@ -9,7 +9,7 @@
                     </el-card>
                     <el-collapse id="helpblock">
                         <el-collapse-item title="Помощь">
-                            <template v-for="extra in text.text_extra">
+                            <template v-for="extra in text.extra">
                                 <el-col :span="12">
                                     <p class="pointer"
                                        v-on:mouseover="showExtra(extra)"
@@ -62,9 +62,10 @@
                     'id': 0,
                     'published': 1,
                     'text': '',
-                    'text_extra': [],
+                    'extra': [],
+                    'synonims': [],
                     'title': '',
-                    'words_count': 0,
+                    'count': 0,
                 },
                 dictionary: {},
                 input: '',
@@ -110,7 +111,7 @@
                     )
                 }
 
-                this.progress = Math.floor((c * 100) / this.text.words_count);
+                this.progress = Math.floor((c * 100) / this.text.count);
 
                 this.$Progress.set(this.progress)
 
@@ -126,7 +127,7 @@
             loadText(id){
                 this.$http.get('/text/' + id).then(
                     (response) => {
-                        if(response.body.success === false){
+                        if(response.status !== 200){
                             this.$notify.error({
                                 title: 'Ошибка',
                                 message: response.body.message,
@@ -134,26 +135,16 @@
                             });
                         } else {
                             this.clear()
-                            this.text = response.body.text
+                            this.text = response.body
                             this.text.computed = this.text.text
                             this.titleChunk = this.text.title
-                            this.loadSyns(id)
+                            this.dictionary = this.text.synonims
                             this.nextTextId = 0
                             this.showSuccess = false
                         }
                     },
                     (response) => {
                         console.log(response)
-                    }
-                )
-            },
-            loadSyns(id){
-                this.$http.get('/syns/' + id).then(
-                    (response) => {
-                        this.dictionary = response.body.sentences
-                    },
-                    (responce) => {
-                        console.log(responce)
                     }
                 )
             },

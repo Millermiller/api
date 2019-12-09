@@ -54,7 +54,7 @@ Route::group([
     Route::get('/translate', 'WordController@search');
     Route::resource('/word', 'WordController', ['except' => ['delete', 'update']]);
 
-    Route::get('/text/{id}', 'TextController@getText');
+    Route::resource('/text', 'TextController')->only(['show']);
     Route::get('/syns/{id}', 'TextController@getSyns');
     Route::post('/nextTLevel', 'TextController@nextLevel');
 

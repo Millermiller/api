@@ -6,6 +6,8 @@ use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
+use JsonSerializable;
+use WordInText;
 
 /**
  * Text
@@ -13,7 +15,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
  * @ORM\Table(name="text", indexes={@ORM\Index(name="lang", columns={"lang"}), @ORM\Index(name="title", columns={"title"})})
  * @ORM\Entity
  */
-class Text
+class Text implements JsonSerializable
 {
     /**
      * @return string
@@ -170,4 +172,56 @@ class Text
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;
+
+    /**
+     * @var Collection|TextExtra[]
+     *
+     * @ORM\OneToMany(targetEntity="TextExtra", mappedBy="text")
+     *
+     */
+    private $extra;
+
+    /**
+     * @var Collection|WordInText[]
+     *
+     * @ORM\OneToMany(targetEntity="WordInText", mappedBy="text")
+     *
+     */
+    private $words;
+
+    /**
+     * @var array
+     */
+    private $synonims;
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'language' => $this->language,
+            'level' => $this->level,
+            'description' => $this->description,
+            'text' => $this->text,
+            'image' => $this->image,
+            'count' => $this->words->count(),
+            'extra' => $this->extra->toArray(),
+            'synonims' => $this->synonims,
+        ];
+    }
+
+    public function setSynonims(array $data): void
+    {
+        $this->synonims = $data;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
 }
