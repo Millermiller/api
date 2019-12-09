@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'touchUser' =>  \App\Http\Middleware\TouchUser::class,
         'checkDomain' =>  \App\Http\Middleware\CheckDomain::class,
         'checkPlan' =>  \App\Http\Middleware\CheckPlan::class,
+        'addUserName' =>  \App\Http\Middleware\AddUserName::class,
     ];
 }

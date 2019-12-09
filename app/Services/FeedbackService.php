@@ -2,12 +2,10 @@
 
 namespace App\Services;
 
-
 use App\Events\MessageEvent;
-use App\Http\Requests\FeedbackRequest;
-use App\Http\Requests\SubdomainFeedbackRequest;
-use App\Models\Message;
-use Auth;
+use App\Entities\Message;
+use App\Repositories\Message\MessageRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class FeedbackService
@@ -16,28 +14,30 @@ use Auth;
 class FeedbackService
 {
     /**
-     * @param FeedbackRequest $request
+     * @var MessageRepositoryInterface
      */
-    public function saveFeedback(FeedbackRequest $request)
+    private $messageRepository;
+
+    /**
+     * FeedbackService constructor.
+     * @param MessageRepositoryInterface $messageRepository
+     */
+    public function __construct(MessageRepositoryInterface $messageRepository)
     {
-        $message = Message::create($request->all());
-
-        event(new MessageEvent($message));
-
-        return $message;
+        $this->messageRepository = $messageRepository;
     }
 
     /**
-     * @param SubdomainFeedbackRequest $request
-     * @return mixed
+     * @param array $request
+     * @return Message|Model
      */
-    public function saveSubdomainFeedback(SubdomainFeedbackRequest $request)
+    public function saveFeedback(array $request)
     {
-        $request->request->add(['name', Auth::user()->login]);
+        $message = new Message($request['name'], $request['message']);
 
-        $message = Message::create($request->all());
+        $this->messageRepository->save($message);
 
-        event(new MessageEvent($message));
+      //  event(new MessageEvent($message));
 
         return $message;
     }

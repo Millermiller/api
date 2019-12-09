@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class Message extends Mailable
 {
@@ -16,9 +15,9 @@ class Message extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param \App\Models\Message $message
+     * @param \App\Entities\Message $message
      */
-    public function __construct(\App\Models\Message $message)
+    public function __construct(\App\Entities\Message $message)
     {
         $this->data = $message;
     }

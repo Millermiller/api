@@ -57,9 +57,9 @@ class TextResult
     private $deletedAt;
 
     /**
-     * @var \Users
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

@@ -47,7 +47,7 @@ class IndexController extends Controller
      */
     public function feedback(FeedbackRequest $request)
     {
-        $message = $this->feedbackService->saveFeedback($request);
+        $message = $this->feedbackService->saveFeedback($request->toArray());
 
         return response()->json($message, 201);
     }

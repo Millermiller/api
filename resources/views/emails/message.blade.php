@@ -3,9 +3,9 @@
 <p>Получено сообщение формы обратной связи:</p>
 <br>
 
-<p>id: {{$data->id}}</p>
-<p>имя: {{$data->name}}</p>
-<p>сообщение: {{$data->message}}</p>
-<p>дата: {{$data->created_at->format('d.m.Y  в H:i')}}</p>
+<p>id: {{$data->getId()}}</p>
+<p>имя: {{$data->getName()}}</p>
+<p>сообщение: {{$data->getMessage()}}</p>
+<p>дата: {{$data->getCreatedAt()->format('d.m.Y  в H:i')}}</p>
 
 @endcomponent

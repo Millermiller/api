@@ -2,7 +2,10 @@
 
 namespace  App\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
+
 
 /**
  * Messages
@@ -10,8 +13,22 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="messages")
  * @ORM\Entity
  */
-class Message
+class Message implements JsonSerializable
 {
+
+    /**
+     * Message constructor.
+     * @param string|null $name
+     * @param string|null $message
+     * @throws \Exception
+     */
+    public function __construct(?string $name, ?string $message)
+    {
+        $this->name = $name;
+        $this->message = $message;
+        $this->createdAt = new DateTime("now");
+    }
+
     /**
      * @var int
      *
@@ -63,5 +80,47 @@ class Message
      */
     private $deletedAt;
 
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'message' => $this->message,
+        ];
+    }
 }

@@ -120,9 +120,13 @@ class IndexController extends Controller
         return response()->json($responce);
     }
 
+    /**
+     * @param SubdomainFeedbackRequest $request
+     * @return JsonResponse
+     */
     public function feedback(SubdomainFeedbackRequest $request)
     {
-        $message = $this->feedbackService->saveSubdomainFeedback($request);
+        $message = $this->feedbackService->saveFeedback($request->toArray());
 
         return response()->json($message, 201);
     }

@@ -36,7 +36,7 @@ Route::group([
     Route::get('/personal', 'IndexController@getPersonal')->name('personal');
 
 
-    Route::post('/feedback', 'IndexController@feedback')->name('feedback');
+    Route::post('/feedback', 'IndexController@feedback')->name('feedback')->middleware(['addUserName']);
 
     Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
 

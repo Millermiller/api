@@ -26,7 +26,7 @@ class MessageEventListener
      */
     public function handle(MessageEvent $event)
     {
-        activity('admin')->performedOn($event->message)->log('Получено сообщение');
+      //  activity('admin')->performedOn($event->message)->log('Получено сообщение');
 
         Mail::send(new Message($event->message));
     }

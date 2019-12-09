@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Intro\IntroRepositoryInterface;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Entities\{Language, User, Asset};
 use App\Repositories\Asset\AssetRepositoryInterface;
@@ -92,8 +93,9 @@ class UserService
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      * @return User
+     * @throws \Exception
      */
     public function registration(array $data)
     {
@@ -107,6 +109,7 @@ class UserService
         $user->setEmail($data['email']);
         $user->setPassword(bcrypt($data['password']));
         $user->setPlan($plan);
+        $user->setCreatedAt( new DateTime("now"));
         $user = $this->userRepository->save($user);
 
         foreach($languages as $language){
