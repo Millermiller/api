@@ -12,17 +12,6 @@ use Tests\TestCase;
 
 class AssetControllerTest extends TestCase
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-    }
-
-    public function tearDown()
-    {
-        Mockery::close();
-    }
-
     public function testShow()
     {
         $user  = app('em')->getRepository(User::class)->find(1);
