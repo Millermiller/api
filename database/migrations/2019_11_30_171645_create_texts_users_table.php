@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTextsToUsersTable extends Migration {
+class CreateTextsUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateTextsToUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('texts_to_users', function(Blueprint $table)
+		Schema::create('texts_users', function(Blueprint $table)
 		{
 			$table->integer('id', true);
 			$table->integer('language_id')->nullable();

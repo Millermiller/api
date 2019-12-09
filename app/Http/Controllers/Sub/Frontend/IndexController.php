@@ -58,20 +58,6 @@ class IndexController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return JsonResponse
-     * @throws QueryException
-     */
-    public function login(Request $request)
-    {
-        if (Auth::attempt(['email' => $request->input('login'), 'password' => $request->input('password')])) {
-            return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER'], 'state' => $this->userService->getState()]);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Пользователь не найден, попробуйте еще раз.']);
-        }
-    }
-
-    /**
      * @return JsonResponse
      */
     public function getUser()

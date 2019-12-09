@@ -13,7 +13,7 @@ Route::group([
     'domain' => '{subdomain}.' . config('app.DOMAIN'),
 ], function () {
     Route::get('/login', 'Sub\Frontend\IndexController@index')->middleware('guest');
-    Route::post('/login', 'Auth\LoginSubController@login')->middleware('checkDomain');
+    Route::post('/login', 'Auth\LoginSubController@login')->middleware('checkDomain')->name('login');
 });
 
 Route::group([
@@ -26,17 +26,17 @@ Route::group([
 
     Route::get('/', 'IndexController@index');
 
-    Route::get('/check', 'IndexController@check');
+    Route::get('/check', 'IndexController@check')->name('check');
     Route::get('/state', 'IndexController@getState');
-    Route::get('/user', 'IndexController@getUser');
-    Route::get('/info', 'IndexController@getInfo');
+    Route::get('/user', 'IndexController@getUser')->name('user-info');
+    Route::get('/info', 'IndexController@getInfo')->name('site-info');
 
-    Route::get('/words', 'IndexController@getWords');
-    Route::get('/sentences', 'IndexController@getSentences');
-    Route::get('/personal', 'IndexController@getPersonal');
+    Route::get('/words', 'IndexController@getWords')->name('words');
+    Route::get('/sentences', 'IndexController@getSentences')->name('sentences');
+    Route::get('/personal', 'IndexController@getPersonal')->name('personal');
 
 
-    Route::post('/feedback', 'IndexController@feedback');
+    Route::post('/feedback', 'IndexController@feedback')->name('feedback');
 
     Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
 
