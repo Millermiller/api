@@ -57,11 +57,6 @@ class AssetController extends Controller
         return response()->json($cards);
     }
 
-    public function assetInfo($id)
-    {
-        return response()->json(Asset::with('result')->find($id));
-    }
-
     /**
      * @param Request $request
      * @return JsonResponse
