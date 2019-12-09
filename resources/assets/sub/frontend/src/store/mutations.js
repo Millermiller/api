@@ -102,10 +102,6 @@ export default {
         state.asset = data
     },
 
-    addCard(state, data){
-        state.assets.personal[state.activePersonalAssetIndex].cards.splice(0, 0, data)
-    },
-
     addCardToFavorite(state){
         state.assets.personal[0].count++
     },
@@ -124,6 +120,18 @@ export default {
     removeCard(state, card){
         let personalAssetIndex = state.assets.personal.findIndex(item => item.id === card.asset_id)
         state.assets.personal[personalAssetIndex].count--
+    },
+
+    /**
+     *
+     * @param state
+     * @param card
+     * @param card.id
+     * @param card.asset_id
+     */
+    addCard(state, card){
+        let personalAssetIndex = state.assets.personal.findIndex(item => item.id === card.asset_id)
+        state.assets.personal[personalAssetIndex].count++
     },
 
     setSelection(state, data){

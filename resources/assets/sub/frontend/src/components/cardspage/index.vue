@@ -36,6 +36,7 @@
         created() {
             this.$eventHub.$on('assetSelect', this.load);
             this.$eventHub.$on('deleteCardFromAsset', this.removeCard);
+            this.$eventHub.$on('addCardToAsset', this.add);
         },
         methods:{
             load(asset){
@@ -69,6 +70,19 @@
                     }
                 )
             },
+            add(data){
+                this.$http.post('/card', data).then(
+                    (response) => {
+                        if(response.status === 201){
+                            this.$store.commit('addCard', response.body)
+                            this.cards.push(response.body)
+                        }
+                    },
+                    (response) => {
+                        console.log(response);
+                    }
+                )
+            },
         },
         computed: {
             show(){
@@ -94,6 +108,7 @@
             this.$store.dispatch('onCardsPageClose')
             this.$eventHub.$off('assetSelect');
             this.$eventHub.$off('deleteCardFromAsset');
+            this.$eventHub.$off('addCardToAsset');
         }
     }
 </script>

@@ -31,9 +31,13 @@ class CardsController extends Controller
         $this->cardService = $cardService;
     }
 
+    /**
+     * @param CreateCardRequest $request
+     * @return JsonResponse
+     */
     public function store(CreateCardRequest $request)
     {
-        $card = $this->cardService->create($request);
+        $card = $this->cardService->createCard($request->toArray());
 
         return response()->json($card, 201);
     }

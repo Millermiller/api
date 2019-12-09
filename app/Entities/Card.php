@@ -239,4 +239,12 @@ class Card implements JsonSerializable
     {
         $this->favourite = $favourite;
     }
+
+    /**
+     * @param int $assetId
+     */
+    public function setAssetId(int $assetId): void
+    {
+        $this->assetId = $assetId;
+    }
 }

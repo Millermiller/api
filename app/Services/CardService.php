@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Entities\Asset;
-use App\Http\Requests\CreateCardRequest;
-use App\Entities\Card;
+use App\Entities\{Asset, Card};
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Card\CardRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
+use App\Repositories\Translate\TranslateRepositoryInterface;
+use App\Repositories\Word\WordRepositoryInterface;
 use Auth;
 
 /**
@@ -31,18 +31,44 @@ class CardService
      */
     private $cardRepository;
 
-    public function __construct(AssetRepositoryInterface $assetRepository, LanguageRepositoryInterface $languageRepository, CardRepositoryInterface $cardRepository)
+    /**
+     * @var WordRepositoryInterface
+     */
+    private $wordRepository;
+
+    /**
+     * @var TranslateRepositoryInterface
+     */
+    private $translateRepository;
+
+    public function __construct(
+        AssetRepositoryInterface $assetRepository,
+        LanguageRepositoryInterface $languageRepository,
+        CardRepositoryInterface $cardRepository,
+        WordRepositoryInterface $wordRepository,
+        TranslateRepositoryInterface $translateRepository
+    )
     {
         $this->assetRepository = $assetRepository;
         $this->languageRepository = $languageRepository;
         $this->cardRepository = $cardRepository;
+        $this->wordRepository = $wordRepository;
+        $this->translateRepository = $translateRepository;
     }
 
-    public function create(CreateCardRequest $request)
+    /**
+     * @param array $data
+     * @return Card
+     */
+    public function createCard(array $data)
     {
-        $card = Card::create($request->all());
+        $word = $this->wordRepository->get($data['word_id']);
+        $translate = $this->translateRepository->get($data['translate_id']);
+        $asset = $this->assetRepository->get($data['asset_id']);
 
-        $card->load(['word', 'translate', 'asset', 'examples']);
+        $card = new Card($word, $asset, $translate);
+        $card->setAssetId($asset->getId());
+        $this->cardRepository->save($card);
 
         return $card;
     }

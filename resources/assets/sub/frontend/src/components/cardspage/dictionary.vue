@@ -90,9 +90,6 @@
                 loading: false
             }
         },
-        created() {
-            this.$eventHub.$on('addCardToAsset', this.add);
-        },
         components:{
             'translate': Translate
         },
@@ -144,18 +141,6 @@
                 if(this.isActive){
                     this.dialogFormVisible = true
                 }
-            },
-            add(data){
-                this.$http.post('/card', data).then(
-                    (response) => {
-                        if(response.status === 201){
-                            this.$store.commit('addCard', response.body)
-                        }
-                    },
-                    (response) => {
-                        console.log(response);
-                    }
-                )
             },
             submit(){
                 this.form.is_public = this.form.is_public ? 1 : 0;
