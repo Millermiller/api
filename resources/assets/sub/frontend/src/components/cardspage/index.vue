@@ -39,9 +39,9 @@
             this.$eventHub.$on('addCardToAsset', this.add);
         },
         methods:{
-            load(asset){
+            load(id){
                 this.loading = true
-                this.$http.get('/asset/' + asset.id).then((response) => {
+                this.$http.get('/asset/' + id).then((response) => {
                     if(response.body.success === false){
                         this.$notify.error({
                             title: 'Ошибка',
@@ -91,6 +91,8 @@
         },
         mounted(){
             this.$store.dispatch('onCardsPageOpen')
+
+            this.load(this.$store.getters.activeAsset)
 
             let intr = introJs.introJs()
 

@@ -93,7 +93,7 @@
                     return false
                 }
                 else {
-                    this.$eventHub.$emit('assetSelect', this.asset);
+                    this.$eventHub.$emit('assetSelect', this.asset.id);
                     this.$store.commit('showDictionary')
                     this.$store.dispatch('loadAsset', {asset: this.asset, index: this.index})
                 }
