@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Nexmo\Call\Collection;
 
 interface BaseRepositoryInterface extends ObjectRepository
 {

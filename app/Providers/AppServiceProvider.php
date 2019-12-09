@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Message\MessageRepository;
+use App\Repositories\Message\MessageRepositoryInterface;
 use App\Repositories\Card\{CardRepository, CardRepositoryInterface};
 use App\Repositories\Intro\{IntroRepository, IntroRepositoryInterface};
 use App\Repositories\Puzzle\{PuzzleRepository, PuzzleRepositoryInterface};
@@ -14,7 +16,7 @@ use App\Repositories\Asset\{AssetRepository, AssetRepositoryInterface};
 use App\Repositories\Language\{LanguageRepository, LanguageRepositoryInterface};
 use App\Repositories\Text\{TextRepository, TextRepositoryInterface};
 use Laravel\Passport\Passport;
-use App\Entities\{Card, Plan, Puzzle, Result, Translate, User, Language, Asset, Text, Intro, Word};
+use App\Entities\{Card, Message, Plan, Puzzle, Result, Translate, User, Language, Asset, Text, Intro, Word};
 
 use Illuminate\Support\ServiceProvider;
 
@@ -113,6 +115,13 @@ class AppServiceProvider extends ServiceProvider
             return new WordRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Word::class)
+            );
+        });
+
+        $this->app->bind(MessageRepositoryInterface::class, function () {
+            return new MessageRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Message::class)
             );
         });
     }

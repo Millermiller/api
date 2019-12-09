@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
 use App\Models\Message;
-use App\Models\Text;
-use App\Models\Word;
+use App\Services\AdminService;
 
 /**
  * Created by PhpStorm.
@@ -19,19 +17,26 @@ use App\Models\Word;
  */
 class DashboardController extends Controller
 {
+    /**
+     * @var AdminService
+     */
+    private $adminService;
+
+    /**
+     * DashboardController constructor.
+     * @param AdminService $adminService
+     */
+    public function __construct(\App\Services\AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
 
     /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        return response()->json([
-            'words'      => Word::all()->count(),
-            'assets'     => Asset::all()->count(),
-            'audiofiles' => Word::where('audio', '!=', null)->count(),
-            'texts'      => Text::all()->count(),
-            'messages'   => array_values(Message::all()->sortByDesc('created_at')->toArray())
-        ]);
+        return response()->json($this->adminService->stats());
     }
 
     /**
