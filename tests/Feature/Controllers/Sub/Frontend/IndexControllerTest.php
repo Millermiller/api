@@ -92,7 +92,7 @@ class IndexControllerTest extends TestCase
         $user = app('em')->getRepository(User::class)->find(1);
         $this->actingAs($user);
 
-        $response = $this->get(route('sub_frontend::post', ['domain' => 'is', 'message' => 'testmessage']));
+        $response = $this->post(route('sub_frontend::subdomain-feedback', ['domain' => 'is', 'message' => 'testmessage']));
 
         $this->assertEquals(201, $response->getStatusCode());
 
@@ -100,5 +100,6 @@ class IndexControllerTest extends TestCase
 
         $data = $response->decodeResponseJson();
         $this->assertEquals('testmessage', $data['message']);
+        $this->assertEquals($user->getLogin(), $data['name']);
     }
 }

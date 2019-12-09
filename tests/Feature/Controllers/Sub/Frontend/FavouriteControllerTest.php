@@ -3,7 +3,9 @@
 
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
+use App\Entities\Card;
 use App\Entities\User;
+use App\Entities\Word;
 use Tests\TestCase;
 
 class FavouriteControllerTest extends TestCase
@@ -41,7 +43,7 @@ class FavouriteControllerTest extends TestCase
 
         $this->assertEquals(1, $data['word']['id']);
         $this->assertEquals(1, $data['translate']['id']);
-        $this->assertEquals(1, $data['asset']['id']);
+        $this->assertEquals(5, $data['asset']['id']);
     }
 
     public function testDestroy()
@@ -49,7 +51,9 @@ class FavouriteControllerTest extends TestCase
         $user = app('em')->getRepository(User::class)->find(1);
         $this->actingAs($user);
 
-        $response = $this->delete(route('sub_frontend::delete-favorite', ['domain' => 'is', 'id' => 19]));
+        $card = app('em')->getRepository(Card::class)->findBy(['assetId' => 5])[0];
+
+        $response = $this->delete(route('sub_frontend::delete-favorite', ['domain' => 'is', 'id' => $card->getWord()->getId()]));
 
         $response->assertJsonStructure(['success']);
     }

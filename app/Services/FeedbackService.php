@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Events\MessageEvent;
 use App\Entities\Message;
 use App\Repositories\Message\MessageRepositoryInterface;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -30,6 +30,7 @@ class FeedbackService
     /**
      * @param array $request
      * @return Message|Model
+     * @throws Exception
      */
     public function saveFeedback(array $request)
     {

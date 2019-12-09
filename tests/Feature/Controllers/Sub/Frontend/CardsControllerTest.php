@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers\Sub\Frontend;
 
 
 use App\Entities\Asset;
+use App\Entities\Card;
 use App\Entities\User;
 use Illuminate\Http\Request;
 use Mockery;
@@ -50,12 +51,12 @@ class CardsControllerTest extends TestCase
 
     public function testDestroy()
     {
-        $asset = app('em')->getRepository(Asset::class)->find(1);
+        $card = app('em')->getRepository(Card::class)->find(26);
 
         $user = app('em')->getRepository(User::class)->find(1);
         $this->actingAs($user);
 
-        $response = $this->delete(route('sub_frontend::card.destroy', ['domain' => 'is', 'asset' => $asset->getId()]));
+        $response = $this->delete(route('sub_frontend::card.destroy', ['domain' => 'is', 'card' => $card->getId()]));
 
         $this->assertEquals(204, $response->getStatusCode());
     }
