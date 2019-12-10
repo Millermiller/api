@@ -40,7 +40,7 @@
                 <span>{{user.login}}</span>
             </li>
             <li class="el-menu-item pull-right">
-                <el-select v-model="url" @change="gotosite" size="small" >
+                <el-select v-model="url" @change="gotosite" size="small" :placeholder="sites[0].label" >
                     <el-option
                             v-for="item in sites"
                             :key="item.value"

@@ -121,9 +121,11 @@ class Language implements JsonSerializable
     {
         return array(
             'name' => $this->label,
-            'flag'=> $this->flag,
+            'label' => $this->label,
+            'flag'=> config('app.SITE').$this->flag,
             'letter'=> $this->name,
             'cards' => $this->getCards()->count(),
+            'value' => 'https://'.$this->name.'.'.config('app.DOMAIN')
         );
     }
 

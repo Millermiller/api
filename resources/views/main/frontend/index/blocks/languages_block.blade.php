@@ -34,7 +34,7 @@
                         Швеция, страна с самыми крупными на свете комарами и с самой гадкой на свете едой.</p>
                     <div class="clearfix"></div>
                     <div class="card-footer text-right">
-                        <a href="https://sw.{{config('app.DOMAIN')}}">перейти</a>
+                        <small>в разработке</small>
                     </div>
                 </div>
             </div>

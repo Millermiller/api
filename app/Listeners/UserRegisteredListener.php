@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\UserRegistered;
+use App\Jobs\CreateUserForum;
+use App\Jobs\SendRegistrationEmail;
 use App\Mail\Welcome;
 use App\Services\Requester;
 use GuzzleHttp\Exception\GuzzleException;
@@ -27,12 +29,7 @@ class UserRegisteredListener
      */
     public function handle(UserRegistered $event)
     {
-        Mail::to($event->user->getEmail())->send(new Welcome($event->data));
-
-        try{
-            Requester::createForumUser($event->data);
-        }catch (GuzzleException $exception){
-            //
-        }
+        dispatch(new SendRegistrationEmail($event));
+        dispatch(new CreateUserForum($event));
     }
 }

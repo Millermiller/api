@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2019-12-08 23:14:59.
+    * Generated on 2019-12-09 23:19:12.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -177,6 +177,7 @@ namespace PHPSTORM_META {
         'queue.worker' => \Illuminate\Queue\Worker::class,
         'redirect' => \Illuminate\Routing\Redirector::class,
         'redis' => \Illuminate\Redis\RedisManager::class,
+        'redis.connection' => \Illuminate\Redis\Connections\PredisConnection::class,
         'registry' => \LaravelDoctrine\ORM\IlluminateRegistry::class,
         'router' => \Illuminate\Routing\Router::class,
         'session' => \Illuminate\Session\SessionManager::class,
@@ -358,6 +359,7 @@ namespace PHPSTORM_META {
         'queue.worker' => \Illuminate\Queue\Worker::class,
         'redirect' => \Illuminate\Routing\Redirector::class,
         'redis' => \Illuminate\Redis\RedisManager::class,
+        'redis.connection' => \Illuminate\Redis\Connections\PredisConnection::class,
         'registry' => \LaravelDoctrine\ORM\IlluminateRegistry::class,
         'router' => \Illuminate\Routing\Router::class,
         'session' => \Illuminate\Session\SessionManager::class,
@@ -539,6 +541,7 @@ namespace PHPSTORM_META {
         'queue.worker' => \Illuminate\Queue\Worker::class,
         'redirect' => \Illuminate\Routing\Redirector::class,
         'redis' => \Illuminate\Redis\RedisManager::class,
+        'redis.connection' => \Illuminate\Redis\Connections\PredisConnection::class,
         'registry' => \LaravelDoctrine\ORM\IlluminateRegistry::class,
         'router' => \Illuminate\Routing\Router::class,
         'session' => \Illuminate\Session\SessionManager::class,
@@ -720,6 +723,7 @@ namespace PHPSTORM_META {
         'queue.worker' => \Illuminate\Queue\Worker::class,
         'redirect' => \Illuminate\Routing\Redirector::class,
         'redis' => \Illuminate\Redis\RedisManager::class,
+        'redis.connection' => \Illuminate\Redis\Connections\PredisConnection::class,
         'registry' => \LaravelDoctrine\ORM\IlluminateRegistry::class,
         'router' => \Illuminate\Routing\Router::class,
         'session' => \Illuminate\Session\SessionManager::class,
@@ -901,6 +905,7 @@ namespace PHPSTORM_META {
         'queue.worker' => \Illuminate\Queue\Worker::class,
         'redirect' => \Illuminate\Routing\Redirector::class,
         'redis' => \Illuminate\Redis\RedisManager::class,
+        'redis.connection' => \Illuminate\Redis\Connections\PredisConnection::class,
         'registry' => \LaravelDoctrine\ORM\IlluminateRegistry::class,
         'router' => \Illuminate\Routing\Router::class,
         'session' => \Illuminate\Session\SessionManager::class,
@@ -1082,6 +1087,7 @@ namespace PHPSTORM_META {
         'queue.worker' => \Illuminate\Queue\Worker::class,
         'redirect' => \Illuminate\Routing\Redirector::class,
         'redis' => \Illuminate\Redis\RedisManager::class,
+        'redis.connection' => \Illuminate\Redis\Connections\PredisConnection::class,
         'registry' => \LaravelDoctrine\ORM\IlluminateRegistry::class,
         'router' => \Illuminate\Routing\Router::class,
         'session' => \Illuminate\Session\SessionManager::class,
@@ -1263,6 +1269,7 @@ namespace PHPSTORM_META {
         'queue.worker' => \Illuminate\Queue\Worker::class,
         'redirect' => \Illuminate\Routing\Redirector::class,
         'redis' => \Illuminate\Redis\RedisManager::class,
+        'redis.connection' => \Illuminate\Redis\Connections\PredisConnection::class,
         'registry' => \LaravelDoctrine\ORM\IlluminateRegistry::class,
         'router' => \Illuminate\Routing\Router::class,
         'session' => \Illuminate\Session\SessionManager::class,

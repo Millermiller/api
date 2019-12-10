@@ -7,9 +7,7 @@ Halló, {{$data['login']}}
 <p>логин: {{$data['login']}}</p>
 <p>пароль: {{$data['password']}}</p>
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
+
 
 Thanks,<br>
 {{ config('app.name') }}

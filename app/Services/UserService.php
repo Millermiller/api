@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Events\UserRegistered;
 use App\Repositories\Intro\IntroRepositoryInterface;
 use Carbon\Carbon;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Entities\{Language, User, Asset};
 use App\Repositories\Asset\AssetRepositoryInterface;
@@ -105,17 +107,19 @@ class UserService
         $languages = $this->languageRepository->all();
 
         $user = new User();
+        $user->setAssets(new ArrayCollection());
+        $user->setTexts(new ArrayCollection());
         $user->setLogin($data['login']);
         $user->setEmail($data['email']);
         $user->setPassword(bcrypt($data['password']));
         $user->setPlan($plan);
-        $user->setCreatedAt( new DateTime("now"));
+        $user->setCreatedAt( Carbon::now()->format("Y-m-d H:i:s"));
         $user = $this->userRepository->save($user);
 
         foreach($languages as $language){
 
             //даем пользователю избранное
-            $favourite = new Asset('Избранное', false, Asset::TYPE_FAVORITES, 1, $language->getId());
+            $favourite = new Asset('Избранное', false, Asset::TYPE_FAVORITES, 1, $language);
             $favourite = $this->assetRepository->save($favourite);
             $this->userRepository->addAsset($user, $favourite);
 
@@ -132,7 +136,7 @@ class UserService
             $this->userRepository->addText($user, $firstText);
         }
 
-      //  event(new UserRegistered($user, $data));
+        event(new UserRegistered($user, $data));
 
       //  activity('public')->causedBy($user)->log('Зарегистрирован пользователь'); //TODO: не работает с доктриной
 

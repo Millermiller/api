@@ -276,7 +276,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     {
         if ($this->photo) {
             if (file_exists(public_path('/uploads/u/a/') . $this->photo)) {
-                return asset('/uploads/u/a/' . $this->photo);
+                return '/uploads/u/a/' . $this->photo;
             } else {
                 $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
                 $avatar->resize(
@@ -288,7 +288,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
                     }
                 );
                 $avatar->save(public_path('/uploads/u/a/' . $this->photo));
-                return url('/uploads/u/a/' . $this->photo);
+                return '/uploads/u/a/' . $this->photo;
             }
         } else {
             return Avatar::create($this->login)->toBase64()->encoded;
@@ -473,5 +473,21 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     public function incrementAssetCounter(): void
     {
         $this->assetsCreated++;
+    }
+
+    /**
+     * @param Asset[]|Collection $assets
+     */
+    public function setAssets($assets): void
+    {
+        $this->assets = $assets;
+    }
+
+    /**
+     * @param Text[]|Collection $texts
+     */
+    public function setTexts($texts): void
+    {
+        $this->texts = $texts;
     }
 }

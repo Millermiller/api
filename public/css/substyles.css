@@ -1483,9 +1483,7 @@ span[tooltip]:hover:after {
 #dictionary_block .el-input{
     margin-bottom: 10px;
 }
-.origtext{
-    font-family: Segoe UI,Helvetica,Arial,sans-serif;
-}
+
 .widget-block{
     min-height: 170px;
     position: relative;
