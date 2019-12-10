@@ -17,7 +17,9 @@ class PuzzleRepository  extends BaseRepository implements PuzzleRepositoryInterf
 
          return $q->select('p', 'u')
              ->from($this::getEntityName(), 'p')
-             ->leftJoin('p.users', 'u', 'WITH')
+             ->leftJoin('p.users', 'u', 'WITH', 'u.id = :uid')
+             ->setParameter('uid', $user->getKey() )
+             ->orderBy('p.id', 'asc')
              ->getQuery()
              ->getResult();
     }

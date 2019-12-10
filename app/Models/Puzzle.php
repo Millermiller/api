@@ -46,7 +46,7 @@ class Puzzle extends Model
 
     public function getSuccessAttribute()
     {
-        return $this->users()->where('users.id', Auth::user()->id)->exists();
+        return $this->users()->where('users.id', Auth::user()->getKey())->exists();
     }
 
     public function users()

@@ -75,7 +75,7 @@ class Puzzle implements JsonSerializable
             'id' => $this->id,
             'text' => $this->text,
             'translate' => $this->translate,
-            'success' => (bool) $this->users->count()
+            'success' =>  $this->users->count()
         ];
     }
 
