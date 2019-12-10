@@ -58,7 +58,7 @@
                     <input type="hidden" name="receiver" value="{{config('app.yreceiver')}}">
                     <input type="hidden" name="formcomment" value="Оплата на сайте scandinaver.org">
                     <input type="hidden" name="short-dest" value="Оплата на сайте scandinaver.org">
-                    <input type="hidden" name="label" value="{{Auth::user()->id}}|{{$plan->id}}">
+                    <input type="hidden" name="label" value="{{Auth::user()->getKey()}}|{{$plan->id}}">
                     <input type="hidden" name="quickpay-form" value="shop">
                     <input type="hidden" name="targets" value="Покупка тарифа {{$plan->name}} на сайте scandinaver.org">
                     <input type="hidden" name="sum" value="2" data-type="number">

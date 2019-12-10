@@ -100,7 +100,7 @@ class ProfileController extends Controller
         Meta::set('title', 'Профиль');
 
         $logs = Activity::where([
-            'causer_id' => Auth::user()->id,
+            'causer_id' => Auth::user()->getKey(),
             'log_name'  => 'public'
         ])->orderBy('id', 'DESC')
             ->paginate(5);
