@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +23,6 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->hasMany('App\Models\Post');
+        return $this->hasMany('App\Helpers\Eloquent\Post');
     }
 }

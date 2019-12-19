@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\NextTextLevel;
+use App\Helpers\EloquentHelper;
 
 class NextTextLevelListener
 {
@@ -24,10 +25,13 @@ class NextTextLevelListener
      */
     public function handle(NextTextLevel $event)
     {
+        $user = EloquentHelper::getEloquentModel($event->user);
+        $result = EloquentHelper::getEloquentModel($event->result);
+
         activity('public')
-            ->causedBy($event->user)
+            ->causedBy($user)
             ->withProperties(['lang' => config('app.lang')])
-            ->performedOn($event->result)
+            ->performedOn($result)
             ->log('Получен новый уровень');
     }
 }

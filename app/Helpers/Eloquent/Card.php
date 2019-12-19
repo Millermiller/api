@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +42,7 @@ class Card extends Model{
      */
     public function word()
     {
-        return $this->belongsTo('App\Models\Word');
+        return $this->belongsTo('App\Helpers\Eloquent\Word');
     }
 
     /**
@@ -50,7 +50,7 @@ class Card extends Model{
      */
     public function translate()
     {
-        return $this->belongsTo('App\Models\Translate');
+        return $this->belongsTo('App\Helpers\Eloquent\Translate');
     }
 
     /**
@@ -58,11 +58,11 @@ class Card extends Model{
      */
     public function asset()
     {
-        return $this->belongsTo('App\Models\Asset');
+        return $this->belongsTo('App\Helpers\Eloquent\Asset');
     }
 
     public function examples()
     {
-        return $this->hasMany('App\Models\Example');
+        return $this->hasMany('App\Helpers\Eloquent\Example');
     }
 }

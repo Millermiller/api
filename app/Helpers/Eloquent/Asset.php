@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Auth;
 use DB;
@@ -59,7 +59,7 @@ class Asset extends Model
      */
     public function cards()
     {
-        return $this->hasMany('App\Models\Card');
+        return $this->hasMany('App\Helpers\Eloquent\Card');
     }
 
     /**
@@ -67,12 +67,12 @@ class Asset extends Model
      */
     public function result()
     {
-        return $this->belongsTo('App\Models\Result', 'id', 'asset_id')->where('user_id', \Auth::id());
+        return $this->belongsTo('App\Helpers\Eloquent\Result', 'id', 'asset_id')->where('user_id', \Auth::id());
     }
 
   // public function user()
   // {
-  //     return $this->belongsTo('App\Models\User', 'role_user', 'user_id', 'role_id');
+  //     return $this->belongsTo('App\Helpers\Eloquent\User', 'role_user', 'user_id', 'role_id');
   // }
 
     /**

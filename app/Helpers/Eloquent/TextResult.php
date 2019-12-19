@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +43,6 @@ class TextResult extends Model
      */
     public function text()
     {
-        return $this->hasOne('App\Models\Text', 'id', 'text_id');
+        return $this->hasOne('App\Helpers\Eloquent\Text', 'id', 'text_id');
     }
 }

@@ -38,6 +38,11 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         return $this->id;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getName()
     {
         return 'name';

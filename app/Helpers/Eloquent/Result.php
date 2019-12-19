@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +40,6 @@ class Result extends Model
      */
     public function asset()
    {
-       return $this->hasOne('App\Models\Asset', 'id', 'asset_id');
+       return $this->hasOne('App\Helpers\Eloquent\Asset', 'id', 'asset_id');
    }
 }

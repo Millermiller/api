@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Helpers\Eloquent;
 
 use App\Mail\ResetPassword;
-use App\Models\Asset;
-use App\Models\Plan;
-use App\Models\Result;
-use App\Models\TextResult;
-use App\Models\Word;
+use App\Helpers\Eloquent\Asset;
+use App\Helpers\Eloquent\Plan;
+use App\Helpers\Eloquent\Result;
+use App\Helpers\Eloquent\TextResult;
+use App\Helpers\Eloquent\Word;
 use Avatar;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
@@ -79,22 +79,22 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment');
+        return $this->hasMany('App\Helpers\Eloquent\Comment');
     }
 
     public function assets()
     {
-        return $this->belongsToMany('App\Models\Asset', 'assets_users', 'user_id', 'asset_id');
+        return $this->belongsToMany('App\Helpers\Eloquent\Asset', 'assets_users', 'user_id', 'asset_id');
     }
 
     public function plan()
     {
-        return $this->belongsTo('App\Models\Plan');
+        return $this->belongsTo('App\Helpers\Eloquent\Plan');
     }
 
     public function puzzles()
     {
-        return $this->belongsToMany('App\Models\Puzzle', 'puzzles_users')->withTimestamps();
+        return $this->belongsToMany('App\Helpers\Eloquent\Puzzle', 'puzzles_users')->withTimestamps();
     }
 
     public function getPremiumAttribute()

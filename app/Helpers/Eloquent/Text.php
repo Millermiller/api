@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -45,7 +45,7 @@ class Text extends Model
      */
     public function textExtra()
     {
-        return $this->hasMany('App\Models\TextExtra');
+        return $this->hasMany('App\Helpers\Eloquent\TextExtra');
     }
 
     /**
@@ -53,7 +53,7 @@ class Text extends Model
      */
     public function words()
     {
-        return $this->hasMany('App\Models\TextWord');
+        return $this->hasMany('App\Helpers\Eloquent\TextWord');
     }
 
     /**
@@ -61,7 +61,7 @@ class Text extends Model
      */
     public function result()
     {
-        return $this->belongsTo('App\Models\TextResult', 'id', 'text_id')->where('user_id', \Auth::id());
+        return $this->belongsTo('App\Helpers\Eloquent\TextResult', 'id', 'text_id')->where('user_id', \Auth::id());
     }
 
     /**

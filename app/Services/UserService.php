@@ -138,8 +138,6 @@ class UserService
 
         event(new UserRegistered($user, $data));
 
-        activity('public')->causedBy($user->getKey())->log('Зарегистрирован пользователь'); //TODO: не работает с доктриной
-
         return $user;
     }
 

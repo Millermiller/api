@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +26,6 @@ class TextWord extends Model
 
     public function synonyms()
     {
-        return $this->hasMany('App\Models\Synonym');
+        return $this->hasMany('App\Helpers\Eloquent\Synonym');
     }
 }

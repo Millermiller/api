@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,6 +31,6 @@ class TextExtra extends Model
      */
     public function text()
     {
-        return $this->belongsTo('App\Models\Text');
+        return $this->belongsTo('App\Helpers\Eloquent\Text');
     }
 }

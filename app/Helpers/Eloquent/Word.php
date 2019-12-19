@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use App\User;
 use Auth;
@@ -63,7 +63,7 @@ class Word extends Model {
      */
     public function translates()
     {
-        return $this->hasMany('App\Models\Translate');
+        return $this->hasMany('App\Helpers\Eloquent\Translate');
     }
 
     public function user()

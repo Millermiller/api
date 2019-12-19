@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\MessageRecieved;
+use App\Helpers\EloquentHelper;
 
 class MessageRecievedListener
 {
@@ -24,6 +25,9 @@ class MessageRecievedListener
      */
     public function handle(MessageRecieved $event)
     {
-        activity('admin')->causedBy($event->user)->performedOn($event->message)->log('Получено сообщение');
+        $user = EloquentHelper::getEloquentModel($event->user);
+        $message = EloquentHelper::getEloquentModel($event->message);
+
+        activity('admin')->causedBy($user)->performedOn($message)->log('Получено сообщение');
     }
 }

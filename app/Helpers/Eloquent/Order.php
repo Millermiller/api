@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +46,6 @@ class Order extends Model
      */
     public function plan()
     {
-        return $this->belongsTo('App\Models\Plan');
+        return $this->belongsTo('App\Helpers\Eloquent\Plan');
     }
 }

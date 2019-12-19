@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -48,11 +48,11 @@ class Post extends Model{
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category');
+        return $this->belongsTo('App\Helpers\Eloquent\Category');
     }
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment');
+        return $this->hasMany('App\Helpers\Eloquent\Comment');
     }
 }

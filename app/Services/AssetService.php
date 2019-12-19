@@ -79,7 +79,7 @@ class AssetService
         app('em')->persist($result);
         app('em')->flush();
 
-      //  event(new AssetCreated(Auth::user(), $asset));
+        event(new AssetCreated(Auth::user(), $asset));
 
         return $asset;
     }

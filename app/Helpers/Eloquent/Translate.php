@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,7 +32,7 @@ class Translate extends Model
      */
     public function word()
     {
-        return $this->belongsTo('App\Models\Word');
+        return $this->belongsTo('App\Helpers\Eloquent\Word');
     }
 
     public function getActiveAttribute()

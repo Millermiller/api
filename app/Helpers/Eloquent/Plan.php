@@ -5,7 +5,7 @@
  * Date: Fri, 02 Nov 2018 00:24:58 +0000.
  */
 
-namespace App\Models;
+namespace App\Helpers\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 

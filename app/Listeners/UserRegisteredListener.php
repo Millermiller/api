@@ -3,12 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\UserRegistered;
+use App\Helpers\EloquentHelper;
 use App\Jobs\CreateUserForum;
 use App\Jobs\SendRegistrationEmail;
-use App\Mail\Welcome;
-use App\Services\Requester;
-use GuzzleHttp\Exception\GuzzleException;
-use Mail;
 
 class UserRegisteredListener
 {
@@ -31,5 +28,9 @@ class UserRegisteredListener
     {
         dispatch(new SendRegistrationEmail($event));
         dispatch(new CreateUserForum($event));
+
+        $user = EloquentHelper::getEloquentModel($event->user);
+
+        activity('public')->causedBy($user)->log('Зарегистрирован пользователь');
     }
 }

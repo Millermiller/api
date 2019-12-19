@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\AssetCreated;
+use App\Helpers\EloquentHelper;
 
 class AssetCreatedListener
 {
@@ -24,10 +25,13 @@ class AssetCreatedListener
      */
     public function handle(AssetCreated $event)
     {
+        $user = EloquentHelper::getEloquentModel($event->user);
+        $asset = EloquentHelper::getEloquentModel($event->asset);
+
         activity('public')
-            ->causedBy($event->user)
+            ->causedBy($user)
             ->withProperties(['lang' => config('app.lang')])
-            ->performedOn($event->asset)
+            ->performedOn($asset)
             ->log('Создан словарь');
     }
 }
