@@ -18,4 +18,6 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function setPlan(User $user, Plan $plan): void;
 
     public function setAvatar(User $user, string $file);
+
+    public function findByNameOrEmail($string): array;
 }

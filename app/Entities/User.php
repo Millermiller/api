@@ -4,8 +4,10 @@ namespace App\Entities;
 
 use App\Entities\Traits\UsesPasswordGrant;
 use Carbon\Carbon;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Doctrine\ORM\Mapping\{JoinTable, ManyToMany};
 use Image;
 use JsonSerializable;
@@ -72,11 +74,19 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     private $email;
 
     /**
-     * @var int
+     * @var DateTime
      *
-     * @ORM\Column(name="active_to", type="integer", nullable=true, nullable=true)
+     * @ORM\Column(name="active_to", type="datetime", nullable=true, nullable=true)
      */
     private $activeTo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="plan_id", type="integer", nullable=true)
+     */
+    private $planId;
+
 
     /**
      * @var string|null
@@ -243,19 +253,20 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
-     * @return Carbon
+     * @return DateTime
      */
-    public function getActiveTo(): Carbon
+    public function getActiveTo(): DateTime
     {
-        return Carbon::parse($this->activeTo);
+        return $this->activeTo;
     }
 
     /**
-     * @param int $activeTo
+     * @param string $activeTo
+     * @throws Exception
      */
-    public function setActiveTo(int $activeTo): void
+    public function setActiveTo(string $activeTo): void
     {
-        $this->activeTo = $activeTo;
+        $this->activeTo = new DateTime($activeTo);
     }
 
     /**
@@ -302,10 +313,11 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @return bool
+     * @throws \Exception
      */
     public function isPremium(): bool
     {
-        return (Carbon::parse($this->activeTo) > Carbon::now()) ? true : false;
+        return ($this->activeTo > new DateTime());
     }
 
     /**
@@ -382,15 +394,17 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
             'login' => $this->login,
             'email' => $this->email,
             'active_to' => $this->getActiveTo()->format("Y-m-d H:i:s"),
-            'plan_id' => $this->getPlan()->getId(),
+            'plan' => $this->plan,
+            'plan_id' => $this->planId,
             'name' => $this->name,
             'photo' => $this->photo,
             'assets_opened' => $this->assetsOpened,
@@ -494,5 +508,45 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     public function setTexts($texts): void
     {
         $this->texts = $texts;
+    }
+
+    /**
+     * @param int $planId
+     * @return User
+     */
+    public function setPlanId(int $planId): User
+    {
+        $this->planId = $planId;
+        return $this;
+    }
+
+    /**
+     * @param string|null $name
+     * @return User
+     */
+    public function setName(?string $name): User
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param int|null $assetsOpened
+     * @return User
+     */
+    public function setAssetsOpened(?int $assetsOpened): User
+    {
+        $this->assetsOpened = $assetsOpened;
+        return $this;
+    }
+
+    /**
+     * @param int|null $assetsCreated
+     * @return User
+     */
+    public function setAssetsCreated(?int $assetsCreated): User
+    {
+        $this->assetsCreated = $assetsCreated;
+        return $this;
     }
 }

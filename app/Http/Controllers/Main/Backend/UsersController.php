@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use App\User;
+use App\Services\UserService;
+use App\Entities\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
 use \Illuminate\Http\Request;
 
@@ -19,31 +21,41 @@ use \Illuminate\Http\Request;
 class UsersController extends Controller
 {
     /**
+     * @var UserService
+     */
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
-        return response()->json(User::with('plan')->get());
+        return response()->json($this->userService->getAll());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(User $user)
     {
-        return response()->json(User::find($id));
+        return response()->json($this->userService->getOne($user->getKey()));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -53,14 +65,13 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
+        $user = $this->userService->updateUser($user, $request->toArray());
 
         return response()->json($user, 200);
     }
@@ -68,14 +79,12 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @param User $user
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $this->userService->delete($user);
 
         return response()->json(null, 204);
     }
@@ -89,14 +98,11 @@ class UsersController extends Controller
        // return response()->json();
     }
 
+    /**
+     *
+     */
     public function search()
     {
-        $search = Input::get('q');
-
-        return User::where(function ($query) use ($search) {
-            /** @var \Illuminate\Database\Eloquent\Builder $query*/
-            $query->where('login', 'LIKE', "%{$search}%")
-                ->orWhere('email', 'LIKE', "%{$search}%");
-        })->get();
+        return  $this->userService->find(Input::get('q'));
     }
 }

@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use App\Events\UserRegistered;
+use App\Events\{UserDeleted, UserRegistered};
 use App\Repositories\Intro\IntroRepositoryInterface;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Entities\{Language, User, Asset};
@@ -92,6 +91,23 @@ class UserService
         $this->introRepository = $introRepository;
         $this->assetService = $assetService;
         $this->textService = $textService;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAll(): array
+    {
+        return $this->userRepository->all();
+    }
+
+    /**
+     * @param string $string
+     * @return array
+     */
+    public function find($string): array
+    {
+        return $this->userRepository->findByNameOrEmail($string);
     }
 
     /**
@@ -204,5 +220,37 @@ class UserService
         $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->getPassword();
 
         $this->userRepository->update($user, $request);
+    }
+
+    /**
+     * @param User $user
+     * @param array $data
+     * @return User
+     */
+    public function updateUser(User $user, array $data): User
+    {
+        $data['plan'] = $this->planRepository->get($data['plan']['id']);
+
+        return $this->userRepository->update($user, $data);
+    }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function delete(User $user)
+    {
+        $this->userRepository->delete($user);
+
+        event(new UserDeleted($user));
+    }
+
+    /**
+     * @param int $id
+     * @return User
+     */
+    public function getOne(int $id): User
+    {
+        return $this->userRepository->get($id);
     }
 }

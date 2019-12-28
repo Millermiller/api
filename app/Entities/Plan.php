@@ -3,6 +3,7 @@
 namespace  App\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Plans
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="plans")
  * @ORM\Entity
  */
-class Plan
+class Plan implements JsonSerializable
 {
     /**
      * @var int
@@ -66,4 +67,16 @@ class Plan
     }
 
 
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'period' => $this->period,
+            'cost' => $this->cost,
+        ];
+    }
 }
