@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Entities\Post;
+use App\Services\PostService;
+use Illuminate\Http\{JsonResponse, Request, Response};
 use Illuminate\Support\Facades\Input;
 
 /**
  * Class ArticleController
- * @package Application\Controllers\Admin
+ * @package App\Http\Controllers\Main\Backend
  *
  * Created by PhpStorm.
  * User: user
@@ -19,20 +20,34 @@ use Illuminate\Support\Facades\Input;
 class ArticleController extends Controller
 {
     /**
+     * @var PostService
+     */
+    private $postService;
+
+    /**
+     * ArticleController constructor.
+     * @param PostService $postService
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
-        return response()->json(array_values(Post::with(['category', 'comments'])->get()->sortByDesc('id')->toArray()));
+        return response()->json($this->postService->getAll());
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -43,7 +58,7 @@ class ArticleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -55,7 +70,7 @@ class ArticleController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -69,7 +84,7 @@ class ArticleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws \Exception
      */
     public function destroy($id)

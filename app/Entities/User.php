@@ -200,6 +200,14 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     private $texts;
 
     /**
+     * @var Collection|Post[]
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     *
+     */
+    private $posts;
+
+    /**
      * @return Plan
      */
     public function getPlan(): Plan
@@ -548,5 +556,21 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     {
         $this->assetsCreated = $assetsCreated;
         return $this;
+    }
+
+    /**
+     * @return Post[]|Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * @param Post[]|Collection $posts
+     */
+    public function setPosts($posts): void
+    {
+        $this->posts = $posts;
     }
 }

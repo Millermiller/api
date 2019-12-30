@@ -15,8 +15,9 @@ use App\Repositories\User\{UserRepository, UserRepositoryInterface};
 use App\Repositories\Asset\{AssetRepository, AssetRepositoryInterface};
 use App\Repositories\Language\{LanguageRepository, LanguageRepositoryInterface};
 use App\Repositories\Text\{TextRepository, TextRepositoryInterface};
+use App\Repositories\Post\{PostRepository, PostRepositoryInterface};
 use Laravel\Passport\Passport;
-use App\Entities\{Card, Message, Plan, Puzzle, Result, Translate, User, Language, Asset, Text, Intro, Word};
+use App\Entities\{Card, Message, Plan, Puzzle, Result, Translate, User, Language, Asset, Text, Intro, Word, Post};
 
 use Illuminate\Support\ServiceProvider;
 
@@ -122,6 +123,13 @@ class AppServiceProvider extends ServiceProvider
             return new MessageRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Message::class)
+            );
+        });
+
+        $this->app->bind(PostRepositoryInterface::class, function () {
+            return new PostRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Post::class)
             );
         });
     }
