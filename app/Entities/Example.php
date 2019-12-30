@@ -146,7 +146,7 @@ class Example implements JsonSerializable
     /**
      * @var Card
      *
-     * @ORM\ManyToOne(targetEntity="Card")
+     * @ORM\ManyToOne(targetEntity="Card", inversedBy="examples")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="card_id", referencedColumnName="id")
      * })

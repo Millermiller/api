@@ -115,6 +115,27 @@ class Language implements JsonSerializable
     private $assets;
 
     /**
+     * @var Collection|Text[]
+     *
+     * @ORM\OneToMany(targetEntity="Text", mappedBy="language")
+     */
+    private $texts;
+
+    /**
+     * @var Collection|Post[]
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="language")
+     */
+    private $posts;
+
+    /**
+     * @var Collection|Result[]
+     *
+     * @ORM\OneToMany(targetEntity="Result", mappedBy="language")
+     */
+    private $results;
+
+    /**
      * @return array|mixed
      */
     public function jsonSerialize()

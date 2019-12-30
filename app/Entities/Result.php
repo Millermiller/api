@@ -80,7 +80,7 @@ class Result implements JsonSerializable
     /**
      * @var Asset
      *
-     * @ORM\ManyToOne(targetEntity="Asset")
+     * @ORM\ManyToOne(targetEntity="Asset", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * })
@@ -90,7 +90,7 @@ class Result implements JsonSerializable
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -99,8 +99,11 @@ class Result implements JsonSerializable
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="Language", inversedBy="result")
-     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     *
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="results")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     * })
      */
     private $language;
 

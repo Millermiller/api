@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -50,6 +51,12 @@ class Category implements JsonSerializable
      */
     private $deletedAt;
 
+    /**
+     * @var Collection|Post[]
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
+     */
+    private $posts;
 
     /**
      * @inheritDoc

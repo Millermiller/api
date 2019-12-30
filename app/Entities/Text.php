@@ -146,7 +146,7 @@ class Text implements JsonSerializable
     /**
      * @var Collection|User[]
      *
-     * @ManyToMany(targetEntity="User", mappedBy="texts")
+     * @ORM\ManytoMany(targetEntity="User", mappedBy="texts")
      */
     private $users;
 
@@ -168,8 +168,11 @@ class Text implements JsonSerializable
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="Language", inversedBy="text")
-     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     *
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="texts")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     * })
      */
     private $language;
 
@@ -188,6 +191,14 @@ class Text implements JsonSerializable
      *
      */
     private $words;
+
+    /**
+     * @var Collection|TextResult[]
+     *
+     * @ORM\OneToMany(targetEntity="TextResult", mappedBy="text", cascade="remove")
+     *
+     */
+    private $textResults;
 
     /**
      * @var array

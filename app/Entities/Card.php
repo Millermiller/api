@@ -161,7 +161,7 @@ class Card implements JsonSerializable
     /**
      * @var Word
      *
-     * @ORM\ManyToOne(targetEntity="Word")
+     * @ORM\ManyToOne(targetEntity="Word", inversedBy="cards")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="word_id", referencedColumnName="id")
      * })
@@ -171,7 +171,7 @@ class Card implements JsonSerializable
     /**
      * @var Asset
      *
-     * @ORM\ManyToOne(targetEntity="Asset")
+     * @ORM\ManyToOne(targetEntity="Asset", inversedBy="cards")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * })

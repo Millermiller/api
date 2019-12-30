@@ -61,7 +61,7 @@ class WordInText implements JsonSerializable
     /**
      * @var Text
      *
-     * @ORM\ManyToOne(targetEntity="Text")
+     * @ORM\ManyToOne(targetEntity="Text", inversedBy="words")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="text_id", referencedColumnName="id")
      * })

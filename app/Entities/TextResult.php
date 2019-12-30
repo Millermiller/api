@@ -66,5 +66,13 @@ class TextResult
      */
     private $user;
 
-
+    /**
+     * @var Text
+     *
+     * @ORM\ManyToOne(targetEntity="Text", inversedBy="textResults")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="text_id", referencedColumnName="id")
+     * })
+     */
+    private $text;
 }
