@@ -111,7 +111,7 @@ class UserService
     }
 
     /**
-     * @param array $data
+     * @param  array $data
      * @return User
      * @throws \Exception
      */
@@ -160,6 +160,7 @@ class UserService
     /**
      * @param Authenticatable|User $user
      * @return array
+     * @throws \Exception
      */
     public function getState(Authenticatable $user)
     {

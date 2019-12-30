@@ -9,8 +9,7 @@ use App\Repositories\Card\CardRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Translate\TranslateRepositoryInterface;
 use App\Repositories\Word\WordRepositoryInterface;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Http\Request;
 
 /**
@@ -49,6 +48,15 @@ class FavouriteService
      */
     private $languageRepository;
 
+    /**
+     * FavouriteService constructor.
+     * @param CardService $cardService
+     * @param CardRepositoryInterface $cardRepository
+     * @param WordRepositoryInterface $wordRepository
+     * @param TranslateRepositoryInterface $translateRepository
+     * @param AssetRepositoryInterface $assetRepository
+     * @param LanguageRepositoryInterface $languageRepository
+     */
     public function __construct(
         CardService $cardService,
         CardRepositoryInterface $cardRepository,
@@ -58,7 +66,7 @@ class FavouriteService
         LanguageRepositoryInterface $languageRepository
     )
     {
-        $this->cardService = $cardService;
+        $this->cardService    = $cardService;
         $this->cardRepository = $cardRepository;
         $this->wordRepository = $wordRepository;
         $this->translateRepository = $translateRepository;

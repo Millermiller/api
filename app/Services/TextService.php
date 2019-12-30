@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\Result\ResultRepositoryInterface;
 use PDO;
 use Auth;
 use App\Entities\{Language, Result, Text, User};
@@ -28,14 +29,21 @@ class TextService
     private $languageRepository;
 
     /**
+     * @var ResultRepositoryInterface
+     */
+    protected $resultRepository;
+
+    /**
      * TextService constructor.
      * @param TextRepositoryInterface $textRepository
      * @param LanguageRepositoryInterface $languageRepository
+     * @param ResultRepositoryInterface $resultRepository
      */
-    public function __construct(TextRepositoryInterface $textRepository, LanguageRepositoryInterface $languageRepository)
+    public function __construct(TextRepositoryInterface $textRepository, LanguageRepositoryInterface $languageRepository, ResultRepositoryInterface $resultRepository)
     {
         $this->textRepository = $textRepository;
         $this->languageRepository = $languageRepository;
+        $this->resultRepository   = $resultRepository;
     }
 
     /**
@@ -86,7 +94,7 @@ class TextService
     }
 
     /**
-     * @param Text $text
+     * @param  Text $text
      * @return Text
      * @throws DBALException
      */
@@ -123,8 +131,8 @@ class TextService
     }
 
     /**
-     * @param Authenticatable|User $user
-     * @param Text $text
+     * @param  Authenticatable|User $user
+     * @param  Text $text
      * @return Text
      */
     public function giveNextLevel(Authenticatable $user, Text $text): Text

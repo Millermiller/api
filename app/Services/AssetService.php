@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\{Result, User, Asset};
@@ -44,6 +43,14 @@ class AssetService
      */
     private $userRepository;
 
+    /**
+     * AssetService constructor.
+     * @param LanguageRepositoryInterface $languageRepository
+     * @param AssetRepositoryInterface $assetsRepository
+     * @param ResultRepositoryInterface $resultRepository
+     * @param AssetRepositoryInterface $assetRepository
+     * @param AssetRepositoryInterface $userRepository
+     */
     public function __construct(
         LanguageRepositoryInterface $languageRepository,
         AssetRepositoryInterface $assetsRepository,
@@ -53,10 +60,10 @@ class AssetService
     )
     {
         $this->languageRepository = $languageRepository;
-        $this->assetsRepository = $assetsRepository;
-        $this->resultRepository = $resultRepository;
-        $this->assetRepository = $assetRepository;
-        $this->userRepository = $userRepository;
+        $this->assetsRepository   = $assetsRepository;
+        $this->resultRepository   = $resultRepository;
+        $this->assetRepository    = $assetRepository;
+        $this->userRepository     = $userRepository;
     }
 
     /**
@@ -99,11 +106,12 @@ class AssetService
     /**
      * Возвращает массив словарей определенного типа для пользователя
      *
-     * @param \App\Entities\User $user
+     * @param User $user
      * @param int $type
      * @return array
+     * @throws \Exception
      */
-    public function getAssetsByType(\App\Entities\User $user, int $type)
+    public function getAssetsByType(User $user, int $type)
     {
         $language = $this->languageRepository->get(config('app.lang'));
 
@@ -115,7 +123,7 @@ class AssetService
         $testlink = false;
         $counter = 0;
 
-        /** @var \App\Entities\Asset $asset */
+        /** @var Asset $asset */
         foreach($assets as &$asset) {
             $counter++;
             if (in_array($asset->getId(), $activeArray)) {
@@ -155,7 +163,6 @@ class AssetService
 
         return $assets;
     }
-
 
     /**
      * @param User $user

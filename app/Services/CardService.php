@@ -41,6 +41,14 @@ class CardService
      */
     private $translateRepository;
 
+    /**
+     * CardService constructor.
+     * @param AssetRepositoryInterface $assetRepository
+     * @param LanguageRepositoryInterface $languageRepository
+     * @param CardRepositoryInterface $cardRepository
+     * @param WordRepositoryInterface $wordRepository
+     * @param TranslateRepositoryInterface $translateRepository
+     */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         LanguageRepositoryInterface $languageRepository,
@@ -49,10 +57,10 @@ class CardService
         TranslateRepositoryInterface $translateRepository
     )
     {
-        $this->assetRepository = $assetRepository;
-        $this->languageRepository = $languageRepository;
-        $this->cardRepository = $cardRepository;
-        $this->wordRepository = $wordRepository;
+        $this->assetRepository     = $assetRepository;
+        $this->languageRepository  = $languageRepository;
+        $this->cardRepository      = $cardRepository;
+        $this->wordRepository      = $wordRepository;
         $this->translateRepository = $translateRepository;
     }
 

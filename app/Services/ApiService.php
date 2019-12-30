@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Asset;
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Result\ResultRepositoryInterface;
@@ -28,11 +27,17 @@ class ApiService
      */
     protected $resultRepository;
 
+    /**
+     * ApiService constructor.
+     * @param LanguageRepositoryInterface $languageRepository
+     * @param AssetRepositoryInterface $assetsRepository
+     * @param ResultRepositoryInterface $resultRepository
+     */
     public function __construct(LanguageRepositoryInterface $languageRepository, AssetRepositoryInterface $assetsRepository, ResultRepositoryInterface $resultRepository)
     {
         $this->languageRepository = $languageRepository;
-        $this->assetsRepository = $assetsRepository;
-        $this->resultRepository = $resultRepository;
+        $this->assetsRepository   = $assetsRepository;
+        $this->resultRepository   = $resultRepository;
     }
 
     /**
@@ -46,6 +51,7 @@ class ApiService
     /**
      * @param $language
      * @return array
+     * @throws \Exception
      */
     public function getAssets($language)
     {

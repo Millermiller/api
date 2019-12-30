@@ -5,9 +5,7 @@ namespace App\Services;
 use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Message\MessageRepositoryInterface;
-use App\Repositories\Plan\PlanRepositoryInterface;
 use App\Repositories\Text\TextRepositoryInterface;
-use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Word\WordRepositoryInterface;
 
 class AdminService
@@ -54,10 +52,10 @@ class AdminService
     )
     {
         $this->languageRepository = $languageRepository;
-        $this->assetRepository = $assetRepository;
-        $this->textRepository = $textRepository;
-        $this->wordRepository = $wordRepository;
-        $this->messageRepository = $messageRepository;
+        $this->assetRepository    = $assetRepository;
+        $this->textRepository     = $textRepository;
+        $this->wordRepository     = $wordRepository;
+        $this->messageRepository  = $messageRepository;
     }
 
     /**
