@@ -2,11 +2,9 @@
 
 namespace App\Repositories\Text;
 
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use App\Entities\{Text, Language, TextsUsers, User};
+use Doctrine\ORM\{NoResultException, NonUniqueResultException};
+use App\Entities\{Text, Language, TextResult, User};
 use App\Repositories\BaseRepository;
-use Doctrine\ORM\AbstractQuery;
 
 class TextRepository extends BaseRepository implements TextRepositoryInterface
 {
@@ -42,7 +40,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         app('em')->getConfiguration()->addCustomHydrationMode('ColumnHydrator', '\App\Hydrators\ColumnHydrator');
 
         return $q->select('r.textId')
-            ->from(TextsUsers::class, 'r')
+            ->from(TextResult::class, 'r')
             ->join('r.text', 't')
             ->where($q->expr()->eq('r.user', ':user'))
             ->andWhere($q->expr()->eq('t.language', ':language'))

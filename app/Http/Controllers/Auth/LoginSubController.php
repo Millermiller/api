@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use App\Entities\User;
 use Auth;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
+use Illuminate\Http\{Request, JsonResponse};
+use Illuminate\Validation\ValidationException;
 
 class LoginSubController extends Controller
 {
@@ -33,9 +35,9 @@ class LoginSubController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Doctrine\ORM\Query\QueryException
-     * @throws \Illuminate\Validation\ValidationException
+     * @return JsonResponse
+     * @throws ValidationException
+     * @throws Exception
      */
     public function login(Request $request)
     {
