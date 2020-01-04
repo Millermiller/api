@@ -24,7 +24,14 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => 'required'
+            'word' => 'required|min:3|max:255'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'min' => 'Минимум :min символа'
         ];
     }
 }

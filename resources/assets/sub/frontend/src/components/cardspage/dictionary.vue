@@ -133,7 +133,12 @@
                         })
                     },
                     (response) => {
-                        console.log(response)
+                        if(response.body.errors.word){
+                            response.body.errors.word.forEach(item => {
+                                this.message = item
+                            });
+                            this.loading = false
+                        }
                     }
                 )
             },

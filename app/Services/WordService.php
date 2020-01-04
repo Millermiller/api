@@ -87,6 +87,6 @@ class WordService
         $stmt->execute($params);
         $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-        return $this->translateRepository->searchByIds($ids);
+        return $ids ? $this->translateRepository->searchByIds($ids) : [];
     }
 }
