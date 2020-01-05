@@ -13,10 +13,9 @@ use App\Repositories\Plan\{PlanRepository, PlanRepositoryInterface};
 use App\Repositories\User\{UserRepository, UserRepositoryInterface};
 use App\Repositories\Asset\{AssetRepository, AssetRepositoryInterface};
 use App\Repositories\Language\{LanguageRepository, LanguageRepositoryInterface};
-use App\Repositories\Text\{TextRepository, TextRepositoryInterface};
 use App\Repositories\Post\{PostRepository, PostRepositoryInterface};
 use Laravel\Passport\Passport;
-use App\Entities\{Card, Message, Plan, Result, Translate, User, Language, Asset, Text, Intro, Word, Post};
+use App\Entities\{Card, Message, Plan, Result, Translate, User, Language, Asset, Intro, Word, Post};
 
 use Illuminate\Support\ServiceProvider;
 
@@ -66,13 +65,6 @@ class AppServiceProvider extends ServiceProvider
             return new AssetRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Asset::class)
-            );
-        });
-
-        $this->app->bind(TextRepositoryInterface::class, function () {
-            return new TextRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Text::class)
             );
         });
 

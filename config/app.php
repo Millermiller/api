@@ -190,6 +190,8 @@ return [
          */
         Scandinaver\Puzzle\Application\PuzzleServiceProvider::class,
         Scandinaver\Puzzle\Application\RouteServiceProvider::class,
+        Scandinaver\Text\Application\TextServiceProvider::class,
+        Scandinaver\Text\Application\RouteServiceProvider::class,
     ],
 
     /*

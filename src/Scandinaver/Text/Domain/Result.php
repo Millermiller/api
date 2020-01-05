@@ -1,7 +1,9 @@
 <?php
 
-namespace  App\Entities;
+namespace Scandinaver\Text\Domain;
 
+use App\Entities\Language;
+use App\Entities\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,8 +12,22 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="texts_users", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="text_id", columns={"text_id"})})
  * @ORM\Entity
  */
-class TextResult
+class Result
 {
+
+    /**
+     * Result constructor.
+     * @param Text $text
+     * @param User $user
+     * @param Language $language
+     */
+    public function __construct(Text $text, User $user, Language $language)
+    {
+        $this->lang = $language;
+        $this->user = $user;
+        $this->text = $text;
+    }
+
     /**
      * @var int
      *
@@ -24,9 +40,19 @@ class TextResult
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lang", type="string", length=50, nullable=true)
+     * @ORM\Column(name="language_id", type="string", length=50, nullable=true)
      */
-    private $lang;
+    private $languageId;
+
+    /**
+     * @var Language
+     *
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="results")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     * })
+     */
+    private $language;
 
     /**
      * @var int|null
@@ -59,7 +85,7 @@ class TextResult
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="App\Entities\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

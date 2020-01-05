@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Repositories\Text;
+namespace Scandinaver\Text\Domain;
 
-use App\Entities\{Text, Language, User};
+
+use App\Entities\Language;
+use App\Entities\User;
 use App\Repositories\BaseRepositoryInterface;
 
 /**
  * Interface TextRepositoryInterface
- * @package App\Repositories\Text
+ * @package Scandinaver\Text\Domain;
  */
 interface TextRepositoryInterface extends BaseRepositoryInterface
 {

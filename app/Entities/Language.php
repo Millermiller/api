@@ -117,7 +117,7 @@ class Language implements JsonSerializable
     /**
      * @var Collection|Text[]
      *
-     * @ORM\OneToMany(targetEntity="Text", mappedBy="language")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Text\Domain\Text", mappedBy="language")
      */
     private $texts;
 

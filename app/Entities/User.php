@@ -18,6 +18,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Scandinaver\Puzzle\Domain\Puzzle;
+use Scandinaver\Text\Domain\Text;
 
 /**
  * Users
@@ -195,7 +196,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     /**
      * @var \Doctrine\Common\Collections\Collection|Text[]
      *
-     * @ManyToMany(targetEntity="Text", inversedBy="users")
+     * @ManyToMany(targetEntity="Scandinaver\Text\Domain\Text", inversedBy="users")
      * @JoinTable(name="texts_users")
      */
     private $texts;

@@ -1,18 +1,18 @@
 <?php
 
-namespace  App\Entities;
+namespace Scandinaver\Text\Domain;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 /**
- * WordInText
+ * TextExtras
  *
- * @ORM\Table(name="word_in_text", indexes={@ORM\Index(name="text_id", columns={"text_id", "sentence_num", "word"}), @ORM\Index(name="IDX_1B42EF50698D3548", columns={"text_id"})})
+ * @ORM\Table(name="text_extras", indexes={@ORM\Index(name="text_id", columns={"text_id", "orig", "extra"}), @ORM\Index(name="IDX_3317FC22698D3548", columns={"text_id"})})
  * @ORM\Entity
  */
-class WordInText implements JsonSerializable
+class TextExtra implements JsonSerializable
 {
     /**
      * @var int
@@ -24,25 +24,18 @@ class WordInText implements JsonSerializable
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="sentence_num", type="integer", nullable=false)
-     */
-    private $sentenceNum;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="word", type="string", length=255, nullable=false)
-     */
-    private $word;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="orig", type="string", length=255, nullable=false)
      */
     private $orig;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="extra", type="string", length=255, nullable=false)
+     */
+    private $extra;
 
     /**
      * @var DateTime|null
@@ -61,24 +54,23 @@ class WordInText implements JsonSerializable
     /**
      * @var Text
      *
-     * @ORM\ManyToOne(targetEntity="Text", inversedBy="words")
+     * @ORM\ManyToOne(targetEntity="Text", inversedBy="extra")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="text_id", referencedColumnName="id")
      * })
      */
     private $text;
 
+
     /**
      * @inheritDoc
      */
     public function jsonSerialize()
     {
-        return [
-            'id' => $this->id,
-            'text_id' => $this->text->getId(),
-            'sentence_num' => $this->sentenceNum,
-            'word' => $this->word,
-            'orig' => $this->orig,
-        ];
+       return [
+           'id' => $this->id,
+           'orig' => $this->orig,
+           'extra' => $this->extra,
+       ];
     }
 }

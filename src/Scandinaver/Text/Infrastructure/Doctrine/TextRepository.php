@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Repositories\Text;
+namespace Scandinaver\Text\Infrastructure\Doctrine;
 
 use Doctrine\ORM\{NoResultException, NonUniqueResultException};
-use App\Entities\{Text, Language, TextResult, User};
+use Scandinaver\Text\Domain\{Result, Text, TextRepositoryInterface};
+use App\Entities\{Language, User};
 use App\Repositories\BaseRepository;
 
+/**
+ * Class TextRepository
+ * @package Scandinaver\Text\Infrastructure\Doctrine
+ */
 class TextRepository extends BaseRepository implements TextRepositoryInterface
 {
     /**
@@ -40,7 +45,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         app('em')->getConfiguration()->addCustomHydrationMode('ColumnHydrator', '\App\Hydrators\ColumnHydrator');
 
         return $q->select('r.textId')
-            ->from(TextResult::class, 'r')
+            ->from(Result::class, 'r')
             ->join('r.text', 't')
             ->where($q->expr()->eq('r.user', ':user'))
             ->andWhere($q->expr()->eq('t.language', ':language'))

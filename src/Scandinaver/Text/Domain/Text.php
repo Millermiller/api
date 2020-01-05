@@ -1,13 +1,14 @@
 <?php
 
-namespace  App\Entities;
+namespace Scandinaver\Text\Domain;
 
+use App\Entities\Language;
+use App\Entities\User;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use JsonSerializable;
-use WordInText;
 
 /**
  * Text
@@ -146,7 +147,7 @@ class Text implements JsonSerializable
     /**
      * @var Collection|User[]
      *
-     * @ORM\ManytoMany(targetEntity="User", mappedBy="texts")
+     * @ORM\ManytoMany(targetEntity="App\Entities\User", mappedBy="texts")
      */
     private $users;
 
@@ -169,7 +170,7 @@ class Text implements JsonSerializable
     /**
      * @var Language
      *
-     * @ORM\ManyToOne(targetEntity="Language", inversedBy="texts")
+     * @ORM\ManyToOne(targetEntity="App\Entities\Language", inversedBy="texts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * })
@@ -179,23 +180,23 @@ class Text implements JsonSerializable
     /**
      * @var Collection|TextExtra[]
      *
-     * @ORM\OneToMany(targetEntity="TextExtra", mappedBy="text")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Text\Domain\TextExtra", mappedBy="text")
      *
      */
     private $extra;
 
     /**
-     * @var Collection|WordInText[]
+     * @var Collection|Word[]
      *
-     * @ORM\OneToMany(targetEntity="WordInText", mappedBy="text")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Text\Domain\Word", mappedBy="text")
      *
      */
     private $words;
 
     /**
-     * @var Collection|TextResult[]
+     * @var Collection|Result[]
      *
-     * @ORM\OneToMany(targetEntity="TextResult", mappedBy="text", cascade="remove")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Text\Domain\Result", mappedBy="text", cascade="remove")
      *
      */
     private $textResults;

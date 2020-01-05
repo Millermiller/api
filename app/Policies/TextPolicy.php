@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Entities\User;
-use App\Entities\Text;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Scandinaver\Text\Domain\Text;
 
-class textPolicy
+class TextPolicy
 {
     use HandlesAuthorization;
 

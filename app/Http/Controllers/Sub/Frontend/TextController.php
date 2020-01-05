@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use Auth;
-use App\Entities\{Text};
+use Scandinaver\Text\Domain\{TextService, Text};
 use App\Http\Controllers\Controller;
-use App\Services\TextService;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\NoResultException;
 use Illuminate\Auth\Access\AuthorizationException;

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Scandinaver\Text\Domain\TextRepositoryInterface;
+use Scandinaver\Text\Domain\TextService;
 use App\Events\{UserDeleted, UserRegistered};
 use App\Repositories\Intro\IntroRepositoryInterface;
 use Carbon\Carbon;
@@ -12,7 +14,6 @@ use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use App\Repositories\Plan\PlanRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
-use App\Repositories\Text\TextRepositoryInterface;
 use Auth;
 
 /**

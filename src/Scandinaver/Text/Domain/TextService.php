@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Services;
+namespace Scandinaver\Text\Domain;
 
-use App\Repositories\Result\ResultRepositoryInterface;
 use PDO;
 use Auth;
-use App\Entities\{Language, Result, Text, User};
+use App\Entities\{Language, User};
 use App\Events\NextTextLevel;
 use App\Repositories\Language\LanguageRepositoryInterface;
-use App\Repositories\Text\TextRepositoryInterface;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * Class TextService
- * @package App\Services
+ * @package Scandinaver\Text\Domain;
  */
 class TextService
 {

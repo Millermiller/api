@@ -53,9 +53,8 @@ Route::group([
     Route::get('/translate', 'WordController@search');
     Route::resource('/word', 'WordController', ['except' => ['delete', 'update']]);
 
-    Route::resource('/text', 'TextController')->only(['show']);
-    Route::get('/syns/{id}', 'TextController@getSyns');
-    Route::post('/nextTLevel', 'TextController@nextLevel');
+
+
 });
 
 /******************************** SUBDOMAIN - ADMIN ***********************************/
@@ -103,19 +102,7 @@ Route::group([
     Route::post('/wordfile', 'AssetsController@uploadSentences');
     Route::post('/card', 'AssetsController@addPair');
 
-    Route::get('/texts', 'TextController@index');
-    Route::post('/text/publish', 'TextController@publish');
-    Route::post('/text/{id}', 'TextController@textedit');
-    Route::post('/text', 'TextController@textcreate');
-    Route::delete('/text/{id}', 'TextController@textdelete');
-    Route::get('/text/{id}', 'TextController@getText');
-    Route::post('/text/extra', 'TextController@addExtras');
-    Route::post('/text/sentences', 'TextController@saveSentences');
-    Route::get('/text/synonyms/{id}', 'TextController@getSynonyms');
-    Route::post('/text/synonym', 'TextController@addSynonym');
-    Route::delete('/text/synonym/{id}', 'TextController@deleteSynonym');
-    Route::post('/text/image/{id}', 'TextController@uploadImage');
-    Route::post('/text/description/{id}', 'TextController@updateDescription');
+
 
     Route::resource('/intro', 'IntroController');
 });
