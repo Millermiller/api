@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Text\Infrastructure\Doctrine;
+namespace Scandinaver\Text\Infrastructure\Persistence\Doctrine;
 
 use Scandinaver\Text\Domain\ResultRepositoryInterface;
 use App\Repositories\BaseRepository;

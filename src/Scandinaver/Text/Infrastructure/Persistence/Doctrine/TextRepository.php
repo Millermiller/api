@@ -1,6 +1,6 @@
 <?php
 
-namespace Scandinaver\Text\Infrastructure\Doctrine;
+namespace Scandinaver\Text\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\{NoResultException, NonUniqueResultException};
 use Scandinaver\Text\Domain\{Result, Text, TextRepositoryInterface};

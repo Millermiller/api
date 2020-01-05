@@ -1,14 +1,17 @@
 <?php
 
-namespace Scandinaver\Puzzle\Infrastructure\Doctrine;
+namespace Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine;
 
 use App\Entities\User;
 use App\Repositories\BaseRepository;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Scandinaver\Puzzle\Domain\{Puzzle, PuzzleRepositoryInterface};
 
+/**
+ * Class PuzzleRepository
+ * @package Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine
+ */
 class PuzzleRepository  extends BaseRepository implements PuzzleRepositoryInterface
-
 {
     /**
      * @param User $user

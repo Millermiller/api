@@ -5,6 +5,10 @@ namespace Scandinaver\Puzzle\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
+/**
+ * Class RouteServiceProvider
+ * @package Scandinaver\Puzzle\Application
+ */
 class RouteServiceProvider extends ServiceProvider
 {
     /**

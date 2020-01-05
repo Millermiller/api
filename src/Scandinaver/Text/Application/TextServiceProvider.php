@@ -5,8 +5,7 @@ namespace Scandinaver\Text\Application;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Text\Domain\{Result, ResultRepositoryInterface, TextRepositoryInterface, Text};
-use Scandinaver\Text\Infrastructure\Doctrine\ResultRepository;
-use Scandinaver\Text\Infrastructure\Doctrine\TextRepository;
+use Scandinaver\Text\Infrastructure\Persistence\Doctrine\{TextRepository, ResultRepository};
 
 /**
  * Class TextServiceProvider
