@@ -6,7 +6,6 @@ use App\Repositories\Message\MessageRepository;
 use App\Repositories\Message\MessageRepositoryInterface;
 use App\Repositories\Card\{CardRepository, CardRepositoryInterface};
 use App\Repositories\Intro\{IntroRepository, IntroRepositoryInterface};
-use App\Repositories\Puzzle\{PuzzleRepository, PuzzleRepositoryInterface};
 use App\Repositories\Translate\{TranslateRepository, TranslateRepositoryInterface};
 use App\Repositories\Word\{WordRepository, WordRepositoryInterface};
 use App\Repositories\Result\{ResultRepository, ResultRepositoryInterface};
@@ -17,7 +16,7 @@ use App\Repositories\Language\{LanguageRepository, LanguageRepositoryInterface};
 use App\Repositories\Text\{TextRepository, TextRepositoryInterface};
 use App\Repositories\Post\{PostRepository, PostRepositoryInterface};
 use Laravel\Passport\Passport;
-use App\Entities\{Card, Message, Plan, Puzzle, Result, Translate, User, Language, Asset, Text, Intro, Word, Post};
+use App\Entities\{Card, Message, Plan, Result, Translate, User, Language, Asset, Text, Intro, Word, Post};
 
 use Illuminate\Support\ServiceProvider;
 
@@ -91,12 +90,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(PuzzleRepositoryInterface::class, function () {
-            return new PuzzleRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Puzzle::class)
-            );
-        });
+
 
         $this->app->bind(CardRepositoryInterface::class, function () {
             return new CardRepository(

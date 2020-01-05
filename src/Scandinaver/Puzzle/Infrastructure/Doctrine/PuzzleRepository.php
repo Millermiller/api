@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Repositories\Puzzle;
+namespace Scandinaver\Puzzle\Infrastructure\Doctrine;
 
 use App\Entities\User;
 use App\Repositories\BaseRepository;
+use Doctrine\ORM\{ORMException, OptimisticLockException};
+use Scandinaver\Puzzle\Domain\{Puzzle, PuzzleRepositoryInterface};
 
 class PuzzleRepository  extends BaseRepository implements PuzzleRepositoryInterface
+
 {
     /**
      * @param User $user
@@ -22,5 +25,17 @@ class PuzzleRepository  extends BaseRepository implements PuzzleRepositoryInterf
              ->orderBy('p.id', 'asc')
              ->getQuery()
              ->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @param Puzzle $puzzle
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function addForUser(User $user, Puzzle $puzzle): void
+    {
+        $user->addPuzzle($puzzle);
+        $this->_em->flush();
     }
 }

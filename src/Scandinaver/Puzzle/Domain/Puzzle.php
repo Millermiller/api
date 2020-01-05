@@ -1,7 +1,8 @@
 <?php
 
-namespace  App\Entities;
+namespace  Scandinaver\Puzzle\Domain;
 
+use App\Entities\User;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -62,7 +63,7 @@ class Puzzle implements JsonSerializable
     /**
      * @var Collection|User[]
      *
-     * @ORM\ManytoMany(targetEntity="User", mappedBy="puzzles")
+     * @ORM\ManytoMany(targetEntity="App\Entities\User", mappedBy="puzzles")
      */
     private $users;
 

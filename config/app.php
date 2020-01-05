@@ -184,6 +184,11 @@ return [
         Eusonlito\LaravelMeta\MetaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Reliese\Coders\CodersServiceProvider::class,
+
+        /*
+         * Scandinaver Service Providers...
+         */
+        Scandinaver\Puzzle\Application\PuzzleServiceProvider::class,
     ],
 
     /*
