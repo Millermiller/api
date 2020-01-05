@@ -189,6 +189,7 @@ return [
          * Scandinaver Service Providers...
          */
         Scandinaver\Puzzle\Application\PuzzleServiceProvider::class,
+        Scandinaver\Puzzle\Application\RouteServiceProvider::class,
     ],
 
     /*

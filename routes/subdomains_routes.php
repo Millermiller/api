@@ -56,8 +56,6 @@ Route::group([
     Route::resource('/text', 'TextController')->only(['show']);
     Route::get('/syns/{id}', 'TextController@getSyns');
     Route::post('/nextTLevel', 'TextController@nextLevel');
-
-    Route::resource('/puzzle', 'PuzzleController', ['except' => ['create', 'delete']]);
 });
 
 /******************************** SUBDOMAIN - ADMIN ***********************************/
@@ -119,6 +117,5 @@ Route::group([
     Route::post('/text/image/{id}', 'TextController@uploadImage');
     Route::post('/text/description/{id}', 'TextController@updateDescription');
 
-    Route::resource('/puzzle', 'PuzzleController');
     Route::resource('/intro', 'IntroController');
 });
