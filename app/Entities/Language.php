@@ -1,11 +1,14 @@
 <?php
 
+
 namespace  App\Entities;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Result;
+use Scandinaver\Text\Domain\Text;
 
 /**
  * Languages
@@ -110,7 +113,7 @@ class Language implements JsonSerializable
     /**
      * @var Collection|Asset[]
      *
-     * @ORM\OneToMany(targetEntity="Asset", mappedBy="language")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Asset", mappedBy="language")
      */
     private $assets;
 
@@ -131,7 +134,7 @@ class Language implements JsonSerializable
     /**
      * @var Collection|Result[]
      *
-     * @ORM\OneToMany(targetEntity="Result", mappedBy="language")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Result", mappedBy="language")
      */
     private $results;
 

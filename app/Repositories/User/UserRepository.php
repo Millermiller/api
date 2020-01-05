@@ -3,9 +3,11 @@
 
 namespace App\Repositories\User;
 
-use App\Entities\{Asset, Plan, Text, User};
+use App\Entities\{Plan, User};
 use App\Repositories\BaseRepository;
 use Doctrine\ORM\{NonUniqueResultException, NoResultException, ORMException, OptimisticLockException};
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Text\Domain\Text;
 
 /**
  * Class UserRepository

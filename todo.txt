@@ -1,5 +1,7 @@
 ﻿сделать domain events
 
+remove assetIno request
+
 нормальный поиск по словам
 
 общий вход на форум

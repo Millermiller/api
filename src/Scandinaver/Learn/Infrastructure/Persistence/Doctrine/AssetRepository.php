@@ -1,18 +1,27 @@
 <?php
 
-namespace App\Repositories\Asset;
 
-use App\Entities\{Asset, Language, User};
+namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
+
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use App\Entities\{Language, User};
 use App\Repositories\BaseRepository;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Contracts\AssetRepositoryInterface;
 
+/**
+ * Class AssetRepository
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
+ */
 class AssetRepository extends BaseRepository implements AssetRepositoryInterface
 {
     /**
      * @param Language $language
      * @param int $type
      * @return Asset
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function getFirstAsset(Language $language, int $type): Asset
     {
@@ -88,8 +97,8 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      * @param Language $language
      * @param User $user
      * @return Asset
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function getFavouriteAsset(Language $language, User $user): Asset
     {
@@ -134,8 +143,8 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
     /**
      * @param Asset $asset
      * @return Asset
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function getNextAsset(Asset $asset, Language $language): Asset
     {

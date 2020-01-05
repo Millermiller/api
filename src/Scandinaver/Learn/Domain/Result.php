@@ -1,7 +1,10 @@
 <?php
 
-namespace  App\Entities;
 
+namespace Scandinaver\Learn\Domain;
+
+use App\Entities\Language;
+use App\Entities\User;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -80,7 +83,7 @@ class Result implements JsonSerializable
     /**
      * @var Asset
      *
-     * @ORM\ManyToOne(targetEntity="Asset", inversedBy="results")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Asset", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * })
@@ -90,7 +93,7 @@ class Result implements JsonSerializable
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="results")
+     * @ORM\ManyToOne(targetEntity="App\Entities\User", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -100,7 +103,7 @@ class Result implements JsonSerializable
     /**
      * @var Language
      *
-     * @ORM\ManyToOne(targetEntity="Language", inversedBy="results")
+     * @ORM\ManyToOne(targetEntity="App\Entities\Language", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * })

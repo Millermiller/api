@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Entities\Asset;
-use App\Services\{AssetService, CardService};
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
@@ -50,7 +50,7 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        $this->authorize('view', $asset);
+      //  $this->authorize('view', $asset);
 
         $cards = $this->cardService->getCards($asset);
 

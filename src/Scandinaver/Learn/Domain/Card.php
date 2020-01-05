@@ -1,6 +1,7 @@
 <?php
 
-namespace  App\Entities;
+
+namespace Scandinaver\Learn\Domain;
 
 use DateTime;
 use Doctrine\Common\Collections\Collection;
@@ -161,7 +162,7 @@ class Card implements JsonSerializable
     /**
      * @var Word
      *
-     * @ORM\ManyToOne(targetEntity="Word", inversedBy="cards")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Word", inversedBy="cards")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="word_id", referencedColumnName="id")
      * })
@@ -171,7 +172,7 @@ class Card implements JsonSerializable
     /**
      * @var Asset
      *
-     * @ORM\ManyToOne(targetEntity="Asset", inversedBy="cards")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Asset", inversedBy="cards")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * })
@@ -181,7 +182,7 @@ class Card implements JsonSerializable
     /**
      * @var Translate
      *
-     * @ORM\ManyToOne(targetEntity="Translate")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Translate")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="translate_id", referencedColumnName="id")
      * })
@@ -191,7 +192,7 @@ class Card implements JsonSerializable
     /**
      * @var Collection|Example[]
      *
-     * @ORM\OneToMany(targetEntity="Example", mappedBy="card")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Example", mappedBy="card")
      *
      */
     private $examples;

@@ -192,6 +192,8 @@ return [
         Scandinaver\Puzzle\Application\RouteServiceProvider::class,
         Scandinaver\Text\Application\TextServiceProvider::class,
         Scandinaver\Text\Application\RouteServiceProvider::class,
+        Scandinaver\Learn\Application\LearnServiceProvider::class,
+        Scandinaver\Learn\Application\RouteServiceProvider::class,
     ],
 
     /*

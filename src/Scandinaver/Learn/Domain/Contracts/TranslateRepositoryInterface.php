@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Translate;
+namespace Scandinaver\Learn\Domain\Contracts;
 
 use App\Repositories\BaseRepositoryInterface;
 

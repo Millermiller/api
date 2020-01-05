@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Services;
 
+namespace Scandinaver\Learn\Domain\Services;
+
+use Auth;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use App\Entities\{Result, User, Asset};
+use Scandinaver\Learn\Domain\{Asset, Result};
+use App\Entities\User;
 use App\Events\{AssetCreated, AssetDelete, NextLevel};
-use App\Repositories\Asset\AssetRepositoryInterface;
 use App\Repositories\Language\LanguageRepositoryInterface;
-use App\Repositories\Result\ResultRepositoryInterface;
-use Auth;
+use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultRepositoryInterface};
 
 /**
  * Class AssetService

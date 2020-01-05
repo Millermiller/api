@@ -3,11 +3,11 @@
 
 namespace App\Repositories\User;
 
-use App\Entities\Asset;
 use App\Entities\Plan;
-use App\Entities\Text;
 use App\Entities\User;
 use App\Repositories\BaseRepositoryInterface;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Text\Domain\Text;
 
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {

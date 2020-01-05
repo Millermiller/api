@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Services;
 
-use App\Http\Requests\{SearchRequest, CreateWordRequest};
-use App\Models\Translate;
-use App\Models\Word;
-use App\Repositories\Translate\TranslateRepositoryInterface;
+namespace Scandinaver\Learn\Domain\Services;
+
 use Auth;
-use Doctrine\DBAL\DBALException;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use PDO;
+use App\Helpers\Eloquent\Word;
+use Scandinaver\Learn\Domain\Contracts\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Translate;
+use App\Http\Requests\{SearchRequest, CreateWordRequest};
+use Doctrine\DBAL\DBALException;
+use Illuminate\Database\Eloquent\{Builder, Collection};
 
 /**
  * Class WordService
@@ -34,19 +34,23 @@ class WordService
 
     public function create(CreateWordRequest $request)
     {
-        $word = new Word([
-            'word' => $request->get('orig'),
-            'sentence' => 0,
-            'is_public' => $request->get('is_public'),
-            'creator' => Auth::user()->id,
-            'lang' => config('app.lang')
-        ]);
+        $word = new Word(
+            [
+                'word' => $request->get('orig'),
+                'sentence' => 0,
+                'is_public' => $request->get('is_public'),
+                'creator' => Auth::user()->getId(),
+                'lang' => config('app.lang')
+            ]
+        );
 
-        $word->translates()->create([
-            'value' => $request->get('translate'),
-            'sentence' => 0,
-            'is_public' => $request->get('is_public')
-        ]);
+        $word->translates()->create(
+            [
+                'value' => $request->get('translate'),
+                'sentence' => 0,
+                'is_public' => $request->get('is_public')
+            ]
+        );
 
         $word->load('translates');
 
@@ -81,7 +85,7 @@ class WordService
                             and w.language_id = ?
                             order by score desc';
 
-        $params = [$word, $word, $word."%", $word, $sentence, Auth::user()->getKey(), config('app.lang')];
+        $params = [$word, $word, $word . "%", $word, $sentence, Auth::user()->getKey(), config('app.lang')];
 
         $stmt = app('em')->getConnection()->prepare($sql);
         $stmt->execute($params);

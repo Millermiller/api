@@ -1,6 +1,7 @@
 <?php
 
-namespace  App\Entities;
+
+namespace Scandinaver\Learn\Domain;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -90,7 +91,7 @@ class Translate implements JsonSerializable
     /**
      * @var Word
      *
-     * @ORM\ManyToOne(targetEntity="Word")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Word")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="word_id", referencedColumnName="id")
      * })

@@ -61,47 +61,10 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(AssetRepositoryInterface::class, function () {
-            return new AssetRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Asset::class)
-            );
-        });
-
-        $this->app->bind(ResultRepositoryInterface::class, function () {
-            return new ResultRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Result::class)
-            );
-        });
-
         $this->app->bind(IntroRepositoryInterface::class, function () {
             return new IntroRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Intro::class)
-            );
-        });
-
-
-
-        $this->app->bind(CardRepositoryInterface::class, function () {
-            return new CardRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Card::class)
-            );
-        });
-
-        $this->app->bind(TranslateRepositoryInterface::class, function () {
-            return new TranslateRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Translate::class)
-            );
-        });
-
-        $this->app->bind(WordRepositoryInterface::class, function () {
-            return new WordRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Word::class)
             );
         });
 

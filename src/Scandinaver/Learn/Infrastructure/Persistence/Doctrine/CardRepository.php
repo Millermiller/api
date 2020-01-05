@@ -1,10 +1,17 @@
 <?php
 
-namespace App\Repositories\Card;
 
-use App\Entities\{Text, Language, User};
+namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
+
+use Scandinaver\Learn\Domain\Contracts\CardRepositoryInterface;
+use App\Entities\{Language, User};
 use App\Repositories\BaseRepository;
+use Scandinaver\Text\Domain\Text;
 
+/**
+ * Class CardRepository
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
+ */
 class CardRepository extends BaseRepository implements CardRepositoryInterface
 {
     /**

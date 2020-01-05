@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Card;
+namespace Scandinaver\Learn\Domain\Contracts;
 
 use App\Entities\{Language, User};
 use App\Repositories\BaseRepositoryInterface;

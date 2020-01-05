@@ -1,18 +1,23 @@
 <?php
 
-namespace App\Repositories\Result;
 
-use App\Entities\{Asset, Result, User, Language};
+namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
+
+use Scandinaver\Learn\Domain\{Asset, Result};
+use App\Entities\{User, Language};
 use App\Repositories\BaseRepository;
-use Doctrine\ORM\AbstractQuery;
+use Scandinaver\Learn\Domain\Contracts\ResultRepositoryInterface;
 
+/**
+ * Class ResultRepository
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
+ */
 class ResultRepository extends BaseRepository implements ResultRepositoryInterface
 {
     /**
      * @param User $user
      * @param Language $language
      * @return array
-     * @throws \Doctrine\ORM\Query\QueryException
      */
     public function getActiveIds(User $user, Language $language): array
     {

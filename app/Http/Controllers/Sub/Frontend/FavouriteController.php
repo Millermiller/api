@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Services\{AssetService, FavouriteService};
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
+use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Illuminate\Http\{JsonResponse, Request};
 
 class FavouriteController extends Controller

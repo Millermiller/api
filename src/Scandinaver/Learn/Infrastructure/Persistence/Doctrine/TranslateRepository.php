@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Repositories\Translate;
 
-use App\Entities\Translate;
+namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
+
 use App\Repositories\BaseRepository;
+use Scandinaver\Learn\Domain\Contracts\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Translate;
 
+/**
+ * Class TranslateRepository
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
+ */
 class TranslateRepository  extends BaseRepository implements TranslateRepositoryInterface
 {
-
     /**
      * @param array $ids
      * @return Translate[]

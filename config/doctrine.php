@@ -27,7 +27,8 @@ return [
             'connection'    => env('DB_CONNECTION', 'mysql'),
             'namespaces'    => [],
             'paths'         => [
-                base_path('app/Entities')
+                base_path('app/Entities'),
+                base_path('src/Scandinaver/Learn/Domain'),
             ],
             'repository'    => Doctrine\ORM\EntityRepository::class,
             'proxies'       => [

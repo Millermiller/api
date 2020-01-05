@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Repositories\Word;
+
+namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use App\Repositories\BaseRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\{NonUniqueResultException, NoResultException};
+use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
 
+/**
+ * Class WordRepository
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
+ */
 class WordRepository extends BaseRepository implements WordRepositoryInterface
 {
     /**

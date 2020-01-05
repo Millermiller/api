@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use Auth;
 use App\Http\Controllers\Controller;
-use App\Entities\Asset;
-use App\Services\{AssetService, CardService};
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Doctrine\ORM\NoResultException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;

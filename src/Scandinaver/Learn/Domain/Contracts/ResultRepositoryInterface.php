@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repositories\Result;
+namespace Scandinaver\Learn\Domain\Contracts;
 
-use App\Entities\{Asset, Language, Result, User};
+use App\Entities\{Language, User};
 use App\Repositories\BaseRepositoryInterface;
+use Scandinaver\Learn\Domain\{Asset, Result};
 
 interface ResultRepositoryInterface extends BaseRepositoryInterface
 {

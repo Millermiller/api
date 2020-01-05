@@ -1,10 +1,11 @@
 <?php
 
-namespace  App\Entities;
 
+namespace Scandinaver\Learn\Domain;
+
+use App\Entities\{Language, User};
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use JsonSerializable;
@@ -118,7 +119,7 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @var Collection|User[]
      *
-     * @ManyToMany(targetEntity="User", mappedBy="assets")
+     * @ManyToMany(targetEntity="App\Entities\User", mappedBy="assets")
      */
     private $users;
 
@@ -244,7 +245,7 @@ class Asset implements JsonSerializable, UrlRoutable
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="Language", inversedBy="assets")
+     * @ORM\ManyToOne(targetEntity="App\Entities\Language", inversedBy="assets")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;
@@ -252,7 +253,7 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @var Collection|Card[]
      *
-     * @ORM\OneToMany(targetEntity="Card", mappedBy="asset", cascade="remove", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Card", mappedBy="asset", cascade="remove", fetch="EAGER")
      *
      */
     private $cards;
@@ -260,7 +261,7 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @var Collection|Result[]
      *
-     * @ORM\OneToMany(targetEntity="Result", mappedBy="asset", cascade="remove")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Result", mappedBy="asset", cascade="remove")
      *
      */
     private $results;

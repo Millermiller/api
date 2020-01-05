@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Services;
 
-use App\Entities\{Asset, Card};
-use App\Repositories\Asset\AssetRepositoryInterface;
-use App\Repositories\Card\CardRepositoryInterface;
+namespace Scandinaver\Learn\Domain\Services;
+
+use Scandinaver\Learn\Domain\{Asset,
+    Card,
+    Contracts\AssetRepositoryInterface,
+    Contracts\CardRepositoryInterface,
+    Contracts\TranslateRepositoryInterface,
+    Contracts\WordRepositoryInterface};
 use App\Repositories\Language\LanguageRepositoryInterface;
-use App\Repositories\Translate\TranslateRepositoryInterface;
-use App\Repositories\Word\WordRepositoryInterface;
 use Auth;
 
 /**

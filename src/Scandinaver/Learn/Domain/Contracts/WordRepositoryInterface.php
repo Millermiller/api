@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Word;
+namespace Scandinaver\Learn\Domain\Contracts;
 
 use App\Repositories\BaseRepositoryInterface;
 

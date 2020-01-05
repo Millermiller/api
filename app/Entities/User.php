@@ -1,22 +1,24 @@
 <?php
 
+
 namespace App\Entities;
 
+use Image;
+use Avatar;
+use Exception;
+use DateTime;
+use JsonSerializable;
 use App\Entities\Traits\UsesPasswordGrant;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Doctrine\ORM\Mapping\{JoinTable, ManyToMany};
-use Image;
-use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
-use Avatar;
+use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use LaravelDoctrine\ORM\Notifications\Notifiable;
+use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Puzzle\Domain\Puzzle;
 use Scandinaver\Text\Domain\Text;
 
@@ -178,15 +180,15 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     private $plan;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|Asset[]
+     * @var Collection|Asset[]
      *
-     * @ManyToMany(targetEntity="Asset", inversedBy="users", cascade={"persist"})
+     * @ManyToMany(targetEntity="Scandinaver\Learn\Domain\Asset", inversedBy="users", cascade={"persist"})
      * @JoinTable(name="assets_users")
      */
     private $assets;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|Puzzle[]
+     * @var Collection|Puzzle[]
      *
      * @ManyToMany(targetEntity="\Scandinaver\Puzzle\Domain\Puzzle", inversedBy="users")
      * @JoinTable(name="puzzles_users")
@@ -194,7 +196,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     private $puzzles;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|Text[]
+     * @var Collection|Text[]
      *
      * @ManyToMany(targetEntity="Scandinaver\Text\Domain\Text", inversedBy="users")
      * @JoinTable(name="texts_users")
@@ -218,7 +220,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection|Asset[]
+     * @return Collection|Asset[]
      */
     public function getAssets()
     {
@@ -226,7 +228,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection|Text[]
+     * @return Collection|Text[]
      */
     public function getTexts()
     {
@@ -397,7 +399,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     /**
      * @var Collection|Result[]
      *
-     * @ORM\OneToMany(targetEntity="Result", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Result", mappedBy="user")
      *
      */
     private $results;

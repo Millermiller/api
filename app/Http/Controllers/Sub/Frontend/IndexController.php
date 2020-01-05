@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubdomainFeedbackRequest;
-use App\Entities\Asset;
-use App\Services\{AssetService, CardService, FeedbackService, UserService};
-use Doctrine\ORM\Query\QueryException;
+use App\Services\FeedbackService;
+use App\Services\UserService;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Http\{JsonResponse};
 use Auth;
 use Illuminate\View\View;
 
@@ -77,6 +78,7 @@ class IndexController extends Controller
 
     /**
      * @return JsonResponse
+     * @throws \Exception
      */
     public function getWords()
     {
@@ -87,6 +89,7 @@ class IndexController extends Controller
 
     /**
      * @return JsonResponse
+     * @throws \Exception
      */
     public function getSentences()
     {
@@ -107,7 +110,6 @@ class IndexController extends Controller
 
     /**
      * @return JsonResponse
-     * @throws QueryException
      */
     public function check()
     {
@@ -123,6 +125,7 @@ class IndexController extends Controller
     /**
      * @param SubdomainFeedbackRequest $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function feedback(SubdomainFeedbackRequest $request)
     {

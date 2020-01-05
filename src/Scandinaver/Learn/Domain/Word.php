@@ -1,7 +1,10 @@
 <?php
 
-namespace  App\Entities;
 
+namespace Scandinaver\Learn\Domain;
+
+use App\Entities\Language;
+use App\Entities\User;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -98,7 +101,7 @@ class Word implements JsonSerializable
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="App\Entities\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="creator_id", referencedColumnName="id")
      * })
@@ -108,7 +111,7 @@ class Word implements JsonSerializable
     /**
      * @var Language
      *
-     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\ManyToOne(targetEntity="App\Entities\Language")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * })
@@ -125,7 +128,7 @@ class Word implements JsonSerializable
     /**
      * @var Collection|Result[]
      *
-     * @ORM\OneToMany(targetEntity="Card", mappedBy="word")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Card", mappedBy="word")
      *
      */
     private $cards;

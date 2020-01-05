@@ -23,7 +23,7 @@ class Result
      */
     public function __construct(Text $text, User $user, Language $language)
     {
-        $this->lang = $language;
+        $this->language = $language;
         $this->user = $user;
         $this->text = $text;
     }
@@ -47,7 +47,7 @@ class Result
     /**
      * @var Language
      *
-     * @ORM\ManyToOne(targetEntity="Language", inversedBy="results")
+     * @ORM\ManyToOne(targetEntity="App\Entities\Language", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * })

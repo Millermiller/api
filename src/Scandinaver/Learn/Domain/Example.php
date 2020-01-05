@@ -1,6 +1,6 @@
 <?php
 
-namespace  App\Entities;
+namespace Scandinaver\Learn\Domain;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;

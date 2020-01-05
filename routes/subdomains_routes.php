@@ -31,30 +31,7 @@ Route::group([
     Route::get('/user', 'IndexController@getUser')->name('user-info');
     Route::get('/info', 'IndexController@getInfo')->name('site-info');
 
-    Route::get('/words', 'IndexController@getWords')->name('words');
-    Route::get('/sentences', 'IndexController@getSentences')->name('sentences');
-    Route::get('/personal', 'IndexController@getPersonal')->name('personal');
-
-
     Route::post('/feedback', 'IndexController@feedback')->name('subdomain-feedback')->middleware(['addUserName']);
-
-    Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
-
-    Route::resource('/asset', 'AssetController');
-
-    Route::post('/favourite', 'FavouriteController@store')->name('add-favorite');
-    Route::delete('/favourite/{id}', 'FavouriteController@delete')->name('delete-favorite');
-
-    Route::post('/result/{asset}', 'TestController@result');
-    Route::post('/complete/{asset}', 'TestController@complete');
-
-    Route::resource('/card', 'CardsController', ['except' => []]);
-
-    Route::get('/translate', 'WordController@search');
-    Route::resource('/word', 'WordController', ['except' => ['delete', 'update']]);
-
-
-
 });
 
 /******************************** SUBDOMAIN - ADMIN ***********************************/
@@ -83,26 +60,6 @@ Route::group([
     Route::delete('/log/{id}', 'DashboardController@deleteLog');
     Route::delete('/message/{id}', 'DashboardController@deleteMessage');
     Route::post('/message/read/{id}', 'DashboardController@readMessage');
-
-    Route::get('/assets', 'AssetsController@index');
-    Route::post('/forvo/{id}', 'AssetsController@findAudio');
-    Route::get('/asset/{id}', 'AssetsController@showAsset');
-    Route::get('/values/{id}', 'AssetsController@showValues');
-    Route::get('/examples/{id}', 'AssetsController@showExamples');
-    Route::post('/asset/{id}', 'AssetsController@changeAsset');
-    Route::post('/changeUsedTranslate', 'AssetsController@changeUsedTranslate');
-    Route::post('/translate', 'AssetsController@editTranslate');
-    Route::post('/audio', 'AssetsController@uploadAudio');
-    Route::get('/sentences', 'AssetsController@getSentences');
-
-    Route::post('/card', 'CardsController@addWordToAsset'); //TODO: frontend route!
-    Route::post('/level', 'AssetsController@addBasicAssetLevel');
-    Route::delete('/translate/{id}', 'AssetsController@deleteTranslate');
-
-    Route::post('/wordfile', 'AssetsController@uploadSentences');
-    Route::post('/card', 'AssetsController@addPair');
-
-
 
     Route::resource('/intro', 'IntroController');
 });

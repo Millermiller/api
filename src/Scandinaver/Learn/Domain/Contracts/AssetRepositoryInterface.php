@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories\Asset;
+namespace Scandinaver\Learn\Domain\Contracts;
 
-use App\Entities\{Asset, Language, User};
+use App\Entities\Language;
+use App\Entities\User;
+use Scandinaver\Learn\Domain\{Asset};
 use App\Repositories\BaseRepositoryInterface;
-use Doctrine\Common\Collections\Collection;
 
 interface AssetRepositoryInterface extends BaseRepositoryInterface
 {

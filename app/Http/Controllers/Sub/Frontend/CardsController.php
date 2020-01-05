@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCardRequest;
-use App\Entities\Card;
+use Scandinaver\Learn\Domain\Card;
 use App\Models\Word;
-use App\Services\CardService;
+use Scandinaver\Learn\Domain\Services\CardService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 
