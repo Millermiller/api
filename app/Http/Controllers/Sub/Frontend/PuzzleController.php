@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
+use ReflectionException;
 use App\Helpers\Auth;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Puzzle\Domain\{Puzzle, PuzzleService};
+use Scandinaver\Puzzle\Domain\Puzzle;
+use Scandinaver\Puzzle\Application\Commands\PuzzleCompleteCommand;
+use Scandinaver\Puzzle\Application\Query\UserPuzzlesQuery;
 
 /**
  * Class PuzzleController
@@ -15,38 +19,26 @@ use Scandinaver\Puzzle\Domain\{Puzzle, PuzzleService};
  * Date: 22.11.2018
  * Time: 4:35
  */
-class PuzzleController
+class PuzzleController extends Controller
 {
     /**
-     * @var PuzzleService
-     */
-    private $puzzleService;
-
-    /**
-     * PuzzleController constructor.
-     * @param PuzzleService $puzzleService
-     */
-    public function __construct(PuzzleService $puzzleService)
-    {
-        $this->puzzleService = $puzzleService;
-    }
-
-    /**
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json($this->puzzleService->getForUser(Auth::user()));
+        return response()->json($this->queryBus->execute(new UserPuzzlesQuery(Auth::user())));
     }
 
     /**
      *
      * @param Puzzle $puzzle
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function update(Puzzle $puzzle)
     {
-        $this->puzzleService->completed(Auth::user(), $puzzle);
+        $this->commandBus->execute(new PuzzleCompleteCommand(Auth::user(), $puzzle));
 
         return response()->json($puzzle, 200);
     }

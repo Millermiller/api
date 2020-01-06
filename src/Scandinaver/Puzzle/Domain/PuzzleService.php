@@ -4,7 +4,6 @@
 namespace Scandinaver\Puzzle\Domain;
 
 use App\Entities\User;
-use App\Events\PuzzleCompleted;
 
 /**
  * Class PuzzleService
@@ -33,8 +32,6 @@ class PuzzleService
     public function completed(User $user, Puzzle $puzzle): void
     {
         $this->puzzleRepository->addForUser($user, $puzzle);
-
-        event(new PuzzleCompleted($user, $puzzle));
     }
 
     /**

@@ -21,5 +21,15 @@ class PuzzleServiceProvider  extends ServiceProvider
                 $this->app['em']->getClassMetadata(Puzzle::class)
             );
         });
+
+        $this->app->bind(
+            'PuzzleCompleteHandlerInterface',
+            'Scandinaver\Puzzle\Application\Handlers\PuzzleCompletedHandler'
+        );
+
+        $this->app->bind(
+            'UserPuzzlesHandlerInterface',
+            'Scandinaver\Puzzle\Application\Handlers\UserPuzzlesHandler'
+        );
     }
 }

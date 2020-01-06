@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Scandinaver\Shared\Response;
 
 /**
  * Puzzles
@@ -14,7 +15,7 @@ use JsonSerializable;
  * @ORM\Table(name="puzzles")
  * @ORM\Entity
  */
-class Puzzle implements JsonSerializable
+class Puzzle implements JsonSerializable, Response
 {
     /**
      * @var int
