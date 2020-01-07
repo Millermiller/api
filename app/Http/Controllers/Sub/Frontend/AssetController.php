@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
+use App\Helpers\Auth;
+use ReflectionException;
 use App\Http\Controllers\Controller;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
-use Doctrine\ORM\{ORMException, OptimisticLockException};
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Auth\Access\AuthorizationException;
+use Scandinaver\Learn\Application\Commands\{CreateAssetCommand, DeleteAssetCommand, UpdateAssetCommand};
+use Scandinaver\Learn\Application\Query\CardsOfAssetQuery;
+use Scandinaver\Learn\Domain\Asset;
 
 /**
  * Class LearnController
@@ -22,52 +24,27 @@ use Illuminate\Http\{JsonResponse, Request};
 class AssetController extends Controller
 {
     /**
-     * @var CardService
-     */
-    protected $cardService;
-
-    /**
-     * @var AssetService
-     */
-    protected $assetService;
-
-    /**
-     * AssetController constructor.
-     * @param AssetService $assetService
-     * @param CardService $cardService
-     */
-    public function __construct(AssetService $assetService, CardService $cardService)
-    {
-        $this->assetService = $assetService;
-
-        $this->cardService = $cardService;
-    }
-
-    /**
      * @param Asset $asset
      * @return JsonResponse
-     * @throws AuthorizationException
+     * @throws ReflectionException
      */
     public function show(Asset $asset)
     {
       //  $this->authorize('view', $asset);
 
-        $cards = $this->cardService->getCards($asset);
-
-        return response()->json($cards);
+        return response()->json($this->queryBus->execute(new CardsOfAssetQuery(Auth::user(), $asset)));
     }
 
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @throws ReflectionException
      */
     public function store(Request $request)
     {
-        $asset = $this->assetService->create($request->toArray());
+        $this->commandBus->execute(new CreateAssetCommand(Auth::user(), $request->get('title')));
 
-        return response()->json($asset, 201);
+        return response()->json(null, 201);
     }
 
     /**
@@ -75,26 +52,28 @@ class AssetController extends Controller
      * @param Asset $asset
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws ReflectionException
      */
     public function update(Request $request, Asset $asset)
     {
         $this->authorize('update', $asset);
 
-        $asset = $this->assetService->updateAsset($asset, $request->toArray());
+        $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->get('title')));
 
-        return response()->json($asset, 200);
+        return response()->json(null, 200);
     }
 
     /**
      * @param Asset $asset
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws ReflectionException
      */
     public function destroy(Asset $asset)
     {
         $this->authorize('delete', $asset);
 
-        $this->assetService->delete($asset);
+        $this->commandBus->execute(new DeleteAssetCommand($asset));
 
         return response()->json(null, 204);
     }

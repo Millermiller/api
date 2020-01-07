@@ -26,41 +26,36 @@ export default{
     },
 
     reloadPersonal(context) {
-        Vue.http.get('/personal').then(
-            (response) => {
-                context.commit('setPersonal', response.body)
-            },
-            (response) => {
-                console.log(response.body)
-            }
-        )
+        return new Promise((resolve, reject) => {
+            Vue.http.get('/personal').then(
+                (response) => {
+                    context.commit('setPersonal', response.body)
+                    resolve(response)
+                },
+                (response) => {
+                    console.log(response.body)
+                    reject(error)
+                }
+            )
+        })
     },
 
     addPersonalAsset(context, title){
-
-        Vue.http.post('/asset', {title: title}).then(
-            (response) => {
-                if(response.status === 201){
-                    context.commit('addPersonal',
-                        {
-                            basic:0,
-                            favorite:0,
-                            id: response.body.id,
-                            level: 0,
-                            result: 0,
-                            count: 0,
-                            title: response.body.title,
-                            cards: [],
-                            selected: true
-                        }
-                    )
-                    context.commit('setSelection', 1)
+        return new Promise((resolve, reject) => {
+            Vue.http.post('/asset', {title: title}).then(
+                (response) => {
+                    if(response.status === 201){
+                        context.dispatch('reloadPersonal')
+                        context.commit('setSelection', 1)
+                        resolve(response)
+                    }
+                },
+                (responce) => {
+                    console.log(response.body)
+                    reject(error)
                 }
-            },
-            (responce) => {
-                console.log(response.body)
-            }
-        )
+            )
+        })
     },
 
     loadAsset(context, data){

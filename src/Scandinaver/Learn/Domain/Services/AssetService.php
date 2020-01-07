@@ -6,10 +6,9 @@ namespace Scandinaver\Learn\Domain\Services;
 use Auth;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Scandinaver\Learn\Domain\{Asset, Result};
 use App\Entities\User;
-use App\Events\{AssetCreated, AssetDelete, NextLevel};
+use App\Events\{NextLevel};
 use App\Repositories\Language\LanguageRepositoryInterface;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultRepositoryInterface};
 
@@ -68,26 +67,23 @@ class AssetService
     }
 
     /**
-     * @param array $data
-     * @return Asset|Model
+     * @param User $user
+     * @param string $title
+     * @return Asset
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create(array $data)
+    public function create(User $user, string $title): Asset
     {
         $language = $this->languageRepository->get(config('app.lang'));
 
-        $user = Auth::user();
-
-        $asset = new Asset($data['title'], 0, Asset::TYPE_PERSONAL, 0, $language);
+        $asset  = new Asset($title, 0, Asset::TYPE_PERSONAL, 0, $language);
         $result = new Result($asset, $user, $language);
         $user->incrementAssetCounter();
 
         app('em')->persist($asset);
         app('em')->persist($result);
         app('em')->flush();
-
-        event(new AssetCreated(Auth::user(), $asset));
 
         return $asset;
     }
@@ -96,12 +92,9 @@ class AssetService
      * @param Asset $asset
      * @return void
      */
-    public function delete(Asset $asset)
+    public function delete(Asset $asset): void
     {
         $this->assetsRepository->delete($asset);
-
-        event(new AssetDelete(Auth::user(), $asset));
-
     }
 
     /**

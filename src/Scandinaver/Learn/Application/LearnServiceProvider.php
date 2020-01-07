@@ -68,5 +68,25 @@ class LearnServiceProvider  extends ServiceProvider
             'DeleteFavouriteHandlerInterface',
             'Scandinaver\Learn\Application\Handlers\DeleteFavouriteHandler'
         );
+
+        $this->app->bind(
+            'CreateAssetHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\CreateAssetHandler'
+        );
+
+        $this->app->bind(
+            'DeleteAssetHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\DeleteAssetHandler'
+        );
+
+        $this->app->bind(
+            'UpdateAssetHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\UpdateAssetHandler'
+        );
+
+        $this->app->bind(
+            'CardsOfAssetHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\CardsOfAssetHandler'
+        );
     }
 }

@@ -15,7 +15,7 @@
                     </el-popover>
                 </el-row>
             </div>
-            <section data-scrollbar style="height: 65vh;overflow: visible !important;">
+            <section data-scrollbar style="height: 65vh;overflow: visible !important;" v-loading.body="loading">
                 <transition-group name="splash" tag="div">
                     <asset
                             v-for="(asset, index) in assets"
@@ -34,7 +34,9 @@
     import Vue from "vue";
     export default{
         data(){
-            return{}
+            return{
+                loading: false
+            }
         },
         created() {
             this.$eventHub.$on('removeItem', this.remove);
@@ -48,18 +50,27 @@
                         inputPattern: /^.+$/,
                         inputErrorMessage: 'Введите название'
                     }).then(input => {
-                        this.$store.dispatch('addPersonalAsset', input.value)
-                        this.$notify.success({
-                            title: 'Словарь создан',
-                            message: input.value,
-                            duration: 4000
-                        });
+                        this.loading = true
+                        this.$store.dispatch('addPersonalAsset', input.value).then(response => {
+                            this.$notify.success({
+                                title: 'Словарь создан',
+                                message: input.value,
+                                duration: 4000
+                            });
+                            this.loading = false
+                        }, error => {
+                            this.$notify.error({
+                                title: 'Ошибка',
+                                duration: 4000
+                            });
+                        })
                     }).catch(() => {
                         //
                     });
                 }
             },
             remove(data){
+                this.loading = true
                 Vue.http.delete('/asset/' + data.asset.id).then(
                     (response) => {
                         if(response.status === 204){
@@ -69,7 +80,7 @@
                                 duration: 4000
                             });
                         }
-                        this.$store.commit('removePersonal', data.index)
+                        this.$store.dispatch('reloadPersonal').then(response => {this.loading = false}, error => {})
                     },
                     (response) => {
                         console.log(response.body)

@@ -8,7 +8,7 @@
         <el-row>
             <el-col :span="22"  style="height: 57px;">
                 <span v-if="edited === false" class="asset-title h4" style="height: 57px;display:inline-block">{{assetname}}</span>
-                <el-input v-if="edited === true" size="small" placeholder="Название словаря" v-model="assetname">
+                <el-input v-if="edited === true" size="small" placeholder="Название словаря" v-model="assetname"  @click.native="showResponder($event)">
                     <el-button slot="append" type="danger" icon="el-icon-close" size="mini" @click.stop="closeedit" plain/>
                     <el-button slot="append" type="success" icon="el-icon-check" size="mini" @click.stop="applyedit" plain/>
                 </el-input>
@@ -77,6 +77,10 @@
             }
         },
         methods: {
+            showResponder: function(e){
+                e.preventDefault()
+                e.stopPropagation()
+            },
             confirm(asset) {
                 if(this.isActive){
                     this.$confirm('Удалить словарь?', asset.title, {
@@ -84,7 +88,6 @@
                         cancelButtonText: 'Нет',
                         type: 'warning'
                     }).then(() => {
-                        this.loading = true
                         this.$eventHub.$emit('removeItem', {asset: this.asset, index: this.index})
                     }).catch(() => {
                         //
@@ -108,6 +111,7 @@
                 this.edited = false
             },
             applyedit(){
+                this.loading = true
                 this.$http.put('/asset/' + this.asset.id, {title: this.assetname}).then(
                     (response) => {
                         if(response.status === 200){
@@ -117,6 +121,7 @@
                             }
 
                             this.edited = false
+                            this.loading = false
                         }
                     },
                     (response) => {

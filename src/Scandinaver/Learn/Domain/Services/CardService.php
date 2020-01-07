@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use App\Entities\User;
 use Scandinaver\Learn\Domain\{Asset,
     Card,
     Contracts\AssetRepositoryInterface,
@@ -10,7 +11,6 @@ use Scandinaver\Learn\Domain\{Asset,
     Contracts\TranslateRepositoryInterface,
     Contracts\WordRepositoryInterface};
 use App\Repositories\Language\LanguageRepositoryInterface;
-use Auth;
 
 /**
  * Class CardService
@@ -95,14 +95,15 @@ class CardService
      * возвращает слова набора, транскрипцию и один вариант перевода
      *
      * используется  при редактировании набора на /cards/
+     * @param User $user
      * @param Asset $asset
      * @return array
      */
-    public function getCards(Asset $asset)
+    public function getCards(User $user, Asset $asset): array
     {
         $language = $this->languageRepository->get(config('app.lang'));
 
-        $favouriteAsset = $this->assetRepository->getFavouriteAsset($language, Auth::user());
+        $favouriteAsset = $this->assetRepository->getFavouriteAsset($language, $user);
 
         $cards = $asset->getCards()->toArray();
 
