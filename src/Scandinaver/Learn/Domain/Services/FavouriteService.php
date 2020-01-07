@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use Auth;
+use App\Entities\User;
 use App\Repositories\Language\LanguageRepositoryInterface;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
-use Illuminate\Http\Request;
 use Scandinaver\Learn\Domain\Card;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
     CardRepositoryInterface,
     TranslateRepositoryInterface,
     WordRepositoryInterface};
+use Scandinaver\Learn\Domain\{Translate, Word};
 
 /**
  * Class FavouriteService
@@ -75,33 +75,30 @@ class FavouriteService
     }
 
     /**
-     * @param Request $request
+     * @param User $user
+     * @param Word $word
+     * @param Translate $translate
      * @return Card
      */
-    public function create(Request $request)
+    public function create(User $user, Word $word, Translate $translate): Card
     {
         $language = $this->languageRepository->get(config('app.lang'));
-        $asset = $this->assetRepository->getFavouriteAsset($language, Auth::user());
-        $word = $this->wordRepository->get($request->get('word_id'));
-        $translate = $this->translateRepository->get($request->get('translate_id'));
+        $asset    = $this->assetRepository->getFavouriteAsset($language, $user);
 
-        $card = new Card($word, $asset, $translate);
-
-        $card = $this->cardRepository->save($card);
-
-        return $card;
+        return $this->cardRepository->save(new Card($word, $asset, $translate));
     }
 
     /**
+     * @param User $user
      * @param $id
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function delete($id)
+    public function delete(User $user, $id): void
     {
         $language = $this->languageRepository->get(config('app.lang'));
-        $asset = $this->assetRepository->getFavouriteAsset($language, Auth::user());
-        $card = $this->cardRepository->findOneBy(['wordId' => $id, 'assetId' => $asset->getId()]);
+        $asset    = $this->assetRepository->getFavouriteAsset($language, $user);
+        $card     = $this->cardRepository->findOneBy(['wordId' => $id, 'assetId' => $asset->getId()]);
 
         app('em')->remove($card);
         app('em')->flush();

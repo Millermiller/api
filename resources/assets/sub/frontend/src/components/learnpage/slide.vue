@@ -9,8 +9,8 @@
                     <p class="slide-value">{{item.translate.value}}</p>
                     <div class="example-area">
                         <template v-for="example in item.examples">
-                            <p v-html="example.text" class="example-text"></p>
-                            <p v-html="example.value" class="example-value"></p>
+                            <p v-html="example.text" class="example-text"/>
+                            <p v-html="example.value" class="example-value"/>
                         </template>
                     </div>
                     <el-row v-if="item.word.creator" :class="['danger', 'text-right', 'small', 'creator']">
@@ -35,14 +35,14 @@
                         </el-popover>
                     </el-row>
                 </template>
-                <i v-else class="ion-help"></i>
+                <i v-else class="ion-help"/>
             </div>
 
-            <audio :src="item.word.audio" preload="none" ref="player"></audio>
+            <audio :src="item.word.audio" preload="none" ref="player"/>
 
-            <i :class="['ion favourite-button pointer', item.favourite ? activeClass : defaultClass]" @click="favourite"></i>
+            <i :class="['ion favourite-button pointer', item.favourite ? activeClass : defaultClass]" @click="favourite"/>
 
-            <i :class="['ion-ios-volume-high', 'ion', 'pointer']"  @click="play"></i>
+            <i :class="['ion-ios-volume-high', 'ion', 'pointer']" @click="play"/>
         </template>
     </div>
 </template>
@@ -73,7 +73,7 @@
             favourite(){
                 let self = this
                 if(!this.item.favourite) {
-                    this.$http.post('/favourite', {'word_id': this.item.word.id, 'translate_id': this.item.translate.id})
+                    this.$http.post('/favourite/' + this.item.word.id + '/' + this.item.translate.id)
                         .then(
                             response =>{
                                 if(response.status === 201){
@@ -98,7 +98,7 @@
                     this.$http.delete('/favourite/' + this.item.word.id)
                         .then(
                             response =>{
-                                if(response.body.success){
+                                if(response.status === 204){
                                     self.item.favourite = false
                                     self.$notify.success({
                                         title: self.item.word.word,

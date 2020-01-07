@@ -58,5 +58,15 @@ class LearnServiceProvider  extends ServiceProvider
                 $this->app['em']->getClassMetadata(Result::class)
             );
         });
+
+        $this->app->bind(
+            'CreateFavouriteHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\CreateFavouriteHandler'
+        );
+
+        $this->app->bind(
+            'DeleteFavouriteHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\DeleteFavouriteHandler'
+        );
     }
 }

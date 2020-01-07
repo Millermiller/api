@@ -4,6 +4,7 @@ namespace Scandinaver\Learn\Application;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Scandinaver\Learn\Domain\Word;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -38,8 +39,8 @@ class RouteServiceProvider extends ServiceProvider
                 Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
                 Route::resource('/asset', 'AssetController');
 
-                Route::post('/favourite', 'FavouriteController@store')->name('add-favorite');
-                Route::delete('/favourite/{id}', 'FavouriteController@delete')->name('delete-favorite');
+                Route::post('/favourite/{word}/{translate}', 'FavouriteController@store')->name('add-favorite');
+                Route::delete('/favourite/{id}', 'FavouriteController@destroy')->name('delete-favorite');
 
                 Route::post('/result/{asset}', 'TestController@result');
                 Route::post('/complete/{asset}', 'TestController@complete');

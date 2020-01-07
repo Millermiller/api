@@ -33,7 +33,7 @@
             favourite(){
                 let self = this
                 if (!this.item.favourite) {
-                    this.$http.post('/favourite', {'word_id': this.item.id, 'translate_id': this.item.translate_id})
+                    this.$http.post('/favourite/' + this.item.word.id + '/' + this.item.translate_id)
                         .then(
                             response => {
                                 if (response.status === 201) {
@@ -55,10 +55,10 @@
 
                 }
                 else {
-                    this.$http.delete('/favourite/' + this.item.id)
+                    this.$http.delete('/favourite/' + this.item.word.id)
                         .then(
                             response => {
-                                if (response.body.success) {
+                                if (response.status === 204) {
                                     self.item.favourite = false
                                     self.$notify.success({
                                         title: self.item.word.word,
