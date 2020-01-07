@@ -1,6 +1,6 @@
 ﻿сделать domain events
 
-remove assetIno request
+проверить прохождение тестов
 
 нормальный поиск по словам
 

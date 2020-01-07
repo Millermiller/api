@@ -63,6 +63,18 @@ export default {
         state.quantity = data
     },
 
+    setTitle(state, data){
+        state.title = data
+    },
+
+    setLevel(state, data){
+        state.level = data
+    },
+
+    setResult(state, data){
+        state.result = data
+    },
+
     setError(state, data){
         state.errors.splice(0, 0, data)
     },

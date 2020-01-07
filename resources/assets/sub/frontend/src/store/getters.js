@@ -68,6 +68,18 @@ export default{
         return state.quantity
     },
 
+    level: state => {
+        return state.level
+    },
+
+    title: state => {
+        return state.title
+    },
+
+    result: state => {
+        return state.result
+    },
+
     errors: state => {
         return state.errors
     },

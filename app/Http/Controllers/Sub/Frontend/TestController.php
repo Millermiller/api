@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use Auth;
+use ReflectionException;
+use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
-use Doctrine\ORM\NoResultException;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Auth\Access\AuthorizationException;
+use Scandinaver\Learn\Application\Commands\{GiveNextLevelCommand, SaveTestResultCommand};
+use Scandinaver\Learn\Domain\Asset;
 
 /**
  * Created by PhpStorm.
@@ -23,50 +23,15 @@ use Illuminate\Support\Facades\Input;
 class TestController extends Controller
 {
     /**
-     * @var CardService
-     */
-    private $cardService;
-
-    /**
-     * @var AssetService
-     */
-    private $assetService;
-
-    /**
-     * TestController constructor.
-     * @param CardService $cardService
-     * @param AssetService $assetService
-     */
-    public function __construct(CardService $cardService, AssetService $assetService)
-    {
-        $this->cardService = $cardService;
-        $this->assetService = $assetService;
-    }
-
-    /**
-     * @param $id
-     * @return JsonResponse
-     */
-    public function getAsset($id)
-    {
-        $cards = $this->cardService->getCards($id);
-
-        return response()->json($cards);
-    }
-
-    /**
      * @param Asset $asset
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function complete(Asset $asset)
     {
-        try{
-            $asset = $this->assetService->giveNextLevel(Auth::user(), $asset);
-        }catch(NoResultException $e){
-            //
-        }
+        $this->commandBus->execute(new GiveNextLevelCommand(Auth::user(), $asset));
 
-        return response()->json($asset);
+        return response()->json(null, 200);
     }
 
     /**
@@ -74,6 +39,7 @@ class TestController extends Controller
      * @param Asset $asset
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws ReflectionException
      */
     public function result(Asset $asset)
     {
@@ -81,8 +47,8 @@ class TestController extends Controller
 
         $resultValue = Input::get('result');
 
-        $result = $this->assetService->saveTestResult($asset, Auth::user(), $resultValue);
+        $this->commandBus->execute(new SaveTestResultCommand(Auth::user(), $asset, $resultValue));
 
-        return response()->json($result);
+        return response()->json(null, 200);
     }
 }

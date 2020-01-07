@@ -10,6 +10,7 @@ use Scandinaver\Learn\Domain\{Asset,
     Contracts\CardRepositoryInterface,
     Contracts\TranslateRepositoryInterface,
     Contracts\WordRepositoryInterface,
+    Contracts\ResultRepositoryInterface,
     Translate,
     Word};
 use App\Repositories\Language\LanguageRepositoryInterface;
@@ -46,19 +47,26 @@ class CardService
     private $translateRepository;
 
     /**
+     * @var ResultRepositoryInterface
+     */
+    private $resultRepository;
+
+    /**
      * CardService constructor.
      * @param AssetRepositoryInterface $assetRepository
      * @param LanguageRepositoryInterface $languageRepository
      * @param CardRepositoryInterface $cardRepository
      * @param WordRepositoryInterface $wordRepository
      * @param TranslateRepositoryInterface $translateRepository
+     * @param ResultRepositoryInterface $resultRepository
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         LanguageRepositoryInterface $languageRepository,
         CardRepositoryInterface $cardRepository,
         WordRepositoryInterface $wordRepository,
-        TranslateRepositoryInterface $translateRepository
+        TranslateRepositoryInterface $translateRepository,
+        ResultRepositoryInterface $resultRepository
     )
     {
         $this->assetRepository     = $assetRepository;
@@ -66,6 +74,7 @@ class CardService
         $this->cardRepository      = $cardRepository;
         $this->wordRepository      = $wordRepository;
         $this->translateRepository = $translateRepository;
+        $this->resultRepository = $resultRepository;
     }
 
     /**
@@ -105,12 +114,20 @@ class CardService
 
         $favouriteAsset = $this->assetRepository->getFavouriteAsset($language, $user);
 
+        $result = $this->resultRepository->getResult($user, $asset);
+
         $cards = $asset->getCards()->toArray();
 
         foreach($cards as &$c){
             $c->setFavourite(in_array($c->getWord()->getId(), $favouriteAsset->getWordsIds()));
         }
 
-        return ['type' => $asset->getType(), 'cards' => $cards, 'title' => $asset->getTitle()];
+        return [
+            'type' => $asset->getType(),
+            'cards' => $cards,
+            'title' => $asset->getTitle(),
+            'result' => $result->getValue(),
+            'level' => $asset->getLevel(),
+        ];
     }
 }

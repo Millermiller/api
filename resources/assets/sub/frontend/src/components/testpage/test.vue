@@ -104,6 +104,9 @@
                         this.$store.commit('setQuantity', this.quantity)
                         this.$store.commit('resetError')
                         this.$store.commit('resetPercent')
+                        this.$store.commit('setTitle', response.body.title)
+                        this.$store.commit('setResult', response.body.result)
+                        this.$store.commit('setLevel', response.body.level)
                         this.translates = []
                         this.success = 0
                         this.answers = 0
@@ -148,7 +151,7 @@
                     this.variants = []
                     this.dialogVisible = true
 
-                    if(this.percent > this.asset.result.result)
+                    if(this.percent > this.$store.getters.result)
                         this.save()
 
                     if(this.percent > 80)
@@ -177,7 +180,7 @@
                 this.variants.shuffle()
             },
             save(){
-                this.$http.post('/result/' + this.asset.id, {'result': this.percent}).then(
+                this.$http.post('/result/' + this.id, {'result': this.percent}).then(
                     (responce) => {
                         this.$store.dispatch('reloadStore')
                     },
@@ -187,7 +190,7 @@
                 )
             },
             nextLevel(){
-                this.$http.post('/complete/' + this.asset.id).then(
+                this.$http.post('/complete/' + this.id).then(
                     (responce) => {
                         this.$store.dispatch('reloadStore')
                     },

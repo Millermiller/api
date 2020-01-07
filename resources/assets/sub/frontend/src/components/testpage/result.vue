@@ -7,8 +7,8 @@
                         <el-progress type="circle" :percentage="percent" :width="100"/>
                     </el-col>
                     <el-col :span="16" class="asset-info">
-                        <template v-if="asset.title">
-                            <p v-if="!asset.favorite">{{asset.level}} уровень</p>
+                        <template v-if="title">
+                            <p v-if="level > 0">{{level}} уровень</p>
                             <p> вопросов: {{quantity}}</p>
                             <p>Лучший результат: {{result}}%</p>
                         </template>
@@ -33,18 +33,10 @@
     import erroritem from './erroritem.vue'
     import Scrollbar from 'smooth-scrollbar';
     export default{
-        data(){
-            return{
-                result: 0
-            }
-        },
         components:{
             'erroritem': erroritem
         },
         created: function () {
-            if (this.$route.params.id > 0)
-                this.getInfo(this.$route.params.id)
-
             this.$eventHub.$on('removeErrorItem', this.removeErrorItem);
         },
         computed:{
@@ -57,29 +49,17 @@
             errors(){
                 return this.$store.getters.errors
             },
-            asset(){
-                return this.$store.getters.asset
-            }
-        },
-        watch: {
-            '$route'(to, from) {
-                if(this.$route.params.id)
-                    this.getInfo(this.$route.params.id)
+            title(){
+                return this.$store.getters.title
+            },
+            result(){
+                return this.$store.getters.result
+            },
+            level(){
+                return this.$store.getters.level
             }
         },
         methods:{
-            getInfo(id){
-                this.$http.get('/assetInfo/' + id).then(
-                    (responce) => {
-                        this.$store.commit('setAsset', responce.body)
-                        this.result = responce.body.result.result
-                    },
-
-                    (error) => {
-                        console.log(error)
-                    }
-                )
-            },
             removeErrorItem(id){
                 this.$store.commit('removeError', id)
             }

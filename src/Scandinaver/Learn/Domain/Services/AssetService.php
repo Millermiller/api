@@ -3,12 +3,10 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use Auth;
+use App\Entities\User;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Contracts\Auth\Authenticatable;
 use Scandinaver\Learn\Domain\{Asset, Result};
-use App\Entities\User;
-use App\Events\{NextLevel};
 use App\Repositories\Language\LanguageRepositoryInterface;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultRepositoryInterface};
 
@@ -174,7 +172,7 @@ class AssetService
      * @param Asset $asset
      * @return Asset
      */
-    public function giveNextLevel(Authenticatable $user, Asset $asset): Asset
+    public function giveNextLevel(User $user, Asset $asset): Asset
     {
         $language  = $this->languageRepository->get(config('app.lang'));
 
@@ -184,9 +182,7 @@ class AssetService
 
         if($result === null) $result = new Result($nextAsset, $user, $language);
 
-        $result = $this->resultRepository->save($result);
-
-        event(new NextLevel(Auth::user(), $result));
+        $this->resultRepository->save($result);
 
         return $nextAsset;
     }
@@ -197,7 +193,7 @@ class AssetService
      * @param int $resultValue
      * @return Result
      */
-    public function saveTestResult(Asset $asset, Authenticatable $user, int $resultValue): Result
+    public function saveTestResult(User $user, Asset $asset, int $resultValue): Result
     {
         $language  = $this->languageRepository->get(config('app.lang'));
 
