@@ -4,8 +4,11 @@ namespace Scandinaver\Learn\Application;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Scandinaver\Learn\Domain\Word;
 
+/**
+ * Class RouteServiceProvider
+ * @package Scandinaver\Learn\Application
+ */
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -33,7 +36,6 @@ class RouteServiceProvider extends ServiceProvider
             ],
             function () {
                 Route::get('/words', 'IndexController@getWords')->name('words');
-                Route::get('/sentences', 'IndexController@getSentences')->name('sentences');
                 Route::get('/personal', 'IndexController@getPersonal')->name('personal');
 
                 Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
@@ -45,7 +47,8 @@ class RouteServiceProvider extends ServiceProvider
                 Route::post('/result/{asset}', 'TestController@result');
                 Route::post('/complete/{asset}', 'TestController@complete');
 
-                Route::resource('/card', 'CardsController', ['except' => []]);
+                Route::post('/card/{word}/{translate}/{asset}', 'CardsController@store')->name('add-card-to-asset');
+                Route::delete('/card/{card}', 'CardsController@destroy')->name('delete-card-from-asset');
 
                 Route::get('/translate', 'WordController@search');
                 Route::resource('/word', 'WordController', ['except' => ['delete', 'update']]);
@@ -69,7 +72,6 @@ class RouteServiceProvider extends ServiceProvider
                 Route::post('/changeUsedTranslate', 'AssetsController@changeUsedTranslate');
                 Route::post('/translate', 'AssetsController@editTranslate');
                 Route::post('/audio', 'AssetsController@uploadAudio');
-                Route::get('/sentences', 'AssetsController@getSentences');
 
                 Route::post('/card', 'CardsController@addWordToAsset'); //TODO: frontend route!
                 Route::post('/level', 'AssetsController@addBasicAssetLevel');

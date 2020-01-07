@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
+use ReflectionException;
+use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateCardRequest;
-use Scandinaver\Learn\Domain\Card;
-use App\Models\Word;
-use Scandinaver\Learn\Domain\Services\CardService;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\Access\AuthorizationException;
+use Scandinaver\Learn\Application\Commands\{AddCardToAssetCommand, DeleteCardFromAssetCommand};
+use Scandinaver\Learn\Domain\{Asset, Card};
+use Scandinaver\Learn\Domain\{Translate, Word};
 
 /**
  * Created by PhpStorm.
@@ -22,46 +23,31 @@ use Illuminate\Http\JsonResponse;
 class CardsController extends Controller
 {
     /**
-     * @var CardService
-     */
-    protected $cardService;
-
-    /**
-     * CardsController constructor.
-     * @param CardService $cardService
-     */
-    public function __construct(CardService $cardService)
-    {
-        $this->cardService = $cardService;
-    }
-
-    /**
-     * @param CreateCardRequest $request
+     * @param Word $word
+     * @param Translate $translate
+     * @param Asset $asset
      * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function store(CreateCardRequest $request)
+    public function store(Word $word, Translate $translate, Asset $asset)
     {
-        $card = $this->cardService->createCard($request->toArray());
+        $this->commandBus->execute(new AddCardToAssetCommand(Auth::user(), $word, $translate, $asset));
 
-        return response()->json($card, 201);
+        return response()->json(null, 201);
     }
 
     /**
      * @param Card $card
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws ReflectionException
      */
     public function destroy(Card $card)
     {
         $this->authorize('delete', $card);
 
-        $this->cardService->destroyCard($card);
+        $this->commandBus->execute(new DeleteCardFromAssetCommand(Auth::user(), $card));
 
         return response()->json(null, 204);
-    }
-
-    public function getSentences()
-    {
-       return response()->json(Word::getSentences());
     }
 }

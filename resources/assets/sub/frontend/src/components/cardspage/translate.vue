@@ -4,7 +4,7 @@
             <p :class="['asset_title', {'text-success' : card.exist}]">{{card.word.word}}</p>
         </el-col>
         <el-col :span="4">
-            <i class="ion ion-ios-plus-empty pointer" @click="add"></i>
+            <i class="ion ion-ios-plus-empty pointer" @click="add"/>
         </el-col>
         <el-col :span="24">
             <p :class="['no-margin', 'card-value', {'text-success' : card.exist}]">{{card.value}}</p>
@@ -49,7 +49,7 @@
         methods:{
             add(){
                 let data = {
-                    word_id: this.card.word.id,
+                    word: this.card.word,
                     translate_id: this.card.id,
                     asset_id: this.$store.getters.activeAsset,
                     index: this.index,

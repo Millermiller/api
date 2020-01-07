@@ -9,7 +9,9 @@ use Scandinaver\Learn\Domain\{Asset,
     Contracts\AssetRepositoryInterface,
     Contracts\CardRepositoryInterface,
     Contracts\TranslateRepositoryInterface,
-    Contracts\WordRepositoryInterface};
+    Contracts\WordRepositoryInterface,
+    Translate,
+    Word};
 use App\Repositories\Language\LanguageRepositoryInterface;
 
 /**
@@ -67,15 +69,13 @@ class CardService
     }
 
     /**
-     * @param array $data
+     * @param Word $word
+     * @param Translate $translate
+     * @param Asset $asset
      * @return Card
      */
-    public function createCard(array $data)
+    public function createCard(Word $word, Translate $translate, Asset $asset): Card
     {
-        $word = $this->wordRepository->get($data['word_id']);
-        $translate = $this->translateRepository->get($data['translate_id']);
-        $asset = $this->assetRepository->get($data['asset_id']);
-
         $card = new Card($word, $asset, $translate);
         $card->setAssetId($asset->getId());
         $this->cardRepository->save($card);

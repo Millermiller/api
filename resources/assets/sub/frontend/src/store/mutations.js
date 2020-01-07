@@ -125,12 +125,10 @@ export default {
     /**
      *
      * @param state
-     * @param card
-     * @param card.id
-     * @param card.asset_id
+     * @param asset_id
      */
-    addCard(state, card){
-        let personalAssetIndex = state.assets.personal.findIndex(item => item.id === card.asset_id)
+    addCard(state, asset_id){
+        let personalAssetIndex = state.assets.personal.findIndex(item => item.id === asset_id)
         state.assets.personal[personalAssetIndex].count++
     },
 

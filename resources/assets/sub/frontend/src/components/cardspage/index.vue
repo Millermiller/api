@@ -35,7 +35,6 @@
         },
         created() {
             this.$eventHub.$on('assetSelect', this.load);
-            this.$eventHub.$on('deleteCardFromAsset', this.removeCard);
             this.$eventHub.$on('addCardToAsset', this.add);
         },
         methods:{
@@ -58,24 +57,18 @@
                     console.log(response);
                 });
             },
-            removeCard(data){
-                this.$http.delete('/card/' + data.card.id).then(
-                    (response) => {
-                        if(response.status === 204)
-                            this.cards.splice(data.index, 1)
-                            this.$store.commit('removeCard', data.card)
-                    },
-                    (response) => {
-                        console.log(response.body)
-                    }
-                )
-            },
             add(data){
-                this.$http.post('/card', data).then(
+                this.loading = true
+                this.$http.post('/card/' + data.word.id + '/' + data.translate_id + '/' + data.asset_id).then(
                     (response) => {
                         if(response.status === 201){
-                            this.$store.commit('addCard', response.body)
-                            this.cards.push(response.body)
+                            this.$notify.success({
+                                title: 'Карточка добавлена',
+                                message: data.word.word,
+                                duration: 4000
+                            });
+                            this.$store.commit('addCard', data.asset_id)
+                            this.load(data.asset_id)
                         }
                     },
                     (response) => {

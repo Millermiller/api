@@ -88,5 +88,15 @@ class LearnServiceProvider  extends ServiceProvider
             'CardsOfAssetHandlerInterface',
             'Scandinaver\Learn\Application\Handlers\CardsOfAssetHandler'
         );
+
+        $this->app->bind(
+            'DeleteCardFromAssetHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\DeleteCardFromAssetHandler'
+        );
+
+        $this->app->bind(
+            'AddCardToAssetHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AddCardToAssetHandler'
+        );
     }
 }
