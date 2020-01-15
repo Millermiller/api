@@ -1,11 +1,14 @@
 <?php
 
+
 namespace Scandinaver\Text\Infrastructure\Persistence\Doctrine;
 
-use Doctrine\ORM\{NoResultException, NonUniqueResultException};
-use Scandinaver\Text\Domain\{Result, Text, TextRepositoryInterface};
-use App\Entities\{Language, User};
-use App\Repositories\BaseRepository;
+use Doctrine\ORM\{NoResultException, NonUniqueResultException, Query\QueryException};
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Text\Domain\Contracts\TextRepositoryInterface;
+use Scandinaver\Text\Domain\{Result, Text};
+use Scandinaver\User\Domain\User;
 
 /**
  * Class TextRepository
@@ -36,13 +39,12 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
      * @param User $user
      * @param Language $language
      * @return array
-     * @throws \Doctrine\ORM\Query\QueryException
      */
     public function getActiveIds(User $user, Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
 
-        app('em')->getConfiguration()->addCustomHydrationMode('ColumnHydrator', '\App\Hydrators\ColumnHydrator');
+        app('em')->getConfiguration()->addCustomHydrationMode('ColumnHydrator', 'Scandinaver\Common\Infrastructure\Persistence\Doctrine\ColumnHydrator');
 
         return $q->select('r.textId')
             ->from(Result::class, 'r')

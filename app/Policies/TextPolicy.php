@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Scandinaver\Text\Domain\Text;
 

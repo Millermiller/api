@@ -1,11 +1,12 @@
 <?php
 
+
 namespace Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine;
 
-use App\Entities\User;
-use App\Repositories\BaseRepository;
+use Scandinaver\User\Domain\User;
+use Scandinaver\Shared\BaseRepository;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
-use Scandinaver\Puzzle\Domain\{Puzzle, PuzzleRepositoryInterface};
+use Scandinaver\Puzzle\Domain\{Contracts\PuzzleRepositoryInterface, Puzzle};
 
 /**
  * Class PuzzleRepository

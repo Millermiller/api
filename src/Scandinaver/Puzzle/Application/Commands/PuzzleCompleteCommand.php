@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Puzzle\Application\Commands;
 
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Scandinaver\Puzzle\Domain\Puzzle;
-use Scandinaver\Shared\Command;
+use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class PuzzleCompleteCommand

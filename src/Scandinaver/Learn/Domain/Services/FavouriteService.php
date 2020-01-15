@@ -3,14 +3,13 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use App\Entities\User;
-use App\Repositories\Language\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\User\Domain\User;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Scandinaver\Learn\Domain\Card;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
     CardRepositoryInterface,
-    TranslateRepositoryInterface,
-    WordRepositoryInterface};
+    TranslateRepositoryInterface};
 use Scandinaver\Learn\Domain\{Translate, Word};
 
 /**
@@ -20,19 +19,9 @@ use Scandinaver\Learn\Domain\{Translate, Word};
 class FavouriteService
 {
     /**
-     * @var CardService
-     */
-    private $cardService;
-
-    /**
      * @var CardRepositoryInterface
      */
     private $cardRepository;
-
-    /**
-     * @var WordRepositoryInterface
-     */
-    private $wordRepository;
 
     /**
      * @var TranslateRepositoryInterface
@@ -51,24 +40,18 @@ class FavouriteService
 
     /**
      * FavouriteService constructor.
-     * @param CardService $cardService
      * @param CardRepositoryInterface $cardRepository
-     * @param WordRepositoryInterface $wordRepository
      * @param TranslateRepositoryInterface $translateRepository
      * @param AssetRepositoryInterface $assetRepository
      * @param LanguageRepositoryInterface $languageRepository
      */
     public function __construct(
-        CardService $cardService,
         CardRepositoryInterface $cardRepository,
-        WordRepositoryInterface $wordRepository,
         TranslateRepositoryInterface $translateRepository,
         AssetRepositoryInterface $assetRepository,
         LanguageRepositoryInterface $languageRepository
     ) {
-        $this->cardService = $cardService;
         $this->cardRepository = $cardRepository;
-        $this->wordRepository = $wordRepository;
         $this->translateRepository = $translateRepository;
         $this->assetRepository = $assetRepository;
         $this->languageRepository = $languageRepository;

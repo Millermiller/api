@@ -1,12 +1,17 @@
 <?php
 
+
 namespace Scandinaver\Learn\Domain\Contracts;
 
-use App\Entities\Language;
-use App\Entities\User;
 use Scandinaver\Learn\Domain\{Asset};
-use App\Repositories\BaseRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
+use Scandinaver\User\Domain\User;
 
+/**
+ * Interface AssetRepositoryInterface
+ * @package Scandinaver\Learn\Domain\Contracts
+ */
 interface AssetRepositoryInterface extends BaseRepositoryInterface
 {
     public function getFirstAsset(Language $language, int $type): Asset;

@@ -1,13 +1,13 @@
 <?php
 
+
 namespace Scandinaver\Text\Domain;
 
-use App\Entities\Language;
-use App\Entities\User;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\User\Domain\User;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToMany;
 use JsonSerializable;
 
 /**
@@ -147,7 +147,7 @@ class Text implements JsonSerializable
     /**
      * @var Collection|User[]
      *
-     * @ORM\ManytoMany(targetEntity="App\Entities\User", mappedBy="texts")
+     * @ORM\ManytoMany(targetEntity="Scandinaver\User\Domain\User", mappedBy="texts")
      */
     private $users;
 
@@ -170,7 +170,7 @@ class Text implements JsonSerializable
     /**
      * @var Language
      *
-     * @ORM\ManyToOne(targetEntity="App\Entities\Language", inversedBy="texts")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Common\Domain\Language", inversedBy="texts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * })

@@ -3,7 +3,7 @@
 
 namespace App\Helpers;
 
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 
 class Auth
 {

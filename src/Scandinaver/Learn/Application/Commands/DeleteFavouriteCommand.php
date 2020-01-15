@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use App\Entities\User;
-use Scandinaver\Shared\Command;
+use Scandinaver\User\Domain\User;
+use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class DeleteFavouriteCommand

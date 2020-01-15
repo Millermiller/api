@@ -1,11 +1,16 @@
 <?php
 
+
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
-use App\Entities\Asset;
-use App\Entities\User;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\User\Domain\User;
 use Tests\TestCase;
 
+/**
+ * Class AssetControllerTest
+ * @package Tests\Feature\Controllers\Sub\Frontend
+ */
 class AssetControllerTest extends TestCase
 {
     public function testShow()

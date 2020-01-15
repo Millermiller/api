@@ -4,14 +4,14 @@
 namespace Scandinaver\Text\Application;
 
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Text\Domain\{Result, ResultRepositoryInterface, TextRepositoryInterface, Text};
+use Scandinaver\Text\Domain\{Contracts\ResultRepositoryInterface, Contracts\TextRepositoryInterface, Result, Text};
 use Scandinaver\Text\Infrastructure\Persistence\Doctrine\{TextRepository, ResultRepository};
 
 /**
  * Class TextServiceProvider
  * @package Scandinaver\Text\Application
  */
-class TextServiceProvider  extends ServiceProvider
+class TextServiceProvider extends ServiceProvider
 {
     public function register()
     {

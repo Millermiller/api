@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Handlers;
 
-use Scandinaver\Shared\CommandHandler;
+use Scandinaver\Shared\Contracts\CommandHandler;
 
 /**
  * Interface SaveTestResultHandlerInterface

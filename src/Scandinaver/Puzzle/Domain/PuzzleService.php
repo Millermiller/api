@@ -3,7 +3,8 @@
 
 namespace Scandinaver\Puzzle\Domain;
 
-use App\Entities\User;
+use Scandinaver\Puzzle\Domain\Contracts\PuzzleRepositoryInterface;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class PuzzleService

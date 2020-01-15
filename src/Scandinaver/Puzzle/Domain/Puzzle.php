@@ -1,13 +1,14 @@
 <?php
 
+
 namespace  Scandinaver\Puzzle\Domain;
 
-use App\Entities\User;
+use Scandinaver\Shared\Contracts\Response;
+use Scandinaver\User\Domain\User;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
-use Scandinaver\Shared\Response;
 
 /**
  * Puzzles
@@ -64,7 +65,7 @@ class Puzzle implements JsonSerializable, Response
     /**
      * @var Collection|User[]
      *
-     * @ORM\ManytoMany(targetEntity="App\Entities\User", mappedBy="puzzles")
+     * @ORM\ManytoMany(targetEntity="Scandinaver\User\Domain\User", mappedBy="puzzles")
      */
     private $users;
 

@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Text\Infrastructure\Persistence\Doctrine;
 
-use Scandinaver\Text\Domain\ResultRepositoryInterface;
-use App\Repositories\BaseRepository;
+use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Text\Domain\Contracts\ResultRepositoryInterface;
 
 /**
  * Class ResultRepository

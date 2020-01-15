@@ -1,18 +1,22 @@
 <?php
 
+
 namespace Tests\Repositories\Language;
 
-use App\Entities\Language;
-use App\Repositories\Language\LanguageRepository;
-use App\Repositories\Language\LanguageRepositoryInterface;
-use EntityManager;
+use Doctrine\ORM\EntityManager;
+use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
 use Tests\TestCase;
 
+/**
+ * Class LanguageRepositoryTest
+ * @package Tests\Repositories\Language
+ */
 class LanguageRepositoryTest extends TestCase
 {
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $entityManager;
 

@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\Asset::class, function (Faker $faker) {
+$factory->define(App\Helpers\Eloquent\Asset::class, function (Faker $faker) {
 
     static $level = 1;
 

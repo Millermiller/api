@@ -1,9 +1,10 @@
 <?php
 
+
 namespace Scandinaver\Text\Domain;
 
-use App\Entities\Language;
-use App\Entities\User;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\User\Domain\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,7 +48,7 @@ class Result
     /**
      * @var Language
      *
-     * @ORM\ManyToOne(targetEntity="App\Entities\Language", inversedBy="results")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Common\Domain\Language", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * })
@@ -85,7 +86,7 @@ class Result
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entities\User")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\User\Domain\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

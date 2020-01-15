@@ -5,10 +5,11 @@ namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use App\Entities\{Language, User};
-use App\Repositories\BaseRepository;
+use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Learn\Domain\Contracts\AssetRepositoryInterface;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class AssetRepository

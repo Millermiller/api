@@ -3,17 +3,15 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use App\Entities\User;
+use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\{Asset,
     Card,
     Contracts\AssetRepositoryInterface,
     Contracts\CardRepositoryInterface,
-    Contracts\TranslateRepositoryInterface,
-    Contracts\WordRepositoryInterface,
     Contracts\ResultRepositoryInterface,
     Translate,
     Word};
-use App\Repositories\Language\LanguageRepositoryInterface;
 
 /**
  * Class CardService
@@ -37,16 +35,6 @@ class CardService
     private $cardRepository;
 
     /**
-     * @var WordRepositoryInterface
-     */
-    private $wordRepository;
-
-    /**
-     * @var TranslateRepositoryInterface
-     */
-    private $translateRepository;
-
-    /**
      * @var ResultRepositoryInterface
      */
     private $resultRepository;
@@ -56,24 +44,18 @@ class CardService
      * @param AssetRepositoryInterface $assetRepository
      * @param LanguageRepositoryInterface $languageRepository
      * @param CardRepositoryInterface $cardRepository
-     * @param WordRepositoryInterface $wordRepository
-     * @param TranslateRepositoryInterface $translateRepository
      * @param ResultRepositoryInterface $resultRepository
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         LanguageRepositoryInterface $languageRepository,
         CardRepositoryInterface $cardRepository,
-        WordRepositoryInterface $wordRepository,
-        TranslateRepositoryInterface $translateRepository,
         ResultRepositoryInterface $resultRepository
     )
     {
         $this->assetRepository     = $assetRepository;
         $this->languageRepository  = $languageRepository;
         $this->cardRepository      = $cardRepository;
-        $this->wordRepository      = $wordRepository;
-        $this->translateRepository = $translateRepository;
         $this->resultRepository = $resultRepository;
     }
 

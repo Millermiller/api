@@ -3,9 +3,12 @@
 
 namespace Scandinaver\Learn\Application\Handlers;
 
+use Scandinaver\Shared\Contracts\CommandHandler;
 
-use Scandinaver\Shared\CommandHandler;
-
+/**
+ * Interface UpdateAssetHandlerInteface
+ * @package Scandinaver\Learn\Application\Handlers
+ */
 interface UpdateAssetHandlerInteface extends CommandHandler
 {
 

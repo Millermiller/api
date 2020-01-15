@@ -1,9 +1,11 @@
 <?php
 
+
 namespace Scandinaver\Learn\Domain\Contracts;
 
-use App\Entities\{Language, User};
-use App\Repositories\BaseRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
+use Scandinaver\User\Domain\User;
 
 /**
  * Interface TextRepositoryInterface

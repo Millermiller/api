@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
-use App\Repositories\BaseRepository;
+use Scandinaver\Shared\BaseRepository;
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
 use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
 

@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
+use Exception;
+use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SubdomainFeedbackRequest;
-use App\Services\FeedbackService;
-use App\Services\UserService;
+use ReflectionException;
+use Scandinaver\Learn\Application\Query\{AssetForUserByTypeQuery, PersonalAssetsQuery};
 use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
+use Scandinaver\Learn\Domain\Services\{AssetService};
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\{JsonResponse};
-use Auth;
 use Illuminate\View\View;
+use Scandinaver\User\Domain\Services\UserService;
 
 /**
  * Class IndexController
@@ -20,34 +21,15 @@ use Illuminate\View\View;
 class IndexController extends Controller
 {
     /**
-     * @var AssetService
-     */
-    protected $assetService;
-
-    /**
      * @var UserService
      */
     protected $userService;
 
-    /**
-     * @var CardService
-     */
-    protected $cardService;
-
-    /**
-     * @var FeedbackService
-     */
-    protected $feedbackService;
-
-    public function __construct(AssetService $assetService, UserService $userService, CardService $cardService, FeedbackService $feedbackService)
+    public function __construct(AssetService $assetService, UserService $userService)
     {
         $this->assetService = $assetService;
 
         $this->userService = $userService;
-
-        $this->cardService = $cardService;
-
-        $this->feedbackService = $feedbackService;
     }
 
     /**
@@ -78,32 +60,33 @@ class IndexController extends Controller
 
     /**
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function getWords()
     {
-        $words = $this->assetService->getAssetsByType(Auth::user(), Asset::TYPE_WORDS);
+        $words = $this->queryBus->execute(new AssetForUserByTypeQuery(Auth::user(), Asset::TYPE_WORDS));
 
         return response()->json($words);
     }
 
     /**
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function getSentences()
     {
-        $sentences = $this->assetService->getAssetsByType(Auth::user(), Asset::TYPE_SENTENCES);
+        $sentences = $this->queryBus->execute(new AssetForUserByTypeQuery(Auth::user(), Asset::TYPE_SENTENCES));
 
         return response()->json($sentences);
     }
 
     /**
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function getPersonal()
     {
-        $personal = $this->assetService->getPersonalAssets(Auth::user());
+        $personal = $this->queryBus->execute(new PersonalAssetsQuery(Auth::user()));
 
         return response()->json($personal);
     }
@@ -120,17 +103,5 @@ class IndexController extends Controller
         }
 
         return response()->json($responce);
-    }
-
-    /**
-     * @param SubdomainFeedbackRequest $request
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function feedback(SubdomainFeedbackRequest $request)
-    {
-        $message = $this->feedbackService->saveFeedback($request->toArray());
-
-        return response()->json($message, 201);
     }
 }

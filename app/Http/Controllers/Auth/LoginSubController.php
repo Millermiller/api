@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Auth;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;

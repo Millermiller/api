@@ -3,10 +3,11 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Contracts\CardRepositoryInterface;
-use App\Entities\{Language, User};
-use App\Repositories\BaseRepository;
+use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Text\Domain\Text;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class CardRepository

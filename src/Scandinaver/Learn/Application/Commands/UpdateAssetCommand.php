@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Shared\Command;
+use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class CreateAssetCommand

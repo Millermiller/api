@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Learn\Application\Query;
 
-use App\Entities\User;
+use Scandinaver\Shared\Contracts\Query;
+use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Shared\Query;
 
 /**
  * Class CardsOfAssetQuery

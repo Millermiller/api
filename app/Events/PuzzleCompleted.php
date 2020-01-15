@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Illuminate\Broadcasting\{Channel, PrivateChannel, InteractsWithSockets};
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;

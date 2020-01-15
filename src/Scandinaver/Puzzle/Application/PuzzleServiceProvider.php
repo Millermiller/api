@@ -4,7 +4,7 @@
 namespace Scandinaver\Puzzle\Application;
 
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Puzzle\Domain\{PuzzleRepositoryInterface, Puzzle};
+use Scandinaver\Puzzle\Domain\{Contracts\PuzzleRepositoryInterface, Puzzle};
 use Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine\PuzzleRepository;
 
 /**

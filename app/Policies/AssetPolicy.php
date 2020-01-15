@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use Scandinaver\Learn\Domain\Asset;
-use App\Entities\{User};
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Scandinaver\User\Domain\User;
 
 class AssetPolicy
 {

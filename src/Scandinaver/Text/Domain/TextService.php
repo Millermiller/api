@@ -1,14 +1,17 @@
 <?php
 
+
 namespace Scandinaver\Text\Domain;
 
 use PDO;
-use Auth;
-use App\Entities\{Language, User};
 use App\Events\NextTextLevel;
-use App\Repositories\Language\LanguageRepositoryInterface;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Text\Domain\Contracts\ResultRepositoryInterface;
+use Scandinaver\Text\Domain\Contracts\TextRepositoryInterface;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class TextService
@@ -145,7 +148,7 @@ class TextService
 
         $result = $this->resultRepository->save($result);
 
-        event(new NextTextLevel(Auth::user(), $result));
+        event(new NextTextLevel($user, $result));
 
         return $nextText;
     }

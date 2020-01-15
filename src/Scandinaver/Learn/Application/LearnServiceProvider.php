@@ -108,5 +108,15 @@ class LearnServiceProvider  extends ServiceProvider
             'GiveNextLevelHandlerInterface',
             'Scandinaver\Learn\Application\Handlers\GiveNextLevelHandler'
         );
+
+        $this->app->bind(
+            'AssetForUserByTypeHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AssetForUserByTypeHandler'
+        );
+
+        $this->app->bind(
+            'PersonalAssetsHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\PersonalAssetsHandler'
+        );
     }
 }

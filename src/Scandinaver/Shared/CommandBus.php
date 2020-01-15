@@ -4,6 +4,8 @@
 namespace Scandinaver\Shared;
 
 use ReflectionException;
+use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\Shared\Contracts\CommandHandler;
 
 /**
  * Class CommandBus

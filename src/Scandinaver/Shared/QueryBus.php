@@ -4,6 +4,9 @@
 namespace Scandinaver\Shared;
 
 use ReflectionException;
+use Scandinaver\Shared\Contracts\Query;
+use Scandinaver\Shared\Contracts\QueryHandler;
+use Scandinaver\Shared\Contracts\Response;
 
 /**
  * Class CommandBus

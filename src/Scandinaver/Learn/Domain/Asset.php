@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Learn\Domain;
 
-use App\Entities\{Language, User};
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\User\Domain\User;
 
 /**
  * Assets
@@ -19,10 +20,10 @@ use LaravelDoctrine\ORM\Contracts\UrlRoutable;
  */
 class Asset implements JsonSerializable, UrlRoutable
 {
-    const TYPE_PERSONAL = 0;
-    const TYPE_WORDS = 1;
-    const TYPE_SENTENCES = 2;
-    const TYPE_FAVORITES = 3;
+    public const TYPE_PERSONAL = 0;
+    public const TYPE_WORDS = 1;
+    public const TYPE_SENTENCES = 2;
+    public const TYPE_FAVORITES = 3;
 
     /**
      * Asset constructor.
@@ -30,7 +31,7 @@ class Asset implements JsonSerializable, UrlRoutable
      * @param int $basic
      * @param int $type
      * @param int|null $favorite
-     * @param string $language_id
+     * @param Language $language
      */
     public function __construct(string $title, int $basic, int $type, ?int $favorite, Language $language)
     {
@@ -119,7 +120,7 @@ class Asset implements JsonSerializable, UrlRoutable
     /**
      * @var Collection|User[]
      *
-     * @ManyToMany(targetEntity="App\Entities\User", mappedBy="assets")
+     * @ManyToMany(targetEntity="Scandinaver\User\Domain\User", mappedBy="assets")
      */
     private $users;
 
@@ -228,7 +229,7 @@ class Asset implements JsonSerializable, UrlRoutable
     }
 
     /**
-     * @param string|null $lang
+     * @param string|null $language_id
      */
     public function setLang(?string $language_id): void
     {
@@ -245,7 +246,7 @@ class Asset implements JsonSerializable, UrlRoutable
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="App\Entities\Language", inversedBy="assets")
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Common\Domain\Language", inversedBy="assets")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;

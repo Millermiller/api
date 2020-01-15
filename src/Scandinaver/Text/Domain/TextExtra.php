@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Scandinaver\Text\Domain;
 
 use DateTime;

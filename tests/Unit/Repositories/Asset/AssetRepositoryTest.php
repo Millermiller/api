@@ -1,14 +1,18 @@
 <?php
 
+
 namespace Tests\Repositories\Asset;
 
-use App\Entities\Asset;
-use App\Entities\Language;
-use App\Entities\Plan;
-use App\Entities\User;
-use App\Repositories\Asset\AssetRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Contracts\AssetRepositoryInterface;
+use Scandinaver\User\Domain\{Plan, User};
 use Tests\TestCase;
 
+/**
+ * Class AssetRepositoryTest
+ * @package Tests\Repositories\Asset
+ */
 class AssetRepositoryTest extends TestCase
 {
     /**

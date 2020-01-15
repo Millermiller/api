@@ -1,9 +1,14 @@
 <?php
 
+
 namespace Scandinaver\Learn\Domain\Contracts;
 
-use App\Repositories\BaseRepositoryInterface;
+use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
 
+/**
+ * Interface WordRepositoryInterface
+ * @package Scandinaver\Learn\Domain\Contracts
+ */
 interface WordRepositoryInterface extends BaseRepositoryInterface
 {
     /**

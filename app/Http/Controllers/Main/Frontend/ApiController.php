@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Services\ApiService;
 use Illuminate\Http\JsonResponse;
+use Scandinaver\Common\Domain\Services\ApiService;
 use Validator;
 
 /**
@@ -46,11 +46,12 @@ class ApiController extends Controller
     /**
      * @param $language
      * @return JsonResponse
+     * @throws \Exception
      */
     public function assets($language)
     {
         $validator = Validator::make(['language' => $language], [
-            'language' => 'exists:App\Entities\Language,name'
+            'language' => 'exists:Scandinaver\Common\Domain\Language,name'
         ], [
             'exist' => 'Неверный параметр'
         ]);

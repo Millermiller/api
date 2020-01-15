@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Application\Handlers;
 
 use App\Events\CardDeleted;
-use Scandinaver\Learn\Application\Commands\DeleteCardCommand;
+use Scandinaver\Learn\Application\Commands\DeleteCardFromAssetCommand;
 use Scandinaver\Learn\Domain\Services\CardService;
 
 /**
@@ -28,7 +28,7 @@ class DeleteCardFromAssetHandler implements DeleteCardFromAssetHandlerInterface
     }
 
     /**
-     * @param DeleteCardCommand $command
+     * @param DeleteCardFromAssetCommand $command
      */
     public function handle($command): void
     {

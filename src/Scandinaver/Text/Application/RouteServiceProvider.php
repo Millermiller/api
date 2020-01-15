@@ -1,10 +1,15 @@
 <?php
 
+
 namespace Scandinaver\Text\Application;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
+/**
+ * Class RouteServiceProvider
+ * @package Scandinaver\Text\Application
+ */
 class RouteServiceProvider extends ServiceProvider
 {
     /**

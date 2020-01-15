@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Puzzle\Application\Handlers;
 
-use Scandinaver\Shared\CommandHandler;
+use Scandinaver\Shared\Contracts\CommandHandler;
 
 /**
  * Interface PuzzleCompleteHandlerInterface

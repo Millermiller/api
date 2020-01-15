@@ -4,9 +4,12 @@
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use Scandinaver\Learn\Domain\{Asset, Result};
-use App\Entities\{User, Language};
-use App\Repositories\BaseRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Learn\Domain\Contracts\ResultRepositoryInterface;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class ResultRepository
@@ -23,7 +26,7 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
     {
         $q = $this->_em->createQueryBuilder();
 
-        app('em')->getConfiguration()->addCustomHydrationMode('ColumnHydrator', '\App\Hydrators\ColumnHydrator');
+        app('em')->getConfiguration()->addCustomHydrationMode('ColumnHydrator', 'Scandinaver\Common\Infrastructure\Persistence\Doctrine\ColumnHydrator');
 
         return $q->select('r.assetId')
             ->from($this->getEntityName(), 'r')
@@ -40,8 +43,8 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
      * @param User $user
      * @param Asset $asset
      * @return Result
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function getResult(User $user, Asset $asset): Result
     {

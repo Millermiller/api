@@ -2,16 +2,8 @@
 
 namespace Tests;
 
-use App\Entities\User;
-use App\Repositories\User\UserRepository;
-use App\Repositories\User\UserRepositoryInterface;
-use Artisan;
-use Doctrine\ORM\EntityManagerInterface;
-use EntityManager;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Console\Kernel;
-use \Illuminate\Container\Container as Container;
-use \Illuminate\Support\Facades\Facade as Facade;
 
 trait CreatesApplication
 {

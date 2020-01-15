@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Entities\Asset;
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TestPolicy

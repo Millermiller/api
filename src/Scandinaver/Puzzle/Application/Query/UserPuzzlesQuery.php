@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Puzzle\Application\Query;
 
-use App\Entities\User;
-use Scandinaver\Shared\Query;
+use Scandinaver\Shared\Contracts\Query;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class UserPuzzlesQuery

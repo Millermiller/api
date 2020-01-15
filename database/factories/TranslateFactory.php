@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 
 
-$factory->define(App\Models\Translate::class, function () {
+$factory->define(App\Helpers\Eloquent\Translate::class, function () {
 
     $faker = \Faker\Factory::create('ru_RU');
 

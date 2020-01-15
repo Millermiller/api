@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use App\Entities\User;
 use Scandinaver\Learn\Domain\{Asset, Translate, Word};
-use Scandinaver\Shared\Command;
+use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class AddCardToAssetCommand

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Puzzle\Application\Handlers;
 
-use Scandinaver\Shared\QueryHandler;
+use Scandinaver\Shared\Contracts\QueryHandler;
 
 /**
  * Interface UserPuzzlesHandlerInterface

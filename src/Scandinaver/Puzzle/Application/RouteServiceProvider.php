@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Scandinaver\Puzzle\Application;
 
 use Illuminate\Support\Facades\Route;

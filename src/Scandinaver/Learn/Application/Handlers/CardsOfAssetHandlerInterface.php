@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Handlers;
 
-use Scandinaver\Shared\QueryHandler;
+use Scandinaver\Shared\Contracts\QueryHandler;
 
 /**
  * Interface CardsOfAssetHandlerInterface

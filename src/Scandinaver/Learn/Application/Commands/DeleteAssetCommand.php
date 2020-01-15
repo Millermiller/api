@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Application\Commands;
 
 use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Shared\Command;
+use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class DeleteAssetCommand

@@ -3,11 +3,11 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use App\Entities\User;
+use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\User\Domain\User;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Contracts\Auth\Authenticatable;
 use Scandinaver\Learn\Domain\{Asset, Result};
-use App\Repositories\Language\LanguageRepositoryInterface;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultRepositoryInterface};
 
 /**
@@ -37,31 +37,23 @@ class AssetService
     private $assetRepository;
 
     /**
-     * @var AssetRepositoryInterface
-     */
-    private $userRepository;
-
-    /**
      * AssetService constructor.
      * @param LanguageRepositoryInterface $languageRepository
      * @param AssetRepositoryInterface $assetsRepository
      * @param ResultRepositoryInterface $resultRepository
      * @param AssetRepositoryInterface $assetRepository
-     * @param AssetRepositoryInterface $userRepository
      */
     public function __construct(
         LanguageRepositoryInterface $languageRepository,
         AssetRepositoryInterface $assetsRepository,
         ResultRepositoryInterface $resultRepository,
-        AssetRepositoryInterface $assetRepository,
-        AssetRepositoryInterface $userRepository
+        AssetRepositoryInterface $assetRepository
     )
     {
         $this->languageRepository = $languageRepository;
         $this->assetsRepository   = $assetsRepository;
         $this->resultRepository   = $resultRepository;
         $this->assetRepository    = $assetRepository;
-        $this->userRepository     = $userRepository;
     }
 
     /**
@@ -105,15 +97,13 @@ class AssetService
      */
     public function getAssetsByType(User $user, int $type)
     {
-        $language = $this->languageRepository->get(config('app.lang'));
+        $language    = $this->languageRepository->get(config('app.lang'));
+        $activeArray = $this->resultRepository->getActiveIds($user,  $language);
+        $assets      = $this->assetsRepository->getAssetsByType($language, $type);
 
-        $activeArray  = $this->resultRepository->getActiveIds($user,  $language);
-
-        $assets = $this->assetsRepository->getAssetsByType($language, $type);
-
-        $canopen = true;
+        $canopen  = true;
         $testlink = false;
-        $counter = 0;
+        $counter  = 0;
 
         /** @var Asset $asset */
         foreach($assets as &$asset) {
@@ -160,7 +150,7 @@ class AssetService
      * @param User $user
      * @return array
      */
-    public function getPersonalAssets(User $user)
+    public function getPersonalAssets(User $user): array
     {
         $language  = $this->languageRepository->get(config('app.lang'));
 
