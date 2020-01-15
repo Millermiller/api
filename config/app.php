@@ -196,6 +196,8 @@ return [
         Scandinaver\Learn\Application\RouteServiceProvider::class,
         Scandinaver\Common\Application\AppServiceProvider::class,
         Scandinaver\User\Application\UserServiceProvider::class,
+        Scandinaver\API\Application\APIServiceProvider::class,
+        Scandinaver\API\Application\RouteServiceProvider::class,
     ],
 
     /*

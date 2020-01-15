@@ -1,8 +1,9 @@
 <?php
 
 
-namespace Scandinaver\Common\Domain\Services;
+namespace Scandinaver\API\Infrastructure;
 
+use Exception;
 use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultRepositoryInterface};
@@ -52,15 +53,13 @@ class ApiService
 
     /**
      * @param $language
+     * @param User $user
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getAssets($language)
+    public function getAssets($language, User $user): array
     {
         $language = $this->languageRepository->getByName($language);
-
-        /** @var User $user */
-        $user = auth('api')->user();
 
         $assets = [];
 
