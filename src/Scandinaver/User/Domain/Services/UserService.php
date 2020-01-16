@@ -6,6 +6,7 @@ namespace Scandinaver\User\Domain\Services;
 use Auth;
 use Exception;
 use Carbon\Carbon;
+use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 use App\Events\{UserDeleted, UserRegistered};
 use Illuminate\Contracts\Auth\Authenticatable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -115,6 +116,20 @@ class UserService
     }
 
     /**
+     * @param  array $credentials
+     * @return Authenticatable|User|null
+     * @throws UserNotFoundException
+     * @throws Exception
+     */
+    public function login(array $credentials): ?User
+    {
+        if(!Auth::attempt($credentials)){
+            throw new UserNotFoundException();
+        }
+        return \App\Helpers\Auth::user();
+    }
+
+    /**
      * @param  array $data
      * @return User
      * @throws Exception
@@ -166,7 +181,7 @@ class UserService
      * @return array
      * @throws \Exception
      */
-    public function getState(Authenticatable $user)
+    public function getState(User $user)
     {
         $language = $this->languageRepository->get(config('app.lang'));
 

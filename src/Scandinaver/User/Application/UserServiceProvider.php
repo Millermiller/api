@@ -31,5 +31,15 @@ class UserServiceProvider extends ServiceProvider
                 $this->app['em']->getClassMetadata(Plan::class)
             );
         });
+
+        $this->app->bind(
+            'LoginHandlerInterface',
+            'Scandinaver\User\Application\Handlers\LoginHandler'
+        );
+
+        $this->app->bind(
+            'UserStateHandlerInterface',
+            'Scandinaver\User\Application\Handlers\UserStateHandler'
+        );
     }
 }
