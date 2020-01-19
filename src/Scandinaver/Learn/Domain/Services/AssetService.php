@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\User\Domain\User;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -54,6 +55,15 @@ class AssetService
         $this->assetsRepository   = $assetsRepository;
         $this->resultRepository   = $resultRepository;
         $this->assetRepository    = $assetRepository;
+    }
+
+    /**
+     * @param Language $language
+     * @return int
+     */
+    public function count(Language $language): int
+    {
+        return $this->assetsRepository->getCountByLanguage($language);
     }
 
     /**

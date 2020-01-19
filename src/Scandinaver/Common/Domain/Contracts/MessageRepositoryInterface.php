@@ -11,5 +11,8 @@ use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
  */
 interface MessageRepositoryInterface extends BaseRepositoryInterface
 {
-
+    /**
+     * @return int
+     */
+    public function count(): int;
 }

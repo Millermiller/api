@@ -2,8 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Requests\BaseRequest;
 use Closure;
 use Illuminate\Http\Request;
+use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\Common\Infrastructure\Persistence\Doctrine\LanguageRepository;
 
 /**
  * Class CheckDomain
@@ -12,22 +15,39 @@ use Illuminate\Http\Request;
 class CheckDomain
 {
     /**
+     * @var LanguageRepositoryInterface
+     */
+    private $languageRepository;
+
+    /**
+     * CheckDomain constructor.
+     * @param LanguageRepositoryInterface $languageRepository
+     */
+    public function __construct(LanguageRepositoryInterface $languageRepository)
+    {
+        $this->languageRepository = $languageRepository;
+    }
+
+    /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
+     * @param  BaseRequest  $request
      * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if(request('subdomain') === 'www')
-           return redirect(config('app.SITE'));
-
-        if(request('subdomain') === 'is')
-            config(['app.lang' => 1]);
-
-        if(request('subdomain') === 'sw')
-            config(['app.lang' => 2]);
+        if($langname = request('subdomain')){
+            switch ($langname){
+                case 'is':
+                    config(['app.lang' => 1]);
+                    break;
+                case 'sw':
+                    config(['app.lang' => 2]);
+                    break;
+            }
+            $request->request->add(['language' => $this->languageRepository->get(config('app.lang'))]);
+        }
 
         $request->route()->forgetParameter('subdomain');
 

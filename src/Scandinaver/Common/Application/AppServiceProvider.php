@@ -68,5 +68,10 @@ class AppServiceProvider extends ServiceProvider
                 $this->app['em']->getClassMetadata(Post::class)
             );
         });
+
+        $this->app->bind(
+            'MessagesHandlerInterface',
+            'Scandinaver\Common\Application\Handlers\MessagesHandler'
+        );
     }
 }

@@ -45,4 +45,10 @@ interface TextRepositoryInterface extends BaseRepositoryInterface
      * @return Text
      */
     public function getNextText(Text $text, Language $language): Text;
+
+    /**
+     * @param Language $language
+     * @return int
+     */
+    public function getCountByLanguage(Language $language): int;
 }

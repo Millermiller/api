@@ -63,6 +63,11 @@ class RouteServiceProvider extends ServiceProvider
                 'prefix' => 'admin'
             ],
             function () {
+                Route::get('/wordscount', 'DashboardController@wordscount');
+                Route::get('/assetscount', 'DashboardController@assetscount');
+                Route::get('/audiocount', 'DashboardController@audiocount');
+                Route::get('/textscount', 'DashboardController@textscount');
+
                 Route::get('/assets', 'AssetsController@index');
                 Route::post('/forvo/{id}', 'AssetsController@findAudio');
                 Route::get('/asset/{id}', 'AssetsController@showAsset');

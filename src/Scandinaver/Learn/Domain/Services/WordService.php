@@ -6,7 +6,9 @@ namespace Scandinaver\Learn\Domain\Services;
 use Auth;
 use PDO;
 use App\Helpers\Eloquent\Word;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Contracts\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Translate;
 use App\Http\Requests\{SearchRequest, CreateWordRequest};
 use Doctrine\DBAL\DBALException;
@@ -24,12 +26,28 @@ class WordService
     private $translateRepository;
 
     /**
+     * @var WordRepositoryInterface
+     */
+    private $wordsRepository;
+
+    /**
      * WordService constructor.
      * @param TranslateRepositoryInterface $translateRepository
+     * @param WordRepositoryInterface $wordsRepository
      */
-    public function __construct(TranslateRepositoryInterface $translateRepository)
+    public function __construct(TranslateRepositoryInterface $translateRepository, WordRepositoryInterface $wordsRepository)
     {
         $this->translateRepository = $translateRepository;
+        $this->wordsRepository = $wordsRepository;
+    }
+
+    /**
+     * @param Language $language
+     * @return int
+     */
+    public function count(Language $language): int
+    {
+        return $this->wordsRepository->getCountByLanguage($language);
     }
 
     public function create(CreateWordRequest $request)

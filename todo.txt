@@ -111,3 +111,10 @@ sudo update-alternatives --config php
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo supervisorctl start laravel-worker:*
+
+******************************* NPM CHECK UPDATES *************************
+ncu -u
+
+******************************** NVM *************************************
+nvm ls
+nmm use

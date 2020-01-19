@@ -118,5 +118,25 @@ class LearnServiceProvider  extends ServiceProvider
             'PersonalAssetsHandlerInterface',
             'Scandinaver\Learn\Application\Handlers\PersonalAssetsHandler'
         );
+
+        $this->app->bind(
+            'WordsCountHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\WordsCountHandler'
+        );
+
+        $this->app->bind(
+            'TextsCountHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\TextsCountHandler'
+        );
+
+        $this->app->bind(
+            'AudioCountHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AudioCountHandler'
+        );
+
+        $this->app->bind(
+            'AssetsCountHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AssetsCountHandler'
+        );
     }
 }

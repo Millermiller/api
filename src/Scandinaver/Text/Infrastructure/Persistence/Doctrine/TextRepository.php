@@ -106,4 +106,22 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
             ->getQuery()
             ->getSingleResult();
     }
+
+    /**TODO: повторяется
+     * @param Language $language
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getCountByLanguage(Language $language): int
+    {
+        $q = $this->_em->createQueryBuilder();
+
+        return $q->select('count(t.id)')
+            ->from($this->getEntityName(), 't')
+            ->where($q->expr()->eq('t.language', ':language'))
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

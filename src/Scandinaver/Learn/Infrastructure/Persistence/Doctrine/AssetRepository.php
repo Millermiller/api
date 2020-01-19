@@ -162,4 +162,22 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
             ->getQuery()
             ->getSingleResult();
     }
+
+    /**TODO: повторяется
+     * @param Language $language
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getCountByLanguage(Language $language): int
+    {
+        $q = $this->_em->createQueryBuilder();
+
+        return $q->select('count(a.id)')
+            ->from($this->getEntityName(), 'a')
+            ->where($q->expr()->eq('a.language', ':language'))
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
