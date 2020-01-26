@@ -13,6 +13,7 @@
 <div id="app"></div>
 
 <link rel="stylesheet" href="/css/substyles.css">
-<script src="/sub/frontend/build.js"></script>
+<script src="/sub/frontend/js/app.js"></script>
+<script src="/sub/frontend/js/chunk-vendors.js"></script>
 </body>
 </html>

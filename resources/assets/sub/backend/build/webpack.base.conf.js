@@ -43,33 +43,31 @@ module.exports = {
             //  }
             //},
             {
-                test: /.vue$/,
-                loaders: ['vue-loader']
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: vueLoaderConfig
             },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    cacheDirectory: true, // включить кэширование
-                    presets: ['es2015'],
-                    plugins: ['transform-runtime']
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: utils.assetsPath('img/[name].[hash:7].[ext]')
                 }
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
-                loader: 'file-loader',
-                query: {
-                    name: '/frontend/assets/img/[name].[ext]?[hash]'
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
                 }
-            },
-            {
-                test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-                loader: 'file-loader',
-                query:{
-                    name: '/assets/fonts/[name].[ext]'
-                }
-            },
+            }
         ]
     }
 }

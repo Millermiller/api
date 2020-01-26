@@ -12,6 +12,8 @@ use Scandinaver\Learn\Domain\Services\{AssetService};
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\{JsonResponse};
 use Illuminate\View\View;
+use Scandinaver\Shared\CommandBus;
+use Scandinaver\Shared\QueryBus;
 use Scandinaver\User\Domain\Services\UserService;
 
 /**
@@ -25,8 +27,10 @@ class IndexController extends Controller
      */
     protected $userService;
 
-    public function __construct(AssetService $assetService, UserService $userService)
+    public function __construct(AssetService $assetService, UserService $userService, CommandBus $commandBus, QueryBus $queryBus)
     {
+        parent::__construct($commandBus, $queryBus);
+
         $this->assetService = $assetService;
 
         $this->userService = $userService;
