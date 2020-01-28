@@ -1,13 +1,18 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { IUser } from '@/models/User';
-import ILoginForm from '@/api/ILoginForm';
+import ILoginForm from '@/api/ILoginForm'
+import IState from '@/models/State'
+
+export interface ILoginData {
+  state: IState
+  message: string
+}
 
 export default {
-  login(data: ILoginForm): Promise<AxiosResponse<any>> {
+  login(data: ILoginForm): Promise<AxiosResponse<ILoginData>> {
     return request.post('/login', data)
   },
-  logout(): Promise<AxiosResponse<any>> {
+  logout(): Promise<AxiosResponse> {
     return request.post('/logout')
   },
 }

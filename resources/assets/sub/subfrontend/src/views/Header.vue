@@ -59,8 +59,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import auth from '@/auth'
-
+import { LoginService } from '@/services/LoginService';
+import { store } from '@/store';
 
   @Component({
     name: 'Header',
@@ -81,8 +81,11 @@ export default class extends Vue {
       this.$root.$emit('show')
     }
 
-    logout = (): void => {
-      auth.logout()
+    logout(): void {
+      LoginService.logout().then((response) => {
+        store.commit('setAuth', false)
+        this.$router.push({ path: '/login' })
+      })
     }
 
     gotosite = (): void => {
@@ -102,7 +105,6 @@ export default class extends Vue {
         this.setUnderline(target)
       }
     }
-
 
     get user() {
       return this.$store.getters.user

@@ -31,7 +31,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import commonAPI from '@/api/commonAPI'
 import ILoginForm from '@/api/ILoginForm'
-import userAPI from '@/api/userAPI'
+import { LoginService } from '@/services/LoginService';
 
   @Component
 export default class Login extends Vue {
@@ -49,7 +49,7 @@ export default class Login extends Vue {
       ],
     }
 
-    error: boolean = false
+    error: string = ''
 
     loading: boolean = false
 
@@ -73,13 +73,16 @@ export default class Login extends Vue {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           v.loading = true
-          userAPI.login(v.form).then(
-            (data) => {
-              // nothing
+          LoginService.execute(v.form).then(
+            (response) => {
+              this.$store.commit('setAuth', true)
+              this.$store.dispatch('setStore', response.data.state)
+              this.$store.commit('setSelection', 0)
+              this.$router.push({ path: 'main' })
             },
-          ).catch((data) => {
-            v.error = data
-            v.loading = false
+          ).catch((error: any) => {
+            v.error = error
+            v.loading = false;
           })
         }
       })

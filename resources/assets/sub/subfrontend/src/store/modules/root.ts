@@ -12,6 +12,7 @@ import { text } from '@/store/modules/text'
 import { user } from '@/store/modules/user'
 import { test } from '@/store/modules/test'
 import { User } from '@/models/User'
+import IState from "@/models/State";
 
 
 interface SetStoreParams {
@@ -125,7 +126,7 @@ class CommonActions extends Actions<State, CommonGetters, CommonMutations, Commo
     this.textstore = text.context(store)
   }
 
-  setStore(data: any) {
+  setStore(data: IState) {
     this.userstore.commit('setUser', new User(data.user.id, data.user.email, data.user.login, data.user.avatar))
     this.userstore.commit('setActiveTo', new Date(data.user.active_to.date).toLocaleDateString())
     this.userstore.commit('setActive', data.user.active)
