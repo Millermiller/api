@@ -48,10 +48,6 @@ export default class AssetGetters extends Getters<State> {
     return this.state.assets.personal;
   }
 
-  get asset() {
-    return this.state.asset;
-  }
-
   get cards(): Card[] | null {
     if (typeof this.state.assets.personal[this.state.activePersonalAssetIndex] !== 'undefined') return this.state.assets.personal[this.state.activePersonalAssetIndex].cards;
     return null;

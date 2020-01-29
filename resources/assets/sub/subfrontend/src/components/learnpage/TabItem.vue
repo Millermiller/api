@@ -93,7 +93,6 @@ export default class extends Vue {
         this.$eventHub.$emit('closeMenu')
       }
 
-      this.$store.commit('setSelection', { asset: this.item, index: this.index })
       this.$router.push(`/learn/${this.item.id}`)
     }
 

@@ -7,12 +7,12 @@ import Vue from 'vue'
 import { Store } from 'vuex'
 import request from '@/utils/request'
 
-import { asset } from '@/store/modules/asset'
+import { assetModule } from '@/store/modules/asset'
 import { text } from '@/store/modules/text'
 import { user } from '@/store/modules/user'
 import { test } from '@/store/modules/test'
 import { User } from '@/models/User'
-import IState from "@/models/State";
+import IState from '@/models/State';
 
 
 interface SetStoreParams {
@@ -116,13 +116,13 @@ class CommonMutations extends Mutations<State> {
 class CommonActions extends Actions<State, CommonGetters, CommonMutations, CommonActions> {
   userstore!: Context<typeof user>
 
-  assetstore!: Context<typeof asset>
+  assetstore!: Context<typeof assetModule>
 
   textstore!: Context<typeof text>
 
   $init(store: Store<any>): void {
     this.userstore = user.context(store)
-    this.assetstore = asset.context(store)
+    this.assetstore = assetModule.context(store)
     this.textstore = text.context(store)
   }
 
@@ -174,7 +174,7 @@ export const root = new Module({
   actions: CommonActions,
   modules: {
     user,
-    asset,
+    assetModule,
     text,
     test,
   },

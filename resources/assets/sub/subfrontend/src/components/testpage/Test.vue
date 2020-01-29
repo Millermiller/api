@@ -15,9 +15,9 @@
     <el-dialog title="Результаты:" :visible.sync="dialogVisible">
       <el-row type="flex" align="middle">
         <el-col :md="18">
-          <p v-if="percent >= 80 && asset.basic" class="success">Вы перешли на следующий
+          <p v-if="percent >= 80" class="success">Вы перешли на следующий
             уровень!</p>
-          <p v-if="percent < 80 && asset.basic" class="text-danger">Вы не прошли тест!</p>
+          <p v-if="percent < 80" class="text-danger">Вы не прошли тест!</p>
           <p>Правильные ответы: {{success}} из {{quantity}}</p>
         </el-col>
         <el-col :md="6">
@@ -31,7 +31,7 @@
         </el-row>
       </template>
       <span slot="footer" class="dialog-footer">
-                <el-button v-if="percent < 80 && asset.basic"
+                <el-button v-if="percent < 80"
                            @click="reload">Попробовать еще раз</el-button>
                 <el-button @click="dialogVisible = false">Закрыть</el-button>
             </span>
@@ -97,11 +97,6 @@ export default class extends Vue {
 
     loading: boolean = false
 
-
-    get asset() {
-      return this.$store.getters.asset
-    }
-
     @Watch('$route')
     private onRouteChange(route: Route) {
       if (route.params.id) this.getAsset(parseInt(route.params.id, 10))
@@ -109,6 +104,8 @@ export default class extends Vue {
 
 
     created() {
+      this.percent = 0
+      this.$Progress.set(0)
       this.$store.commit('resetError')
       if (parseInt(this.$route.params.id, 10) > 0) this.getAsset(parseInt(this.$route.params.id, 10))
     }

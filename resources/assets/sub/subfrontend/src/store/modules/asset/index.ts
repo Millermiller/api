@@ -4,7 +4,7 @@ import AssetMutations from '@/store/modules/asset/mutations';
 import AssetGetters from '@/store/modules/asset/getters';
 import AssetActions from '@/store/modules/asset/actions';
 
-export const asset = new Module({
+export const assetModule = new Module({
   namespaced: false,
   state: State,
   getters: AssetGetters,

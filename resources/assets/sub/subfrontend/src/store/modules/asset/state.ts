@@ -6,8 +6,6 @@ export default class State {
     personal: [],
   }
 
-  asset = {}
-
   activePersonalAsset = 0
 
   activePersonalAssetIndex = 0

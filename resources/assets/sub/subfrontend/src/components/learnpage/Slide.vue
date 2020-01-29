@@ -5,7 +5,7 @@
     <template v-if="!item.nocontrols">
 
       <div :class="['translate-area', 'pointer']" @click="showTranslate">
-        <template v-if="show">
+        <template v-if="show && item.translate">
           <p class="slide-value">{{item.translate.value}}</p>
           <div class="example-area">
             <template v-for="(example, index) in item.examples">

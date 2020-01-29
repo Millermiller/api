@@ -104,7 +104,7 @@ export default class extends Vue {
     created() {
       if (parseInt(this.$route.params.id, 10) > 0) this.getAsset(parseInt(this.$route.params.id, 10))
       else {
-        this.cards.push(new Card(new Word('Выберите словарь')))
+        this.cards.push(new Card(new Word('Выберите словарь'), true))
       }
     }
 }

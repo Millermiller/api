@@ -1,9 +1,8 @@
-import { Actions } from 'vuex-smart-module';
-import Vue from 'vue';
-import request from '@/utils/request';
-import State from '@/store/modules/asset/state';
-import AssetGetters from '@/store/modules/asset/getters';
-import AssetMutations from '@/store/modules/asset/mutations';
+import { Actions } from 'vuex-smart-module'
+import request from '@/utils/request'
+import State from '@/store/modules/asset/state'
+import AssetGetters from '@/store/modules/asset/getters'
+import AssetMutations from '@/store/modules/asset/mutations'
 
 export default class AssetActions extends Actions<State, AssetGetters, AssetMutations, AssetActions> {
   addPersonalAsset(title: string) {
@@ -12,7 +11,7 @@ export default class AssetActions extends Actions<State, AssetGetters, AssetMuta
         (response: any) => {
           if (response.status === 201) {
             this.dispatch('reloadPersonal')
-            this.commit('setSelection', { asset: {}, index: 1 })
+            this.commit('setSelection', 1)
             resolve(response)
           }
         },
@@ -54,12 +53,12 @@ export default class AssetActions extends Actions<State, AssetGetters, AssetMuta
   }
 
   onCardsPageClose() {
-    this.commit('setSelection', { asset: {}, index: 0 })
+    this.commit('setSelection', 1)
     this.commit('setActiveAssetEdit', false)
   }
 
   onCardsPageOpen() {
     const asset = { type: 3 }
-    if (!this.state.activePersonalAssetEdit) this.commit('setSelection', { asset, index: 0 })
+    if (!this.state.activePersonalAssetEdit) this.commit('setSelection', 1)
   }
 }

@@ -94,7 +94,7 @@ export default class extends Vue {
 
     cardspage() {
       if (this.isActive) {
-        this.$store.dispatch('loadAsset', { asset: this.item, index: this.index })
+        this.$store.dispatch('loadAsset', this.item.id)
         this.$store.commit('setActiveAssetEdit', true)
         this.$router.push('/cards')
       }
