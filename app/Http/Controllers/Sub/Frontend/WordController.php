@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\{SearchRequest, CreateWordRequest};
-use App\Services\WordService;
+use Scandinaver\Learn\Domain\Services\WordService;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Http\{Request, JsonResponse};
 

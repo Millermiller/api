@@ -3,17 +3,16 @@
 
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
-
-use App\Entities\Asset;
-use App\Entities\Card;
-use App\Entities\User;
-use Illuminate\Http\Request;
-use Mockery;
+use Scandinaver\Learn\Domain\Card;
+use Scandinaver\User\Domain\User;
 use Tests\TestCase;
 
+/**
+ * Class CardsControllerTest
+ * @package Tests\Feature\Controllers\Sub\Frontend
+ */
 class CardsControllerTest extends TestCase
 {
-
     public function testStore()
     {
         $user = app('em')->getRepository(User::class)->find(1);

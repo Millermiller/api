@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Plan;
-use App\Services\UserService;
+use App\Helpers\Auth;
 use Carbon\Carbon;
 use Closure;
+use Scandinaver\User\Domain\Services\UserService;
 
 class CheckPlan
 {
@@ -26,7 +26,7 @@ class CheckPlan
     public function handle($request, Closure $next)
     {
         if (\Auth::check()) {
-            $this->userService->updatePlan(\Auth::user());
+            $this->userService->updatePlan(Auth::user());
         }
         return $next($request);
     }

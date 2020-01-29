@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Services\UserService;
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use Auth;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Illuminate\Http\{JsonResponse, Request};
-use App\Repositories\Puzzle\PuzzleRepositoryInterface;
+use ReflectionException;
+use App\Helpers\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Scandinaver\Puzzle\Domain\Puzzle;
+use Scandinaver\Puzzle\Application\Commands\PuzzleCompleteCommand;
+use Scandinaver\Puzzle\Application\Query\UserPuzzlesQuery;
 
 /**
  * Class PuzzleController
@@ -17,47 +19,26 @@ use App\Repositories\Puzzle\PuzzleRepositoryInterface;
  * Date: 22.11.2018
  * Time: 4:35
  */
-class PuzzleController
+class PuzzleController extends Controller
 {
     /**
-     * @var PuzzleRepositoryInterface
-     */
-    private $puzzleRepository;
-
-    /**
-     * PuzzleController constructor.
-     * @param PuzzleRepositoryInterface $puzzleRepository
-     */
-    public function __construct(PuzzleRepositoryInterface $puzzleRepository)
-    {
-        $this->puzzleRepository = $puzzleRepository;
-    }
-
-    /**
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        $puzzles = $this->puzzleRepository->getForUser(Auth::user());
-
-        return response()->json($puzzles);
+        return response()->json($this->queryBus->execute(new UserPuzzlesQuery(Auth::user())));
     }
 
     /**
      *
-     * @param Request $request
-     * @param int $id
+     * @param Puzzle $puzzle
      * @return JsonResponse
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @throws ReflectionException
      */
-    public function update(Request $request, $id)
+    public function update(Puzzle $puzzle)
     {
-        $puzzle = $this->puzzleRepository->get($id);
-
-        Auth::user()->addPuzzle($puzzle);
-
-        app('em')->flush();
+        $this->commandBus->execute(new PuzzleCompleteCommand(Auth::user(), $puzzle));
 
         return response()->json($puzzle, 200);
     }

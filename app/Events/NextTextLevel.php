@@ -3,7 +3,7 @@
 namespace App\Events;
 
 use App\Entities\TextResult;
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\Entities\User;
-use App\Entities\Card;
+use Scandinaver\User\Domain\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Scandinaver\Learn\Domain\Card;
 
 class CardPolicy
 {
@@ -60,7 +60,7 @@ class CardPolicy
     /**
      * Determine whether the user can restore the card.
      *
-     * @param  \App\User $user
+     * @param User $user
      * @param Card $card
      * @return mixed
      */
@@ -72,7 +72,7 @@ class CardPolicy
     /**
      * Determine whether the user can permanently delete the card.
      *
-     * @param  \App\User $user
+     * @param User $user
      * @param Card $card
      * @return mixed
      */

@@ -1,12 +1,16 @@
 <?php
 
+
 namespace Tests\Unit;
 
-use App\User;
+use Scandinaver\User\Domain\Plan;
+use Scandinaver\User\Domain\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * Class ApiTest
+ * @package Tests\Unit
+ */
 class ApiTest extends TestCase
 {
     /**
@@ -30,11 +34,10 @@ class ApiTest extends TestCase
 
     public function testGetAssets()
     {
-
-        $plan = new \App\Entities\Plan();
+        $plan = new Plan();
         $plan->setId(1);
 
-        $user = new \App\Entities\User('test', 'test@test.test', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', $plan);
+        $user = new User();
         $user->setid(1);
 
         $this->actingAs($user, 'api');
@@ -66,10 +69,10 @@ class ApiTest extends TestCase
 
     public function testIncorrectLanguageName()
     {
-        $plan = new \App\Entities\Plan();
+        $plan = new Plan();
         $plan->setId(1);
 
-        $user = new \App\Entities\User('test', 'test@test.test', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', $plan);
+        $user = new User();
         $user->setid(1);
 
         $this->actingAs($user, 'api');

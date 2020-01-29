@@ -1,5 +1,20 @@
-﻿
+﻿сделать domain events
+
+проверить прохождение тестов
+
+нормальный поиск по словам
+
 общий вход на форум
+
+сделать новое intro
+
+async/await
+
+pug
+
+починить metatitle subfrontend
+
+починить выделение активного словаря на cardspage + странный баг с удалением
 
 добавление пользователя в адменке
 
@@ -104,3 +119,10 @@ sudo update-alternatives --config php
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo supervisorctl start laravel-worker:*
+
+******************************* NPM CHECK UPDATES *************************
+ncu -u
+
+******************************** NVM *************************************
+nvm ls
+nmm use

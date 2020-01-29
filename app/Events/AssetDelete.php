@@ -2,7 +2,8 @@
 
 namespace App\Events;
 
-use App\Entities\{User, Asset};
+use Scandinaver\User\Domain\User;
+use Scandinaver\Learn\Domain\{Asset};
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

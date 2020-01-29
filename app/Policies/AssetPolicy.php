@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Entities\{User, Asset};
+use Scandinaver\Learn\Domain\Asset;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Scandinaver\User\Domain\User;
 
 class AssetPolicy
 {
@@ -12,8 +13,8 @@ class AssetPolicy
     /**
      * Determine whether the user can view the asset.
      *
-     * @param  \App\Entities\User  $user
-     * @param  \App\Entities\Asset  $asset
+     * @param User $user
+     * @param Asset $asset
      * @return mixed
      */
     public function view(User $user, Asset $asset)
@@ -34,7 +35,7 @@ class AssetPolicy
     /**
      * Determine whether the user can create assets.
      *
-     * @param  \App\Entities\User  $user
+     * @param User $user
      * @return mixed
      */
     public function create(User $user)
@@ -45,8 +46,8 @@ class AssetPolicy
     /**
      * Determine whether the user can update the asset.
      *
-     * @param  \App\Entities\User  $user
-     * @param   \App\Entities\Asset  $asset
+     * @param User $user
+     * @param Asset $asset
      * @return mixed
      */
     public function update(User $user, Asset $asset)
@@ -57,9 +58,9 @@ class AssetPolicy
     /**
      * Determine whether the user can delete the asset.
      *
-     * @param  \App\Entities\User  $user
-     * @param   \App\Entities\Asset  $asset
-     * @return mixed
+     * @param User $user
+     * @param Asset $asset
+     * @return bool
      */
     public function delete(User $user, Asset $asset)
     {

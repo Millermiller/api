@@ -3,9 +3,13 @@
 
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
-use App\Entities\User;
+use Scandinaver\User\Domain\User;
 use Tests\TestCase;
 
+/**
+ * Class IndexControllerTest
+ * @package Tests\Feature\Controllers\Sub\Frontend
+ */
 class IndexControllerTest extends TestCase
 {
 

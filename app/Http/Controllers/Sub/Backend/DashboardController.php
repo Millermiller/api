@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Sub\Backend;
 
+use ReflectionException;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\BaseRequest;
 use App\Http\Controllers\Controller;
-use App\Models\Message;
-use App\Services\AdminService;
+use Scandinaver\Learn\Application\Query\{AssetsCountQuery, AudioCountQuery, TextsCountQuery, WordsCountQuery};
 
 /**
  * Created by PhpStorm.
@@ -18,45 +20,42 @@ use App\Services\AdminService;
 class DashboardController extends Controller
 {
     /**
-     * @var AdminService
+     * @param BaseRequest $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    private $adminService;
-
-    /**
-     * DashboardController constructor.
-     * @param AdminService $adminService
-     */
-    public function __construct(\App\Services\AdminService $adminService)
+    public function wordsCount(BaseRequest $request)
     {
-        $this->adminService = $adminService;
+        return response()->json($this->queryBus->execute(new WordsCountQuery($request->language)));
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param BaseRequest $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function index()
+    public function assetsCount(BaseRequest $request)
     {
-        return response()->json($this->adminService->stats());
+        return response()->json($this->queryBus->execute(new AssetsCountQuery($request->language)));
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param BaseRequest $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function deleteMessage($id)
+    public function audioCount(BaseRequest $request)
     {
-        return response()->json([
-            'success'  => Message::destroy($id),
-            'messages' => array_values(Message::all()->sortByDesc('created_at')->toArray())
-        ]);
+        return response()->json($this->queryBus->execute(new AudioCountQuery($request->language)));
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param BaseRequest $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function readMessage($id)
+    public function textsCount(BaseRequest $request)
     {
-        return response()->json(['success' =>  Message::find($id)->update(['readed' => 1])]);
+        return response()->json($this->queryBus->execute(new TextsCountQuery($request->language)));
     }
 }

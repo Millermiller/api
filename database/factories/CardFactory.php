@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\Card::class, function (Faker $faker) {
+$factory->define(App\Helpers\Eloquent\Card::class, function (Faker $faker) {
     return [
         //
     ];

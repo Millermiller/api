@@ -3,11 +3,14 @@
 
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
-use App\Entities\Card;
-use App\Entities\User;
-use App\Entities\Word;
+use Scandinaver\Learn\Domain\Card;
+use Scandinaver\User\Domain\User;
 use Tests\TestCase;
 
+/**
+ * Class FavouriteControllerTest
+ * @package Tests\Feature\Controllers\Sub\Frontend
+ */
 class FavouriteControllerTest extends TestCase
 {
 

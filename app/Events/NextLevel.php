@@ -2,14 +2,17 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
-use App\Entities\{Result, User};
+use Scandinaver\User\Domain\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\{PrivateChannel, InteractsWithSockets, Channel};
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
+use Scandinaver\Learn\Domain\Asset;
 
+/**
+ * Class NextLevel
+ * @package App\Events
+ */
 class NextLevel
 {
     use Dispatchable;
@@ -22,20 +25,20 @@ class NextLevel
     public $user;
 
     /**
-     * @var Result
+     * @var Asset
      */
-    public $result;
+    public $nextAsset;
 
     /**
      * Create a new event instance.
      *
      * @param Authenticatable $user
-     * @param Result $result
+     * @param Asset $nextAsset
      */
-    public function __construct(Authenticatable $user, Result $result)
+    public function __construct(Authenticatable $user, Asset $nextAsset)
     {
         $this->user = $user;
-        $this->result = $result;
+        $this->nextAsset = $nextAsset;
     }
 
     /**

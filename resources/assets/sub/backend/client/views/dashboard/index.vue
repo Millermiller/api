@@ -1,42 +1,10 @@
 <template>
     <div>
         <div class="tile is-ancestor">
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <div v-if="loading" id="nprogress">
-                        <div class="spinner-icon"></div>
-                    </div>
-                    <p class="title">{{words}}</p>
-                    <p class="subtitle">Слов</p>
-                </article>
-            </div>
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <div v-if="loading" id="nprogress">
-                        <div class="spinner-icon"></div>
-                    </div>
-                    <p class="title">{{assets}}</p>
-                    <p class="subtitle">Словарей</p>
-                </article>
-            </div>
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <div v-if="loading" id="nprogress">
-                        <div class="spinner-icon"></div>
-                    </div>
-                    <p class="title">{{audiofiles}}</p>
-                    <p class="subtitle">Аудиозаписей</p>
-                </article>
-            </div>
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <div v-if="loading" id="nprogress">
-                        <div class="spinner-icon"></div>
-                    </div>
-                    <p class="title">{{texts}}</p>
-                    <p class="subtitle">Текстов</p>
-                </article>
-            </div>
+            <words/>
+            <assets/>
+            <audio/>
+            <texts/>
         </div>
 
         <div class="tile is-ancestor">
@@ -73,11 +41,14 @@
 <script>
     import message from './message.vue'
     import log from './log.vue'
+    import words from './widgets/words'
+    import assets from './widgets/assets'
+    import audio from './widgets/audio'
+    import texts from './widgets/texts'
 
     export default {
         components: {
-            message,
-            log
+            message, log, words, assets, audio, texts
         },
         data () {
             return {

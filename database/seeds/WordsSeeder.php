@@ -11,10 +11,10 @@ class WordsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Word::class, 50)->create()->each(
+        factory(App\Helpers\Eloquent\Word::class, 50)->create()->each(
           function ($word) {
-              /*** @var \App\Models\Word $word*/
-            $word->translates()->saveMany(factory(App\Models\Translate::class, 2)->make());
+              /*** @var App\Helpers\Eloquent\Word $word*/
+            $word->translates()->saveMany(factory(App\Helpers\Eloquent\Translate::class, 2)->make());
         });
     }
 }
