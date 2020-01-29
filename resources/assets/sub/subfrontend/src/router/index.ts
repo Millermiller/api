@@ -5,7 +5,8 @@ import Learn from '@/views/Learn.vue'
 import Tests from '@/views/Tests.vue'
 import Login from '@/views/Login.vue'
 import Cards from '@/views/Cards.vue'
-import Texts from '@/views/Text.vue'
+import Texts from '@/views/Texts.vue'
+import TextItem from '@/views/Text.vue'
 import Puzzles from '@/views/Puzzles.vue'
 import { store } from '@/store'
 import commonAPI from '@/api/commonAPI'
@@ -93,7 +94,7 @@ const routes = [
   {
     path: '/translates/:id',
     name: 'text',
-    component: Texts,
+    component: TextItem,
     beforeEnter: requireAuth,
   },
   {
