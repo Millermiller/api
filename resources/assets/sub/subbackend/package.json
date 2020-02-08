@@ -1,0 +1,116 @@
+{
+  "name": "subbackend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "buefy": "^0.8.10",
+    "canvas": "^2.6.1",
+    "core-js": "^3.4.4",
+    "fibers": "^4.0.2",
+    "froala-editor": "^3.1.0",
+    "sass": "^1.25.0",
+    "vue": "^2.6.10",
+    "vue-bulma-breadcrumb": "^1.0.1",
+    "vue-bulma-expanding": "0.0.1",
+    "vue-class-component": "^7.0.2",
+    "vue-froala-wysiwyg": "^3.1.0",
+    "vue-progressbar": "0.7.2",
+    "vue-property-decorator": "^8.3.0",
+    "vue-router": "^3.1.3",
+    "vuex-smart-module": "^0.3.2",
+    "vuex": "^3.1.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.5",
+    "@types/mocha": "^5.2.4",
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-e2e-cypress": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-plugin-router": "^4.1.0",
+    "@vue/cli-plugin-typescript": "^4.1.0",
+    "@vue/cli-plugin-unit-mocha": "^4.1.0",
+    "@vue/cli-plugin-vuex": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "@vue/eslint-config-airbnb": "^4.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^4.0.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "bufferutil": "^4.0.1",
+    "chai": "^4.1.2",
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.12.0",
+    "prettier": "1.19.1",
+    "pug": "^2.0.4",
+    "pug-load": "^2.0.12",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^8.0.0",
+    "typescript": "~3.5.3",
+    "utf-8-validate": "^5.0.2",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buefy/buefy.git"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/airbnb",
+      "@vue/typescript"
+    ],
+    "rules": {
+      "no-param-reassign": "off",
+      "lines-between-class-members": "off",
+      "import/no-unresolved": "off",
+      "no-shadow": "off",
+      "max-len": "off",
+      "no-nested-ternary": "off",
+      "semi": "off",
+      "import/prefer-default-export": "off",
+      "camelcase": "off",
+      "no-plusplus": "off",
+      "no-console": "off",
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "jsx": "never",
+          "ts": "never",
+          "tsx": "never"
+        }
+      ]
+    },
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)"
+        ],
+        "env": {
+          "mocha": true
+        }
+      }
+    ]
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
