@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'admin_scandinaver'),
-            'username' => env('DB_USERNAME', 'admin_john'),
-            'password' => env('DB_PASSWORD', '7BW5r2xl3l'),
+            'host' => env('mariadb', 'mariadb'),
+            'port' => env('DB_PORT', '3307'),
+            'database' => env('DB_DATABASE', 'default'),
+            'username' => env('DB_USERNAME', 'default'),
+            'password' => env('DB_PASSWORD', 'secret'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

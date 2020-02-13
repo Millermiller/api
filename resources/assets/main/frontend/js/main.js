@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueAwesomeSwiper from 'vue-awesome-swiper';
-import 'swiper/dist/css/swiper.css'
+import 'vue-awesome-swiper/node_modules/swiper/dist/css/swiper.css'
 import RadialProgressBar from 'vue-radial-progress'
 import VueDragDrop from 'vue-drag-drop';
 import {cards} from "./content/cards";
