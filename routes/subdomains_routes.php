@@ -10,14 +10,13 @@
 /***************************** SUBDOMAIN - PUBLIC **********************************/
 
 Route::group([
-    'domain' => '{subdomain}.' . config('app.DOMAIN'),
+
 ], function () {
     Route::get('/login', 'Sub\Frontend\IndexController@index')->middleware('guest');
     Route::post('/login', 'Auth\LoginSubController@login')->middleware('checkDomain')->name('login');
 });
 
 Route::group([
-    'domain' => '{subdomain}.' . config('app.DOMAIN'),
     'middleware' => ['checkDomain', 'touchUser', 'checkPlan'],
     'namespace' => 'Sub\Frontend',
     'as' => 'sub_frontend::'
@@ -37,7 +36,6 @@ Route::group([
 /******************************** SUBDOMAIN - ADMIN ***********************************/
 
 Route::group([
-    'domain' => '{subdomain}.' . config('app.DOMAIN'),
     'middleware' => ['checkDomain'],
 ], function () {
     Route::get('/admin/login', 'Auth\LoginAdminController@showLoginForm');
@@ -45,7 +43,6 @@ Route::group([
 });
 
 Route::group([
-    'domain' => '{subdomain}.' . config('app.DOMAIN'),
     'middleware' => ['checkAdmin', 'checkDomain', 'touchUser'],
     'namespace' => 'Sub\Backend',
     'prefix' => 'admin'

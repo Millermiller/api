@@ -29,7 +29,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group(
             [
-                'domain' => '{subdomain}.' . config('app.DOMAIN'),
                 'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan'],
                 'namespace' => 'App\Http\Controllers\Sub\Frontend',
                 'as' => 'sub_frontend::'
