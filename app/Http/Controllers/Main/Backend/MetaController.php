@@ -3,8 +3,20 @@
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Meta;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use ReflectionException;
+use Scandinaver\Blog\Application\Commands\CreateCommentCommand;
+use Scandinaver\Blog\Application\Commands\DeleteCommentCommand;
+use Scandinaver\Blog\Application\Commands\UpdateCommentCommand;
+use Scandinaver\Blog\Application\Query\CommentQuery;
+use Scandinaver\Blog\Application\Query\CommentsQuery;
+use Scandinaver\Blog\Domain\Comment;
+use Scandinaver\Common\Application\Commands\CreateMetaCommand;
+use Scandinaver\Common\Application\Commands\DeleteMetaCommand;
+use Scandinaver\Common\Application\Commands\UpdateMetaCommand;
+use Scandinaver\Common\Application\Query\MetaQuery;
+use Scandinaver\Common\Application\Query\MetasQuery;
 
 /**
  * Class SeoController
@@ -13,63 +25,56 @@ use Illuminate\Http\Request;
 class MetaController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json(array_values(Meta::get()->sortByDesc('id')->toArray()));
+        return response()->json($this->queryBus->execute(new MetasQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show($id)
     {
-        return response()->json(Meta::findOrFail($id));
+        return response()->json($this->queryBus->execute(new MetaQuery($id)));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function store(Request $request)
     {
-        return response()->json(Meta::create($request->all()), 201);
+        $this->commandBus->execute(new CreateMetaCommand($request->toArray()));
+
+        return response()->json(null, 201);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Meta $meta
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Meta $meta)
     {
-        $meta = Meta::findOrFail($id);
-        $meta->update($request->all());
+        $this->commandBus->execute(new UpdateMetaCommand($meta, $request->toArray()));
 
-        return response()->json($meta, 200);
+        return response()->json(null, 201);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function destroy($id)
+    public function destroy(Meta $meta)
     {
-        $meta = Meta::findOrFail($id);
-        $meta->delete();
+        $this->commandBus->execute(new DeleteMetaCommand($meta));
 
         return response()->json(null, 204);
     }

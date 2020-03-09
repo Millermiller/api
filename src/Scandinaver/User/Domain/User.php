@@ -307,17 +307,22 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
             if (file_exists(public_path('/uploads/u/a/') . $this->photo)) {
                 return '/uploads/u/a/' . $this->photo;
             } else {
-                $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
-                $avatar->resize(
-                    300,
-                    null,
-                    function ($constraint) {
-                        /** @var \Intervention\Image\Constraint $constraint */
-                        $constraint->aspectRatio();
-                    }
-                );
-                $avatar->save(public_path('/uploads/u/a/' . $this->photo));
-                return '/uploads/u/a/' . $this->photo;
+                try {
+                    $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
+                    $avatar->resize(
+                        300,
+                        null,
+                        function ($constraint) {
+                            /** @var \Intervention\Image\Constraint $constraint */
+                            $constraint->aspectRatio();
+                        }
+                    );
+                    $avatar->save(public_path('/uploads/u/a/' . $this->photo));
+                    return '/uploads/u/a/' . $this->photo;
+                }
+                catch (Exception $exception){
+                    return Avatar::create($this->login)->toBase64()->encoded;
+                }
             }
         } else {
             return Avatar::create($this->login)->toBase64()->encoded;

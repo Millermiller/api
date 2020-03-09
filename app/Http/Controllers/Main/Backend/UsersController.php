@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use App\Services\UserService;
+use ReflectionException;
+use \Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Scandinaver\User\Domain\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Input;
-use \Illuminate\Http\Request;
+use Scandinaver\User\Application\Commands\DeleteUserCommand;
+use Scandinaver\User\Application\Commands\UpdateUserCommand;
+use Scandinaver\User\Application\Query\UsersQuery;
 
 /**
  * Class UsersController
@@ -21,34 +23,22 @@ use \Illuminate\Http\Request;
 class UsersController extends Controller
 {
     /**
-     * @var UserService
-     */
-    private $userService;
-
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json($this->userService->getAll());
+        return response()->json($this->queryBus->execute(new UsersQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param User $user
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show(User $user)
     {
-        return response()->json($this->userService->getOne($user->getKey()));
+        return response()->json($this->queryBus->execute(new UsersQuery($user->getKey())));
     }
 
     /**
@@ -63,28 +53,26 @@ class UsersController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param User $user
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function update(Request $request, User $user)
     {
-        $user = $this->userService->updateUser($user, $request->toArray());
+        $this->commandBus->execute(new UpdateUserCommand($user, $request->toArray()));
 
-        return response()->json($user, 200);
+        return response()->json(null, 201);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param User $user
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function destroy(User $user)
     {
-        $this->userService->delete($user);
+        $this->commandBus->execute(new DeleteUserCommand($user));
 
         return response()->json(null, 204);
     }
@@ -98,11 +86,8 @@ class UsersController extends Controller
        // return response()->json();
     }
 
-    /**
-     *
-     */
     public function search()
     {
-        return  $this->userService->find(Input::get('q'));
+       // return $this->userService->find(Input::get('q'));
     }
 }

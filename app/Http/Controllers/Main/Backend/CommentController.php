@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Comment;
+use ReflectionException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Scandinaver\Blog\Application\Commands\CreateCommentCommand;
+use Scandinaver\Blog\Application\Commands\DeleteCommentCommand;
+use Scandinaver\Blog\Application\Commands\UpdateCommentCommand;
+use Scandinaver\Blog\Application\Query\CommentQuery;
+use Scandinaver\Blog\Application\Query\CommentsQuery;
+use Scandinaver\Blog\Domain\Comment;
 
 /**
  * Class CommentController
@@ -14,77 +20,72 @@ use Illuminate\Support\Facades\Input;
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json(Comment::all());
+        return response()->json($this->queryBus->execute(new CommentsQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show($id)
     {
-        return response()->json(Comment::findOrFail($id));
+        return response()->json($this->queryBus->execute(new CommentQuery($id)));
+    }
+
+    /**
+     * @param  Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
+     */
+    public function store(Request $request)
+    {
+        $this->commandBus->execute(new CreateCommentCommand($request->toArray()));
+
+        return response()->json(null, 201);
+    }
+
+    /**
+     * @param Request $request
+     * @param Comment $comment
+     * @return JsonResponse
+     * @throws ReflectionException
+     */
+    public function update(Request $request, Comment $comment)
+    {
+        $this->commandBus->execute(new UpdateCommentCommand($comment, $request->toArray()));
+
+        return response()->json(null, 201);
+    }
+
+    /**
+     * @param Comment $comment
+     * @return JsonResponse
+     * @throws ReflectionException
+     */
+    public function destroy(Comment $comment)
+    {
+        $this->commandBus->execute(new DeleteCommentCommand($comment));
+
+        return response()->json(null, 204);
     }
 
     public function search()
     {
+        /*
         $search = Input::get('q');
 
         return response()->json([
             'success' => true,
             'comments' => Comment::with(['author', 'post'])->where(function ($query) use ($search) {
-                /** @var \Illuminate\Database\Eloquent\Builder $query*/
                 $query->where('text', 'LIKE', "%{$search}%");
             })->get()
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        return response()->json(Comment::create($request->all()), 201);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
-     */
-    public function destroy($id)
-    {
-        $category = Comment::findOrFail($id);
-        $category->delete();
-
-        return response()->json(null, 204);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $category = Comment::findOrFail($id);
-        $category->update($request->all());
-
-        return response()->json($category, 200);
+        */
     }
 }

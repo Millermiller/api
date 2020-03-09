@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
+use ReflectionException;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Models\Message;
-use Spatie\Activitylog\Models\Activity;
+use Scandinaver\Common\Domain\Message;
+use Scandinaver\Common\Application\Commands\DeleteMessageCommand;
+use Scandinaver\Common\Application\Query\MessageQuery;
+use Scandinaver\Common\Application\Query\MessagesQuery;
 
 /**
  * Class SeoController
@@ -13,37 +17,32 @@ use Spatie\Activitylog\Models\Activity;
 class MessageController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json(Message::all());
+        return response()->json($this->queryBus->execute(new MessagesQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show($id)
     {
-        return response()->json(Message::findOrFail($id));
+        return response()->json($this->queryBus->execute(new MessageQuery($id)));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @param Message $message
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function destroy($id)
+    public function destroy(Message $message)
     {
-        $log = Message::findOrFail($id);
-        $log->delete();
+        $this->commandBus->execute(new DeleteMessageCommand($message));
 
         return response()->json(null, 204);
     }

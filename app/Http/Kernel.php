@@ -20,6 +20,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\ShowDebug::class,
+        \App\Http\Middleware\Cors::class,
     ];
 
     /**
@@ -42,6 +43,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+           'cors',
         ],
     ];
 
@@ -65,5 +67,12 @@ class Kernel extends HttpKernel
         'checkDomain' =>  \App\Http\Middleware\CheckDomain::class,
         'checkPlan' =>  \App\Http\Middleware\CheckPlan::class,
         'addUserName' =>  \App\Http\Middleware\AddUserName::class,
+        'cors' =>  \App\Http\Middleware\Cors::class,
+    ];
+
+    protected $commands = [
+        'App\Console\Commands\CreateCommand',
+        'App\Console\Commands\CreateCommandHandler',
+        'App\Console\Commands\CreateCommandHandlerInterface',
     ];
 }

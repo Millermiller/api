@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Spatie\Activitylog\Models\Activity;
 
 /**
@@ -14,7 +16,7 @@ class LogController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
@@ -25,7 +27,7 @@ class LogController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -36,13 +38,12 @@ class LogController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function destroy($id)
     {
-        $log = Activity::findOrFail($id);
-        $log->delete();
+        Activity::destroy($id);
 
         return response()->json(null, 204);
     }

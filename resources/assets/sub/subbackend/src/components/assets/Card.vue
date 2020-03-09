@@ -49,7 +49,7 @@ export default class extends Vue {
       @Prop({ required: true })
       private index!: any
 
-      private settingsModal: boolean = false
+      private settingsModal:  = false
 
       showSettingsModal() {
         this.settingsModal = true

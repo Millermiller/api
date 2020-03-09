@@ -43,10 +43,13 @@ class LoginController extends Controller
 
         try{//TODO: убрать success из ответов
             $this->queryBus->execute(new LoginQuery($request->only($login_type, 'password')));
-            return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER']]);
+
+            $tokenResult = auth()->user()->createToken('Personal Access Token');
+            $tokenResult->token->save();
+            return response()->json(['access_token' => $tokenResult->accessToken,]);
         }
         catch (UserNotFoundException $e){
-            return response()->json(['success' => false, 'message' => 'Неверный логин или пароль']);
+            return response()->json(['success' => false, 'message' => 'Неверный логин или пароль'], 403);
         }
     }
 }

@@ -1,0 +1,15 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use Scandinaver\Shared\Contracts\CommandHandler;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+interface DummyClass extends CommandHandler
+{
+
+}

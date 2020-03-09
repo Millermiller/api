@@ -13,53 +13,7 @@ use JsonSerializable;
  */
 class Intro implements JsonSerializable
 {
-    /**
-     * @return string|null
-     */
-    public function getPage(): string
-    {
-        return $this->page;
-    }
 
-    /**
-     * @return string|null
-     */
-    public function getElement(): ?string
-    {
-        return $this->element;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getIntro(): ?string
-    {
-        return $this->intro;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPosition(): ?string
-    {
-        return $this->position;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTooltipclass(): ?string
-    {
-        return $this->tooltipclass;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getSort(): ?int
-    {
-        return $this->sort;
-    }
     /**
      * @var int
      *
@@ -140,11 +94,115 @@ class Intro implements JsonSerializable
     private $deletedAt;
 
     /**
+     * @param string|null $page
+     */
+    public function setPage(?string $page): void
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * @param string|null $element
+     */
+    public function setElement(?string $element): void
+    {
+        $this->element = $element;
+    }
+
+    /**
+     * @param string|null $intro
+     */
+    public function setIntro(?string $intro): void
+    {
+        $this->intro = $intro;
+    }
+
+    /**
+     * @param string|null $position
+     */
+    public function setPosition(?string $position): void
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @param string|null $tooltipclass
+     */
+    public function setTooltipclass(?string $tooltipclass): void
+    {
+        $this->tooltipclass = $tooltipclass;
+    }
+
+    /**
+     * @param int|null $sort
+     */
+    public function setSort(?int $sort): void
+    {
+        $this->sort = $sort;
+    }
+
+    /**
+     * @param int|null $active
+     */
+    public function setActive(?int $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPage(): string
+    {
+        return $this->page;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getElement(): ?string
+    {
+        return $this->element;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIntro(): ?string
+    {
+        return $this->intro;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPosition(): ?string
+    {
+        return $this->position;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTooltipclass(): ?string
+    {
+        return $this->tooltipclass;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSort(): ?int
+    {
+        return $this->sort;
     }
 
     /**

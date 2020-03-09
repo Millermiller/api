@@ -14,12 +14,30 @@ namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
 
-class ConfigController extends Controller {
+class ConfigController extends Controller
+{
+    public function index()
+    {
+        
+    }
 
-        public function index()
-        {
-            $this->view->setLayout('admin');
-            $this->view->setTemplate('config');
-            $this->view->render();
-        }
+    public function show()
+    {
+        
+    }
+
+    public function store()
+    {
+        
+    }
+
+    public function update()
+    {
+        
+    }
+
+    public function destroy()
+    {
+        
+    }
 }

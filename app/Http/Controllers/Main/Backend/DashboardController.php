@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Message;
-use App\User;
 use Spatie\Activitylog\Models\Activity;
 
 /**

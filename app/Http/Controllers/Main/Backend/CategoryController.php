@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use ReflectionException;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Scandinaver\Blog\Application\Commands\CreateCategoryCommand;
+use Scandinaver\Blog\Application\Commands\DeleteCategoryCommand;
+use Scandinaver\Blog\Application\Commands\UpdateCategoryCommand;
+use Scandinaver\Blog\Application\Query\CategoriesQuery;
+use Scandinaver\Blog\Application\Query\CategoryQuery;
+use Scandinaver\Blog\Domain\Category;
 
 /**
  * Class CategoryController
@@ -13,64 +20,58 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-       return response()->json(Category::all());
+        return response()->json($this->queryBus->execute(new CategoriesQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show($id)
     {
-        return response()->json(Category::findOrFail($id));
+        return response()->json($this->queryBus->execute(new CategoryQuery($id)));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function store(Request $request)
     {
-        return response()->json(Category::create($request->all()), 201);
+        $this->commandBus->execute(new CreateCategoryCommand($request->toArray()));
+
+        return response()->json(null, 201);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @param Request $request
+     * @param Category $category
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function destroy($id)
+    public function update(Request $request, Category $category)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
+        $this->commandBus->execute(new UpdateCategoryCommand($category, $request->toArray()));
+
+        return response()->json(null, 201);
+    }
+
+    /**
+     * @param Category $category
+     * @return JsonResponse
+     * @throws ReflectionException
+     */
+    public function destroy(Category $category)
+    {
+        $this->commandBus->execute(new DeleteCategoryCommand($category));
 
         return response()->json(null, 204);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $category = Category::findOrFail($id);
-        $category->update($request->all());
-
-        return response()->json($category, 200);
     }
 }

@@ -10,9 +10,11 @@
 /******************************** MAIN - PUBLIC *****************************************/
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
-Route::post('/login', 'Auth\LoginController@login');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('frontend::logout');
-
+Route::get('/user', function(Request $request) {
+    return auth()->user();
+});
 Route::post('/signup', 'Auth\RegisterController@register');
 
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('restore');

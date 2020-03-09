@@ -1,0 +1,27 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use DummyCommandNamespace;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass implements DummyClassInterface
+{
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param DummyCommandClass
+     * @inheritDoc
+     */
+    public function handle($command): void
+    {
+        // TODO: Implement handle() method.
+    }
+} 

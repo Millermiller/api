@@ -5,6 +5,7 @@ namespace Scandinaver\Blog\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
 use Scandinaver\Blog\Domain\Contracts\PostRepositoryInterface;
+use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Shared\BaseRepository;
 
 /**
@@ -32,11 +33,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
     /**
      * @param $id
-     * @return object|void|null
+     * @return Post
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function get($id)
+    public function get($id): Post
     {
         $q = $this->_em->createQueryBuilder();
 

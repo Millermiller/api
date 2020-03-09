@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Plan;
+use ReflectionException;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Scandinaver\User\Domain\Plan;
+use Scandinaver\User\Application\Commands\CreatePlanCommand;
+use Scandinaver\User\Application\Commands\DeletePlanCommand;
+use Scandinaver\User\Application\Commands\UpdatePlanCommand;
+use Scandinaver\User\Application\Query\PlanQuery;
+use Scandinaver\User\Application\Query\PlansQuery;
 
 /**
  * Class SeoController
@@ -13,63 +20,57 @@ use Illuminate\Http\Request;
 class PlanController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json(Plan::all());
+        return response()->json($this->queryBus->execute(new PlansQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show($id)
     {
-        return response()->json(Plan::findOrFail($id));
+        return response()->json($this->queryBus->execute(new PlanQuery($id)));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function store(Request $request)
     {
-        return response()->json(Plan::create($request->all()), 201);
+        $this->commandBus->execute(new CreatePlanCommand($request->toArray()));
+
+        return response()->json(null, 201);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Plan $plan
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Plan $plan)
     {
-        $tarif = Plan::findOrFail($id);
-        $tarif->update($request->all());
+        $this->commandBus->execute(new UpdatePlanCommand($plan, $request->toArray()));
 
-        return response()->json($tarif, 200);
+        return response()->json(null, 201);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @param Plan $plan
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function destroy($id)
+    public function destroy(Plan $plan)
     {
-        $tarif = Plan::findOrFail($id);
-        $tarif->delete();
+        $this->commandBus->execute(new DeletePlanCommand($plan));
 
         return response()->json(null, 204);
     }

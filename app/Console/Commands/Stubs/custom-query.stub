@@ -1,0 +1,18 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use Scandinaver\Shared\Contracts\Query;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass implements Query
+{
+    public function __construct()
+    {
+
+    }
+}

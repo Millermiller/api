@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Sub\Backend;
 
+use ReflectionException;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Models\Intro;
-use \Illuminate\Http\Request;
+use Scandinaver\Common\Application\Query\{IntroQuery, IntrosQuery};
+use Scandinaver\Common\Application\Commands\CreateIntroCommand;
+use Scandinaver\Common\Application\Handlers\CreateIntroCommandHandler;
 
 /**
  * Created by PhpStorm.
@@ -18,29 +22,35 @@ use \Illuminate\Http\Request;
 class IntroController extends Controller
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json(Intro::all());
+        return response()->json($this->queryBus->execute(new IntrosQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show($id)
     {
-        return response()->json(Intro::findOrFail($id));
+        return response()->json($this->queryBus->execute(new IntroQuery($id)));
     }
 
-    public function store()
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
+     */
+    public function store(Request $request)
     {
         $intro =  new Intro();
 
-        return response()->json(['success' => true, 'intro' => $intro]);
+        $this->commandBus->execute(new CreateIntroCommand($request->toArray()));
+        return response()->json(null, 201);
     }
 
     public function update(Request $request, $id)

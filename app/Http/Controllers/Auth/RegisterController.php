@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Services\UserService;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\ValidationException;
+use Scandinaver\User\Domain\Services\UserService;
 use Session;
 
 class RegisterController extends Controller

@@ -1,0 +1,27 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use DummyQueryNamespace;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass implements DummyClassInterface
+{
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param DummyQueryClass
+     * @inheritDoc
+     */
+    public function handle($query)
+    {
+        // TODO: Implement handle() method.
+    }
+} 

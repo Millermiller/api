@@ -1,0 +1,18 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use Scandinaver\Shared\Contracts\Command;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass implements Command
+{
+    public function __construct()
+    {
+
+    }
+}

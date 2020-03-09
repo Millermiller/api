@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
+use ReflectionException;
 use App\Http\Controllers\Controller;
-use App\Entities\Post;
-use App\Services\PostService;
-use Illuminate\Http\{JsonResponse, Request, Response};
-use Illuminate\Support\Facades\Input;
+use Scandinaver\Blog\Application\Commands\DeletePostCommand;
+use Scandinaver\Blog\Domain\Post;
+use Illuminate\Http\{JsonResponse, Request};
+use Scandinaver\Blog\Application\Commands\{CreatePostCommand, UpdatePostCommand};
+use Scandinaver\Blog\Application\Query\{PostQuery, PostsQuery};
 
 /**
  * Class ArticleController
@@ -20,94 +22,65 @@ use Illuminate\Support\Facades\Input;
 class ArticleController extends Controller
 {
     /**
-     * @var PostService
-     */
-    private $postService;
-
-    /**
-     * ArticleController constructor.
-     * @param PostService $postService
-     */
-    public function __construct(PostService $postService)
-    {
-        $this->postService = $postService;
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function index()
     {
-        return response()->json($this->postService->getAll());
+        return response()->json($this->queryBus->execute(new PostsQuery()));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
+     * @param int $id
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function show($id)
     {
-        return response()->json(Post::with(['category'])->find($id));
+        return response()->json($this->queryBus->execute(new PostQuery($id)));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return Response
+     * @param  Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
     public function store(Request $request)
     {
-        return response()->json(Post::create($request->all()), 201);
+        $this->commandBus->execute(new CreatePostCommand($request->toArray()));
+
+        return response()->json(null, 201);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return Response
+     * @param Request $request
+     * @param Post $post
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $post = Post::findOrFail($id);
-        $post->update($request->all());
+        $this->commandBus->execute(new UpdatePostCommand($post, $request->toArray()));
 
-        return response()->json($post, 200);
+        return response()->json(null, 201);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     * @throws \Exception
+     * @param Post $post
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
+        $this->commandBus->execute(new DeletePostCommand($post));
 
         return response()->json(null, 204);
     }
 
-    public function search()
-    {
-        $search = Input::get('q');
-
-        return response()->json([
-            'success' => true,
-            'articles' => Post::with(['category', 'comments'])->where(function ($query) use ($search) {
-                /** @var \Illuminate\Database\Eloquent\Builder $query*/
-                $query->where('post_name', 'LIKE', "%{$search}%");
-            })->get()
-        ]);
-    }
-
+    /** TODO: доделать
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function upload(Request $request)
     {
         $file = $request->file('img');
@@ -117,6 +90,5 @@ class ArticleController extends Controller
         $file->move($destinationPath, $filename);
 
         return response()->json(['data' => '/uploads/articles/'. $filename]);
-
     }
 }

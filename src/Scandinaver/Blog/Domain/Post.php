@@ -211,4 +211,28 @@ class Post implements JsonSerializable
     {
         return $this->createdAt;
     }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string|null $content
+     */
+    public function setContent(?string $content): void
+    {
+        $this->content = $content;
+    }
 }
