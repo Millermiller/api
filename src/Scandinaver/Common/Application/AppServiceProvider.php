@@ -83,5 +83,25 @@ class AppServiceProvider extends ServiceProvider
             'IntroHandlerInterface',
             'Scandinaver\Common\Application\Handlers\IntroHandler'
         );
+
+        $this->app->bind(
+            'CreateMessageHandlerInterface',
+            'Scandinaver\Common\Application\Handlers\CreateMessageHandler'
+        );
+
+        $this->app->bind(
+            'DeleteMessageHandlerInterface',
+            'Scandinaver\Common\Application\Handlers\DeleteMessageHandler'
+        );
+
+        $this->app->bind(
+            'MessageHandlerInterface',
+            'Scandinaver\Common\Application\Handlers\MessageHandler'
+        );
+
+        $this->app->bind(
+            'UpdateMessageHandlerInterface',
+            'Scandinaver\Common\Application\Handlers\UpdateMessageHandler'
+        );
     }
 }
