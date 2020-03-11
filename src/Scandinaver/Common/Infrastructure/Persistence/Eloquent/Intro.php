@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Eloquent;
+namespace Scandinaver\Common\Infrastructure\Persistence\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Helpers;
 
 /**
@@ -14,8 +15,8 @@ class EloquentHelper
      */
     public static function getEloquentModel(object $entity)
     {
-        $classname = '\App\Helpers\Eloquent\\'.class_basename($entity);
+        $classname = get_class($entity);
 
-        return call_user_func_array([$classname, 'find'], [$entity->getId()]) ;
+        return call_user_func_array([$classname, 'find'], [$entity->getId()]);
     }
 }

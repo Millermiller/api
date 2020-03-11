@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Eloquent;
+namespace Scandinaver\Blog\Infrastructure\Persistence\Eloquent;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

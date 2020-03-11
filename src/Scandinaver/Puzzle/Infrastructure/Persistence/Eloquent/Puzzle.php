@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Eloquent;
+namespace Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent;
 
 use App\Helpers\StringHelper;
 use Auth;

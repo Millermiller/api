@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Eloquent;
+namespace Scandinaver\User\Infrastructure\Persistence\Eloquent;
 
 use App\Mail\ResetPassword;
 use App\Helpers\Eloquent\Asset;

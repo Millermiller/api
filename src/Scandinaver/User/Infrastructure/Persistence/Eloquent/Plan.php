@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Created by Reliese Model.
- * Date: Fri, 02 Nov 2018 00:24:58 +0000.
- */
 
-namespace App\Helpers\Eloquent;
+namespace Scandinaver\User\Infrastructure\Persistence\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Tarif
+ * Class Plan
  * 
  * @property int $id
  * @property string $name

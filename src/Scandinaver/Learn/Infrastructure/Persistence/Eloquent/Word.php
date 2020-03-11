@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Eloquent;
+namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
 use App\User;
 use Auth;
