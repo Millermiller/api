@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Infrastructure\Persistence\Eloquent;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $period
  * @property int $cost
  * @property int $cost_per_month
+ *
+ * @mixin Eloquent
  *
  * @package App\Models
  */

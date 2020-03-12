@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use ReflectionException;
@@ -25,7 +26,7 @@ class PuzzleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new UserPuzzlesQuery(Auth::user())));
     }
@@ -36,7 +37,7 @@ class PuzzleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function update(Puzzle $puzzle)
+    public function update(Puzzle $puzzle): JsonResponse
     {
         $this->commandBus->execute(new PuzzleCompleteCommand(Auth::user(), $puzzle));
 

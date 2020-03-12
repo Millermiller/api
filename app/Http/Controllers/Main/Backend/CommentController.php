@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use ReflectionException;
@@ -23,7 +24,7 @@ class CommentController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CommentsQuery()));
     }
@@ -33,7 +34,7 @@ class CommentController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CommentQuery($id)));
     }
@@ -43,7 +44,7 @@ class CommentController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateCommentCommand($request->toArray()));
 
@@ -56,7 +57,7 @@ class CommentController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, Comment $comment): JsonResponse
     {
         $this->commandBus->execute(new UpdateCommentCommand($comment, $request->toArray()));
 
@@ -68,7 +69,7 @@ class CommentController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment): JsonResponse
     {
         $this->commandBus->execute(new DeleteCommentCommand($comment));
 

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Auth;
 
 use ReflectionException;
@@ -25,7 +26,7 @@ class LoginController extends Controller
      * @throws ReflectionException
      * @throws ValidationException
      */
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $this->validate($request,
             [

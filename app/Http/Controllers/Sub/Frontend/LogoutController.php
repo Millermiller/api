@@ -1,9 +1,10 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
-use App\Http\Controllers\Controller;
 use Auth;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -20,7 +21,7 @@ class LogoutController extends Controller {
     /**
      * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         setcookie('token', 'w', time()-1000, '/', '.'.config('app.DOMAIN'));
         setcookie('user',  'w', time()-1000, '/', '.'.config('app.DOMAIN'));

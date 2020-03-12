@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use ReflectionException;
@@ -23,7 +24,7 @@ class CategoryController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CategoriesQuery()));
     }
@@ -33,7 +34,7 @@ class CategoryController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CategoryQuery($id)));
     }
@@ -43,7 +44,7 @@ class CategoryController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateCategoryCommand($request->toArray()));
 
@@ -56,7 +57,7 @@ class CategoryController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $category): JsonResponse
     {
         $this->commandBus->execute(new UpdateCategoryCommand($category, $request->toArray()));
 
@@ -68,7 +69,7 @@ class CategoryController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         $this->commandBus->execute(new DeleteCategoryCommand($category));
 

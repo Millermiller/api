@@ -11,8 +11,18 @@ use Scandinaver\Shared\Contracts\Query;
  */
 class UserQuery implements Query
 {
-    public function __construct()
-    {
+    private $key;
 
+    public function __construct($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->key;
     }
 }

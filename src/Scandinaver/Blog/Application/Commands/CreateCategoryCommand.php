@@ -11,8 +11,21 @@ use Scandinaver\Shared\Contracts\Command;
  */
 class CreateCategoryCommand implements Command
 {
-    public function __construct()
-    {
+    /**
+     * @var array
+     */
+    private $data;
 
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
     }
 }

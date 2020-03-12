@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use Auth;
@@ -37,7 +38,7 @@ class TextController extends Controller
      * @throws AuthorizationException
      * @throws DBALException
      */
-    public function show(Text $text)
+    public function show(Text $text): JsonResponse
     {
         $this->authorize('view', $text);
 
@@ -50,7 +51,7 @@ class TextController extends Controller
      * @param Text $text
      * @return JsonResponse
      */
-    public function complete(Text $text)
+    public function complete(Text $text): JsonResponse
     {
         try{
             $text = $this->textService->giveNextLevel(Auth::user(), $text);

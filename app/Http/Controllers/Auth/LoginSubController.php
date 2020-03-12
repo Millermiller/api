@@ -26,7 +26,7 @@ class LoginSubController extends Controller
      * @throws ValidationException
      * @throws Exception
      */
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $this->validate($request, [
             'login'    => 'required',

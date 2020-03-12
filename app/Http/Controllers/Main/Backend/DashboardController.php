@@ -1,8 +1,10 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Spatie\Activitylog\Models\Activity;
 
 /**
@@ -16,7 +18,10 @@ use Spatie\Activitylog\Models\Activity;
  */
 class DashboardController extends Controller
 {
-    public function index()
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
     {
         // $last_day_users = User::where('created_at', '>', Carbon::yesterday())->count();
         // $message_count = Message::all()->count();
@@ -29,7 +34,11 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function readMessage($id)
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function readMessage($id): JsonResponse
     {
         return response()->json(['success' =>  Message::find($id)->update(['readed' => 1])]);
     }

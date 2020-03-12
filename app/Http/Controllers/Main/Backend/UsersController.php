@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main\Backend;
 use ReflectionException;
 use \Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Scandinaver\User\Application\Query\UserQuery;
 use Scandinaver\User\Domain\User;
 use App\Http\Controllers\Controller;
 use Scandinaver\User\Application\Commands\DeleteUserCommand;
@@ -26,7 +27,7 @@ class UsersController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new UsersQuery()));
     }
@@ -36,9 +37,9 @@ class UsersController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show(User $user)
+    public function show(User $user): JsonResponse
     {
-        return response()->json($this->queryBus->execute(new UsersQuery($user->getKey())));
+        return response()->json($this->queryBus->execute(new UserQuery($user->getKey())));
     }
 
     /**
@@ -58,7 +59,7 @@ class UsersController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): JsonResponse
     {
         $this->commandBus->execute(new UpdateUserCommand($user, $request->toArray()));
 
@@ -70,7 +71,7 @@ class UsersController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $this->commandBus->execute(new DeleteUserCommand($user));
 

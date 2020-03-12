@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use Exception;
@@ -47,7 +48,7 @@ class IndexController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getUser()
+    public function getUser(): JsonResponse
     {
         $info = $this->userService->getInfo();
 
@@ -57,7 +58,7 @@ class IndexController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getInfo()
+    public function getInfo(): JsonResponse
     {
         return response()->json(['site' => config('app.MAIN_SITE')]);
     }
@@ -66,7 +67,7 @@ class IndexController extends Controller
      * @return JsonResponse
      * @throws Exception
      */
-    public function getWords()
+    public function getWords(): JsonResponse
     {
         $words = $this->queryBus->execute(new AssetForUserByTypeQuery(Auth::user(), Asset::TYPE_WORDS));
 
@@ -77,7 +78,7 @@ class IndexController extends Controller
      * @return JsonResponse
      * @throws Exception
      */
-    public function getSentences()
+    public function getSentences(): JsonResponse
     {
         $sentences = $this->queryBus->execute(new AssetForUserByTypeQuery(Auth::user(), Asset::TYPE_SENTENCES));
 
@@ -88,7 +89,7 @@ class IndexController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function getPersonal()
+    public function getPersonal(): JsonResponse
     {
         $personal = $this->queryBus->execute(new PersonalAssetsQuery(Auth::user()));
 
@@ -98,7 +99,7 @@ class IndexController extends Controller
     /**
      * @return JsonResponse
      */
-    public function check()
+    public function check(): JsonResponse
     {
         try {
             $responce = ['auth' => true, 'state' => $this->userService->getState(Auth::user())];

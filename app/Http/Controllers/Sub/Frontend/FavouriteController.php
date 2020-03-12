@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Helpers\Auth;
@@ -21,7 +22,7 @@ class FavouriteController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Word $word, Translate $translate)
+    public function store(Word $word, Translate $translate): JsonResponse
     {
         $this->commandBus->execute(new CreateFavouriteCommand(Auth::user(), $word, $translate));
 
@@ -33,7 +34,7 @@ class FavouriteController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $this->commandBus->execute(new DeleteFavouriteCommand(Auth::user(), $id));
 

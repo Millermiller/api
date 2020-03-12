@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Helpers\Auth;
@@ -19,7 +20,6 @@ use Scandinaver\Learn\Domain\Asset;
  * User: whiskey
  * Date: 10.03.15
  * Time: 1:44
- *
  */
 class AssetController extends Controller
 {
@@ -28,7 +28,7 @@ class AssetController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show(Asset $asset)
+    public function show(Asset $asset): JsonResponse
     {
       //  $this->authorize('view', $asset);
 
@@ -40,7 +40,7 @@ class AssetController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateAssetCommand(Auth::user(), $request->get('title')));
 
@@ -54,7 +54,7 @@ class AssetController extends Controller
      * @throws AuthorizationException
      * @throws ReflectionException
      */
-    public function update(Request $request, Asset $asset)
+    public function update(Request $request, Asset $asset): JsonResponse
     {
         $this->authorize('update', $asset);
 
@@ -69,7 +69,7 @@ class AssetController extends Controller
      * @throws AuthorizationException
      * @throws ReflectionException
      */
-    public function destroy(Asset $asset)
+    public function destroy(Asset $asset): JsonResponse
     {
         $this->authorize('delete', $asset);
 

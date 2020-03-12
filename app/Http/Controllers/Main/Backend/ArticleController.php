@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use ReflectionException;
@@ -25,7 +26,7 @@ class ArticleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new PostsQuery()));
     }
@@ -35,7 +36,7 @@ class ArticleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new PostQuery($id)));
     }
@@ -45,7 +46,7 @@ class ArticleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreatePostCommand($request->toArray()));
 
@@ -58,7 +59,7 @@ class ArticleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post): JsonResponse
     {
         $this->commandBus->execute(new UpdatePostCommand($post, $request->toArray()));
 
@@ -70,7 +71,7 @@ class ArticleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): JsonResponse
     {
         $this->commandBus->execute(new DeletePostCommand($post));
 
@@ -81,7 +82,7 @@ class ArticleController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function upload(Request $request)
+    public function upload(Request $request): JsonResponse
     {
         $file = $request->file('img');
         $destinationPath = public_path() . '/uploads/articles/';

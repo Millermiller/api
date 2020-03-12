@@ -3,10 +3,13 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubdomainFeedbackRequest;
 
+/**
+ * Class FeedbackController
+ * @package App\Http\Controllers\Sub\Frontend
+ */
 class FeedbackController extends Controller
 {
     public function store(SubdomainFeedbackRequest $request)

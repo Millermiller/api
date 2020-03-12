@@ -1,16 +1,18 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
-use App\Http\Controllers\Controller;
 use Auth;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
-use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
 use ReflectionException;
+use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
+use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 use Scandinaver\User\Application\Query\LoginQuery;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 
@@ -64,7 +66,10 @@ class VueController extends Controller
         }
     }
 
-    public function logout()
+    /**
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
     {
         setcookie('token', 'w', time() - 1000, '/', '.' . config('app.DOMAIN'));
         setcookie('user',  'w', time() - 1000, '/', '.' . config('app.DOMAIN'));

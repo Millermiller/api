@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use ReflectionException;
@@ -29,7 +30,7 @@ class CardsController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Word $word, Translate $translate, Asset $asset)
+    public function store(Word $word, Translate $translate, Asset $asset): JsonResponse
     {
         $this->commandBus->execute(new AddCardToAssetCommand(Auth::user(), $word, $translate, $asset));
 
@@ -42,7 +43,7 @@ class CardsController extends Controller
      * @throws AuthorizationException
      * @throws ReflectionException
      */
-    public function destroy(Card $card)
+    public function destroy(Card $card): JsonResponse
     {
         $this->authorize('delete', $card);
 

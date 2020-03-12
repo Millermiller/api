@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Main\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\Plan;
-use App\Services\PaymentService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Meta;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Scandinaver\User\Domain\Services\PaymentService;
+use Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan;
 
 /**
  * Created by PhpStorm.

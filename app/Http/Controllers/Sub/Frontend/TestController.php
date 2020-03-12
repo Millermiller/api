@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use ReflectionException;
@@ -27,7 +28,7 @@ class TestController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function complete(Asset $asset)
+    public function complete(Asset $asset): JsonResponse
     {
         $this->commandBus->execute(new GiveNextLevelCommand(Auth::user(), $asset));
 
@@ -41,7 +42,7 @@ class TestController extends Controller
      * @throws AuthorizationException
      * @throws ReflectionException
      */
-    public function result(Asset $asset)
+    public function result(Asset $asset): JsonResponse
     {
         $this->authorize('updateResult', $asset);
 

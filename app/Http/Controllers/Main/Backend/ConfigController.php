@@ -1,5 +1,10 @@
 <?php
 
+
+namespace App\Http\Controllers\Main\Backend;
+
+use App\Http\Controllers\Controller;
+
 /**
  * Class ConfigController
  * @package Application\Controllers\Admin
@@ -9,11 +14,6 @@
  * Date: 29.11.14
  * Time: 18:49
  */
-
-namespace App\Http\Controllers\Main\Backend;
-
-use App\Http\Controllers\Controller;
-
 class ConfigController extends Controller
 {
     public function index()

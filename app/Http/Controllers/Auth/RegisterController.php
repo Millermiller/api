@@ -1,18 +1,24 @@
 <?php
 
+
 namespace App\Http\Controllers\Auth;
 
-
+use Session;
+use Exception;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\ValidationException;
 use Scandinaver\User\Domain\Services\UserService;
-use Session;
+use Scandinaver\User\Domain\User;
 
+/**
+ * Class RegisterController
+ * @package App\Http\Controllers\Auth
+ */
 class RegisterController extends Controller
 {
     /*
@@ -81,10 +87,11 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      * @throws ValidationException
+     * @throws Exception
      */
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $this->validator($request->all())->validate();
 
@@ -102,10 +109,11 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\Entities\User
+     * @param array $data
+     * @return User
+     * @throws Exception
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
         return $this->userService->registration($data);
     }
@@ -115,9 +123,9 @@ class RegisterController extends Controller
      *
      * @param Request $request
      * @param  mixed  $user
-     * @return mixed
+     * @return JsonResponse
      */
-    protected function registered(Request $request, $user)
+    protected function registered(Request $request, $user): JsonResponse
     {
         return response()->json(['success' => true, 'link' => $_SERVER['HTTP_REFERER']]);
     }

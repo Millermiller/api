@@ -1,17 +1,12 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use ReflectionException;
-use Scandinaver\Blog\Application\Commands\CreateCommentCommand;
-use Scandinaver\Blog\Application\Commands\DeleteCommentCommand;
-use Scandinaver\Blog\Application\Commands\UpdateCommentCommand;
-use Scandinaver\Blog\Application\Query\CommentQuery;
-use Scandinaver\Blog\Application\Query\CommentsQuery;
-use Scandinaver\Blog\Domain\Comment;
 use Scandinaver\Common\Application\Commands\CreateMetaCommand;
 use Scandinaver\Common\Application\Commands\DeleteMetaCommand;
 use Scandinaver\Common\Application\Commands\UpdateMetaCommand;
@@ -28,17 +23,17 @@ class MetaController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new MetasQuery()));
     }
 
-    /**
+    /**TODO: bind model
      * @param int $id
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new MetaQuery($id)));
     }
@@ -48,7 +43,7 @@ class MetaController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateMetaCommand($request->toArray()));
 
@@ -61,7 +56,7 @@ class MetaController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function update(Request $request, Meta $meta)
+    public function update(Request $request, Meta $meta): JsonResponse
     {
         $this->commandBus->execute(new UpdateMetaCommand($meta, $request->toArray()));
 
@@ -72,7 +67,7 @@ class MetaController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy(Meta $meta)
+    public function destroy(Meta $meta): JsonResponse
     {
         $this->commandBus->execute(new DeleteMetaCommand($meta));
 

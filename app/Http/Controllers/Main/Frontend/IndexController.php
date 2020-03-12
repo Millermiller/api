@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FeedbackRequest;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Meta;
-use Redis;
 
 /**
  * Class IndexController
@@ -16,8 +13,6 @@ use Redis;
  */
 class IndexController extends Controller
 {
-
-
     /**
      * @return Factory|View
      */
@@ -28,6 +23,4 @@ class IndexController extends Controller
 
         return view('main.frontend.index.home');
     }
-
-
 }

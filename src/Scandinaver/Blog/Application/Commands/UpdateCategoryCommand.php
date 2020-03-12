@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\Application\Commands;
 
+use Scandinaver\Blog\Domain\Category;
 use Scandinaver\Shared\Contracts\Command;
 
 /**
@@ -11,8 +12,35 @@ use Scandinaver\Shared\Contracts\Command;
  */
 class UpdateCategoryCommand implements Command
 {
-    public function __construct()
-    {
+    /**
+     * @var Category
+     */
+    private $category;
 
+    /**
+     * @var array
+     */
+    private $data;
+
+    public function __construct(Category $category, array $data)
+    {
+        $this->category = $category;
+        $this->data = $data;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
     }
 }

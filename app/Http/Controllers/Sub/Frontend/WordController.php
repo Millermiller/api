@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
@@ -44,7 +45,7 @@ class WordController extends Controller
      * @param CreateWordRequest $request
      * @return JsonResponse
      */
-    public function store(CreateWordRequest $request)
+    public function store(CreateWordRequest $request): JsonResponse
     {
         $item = $this->wordService->create($request);
 
@@ -90,7 +91,7 @@ class WordController extends Controller
      * @return JsonResponse
      * @throws DBALException
      */
-    public function search(SearchRequest $request)
+    public function search(SearchRequest $request): JsonResponse
     {
         $words = $this->wordService->translate($request);
 

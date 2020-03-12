@@ -1,18 +1,21 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Frontend;
 
+use Auth;
+use Illuminate\Http\JsonResponse;
+use Meta;
+use Scandinaver\Common\Domain\Services\FileService;
+use Scandinaver\User\Domain\Services\UserService;
+use Session;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Requests\{ProfileRequest, UploadAvatarRequest};
-use App\Services\{FileService, UserService};
-use Auth;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Meta;
-use Session;
 use Spatie\Activitylog\Models\Activity;
 
 /**
@@ -66,9 +69,9 @@ class ProfileController extends Controller
 
     /**
      * @param UploadAvatarRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function uploadImage(UploadAvatarRequest $request)
+    public function uploadImage(UploadAvatarRequest $request): JsonResponse
     {
         $request->validated();
 
@@ -80,7 +83,6 @@ class ProfileController extends Controller
     /**
      * @param ProfileRequest $request
      * @return RedirectResponse
-     * @throws GuzzleException
      */
     public function edit(ProfileRequest $request)
     {

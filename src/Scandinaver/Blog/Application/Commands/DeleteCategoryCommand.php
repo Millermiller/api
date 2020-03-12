@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\Application\Commands;
 
+use Scandinaver\Blog\Domain\Category;
 use Scandinaver\Shared\Contracts\Command;
 
 /**
@@ -11,8 +12,21 @@ use Scandinaver\Shared\Contracts\Command;
  */
 class DeleteCategoryCommand implements Command
 {
-    public function __construct()
-    {
+    /**
+     * @var Category
+     */
+    private $category;
 
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
     }
 }

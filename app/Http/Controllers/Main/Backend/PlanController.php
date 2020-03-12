@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use ReflectionException;
@@ -23,17 +24,17 @@ class PlanController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new PlansQuery()));
     }
 
-    /**
+    /**TODO: bind model
      * @param int $id
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new PlanQuery($id)));
     }
@@ -43,7 +44,7 @@ class PlanController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreatePlanCommand($request->toArray()));
 
@@ -56,7 +57,7 @@ class PlanController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function update(Request $request, Plan $plan)
+    public function update(Request $request, Plan $plan): JsonResponse
     {
         $this->commandBus->execute(new UpdatePlanCommand($plan, $request->toArray()));
 
@@ -68,7 +69,7 @@ class PlanController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy(Plan $plan)
+    public function destroy(Plan $plan): JsonResponse
     {
         $this->commandBus->execute(new DeletePlanCommand($plan));
 

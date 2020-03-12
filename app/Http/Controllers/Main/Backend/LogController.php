@@ -18,7 +18,7 @@ class LogController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json(Activity::with('causer', 'subject')->get());
     }
@@ -29,7 +29,7 @@ class LogController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json(Activity::findOrFail($id));
     }
@@ -41,7 +41,7 @@ class LogController extends Controller
      * @return JsonResponse
      * @throws Exception
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         Activity::destroy($id);
 

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use ReflectionException;
@@ -20,17 +21,17 @@ class MessageController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new MessagesQuery()));
     }
 
-    /**
+    /** TODO: bind model
      * @param int $id
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new MessageQuery($id)));
     }
@@ -40,7 +41,7 @@ class MessageController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy(Message $message)
+    public function destroy(Message $message): JsonResponse
     {
         $this->commandBus->execute(new DeleteMessageCommand($message));
 
