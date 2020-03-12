@@ -1,10 +1,11 @@
 <?php
 
+
 namespace Scandinaver\User\Infrastructure\Persistence\Eloquent;
 
-use App\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result;
 
 /**
  * Class Order
@@ -34,17 +35,17 @@ class Order extends Model
     protected $fillable = ['sum', 'status', 'plan_id', 'user_id', 'notification_type', 'datetime', 'codepro', 'sender', 'sha1_hash', 'label'];
 
     /**
-     * @return Result|\Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return User|BelongsTo
      */
-    public function user()
+    public function user(): User
     {
         return $this->belongsTo('App\User');
     }
 
     /**
-     * @return Result|\Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return Result|BelongsTo
      */
-    public function plan()
+    public function plan(): Result
     {
         return $this->belongsTo('App\Helpers\Eloquent\Plan');
     }

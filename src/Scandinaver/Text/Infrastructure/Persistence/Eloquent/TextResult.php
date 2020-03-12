@@ -1,9 +1,10 @@
 <?php
 
+
 namespace Scandinaver\Text\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
+use Illuminate\Database\Eloquent\{Builder, Model, Relations\HasOne};
 
 /**
  * Class TextResult
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Text $text
  *
  * @method static Builder domain()
+ *
+ * @mixin Eloquent
  */
 class TextResult extends Model
 {
@@ -31,17 +34,17 @@ class TextResult extends Model
 
     /**
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopeDomain($query)
+    public function scopeDomain(Builder $query): Builder
     {
-        return $query->where('language_id',  config('app.lang'));
+        return $query->where('language_id', config('app.lang'));
     }
 
     /**
-     * @return Asset|\Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne|Text
      */
-    public function text()
+    public function text(): Text
     {
         return $this->hasOne('App\Helpers\Eloquent\Text', 'id', 'text_id');
     }

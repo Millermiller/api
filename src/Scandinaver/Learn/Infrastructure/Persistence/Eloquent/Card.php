@@ -1,11 +1,9 @@
 <?php
 
+
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
-use Auth;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use DB;
+use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany, SoftDeletes};
 
 /**
  * Created by PhpStorm.
@@ -27,7 +25,9 @@ use DB;
  * @property Asset asset
  * @property Translate translate
  */
-class Card extends Model{
+class Card extends Model
+{
+    use SoftDeletes;
 
     protected $table = 'cards';
 
@@ -35,33 +35,34 @@ class Card extends Model{
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
-    Use SoftDeletes;
-
     /**
-     * @return Word | \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo|Word
      */
-    public function word()
+    public function word(): Word
     {
         return $this->belongsTo('App\Helpers\Eloquent\Word');
     }
 
     /**
-     * @return Translate | \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo|Translate
      */
-    public function translate()
+    public function translate(): Translate
     {
         return $this->belongsTo('App\Helpers\Eloquent\Translate');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo|Asset
      */
-    public function asset()
+    public function asset(): Asset
     {
         return $this->belongsTo('App\Helpers\Eloquent\Asset');
     }
 
-    public function examples()
+    /**
+     * @return HasMany|Example[]
+     */
+    public function examples(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\Example');
     }

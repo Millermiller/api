@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Plan
- * 
+ *
  * @property int $id
  * @property string $name
  * @property string $period
@@ -18,19 +18,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Plan extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
     protected $table = 'plans';
 
-	protected $casts = [
-		'cost' => 'int',
-		'cost_per_month' => 'int'
-	];
+    protected $casts = [
+        'cost' => 'int',
+        'cost_per_month' => 'int'
+    ];
 
-	protected $fillable = [
-		'name',
-		'period',
-		'cost',
-		'cost_per_month'
-	];
+    protected $fillable = [
+        'name',
+        'period',
+        'cost',
+        'cost_per_month'
+    ];
 }

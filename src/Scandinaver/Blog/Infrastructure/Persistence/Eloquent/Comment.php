@@ -1,9 +1,10 @@
 <?php
 
+
 namespace Scandinaver\Blog\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, SoftDeletes};
+use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
  * Created by PhpStorm.
@@ -19,21 +20,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $updated_at
  *
  */
-
-class Comment extends Model{
-
-    Use SoftDeletes;
+class Comment extends Model
+{
+    use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
     protected $table = 'comments';
 
-    public function author()
+    /**
+     * @return BelongsTo|User
+     */
+    public function author(): User
     {
         return $this->belongsTo('Application\Models\User');
     }
 
-    public function post()
+    /**
+     * @return BelongsTo|Post
+     */
+    public function post(): Post
     {
         return $this->belongsTo('Application\Models\Post');
     }

@@ -1,9 +1,9 @@
 <?php
 
+
 namespace Scandinaver\Common\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 /**
  * Class Message
@@ -24,5 +24,4 @@ class Message extends Model
     protected $table = 'messages';
 
     protected $fillable = ['name', 'message'];
-
 }

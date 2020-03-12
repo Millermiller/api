@@ -1,9 +1,9 @@
 <?php
 
+
 namespace Scandinaver\Blog\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Relations\HasMany, SoftDeletes, Model};
 
 /**
  * Class Category
@@ -11,17 +11,20 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'categories';
 
     protected $fillable = ['name'];
 
     public $timestamps = true;
 
-    use SoftDeletes;
-
     protected $dates = ['deleted_at'];
 
-    public function posts()
+    /**
+     * @return HasMany|Post[]
+     */
+    public function posts(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\Post');
     }

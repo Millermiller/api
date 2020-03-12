@@ -1,12 +1,13 @@
 <?php
 
+
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
-use App\User;
-use Auth;
-use Illuminate\Database\Eloquent\Model;
 use DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
+use Eloquent;
+use Illuminate\Database\Eloquent\{Model, Relations\HasMany, Relations\HasOne, SoftDeletes};
+use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
  * Created by PhpStorm.
@@ -29,8 +30,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int is_public
  *
  * @property User user
+ *
+ * @mixin Eloquent
  */
-class Word extends Model {
+class Word extends Model
+{
 
     use SoftDeletes;
 
@@ -38,14 +42,14 @@ class Word extends Model {
 
     protected $fillable = ['word', 'transcription', 'audio', 'sentence', 'is_public', 'creator'];
 
-    protected $hidden  = ['created_at', 'updated_at', 'deleted_at', 'transcription'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'transcription'];
 
     protected $appends = ['variants', 'login'];
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getVariantsAttribute()
+    public function getVariantsAttribute(): bool
     {
         return $this->attributes['variants'] = Translate::where('word_id', '=', $this->id)->count();
     }
@@ -53,20 +57,23 @@ class Word extends Model {
     /**
      * @return string
      */
-    public function getLoginAttribute()
+    public function getLoginAttribute(): string
     {
         return ($this->user) ? $this->user->login : '';
     }
 
     /**
-     * @return Card|\Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany|Card[]
      */
-    public function translates()
+    public function translates(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\Translate');
     }
 
-    public function user()
+    /**
+     * @return HasOne|User
+     */
+    public function user(): User
     {
         return $this->hasOne('App\User', 'id', 'creator');
     }
@@ -77,11 +84,12 @@ class Word extends Model {
      *
      * только публичные слова
      * и приватные текущего пользователя
-     * @param $word
-     * @param $sentence
+     *
+     * @param string $word
+     * @param string $sentence
      * @return array
      */
-    public static function tr($word, $sentence)
+    public static function tr(string $word, string $sentence): array
     {
         return DB::select('
                             select t.id,
@@ -100,13 +108,15 @@ class Word extends Model {
                             and (w.is_public = 1 or (w.is_public = 0 and w.creator = ?))
                             and w.language_id = ?
                             order by score desc;
-                            ', [$word, $word, $word."%", $word, $sentence, Auth::user()->id, config('app.lang')]);
+                            ', [$word, $word, $word . "%", $word, $sentence, Auth::user()->id, config('app.lang')]);
     }
 
     /**
      * Возвращает предложения, не участвующие в наборах
+     *
+     * @return array
      */
-    public static function getSentences()
+    public static function getSentences(): array
     {
         return DB::select('
                          SELECT w.id, w.word, t.value, t.id as translate_id

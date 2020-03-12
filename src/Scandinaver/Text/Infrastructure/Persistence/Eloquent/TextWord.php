@@ -1,8 +1,10 @@
 <?php
 
+
 namespace Scandinaver\Text\Infrastructure\Persistence\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class TextWord
@@ -20,11 +22,20 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TextWord extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = 'word_in_text';
 
+    /**
+     * @var array
+     */
     protected $fillable = ['text_id', 'sentence_num', 'word', 'orig'];
 
-    public function synonyms()
+    /**
+     * @return HasMany|Synonym[]
+     */
+    public function synonyms(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\Synonym');
     }

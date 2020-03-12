@@ -2,8 +2,8 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
+use Illuminate\Database\Eloquent\{Builder, Model, Relations\HasOne};
 
 /**
  * Class Result
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int result
  *
  * @property Asset asset
- *
+ * @mixin Eloquent
  * @method static Builder domain()
  */
 class Result extends Model
@@ -30,16 +30,16 @@ class Result extends Model
      * @param Builder $query
      * @return mixed
      */
-    public function scopeDomain($query)
+    public function scopeDomain(Builder $query): Builder
     {
-        return $query->where('language_id',  config('app.lang'));
+        return $query->where('language_id', config('app.lang'));
     }
 
     /**
-     * @return Asset|\Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne|Asset
      */
-    public function asset()
-   {
-       return $this->hasOne('App\Helpers\Eloquent\Asset', 'id', 'asset_id');
-   }
+    public function asset(): Asset
+    {
+        return $this->hasOne('App\Helpers\Eloquent\Asset', 'id', 'asset_id');
+    }
 }

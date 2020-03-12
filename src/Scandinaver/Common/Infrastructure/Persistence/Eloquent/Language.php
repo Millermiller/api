@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Scandinaver\Common\Infrastructure\Persistence\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
@@ -20,18 +21,18 @@ class Language extends Model
     protected $appends = ['value', 'image'];
 
     /**
-     * @return int
+     * @return string
      */
-    public function getValueAttribute()
+    public function getValueAttribute(): string
     {
-        return 'https://'.$this->name.'.'.config('app.DOMAIN');
+        return 'https://' . $this->name . '.' . config('app.DOMAIN');
     }
 
     /**
      * @return string
      */
-    public function getImageAttribute()
+    public function getImageAttribute(): string
     {
-        return config('app.SITE').$this->flag;
+        return config('app.SITE') . $this->flag;
     }
 }

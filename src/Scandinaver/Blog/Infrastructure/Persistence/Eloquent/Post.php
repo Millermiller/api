@@ -1,10 +1,11 @@
 <?php
 
+
 namespace Scandinaver\Blog\Infrastructure\Persistence\Eloquent;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Exception;
+use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany, SoftDeletes};
 
 /**
  * Created by PhpStorm.
@@ -24,34 +25,43 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
+class Post extends Model
+{
+    use SoftDeletes;
 
-class Post extends Model{
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
 
     protected $table = 'posts';
 
     protected $fillable = ['title', 'post_author', 'content', 'category_id', 'anonse', 'status'];
 
-    Use SoftDeletes;
-
     protected $dates = ['deleted_at'];
 
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
-
-    public function delete()
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function delete(): bool
     {
-        if(parent::delete()){
-           $this->comments()->delete();
+        if (parent::delete()) {
+            $this->comments()->delete();
         }
         return true;
     }
 
-    public function category()
+    /**
+     * @return BelongsTo|Category
+     */
+    public function category(): Category
     {
         return $this->belongsTo('App\Helpers\Eloquent\Category');
     }
 
-    public function comments()
+    /**
+     * @return HasMany|Comment[]
+     */
+    public function comments(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\Comment');
     }

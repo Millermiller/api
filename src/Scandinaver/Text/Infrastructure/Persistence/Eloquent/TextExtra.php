@@ -1,8 +1,10 @@
 <?php
 
+
 namespace Scandinaver\Text\Infrastructure\Persistence\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class TextExtra
@@ -22,14 +24,14 @@ class TextExtra extends Model
 {
     protected $table = 'text_extras';
 
-    protected $fillable = ['text_id', 'orig','extra'];
+    protected $fillable = ['text_id', 'orig', 'extra'];
 
     protected $hidden = ['created_at', 'updated_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo|Text
      */
-    public function text()
+    public function text(): Text
     {
         return $this->belongsTo('App\Helpers\Eloquent\Text');
     }

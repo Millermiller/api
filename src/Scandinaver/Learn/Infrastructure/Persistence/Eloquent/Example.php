@@ -1,9 +1,9 @@
 <?php
 
+
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 /**
  * Class Example

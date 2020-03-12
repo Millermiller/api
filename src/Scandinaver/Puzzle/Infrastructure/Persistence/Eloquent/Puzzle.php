@@ -1,11 +1,12 @@
 <?php
 
+
 namespace Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent;
 
-use App\Helpers\StringHelper;
 use Auth;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use App\Helpers\StringHelper;
+use Illuminate\Database\Eloquent\{Model, Builder, Relations\BelongsToMany};
+use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
  * Class Puzzle
@@ -29,27 +30,41 @@ class Puzzle extends Model
 
     /**
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopeDomain($query)
+    public function scopeDomain(Builder $query): Builder
     {
-        return $query->where('language_id',  config('app.lang'));
+        return $query->where('language_id', config('app.lang'));
     }
 
-    public function setTextAttribute($value){
+    /**
+     * @param string $value
+     */
+    public function setTextAttribute(string $value): void
+    {
         $this->attributes['text'] = StringHelper::cleartext($value);
     }
 
-    public function setTranslateAttribute($value){
+    /**
+     * @param string $value
+     */
+    public function setTranslateAttribute(string $value): void
+    {
         $this->attributes['translate'] = StringHelper::cleartext($value);
     }
 
-    public function getSuccessAttribute()
+    /**
+     * @return boolean
+     */
+    public function getSuccessAttribute(): bool
     {
         return $this->users()->where('users.id', Auth::user()->getKey())->exists();
     }
 
-    public function users()
+    /**
+     * @return BelongsToMany|User[]
+     */
+    public function users(): array
     {
         return $this->belongsToMany('App\User', 'puzzles_users')->withTimestamps();
     }

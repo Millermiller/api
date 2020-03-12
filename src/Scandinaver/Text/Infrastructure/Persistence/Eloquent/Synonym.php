@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Scandinaver\Text\Infrastructure\Persistence\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;

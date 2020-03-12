@@ -1,12 +1,13 @@
 <?php
 
+
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
 use Auth;
 use DB;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Eloquent;
+use Exception;
+use Illuminate\Database\Eloquent\{Builder, Model, Relations\BelongsTo, Relations\HasMany, SoftDeletes};
 
 /**
  * Created by PhpStorm.
@@ -29,15 +30,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Result result
  *
  * @method static Builder domain()
+ * @mixin Eloquent
  */
 class Asset extends Model
 {
+    use SoftDeletes;
+
     const TYPE_PERSONAL = 0;
     const TYPE_WORDS = 1;
     const TYPE_SENTENCES = 2;
     const TYPE_FAVORITES = 3;
-
-    use SoftDeletes;
 
     protected $table = 'assets';
 
@@ -47,45 +49,45 @@ class Asset extends Model
 
     /**
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopeDomain($query)
+    public function scopeDomain(Builder $query): Builder
     {
-        return $query->where('language_id',  config('app.lang'));
+        return $query->where('language_id', config('app.lang'));
     }
 
     /**
-     * @return Card|\Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany|Card[]
      */
-    public function cards()
+    public function cards(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\Card');
     }
 
     /**
-     * @return Result|\Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo|Result
      */
-    public function result()
+    public function result(): Result
     {
         return $this->belongsTo('App\Helpers\Eloquent\Result', 'id', 'asset_id')->where('user_id', \Auth::id());
     }
 
-  // public function user()
-  // {
-  //     return $this->belongsTo('App\Helpers\Eloquent\User', 'role_user', 'user_id', 'role_id');
-  // }
+    // public function user()
+    // {
+    //     return $this->belongsTo('App\Helpers\Eloquent\User', 'role_user', 'user_id', 'role_id');
+    // }
 
     /**
      * Удаляет набор и все с ним связанное
      * TODO: объединить запрос. использовать внешние ключи.
      *
-     * @param  int $id Asset Id
+     * @param int $id Asset Id
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function deleteAsset($id)
+    public static function deleteAsset(int $id): bool
     {
-        if(!Auth::user()->hasAsset($id) && !Auth::user()->_admin)
+        if (!Auth::user()->hasAsset($id) && !Auth::user()->_admin)
             return false;
 
         DB::beginTransaction();
@@ -100,8 +102,7 @@ class Asset extends Model
             DB::commit();
 
             return true;
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
 
             DB::rollback();
 
@@ -113,11 +114,10 @@ class Asset extends Model
      * Проверяет наличие следующего уровня basic-набора
      * Возвращает его id или false если не находит
      * TODO: сократить вложенные запросы
-     * @param  int $asset_id Asset Id
-     *
+     * @param int $asset_id Asset Id
      * @return int
      */
-    public static function getNextLevel($asset_id)
+    public static function getNextLevel(int $asset_id): int
     {
         return DB::select('
                    SELECT id
@@ -131,10 +131,10 @@ class Asset extends Model
     /**
      * Добавляет basic набор следующего уровня
      * возвращает инфу о новом наборе
-     * @param $asset_id
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @param int $asset_id
+     * @return Asset
      */
-    public static function addLevel($asset_id)
+    public static function addLevel(int $asset_id): Asset
     {
         DB::insert('
                    INSERT INTO assets
@@ -148,7 +148,7 @@ class Asset extends Model
                                     from assets as a2
                                         where a2.type = ?
                                         and a2.language_id = ?) + 1
-                   ', [$asset_id, $asset_id,  config('app.lang'), $asset_id,  config('app.lang')]);
+                   ', [$asset_id, $asset_id, config('app.lang'), $asset_id, config('app.lang')]);
 
 
         return Asset::find(DB::getPdo()->lastInsertId());

@@ -1,11 +1,12 @@
 <?php
 
+
 namespace Scandinaver\Text\Infrastructure\Persistence\Eloquent;
 
-use Auth;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use DB;
+use Auth;
+use Illuminate\Database\Eloquent\{Model, Builder};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 
 /**
  * Class TextModel
@@ -33,42 +34,42 @@ class Text extends Model
 
     /**
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopeDomain($query)
+    public function scopeDomain($query): Builder
     {
-        return $query->where('lang',  config('app.lang'));
+        return $query->where('lang', config('app.lang'));
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany|TextExtra[]
      */
-    public function textExtra()
+    public function textExtra(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\TextExtra');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany|TextWord[]
      */
-    public function words()
+    public function words(): array
     {
         return $this->hasMany('App\Helpers\Eloquent\TextWord');
     }
 
     /**
-     * @return Result|\Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo|TextResult
      */
-    public function result()
+    public function result(): TextResult
     {
         return $this->belongsTo('App\Helpers\Eloquent\TextResult', 'id', 'text_id')->where('user_id', \Auth::id());
     }
 
     /**
-     * @param $textid
+     * @param int $textid
      * @return array
      */
-    public static function getSynonyms($textid)
+    public static function getSynonyms(int $textid): array
     {
         $words = DB::select(' select 
                               w.word as word,  w.orig
@@ -91,10 +92,10 @@ class Text extends Model
     }
 
     /**
-     * @param  int $id User Id
+     * @param int $id User Id
      * @return array
      */
-    public static function getTextsByUser($id)
+    public static function getTextsByUser(int $id): array
     {
         $activeArray = TextResult::domain()->where('user_id', $id)->pluck('text_id')->toArray();
 
@@ -102,17 +103,17 @@ class Text extends Model
 
         $counter = 0;
 
-        foreach($rez as &$r) {
+        foreach ($rez as &$r) {
 
             $counter++;
 
             if (in_array($r->id, $activeArray))
-                $r = ['id' => $r->id,  'title'=> $r->title,'active' => true, 'image'=> $r->image, 'description' => $r->description];
+                $r = ['id' => $r->id, 'title' => $r->title, 'active' => true, 'image' => $r->image, 'description' => $r->description];
             else
-                $r = ['id' => $r->id,  'title'=> $r->title,'active' => false, 'image'=> $r->image, 'description' => $r->description];
+                $r = ['id' => $r->id, 'title' => $r->title, 'active' => false, 'image' => $r->image, 'description' => $r->description];
 
 
-            if($counter < 3 || Auth::user()->active)
+            if ($counter < 3 || Auth::user()->active)
                 $r['available'] = true;
             else
                 $r['available'] = false;
@@ -122,12 +123,12 @@ class Text extends Model
     }
 
     /**
-     * @param  int $id
+     * @param int $id
      * @return bool
      */
-    public static function getNextLevel($id)
+    public static function getNextLevel(int $id): bool
     {
-        $id =  DB::selectOne('
+        $id = DB::selectOne('
                    SELECT id
                    FROM text as t
                    WHERE t.published = 1
@@ -137,9 +138,13 @@ class Text extends Model
         return ($id > 0) ? $id : false;
     }
 
-    public static function create($attributes = array())
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public static function create(array $attributes = array())
     {
-        $attributes['level'] =  DB::selectOne('select max(t.level) as level from text as t')->level + 1;
+        $attributes['level'] = DB::selectOne('select max(t.level) as level from text as t')->level + 1;
         return parent::create($attributes);
     }
 }

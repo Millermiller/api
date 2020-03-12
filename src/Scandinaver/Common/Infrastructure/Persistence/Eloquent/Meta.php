@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Scandinaver\Common\Infrastructure\Persistence\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
@@ -15,9 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property string $keywords
  */
-
-class Meta extends Model{
-
+class Meta extends Model
+{
     protected $table = 'meta';
 
     protected $fillable = ['url', 'title', 'description', 'keywords'];

@@ -2,11 +2,11 @@
 
 namespace App\Mail;
 
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 class ResetPassword extends Mailable
 {

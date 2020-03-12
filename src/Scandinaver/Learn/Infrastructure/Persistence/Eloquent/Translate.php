@@ -1,10 +1,10 @@
 <?php
 
+
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Sofa\Eloquence\Eloquence;
+use Eloquent;
+use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, SoftDeletes};
 
 /**
  * Class Translate
@@ -14,6 +14,8 @@ use Sofa\Eloquence\Eloquence;
  * @property string $value
  * @property int $word_id
  * @property bool $sentence
+ *
+ * @mixin Eloquent
  */
 class Translate extends Model
 {
@@ -28,14 +30,17 @@ class Translate extends Model
     protected $appends = ['active'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo|Word
      */
-    public function word()
+    public function word(): Word
     {
         return $this->belongsTo('App\Helpers\Eloquent\Word');
     }
 
-    public function getActiveAttribute()
+    /**
+     * @return bool
+     */
+    public function getActiveAttribute(): bool
     {
         return $this->attributes['active'] = false;
     }
