@@ -120,4 +120,20 @@ class Translate implements JsonSerializable
     {
         return $this->wordId;
     }
+
+    /**
+     * @param string $value
+     */
+    public function setValue(string $value): void
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * @param Word $word
+     */
+    public function setWord(Word $word): void
+    {
+        $this->word = $word;
+    }
 }

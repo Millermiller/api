@@ -39,6 +39,21 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
             ->getSingleResult();
     }
 
+    public function getLastAsset(Language $language, int $type): Asset
+    {
+        return $this->createQueryBuilder('asset')
+            ->select('a')
+            ->from($this->getEntityName(), 'a')
+            ->where('a.level = :level')
+            ->andWhere('a.languageId = :language_id')
+            ->andWhere('a.type = :type')
+            ->setParameter('level', 1)
+            ->setParameter('type', $type)
+            ->setParameter('language_id', $language->getId())
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     /**
      * @param Language $language
      * @return Asset[]

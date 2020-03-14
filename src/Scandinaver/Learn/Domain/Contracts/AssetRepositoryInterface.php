@@ -22,6 +22,13 @@ interface AssetRepositoryInterface extends BaseRepositoryInterface
     public function getFirstAsset(Language $language, int $type): Asset;
 
     /**
+     * @param Language $language
+     * @param int $type
+     * @return Asset
+     */
+    public function getLastAsset(Language $language, int $type): Asset;
+
+    /**
      * @param Asset $asset
      * @param Language $language
      * @return Asset

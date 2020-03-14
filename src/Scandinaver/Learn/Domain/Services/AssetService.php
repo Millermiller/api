@@ -89,6 +89,23 @@ class AssetService
     }
 
     /**
+     * @param int $asset_id
+     * @return Asset
+     */
+    public function addBasic(int $asset_id): Asset
+    {
+        $language = $this->languageRepository->get(config('app.lang'));
+
+        $asset  = new Asset($asset_id, 1, $asset_id, 0, $language);
+
+        $asset->setLevel($this->assetRepository->getLastAsset($language, $asset_id)->getLevel() + 1);
+
+        $this->assetRepository->save($asset);
+
+        return $asset;
+    }
+
+    /**
      * @param Asset $asset
      * @return void
      */

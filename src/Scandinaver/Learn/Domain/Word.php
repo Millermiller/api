@@ -188,4 +188,44 @@ class Word implements JsonSerializable
     {
         $this->audio = $audio;
     }
+
+    /**
+     * @param string $word
+     */
+    public function setWord(string $word): void
+    {
+        $this->word = $word;
+    }
+
+    /**
+     * @param int|null $sentence
+     */
+    public function setSentence(?int $sentence): void
+    {
+        $this->sentence = $sentence;
+    }
+
+    /**
+     * @param int|null $isPublic
+     */
+    public function setIsPublic(?int $isPublic): void
+    {
+        $this->isPublic = $isPublic;
+    }
+
+    /**
+     * @param User $creator
+     */
+    public function setCreator(User $creator): void
+    {
+        $this->creator = $creator;
+    }
+
+    /**
+     * @param Language $language
+     */
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
+    }
 }

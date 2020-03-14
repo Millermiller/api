@@ -6,7 +6,6 @@ namespace Scandinaver\Learn\Application;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Learn\Domain\{Result, Translate, Word, Card, Asset};
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
-    AudioParserInterface,
     CardRepositoryInterface,
     ResultRepositoryInterface,
     TranslateRepositoryInterface,
@@ -148,6 +147,51 @@ class LearnServiceProvider  extends ServiceProvider
         $this->app->bind(
             'AudioParserInterface',
             'Scandinaver\Learn\Infrastructure\ForvoParser'
+        );
+
+        $this->app->bind(
+            'GetTranslatesByWordHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\GetTranslatesByWordHandler'
+        );
+
+        $this->app->bind(
+            'GetExamplesForCardHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\GetExamplesForCardHandler'
+        );
+
+        $this->app->bind(
+            'SetTranslateForCardHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\SetTranslateForCardHandler'
+        );
+
+        $this->app->bind(
+            'EditTranslateHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\EditTranslateHandler'
+        );
+
+        $this->app->bind(
+            'CreateTranslateHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\CreateTranslateHandler'
+        );
+
+        $this->app->bind(
+            'UploadAudioHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\UploadAudioHandler'
+        );
+
+        $this->app->bind(
+            'GetUnusedSentencesHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\GetUnusedSentencesHandler'
+        );
+
+        $this->app->bind(
+            'AddBasicLevelHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AddBasicLevelHandler'
+        );
+
+        $this->app->bind(
+            'AddWordAndTranslateHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AddWordAndTranslateHandler'
         );
     }
 }

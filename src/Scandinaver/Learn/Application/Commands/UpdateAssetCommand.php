@@ -18,9 +18,9 @@ class UpdateAssetCommand implements Command
      */
     private $user;
     /**
-     * @var string
+     * @var array
      */
-    private $title;
+    private $data;
     /**
      * @var Asset
      */
@@ -30,12 +30,12 @@ class UpdateAssetCommand implements Command
      * CreateAssetCommand constructor.
      * @param User $user
      * @param Asset $asset
-     * @param string $title
+     * @param array $data
      */
-    public function __construct(User $user, Asset $asset, string $title)
+    public function __construct(User $user, Asset $asset, array $data)
     {
         $this->user = $user;
-        $this->title = $title;
+        $this->data = $data;
         $this->asset = $asset;
     }
 
@@ -60,6 +60,11 @@ class UpdateAssetCommand implements Command
      */
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->data['title'];
+    }
+
+    public function getLevel()
+    {
+        return $this->data['level'] ? $this->data['level'] : 0;
     }
 }

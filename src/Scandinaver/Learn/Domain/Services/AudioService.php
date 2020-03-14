@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Contracts\AudioParserInterface;
@@ -44,6 +45,22 @@ class AudioService
     public function count(Language $language): int
     {
         return $this->wordsRepository->getCountAudioByLanguage($language);
+    }
+
+    /**
+     * @param Word $word
+     * @param UploadedFile $file
+     * @return Word
+     */
+    public function upload(Word $word, UploadedFile $file): Word
+    {
+        $path = $file->store('audio');
+
+        $word->setAudio($path);
+
+        $this->wordsRepository->save($word);
+
+        return $word;
     }
 
     /**

@@ -16,6 +16,80 @@ use JsonSerializable;
 class Example implements JsonSerializable
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="card_id", type="integer", nullable=false)
+     */
+    private $cardId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text", type="text", length=65535, nullable=false)
+     */
+    private $text;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="text", length=65535, nullable=false)
+     */
+    private $value;
+
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * @var Card
+     *
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Card", inversedBy="examples")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="card_id", referencedColumnName="id")
+     * })
+     */
+    private $card;
+
+    /**
+     * Example constructor.
+     * @param string $text
+     * @param string $value
+     * @param Card $card
+     */
+    public function __construct(string $text, string $value, Card $card)
+    {
+        $this->setText($text);
+        $this->setValue($value);
+        $this->setCard($card);
+    }
+    
+    /**
      * @param string $text
      */
     public function setText(string $text): void
@@ -93,66 +167,6 @@ class Example implements JsonSerializable
     {
         return $this->card;
     }
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="card_id", type="integer", nullable=false)
-     */
-    private $cardId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="text", type="text", length=65535, nullable=false)
-     */
-    private $text;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="value", type="text", length=65535, nullable=false)
-     */
-    private $value;
-
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
-    private $updatedAt;
-
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
-     */
-    private $deletedAt;
-
-    /**
-     * @var Card
-     *
-     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Card", inversedBy="examples")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="card_id", referencedColumnName="id")
-     * })
-     */
-    private $card;
 
     /**
      * @inheritDoc

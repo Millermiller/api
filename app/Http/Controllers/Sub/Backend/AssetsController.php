@@ -1,18 +1,28 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Backend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Str;
-use PHPExcel_IOFactory;
+use Request;
+use App\Helpers\Auth;
 use ReflectionException;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use Scandinaver\Learn\Application\Commands\AddBasicLevelCommand;
+use Scandinaver\Learn\Application\Commands\AddWordAndTranslateCommand;
+use Scandinaver\Learn\Application\Commands\CreateTranslateCommand;
+use Scandinaver\Learn\Application\Commands\EditTranslateCommand;
+use Scandinaver\Learn\Application\Commands\SetTranslateForCardCommand;
+use Scandinaver\Learn\Application\Commands\UpdateAssetCommand;
+use Scandinaver\Learn\Application\Commands\UploadAudioCommand;
 use Scandinaver\Learn\Application\Query\FindAudioQuery;
+use Scandinaver\Learn\Application\Query\GetExamplesForCardQuery;
+use Scandinaver\Learn\Application\Query\GetTranslatesByWordQuery;
+use Scandinaver\Learn\Application\Query\GetUnusedSentencesQuery;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Card;
 use Scandinaver\Learn\Domain\Word;
-use Sunra\PhpSimple\HtmlDomParser;
-use Upload\File;
-use Upload\Storage\FileSystem;
 
 /**
  * Created by PhpStorm.
@@ -25,11 +35,9 @@ use Upload\Storage\FileSystem;
  */
 class AssetsController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index()
     {
+        /*
         return response()->json([
             'words' => array_values(Asset::domain()->withCount('cards')
                 ->where('basic', '=', '1')
@@ -46,6 +54,7 @@ class AssetsController extends Controller
                 ->toArray()
             )
         ]);
+        */
     }
 
     /**
@@ -53,206 +62,133 @@ class AssetsController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function findAudio(Word $word)
+    public function findAudio(Word $word): JsonResponse
     {
         return response()->json($this->queryBus->execute(new FindAudioQuery($word)));
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Asset $asset
+     * @return JsonResponse
      */
-    public function showAsset($id)
+    public function showAsset(Asset $asset): JsonResponse
     {
-        return response()->json([
-            'success' => true,
-            'data' => Asset::with('cards', 'cards.word', 'cards.translate')->where('id', '=', $id)->first()
-        ]);
+        return response()->json($asset);
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Word $word
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function showValues($id)
+    public function showValues(Word $word): JsonResponse
     {
-        return response()->json(['success' => true, 'values' => Translate::where('word_id', '=', $id)->get()]);
+        return response()->json($this->queryBus->execute(new GetTranslatesByWordQuery($word)));
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Card $card
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function showExamples($id)
+    public function showExamples(Card $card): JsonResponse
     {
-        return response()->json(['success' => true, 'values' => Example::where('card_id', '=', $id)->get()]);
+        return response()->json($this->queryBus->execute(new GetExamplesForCardQuery($card)));
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function changeUsedTranslate()
+    public function changeUsedTranslate(Request $request): JsonResponse
     {
+        $this->commandBus->execute(new SetTranslateForCardCommand($request->toArray()));
 
-        $word_id = Input::get('word_id');
-        $card_id = Input::get('card_id');
-        $translate_id = Input::get('translate_id');
-
-        if (Card::find($card_id)->update(['word_id' => $word_id, 'translate_id' => $translate_id]))
-            return response()->json(['success' => true]);
-        else
-            return response()->json(['success' => false]);
-
+        return response()->json(null, 200);
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function editTranslate()
+    public function editTranslate(Request $request): JsonResponse
     {
-        $translate_id = Input::get('id');
-        $text = Input::get('text');
+        $this->commandBus->execute(new EditTranslateCommand($request->toArray()));
 
-        Translate::find($translate_id)->update(['value' => $text]);
-
-        Example::where('card_id', '=', Input::get('card_id'))->forceDelete();
-
-        if (Input::get('examples')) {
+        if ($request->get('examples')) {
             foreach (Input::get('examples') as $example) {
-                Example::create([
-                    'card_id' => Input::get('card_id'),
-                    'text' => $example['text'],
-                    'value' => $example['value'],
-                ]);
+                $this->commandBus->execute(new CreateTranslateCommand($request->get('card_id'), $example));
             }
         }
 
-        return response()->json(['success' => true]);
+        return response()->json(null, 200);
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Word $word
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function uploadAudio()
+    public function uploadAudio(Request $request, Word $word): JsonResponse
     {
-        $id = $_REQUEST['id'];
-        $storage = new FileSystem(public_path() . '/audio/');
-        $file = new File('audiofile', $storage);
-        $new_filename = uniqid();
-        $file->setName($new_filename);
+        $this->commandBus->execute(new UploadAudioCommand($word, $request->file('audiofile')));
 
-        try {
-            $file->upload();
-            $url = '/audio/' . $file->getNameWithExtension();
-            Word::find($id)->update(['audio' => $url]);
-            return response()->json(['success' => true, 'url' => $url]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
-        }
+        return response()->json(null, 200);
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function getSentences()
+    public function getSentences(): JsonResponse
     {
-        return response()->json(Word::getSentences());
+        return response()->json($this->queryBus->execute(new GetUnusedSentencesQuery()));
     }
 
     /**
-     *добавить новый набор
+     * TODO: сделать нормально
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function addBasicAssetLevel()
+    public function addBasicAssetLevel(Request $request): JsonResponse
     {
-        $asset_id = Input::get('asset_id');
-        return response()->json(['success' => true, 'msg' => Asset::addLevel($asset_id)]);
+        $this->commandBus->execute(new AddBasicLevelCommand($request->toArray()));
+
+        return response()->json(null, 201);
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function deleteTranslate($id)
+    public function addPair(Request $request): JsonResponse
     {
-        Card::where('word_id', '=', $id)->delete();
+        $this->commandBus->execute(new AddWordAndTranslateCommand($request->toArray()));
 
-        if (Word::destroy($id))
-            return response()->json(['success' => Translate::where('word_id', '=', $id)->delete()]);
+        return response()->json(null, 201);
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function addPair()
-    {
 
-        $word = Input::get('word');
-        $translate = Input::get('translate');
-        $issentence = Input::get('issentence');
-
-        $word = new Word(['word' => $word, 'sentence' => $issentence]);
-
-        if ($word->save())
-            $translate = new Translate(['value' => $translate, 'sentence' => $issentence, 'word_id' => $word->id]);
-
-        return response()->json(['success' => $translate->save()]);
-
-    }
-
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function uploadSentences()
     {
-        $storage = new FileSystem(public_path() . '/files/');
-        $file = new File('file', $storage);
-        $new_filename = uniqid();
-        $file->setName($new_filename);
-
-        try {
-            $file->upload();
-            $this->parseSentense(public_path() . '/files/' . $file->getNameWithExtension());
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
-        }
+        // TODO: импорт предложений Excel
     }
 
     /**
-     * @param $file
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \PHPExcel_Reader_Exception
+     * @param Request $request
+     * @param Asset $asset
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    protected function parseSentense($file)
+    public function changeAsset(Request $request, Asset $asset): JsonResponse
     {
-        $objPHPExcel = PHPExcel_IOFactory::load($file);
-        $ar = $objPHPExcel->getActiveSheet()->toArray();
-        $i = 0;
+        $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->toArray()));
 
-        foreach ($ar as $sentence) {
-            $orig = $sentence[0];
-            $translate = $sentence[1];
-
-            $word = new Word(['word' => $orig, 'sentence' => 1]);
-
-            if ($word->save()) {
-                $translate = new Translate(['value' => $translate, 'sentence' => 1, 'word_id' => $word->id]);
-                $translate->save();
-                $i++;
-            }
-        }
-
-        return response()->json(['success' => true, 'count' => $i]);
-    }
-
-    /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function changeAsset($id)
-    {
-        return response()->json([
-            'success' => Asset::find($id)->update(['title' => Input::get('text'), 'level' => Input::get('level')])
-        ]);
+        return response()->json(null, 200);
     }
 }

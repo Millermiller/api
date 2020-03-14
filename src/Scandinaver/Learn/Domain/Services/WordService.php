@@ -5,11 +5,12 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Auth;
 use PDO;
-use App\Helpers\Eloquent\Word;
+use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Contracts\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Translate;
+use Scandinaver\Learn\Domain\Word;
 use App\Http\Requests\{SearchRequest, CreateWordRequest};
 use Doctrine\DBAL\DBALException;
 use Illuminate\Database\Eloquent\{Builder, Collection};
@@ -31,14 +32,21 @@ class WordService
     private $wordsRepository;
 
     /**
+     * @var LanguageRepositoryInterface
+     */
+    protected $languageRepository;
+
+    /**
      * WordService constructor.
      * @param TranslateRepositoryInterface $translateRepository
      * @param WordRepositoryInterface $wordsRepository
+     * @param LanguageRepositoryInterface $languageRepository
      */
-    public function __construct(TranslateRepositoryInterface $translateRepository, WordRepositoryInterface $wordsRepository)
+    public function __construct(TranslateRepositoryInterface $translateRepository, WordRepositoryInterface $wordsRepository, LanguageRepositoryInterface $languageRepository)
     {
         $this->translateRepository = $translateRepository;
-        $this->wordsRepository = $wordsRepository;
+        $this->wordsRepository     = $wordsRepository;
+        $this->languageRepository  = $languageRepository;
     }
 
     /**
@@ -50,29 +58,28 @@ class WordService
         return $this->wordsRepository->getCountByLanguage($language);
     }
 
-    public function create(CreateWordRequest $request)
+    /**TODO: проверить
+     * @param $lang
+     * @param string $word
+     * @param int $isSentence
+     * @param string $translate
+     * @return Word
+     */
+    public function create($lang, string $word, int $isSentence, string $translate): Word
     {
-        $word = new Word(
-            [
-                'word' => $request->get('orig'),
-                'sentence' => 0,
-                'is_public' => $request->get('is_public'),
-                'creator' => Auth::user()->getId(),
-                'lang' => config('app.lang')
-            ]
-        );
+        $language = $this->languageRepository->get($lang);
 
-        $word->translates()->create(
-            [
-                'value' => $request->get('translate'),
-                'sentence' => 0,
-                'is_public' => $request->get('is_public')
-            ]
-        );
+        $word = new Word();
+        $word->setLanguage($language);
+        $word->setWord($word);
+        $word->setSentence($isSentence);
 
-        $word->load('translates');
+        $translate = new Translate();
+        $translate->setValue($translate);
+        $translate->setWord($word);
 
-        return $word;
+        $this->wordsRepository->save($word);
+        $this->translateRepository->save($translate);
     }
 
     /**
@@ -110,5 +117,34 @@ class WordService
         $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
         return $ids ? $this->translateRepository->searchByIds($ids) : [];
+    }
+
+    /**
+     * @param Word $word
+     * @return Translate[]
+     */
+    public function getTranslates(Word $word): array
+    {
+        return $this->translateRepository->searchByIds([$word->getId()]);
+    }
+
+    /**
+     * @return array
+     * @throws DBALException
+     */
+    public function getSentences(): array
+    {
+        $sql = 'SELECT w.id, w.word, t.value, t.id as translate_id
+                         FROM words as w
+                         JOIN translate as t
+                            ON w.id = t.word_id
+                         WHERE w.sentence = 1
+                         AND w.id NOT IN(SELECT word_id FROM cards)
+                         AND w.deleted_at is NULL ';
+
+        $stmt = app('em')->getConnection()->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 }
