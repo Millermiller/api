@@ -172,4 +172,20 @@ class Word implements JsonSerializable
     {
         return $this->word;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getAudio(): ?string
+    {
+        return $this->audio;
+    }
+
+    /**
+     * @param string|null $audio
+     */
+    public function setAudio(?string $audio): void
+    {
+        $this->audio = $audio;
+    }
 }

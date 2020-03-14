@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
-use App\Models\Card;
-use App\Models\Example;
-use App\Models\Translate;
-use App\Models\Word;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use PHPExcel_IOFactory;
+use ReflectionException;
+use Scandinaver\Learn\Application\Query\FindAudioQuery;
+use Scandinaver\Learn\Domain\Word;
 use Sunra\PhpSimple\HtmlDomParser;
 use Upload\File;
 use Upload\Storage\FileSystem;
@@ -27,7 +26,7 @@ use Upload\Storage\FileSystem;
 class AssetsController extends Controller
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -50,56 +49,13 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Word $word
+     * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function findAudio($id)
+    public function findAudio(Word $word)
     {
-        $cards = Card::with('word')->where('asset_id', '=', $id)->get();
-
-        $count = 0;
-        foreach ($cards as $card) { //TODO: жесть
-
-            $html = @file_get_contents('http://forvo.com/word/' . $card->word->word . '/#' . env('SHORTLANG'));
-
-            $dom = HtmlDomParser::str_get_html($html);
-
-            $onclick = $dom->find('em[id=is]')[0]->parent()->next_sibling()->find('li')[0]->first_child()->onclick;
-
-            if (!$onclick) continue;
-
-            $arr = explode("'", $onclick);
-
-            $link = (isset($arr[1])) ? $arr[1] : null;
-
-            if (!$link) continue;
-
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, 'https://forvo.com/player-mp3Handler.php?path=' . $link);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            //curl_setopt($curl, CURLOPT_COOKIEFILE, BASE_URL . '/temp/cookie.txt');
-            $file = curl_exec($curl);
-            curl_close($curl);
-
-            $filename = Str::random(32);
-
-            touch(public_path() . '/audio/' . $filename . '.mp3');
-            $fp = fopen(public_path() . '/audio/' . $filename . '.mp3', 'w');
-            $filesize = fwrite($fp, $file);
-            fclose($fp);
-
-            if ($filesize > 0) {
-                Word::find($card->word->id)->update(['audio' => '/audio/' . $filename . '.mp3']);
-                $count++;
-            }
-        }
-
-        return response()->json([
-            'success' => true,
-            'count' => $count,
-            'all' => count($cards)
-        ]);
-
+        return response()->json($this->queryBus->execute(new FindAudioQuery($word)));
     }
 
     /**
