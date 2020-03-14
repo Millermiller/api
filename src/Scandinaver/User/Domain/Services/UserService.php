@@ -134,7 +134,7 @@ class UserService
      * @return User
      * @throws Exception
      */
-    public function registration(array $data)
+    public function registration(array $data): User
     {
         $plan = $this->planRepository->get(1);
 
@@ -179,9 +179,9 @@ class UserService
     /**
      * @param Authenticatable|User $user
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getState(User $user)
+    public function getState(User $user): array
     {
         $language = $this->languageRepository->get(config('app.lang'));
 
@@ -202,9 +202,9 @@ class UserService
     }
 
     /**
-     * @return array|Authenticatable|null
+     * @return array
      */
-    public function getInfo()
+    public function getInfo(): array
     {
         return [
             'id' => Auth::user()->getKey(),
@@ -219,8 +219,9 @@ class UserService
 
     /**
      * @param User $user
+     * @return void
      */
-    public function updatePlan(User $user)
+    public function updatePlan(User $user): void
     {
         if($user->getActiveTo() < Carbon::now()){
             $plan = $this->planRepository->findByName('Basic');
@@ -229,7 +230,8 @@ class UserService
     }
 
     /**
-     * @param $request
+     * @param array $request
+     * @return void
      */
     public function updateUserInfo(array $request): void
     {
@@ -258,7 +260,7 @@ class UserService
      * @param User $user
      * @return void
      */
-    public function delete(User $user)
+    public function delete(User $user): void
     {
         $this->userRepository->delete($user);
 

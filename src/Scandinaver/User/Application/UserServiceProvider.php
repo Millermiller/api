@@ -96,5 +96,10 @@ class UserServiceProvider extends ServiceProvider
             'CreatePlanHandlerInterface',
             'Scandinaver\User\Application\Handlers\CreatePlanHandler'
         );
+
+        $this->app->bind(
+            'GetStateHandlerInterface',
+            'Scandinaver\User\Application\Handlers\GetStateHandler'
+        );
     }
 }

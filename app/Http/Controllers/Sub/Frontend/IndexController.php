@@ -9,13 +9,11 @@ use App\Http\Controllers\Controller;
 use ReflectionException;
 use Scandinaver\Learn\Application\Query\{AssetForUserByTypeQuery, PersonalAssetsQuery};
 use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Services\{AssetService};
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\{JsonResponse};
 use Illuminate\View\View;
-use Scandinaver\Shared\CommandBus;
-use Scandinaver\Shared\QueryBus;
-use Scandinaver\User\Domain\Services\UserService;
+use Scandinaver\User\Application\Query\GetStateQuery;
+use Scandinaver\User\Application\Query\GetUserQuery;
 
 /**
  * Class IndexController
@@ -23,20 +21,6 @@ use Scandinaver\User\Domain\Services\UserService;
  */
 class IndexController extends Controller
 {
-    /**
-     * @var UserService
-     */
-    protected $userService;
-
-    public function __construct(AssetService $assetService, UserService $userService, CommandBus $commandBus, QueryBus $queryBus)
-    {
-        parent::__construct($commandBus, $queryBus);
-
-        $this->assetService = $assetService;
-
-        $this->userService = $userService;
-    }
-
     /**
      * @return array|Factory|View|mixed
      */
@@ -47,12 +31,11 @@ class IndexController extends Controller
 
     /**
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function getUser(): JsonResponse
     {
-        $info = $this->userService->getInfo();
-
-        return response()->json($info);
+        return response()->json($this->queryBus->execute(new GetUserQuery(Auth::user())));
     }
 
     /**
@@ -98,15 +81,10 @@ class IndexController extends Controller
 
     /**
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function check(): JsonResponse
     {
-        try {
-            $responce = ['auth' => true, 'state' => $this->userService->getState(Auth::user())];
-        }catch ( \Throwable $e){
-            $responce = ['auth' => false, 'state' => []];
-        }
-
-        return response()->json($responce);
+        return response()->json($this->queryBus->execute(new GetStateQuery(Auth::user())));
     }
 }
