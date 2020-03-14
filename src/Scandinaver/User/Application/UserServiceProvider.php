@@ -38,6 +38,11 @@ class UserServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'LogoutHandlerInterface',
+            'Scandinaver\User\Application\Handlers\LogoutHandler'
+        );
+
+        $this->app->bind(
             'UserStateHandlerInterface',
             'Scandinaver\User\Application\Handlers\UserStateHandler'
         );

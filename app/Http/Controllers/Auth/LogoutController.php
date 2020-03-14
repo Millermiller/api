@@ -1,11 +1,13 @@
 <?php
 
 
-namespace App\Http\Controllers\Sub\Frontend;
+namespace App\Http\Controllers\Auth;
 
-use Auth;
+use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use ReflectionException;
+use Scandinaver\User\Application\Commands\LogoutCommand;
 
 /**
  * Created by PhpStorm.
@@ -20,14 +22,12 @@ class LogoutController extends Controller {
 
     /**
      * @return JsonResponse
+     * @throws ReflectionException
      */
-    public function index(): JsonResponse
+    public function logout(): JsonResponse
     {
-        setcookie('token', 'w', time()-1000, '/', '.'.config('app.DOMAIN'));
-        setcookie('user',  'w', time()-1000, '/', '.'.config('app.DOMAIN'));
+        $this->commandBus->execute(new LogoutCommand(Auth::user()));
 
-        Auth::logout();
-
-        return response()->json(['success' => true]);
+        return response()->json(null, 200);
     }
 }
