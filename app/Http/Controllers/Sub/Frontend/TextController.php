@@ -3,13 +3,14 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use Auth;
-use Scandinaver\Text\Domain\{TextService, Text};
+use App\Helpers\Auth;
+use ReflectionException;
 use App\Http\Controllers\Controller;
-use Doctrine\DBAL\DBALException;
-use Doctrine\ORM\NoResultException;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\Access\AuthorizationException;
+use Scandinaver\Text\Application\Commands\CompleteTextCommand;
+use Scandinaver\Text\Application\Query\GetTextQuery;
+use Scandinaver\Text\Domain\Text;
 
 /**
  * Class TextController
@@ -17,48 +18,28 @@ use Illuminate\Http\JsonResponse;
  */
 class TextController extends Controller
 {
-
-    /**
-     * @var TextService
-     */
-    private $textService;
-
-    /**
-     * TextController constructor.
-     * @param TextService $textService
-     */
-    public function __construct(TextService $textService)
-    {
-        $this->textService = $textService;
-    }
-
     /**
      * @param Text $text
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws DBALException
+     * @throws ReflectionException
      */
     public function show(Text $text): JsonResponse
     {
         $this->authorize('view', $text);
 
-        $text = $this->textService->prepareText($text);
-
-        return response()->json($text);
+        return response()->json($this->queryBus->execute(new GetTextQuery($text)));
     }
 
     /**
      * @param Text $text
      * @return JsonResponse
+     * @throws ReflectionException
      */
     public function complete(Text $text): JsonResponse
     {
-        try{
-            $text = $this->textService->giveNextLevel(Auth::user(), $text);
-        }catch(NoResultException $e){
-            //
-        }
+        $this->commandBus->execute(new CompleteTextCommand(Auth::user(), $text));
 
-        return response()->json($text);
+        return response()->json(null, 200);
     }
 }

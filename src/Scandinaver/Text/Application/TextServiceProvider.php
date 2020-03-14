@@ -28,5 +28,15 @@ class TextServiceProvider extends ServiceProvider
                 $this->app['em']->getClassMetadata(Result::class)
             );
         });
+
+        $this->app->bind(
+            'GetTextHandlerInterface',
+            'Scandinaver\Text\Application\Handlers\GetTextHandler'
+        );
+
+        $this->app->bind(
+            'CompleteTextHandlerInterface',
+            'Scandinaver\Text\Application\Handlers\CompleteTextHandler'
+        );
     }
 }
