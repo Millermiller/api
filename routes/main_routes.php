@@ -11,7 +11,7 @@
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::get('/logout', 'Auth\LoginController@logout')->name('frontend::logout');
+Route::get('/logout', 'Auth\LogoutController@logout')->name('frontend::logout');
 Route::get('/user', function(Request $request) {
     return auth()->user();
 });

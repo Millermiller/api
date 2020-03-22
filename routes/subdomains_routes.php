@@ -17,7 +17,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['checkDomain', 'touchUser', 'checkPlan'],
+    'middleware' => ['checkDomain', 'touchUser', 'checkPlan', 'auth:api'],
     'namespace' => 'Sub\Frontend',
     'as' => 'sub_frontend::'
 ], function () {
@@ -25,7 +25,7 @@ Route::group([
 
     Route::get('/', 'IndexController@index');
 
-    Route::get('/check', 'IndexController@check')->name('check');
+    Route::get('/{language}/check', 'IndexController@check')->name('check');
     Route::get('/state', 'IndexController@getState');
     Route::get('/user', 'IndexController@getUser')->name('user-info');
     Route::get('/info', 'IndexController@getInfo')->name('site-info');

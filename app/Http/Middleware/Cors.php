@@ -17,13 +17,18 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        header("Access-Control-Allow-Origin: https://scandinaver.local");
+        header("Access-Control-Allow-Origin: {$request->headers->get('Origin')}");
 
         $headers = [
             'Access-Control-Allow-Methods'=> 'POST, GET, OPTIONS, PUT, DELETE',
             'Access-Control-Allow-Headers'=> 'Content-Type, X-Auth-Token, Origin, x-xsrf-token, authorization',
             'Access-Control-Allow-Credentials'=> 'true'
         ];
+
+        if ($request->cookie('authfrontend._token.local')) {
+            $request->headers->set('Authorization', 'Bearer ' . $request->cookie('authfrontend._token.local'));
+        }
+
         if($request->getMethod() == "OPTIONS") {
 
             return response()->make('OK', 200, $headers);

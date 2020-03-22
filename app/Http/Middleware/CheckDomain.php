@@ -37,7 +37,7 @@ class CheckDomain
      */
     public function handle($request, Closure $next)
     {
-        if($langname = request('subdomain')){
+        if($langname = request('language')){
             switch ($langname){
                 case 'is':
                     config(['app.lang' => 1]);
