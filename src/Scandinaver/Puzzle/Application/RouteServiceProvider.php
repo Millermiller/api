@@ -31,12 +31,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::group(
             [
                 'domain' => '{subdomain}.' . config('app.DOMAIN'),
-                'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan'],
+                'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan', 'auth:api'],
                 'namespace' => 'App\Http\Controllers\Sub\Frontend',
                 'as' => 'sub_frontend::'
             ],
             function () {
-                Route::resource('/puzzle', 'PuzzleController', ['except' => ['create', 'delete']]);
+                Route::resource('/{language}/puzzle', 'PuzzleController', ['except' => ['create', 'delete']]);
             }
         );
 
