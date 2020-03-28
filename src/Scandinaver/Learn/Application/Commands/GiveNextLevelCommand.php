@@ -10,6 +10,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class GiveNextLevelCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\GiveNextLevelHandler
  */
 class GiveNextLevelCommand implements Command
 {

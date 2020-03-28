@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Query;
 /**
  * Class GetExamplesForCardQuery
  * @package Scandinaver\Learn\Application\Query
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\GetExamplesForCardHandler
  */
 class GetExamplesForCardQuery implements Query
 {

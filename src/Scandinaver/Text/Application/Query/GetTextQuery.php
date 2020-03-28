@@ -9,6 +9,8 @@ use Scandinaver\Text\Domain\Text;
 /**
  * Class GetTextQuery
  * @package Scandinaver\Text\Application\Query
+ *
+ * @see \Scandinaver\Text\Application\Handlers\GetTextHandler
  */
 class GetTextQuery implements Query
 {

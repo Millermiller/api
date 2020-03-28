@@ -10,6 +10,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class CreateAssetCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\CreateAssetHandler
  */
 class CreateAssetCommand implements Command
 {

@@ -15,6 +15,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class SetTranslateForCardCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\SetTranslateForCardHandler
  */
 class SetTranslateForCardCommand implements Command
 {

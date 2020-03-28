@@ -10,6 +10,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class DeleteCardCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\DeleteCardFromAssetHandler
  */
 class DeleteCardFromAssetCommand implements Command
 {

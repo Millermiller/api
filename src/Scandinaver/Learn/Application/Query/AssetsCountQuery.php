@@ -3,10 +3,16 @@
 
 namespace Scandinaver\Learn\Application\Query;
 
-
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Shared\Contracts\Query;
 
+/**
+ * Class AssetsCountQuery
+ *
+ * @package Scandinaver\Learn\Application\Query
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\AssetsCountHandler
+ */
 class AssetsCountQuery implements Query
 {
     /**

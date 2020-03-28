@@ -8,6 +8,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class AddBasicLevelCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\AddBasicLevelHandler
  */
 class AddBasicLevelCommand implements Command
 {

@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class UpdateCategoryCommand
  * @package Scandinaver\Blog\Application\Commands
+ *
+ * @see \Scandinaver\Blog\Application\Handlers\UpdateCategoryHandler
  */
 class UpdateCategoryCommand implements Command
 {

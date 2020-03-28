@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class DeleteCommentCommand
  * @package Scandinaver\Blog\Application\Commands
+ *
+ * @see \Scandinaver\Blog\Application\Handlers\DeleteCommentHandler
  */
 class DeleteCommentCommand implements Command
 {

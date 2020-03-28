@@ -11,7 +11,7 @@ use Scandinaver\Puzzle\Domain\PuzzleService;
  * Class PuzzleCompletedHandler
  * @package Scandinaver\Puzzle\Application
  */
-class PuzzleCompletedHandler implements PuzzleCompleteHandlerInterface
+class PuzzleCompleteHandler implements PuzzleCompleteHandlerInterface
 {
 
     /**

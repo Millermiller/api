@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Query;
 /**
  * Class FindAudioQuery
  * @package Scandinaver\Learn\Application\Query
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\FindAudioHandler
  */
 class FindAudioQuery implements Query
 {

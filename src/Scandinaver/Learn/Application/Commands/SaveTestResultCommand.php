@@ -10,6 +10,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class SaveTestResultCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\SaveTestResultHandler
  */
 class SaveTestResultCommand implements Command
 {

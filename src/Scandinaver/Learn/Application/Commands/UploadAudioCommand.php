@@ -11,6 +11,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class UploadAudioCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\UploadAudioHandler
  */
 class UploadAudioCommand implements Command
 {

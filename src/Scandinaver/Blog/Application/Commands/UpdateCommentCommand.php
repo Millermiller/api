@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class UpdateCommentCommand
  * @package Scandinaver\Blog\Application\Commands
+ *
+ * @see \Scandinaver\Blog\Application\Handlers\UpdateCommentHandler
  */
 class UpdateCommentCommand implements Command
 {

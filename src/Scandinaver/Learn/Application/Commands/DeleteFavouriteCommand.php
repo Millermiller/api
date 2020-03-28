@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class DeleteFavouriteCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\DeleteFavouriteHandler
  */
 class DeleteFavouriteCommand implements Command
 {

@@ -10,6 +10,8 @@ use Scandinaver\User\Domain\User;
 /**
  * Class CompleteTextCommand
  * @package Scandinaver\Text\Application\Commands
+ *
+ * @see \Scandinaver\Text\Application\Handlers\CompleteTextHandler
  */
 class CompleteTextCommand implements Command
 {

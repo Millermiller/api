@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Query;
 /**
  * Class TextsCountQuery
  * @package Scandinaver\Learn\Application\Query
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\TextsCountHandler
  */
 class TextsCountQuery implements Query
 {

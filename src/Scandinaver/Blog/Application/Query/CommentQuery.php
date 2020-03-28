@@ -8,6 +8,8 @@ use Scandinaver\Shared\Contracts\Query;
 /**
  * Class CommentQuery
  * @package Scandinaver\Blog\Application\Query
+ *
+ * @see \Scandinaver\Blog\Application\Handlers\CommentHandler
  */
 class CommentQuery implements Query
 {

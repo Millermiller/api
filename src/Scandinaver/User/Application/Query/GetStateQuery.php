@@ -10,6 +10,8 @@ use Scandinaver\User\Domain\User;
 /**
  * Class GetStateQuery
  * @package Scandinaver\User\Application\Query
+ *
+ * @see \Scandinaver\User\Application\Handlers\GetStateHandler
  */
 class GetStateQuery implements Query
 {

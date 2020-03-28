@@ -9,6 +9,8 @@ use Scandinaver\User\Domain\Plan;
 /**
  * Class UpdatePlanCommand
  * @package Scandinaver\User\Application\Commands
+ *
+ * @see \Scandinaver\User\Application\Handlers\UpdatePlanHandler
  */
 class UpdatePlanCommand implements Command
 {

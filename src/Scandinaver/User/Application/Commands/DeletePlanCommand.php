@@ -9,6 +9,8 @@ use Scandinaver\User\Domain\Plan;
 /**
  * Class DeletePlanCommand
  * @package Scandinaver\User\Application\Commands
+ *
+ * @see \Scandinaver\User\Application\Handlers\DeletePlanHandler
  */
 class DeletePlanCommand implements Command
 {

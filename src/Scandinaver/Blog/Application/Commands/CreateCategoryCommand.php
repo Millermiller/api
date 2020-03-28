@@ -8,6 +8,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class CreateCategoryCommand
  * @package Scandinaver\Blog\Application\Commands
+ *
+* @see \Scandinaver\Blog\Application\Handlers\CreateCategoryHandler
  */
 class CreateCategoryCommand implements Command
 {

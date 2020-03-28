@@ -8,6 +8,8 @@ use Scandinaver\Shared\Contracts\Query;
 /**
  * Class LoginQuery
  * @package Scandinaver\User\Application\Query
+ *
+ * @see \Scandinaver\User\Application\Handlers\LoginHandler
  */
 class LoginQuery implements Query
 {

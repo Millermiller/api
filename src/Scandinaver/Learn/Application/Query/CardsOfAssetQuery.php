@@ -11,6 +11,8 @@ use Scandinaver\Learn\Domain\Asset;
 /**
  * Class CardsOfAssetQuery
  * @package Scandinaver\Learn\Application\Query
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\CardsOfAssetHandler
  */
 class CardsOfAssetQuery implements Query
 {

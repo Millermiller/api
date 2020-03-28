@@ -9,6 +9,8 @@ use Scandinaver\User\Domain\User;
 /**
  * Class AssetByForUserByTypeQuery
  * @package Scandinaver\Learn\Application\Query
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\AssetForUserByTypeHandler
  */
 class AssetForUserByTypeQuery implements Query
 {

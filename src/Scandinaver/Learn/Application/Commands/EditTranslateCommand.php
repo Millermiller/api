@@ -12,6 +12,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class EditTranslateCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\EditTranslateHandler
  */
 class EditTranslateCommand implements Command
 {

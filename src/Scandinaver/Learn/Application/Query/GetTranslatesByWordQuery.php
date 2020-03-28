@@ -9,6 +9,8 @@ use Scandinaver\Shared\Contracts\Query;
 /**
  * Class GetTranslatesByWordQuery
  * @package Scandinaver\Learn\Application\Query
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\GetTranslatesByWordHandler
  */
 class GetTranslatesByWordQuery implements Query
 {

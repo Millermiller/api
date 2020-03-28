@@ -11,6 +11,8 @@ use Scandinaver\User\Domain\User;
 /**
  * Class AssetsQuery
  * @package Scandinaver\API\Application\Query
+ *
+ * @see \Scandinaver\API\Application\Handlers\AssetsHandler
  */
 class AssetsQuery implements Query
 {

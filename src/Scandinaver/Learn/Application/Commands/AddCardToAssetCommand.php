@@ -10,6 +10,8 @@ use Scandinaver\User\Domain\User;
 /**
  * Class AddCardToAssetCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see \Scandinaver\Learn\Application\Handlers\AddCardToAssetHandler
  */
 class AddCardToAssetCommand implements Command
 {

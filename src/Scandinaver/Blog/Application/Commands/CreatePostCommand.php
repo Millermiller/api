@@ -8,6 +8,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class CreatePostCommand
  * @package Scandinaver\Blog\Application\Commands
+ *
+ * @see \Scandinaver\Blog\Application\Handlers\CreatePostHandler
  */
 class CreatePostCommand implements Command
 {

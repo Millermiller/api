@@ -8,6 +8,8 @@ use Scandinaver\Shared\Contracts\Query;
 /**
  * Class UserQuery
  * @package Scandinaver\User\Application\Query
+ *
+ * @see \Scandinaver\User\Application\Handlers\UserHandler
  */
 class UserQuery implements Query
 {

@@ -10,6 +10,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class PuzzleCompleteCommand
  * @package Scandinaver\Puzzle\Application\Commands
+ *
+ * @see \Scandinaver\Puzzle\Application\Handlers\PuzzleCompleteHandler
  */
 class PuzzleCompleteCommand implements Command
 {

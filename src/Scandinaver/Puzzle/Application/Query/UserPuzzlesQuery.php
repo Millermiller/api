@@ -9,6 +9,8 @@ use Scandinaver\User\Domain\User;
 /**
  * Class UserPuzzlesQuery
  * @package Scandinaver\Puzzle\Application\Query
+ *
+ * @see \Scandinaver\Puzzle\Application\Handlers\UserPuzzlesHandler
  */
 class UserPuzzlesQuery implements Query
 {
