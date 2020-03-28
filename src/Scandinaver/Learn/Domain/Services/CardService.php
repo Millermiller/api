@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Doctrine\Common\Collections\Collection;
-use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\{Asset,
     Card,
@@ -15,7 +15,8 @@ use Scandinaver\Learn\Domain\{Asset,
     Contracts\TranslateRepositoryInterface,
     Example,
     Translate,
-    Word};
+    Word
+};
 
 /**
  * Class CardService
@@ -27,11 +28,6 @@ class CardService
      * @var AssetRepositoryInterface
      */
     private $assetRepository;
-
-    /**
-     * @var LanguageRepositoryInterface
-     */
-    private $languageRepository;
 
     /**
      * @var CardRepositoryInterface
@@ -56,7 +52,6 @@ class CardService
     /**
      * CardService constructor.
      * @param AssetRepositoryInterface $assetRepository
-     * @param LanguageRepositoryInterface $languageRepository
      * @param CardRepositoryInterface $cardRepository
      * @param ResultRepositoryInterface $resultRepository
      * @param ExampleRepositoryInterface $exampleRepository
@@ -64,7 +59,6 @@ class CardService
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
-        LanguageRepositoryInterface $languageRepository,
         CardRepositoryInterface $cardRepository,
         ResultRepositoryInterface $resultRepository,
         ExampleRepositoryInterface $exampleRepository,
@@ -72,10 +66,9 @@ class CardService
     )
     {
         $this->assetRepository     = $assetRepository;
-        $this->languageRepository  = $languageRepository;
         $this->cardRepository      = $cardRepository;
         $this->resultRepository    = $resultRepository;
-        $this->exampleRepository = $exampleRepository;
+        $this->exampleRepository   = $exampleRepository;
         $this->translateRepository = $translateRepository;
     }
 
@@ -123,21 +116,20 @@ class CardService
      * возвращает слова набора, транскрипцию и один вариант перевода
      *
      * используется  при редактировании набора на /cards/
+     * @param Language $language
      * @param User $user
      * @param Asset $asset
      * @return array
      */
-    public function getCards(User $user, Asset $asset): array
+    public function getCards(Language $language, User $user, Asset $asset): array
     {
-        $language = $this->languageRepository->get(config('app.lang'));
-
         $favouriteAsset = $this->assetRepository->getFavouriteAsset($language, $user);
 
         $result = $this->resultRepository->getResult($user, $asset);
 
         $cards = $asset->getCards()->toArray();
 
-        foreach($cards as &$c){
+        foreach ($cards as &$c) {
             $c->setFavourite(in_array($c->getWord()->getId(), $favouriteAsset->getWordsIds()));
         }
 

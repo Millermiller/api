@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Exception;
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\User\Domain\User;
 use Doctrine\ORM\{ORMException, OptimisticLockException};
@@ -17,11 +17,6 @@ use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultReposito
  */
 class AssetService
 {
-    /**
-     * @var LanguageRepositoryInterface
-     */
-    protected $languageRepository;
-
     /**
      * @var AssetRepositoryInterface
      */
@@ -39,22 +34,19 @@ class AssetService
 
     /**
      * AssetService constructor.
-     * @param LanguageRepositoryInterface $languageRepository
-     * @param AssetRepositoryInterface $assetsRepository
+     * @param AssetRepositoryInterface  $assetsRepository
      * @param ResultRepositoryInterface $resultRepository
-     * @param AssetRepositoryInterface $assetRepository
+     * @param AssetRepositoryInterface  $assetRepository
      */
     public function __construct(
-        LanguageRepositoryInterface $languageRepository,
-        AssetRepositoryInterface $assetsRepository,
+        AssetRepositoryInterface  $assetsRepository,
         ResultRepositoryInterface $resultRepository,
-        AssetRepositoryInterface $assetRepository
+        AssetRepositoryInterface  $assetRepository
     )
     {
-        $this->languageRepository = $languageRepository;
-        $this->assetsRepository   = $assetsRepository;
-        $this->resultRepository   = $resultRepository;
-        $this->assetRepository    = $assetRepository;
+        $this->assetsRepository = $assetsRepository;
+        $this->resultRepository = $resultRepository;
+        $this->assetRepository  = $assetRepository;
     }
 
     /**
@@ -67,16 +59,15 @@ class AssetService
     }
 
     /**
+     * @param Language $language
      * @param User $user
      * @param string $title
      * @return Asset
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create(User $user, string $title): Asset
+    public function create(Language $language, User $user, string $title): Asset
     {
-        $language = $this->languageRepository->get(config('app.lang'));
-
         $asset  = new Asset($title, 0, Asset::TYPE_PERSONAL, 0, $language);
         $result = new Result($asset, $user, $language);
         $user->incrementAssetCounter();
@@ -89,13 +80,12 @@ class AssetService
     }
 
     /**
+     * @param Language $language
      * @param int $asset_id
      * @return Asset
      */
-    public function addBasic(int $asset_id): Asset
+    public function addBasic(Language $language, int $asset_id): Asset
     {
-        $language = $this->languageRepository->get(config('app.lang'));
-
         $asset  = new Asset($asset_id, 1, $asset_id, 0, $language);
 
         $asset->setLevel($this->assetRepository->getLastAsset($language, $asset_id)->getLevel() + 1);
@@ -117,14 +107,14 @@ class AssetService
     /**
      * Возвращает массив словарей определенного типа для пользователя
      *
+     * @param Language $language
      * @param User $user
      * @param int $type
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getAssetsByType(User $user, int $type)
+    public function getAssetsByType(Language $language, User $user, int $type)
     {
-        $language    = $this->languageRepository->get(config('app.lang'));
         $activeArray = $this->resultRepository->getActiveIds($user,  $language);
         $assets      = $this->assetsRepository->getAssetsByType($language, $type);
 
@@ -174,25 +164,23 @@ class AssetService
     }
 
     /**
+     * @param Language $language
      * @param User $user
      * @return array
      */
-    public function getPersonalAssets(User $user): array
+    public function getPersonalAssets(Language $language,User $user): array
     {
-        $language  = $this->languageRepository->get(config('app.lang'));
-
         return $this->assetRepository->getCreatedAssets($language, $user);
     }
 
     /**
-     * @param Authenticatable|User $user
+     * @param Language $language
+     * @param User $user
      * @param Asset $asset
      * @return Asset
      */
-    public function giveNextLevel(User $user, Asset $asset): Asset
+    public function giveNextLevel(Language $language, User $user, Asset $asset): Asset
     {
-        $language  = $this->languageRepository->get(config('app.lang'));
-
         $nextAsset = $this->assetsRepository->getNextAsset($asset, $language);
 
         $result = $this->resultRepository->findOneBy(['user' => $user, 'asset' => $asset]);
@@ -205,15 +193,14 @@ class AssetService
     }
 
     /**
-     * @param Asset $asset
+     * @param Language $language
      * @param Authenticatable|User $user
+     * @param Asset $asset
      * @param int $resultValue
      * @return Result
      */
-    public function saveTestResult(User $user, Asset $asset, int $resultValue): Result
+    public function saveTestResult(Language $language, User $user, Asset $asset, int $resultValue): Result
     {
-        $language  = $this->languageRepository->get(config('app.lang'));
-
         $result = $this->resultRepository->findOneBy(['user' => $user, 'asset' => $asset]);
 
         if($result === null) $result = new Result($asset, $user, $language);

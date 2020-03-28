@@ -4,6 +4,7 @@
 namespace Scandinaver\API\Application\Query;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Shared\Contracts\Query;
 use Scandinaver\User\Domain\User;
 
@@ -22,13 +23,14 @@ class AssetsQuery implements Query
      * @var string
      */
     private $language;
-
+    
     /**
      * AssetsQuery constructor.
-     * @param User $user
-     * @param string $language
+     *
+     * @param Authenticatable $user
+     * @param Language        $language
      */
-    public function __construct(Authenticatable $user, string $language)
+    public function __construct(Authenticatable $user, Language $language)
     {
         $this->user = $user;
         $this->language = $language;

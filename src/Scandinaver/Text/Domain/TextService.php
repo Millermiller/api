@@ -7,7 +7,6 @@ use PDO;
 use App\Events\NextTextLevel;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Text\Domain\Contracts\ResultRepositoryInterface;
 use Scandinaver\Text\Domain\Contracts\TextRepositoryInterface;
@@ -15,96 +14,91 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class TextService
+ *
  * @package Scandinaver\Text\Domain;
  */
-class TextService
-{
+class TextService {
     /**
      * @var TextRepositoryInterface
      */
     private $textRepository;
-
-    /**
-     * @var LanguageRepositoryInterface
-     */
-    private $languageRepository;
-
+    
     /**
      * @var ResultRepositoryInterface
      */
     protected $resultRepository;
-
+    
     /**
      * TextService constructor.
-     * @param TextRepositoryInterface $textRepository
-     * @param LanguageRepositoryInterface $languageRepository
+     *
+     * @param TextRepositoryInterface   $textRepository
      * @param ResultRepositoryInterface $resultRepository
      */
-    public function __construct(TextRepositoryInterface $textRepository, LanguageRepositoryInterface $languageRepository, ResultRepositoryInterface $resultRepository)
+    public function __construct(TextRepositoryInterface $textRepository, ResultRepositoryInterface $resultRepository)
     {
         $this->textRepository = $textRepository;
-        $this->languageRepository = $languageRepository;
-        $this->resultRepository   = $resultRepository;
+        $this->resultRepository = $resultRepository;
     }
-
+    
     /**
      * @param Language $language
+     *
      * @return int
      */
     public function count(Language $language): int
     {
         return $this->textRepository->getCountByLanguage($language);
     }
-
+    
     /**
-     * @param User $user
+     * @param Language $language
+     * @param User     $user
+     *
      * @return array
      */
-    public function getTextsForUser(User $user)
+    public function getTextsForUser(Language $language, User $user)
     {
-        /** @var Language $language */
-        $language = $this->languageRepository->get(config('app.lang'));
-
         $activeArray = $this->textRepository->getActiveIds($user, $language);
-
+        
         $texts = $this->textRepository->getByLanguage($language);
-
+        
         $counter = 0;
-
+        
         foreach ($texts as &$text) {
             $counter++;
-
+            
             if (in_array($text->getId(), $activeArray)) {
                 $text = [
-                    'id' => $text->getId(),
-                    'title' => $text->getTitle(),
-                    'active' => true,
-                    'image' => $text->getImage(),
+                    'id'          => $text->getId(),
+                    'title'       => $text->getTitle(),
+                    'active'      => true,
+                    'image'       => $text->getImage(),
                     'description' => $text->getDescription()
                 ];
             } else {
                 $text = [
-                    'id' => $text->getId(),
-                    'title' => $text->getTitle(),
-                    'active' => false,
-                    'image' => $text->getImage(),
+                    'id'          => $text->getId(),
+                    'title'       => $text->getTitle(),
+                    'active'      => false,
+                    'image'       => $text->getImage(),
                     'description' => $text->getDescription()
                 ];
             }
-
-
+            
+            
             if ($counter < 3 || $user->getActive()) {
                 $text['available'] = true;
             } else {
                 $text['available'] = false;
             }
         }
-
+        
         return $texts;
     }
-
+    
     /**
-     * @param  Text $text
+     * @param Text $text
+     *
      * @return Text
      * @throws DBALException
      */
@@ -121,44 +115,44 @@ class TextService
                                         on s.word_id = w.id
                                       where text_id = ?
                                     ';
-
-
+        
+        
         $params = [$text->getId(), $text->getId()];
-
+        
         $stmt = app('em')->getConnection()->prepare($sql);
         $stmt->execute($params);
         $words = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        
         $data = [];
-
+        
         foreach ($words as $word) {
             $data[mb_strtolower($word['word'])][] = trim($word['orig']);
         }
-
+        
         $text->setSynonims($data);
-
+        
         return $text;
     }
-
+    
     /**
-     * @param  Authenticatable|User $user
-     * @param  Text $text
+     * @param Language             $language
+     * @param Authenticatable|User $user
+     * @param Text                 $text
+     *
      * @return Text
      */
-    public function giveNextLevel(Authenticatable $user, Text $text): Text
+    public function giveNextLevel(Language $language, Authenticatable $user, Text $text): Text
     {
-        $language  = $this->languageRepository->get(config('app.lang'));
-
         $nextText = $this->textRepository->getNextText($text, $language);
-
+        
         $result = $this->resultRepository->findOneBy(['user' => $user, 'text' => $text]);
-
-        if($result === null) $result = new Result($nextText, $user, $language);
-
+        
+        if ($result === null) $result = new Result($nextText, $user, $language);
+        
         $result = $this->resultRepository->save($result);
-
+        
         event(new NextTextLevel($user, $result));
-
+        
         return $nextText;
     }
 }

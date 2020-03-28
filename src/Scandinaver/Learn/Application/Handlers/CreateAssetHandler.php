@@ -43,7 +43,7 @@ class CreateAssetHandler implements CreateAssetHandlerInteface
      */
     public function handle($command): void
     {
-        $asset = $this->assetService->create($command->getUser(), $command->getTitle());
+        $asset = $this->assetService->create($command->getLanguage(), $command->getUser(), $command->getTitle());
 
         event(new AssetCreated($command->getUser(), $asset));
 

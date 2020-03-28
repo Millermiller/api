@@ -32,6 +32,6 @@ class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
      */
     public function handle($query)
     {
-        return $this->cardService->getCards($query->getUser(), $query->getAsset());
+        return $this->cardService->getCards($query->getLanguage(), $query->getUser(), $query->getAsset());
     }
 }

@@ -6,6 +6,7 @@ namespace Scandinaver\Common\Domain;
 use JsonSerializable;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
+use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Learn\Domain\{Result, Asset};
 use Scandinaver\Text\Domain\Text;
@@ -16,8 +17,16 @@ use Scandinaver\Text\Domain\Text;
  * @ORM\Table(name="languages", indexes={@ORM\Index(name="name", columns={"name"}), @ORM\Index(name="id", columns={"id"})})
  * @ORM\Entity
  */
-class Language implements JsonSerializable
+class Language implements JsonSerializable, UrlRoutable
 {
+    /**
+     * @return string
+     */
+    public static function getRouteKeyName(): string
+    {
+       return 'name';
+    }
+
     public function __construct(int $id, string $name)
     {
         $this->id = $id;

@@ -18,18 +18,22 @@ class GetStateHandler implements GetStateHandlerInterface
      */
     protected $userService;
 
+    /**
+     * GetStateHandler constructor.
+     * @param UserService $userService
+     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
     }
 
     /**
-     * @param GetStateQuery
+     * @param GetStateQuery $query
      * @return array
      * @throws Exception
      */
     public function handle($query): array
     {
-        return $this->userService->getState($query->getUser());
+        return $this->userService->getState($query->getUser(), $query->getLanguage());
     }
 } 

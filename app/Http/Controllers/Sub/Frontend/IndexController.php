@@ -8,6 +8,7 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use ReflectionException;
 use Scandinaver\Learn\Application\Query\{AssetForUserByTypeQuery, PersonalAssetsQuery};
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Asset;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\{JsonResponse};
@@ -80,11 +81,12 @@ class IndexController extends Controller
     }
 
     /**
+     * @param Language $language
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function check(): JsonResponse
+    public function check(Language $language): JsonResponse
     {
-        return response()->json($this->queryBus->execute(new GetStateQuery(Auth::user())));
+        return response()->json($this->queryBus->execute(new GetStateQuery(Auth::user(), $language)));
     }
 }

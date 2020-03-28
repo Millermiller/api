@@ -178,18 +178,17 @@ class UserService
 
     /**
      * @param Authenticatable|User $user
+     * @param Language $language
      * @return array
      * @throws Exception
      */
-    public function getState(User $user): array
+    public function getState(User $user, Language $language): array
     {
-        $language = $this->languageRepository->get(config('app.lang'));
-
         return [
             'user'      => $this->getInfo(),
             'site'      => config('app.MAIN_SITE'),
-            'words'     => $this->assetService->getAssetsByType($user, Asset::TYPE_WORDS),
-            'sentences' => $this->assetService->getAssetsByType($user, Asset::TYPE_SENTENCES),
+            'words'     => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_WORDS),
+            'sentences' => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_SENTENCES),
             'favourites'=> $this->assetRepository->getFavouriteAsset($language, $user),
             'personal'  => $this->assetRepository->getCreatedAssets($language, $user),
 

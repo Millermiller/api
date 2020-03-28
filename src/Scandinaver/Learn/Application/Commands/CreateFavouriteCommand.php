@@ -10,6 +10,8 @@ use Scandinaver\Shared\Contracts\Command;
 /**
  * Class CreateFavouriteCommand
  * @package Scandinaver\Learn\Application\Commands
+ *
+ * @see  \Scandinaver\Learn\Application\Handlers\CreateFavouriteHandler
  */
 class CreateFavouriteCommand implements Command
 {

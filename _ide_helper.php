@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.28 on 2020-02-22 13:48:05.
+ * Generated for Laravel 5.7.28 on 2020-03-28 09:22:49.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -7537,8 +7537,6 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
-     * @see \Illuminate\Redis\RedisManager
-     * @see \Illuminate\Contracts\Redis\Factory
      */ 
     class Redis {
         
@@ -11514,7 +11512,7 @@ namespace Illuminate\Support\Facades {
          * Get a filesystem instance.
          *
          * @param string $name
-         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
          * @static 
          */ 
         public static function drive($name = null)
@@ -11526,7 +11524,7 @@ namespace Illuminate\Support\Facades {
          * Get a filesystem instance.
          *
          * @param string $name
-         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
          * @static 
          */ 
         public static function disk($name = null)
@@ -11537,7 +11535,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get a default cloud filesystem instance.
          *
-         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
          * @static 
          */ 
         public static function cloud()
@@ -11549,7 +11547,7 @@ namespace Illuminate\Support\Facades {
          * Create an instance of the local driver.
          *
          * @param array $config
-         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
          * @static 
          */ 
         public static function createLocalDriver($config)
@@ -11561,7 +11559,7 @@ namespace Illuminate\Support\Facades {
          * Create an instance of the ftp driver.
          *
          * @param array $config
-         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
          * @static 
          */ 
         public static function createFtpDriver($config)
@@ -11573,7 +11571,7 @@ namespace Illuminate\Support\Facades {
          * Create an instance of the sftp driver.
          *
          * @param array $config
-         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
          * @static 
          */ 
         public static function createSftpDriver($config)
@@ -11663,6 +11661,449 @@ namespace Illuminate\Support\Facades {
         public static function extend($driver, $callback)
         {
             return \Illuminate\Filesystem\FilesystemManager::extend($driver, $callback);
+        }
+        
+        /**
+         * Assert that the given file exists.
+         *
+         * @param string|array $path
+         * @return $this 
+         * @static 
+         */ 
+        public static function assertExists($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::assertExists($path);
+        }
+        
+        /**
+         * Assert that the given file does not exist.
+         *
+         * @param string|array $path
+         * @return $this 
+         * @static 
+         */ 
+        public static function assertMissing($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::assertMissing($path);
+        }
+        
+        /**
+         * Determine if a file exists.
+         *
+         * @param string $path
+         * @return bool 
+         * @static 
+         */ 
+        public static function exists($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::exists($path);
+        }
+        
+        /**
+         * Get the full path for the file at the given "short" path.
+         *
+         * @param string $path
+         * @return string 
+         * @static 
+         */ 
+        public static function path($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::path($path);
+        }
+        
+        /**
+         * Get the contents of a file.
+         *
+         * @param string $path
+         * @return string 
+         * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+         * @static 
+         */ 
+        public static function get($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::get($path);
+        }
+        
+        /**
+         * Create a streamed response for a given file.
+         *
+         * @param string $path
+         * @param string|null $name
+         * @param array|null $headers
+         * @param string|null $disposition
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
+         * @static 
+         */ 
+        public static function response($path, $name = null, $headers = array(), $disposition = 'inline')
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::response($path, $name, $headers, $disposition);
+        }
+        
+        /**
+         * Create a streamed download response for a given file.
+         *
+         * @param string $path
+         * @param string|null $name
+         * @param array|null $headers
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
+         * @static 
+         */ 
+        public static function download($path, $name = null, $headers = array())
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::download($path, $name, $headers);
+        }
+        
+        /**
+         * Write the contents of a file.
+         *
+         * @param string $path
+         * @param string|resource $contents
+         * @param mixed $options
+         * @return bool 
+         * @static 
+         */ 
+        public static function put($path, $contents, $options = array())
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::put($path, $contents, $options);
+        }
+        
+        /**
+         * Store the uploaded file on the disk.
+         *
+         * @param string $path
+         * @param \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
+         * @param array $options
+         * @return string|false 
+         * @static 
+         */ 
+        public static function putFile($path, $file, $options = array())
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::putFile($path, $file, $options);
+        }
+        
+        /**
+         * Store the uploaded file on the disk with a given name.
+         *
+         * @param string $path
+         * @param \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
+         * @param string $name
+         * @param array $options
+         * @return string|false 
+         * @static 
+         */ 
+        public static function putFileAs($path, $file, $name, $options = array())
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::putFileAs($path, $file, $name, $options);
+        }
+        
+        /**
+         * Get the visibility for the given path.
+         *
+         * @param string $path
+         * @return string 
+         * @static 
+         */ 
+        public static function getVisibility($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::getVisibility($path);
+        }
+        
+        /**
+         * Set the visibility for the given path.
+         *
+         * @param string $path
+         * @param string $visibility
+         * @return bool 
+         * @static 
+         */ 
+        public static function setVisibility($path, $visibility)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::setVisibility($path, $visibility);
+        }
+        
+        /**
+         * Prepend to a file.
+         *
+         * @param string $path
+         * @param string $data
+         * @param string $separator
+         * @return bool 
+         * @static 
+         */ 
+        public static function prepend($path, $data, $separator = '')
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::prepend($path, $data, $separator);
+        }
+        
+        /**
+         * Append to a file.
+         *
+         * @param string $path
+         * @param string $data
+         * @param string $separator
+         * @return bool 
+         * @static 
+         */ 
+        public static function append($path, $data, $separator = '')
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::append($path, $data, $separator);
+        }
+        
+        /**
+         * Delete the file at a given path.
+         *
+         * @param string|array $paths
+         * @return bool 
+         * @static 
+         */ 
+        public static function delete($paths)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::delete($paths);
+        }
+        
+        /**
+         * Copy a file to a new location.
+         *
+         * @param string $from
+         * @param string $to
+         * @return bool 
+         * @static 
+         */ 
+        public static function copy($from, $to)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::copy($from, $to);
+        }
+        
+        /**
+         * Move a file to a new location.
+         *
+         * @param string $from
+         * @param string $to
+         * @return bool 
+         * @static 
+         */ 
+        public static function move($from, $to)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::move($from, $to);
+        }
+        
+        /**
+         * Get the file size of a given file.
+         *
+         * @param string $path
+         * @return int 
+         * @static 
+         */ 
+        public static function size($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::size($path);
+        }
+        
+        /**
+         * Get the mime-type of a given file.
+         *
+         * @param string $path
+         * @return string|false 
+         * @static 
+         */ 
+        public static function mimeType($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::mimeType($path);
+        }
+        
+        /**
+         * Get the file's last modification time.
+         *
+         * @param string $path
+         * @return int 
+         * @static 
+         */ 
+        public static function lastModified($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::lastModified($path);
+        }
+        
+        /**
+         * Get the URL for the file at the given path.
+         *
+         * @param string $path
+         * @return string 
+         * @throws \RuntimeException
+         * @static 
+         */ 
+        public static function url($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::url($path);
+        }
+        
+        /**
+         * Get a resource to read the file.
+         *
+         * @param string $path
+         * @return resource|null The path resource or null on failure.
+         * @throws FileNotFoundException
+         * @static 
+         */ 
+        public static function readStream($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::readStream($path);
+        }
+        
+        /**
+         * Write a new file using a stream.
+         *
+         * @param string $path
+         * @param resource $resource
+         * @param array $options
+         * @return bool 
+         * @throws \InvalidArgumentException If $resource is not a file handle.
+         * @throws FileExistsException
+         * @static 
+         */ 
+        public static function writeStream($path, $resource, $options = array())
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::writeStream($path, $resource, $options);
+        }
+        
+        /**
+         * Get a temporary URL for the file at the given path.
+         *
+         * @param string $path
+         * @param \DateTimeInterface $expiration
+         * @param array $options
+         * @return string 
+         * @throws \RuntimeException
+         * @static 
+         */ 
+        public static function temporaryUrl($path, $expiration, $options = array())
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::temporaryUrl($path, $expiration, $options);
+        }
+        
+        /**
+         * Get a temporary URL for the file at the given path.
+         *
+         * @param \League\Flysystem\AwsS3v3\AwsS3Adapter $adapter
+         * @param string $path
+         * @param \DateTimeInterface $expiration
+         * @param array $options
+         * @return string 
+         * @static 
+         */ 
+        public static function getAwsTemporaryUrl($adapter, $path, $expiration, $options)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::getAwsTemporaryUrl($adapter, $path, $expiration, $options);
+        }
+        
+        /**
+         * Get a temporary URL for the file at the given path.
+         *
+         * @param \League\Flysystem\Rackspace\RackspaceAdapter $adapter
+         * @param string $path
+         * @param \DateTimeInterface $expiration
+         * @param array $options
+         * @return string 
+         * @static 
+         */ 
+        public static function getRackspaceTemporaryUrl($adapter, $path, $expiration, $options)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::getRackspaceTemporaryUrl($adapter, $path, $expiration, $options);
+        }
+        
+        /**
+         * Get an array of all files in a directory.
+         *
+         * @param string|null $directory
+         * @param bool $recursive
+         * @return array 
+         * @static 
+         */ 
+        public static function files($directory = null, $recursive = false)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::files($directory, $recursive);
+        }
+        
+        /**
+         * Get all of the files from the given directory (recursive).
+         *
+         * @param string|null $directory
+         * @return array 
+         * @static 
+         */ 
+        public static function allFiles($directory = null)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::allFiles($directory);
+        }
+        
+        /**
+         * Get all of the directories within a given directory.
+         *
+         * @param string|null $directory
+         * @param bool $recursive
+         * @return array 
+         * @static 
+         */ 
+        public static function directories($directory = null, $recursive = false)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::directories($directory, $recursive);
+        }
+        
+        /**
+         * Get all (recursive) of the directories within a given directory.
+         *
+         * @param string|null $directory
+         * @return array 
+         * @static 
+         */ 
+        public static function allDirectories($directory = null)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::allDirectories($directory);
+        }
+        
+        /**
+         * Create a directory.
+         *
+         * @param string $path
+         * @return bool 
+         * @static 
+         */ 
+        public static function makeDirectory($path)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::makeDirectory($path);
+        }
+        
+        /**
+         * Recursively delete a directory.
+         *
+         * @param string $directory
+         * @return bool 
+         * @static 
+         */ 
+        public static function deleteDirectory($directory)
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::deleteDirectory($directory);
+        }
+        
+        /**
+         * Flush the Flysystem cache.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushCache()
+        {
+            \Illuminate\Filesystem\FilesystemAdapter::flushCache();
+        }
+        
+        /**
+         * Get the Flysystem driver.
+         *
+         * @return \League\Flysystem\FilesystemInterface 
+         * @static 
+         */ 
+        public static function getDriver()
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::getDriver();
         }
          
     }
@@ -14660,6 +15101,378 @@ namespace Barryvdh\Debugbar {
         {
             //Method inherited from \DebugBar\DebugBar            
             return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
+        }
+         
+    }
+ 
+}
+
+namespace Clockwork\Support\Laravel { 
+
+    /**
+     * 
+     *
+     */ 
+    class Facade {
+        
+        /**
+         * Add a new data source
+         *
+         * @static 
+         */ 
+        public static function addDataSource($dataSource)
+        {
+            return \Clockwork\Clockwork::addDataSource($dataSource);
+        }
+        
+        /**
+         * Return array of all added data sources
+         *
+         * @static 
+         */ 
+        public static function getDataSources()
+        {
+            return \Clockwork\Clockwork::getDataSources();
+        }
+        
+        /**
+         * Return the request object
+         *
+         * @static 
+         */ 
+        public static function getRequest()
+        {
+            return \Clockwork\Clockwork::getRequest();
+        }
+        
+        /**
+         * Set a custom request object
+         *
+         * @static 
+         */ 
+        public static function setRequest($request)
+        {
+            return \Clockwork\Clockwork::setRequest($request);
+        }
+        
+        /**
+         * Add data from all data sources to request
+         *
+         * @static 
+         */ 
+        public static function resolveRequest()
+        {
+            return \Clockwork\Clockwork::resolveRequest();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function extendRequest($request = null)
+        {
+            return \Clockwork\Clockwork::extendRequest($request);
+        }
+        
+        /**
+         * Store request via storage object
+         *
+         * @static 
+         */ 
+        public static function storeRequest()
+        {
+            return \Clockwork\Clockwork::storeRequest();
+        }
+        
+        /**
+         * Return the storage object
+         *
+         * @static 
+         */ 
+        public static function getStorage()
+        {
+            return \Clockwork\Clockwork::getStorage();
+        }
+        
+        /**
+         * Set a custom storage object
+         *
+         * @static 
+         */ 
+        public static function setStorage($storage)
+        {
+            return \Clockwork\Clockwork::setStorage($storage);
+        }
+        
+        /**
+         * Return the authenticator object
+         *
+         * @static 
+         */ 
+        public static function getAuthenticator()
+        {
+            return \Clockwork\Clockwork::getAuthenticator();
+        }
+        
+        /**
+         * Set a custom authenticator object
+         *
+         * @static 
+         */ 
+        public static function setAuthenticator($authenticator)
+        {
+            return \Clockwork\Clockwork::setAuthenticator($authenticator);
+        }
+        
+        /**
+         * Return the log instance
+         *
+         * @static 
+         */ 
+        public static function getLog()
+        {
+            return \Clockwork\Clockwork::getLog();
+        }
+        
+        /**
+         * Set a custom log instance
+         *
+         * @static 
+         */ 
+        public static function setLog($log)
+        {
+            return \Clockwork\Clockwork::setLog($log);
+        }
+        
+        /**
+         * Return the timeline instance
+         *
+         * @static 
+         */ 
+        public static function getTimeline()
+        {
+            return \Clockwork\Clockwork::getTimeline();
+        }
+        
+        /**
+         * Set a custom timeline instance
+         *
+         * @static 
+         */ 
+        public static function setTimeline($timeline)
+        {
+            return \Clockwork\Clockwork::setTimeline($timeline);
+        }
+        
+        /**
+         * Shortcut methods for the current log instance
+         *
+         * @static 
+         */ 
+        public static function log($level, $message, $context = array())
+        {
+            return \Clockwork\Clockwork::log($level, $message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function emergency($message, $context = array())
+        {
+            return \Clockwork\Clockwork::emergency($message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function alert($message, $context = array())
+        {
+            return \Clockwork\Clockwork::alert($message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function critical($message, $context = array())
+        {
+            return \Clockwork\Clockwork::critical($message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function error($message, $context = array())
+        {
+            return \Clockwork\Clockwork::error($message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function warning($message, $context = array())
+        {
+            return \Clockwork\Clockwork::warning($message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function notice($message, $context = array())
+        {
+            return \Clockwork\Clockwork::notice($message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function info($message, $context = array())
+        {
+            return \Clockwork\Clockwork::info($message, $context);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function debug($message, $context = array())
+        {
+            return \Clockwork\Clockwork::debug($message, $context);
+        }
+        
+        /**
+         * Shortcut methods for the current timeline instance
+         *
+         * @static 
+         */ 
+        public static function startEvent($name, $description, $time = null)
+        {
+            return \Clockwork\Clockwork::startEvent($name, $description, $time);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function endEvent($name)
+        {
+            return \Clockwork\Clockwork::endEvent($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addDatabaseQuery($query, $bindings = array(), $duration = null, $data = array())
+        {
+            return \Clockwork\Clockwork::addDatabaseQuery($query, $bindings, $duration, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addCacheQuery($type, $key, $value = null, $duration = null, $data = array())
+        {
+            return \Clockwork\Clockwork::addCacheQuery($type, $key, $value, $duration, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addEvent($event, $eventData = null, $time = null, $data = array())
+        {
+            return \Clockwork\Clockwork::addEvent($event, $eventData, $time, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addRoute($method, $uri, $action, $data = array())
+        {
+            return \Clockwork\Clockwork::addRoute($method, $uri, $action, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addEmail($subject, $to, $from = null, $headers = array())
+        {
+            return \Clockwork\Clockwork::addEmail($subject, $to, $from, $headers);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addView($name, $data = array())
+        {
+            return \Clockwork\Clockwork::addView($name, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addSubrequest($url, $id, $data = array())
+        {
+            return \Clockwork\Clockwork::addSubrequest($url, $id, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function subrequest($url, $id, $path = null)
+        {
+            return \Clockwork\Clockwork::subrequest($url, $id, $path);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setAuthenticatedUser($username, $id = null, $data = array())
+        {
+            return \Clockwork\Clockwork::setAuthenticatedUser($username, $id, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function userData($key = null)
+        {
+            return \Clockwork\Clockwork::userData($key);
         }
          
     }
@@ -18416,6 +19229,8 @@ namespace  {
     class Doctrine extends \LaravelDoctrine\ORM\Facades\Doctrine {}
 
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
+
+    class Clockwork extends \Clockwork\Support\Laravel\Facade {}
 
     class Form extends \Collective\Html\FormFacade {}
 

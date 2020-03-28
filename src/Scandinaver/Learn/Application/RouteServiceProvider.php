@@ -30,21 +30,24 @@ class RouteServiceProvider extends ServiceProvider
         Route::group(
             [
                 'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan'],
-                'namespace' => 'App\Http\Controllers\Sub\Frontend',
                 'as' => 'sub_frontend::'
             ],
             function () {
-                Route::get('/words', 'IndexController@getWords')->name('words');
-                Route::get('/personal', 'IndexController@getPersonal')->name('personal');
+                Route::get('/words', 'Sub\Frontend\IndexController@getWords')->name('words');
+                Route::get('/personal', 'Sub\Frontend\IndexController@getPersonal')->name('personal');
 
-                Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
-                Route::resource('/asset', 'AssetController');
+                Route::get('/assetInfo/{id}', 'Sub\Frontend\AssetController@assetInfo');
+                
+                Route::get('/{language}/asset/{asset}', 'Sub\Frontend\AssetController@show');
+                Route::post('/{language}/asset', 'Sub\Frontend\AssetController@store');
+                Route::put('/{language}/asset/{asset}', 'Sub\Frontend\AssetController@update');
+                Route::delete('/{language}/asset/{asset}', 'Sub\Frontend\AssetController@destroy');
 
-                Route::post('/favourite/{word}/{translate}', 'FavouriteController@store')->name('add-favorite');
-                Route::delete('/favourite/{id}', 'FavouriteController@destroy')->name('delete-favorite');
+                Route::post('/favourite/{word}/{translate}', 'Sub\Frontend\FavouriteController@store')->name('add-favorite');
+                Route::delete('/favourite/{id}',             'Sub\Frontend\FavouriteController@destroy')->name('delete-favorite');
 
-                Route::post('/result/{asset}', 'TestController@result');
-                Route::post('/complete/{asset}', 'TestController@complete');
+                Route::post('/result/{asset}', 'Sub\Frontend\TestController@result');
+                Route::post('/complete/{asset}', 'Sub\Frontend\TestController@complete');
 
                 Route::post('/card/{word}/{translate}/{asset}', 'CardsController@store')->name('add-card-to-asset');
                 Route::delete('/card/{card}', 'CardsController@destroy')->name('delete-card-from-asset');

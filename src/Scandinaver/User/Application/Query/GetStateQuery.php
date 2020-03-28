@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Query;
 
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Shared\Contracts\Query;
 use Scandinaver\User\Domain\User;
 
@@ -17,9 +18,20 @@ class GetStateQuery implements Query
      */
     private $user;
 
-    public function __construct(User $user)
+    /**
+     * @var Language
+     */
+    private $language;
+
+    /**
+     * GetStateQuery constructor.
+     * @param User $user
+     * @param Language $language
+     */
+    public function __construct(User $user, Language $language)
     {
         $this->user = $user;
+        $this->language = $language;
     }
 
     /**
@@ -28,5 +40,13 @@ class GetStateQuery implements Query
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    /**
+     * @return Language
+     */
+    public function getLanguage(): Language
+    {
+        return $this->language;
     }
 }

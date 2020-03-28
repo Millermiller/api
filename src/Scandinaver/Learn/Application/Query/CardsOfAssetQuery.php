@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Query;
 
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Shared\Contracts\Query;
 use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\Asset;
@@ -22,14 +23,22 @@ class CardsOfAssetQuery implements Query
      * @var User
      */
     private $user;
-
+    
+    /**
+     * @var Language
+     */
+    private $language;
+    
     /**
      * CardsOfAssetQuery constructor.
-     * @param User $user
-     * @param Asset $asset
+     *
+     * @param Language $language
+     * @param User     $user
+     * @param Asset    $asset
      */
-    public function __construct(User $user, Asset $asset)
+    public function __construct(Language $language, User $user, Asset $asset)
     {
+        $this->language = $language;
         $this->asset = $asset;
         $this->user = $user;
     }
@@ -48,5 +57,13 @@ class CardsOfAssetQuery implements Query
     public function getAsset(): Asset
     {
         return $this->asset;
+    }
+    
+    /**
+     * @return Language
+     */
+    public function getLanguage(): Language
+    {
+        return $this->language;
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Auth\Access\AuthorizationException;
 use Scandinaver\Learn\Application\Commands\{CreateAssetCommand, DeleteAssetCommand, UpdateAssetCommand};
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Application\Query\CardsOfAssetQuery;
 use Scandinaver\Learn\Domain\Asset;
 
@@ -24,32 +25,36 @@ use Scandinaver\Learn\Domain\Asset;
 class AssetController extends Controller
 {
     /**
+     * @param Language $language
      * @param Asset $asset
      * @return JsonResponse
+     * @throws AuthorizationException
      * @throws ReflectionException
      */
-    public function show(Asset $asset): JsonResponse
+    public function show(Language $language, Asset $asset): JsonResponse
     {
-      //  $this->authorize('view', $asset);
+        $this->authorize('view', $asset);
 
-        return response()->json($this->queryBus->execute(new CardsOfAssetQuery(Auth::user(), $asset)));
+        return response()->json($this->queryBus->execute(new CardsOfAssetQuery($language, Auth::user(), $asset)));
     }
 
     /**
+     * @param Language $language
      * @param Request $request
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function store(Request $request): JsonResponse
+    public function store(Language $language, Request $request): JsonResponse
     {
-        $this->commandBus->execute(new CreateAssetCommand(Auth::user(), $request->get('title')));
+        $this->commandBus->execute(new CreateAssetCommand($language, Auth::user(), $request->get('title')));
 
         return response()->json(null, 201);
     }
-
+    
     /**
-     * @param Request $request
-     * @param Asset $asset
+     * @param Request  $request
+     * @param Asset    $asset
+     *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws ReflectionException

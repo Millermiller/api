@@ -3,8 +3,8 @@
 
 namespace App\Http\Controllers\API;
 
+use Scandinaver\Common\Domain\Language;
 use Validator;
-use Exception;
 use ReflectionException;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -38,13 +38,14 @@ class ApiController extends Controller
     {
         return response()->json($this->queryBus->execute(new LanguagesQuery()));
     }
-
+    
     /**
-     * @param $language
+     * @param Language $language
+     *
      * @return JsonResponse
-     * @throws Exception
+     * @throws ReflectionException
      */
-    public function assets($language): JsonResponse
+    public function assets(Language $language): JsonResponse
     {
         $validator = Validator::make(
             ['language' => $language],
