@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Services\AssetService;
 
 /**
  * Class AssetForUserByTypeHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class AssetForUserByTypeHandler implements AssetForUserByTypeHandlerInterface
@@ -20,6 +21,7 @@ class AssetForUserByTypeHandler implements AssetForUserByTypeHandlerInterface
 
     /**
      * AssetForUserByTypeHandler constructor.
+     *
      * @param AssetService $assetService
      */
     public function __construct(AssetService $assetService)
@@ -29,6 +31,7 @@ class AssetForUserByTypeHandler implements AssetForUserByTypeHandlerInterface
 
     /**
      * @param AssetForUserByTypeQuery $query
+     *
      * @return array
      * @throws Exception
      */

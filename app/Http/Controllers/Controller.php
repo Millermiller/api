@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -10,6 +11,7 @@ use Scandinaver\Shared\{CommandBus, QueryBus};
 
 /**
  * Class Controller
+ *
  * @package App\Http\Controllers
  */
 class Controller extends BaseController
@@ -18,12 +20,25 @@ class Controller extends BaseController
     use DispatchesJobs;
     use ValidatesRequests;
 
+    /**
+     * @var CommandBus
+     */
     protected $commandBus;
+
+    /**
+     * @var QueryBus
+     */
     protected $queryBus;
 
+    /**
+     * Controller constructor.
+     *
+     * @param CommandBus $commandBus
+     * @param QueryBus   $queryBus
+     */
     public function __construct(CommandBus $commandBus, QueryBus $queryBus)
     {
         $this->commandBus = $commandBus;
-        $this->queryBus = $queryBus;
+        $this->queryBus   = $queryBus;
     }
 }

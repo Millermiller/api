@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\{Translate, Word};
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class CreateFavouriteCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see  \Scandinaver\Learn\Application\Handlers\CreateFavouriteHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\CreateFavouriteHandler
  */
 class CreateFavouriteCommand implements Command
 {
@@ -32,14 +32,15 @@ class CreateFavouriteCommand implements Command
 
     /**
      * CreateFavouriteCommand constructor.
-     * @param User $user
-     * @param Word $word
+     *
+     * @param User      $user
+     * @param Word      $word
      * @param Translate $translate
      */
     public function __construct(User $user, Word $word, Translate $translate)
     {
-        $this->user = $user;
-        $this->word = $word;
+        $this->user      = $user;
+        $this->word      = $word;
         $this->translate = $translate;
     }
 

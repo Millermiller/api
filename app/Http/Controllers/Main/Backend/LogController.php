@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use App\Http\Controllers\Controller;
@@ -9,6 +10,7 @@ use Spatie\Activitylog\Models\Activity;
 
 /**
  * Class SeoController
+ *
  * @package App\Http\Controllers\Main\Backend
  */
 class LogController extends Controller
@@ -26,7 +28,8 @@ class LogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return JsonResponse
      */
     public function show($id): JsonResponse
@@ -37,7 +40,8 @@ class LogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return JsonResponse
      * @throws Exception
      */

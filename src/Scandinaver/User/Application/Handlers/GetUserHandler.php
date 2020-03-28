@@ -8,6 +8,7 @@ use Scandinaver\User\Domain\Services\UserService;
 
 /**
  * Class GetUserHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class GetUserHandler implements GetUserHandlerInterface
@@ -24,6 +25,7 @@ class GetUserHandler implements GetUserHandlerInterface
 
     /**
      * @param GetUserQuery
+     *
      * @return array
      */
     public function handle($query): array

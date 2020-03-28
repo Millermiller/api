@@ -10,9 +10,10 @@ use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
 
 /**
  * Class TextServiceProvider
+ *
  * @package Scandinaver\Text\Application
  */
-class BlogServiceProvider  extends ServiceProvider
+class BlogServiceProvider extends ServiceProvider
 {
     public function register()
     {

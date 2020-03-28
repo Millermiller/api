@@ -4,14 +4,15 @@
 namespace Scandinaver\User\Application;
 
 use Illuminate\Support\ServiceProvider;
+use Scandinaver\User\Domain\{Plan, User};
 use Scandinaver\User\Domain\Contracts\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contracts\UserRepositoryInterface;
-use Scandinaver\User\Domain\{Plan, User};
 use Scandinaver\User\Infrastructure\Persistence\Doctrine\PlanRepository;
 use Scandinaver\User\Infrastructure\Persistence\Doctrine\UserRepository;
 
 /**
  * Class UserServiceProvider
+ *
  * @package Scandinaver\User\Application
  */
 class UserServiceProvider extends ServiceProvider

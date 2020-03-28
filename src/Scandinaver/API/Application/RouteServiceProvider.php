@@ -1,19 +1,20 @@
 <?php
 
+
 namespace Scandinaver\API\Application;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class RouteServiceProvider
+ *
  * @package Scandinaver\Learn\Application
  */
 class RouteServiceProvider extends ServiceProvider
 {
     /**
      * This namespace is applied to your controller routes.
-     *
      * In addition, it is set as the URL generator's root namespace.
      *
      * @var string
@@ -30,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::group(
             [
                 'namespace' => 'App\Http\Controllers\API',
-                'as' => 'api::'
+                'as'        => 'api::'
             ],
             function () {
                 Route::get('/api/languages', 'ApiController@languages')->name('languages');

@@ -7,6 +7,7 @@ use Scandinaver\Blog\Application\Commands\UpdateCategoryCommand;
 
 /**
  * Class UpdateCategoryHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class UpdateCategoryHandler implements UpdateCategoryHandlerInterface
@@ -18,6 +19,7 @@ class UpdateCategoryHandler implements UpdateCategoryHandlerInterface
 
     /**
      * @param UpdateCategoryCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

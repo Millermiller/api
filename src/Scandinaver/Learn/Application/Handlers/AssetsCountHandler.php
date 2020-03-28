@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\AudioService;
 
 /**
  * Class AssetsCountHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class AssetsCountHandler implements AssetsCountHandlerInterface
@@ -19,6 +20,7 @@ class AssetsCountHandler implements AssetsCountHandlerInterface
 
     /**
      * WordsCountHandler constructor.
+     *
      * @param AudioService $audioService
      */
     public function __construct(AudioService $audioService)
@@ -28,6 +30,7 @@ class AssetsCountHandler implements AssetsCountHandlerInterface
 
     /**
      * @param AssetsCountQuery $query
+     *
      * @return int
      */
     public function handle($query): int

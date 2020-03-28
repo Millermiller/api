@@ -3,25 +3,26 @@
 
 namespace Scandinaver\User\Domain\Services;
 
-use Auth;
-use Exception;
-use Carbon\Carbon;
-use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 use App\Events\{UserDeleted, UserRegistered};
-use Illuminate\Contracts\Auth\Authenticatable;
+use Auth;
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Scandinaver\Common\Domain\Contracts\{IntroRepositoryInterface, LanguageRepositoryInterface};
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\Domain\Contracts\AssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Text\Domain\Contracts\TextRepositoryInterface;
 use Scandinaver\Text\Domain\TextService;
-use Scandinaver\User\Domain\Contracts\{UserRepositoryInterface, PlanRepositoryInterface};
+use Scandinaver\User\Domain\Contracts\{PlanRepositoryInterface, UserRepositoryInterface};
+use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 use Scandinaver\User\Domain\User;
 
 /**
  * Class UserService
+ *
  * @package app\Services
  */
 class UserService
@@ -68,14 +69,15 @@ class UserService
 
     /**
      * UserService constructor.
-     * @param AssetRepositoryInterface $assetRepository
-     * @param AssetService $assetService
-     * @param UserRepositoryInterface $userRepository
-     * @param PlanRepositoryInterface $planRepository
+     *
+     * @param AssetRepositoryInterface    $assetRepository
+     * @param AssetService                $assetService
+     * @param UserRepositoryInterface     $userRepository
+     * @param PlanRepositoryInterface     $planRepository
      * @param LanguageRepositoryInterface $languageRepository
-     * @param TextRepositoryInterface $textRepository
-     * @param IntroRepositoryInterface $introRepository
-     * @param TextService $textService
+     * @param TextRepositoryInterface     $textRepository
+     * @param IntroRepositoryInterface    $introRepository
+     * @param TextService                 $textService
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
@@ -88,14 +90,14 @@ class UserService
         TextService $textService
     )
     {
-        $this->userRepository = $userRepository;
-        $this->planRepository = $planRepository;
+        $this->userRepository     = $userRepository;
+        $this->planRepository     = $planRepository;
         $this->languageRepository = $languageRepository;
-        $this->assetRepository = $assetRepository;
-        $this->textRepository = $textRepository;
-        $this->introRepository = $introRepository;
-        $this->assetService = $assetService;
-        $this->textService = $textService;
+        $this->assetRepository    = $assetRepository;
+        $this->textRepository     = $textRepository;
+        $this->introRepository    = $introRepository;
+        $this->assetService       = $assetService;
+        $this->textService        = $textService;
     }
 
     /**
@@ -108,6 +110,7 @@ class UserService
 
     /**
      * @param string $string
+     *
      * @return array
      */
     public function find($string): array
@@ -116,21 +119,23 @@ class UserService
     }
 
     /**
-     * @param  array $credentials
+     * @param array $credentials
+     *
      * @return Authenticatable|User|null
      * @throws UserNotFoundException
      * @throws Exception
      */
     public function login(array $credentials): ?User
     {
-        if(!Auth::attempt($credentials)){
+        if (!Auth::attempt($credentials)) {
             throw new UserNotFoundException();
         }
         return \App\Helpers\Auth::user();
     }
 
     /**
-     * @param  array $data
+     * @param array $data
+     *
      * @return User
      * @throws Exception
      */
@@ -148,10 +153,10 @@ class UserService
         $user->setEmail($data['email']);
         $user->setPassword(bcrypt($data['password']));
         $user->setPlan($plan);
-        $user->setCreatedAt( Carbon::now()->format("Y-m-d H:i:s"));
+        $user->setCreatedAt(Carbon::now()->format("Y-m-d H:i:s"));
         $user = $this->userRepository->save($user);
 
-        foreach($languages as $language){
+        foreach ($languages as $language) {
 
             //даем пользователю избранное
             $favourite = new Asset('Избранное', false, Asset::TYPE_FAVORITES, 1, $language);
@@ -178,19 +183,20 @@ class UserService
 
     /**
      * @param Authenticatable|User $user
-     * @param Language $language
+     * @param Language             $language
+     *
      * @return array
      * @throws Exception
      */
     public function getState(User $user, Language $language): array
     {
         return [
-            'user'      => $this->getInfo(),
-            'site'      => config('app.MAIN_SITE'),
-            'words'     => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_WORDS),
-            'sentences' => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_SENTENCES),
-            'favourites'=> $this->assetRepository->getFavouriteAsset($language, $user),
-            'personal'  => $this->assetRepository->getCreatedAssets($language, $user),
+            'user'       => $this->getInfo(),
+            'site'       => config('app.MAIN_SITE'),
+            'words'      => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_WORDS),
+            'sentences'  => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_SENTENCES),
+            'favourites' => $this->assetRepository->getFavouriteAsset($language, $user),
+            'personal'   => $this->assetRepository->getCreatedAssets($language, $user),
 
             'texts'       => $this->textService->getTextsForUser($user),
             'intro'       => $this->introRepository->getGrouppedIntro(),
@@ -206,23 +212,24 @@ class UserService
     public function getInfo(): array
     {
         return [
-            'id' => Auth::user()->getKey(),
-            'login' => Auth::user()->getLogin(),
-            'avatar' => Auth::user()->getAvatar(),
-            'email' => Auth::user()->getEmail(),
-            'active' => Auth::user()->getActive(),
-            'plan' => Auth::user()->getPlan(),
+            'id'        => Auth::user()->getKey(),
+            'login'     => Auth::user()->getLogin(),
+            'avatar'    => Auth::user()->getAvatar(),
+            'email'     => Auth::user()->getEmail(),
+            'active'    => Auth::user()->getActive(),
+            'plan'      => Auth::user()->getPlan(),
             'active_to' => Auth::user()->getActiveTo()
         ];
     }
 
     /**
      * @param User $user
+     *
      * @return void
      */
     public function updatePlan(User $user): void
     {
-        if($user->getActiveTo() < Carbon::now()){
+        if ($user->getActiveTo() < Carbon::now()) {
             $plan = $this->planRepository->findByName('Basic');
             $user->setPlan($plan);
         }
@@ -230,6 +237,7 @@ class UserService
 
     /**
      * @param array $request
+     *
      * @return void
      */
     public function updateUserInfo(array $request): void
@@ -244,8 +252,9 @@ class UserService
     }
 
     /**
-     * @param User $user
+     * @param User  $user
      * @param array $data
+     *
      * @return User
      */
     public function updateUser(User $user, array $data): User
@@ -257,6 +266,7 @@ class UserService
 
     /**
      * @param User $user
+     *
      * @return void
      */
     public function delete(User $user): void
@@ -268,6 +278,7 @@ class UserService
 
     /**
      * @param int $id
+     *
      * @return User
      */
     public function getOne(int $id): User

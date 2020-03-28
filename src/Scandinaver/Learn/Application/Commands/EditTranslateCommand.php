@@ -11,9 +11,9 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class EditTranslateCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\EditTranslateHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\EditTranslateHandler
  */
 class EditTranslateCommand implements Command
 {
@@ -45,11 +45,11 @@ class EditTranslateCommand implements Command
     public function __construct(array $data)
     {
         $this->translate_id = $data['id'];
-        $this->card_id = $data['card_id'];
-        $this->text = $data['text'];
+        $this->card_id      = $data['card_id'];
+        $this->text         = $data['text'];
 
         $this->translateRepository = app()->make('TranslateRepositoryInterface');
-        $this->cardRepository = app()->make('CardRepositoryInterface');
+        $this->cardRepository      = app()->make('CardRepositoryInterface');
     }
 
     /**

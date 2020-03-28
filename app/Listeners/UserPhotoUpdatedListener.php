@@ -3,8 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\UserPhotoUpdated;
-use App\Services\Requester;
+use GuzzleHttp\Exception\GuzzleException;
+use Scandinaver\Common\Domain\Services\Requester;
 
+/**
+ * Class UserPhotoUpdatedListener
+ *
+ * @package App\Listeners
+ */
 class UserPhotoUpdatedListener
 {
     /**
@@ -20,11 +26,12 @@ class UserPhotoUpdatedListener
     /**
      * Handle the event.
      *
-     * @param  UserPhotoUpdated $event
+     * @param UserPhotoUpdated $event
+     *
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function handle(UserPhotoUpdated $event)
+    public function handle(UserPhotoUpdated $event): void
     {
         Requester::updateForumUserAvatar($event->user);
     }

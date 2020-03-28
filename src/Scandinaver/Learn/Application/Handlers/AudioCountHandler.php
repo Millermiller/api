@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\WordService;
 
 /**
  * Class AudioCountHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class AudioCountHandler implements AudioCountHandlerInterface
@@ -19,6 +20,7 @@ class AudioCountHandler implements AudioCountHandlerInterface
 
     /**
      * WordsCountHandler constructor.
+     *
      * @param WordService $wordService
      */
     public function __construct(WordService $wordService)
@@ -28,6 +30,7 @@ class AudioCountHandler implements AudioCountHandlerInterface
 
     /**
      * @param AudioCountQuery $query
+     *
      * @return int
      */
     public function handle($query): int

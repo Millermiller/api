@@ -9,6 +9,7 @@ use Scandinaver\Puzzle\Domain\PuzzleService;
 
 /**
  * Class PuzzleCompletedHandler
+ *
  * @package Scandinaver\Puzzle\Application
  */
 class PuzzleCompleteHandler implements PuzzleCompleteHandlerInterface
@@ -21,6 +22,7 @@ class PuzzleCompleteHandler implements PuzzleCompleteHandlerInterface
 
     /**
      * PuzzleCompletedHandler constructor.
+     *
      * @param PuzzleService $puzzleService
      */
     public function __construct(PuzzleService $puzzleService)

@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class MetaQuery
+ *
  * @package Scandinaver\Common\Application\Query
  */
 class MetaQuery implements Query

@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\CommandHandler;
 
 /**
  * Interface DeleteCardHandlerInterface
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 interface DeleteCardFromAssetHandlerInterface extends CommandHandler

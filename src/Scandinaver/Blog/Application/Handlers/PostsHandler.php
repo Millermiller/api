@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Services\BlogService;
 
 /**
  * Class PostsHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class PostsHandler implements PostsHandlerInterface
@@ -24,6 +25,7 @@ class PostsHandler implements PostsHandlerInterface
 
     /**
      * @param PostsQuery
+     *
      * @return array
      */
     public function handle($query): array

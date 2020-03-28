@@ -8,6 +8,7 @@ use Scandinaver\Puzzle\Domain\PuzzleService;
 
 /**
  * Class UserPuzzlesHandler
+ *
  * @package Scandinaver\Puzzle\Application\Handlers
  */
 class UserPuzzlesHandler implements UserPuzzlesHandlerInterface
@@ -19,6 +20,7 @@ class UserPuzzlesHandler implements UserPuzzlesHandlerInterface
 
     /**
      * PuzzleCompletedHandler constructor.
+     *
      * @param PuzzleService $puzzleService
      */
     public function __construct(PuzzleService $puzzleService)
@@ -28,6 +30,7 @@ class UserPuzzlesHandler implements UserPuzzlesHandlerInterface
 
     /**
      * @param UserPuzzlesQuery $query
+     *
      * @return array
      */
     public function handle($query): array

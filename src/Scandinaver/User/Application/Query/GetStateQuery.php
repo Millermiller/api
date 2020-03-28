@@ -9,9 +9,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class GetStateQuery
- * @package Scandinaver\User\Application\Query
  *
- * @see \Scandinaver\User\Application\Handlers\GetStateHandler
+ * @package Scandinaver\User\Application\Query
+ * @see     \Scandinaver\User\Application\Handlers\GetStateHandler
  */
 class GetStateQuery implements Query
 {
@@ -27,12 +27,13 @@ class GetStateQuery implements Query
 
     /**
      * GetStateQuery constructor.
-     * @param User $user
+     *
+     * @param User     $user
      * @param Language $language
      */
     public function __construct(User $user, Language $language)
     {
-        $this->user = $user;
+        $this->user     = $user;
         $this->language = $language;
     }
 

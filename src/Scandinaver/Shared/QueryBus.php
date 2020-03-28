@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Shared;
 
+use ReflectionClass;
 use ReflectionException;
 use Scandinaver\Shared\Contracts\Query;
 use Scandinaver\Shared\Contracts\QueryHandler;
@@ -10,6 +11,7 @@ use Scandinaver\Shared\Contracts\Response;
 
 /**
  * Class CommandBus
+ *
  * @package Scandinaver\Shared
  */
 class QueryBus
@@ -19,6 +21,7 @@ class QueryBus
 
     /**
      * @param Query $command
+     *
      * @return Response|null
      * @throws ReflectionException
      */
@@ -29,6 +32,7 @@ class QueryBus
 
     /**
      * @param Query $command
+     *
      * @return QueryHandler
      * @throws ReflectionException
      */
@@ -39,11 +43,12 @@ class QueryBus
 
     /**
      * @param Query $command
+     *
      * @return string
      * @throws ReflectionException
      */
     public function getHandlerClass(Query $command): string
     {
-        return str_replace(self::COMMAND_PREFIX, self::HANDLER_PREFIX, (new \ReflectionClass($command))->getShortName()).'Interface';
+        return str_replace(self::COMMAND_PREFIX, self::HANDLER_PREFIX, (new ReflectionClass($command))->getShortName()) . 'Interface';
     }
 }

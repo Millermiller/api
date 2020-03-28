@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
@@ -9,6 +10,7 @@ use Meta;
 
 /**
  * Class IndexController
+ *
  * @package Application\Controllers
  */
 class IndexController extends Controller

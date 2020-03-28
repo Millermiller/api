@@ -10,6 +10,7 @@ use Scandinaver\Common\Application\Query\MessagesQuery;
 
 /**
  * Class MessagesController
+ *
  * @package App\Http\Controllers\Sub\Backend
  */
 class MessagesController extends Controller

@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\Card;
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class DeleteCardCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\DeleteCardFromAssetHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\DeleteCardFromAssetHandler
  */
 class DeleteCardFromAssetCommand implements Command
 {
@@ -27,6 +27,7 @@ class DeleteCardFromAssetCommand implements Command
 
     /**
      * CreateFavouriteCommand constructor.
+     *
      * @param User $user
      * @param Card $card
      */

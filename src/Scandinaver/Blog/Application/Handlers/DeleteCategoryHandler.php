@@ -7,6 +7,7 @@ use Scandinaver\Blog\Application\Commands\DeleteCategoryCommand;
 
 /**
  * Class DeleteCategoryHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class DeleteCategoryHandler implements DeleteCategoryHandlerInterface
@@ -18,6 +19,7 @@ class DeleteCategoryHandler implements DeleteCategoryHandlerInterface
 
     /**
      * @param DeleteCategoryCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

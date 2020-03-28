@@ -3,20 +3,22 @@
 
 namespace Scandinaver\User\Domain;
 
-use Image;
 use Avatar;
-use Exception;
-use DateTime;
-use JsonSerializable;
 use Carbon\Carbon;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\{JoinTable, ManyToMany};
+use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Image;
+use Intervention\Image\Constraint;
+use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Learn\Domain\{Asset, Result};
 use Scandinaver\Puzzle\Domain\Puzzle;
@@ -25,8 +27,8 @@ use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
 
 /**
  * Users
- *
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})}, indexes={@ORM\Index(name="restore_link", columns={"restore_link"}), @ORM\Index(name="plan_id", columns={"plan_id"}), @ORM\Index(name="last_online", columns={"last_online"})})
+ *
  * @ORM\Entity
  */
 class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable
@@ -38,7 +40,147 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     use UsesPasswordGrant;
 
     const ROLE_ADMIN = 1;
-    const ROLE_USER = 0;
+    const ROLE_USER  = 0;
+
+    /**
+     * @var int
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @ORM\Column(name="login", type="string", length=255, nullable=false)
+     */
+    private $login;
+
+    /**
+     * @var string
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(name="active_to", type="datetime", nullable=true, nullable=true)
+     */
+    private $activeTo;
+
+    /**
+     * @var int
+     * @ORM\Column(name="plan_id", type="integer", nullable=true)
+     */
+    private $planId;
+
+    /**
+     * @var string|null
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var string|null
+     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @var string|null
+     * @ORM\Column(name="restore_link", type="string", length=255, nullable=true)
+     */
+    private $restoreLink;
+
+    /**
+     * @var int
+     * @ORM\Column(name="active", type="integer", nullable=false, options={"default"="1"})
+     */
+    private $active = '1';
+
+    /**
+     * @var int|null
+     * @ORM\Column(name="role", type="integer", nullable=true)
+     */
+    private $role = '0';
+
+    /**
+     * @var int|null
+     * @ORM\Column(name="assets_opened", type="integer", nullable=true)
+     */
+    private $assetsOpened = '0';
+
+    /**
+     * @var int|null
+     * @ORM\Column(name="assets_created", type="integer", nullable=true)
+     */
+    private $assetsCreated = '0';
+
+    /**
+     * @var string
+     * @ORM\Column(name="created_at", type="string", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var int
+     * @ORM\Column(name="deleted_at", type="integer", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * @var int
+     * @ORM\Column(name="updated_at", type="integer", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @var int
+     * @ORM\Column(name="last_online", type="integer", nullable=true)
+     */
+    private $lastOnline;
+
+    /**
+     * @var Plan
+     * @ORM\ManyToOne(targetEntity="Plan")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="plan_id", referencedColumnName="id")
+     * })
+     */
+    private $plan;
+
+    /**
+     * @var Collection|Asset[]
+     * @ManyToMany(targetEntity="Scandinaver\Learn\Domain\Asset", inversedBy="users", cascade={"persist"})
+     * @JoinTable(name="assets_users")
+     */
+    private $assets;
+
+    /**
+     * @var Collection|Puzzle[]
+     * @ManyToMany(targetEntity="\Scandinaver\Puzzle\Domain\Puzzle", inversedBy="users")
+     * @JoinTable(name="puzzles_users")
+     */
+    private $puzzles;
+
+    /**
+     * @var Collection|Text[]
+     * @ManyToMany(targetEntity="Scandinaver\Text\Domain\Text", inversedBy="users")
+     * @JoinTable(name="texts_users")
+     */
+    private $texts;
+
+    /**
+     * @var Collection|Post[]
+     * @ORM\OneToMany(targetEntity="Scandinaver\Blog\Domain\Post", mappedBy="user")
+     */
+    private $posts;
+
+    /**
+     * @var Collection|Result[]
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Result", mappedBy="user")
+     */
+    private $results;
 
     public function getKey()
     {
@@ -50,167 +192,29 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getName()
     {
         return 'name';
     }
 
     /**
-     * @var int
+     * @param string|null $name
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @return User
      */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=255, nullable=false)
-     */
-    private $login;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     */
-    private $email;
-
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="active_to", type="datetime", nullable=true, nullable=true)
-     */
-    private $activeTo;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="plan_id", type="integer", nullable=true)
-     */
-    private $planId;
-
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     */
-    private $name;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
-     */
-    private $photo;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="restore_link", type="string", length=255, nullable=true)
-     */
-    private $restoreLink;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="active", type="integer", nullable=false, options={"default"="1"})
-     */
-    private $active = '1';
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="role", type="integer", nullable=true)
-     */
-    private $role = '0';
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="assets_opened", type="integer", nullable=true)
-     */
-    private $assetsOpened = '0';
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="assets_created", type="integer", nullable=true)
-     */
-    private $assetsCreated = '0';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="created_at", type="string", nullable=true)
-     */
-    private $createdAt;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="deleted_at", type="integer", nullable=true)
-     */
-    private $deletedAt;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="updated_at", type="integer", nullable=true)
-     */
-    private $updatedAt;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="last_online", type="integer", nullable=true)
-     */
-    private $lastOnline;
-
-    /**
-     * @var Plan
-     *
-     * @ORM\ManyToOne(targetEntity="Plan")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="plan_id", referencedColumnName="id")
-     * })
-     */
-    private $plan;
-
-    /**
-     * @var Collection|Asset[]
-     *
-     * @ManyToMany(targetEntity="Scandinaver\Learn\Domain\Asset", inversedBy="users", cascade={"persist"})
-     * @JoinTable(name="assets_users")
-     */
-    private $assets;
-
-    /**
-     * @var Collection|Puzzle[]
-     *
-     * @ManyToMany(targetEntity="\Scandinaver\Puzzle\Domain\Puzzle", inversedBy="users")
-     * @JoinTable(name="puzzles_users")
-     */
-    private $puzzles;
-
-    /**
-     * @var Collection|Text[]
-     *
-     * @ManyToMany(targetEntity="Scandinaver\Text\Domain\Text", inversedBy="users")
-     * @JoinTable(name="texts_users")
-     */
-    private $texts;
-
-    /**
-     * @var Collection|Post[]
-     *
-     * @ORM\OneToMany(targetEntity="Scandinaver\Blog\Domain\Post", mappedBy="user")
-     *
-     */
-    private $posts;
+    public function setName(?string $name): User
+    {
+        $this->name = $name;
+        return $this;
+    }
 
     /**
      * @return Plan
@@ -218,6 +222,14 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     public function getPlan(): Plan
     {
         return $this->plan;
+    }
+
+    /**
+     * @param Plan $plan
+     */
+    public function setPlan(Plan $plan): void
+    {
+        $this->plan = $plan;
     }
 
     /**
@@ -229,6 +241,14 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
+     * @param Asset[]|Collection $assets
+     */
+    public function setAssets($assets): void
+    {
+        $this->assets = $assets;
+    }
+
+    /**
      * @return Collection|Text[]
      */
     public function getTexts()
@@ -236,9 +256,25 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         return $this->texts;
     }
 
+    /**
+     * @param Text[]|Collection $texts
+     */
+    public function setTexts($texts): void
+    {
+        $this->texts = $texts;
+    }
+
     public function getLogin()
     {
         return $this->login;
+    }
+
+    /**
+     * @param string $login
+     */
+    public function setLogin(string $login): void
+    {
+        $this->login = $login;
     }
 
     /**
@@ -266,28 +302,11 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
-     * @return DateTime
+     * @param string $email
      */
-    public function getActiveTo(): DateTime
+    public function setEmail(string $email): void
     {
-        return $this->activeTo;
-    }
-
-    /**
-     * @param string $activeTo
-     * @throws Exception
-     */
-    public function setActiveTo(string $activeTo): void
-    {
-        $this->activeTo = new DateTime($activeTo);
-    }
-
-    /**
-     * @param Plan $plan
-     */
-    public function setPlan(Plan $plan): void
-    {
-        $this->plan = $plan;
+        $this->email = $email;
     }
 
     /**
@@ -299,46 +318,6 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     */
-    public function getAvatar()
-    {
-        if ($this->photo) {
-            if (file_exists(public_path('/uploads/u/a/') . $this->photo)) {
-                return '/uploads/u/a/' . $this->photo;
-            } else {
-                try {
-                    $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
-                    $avatar->resize(
-                        300,
-                        null,
-                        function ($constraint) {
-                            /** @var \Intervention\Image\Constraint $constraint */
-                            $constraint->aspectRatio();
-                        }
-                    );
-                    $avatar->save(public_path('/uploads/u/a/' . $this->photo));
-                    return '/uploads/u/a/' . $this->photo;
-                }
-                catch (Exception $exception){
-                    return Avatar::create($this->login)->toBase64()->encoded;
-                }
-            }
-        } else {
-            return Avatar::create($this->login)->toBase64()->encoded;
-        }
-    }
-
-    /**
-     * @return bool
-     * @throws \Exception
-     */
-    public function isPremium(): bool
-    {
-        return ($this->activeTo > new DateTime());
-    }
-
-    /**
      * @return int|null
      */
     public function getAssetsOpened(): ?int
@@ -347,11 +326,33 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
+     * @param int|null $assetsOpened
+     *
+     * @return User
+     */
+    public function setAssetsOpened(?int $assetsOpened): User
+    {
+        $this->assetsOpened = $assetsOpened;
+        return $this;
+    }
+
+    /**
      * @return int|null
      */
     public function getAssetsCreated(): ?int
     {
         return $this->assetsCreated;
+    }
+
+    /**
+     * @param int|null $assetsCreated
+     *
+     * @return User
+     */
+    public function setAssetsCreated(?int $assetsCreated): User
+    {
+        $this->assetsCreated = $assetsCreated;
+        return $this;
     }
 
     /**
@@ -379,57 +380,82 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @param string $login
-     */
-    public function setLogin(string $login): void
-    {
-        $this->login = $login;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @var Collection|Result[]
-     *
-     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Result", mappedBy="user")
-     *
-     */
-    private $results;
-
-    /**
      * @inheritDoc
      * @throws Exception
      */
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'login' => $this->login,
-            'email' => $this->email,
-            'active_to' => $this->getActiveTo()->format("Y-m-d H:i:s"),
-            'plan' => $this->plan,
-            'plan_id' => $this->planId,
-            'name' => $this->name,
-            'photo' => $this->photo,
-            'assets_opened' => $this->assetsOpened,
+            'id'             => $this->id,
+            'login'          => $this->login,
+            'email'          => $this->email,
+            'active_to'      => $this->getActiveTo()->format("Y-m-d H:i:s"),
+            'plan'           => $this->plan,
+            'plan_id'        => $this->planId,
+            'name'           => $this->name,
+            'photo'          => $this->photo,
+            'assets_opened'  => $this->assetsOpened,
             'assets_created' => $this->assetsCreated,
-            'premium' => $this->isPremium(),
-            'avatar' => $this->getAvatar()
+            'premium'        => $this->isPremium(),
+            'avatar'         => $this->getAvatar()
         ];
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getActiveTo(): DateTime
+    {
+        return $this->activeTo;
+    }
+
+    /**
+     * @param string $activeTo
+     *
+     * @throws Exception
+     */
+    public function setActiveTo(string $activeTo): void
+    {
+        $this->activeTo = new DateTime($activeTo);
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function isPremium(): bool
+    {
+        return ($this->activeTo > new DateTime());
+    }
+
+    /**
+     * @return UrlGenerator|string
+     */
+    public function getAvatar()
+    {
+        if ($this->photo) {
+            if (file_exists(public_path('/uploads/u/a/') . $this->photo)) {
+                return '/uploads/u/a/' . $this->photo;
+            } else {
+                try {
+                    $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
+                    $avatar->resize(
+                        300,
+                        null,
+                        function ($constraint) {
+                            /** @var Constraint $constraint */
+                            $constraint->aspectRatio();
+                        }
+                    );
+                    $avatar->save(public_path('/uploads/u/a/' . $this->photo));
+                    return '/uploads/u/a/' . $this->photo;
+                } catch (Exception $exception) {
+                    return Avatar::create($this->login)->toBase64()->encoded;
+                }
+            }
+        } else {
+            return Avatar::create($this->login)->toBase64()->encoded;
+        }
     }
 
     /**
@@ -442,6 +468,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @param Puzzle $puzzle
+     *
      * @return $this
      */
     public function addPuzzle(Puzzle $puzzle): User
@@ -453,6 +480,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @param Puzzle $puzzle
+     *
      * @return bool
      */
     public function hasPuzzle(Puzzle $puzzle): bool
@@ -467,6 +495,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @param Asset $asset
+     *
      * @return $this
      */
     public function addAsset(Asset $asset): User
@@ -478,6 +507,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @param Asset $asset
+     *
      * @return bool
      */
     public function hasAsset(Asset $asset): bool
@@ -492,6 +522,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @param Text $text
+     *
      * @return bool
      */
     public function hasText(Text $text): bool
@@ -513,58 +544,13 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     }
 
     /**
-     * @param Asset[]|Collection $assets
-     */
-    public function setAssets($assets): void
-    {
-        $this->assets = $assets;
-    }
-
-    /**
-     * @param Text[]|Collection $texts
-     */
-    public function setTexts($texts): void
-    {
-        $this->texts = $texts;
-    }
-
-    /**
      * @param int $planId
+     *
      * @return User
      */
     public function setPlanId(int $planId): User
     {
         $this->planId = $planId;
-        return $this;
-    }
-
-    /**
-     * @param string|null $name
-     * @return User
-     */
-    public function setName(?string $name): User
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @param int|null $assetsOpened
-     * @return User
-     */
-    public function setAssetsOpened(?int $assetsOpened): User
-    {
-        $this->assetsOpened = $assetsOpened;
-        return $this;
-    }
-
-    /**
-     * @param int|null $assetsCreated
-     * @return User
-     */
-    public function setAssetsCreated(?int $assetsCreated): User
-    {
-        $this->assetsCreated = $assetsCreated;
         return $this;
     }
 

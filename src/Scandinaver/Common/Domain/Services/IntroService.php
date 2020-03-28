@@ -8,6 +8,7 @@ use Scandinaver\Common\Domain\Intro;
 
 /**
  * Class IntroService
+ *
  * @package Scandinaver\Common\Domain\Services
  */
 class IntroService
@@ -19,6 +20,7 @@ class IntroService
 
     /**
      * IntroService constructor.
+     *
      * @param IntroRepositoryInterface $introRepository
      */
     public function __construct(IntroRepositoryInterface $introRepository)
@@ -34,6 +36,7 @@ class IntroService
 
     /**
      * @param $id
+     *
      * @return Intro
      */
     public function one($id): object
@@ -43,6 +46,7 @@ class IntroService
 
     /**
      * @param array $data
+     *
      * @return Intro
      */
     public function create(array $data): Intro

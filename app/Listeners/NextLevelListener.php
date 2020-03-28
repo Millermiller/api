@@ -4,6 +4,11 @@ namespace App\Listeners;
 
 use App\Events\NextLevel;
 
+/**
+ * Class NextLevelListener
+ *
+ * @package App\Listeners
+ */
 class NextLevelListener
 {
     /**
@@ -22,7 +27,7 @@ class NextLevelListener
      * @param  NextLevel  $event
      * @return void
      */
-    public function handle(NextLevel $event)
+    public function handle(NextLevel $event): void
     {
         /*
         $event->user->increment('assets_opened');

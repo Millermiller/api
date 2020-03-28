@@ -7,6 +7,7 @@ use DummyQueryNamespace;
 
 /**
  * Class DummyClass
+ *
  * @package DummyNamespace
  */
 class DummyClass implements DummyClassInterface
@@ -18,6 +19,7 @@ class DummyClass implements DummyClassInterface
 
     /**
      * @param DummyQueryClass
+     *
      * @inheritDoc
      */
     public function handle($query)

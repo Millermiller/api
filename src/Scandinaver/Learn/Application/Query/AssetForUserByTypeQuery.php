@@ -8,9 +8,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class AssetByForUserByTypeQuery
- * @package Scandinaver\Learn\Application\Query
  *
- * @see \Scandinaver\Learn\Application\Handlers\AssetForUserByTypeHandler
+ * @package Scandinaver\Learn\Application\Query
+ * @see     \Scandinaver\Learn\Application\Handlers\AssetForUserByTypeHandler
  */
 class AssetForUserByTypeQuery implements Query
 {
@@ -26,8 +26,9 @@ class AssetForUserByTypeQuery implements Query
 
     /**
      * AssetByForUserByTypeQuery constructor.
+     *
      * @param string $type
-     * @param User $user
+     * @param User   $user
      */
     public function __construct(User $user, string $type)
     {

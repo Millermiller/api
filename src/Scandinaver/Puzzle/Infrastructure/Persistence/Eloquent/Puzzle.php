@@ -3,33 +3,33 @@
 
 namespace Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent;
 
-use Auth;
 use App\Helpers\StringHelper;
-use Illuminate\Database\Eloquent\{Model, Builder, Relations\BelongsToMany};
+use Auth;
+use Illuminate\Database\Eloquent\{Builder, Model, Relations\BelongsToMany};
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
  * Class Puzzle
- * @package App\Models
  *
- * @property int $id
+ * @package App\Models
+ * @property int    $id
  * @property string $text
  * @property string $translate
  * @property string $created_at
  * @property string $updated_at
- *
  * @method static Builder domain()
  */
 class Puzzle extends Model
 {
-    protected $table = 'puzzles';
+    protected $table    = 'puzzles';
 
     protected $fillable = ['text', 'translate'];
 
-    protected $appends = ['success'];
+    protected $appends  = ['success'];
 
     /**
      * @param Builder $query
+     *
      * @return Builder
      */
     public function scopeDomain(Builder $query): Builder

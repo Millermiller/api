@@ -7,6 +7,7 @@ use Scandinaver\Blog\Application\Commands\DeleteCommentCommand;
 
 /**
  * Class DeleteCommentHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class DeleteCommentHandler implements DeleteCommentHandlerInterface
@@ -18,6 +19,7 @@ class DeleteCommentHandler implements DeleteCommentHandlerInterface
 
     /**
      * @param DeleteCommentCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

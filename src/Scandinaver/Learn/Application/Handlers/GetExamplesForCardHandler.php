@@ -10,6 +10,7 @@ use Scandinaver\Learn\Domain\Services\CardService;
 
 /**
  * Class GetExamplesForCardHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class GetExamplesForCardHandler implements GetExamplesForCardHandlerInterface
@@ -21,6 +22,7 @@ class GetExamplesForCardHandler implements GetExamplesForCardHandlerInterface
 
     /**
      * GetTranslatesByWordHandler constructor.
+     *
      * @param CardService $cardService
      */
     public function __construct(CardService $cardService)
@@ -30,6 +32,7 @@ class GetExamplesForCardHandler implements GetExamplesForCardHandlerInterface
 
     /**
      * @param GetExamplesForCardQuery
+     *
      * @return Collection|Example[]|array
      */
     public function handle($query): array

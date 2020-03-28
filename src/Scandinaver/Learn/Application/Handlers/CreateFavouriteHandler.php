@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
 
 /**
  * Class CreateFavouriteHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
@@ -26,7 +27,8 @@ class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
 
     /**
      * FavouriteController constructor.
-     * @param AssetService $assetService
+     *
+     * @param AssetService     $assetService
      * @param FavouriteService $favouriteService
      */
     public function __construct(AssetService $assetService, FavouriteService $favouriteService)

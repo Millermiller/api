@@ -11,6 +11,7 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class ApiService
+ *
  * @package app\Services
  */
 class ApiService
@@ -32,9 +33,10 @@ class ApiService
 
     /**
      * ApiService constructor.
+     *
      * @param LanguageRepositoryInterface $languageRepository
-     * @param AssetRepositoryInterface $assetsRepository
-     * @param ResultRepositoryInterface $resultRepository
+     * @param AssetRepositoryInterface    $assetsRepository
+     * @param ResultRepositoryInterface   $resultRepository
      */
     public function __construct(LanguageRepositoryInterface $languageRepository, AssetRepositoryInterface $assetsRepository, ResultRepositoryInterface $resultRepository)
     {
@@ -52,8 +54,9 @@ class ApiService
     }
 
     /**
-     * @param $language
+     * @param      $language
      * @param User $user
+     *
      * @return array
      * @throws Exception
      */
@@ -70,9 +73,9 @@ class ApiService
         $data = $publicdata + $personaldata;
 
         $counter = [
-            Asset::TYPE_WORDS => 0,
+            Asset::TYPE_WORDS     => 0,
             Asset::TYPE_SENTENCES => 0,
-            Asset::TYPE_PERSONAL => 0,
+            Asset::TYPE_PERSONAL  => 0,
             Asset::TYPE_FAVORITES => 0,
         ];
 
@@ -83,32 +86,32 @@ class ApiService
             foreach ($item->getCards() as $card) {
                 $word = $card->getWord();
 
-                if($word === null) continue;
+                if ($word === null) continue;
 
                 $cards[] = [
-                    'id' => $card->getId(),
-                    'word' => $word->getValue(),
-                    'trans' =>  preg_replace('/^(\d\\)\s)/', '',  $card->getTranslate()->getValue()),
+                    'id'       => $card->getId(),
+                    'word'     => $word->getValue(),
+                    'trans'    => preg_replace('/^(\d\\)\s)/', '', $card->getTranslate()->getValue()),
                     'asset_id' => $card->getAsset()->getId(),
                     'examples' => $card->getExamples()
                 ];
             }
 
             $asset = [
-                'id' => $item->getId(),
+                'id'     => $item->getId(),
                 'active' => in_array($item->getId(), $activeArray),
-                'count' => $item->getCards()->count(),
+                'count'  => $item->getCards()->count(),
                 'result' => 0,
-                'level' => $item->getLevel(),
-                'title' => $item->getTitle(),
-                'type' => $item->getType(),
-                'basic' => $item->getBasic(),
-                'cards' => $cards
+                'level'  => $item->getLevel(),
+                'title'  => $item->getTitle(),
+                'type'   => $item->getType(),
+                'basic'  => $item->getBasic(),
+                'cards'  => $cards
             ];
 
             $counter[$item->getType()] = $counter[$item->getType()] + 1;
 
-            if((in_array($item->getType(), [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]) && $counter[$item->getType()] < 10) || $user->isPremium() || in_array($item->getType(), [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]))
+            if ((in_array($item->getType(), [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]) && $counter[$item->getType()] < 10) || $user->isPremium() || in_array($item->getType(), [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]))
                 $asset['available'] = true;
             else
                 $asset['available'] = false;

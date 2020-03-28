@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class IntroQuery
+ *
  * @package Scandinaver\Common\Application\Query
  */
 class IntroQuery implements Query

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\UserRegistered;
@@ -7,11 +8,15 @@ use App\Helpers\EloquentHelper;
 use App\Jobs\CreateUserForum;
 use App\Jobs\SendRegistrationEmail;
 
+/**
+ * Class UserRegisteredListener
+ *
+ * @package App\Listeners
+ */
 class UserRegisteredListener
 {
     /**
      * Create the event listener.
-     *
      */
     public function __construct()
     {
@@ -21,10 +26,11 @@ class UserRegisteredListener
     /**
      * Handle the event.
      *
-     * @param  UserRegistered $event
+     * @param UserRegistered $event
+     *
      * @return void
      */
-    public function handle(UserRegistered $event)
+    public function handle(UserRegistered $event): void
     {
         dispatch(new SendRegistrationEmail($event));
         dispatch(new CreateUserForum($event));

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Backend;
 
 use ReflectionException;
@@ -14,8 +15,8 @@ use Scandinaver\User\Application\Query\UsersQuery;
 
 /**
  * Class UsersController
- * @package App\Http\Controllers\Main\Backend
  *
+ * @package App\Http\Controllers\Main\Backend
  * Created by PhpStorm.
  * User: whiskey
  * Date: 29.11.14
@@ -34,6 +35,7 @@ class UsersController extends Controller
 
     /**
      * @param User $user
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -46,16 +48,18 @@ class UsersController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     *
      * @return void
      */
     public function store(Request $request)
     {
-      //
+        //
     }
 
     /**
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -68,6 +72,7 @@ class UsersController extends Controller
 
     /**
      * @param User $user
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -80,15 +85,15 @@ class UsersController extends Controller
 
     public function active()
     {
-       // User::where('id', Input::get('id'))->update(['active_to' => Carbon::parse(Input::get('data'))]);
+        // User::where('id', Input::get('id'))->update(['active_to' => Carbon::parse(Input::get('data'))]);
 
-       // $this->answer['active'] = (Carbon::parse(Input::get('data')) > Carbon::today()) ? true : false;
+        // $this->answer['active'] = (Carbon::parse(Input::get('data')) > Carbon::today()) ? true : false;
 
-       // return response()->json();
+        // return response()->json();
     }
 
     public function search()
     {
-       // return $this->userService->find(Input::get('q'));
+        // return $this->userService->find(Input::get('q'));
     }
 }

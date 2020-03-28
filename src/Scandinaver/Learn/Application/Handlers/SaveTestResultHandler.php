@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Learn\Application\Handlers;
 
-use App\Helpers\Auth;
 use App\Events\TestResultSaved;
+use App\Helpers\Auth;
 use Scandinaver\Learn\Application\Commands\SaveTestResultCommand;
 use Scandinaver\Learn\Domain\Services\AssetService;
 
 /**
  * Class SaveTestResultHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class SaveTestResultHandler implements SaveTestResultHandlerInterface
@@ -21,6 +22,7 @@ class SaveTestResultHandler implements SaveTestResultHandlerInterface
 
     /**
      * SaveTestResultHandler constructor.
+     *
      * @param AssetService $assetService
      */
     public function __construct(AssetService $assetService)

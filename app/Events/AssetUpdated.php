@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\Learn\Domain\Asset;
@@ -10,6 +11,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
+/**
+ * Class AssetUpdated
+ *
+ * @package App\Events
+ */
 class AssetUpdated
 {
     use Dispatchable;
@@ -29,12 +35,12 @@ class AssetUpdated
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param User  $user
      * @param Asset $asset
      */
     public function __construct(User $user, Asset $asset)
     {
-        $this->user = $user;
+        $this->user  = $user;
         $this->asset = $asset;
     }
 

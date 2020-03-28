@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;
@@ -12,6 +13,7 @@ use Scandinaver\Learn\Domain\Card;
 
 /**
  * Class FavouriteDeleted
+ *
  * @package App\Events
  */
 class CardDeleted

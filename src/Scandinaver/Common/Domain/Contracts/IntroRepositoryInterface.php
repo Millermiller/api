@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
 
 /**
  * Interface IntroRepositoryInterface
+ *
  * @package Scandinaver\Common\Domain\Contracts
  */
 interface IntroRepositoryInterface extends BaseRepositoryInterface

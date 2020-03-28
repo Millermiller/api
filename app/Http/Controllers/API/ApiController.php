@@ -15,10 +15,9 @@ use Scandinaver\API\Application\Query\{AssetsQuery, LanguagesQuery};
  * User: whiskey
  * Date: 19.02.15
  * Time: 23:08
- *
  * Class ApiController
- * @package App\Http\Controllers\Main\Frontend
  *
+ * @package App\Http\Controllers\Main\Frontend
  */
 class ApiController extends Controller
 {
@@ -38,7 +37,7 @@ class ApiController extends Controller
     {
         return response()->json($this->queryBus->execute(new LanguagesQuery()));
     }
-    
+
     /**
      * @param Language $language
      *

@@ -3,7 +3,10 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use App\Http\Requests\{SearchRequest};
 use Auth;
+use Doctrine\DBAL\DBALException;
+use Illuminate\Database\Eloquent\{Builder, Collection};
 use PDO;
 use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Language;
@@ -11,16 +14,19 @@ use Scandinaver\Learn\Domain\Contracts\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Translate;
 use Scandinaver\Learn\Domain\Word;
-use App\Http\Requests\{SearchRequest, CreateWordRequest};
-use Doctrine\DBAL\DBALException;
-use Illuminate\Database\Eloquent\{Builder, Collection};
 
 /**
  * Class WordService
+ *
  * @package App\Services
  */
 class WordService
 {
+    /**
+     * @var LanguageRepositoryInterface
+     */
+    protected $languageRepository;
+
     /**
      * @var TranslateRepositoryInterface
      */
@@ -32,15 +38,11 @@ class WordService
     private $wordsRepository;
 
     /**
-     * @var LanguageRepositoryInterface
-     */
-    protected $languageRepository;
-
-    /**
      * WordService constructor.
+     *
      * @param TranslateRepositoryInterface $translateRepository
-     * @param WordRepositoryInterface $wordsRepository
-     * @param LanguageRepositoryInterface $languageRepository
+     * @param WordRepositoryInterface      $wordsRepository
+     * @param LanguageRepositoryInterface  $languageRepository
      */
     public function __construct(TranslateRepositoryInterface $translateRepository, WordRepositoryInterface $wordsRepository, LanguageRepositoryInterface $languageRepository)
     {
@@ -51,6 +53,7 @@ class WordService
 
     /**
      * @param Language $language
+     *
      * @return int
      */
     public function count(Language $language): int
@@ -59,10 +62,12 @@ class WordService
     }
 
     /**TODO: проверить
-     * @param $lang
+     *
+     * @param        $lang
      * @param string $word
-     * @param int $isSentence
+     * @param int    $isSentence
      * @param string $translate
+     *
      * @return Word
      */
     public function create($lang, string $word, int $isSentence, string $translate): Word
@@ -84,6 +89,7 @@ class WordService
 
     /**
      * @param SearchRequest $request
+     *
      * @return Translate[]|Builder[]|Collection|\Illuminate\Support\Collection
      * @throws DBALException
      */
@@ -121,6 +127,7 @@ class WordService
 
     /**
      * @param Word $word
+     *
      * @return Translate[]
      */
     public function getTranslates(Word $word): array

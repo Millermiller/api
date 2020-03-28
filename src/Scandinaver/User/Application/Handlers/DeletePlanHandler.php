@@ -7,6 +7,7 @@ use Scandinaver\User\Application\Commands\DeletePlanCommand;
 
 /**
  * Class DeletePlanHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class DeletePlanHandler implements DeletePlanHandlerInterface
@@ -18,6 +19,7 @@ class DeletePlanHandler implements DeletePlanHandlerInterface
 
     /**
      * @param DeletePlanCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

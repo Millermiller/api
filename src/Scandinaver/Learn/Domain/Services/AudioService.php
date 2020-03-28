@@ -13,6 +13,7 @@ use Scandinaver\Learn\Domain\Word;
 
 /**
  * Class AudioService
+ *
  * @package Scandinaver\Learn\Domain\Services
  */
 class AudioService
@@ -29,17 +30,19 @@ class AudioService
 
     /**
      * WordService constructor.
+     *
      * @param WordRepositoryInterface $wordsRepository
-     * @param AudioParserInterface $parser
+     * @param AudioParserInterface    $parser
      */
     public function __construct(WordRepositoryInterface $wordsRepository, AudioParserInterface $parser)
     {
         $this->wordsRepository = $wordsRepository;
-        $this->parser = $parser;
+        $this->parser          = $parser;
     }
 
     /**
      * @param Language $language
+     *
      * @return int
      */
     public function count(Language $language): int
@@ -48,8 +51,9 @@ class AudioService
     }
 
     /**
-     * @param Word $word
+     * @param Word         $word
      * @param UploadedFile $file
+     *
      * @return Word
      */
     public function upload(Word $word, UploadedFile $file): Word
@@ -65,7 +69,9 @@ class AudioService
 
     /**
      * TODO: use laravel curl wrapper and Storage
+     *
      * @param Word $word
+     *
      * @return string
      */
     public function parse(Word $word): string
@@ -83,7 +89,7 @@ class AudioService
             $filename = Str::random(32);
 
             touch(public_path() . '/audio/' . $filename . '.mp3');
-            $fp = fopen(public_path() . '/audio/' . $filename . '.mp3', 'w');
+            $fp       = fopen(public_path() . '/audio/' . $filename . '.mp3', 'w');
             $filesize = fwrite($fp, $file);
             fclose($fp);
 

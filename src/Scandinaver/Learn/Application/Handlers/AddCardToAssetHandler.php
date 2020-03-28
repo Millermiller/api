@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Services\CardService;
 
 /**
  * Class AddCardToAssetHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
@@ -20,6 +21,7 @@ class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
 
     /**
      * CardsController constructor.
+     *
      * @param CardService $cardService
      */
     public function __construct(CardService $cardService)

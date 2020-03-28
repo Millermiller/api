@@ -1,12 +1,17 @@
 <?php
 
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class Welcome
+ *
+ * @package App\Mail
+ */
 class Welcome extends Mailable
 {
     use Queueable, SerializesModels;
@@ -26,12 +31,12 @@ class Welcome extends Mailable
     /**
      * Build the message.
      *
-     * @return $this
+     * @return Message
      */
-    public function build()
+    public function build(): Message
     {
         return $this->from('support@scandinaver.org', "Scandinaver")
-            ->subject("Регистрация на сайте Scandinaver.org")
-            ->markdown('emails.welcome');
+                    ->subject("Регистрация на сайте Scandinaver.org")
+                    ->markdown('emails.welcome');
     }
 }

@@ -3,18 +3,18 @@
 
 namespace Scandinaver\Text\Application;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class RouteServiceProvider
+ *
  * @package Scandinaver\Text\Application
  */
 class RouteServiceProvider extends ServiceProvider
 {
     /**
      * This namespace is applied to your controller routes.
-     *
      * In addition, it is set as the URL generator's root namespace.
      *
      * @var string
@@ -30,10 +30,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group(
             [
-                'domain' => '{subdomain}.' . config('app.DOMAIN'),
+                'domain'     => '{subdomain}.' . config('app.DOMAIN'),
                 'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan'],
-                'namespace' => 'App\Http\Controllers\Sub\Frontend',
-                'as' => 'sub_frontend::'
+                'namespace'  => 'App\Http\Controllers\Sub\Frontend',
+                'as'         => 'sub_frontend::'
             ],
             function () {
                 Route::resource('/text', 'TextController')->only(['show']);
@@ -44,10 +44,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::group(
             [
-                'domain' => '{subdomain}.' . config('app.DOMAIN'),
+                'domain'     => '{subdomain}.' . config('app.DOMAIN'),
                 'middleware' => ['checkAdmin', 'checkDomain', 'touchUser'],
-                'namespace' => 'App\Http\Controllers\Sub\Backend',
-                'prefix' => 'admin'
+                'namespace'  => 'App\Http\Controllers\Sub\Backend',
+                'prefix'     => 'admin'
             ],
             function () {
                 Route::get('/texts', 'TextController@index');

@@ -3,12 +3,13 @@
 
 namespace Scandinaver\User\Domain\Services;
 
-use Scandinaver\User\Domain\User;
 use Exception;
 use Illuminate\Contracts\Hashing\Hasher;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class PasswordService
+ *
  * @package App\Services
  */
 class PasswordService
@@ -29,8 +30,9 @@ class PasswordService
     /**
      * Validate and change the given users password
      *
-     * @param User $user
+     * @param User   $user
      * @param string $password
+     *
      * @return void
      * @throws Exception
      */

@@ -8,9 +8,9 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class DeleteAssetCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\DeleteAssetHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\DeleteAssetHandler
  */
 class DeleteAssetCommand implements Command
 {
@@ -21,6 +21,7 @@ class DeleteAssetCommand implements Command
 
     /**
      * DeleteAssetCommand constructor.
+     *
      * @param Asset $asset
      */
     public function __construct(Asset $asset)

@@ -3,13 +3,14 @@
 
 namespace Scandinaver\User\Domain\Contracts;
 
-use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
 use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
 use Scandinaver\Text\Domain\Text;
 use Scandinaver\User\Domain\{Plan, User};
 
 /**
  * Interface UserRepositoryInterface
+ *
  * @package Scandinaver\User\Domain\Contracts
  */
 interface UserRepositoryInterface extends BaseRepositoryInterface

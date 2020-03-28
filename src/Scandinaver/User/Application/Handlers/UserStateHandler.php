@@ -9,6 +9,7 @@ use Scandinaver\User\Domain\Services\UserService;
 
 /**
  * Class UserStateHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class UserStateHandler implements UserStateHandlerInterface
@@ -25,6 +26,7 @@ class UserStateHandler implements UserStateHandlerInterface
 
     /**
      * @param UserStateQuery $query
+     *
      * @return array
      * @throws Exception
      */

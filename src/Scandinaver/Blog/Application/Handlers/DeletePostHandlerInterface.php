@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\CommandHandler;
 
 /**
  * Class DeletePostHandlerInterface
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 interface DeletePostHandlerInterface extends CommandHandler

@@ -7,6 +7,7 @@ use Scandinaver\Common\Application\Commands\DeleteMessageCommand;
 
 /**
  * Class DeleteMessageHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class DeleteMessageHandler implements DeleteMessageHandlerInterface
@@ -18,6 +19,7 @@ class DeleteMessageHandler implements DeleteMessageHandlerInterface
 
     /**
      * @param DeleteMessageCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

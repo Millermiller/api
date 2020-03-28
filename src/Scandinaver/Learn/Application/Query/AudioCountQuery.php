@@ -8,9 +8,9 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class AudioCountQuery
- * @package Scandinaver\Learn\Application\Query
  *
- * @see \Scandinaver\Learn\Application\Handlers\AudioCountHandler
+ * @package Scandinaver\Learn\Application\Query
+ * @see     \Scandinaver\Learn\Application\Handlers\AudioCountHandler
  */
 class AudioCountQuery implements Query
 {
@@ -21,6 +21,7 @@ class AudioCountQuery implements Query
 
     /**
      * WordsCountQuery constructor.
+     *
      * @param Language $language
      */
     public function __construct(Language $language)

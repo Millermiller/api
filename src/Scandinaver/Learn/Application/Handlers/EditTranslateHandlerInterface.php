@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\CommandHandler;
 
 /**
  * Class EditTranslateHandlerInterface
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 interface EditTranslateHandlerInterface extends CommandHandler

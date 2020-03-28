@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Services\AssetService;
 
 /**
  * Class GiveNextLevelHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class GiveNextLevelHandler implements GiveNextLevelHandlerInterface
@@ -20,6 +21,7 @@ class GiveNextLevelHandler implements GiveNextLevelHandlerInterface
 
     /**
      * GiveNextLevelHandler constructor.
+     *
      * @param AssetService $assetService
      */
     public function __construct(AssetService $assetService)

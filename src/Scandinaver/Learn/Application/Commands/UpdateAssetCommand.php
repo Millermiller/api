@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class CreateAssetCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\UpdateAssetHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\UpdateAssetHandler
  */
 class UpdateAssetCommand implements Command
 {
@@ -19,10 +19,12 @@ class UpdateAssetCommand implements Command
      * @var User
      */
     private $user;
+
     /**
      * @var array
      */
     private $data;
+
     /**
      * @var Asset
      */
@@ -30,14 +32,15 @@ class UpdateAssetCommand implements Command
 
     /**
      * CreateAssetCommand constructor.
-     * @param User $user
+     *
+     * @param User  $user
      * @param Asset $asset
      * @param array $data
      */
     public function __construct(User $user, Asset $asset, array $data)
     {
-        $this->user = $user;
-        $this->data = $data;
+        $this->user  = $user;
+        $this->data  = $data;
         $this->asset = $asset;
     }
 

@@ -11,6 +11,7 @@ use Illuminate\Http\{Request, JsonResponse};
 
 /**
  * Class WordController
+ *
  * @package App\Http\Controllers\Sub\Frontend
  */
 class WordController extends Controller
@@ -22,6 +23,7 @@ class WordController extends Controller
 
     /**
      * WordController constructor.
+     *
      * @param WordService $wordService
      */
     public function __construct(WordService $wordService)
@@ -43,6 +45,7 @@ class WordController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateWordRequest $request
+     *
      * @return JsonResponse
      */
     public function store(CreateWordRequest $request): JsonResponse
@@ -56,6 +59,7 @@ class WordController extends Controller
      * Display the specified resource.
      *
      * @param int $id
+     *
      * @return void
      */
     public function show($id)
@@ -67,7 +71,8 @@ class WordController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
+     *
      * @return void
      */
     public function update(Request $request, $id)
@@ -79,6 +84,7 @@ class WordController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
+     *
      * @return void
      */
     public function destroy($id)
@@ -88,6 +94,7 @@ class WordController extends Controller
 
     /**
      * @param SearchRequest $request
+     *
      * @return JsonResponse
      * @throws DBALException
      */

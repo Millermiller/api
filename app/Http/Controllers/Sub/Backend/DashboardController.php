@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Backend;
 
 use ReflectionException;
@@ -13,14 +14,15 @@ use Scandinaver\Learn\Application\Query\{AssetsCountQuery, AudioCountQuery, Text
  * User: john
  * Date: 30.08.2017
  * Time: 20:26
- *
  * Class DashboardController
+ *
  * @package Application\Controllers\Admin
  */
 class DashboardController extends Controller
 {
     /**
      * @param BaseRequest $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -31,6 +33,7 @@ class DashboardController extends Controller
 
     /**
      * @param BaseRequest $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -41,6 +44,7 @@ class DashboardController extends Controller
 
     /**
      * @param BaseRequest $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -51,6 +55,7 @@ class DashboardController extends Controller
 
     /**
      * @param BaseRequest $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

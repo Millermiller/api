@@ -14,9 +14,9 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class SetTranslateForCardCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\SetTranslateForCardHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\SetTranslateForCardHandler
  */
 class SetTranslateForCardCommand implements Command
 {
@@ -52,25 +52,18 @@ class SetTranslateForCardCommand implements Command
 
     /**
      * SetTranslateForCardCommand constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
-        $this->card_id = $data['card_id'];
-        $this->word_id = $data['word_id'];
+        $this->card_id      = $data['card_id'];
+        $this->word_id      = $data['word_id'];
         $this->translate_id = $data['translate_id'];
 
-        $this->cardRepository = app()->make('CardRepositoryInterface');
-        $this->wordRepository = app()->make('WordRepositoryInterface');
+        $this->cardRepository      = app()->make('CardRepositoryInterface');
+        $this->wordRepository      = app()->make('WordRepositoryInterface');
         $this->translateRepository = app()->make('TranslateRepositoryInterface');
-    }
-
-    /**
-     * @return Card
-     */
-    public function getCard(): object
-    {
-        return $this->cardRepository->find($this->card_id);
     }
 
     /**
@@ -95,5 +88,13 @@ class SetTranslateForCardCommand implements Command
     public function getAsset(): Asset
     {
         return $this->getCard()->getAsset();
+    }
+
+    /**
+     * @return Card
+     */
+    public function getCard(): object
+    {
+        return $this->cardRepository->find($this->card_id);
     }
 }

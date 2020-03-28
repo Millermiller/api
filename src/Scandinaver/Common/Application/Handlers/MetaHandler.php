@@ -7,6 +7,7 @@ use Scandinaver\Common\Application\Query\MetaQuery;
 
 /**
  * Class MetaHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class MetaHandler implements MetaHandlerInterface
@@ -18,6 +19,7 @@ class MetaHandler implements MetaHandlerInterface
 
     /**
      * @param MetaQuery
+     *
      * @inheritDoc
      */
     public function handle($query)

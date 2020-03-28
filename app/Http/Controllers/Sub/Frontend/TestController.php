@@ -17,14 +17,15 @@ use Scandinaver\Learn\Domain\Asset;
  * User: user
  * Date: 10.05.2015
  * Time: 3:10
- *
  * Class TestController
+ *
  * @package App\Http\Controllers\Sub\Frontend
  */
 class TestController extends Controller
 {
     /**
      * @param Asset $asset
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -37,7 +38,9 @@ class TestController extends Controller
 
     /**
      * Сохранить результат
+     *
      * @param Asset $asset
+     *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws ReflectionException

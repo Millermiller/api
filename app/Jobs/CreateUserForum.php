@@ -1,15 +1,16 @@
 <?php
 
+
 namespace App\Jobs;
 
 use App\Events\UserRegistered;
-use App\Services\Requester;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Scandinaver\Common\Domain\Services\Requester;
 
 class CreateUserForum implements ShouldQueue
 {
@@ -19,6 +20,7 @@ class CreateUserForum implements ShouldQueue
     use SerializesModels;
 
     private $event;
+
     /**
      * Create a new job instance.
      *
@@ -36,9 +38,9 @@ class CreateUserForum implements ShouldQueue
      */
     public function handle()
     {
-        try{
+        try {
             Requester::createForumUser($this->event->data);
-        }catch (GuzzleException $exception){
+        } catch (GuzzleException $exception) {
             //
         }
     }

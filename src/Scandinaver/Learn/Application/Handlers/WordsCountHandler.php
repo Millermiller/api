@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\WordService;
 
 /**
  * Class WordsCountHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class WordsCountHandler implements WordsCountHandlerInterface
@@ -19,6 +20,7 @@ class WordsCountHandler implements WordsCountHandlerInterface
 
     /**
      * WordsCountHandler constructor.
+     *
      * @param WordService $wordService
      */
     public function __construct(WordService $wordService)
@@ -28,6 +30,7 @@ class WordsCountHandler implements WordsCountHandlerInterface
 
     /**
      * @param WordsCountQuery $query
+     *
      * @return int
      */
     public function handle($query): int

@@ -9,9 +9,10 @@ use Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine\PuzzleRepository;
 
 /**
  * Class PuzzleServiceProvider
+ *
  * @package Scandinaver\Puzzle\Application
  */
-class PuzzleServiceProvider  extends ServiceProvider
+class PuzzleServiceProvider extends ServiceProvider
 {
     public function register()
     {

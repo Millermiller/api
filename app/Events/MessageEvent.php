@@ -1,14 +1,20 @@
 <?php
 
+
 namespace App\Events;
 
-use App\Entities\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Scandinaver\Common\Domain\Message;
 
+/**
+ * Class MessageEvent
+ *
+ * @package App\Events
+ */
 class MessageEvent
 {
     use Dispatchable;

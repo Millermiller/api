@@ -14,11 +14,12 @@ use Scandinaver\User\Application\Commands\LogoutCommand;
  * User: whiskey
  * Date: 06.02.15
  * Time: 0:52
- *
  * Class LogoutController
+ *
  * @package App\Http\Controllers\Sub\Frontend
  */
-class LogoutController extends Controller {
+class LogoutController extends Controller
+{
 
     /**
      * @return JsonResponse

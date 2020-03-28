@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 
 /**
  * Class CreateAssetHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class UpdateAssetHandler implements UpdateAssetHandlerInteface
@@ -25,8 +26,9 @@ class UpdateAssetHandler implements UpdateAssetHandlerInteface
 
     /**
      * AssetController constructor.
+     *
      * @param AssetService $assetService
-     * @param CardService $cardService
+     * @param CardService  $cardService
      */
     public function __construct(AssetService $assetService, CardService $cardService)
     {

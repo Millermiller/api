@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\CardService;
 
 /**
  * Class CardsOfAssetHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
@@ -19,6 +20,7 @@ class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
 
     /**
      * CardsOfAssetHandler constructor.
+     *
      * @param CardService $cardService
      */
     public function __construct(CardService $cardService)
@@ -28,6 +30,7 @@ class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
 
     /**
      * @param CardsOfAssetQuery $query
+     *
      * @return array
      */
     public function handle($query)

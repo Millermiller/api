@@ -8,6 +8,7 @@ use Scandinaver\Text\Domain\TextService;
 
 /**
  * Class TextCountHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class TextsCountHandler implements TextsCountHandlerInterface
@@ -19,6 +20,7 @@ class TextsCountHandler implements TextsCountHandlerInterface
 
     /**
      * TextCountHandler constructor.
+     *
      * @param TextService $textService
      */
     public function __construct(TextService $textService)
@@ -28,6 +30,7 @@ class TextsCountHandler implements TextsCountHandlerInterface
 
     /**
      * @param AssetsCountQuery $query
+     *
      * @return int
      */
     public function handle($query): int

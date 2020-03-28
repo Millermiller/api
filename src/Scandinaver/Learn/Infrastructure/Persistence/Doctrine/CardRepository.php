@@ -11,6 +11,7 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class CardRepository
+ *
  * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
  */
 class CardRepository extends BaseRepository implements CardRepositoryInterface
@@ -25,6 +26,7 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
 
     /**
      * @param Language $language
+     *
      * @return array | Text[]
      */
     public function getByLanguage(Language $language): array
@@ -32,13 +34,13 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('t')
-            ->from(Text::class, 't')
-            ->where('t.published = :published')
-            ->andWhere($q->expr()->eq('t.language', ':language'))
-            ->setParameter('published', 1)
-            ->setParameter('language', $language)
-            ->orderBy('t.level', 'asc')
-            ->getQuery()
-            ->getResult();
+                 ->from(Text::class, 't')
+                 ->where('t.published = :published')
+                 ->andWhere($q->expr()->eq('t.language', ':language'))
+                 ->setParameter('published', 1)
+                 ->setParameter('language', $language)
+                 ->orderBy('t.level', 'asc')
+                 ->getQuery()
+                 ->getResult();
     }
 }

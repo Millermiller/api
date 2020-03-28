@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class CreateMetaCommand
+ *
  * @package Scandinaver\Common\Application\Commands
  */
 class CreateMetaCommand implements Command

@@ -1,12 +1,11 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Synonym;
-use App\Models\Text;
-use App\Models\TextExtra;
-use App\Models\TextWord;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\ImageManagerStatic as Image;
 use Upload\File;
@@ -19,27 +18,27 @@ use Upload\Validation\Size;
  * User: john
  * Date: 30.08.2017
  * Time: 20:39
- *
  * Class TextController
+ *
  * @package Application\Controllers\Admin
  */
 class TextController extends Controller
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json(Text::all()->sortBy('id'));
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function publish()
+    public function publish(): JsonResponse
     {
         $publish = (int)Input::get('published');
-        $id = Input::get('id');
+        $id      = Input::get('id');
 
         $result = Text::find($id)->update(['published' => $publish]);
 
@@ -47,12 +46,12 @@ class TextController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function textcreate()
+    public function textcreate(): JsonResponse
     {
-        $title = $this->cleartext(Input::get('title'));
-        $origtext = $this->cleartext(Input::get('origtext'));
+        $title     = $this->cleartext(Input::get('title'));
+        $origtext  = $this->cleartext(Input::get('origtext'));
         $translate = $this->cleartext(Input::get('translate'));
 
         $text = Text::create(['title' => $title, 'text' => $origtext, 'translate' => $translate]);
@@ -61,7 +60,7 @@ class TextController extends Controller
         array_pop($sentences);
 
         foreach ($sentences as $num => $sentence) {
-            $words = explode(' ', str_replace(',', '', trim($sentence)));
+            $words           = explode(' ', str_replace(',', '', trim($sentence)));
             $sentences[$num] = $words;
         }
 
@@ -76,9 +75,10 @@ class TextController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
-    public function textdelete($id)
+    public function textdelete($id): JsonResponse
     {
         try {
             /** @var Text $text */
@@ -98,14 +98,15 @@ class TextController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
-    public function getText($id)
+    public function getText($id): JsonResponse
     {
         $sentences = [];
-        $extras = TextExtra::where('text_id', '=', $id)->get();
-        $synonims = Text::getSynonyms($id);
-        $text = Text::withCount('words')->find($id)->makeVisible('translate');
+        $extras    = TextExtra::where('text_id', '=', $id)->get();
+        $synonims  = Text::getSynonyms($id);
+        $text      = Text::withCount('words')->find($id)->makeVisible('translate');
         $cleartext = $text->text;
 
         foreach ($extras as $extra) {
@@ -121,21 +122,21 @@ class TextController extends Controller
 
 
         return response()->json([
-            'text' => $text,
+            'text'      => $text,
             'cleartext' => $cleartext,
             'sentences' => $sentences,
-            'extras' => $extras,
-            'synonyms' => $synonims,
-            'success' => true,
+            'extras'    => $extras,
+            'synonyms'  => $synonims,
+            'success'   => true,
         ]);
 
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function addExtras()
+    public function addExtras(): JsonResponse
     {
         $data = Input::get('data');
 
@@ -147,8 +148,8 @@ class TextController extends Controller
             $textExtra = new TextExtra(
                 [
                     'text_id' => $textid,
-                    'orig' => trim($extra['orig']),
-                    'extra' => trim($extra['extra'])
+                    'orig'    => trim($extra['orig']),
+                    'extra'   => trim($extra['extra'])
                 ]
             );
         }
@@ -157,12 +158,12 @@ class TextController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function saveSentences()
+    public function saveSentences(): JsonResponse
     {
-        $data = Input::get('data');
+        $data   = Input::get('data');
         $textId = Input::get('text_id');
 
         TextWord::where('text_id', $textId)->delete();
@@ -170,9 +171,9 @@ class TextController extends Controller
         foreach ($data as $sentence) {
             foreach ($sentence as $word) {
                 $model = new TextWord([
-                    'text_id' => $word['text_id'],
-                    'word' => $word['word'],
-                    'orig' => $word['orig'],
+                    'text_id'      => $word['text_id'],
+                    'word'         => $word['word'],
+                    'orig'         => $word['orig'],
                     'sentence_num' => $word['sentence_num']
                 ]);
             }
@@ -183,20 +184,21 @@ class TextController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
-    public function getSynonyms($id)
+    public function getSynonyms($id): JsonResponse
     {
         return response()->json([
-            'success' => true,
+            'success'  => true,
             'synonyms' => Synonym::where('word_id', $id)->get()
         ]);
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function addSynonym()
+    public function addSynonym(): JsonResponse
     {
         $word_id = Input::get('word_id');
         $synonym = Input::get('synonym');
@@ -206,27 +208,29 @@ class TextController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
-    public function deleteSynonym($id)
+    public function deleteSynonym($id): JsonResponse
     {
         return response()->json(['success' => Synonym::destroy($id)]);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
-    public function uploadImage($id)
+    public function uploadImage($id): JsonResponse
     {
-        $storage = new FileSystem(public_path() . '/uploads/photo/');
-        $file = new File('file', $storage);
+        $storage      = new FileSystem(public_path() . '/uploads/photo/');
+        $file         = new File('file', $storage);
         $new_filename = uniqid();
         $file->setName($new_filename);
-        $file->addValidations(array(
-            new Mimetype(array('image/png', 'image/jpg', 'image/jpeg')),
+        $file->addValidations([
+            new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
             new Size('5M')
-        ));
+        ]);
 
         try {
             $file->upload();
@@ -247,36 +251,38 @@ class TextController extends Controller
             $thumb->widen(150);
             $thumb->save(public_path() . '/uploads/thumbs/' . $file->getNameWithExtension());
 
-            $text = Text::find($id);
+            $text        = Text::find($id);
             $text->image = '/uploads/photo/' . $file->getNameWithExtension();
-            return response()->json(['success'=> $text->save()]);
+            return response()->json(['success' => $text->save()]);
 
         } catch (\Exception $e) {
-            $errors = $file->getErrors();
+            $errors  = $file->getErrors();
             $message = implode(', ', $errors);
             return response()->json([
-                'msg' => $message,
+                'msg'     => $message,
                 'success' => false,
-                'mess' => $e->getMessage(),
+                'mess'    => $e->getMessage(),
             ]);
         }
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
-    public function updateDescription($id)
+    public function updateDescription($id): JsonResponse
     {
         return response()->json(['success' => Text::updateOrCreate(['id' => $id], ['description' => Input::get('content')])]);
     }
 
     /**
      * @param $text
-     * @return mixed
+     *
+     * @return string
      */
-    protected function cleartext($text)
+    protected function cleartext($text): string
     {
-        return str_replace(array("\r\n", "\r", "\n"), '', strip_tags(trim($text)));
+        return str_replace(["\r\n", "\r", "\n"], '', strip_tags(trim($text)));
     }
 }

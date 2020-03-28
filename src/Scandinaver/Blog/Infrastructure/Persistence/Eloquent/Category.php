@@ -3,23 +3,24 @@
 
 namespace Scandinaver\Blog\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Database\Eloquent\{Relations\HasMany, SoftDeletes, Model};
+use Illuminate\Database\Eloquent\{Model, Relations\HasMany, SoftDeletes};
 
 /**
  * Class Category
+ *
  * @package Application\Models
  */
 class Category extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'categories';
+    public    $timestamps = true;
 
-    protected $fillable = ['name'];
+    protected $table      = 'categories';
 
-    public $timestamps = true;
+    protected $fillable   = ['name'];
 
-    protected $dates = ['deleted_at'];
+    protected $dates      = ['deleted_at'];
 
     /**
      * @return HasMany|Post[]

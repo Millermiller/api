@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Application;
 
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Learn\Domain\{Result, Translate, Word, Card, Asset};
+use Scandinaver\Learn\Domain\{Asset, Card, Result, Translate, Word};
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
     CardRepositoryInterface,
     ResultRepositoryInterface,
@@ -12,15 +12,16 @@ use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
     WordRepositoryInterface};
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\{AssetRepository,
     CardRepository,
+    ResultRepository,
     TranslateRepository,
-    WordRepository,
-    ResultRepository};
+    WordRepository};
 
 /**
  * Class TextServiceProvider
+ *
  * @package Scandinaver\Text\Application
  */
-class LearnServiceProvider  extends ServiceProvider
+class LearnServiceProvider extends ServiceProvider
 {
     public function register()
     {

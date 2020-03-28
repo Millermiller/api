@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class OauthPersonalAccessClient
+ *
  * @package App\Entities
  * @ORM\Entity
  * @ORM\Table(name="oauth_personal_access_clients", indexes={@ORM\Index(name="client_id_index", columns={"client_id"})})

@@ -7,6 +7,7 @@ use Exception;
 
 /**
  * Class UserNotFoundException
+ *
  * @package Scandinaver\User\Domain\Exceptions
  */
 class UserNotFoundException extends Exception

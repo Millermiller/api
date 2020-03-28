@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Services\BlogService;
 
 /**
  * Class DeletePostHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class DeletePostHandler implements DeletePostHandlerInterface
@@ -24,6 +25,7 @@ class DeletePostHandler implements DeletePostHandlerInterface
 
     /**
      * @param DeletePostCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

@@ -8,6 +8,7 @@ use Scandinaver\API\Infrastructure\ApiService;
 
 /**
  * Class LanguagesHandler
+ *
  * @package Scandinaver\API\Application\Handlers
  */
 class LanguagesHandler implements LanguagesHandlerInterface
@@ -19,6 +20,7 @@ class LanguagesHandler implements LanguagesHandlerInterface
 
     /**
      * LanguagesHandler constructor.
+     *
      * @param ApiService $apiService
      */
     public function __construct(ApiService $apiService)
@@ -28,6 +30,7 @@ class LanguagesHandler implements LanguagesHandlerInterface
 
     /**
      * @param LanguagesQuery $command
+     *
      * @return array
      */
     public function handle($command): array

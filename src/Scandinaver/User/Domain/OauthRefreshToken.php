@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * OauthRefreshToken
+ *
  * @package App\Entities
  * @ORM\Entity
  * @ORM\Table(name="oauth_refresh_tokens", indexes={@ORM\Index(name="access_token_index", columns={"access_token_id"})})

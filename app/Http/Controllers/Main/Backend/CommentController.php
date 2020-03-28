@@ -16,6 +16,7 @@ use Scandinaver\Blog\Domain\Comment;
 
 /**
  * Class CommentController
+ *
  * @package App\Http\Controllers\Main\Backend
  */
 class CommentController extends Controller
@@ -31,6 +32,7 @@ class CommentController extends Controller
 
     /**
      * @param int $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -40,7 +42,8 @@ class CommentController extends Controller
     }
 
     /**
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -54,6 +57,7 @@ class CommentController extends Controller
     /**
      * @param Request $request
      * @param Comment $comment
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -66,6 +70,7 @@ class CommentController extends Controller
 
     /**
      * @param Comment $comment
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

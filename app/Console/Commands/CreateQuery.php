@@ -1,12 +1,19 @@
 <?php
 
+
 namespace App\Console\Commands;
 
 use Artisan;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class CreateQuery
+ *
+ * @package App\Console\Commands
+ */
 class CreateQuery extends GeneratorCommand
 {
     /**
@@ -16,8 +23,14 @@ class CreateQuery extends GeneratorCommand
      */
     protected $name = 'scandinaver:query';
 
+    /**
+     * @var string
+     */
     protected $domain;
 
+    /**
+     * @var string
+     */
     protected $queryPath = 'Application/Query';
 
     /**
@@ -39,27 +52,36 @@ class CreateQuery extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
-        return __DIR__.'/Stubs/custom-query.stub';
+        return __DIR__ . '/Stubs/custom-query.stub';
     }
 
     /**
      * @return array
      */
-    public function getArguments()
+    public function getArguments(): array
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the class'],
         ];
     }
 
-    protected function getDefaultNamespace($rootNamespace)
+    /**
+     * @param string $rootNamespace
+     *
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
     }
 
-    public function handle()
+    /**
+     * @return bool|void|null
+     * @throws FileNotFoundException
+     */
+    public function handle(): void
     {
         $this->domain = $this->ask('domain');
 
@@ -67,12 +89,12 @@ class CreateQuery extends GeneratorCommand
 
         $path = $this->getPath($name);
 
-        $this->files->put($path, $this->buildClass($name."Query"));
+        $this->files->put($path, $this->buildClass($name . "Query"));
 
-        $this->info($this->type.' created successfully.');
+        $this->info($this->type . ' created successfully.');
 
         Artisan::call('createQueryHandler', [
-            'name' => "{$name}Handler",
+            'name'   => "{$name}Handler",
             'domain' => $this->domain
         ]);
     }
@@ -80,10 +102,11 @@ class CreateQuery extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
-    protected function getPath($name)
+    protected function getPath($name): string
     {
         $name = Str::replaceFirst($this->getDefaultNamespace($name), '', $name);
         $name = str_replace('\\', '/', $name);
@@ -95,10 +118,11 @@ class CreateQuery extends GeneratorCommand
     /**
      * Get the full namespace for a given class, without the class name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
-    protected function getNamespace($name)
+    protected function getNamespace($name): string
     {
         $queryNamespace = str_replace('/', '\\', $this->queryPath);
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";

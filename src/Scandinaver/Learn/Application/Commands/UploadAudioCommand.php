@@ -4,15 +4,14 @@
 namespace Scandinaver\Learn\Application\Commands;
 
 use Illuminate\Http\UploadedFile;
-use Request;
 use Scandinaver\Learn\Domain\Word;
 use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class UploadAudioCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\UploadAudioHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\UploadAudioHandler
  */
 class UploadAudioCommand implements Command
 {
@@ -28,7 +27,8 @@ class UploadAudioCommand implements Command
 
     /**
      * UploadAudioCommand constructor.
-     * @param Word $word
+     *
+     * @param Word         $word
      * @param UploadedFile $file
      */
     public function __construct(Word $word, UploadedFile $file)

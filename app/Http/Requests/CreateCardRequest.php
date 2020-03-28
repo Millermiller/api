@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class CreateCardRequest
+ *
+ * @package App\Http\Requests
+ */
 class CreateCardRequest extends FormRequest
 {
     /**
@@ -11,7 +17,7 @@ class CreateCardRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,12 +27,12 @@ class CreateCardRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'word_id' => 'required',
+            'word_id'      => 'required',
             'translate_id' => 'required',
-            'asset_id' => 'required',
+            'asset_id'     => 'required',
         ];
     }
 }

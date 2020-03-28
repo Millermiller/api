@@ -1,14 +1,23 @@
 <?php
 
+
 namespace App\Http\Controllers\Auth;
 
 use App\Events\PasswordReset;
 use App\Http\Controllers\Controller;
+use Doctrine\ORM\OptimisticLockException;
 use EntityManager;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+/**
+ * Class ResetPasswordController
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class ResetPasswordController extends Controller
 {
     /*
@@ -42,8 +51,10 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * @param \App\Entities\User $user
+     * @param $user
      * @param $password
+     *
+     * @throws OptimisticLockException
      */
     protected function resetPassword($user, $password)
     {
@@ -63,12 +74,12 @@ class ResetPasswordController extends Controller
 
     /**
      * Display the password reset view for the given token.
-     *
      * If no token is present, display the link request form.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string|null  $token
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @param string|null              $token
+     *
+     * @return Factory|View
      */
     public function showResetForm(Request $request, $token = null)
     {

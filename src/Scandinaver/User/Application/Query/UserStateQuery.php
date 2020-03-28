@@ -8,9 +8,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class UserStateQuery
- * @package Scandinaver\User\Application\Query
  *
- * @see \Scandinaver\User\Application\Handlers\UserStateHandler
+ * @package Scandinaver\User\Application\Query
+ * @see     \Scandinaver\User\Application\Handlers\UserStateHandler
  */
 class UserStateQuery implements Query
 {
@@ -21,6 +21,7 @@ class UserStateQuery implements Query
 
     /**
      * UserStateQuery constructor.
+     *
      * @param User $user
      */
     public function __construct(User $user)

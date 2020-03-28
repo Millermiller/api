@@ -1,15 +1,21 @@
 <?php
 
+
 namespace App\Listeners;
 
 use app\Events\PasswordReset;
-use App\Services\Requester;
+use GuzzleHttp\Exception\GuzzleException;
+use Scandinaver\Common\Domain\Services\Requester;
 
+/**
+ * Class PasswordResetListener
+ *
+ * @package App\Listeners
+ */
 class PasswordResetListener
 {
     /**
      * Create the event listener.
-     *
      */
     public function __construct()
     {
@@ -20,15 +26,16 @@ class PasswordResetListener
      * Handle the event.
      *
      * @param PasswordReset $event
+     *
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    public function handle(PasswordReset $event)
+    public function handle(PasswordReset $event): void
     {
         Requester::updateForumUser([
             'password' => $event->password,
-            'login' => $event->user->login,
-            'email' => $event->user->email,
-            ], $event->user->email);
+            'login'    => $event->user->login,
+            'email'    => $event->user->email,
+        ], $event->user->email);
     }
 }

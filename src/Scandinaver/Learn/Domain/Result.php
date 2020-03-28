@@ -3,35 +3,22 @@
 
 namespace Scandinaver\Learn\Domain;
 
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\User\Domain\User;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\User\Domain\User;
 
 /**
  * Result
- *
  * @ORM\Table(name="assets_users", indexes={@ORM\Index(name="lang", columns={"lang"}), @ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="asset_id", columns={"asset_id"})})
+ *
  * @ORM\Entity
  */
 class Result implements JsonSerializable
 {
     /**
-     * Result constructor.
-     * @param Asset $asset
-     * @param User $user
-     * @param Language $language
-     */
-    public function __construct(Asset $asset, User $user, Language $language)
-    {
-        $this->asset = $asset;
-        $this->user = $user;
-        $this->language = $language;
-    }
-
-    /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -40,49 +27,42 @@ class Result implements JsonSerializable
 
     /**
      * @var int
-     *
      * @ORM\Column(name="result", type="integer", nullable=false)
      */
     private $result = '0';
 
     /**
      * @var int
-     *
      * @ORM\Column(name="user_id", type="integer", nullable=false)
      */
     private $userId;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(name="language_id", type="string", length=50, nullable=true)
      */
     private $languageId;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(name="asset_id", type="string", length=50, nullable=true)
      */
     private $assetId;
 
     /**
-     * @var \DateTime|null
-     *
+     * @var DateTime|null
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
+     * @var DateTime|null
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
      * @var Asset
-     *
      * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Asset", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
@@ -92,7 +72,6 @@ class Result implements JsonSerializable
 
     /**
      * @var User
-     *
      * @ORM\ManyToOne(targetEntity="Scandinaver\User\Domain\User", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -102,13 +81,26 @@ class Result implements JsonSerializable
 
     /**
      * @var Language
-     *
      * @ORM\ManyToOne(targetEntity="Scandinaver\Common\Domain\Language", inversedBy="results")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * })
      */
     private $language;
+
+    /**
+     * Result constructor.
+     *
+     * @param Asset    $asset
+     * @param User     $user
+     * @param Language $language
+     */
+    public function __construct(Asset $asset, User $user, Language $language)
+    {
+        $this->asset    = $asset;
+        $this->user     = $user;
+        $this->language = $language;
+    }
 
     /**
      * @return int
@@ -120,6 +112,7 @@ class Result implements JsonSerializable
 
     /**
      * @param int $value
+     *
      * @return void
      */
     public function setValue(int $value): void
@@ -133,7 +126,7 @@ class Result implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id'    => $this->id,
             'value' => $this->result
         ];
     }

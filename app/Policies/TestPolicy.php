@@ -1,11 +1,17 @@
 <?php
 
+
 namespace App\Policies;
 
-use App\Entities\Asset;
+use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\User\Domain\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+/**
+ * Class TestPolicy
+ *
+ * @package App\Policies
+ */
 class TestPolicy
 {
     use HandlesAuthorization;
@@ -20,7 +26,13 @@ class TestPolicy
         //
     }
 
-    public function update(User $user, Asset $asset)
+    /**
+     * @param User  $user
+     * @param Asset $asset
+     *
+     * @return bool
+     */
+    public function update(User $user, Asset $asset): bool
     {
         return true;
     }

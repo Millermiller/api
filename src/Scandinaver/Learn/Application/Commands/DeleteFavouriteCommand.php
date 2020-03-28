@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use Scandinaver\User\Domain\User;
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class DeleteFavouriteCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\DeleteFavouriteHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\DeleteFavouriteHandler
  */
 class DeleteFavouriteCommand implements Command
 {
@@ -26,13 +26,14 @@ class DeleteFavouriteCommand implements Command
 
     /**
      * CreateFavouriteCommand constructor.
+     *
      * @param User $user
-     * @param int $id
+     * @param int  $id
      */
     public function __construct(User $user, int $id)
     {
         $this->user = $user;
-        $this->id = $id;
+        $this->id   = $id;
     }
 
     /**

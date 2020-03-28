@@ -8,9 +8,9 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class GetTranslatesByWordQuery
- * @package Scandinaver\Learn\Application\Query
  *
- * @see \Scandinaver\Learn\Application\Handlers\GetTranslatesByWordHandler
+ * @package Scandinaver\Learn\Application\Query
+ * @see     \Scandinaver\Learn\Application\Handlers\GetTranslatesByWordHandler
  */
 class GetTranslatesByWordQuery implements Query
 {
@@ -21,6 +21,7 @@ class GetTranslatesByWordQuery implements Query
 
     /**
      * GetTranslatesByWordQuery constructor.
+     *
      * @param Word $word
      */
     public function __construct(Word $word)

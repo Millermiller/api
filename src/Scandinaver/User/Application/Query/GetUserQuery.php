@@ -8,9 +8,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class GetUserQuery
- * @package Scandinaver\User\Application\Query
  *
- * @see \Scandinaver\User\Application\Handlers\GetUserHandler
+ * @package Scandinaver\User\Application\Query
+ * @see     \Scandinaver\User\Application\Handlers\GetUserHandler
  */
 class GetUserQuery implements Query
 {

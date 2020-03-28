@@ -13,8 +13,8 @@ use Scandinaver\Puzzle\Application\Query\UserPuzzlesQuery;
 
 /**
  * Class PuzzleController
- * @package App\Http\Controllers\Sub\Frontend
  *
+ * @package App\Http\Controllers\Sub\Frontend
  * Created by PhpStorm.
  * User: john_
  * Date: 22.11.2018
@@ -32,8 +32,8 @@ class PuzzleController extends Controller
     }
 
     /**
-     *
      * @param Puzzle $puzzle
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

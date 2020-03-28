@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
-use DB;
 use Auth;
+use DB;
 use Eloquent;
 use Illuminate\Database\Eloquent\{Model, Relations\HasMany, Relations\HasOne, SoftDeletes};
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
@@ -14,11 +14,10 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
  * User: whiskey
  * Date: 18.01.15
  * Time: 21:03
- *
  * Class Word
- * @package App\Models
  *
- * @property int id
+ * @package App\Models
+ * @property int    id
  * @property string word
  * @property string transcription
  * @property string audio
@@ -26,11 +25,9 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
- * @property int sentence
- * @property int is_public
- *
- * @property User user
- *
+ * @property int    sentence
+ * @property int    is_public
+ * @property User   user
  * @mixin Eloquent
  */
 class Word extends Model
@@ -38,55 +35,23 @@ class Word extends Model
 
     use SoftDeletes;
 
-    protected $table = 'words';
+    protected $table    = 'words';
 
     protected $fillable = ['word', 'transcription', 'audio', 'sentence', 'is_public', 'creator'];
 
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'transcription'];
+    protected $hidden   = ['created_at', 'updated_at', 'deleted_at', 'transcription'];
 
-    protected $appends = ['variants', 'login'];
-
-    /**
-     * @return bool
-     */
-    public function getVariantsAttribute(): bool
-    {
-        return $this->attributes['variants'] = Translate::where('word_id', '=', $this->id)->count();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLoginAttribute(): string
-    {
-        return ($this->user) ? $this->user->login : '';
-    }
-
-    /**
-     * @return HasMany|Card[]
-     */
-    public function translates(): array
-    {
-        return $this->hasMany('App\Helpers\Eloquent\Translate');
-    }
-
-    /**
-     * @return HasOne|User
-     */
-    public function user(): User
-    {
-        return $this->hasOne('App\User', 'id', 'creator');
-    }
+    protected $appends  = ['variants', 'login'];
 
     /**
      * Переводит слово с русского языка
      * Возвращает слово, перевод и транскрипцию
-     *
      * только публичные слова
      * и приватные текущего пользователя
      *
      * @param string $word
      * @param string $sentence
+     *
      * @return array
      */
     public static function tr(string $word, string $sentence): array
@@ -126,5 +91,37 @@ class Word extends Model
                          WHERE w.sentence = 1
                          AND w.id NOT IN(SELECT word_id FROM cards)
                          AND w.deleted_at is NULL ');
+    }
+
+    /**
+     * @return bool
+     */
+    public function getVariantsAttribute(): bool
+    {
+        return $this->attributes['variants'] = Translate::where('word_id', '=', $this->id)->count();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginAttribute(): string
+    {
+        return ($this->user) ? $this->user->login : '';
+    }
+
+    /**
+     * @return HasMany|Card[]
+     */
+    public function translates(): array
+    {
+        return $this->hasMany('App\Helpers\Eloquent\Translate');
+    }
+
+    /**
+     * @return HasOne|User
+     */
+    public function user(): User
+    {
+        return $this->hasOne('App\User', 'id', 'creator');
     }
 }

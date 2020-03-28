@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\UserUpdated;
 
+/**
+ * Class UserUpdatedListener
+ *
+ * @package App\Listeners
+ */
 class UserUpdatedListener
 {
     /**
@@ -19,10 +25,11 @@ class UserUpdatedListener
     /**
      * Handle the event.
      *
-     * @param  UserUpdated  $event
+     * @param UserUpdated $event
+     *
      * @return void
      */
-    public function handle(UserUpdated $event)
+    public function handle(UserUpdated $event): void
     {
         //
     }

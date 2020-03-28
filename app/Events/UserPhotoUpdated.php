@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;

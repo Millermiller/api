@@ -1,10 +1,16 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\NextTextLevel;
 use App\Helpers\EloquentHelper;
 
+/**
+ * Class NextTextLevelListener
+ *
+ * @package App\Listeners
+ */
 class NextTextLevelListener
 {
     /**
@@ -20,12 +26,13 @@ class NextTextLevelListener
     /**
      * Handle the event.
      *
-     * @param  NextTextLevel  $event
+     * @param NextTextLevel $event
+     *
      * @return void
      */
-    public function handle(NextTextLevel $event)
+    public function handle(NextTextLevel $event): void
     {
-        $user = EloquentHelper::getEloquentModel($event->user);
+        $user   = EloquentHelper::getEloquentModel($event->user);
         $result = EloquentHelper::getEloquentModel($event->result);
 
         activity('public')

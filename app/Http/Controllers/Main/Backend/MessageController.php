@@ -13,6 +13,7 @@ use Scandinaver\Common\Application\Query\MessagesQuery;
 
 /**
  * Class SeoController
+ *
  * @package App\Http\Controllers\Main\Backend
  */
 class MessageController extends Controller
@@ -27,7 +28,9 @@ class MessageController extends Controller
     }
 
     /** TODO: bind model
+     *
      * @param int $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -38,6 +41,7 @@ class MessageController extends Controller
 
     /**
      * @param Message $message
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

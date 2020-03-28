@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Text\Domain;
 
-use PDO;
 use App\Events\NextTextLevel;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Contracts\Auth\Authenticatable;
+use PDO;
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Text\Domain\Contracts\ResultRepositoryInterface;
 use Scandinaver\Text\Domain\Contracts\TextRepositoryInterface;
@@ -17,17 +17,18 @@ use Scandinaver\User\Domain\User;
  *
  * @package Scandinaver\Text\Domain;
  */
-class TextService {
-    /**
-     * @var TextRepositoryInterface
-     */
-    private $textRepository;
-    
+class TextService
+{
     /**
      * @var ResultRepositoryInterface
      */
     protected $resultRepository;
-    
+
+    /**
+     * @var TextRepositoryInterface
+     */
+    private $textRepository;
+
     /**
      * TextService constructor.
      *
@@ -36,10 +37,10 @@ class TextService {
      */
     public function __construct(TextRepositoryInterface $textRepository, ResultRepositoryInterface $resultRepository)
     {
-        $this->textRepository = $textRepository;
+        $this->textRepository   = $textRepository;
         $this->resultRepository = $resultRepository;
     }
-    
+
     /**
      * @param Language $language
      *
@@ -49,7 +50,7 @@ class TextService {
     {
         return $this->textRepository->getCountByLanguage($language);
     }
-    
+
     /**
      * @param Language $language
      * @param User     $user
@@ -59,14 +60,14 @@ class TextService {
     public function getTextsForUser(Language $language, User $user)
     {
         $activeArray = $this->textRepository->getActiveIds($user, $language);
-        
+
         $texts = $this->textRepository->getByLanguage($language);
-        
+
         $counter = 0;
-        
+
         foreach ($texts as &$text) {
             $counter++;
-            
+
             if (in_array($text->getId(), $activeArray)) {
                 $text = [
                     'id'          => $text->getId(),
@@ -84,18 +85,18 @@ class TextService {
                     'description' => $text->getDescription()
                 ];
             }
-            
-            
+
+
             if ($counter < 3 || $user->getActive()) {
                 $text['available'] = true;
             } else {
                 $text['available'] = false;
             }
         }
-        
+
         return $texts;
     }
-    
+
     /**
      * @param Text $text
      *
@@ -115,25 +116,25 @@ class TextService {
                                         on s.word_id = w.id
                                       where text_id = ?
                                     ';
-        
-        
+
+
         $params = [$text->getId(), $text->getId()];
-        
+
         $stmt = app('em')->getConnection()->prepare($sql);
         $stmt->execute($params);
         $words = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         $data = [];
-        
+
         foreach ($words as $word) {
             $data[mb_strtolower($word['word'])][] = trim($word['orig']);
         }
-        
+
         $text->setSynonims($data);
-        
+
         return $text;
     }
-    
+
     /**
      * @param Language             $language
      * @param Authenticatable|User $user
@@ -144,15 +145,15 @@ class TextService {
     public function giveNextLevel(Language $language, Authenticatable $user, Text $text): Text
     {
         $nextText = $this->textRepository->getNextText($text, $language);
-        
+
         $result = $this->resultRepository->findOneBy(['user' => $user, 'text' => $text]);
-        
+
         if ($result === null) $result = new Result($nextText, $user, $language);
-        
+
         $result = $this->resultRepository->save($result);
-        
+
         event(new NextTextLevel($user, $result));
-        
+
         return $nextText;
     }
 }

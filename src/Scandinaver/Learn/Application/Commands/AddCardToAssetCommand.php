@@ -9,9 +9,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class AddCardToAssetCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\AddCardToAssetHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\AddCardToAssetHandler
  */
 class AddCardToAssetCommand implements Command
 {
@@ -37,17 +37,18 @@ class AddCardToAssetCommand implements Command
 
     /**
      * CreateAssetCommand constructor.
-     * @param User $user
-     * @param Word $word
+     *
+     * @param User      $user
+     * @param Word      $word
      * @param Translate $translate
-     * @param Asset $asset
+     * @param Asset     $asset
      */
     public function __construct(User $user, Word $word, Translate $translate, Asset $asset)
     {
-        $this->user = $user;
-        $this->word = $word;
+        $this->user      = $user;
+        $this->word      = $word;
         $this->translate = $translate;
-        $this->asset = $asset;
+        $this->asset     = $asset;
     }
 
     /**

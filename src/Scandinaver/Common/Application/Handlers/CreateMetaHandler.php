@@ -7,6 +7,7 @@ use Scandinaver\Common\Application\Commands\CreateMetaCommand;
 
 /**
  * Class CreateMetaHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class CreateMetaHandler implements CreateMetaHandlerInterface
@@ -18,6 +19,7 @@ class CreateMetaHandler implements CreateMetaHandlerInterface
 
     /**
      * @param CreateMetaCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

@@ -4,14 +4,14 @@
 namespace Scandinaver\Learn\Application\Commands;
 
 use Scandinaver\Common\Domain\Language;
-use Scandinaver\User\Domain\User;
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class CreateAssetCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\CreateAssetHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\CreateAssetHandler
  */
 class CreateAssetCommand implements Command
 {
@@ -19,16 +19,17 @@ class CreateAssetCommand implements Command
      * @var User
      */
     private $user;
+
     /**
      * @var string
      */
     private $title;
-    
+
     /**
      * @var Language
      */
     private $language;
-    
+
     /**
      * CreateAssetCommand constructor.
      *
@@ -39,8 +40,8 @@ class CreateAssetCommand implements Command
     public function __construct(Language $language, User $user, string $title)
     {
         $this->language = $language;
-        $this->user = $user;
-        $this->title = $title;
+        $this->user     = $user;
+        $this->title    = $title;
     }
 
     /**
@@ -58,7 +59,7 @@ class CreateAssetCommand implements Command
     {
         return $this->title;
     }
-    
+
     /**
      * @return Language
      */

@@ -1,10 +1,16 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\AssetCreated;
 use App\Helpers\EloquentHelper;
 
+/**
+ * Class AssetCreatedListener
+ *
+ * @package App\Listeners
+ */
 class AssetCreatedListener
 {
     /**
@@ -20,12 +26,13 @@ class AssetCreatedListener
     /**
      * Handle the event.
      *
-     * @param  AssetCreated  $event
+     * @param AssetCreated $event
+     *
      * @return void
      */
-    public function handle(AssetCreated $event)
+    public function handle(AssetCreated $event): void
     {
-        $user = EloquentHelper::getEloquentModel($event->user);
+        $user  = EloquentHelper::getEloquentModel($event->user);
         $asset = EloquentHelper::getEloquentModel($event->asset);
 
         activity('public')

@@ -9,6 +9,7 @@ use Scandinaver\Common\Domain\Services\IntroService;
 
 /**
  * Class MessagesHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class IntroHandler implements IntroHandlerInterface
@@ -20,6 +21,7 @@ class IntroHandler implements IntroHandlerInterface
 
     /**
      * MessagesHandler constructor.
+     *
      * @param IntroService $introService
      */
     public function __construct(IntroService $introService)
@@ -29,6 +31,7 @@ class IntroHandler implements IntroHandlerInterface
 
     /**
      * @param IntroQuery $query
+     *
      * @return Intro
      */
     public function handle($query): Intro

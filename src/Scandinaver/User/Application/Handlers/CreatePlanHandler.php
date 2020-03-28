@@ -7,6 +7,7 @@ use Scandinaver\User\Application\Commands\CreatePlanCommand;
 
 /**
  * Class CreatePlanHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class CreatePlanHandler implements CreatePlanHandlerInterface
@@ -18,6 +19,7 @@ class CreatePlanHandler implements CreatePlanHandlerInterface
 
     /**
      * @param CreatePlanCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

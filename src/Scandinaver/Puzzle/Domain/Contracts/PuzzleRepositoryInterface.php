@@ -4,11 +4,12 @@
 namespace Scandinaver\Puzzle\Domain\Contracts;
 
 use Scandinaver\Puzzle\Domain\Puzzle;
-use Scandinaver\User\Domain\User;
 use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
+use Scandinaver\User\Domain\User;
 
 /**
  * Interface PuzzleRepositoryInterface
+ *
  * @package Scandinaver\Puzzle\Domain\Contracts
  */
 interface PuzzleRepositoryInterface extends BaseRepositoryInterface

@@ -8,9 +8,9 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class DeleteCommentCommand
- * @package Scandinaver\Blog\Application\Commands
  *
- * @see \Scandinaver\Blog\Application\Handlers\DeleteCommentHandler
+ * @package Scandinaver\Blog\Application\Commands
+ * @see     \Scandinaver\Blog\Application\Handlers\DeleteCommentHandler
  */
 class DeleteCommentCommand implements Command
 {
@@ -19,7 +19,7 @@ class DeleteCommentCommand implements Command
      */
     private $comment;
 
-    public function __construct(\Scandinaver\Blog\Domain\Comment $comment)
+    public function __construct(Comment $comment)
     {
         $this->comment = $comment;
     }

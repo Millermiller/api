@@ -7,6 +7,7 @@ use Scandinaver\Common\Domain\Contracts\MessageRepositoryInterface;
 
 /**
  * Class MessageService
+ *
  * @package Scandinaver\Common\Domain\Services
  */
 class MessageService
@@ -18,6 +19,7 @@ class MessageService
 
     /**
      * MessageService constructor.
+     *
      * @param MessageRepositoryInterface $messageRepository
      */
     public function __construct(MessageRepositoryInterface $messageRepository)

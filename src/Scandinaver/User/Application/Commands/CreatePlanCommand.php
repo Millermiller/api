@@ -7,9 +7,9 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class CreatePlanCommand
- * @package Scandinaver\User\Application\Commands
  *
- * @see \Scandinaver\User\Application\Handlers\CreatePlanHandler
+ * @package Scandinaver\User\Application\Commands
+ * @see     \Scandinaver\User\Application\Handlers\CreatePlanHandler
  */
 class CreatePlanCommand implements Command
 {

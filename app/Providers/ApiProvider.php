@@ -1,10 +1,15 @@
 <?php
 
+
 namespace App\Providers;
 
-use App\Services\ApiService;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class ApiProvider
+ *
+ * @package App\Providers
+ */
 class ApiProvider extends ServiceProvider
 {
     /**

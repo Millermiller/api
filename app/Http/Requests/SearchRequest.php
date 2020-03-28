@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class SearchRequest
+ *
+ * @package App\Http\Requests
+ */
 class SearchRequest extends FormRequest
 {
     /**
@@ -11,7 +17,7 @@ class SearchRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,14 +27,17 @@ class SearchRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'word' => 'required|min:3|max:255'
         ];
     }
 
-    public function messages()
+    /**
+     * @return array
+     */
+    public function messages(): array
     {
         return [
             'min' => 'Минимум :min символа'

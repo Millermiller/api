@@ -1,10 +1,16 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\MessageRecieved;
 use App\Helpers\EloquentHelper;
 
+/**
+ * Class MessageRecievedListener
+ *
+ * @package App\Listeners
+ */
 class MessageRecievedListener
 {
     /**
@@ -20,12 +26,13 @@ class MessageRecievedListener
     /**
      * Handle the event.
      *
-     * @param  MessageRecieved  $event
+     * @param MessageRecieved $event
+     *
      * @return void
      */
-    public function handle(MessageRecieved $event)
+    public function handle(MessageRecieved $event): void
     {
-        $user = EloquentHelper::getEloquentModel($event->user);
+        $user    = EloquentHelper::getEloquentModel($event->user);
         $message = EloquentHelper::getEloquentModel($event->message);
 
         activity('admin')->causedBy($user)->performedOn($message)->log('Получено сообщение');

@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Translate;
 
 /**
  * Class GetTranslatesByWordHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class GetTranslatesByWordHandler implements GetTranslatesByWordHandlerInterface
@@ -20,6 +21,7 @@ class GetTranslatesByWordHandler implements GetTranslatesByWordHandlerInterface
 
     /**
      * GetTranslatesByWordHandler constructor.
+     *
      * @param WordService $wordService
      */
     public function __construct(WordService $wordService)
@@ -29,6 +31,7 @@ class GetTranslatesByWordHandler implements GetTranslatesByWordHandlerInterface
 
     /**
      * @param GetTranslatesByWordQuery
+     *
      * @return Translate[]
      */
     public function handle($query): array

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Console\Commands;
 
 use Artisan;
@@ -7,6 +8,11 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class CreateCommand
+ *
+ * @package App\Console\Commands
+ */
 class CreateCommand extends GeneratorCommand
 {
     /**
@@ -16,8 +22,14 @@ class CreateCommand extends GeneratorCommand
      */
     protected $name = 'scandinaver:command';
 
+    /**
+     * @var string
+     */
     protected $domain;
 
+    /**
+     * @var string
+     */
     protected $commandPath = 'Application/Commands';
 
     /**
@@ -41,7 +53,7 @@ class CreateCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/Stubs/custom-command.stub';
+        return __DIR__ . '/Stubs/custom-command.stub';
     }
 
     /**
@@ -67,12 +79,12 @@ class CreateCommand extends GeneratorCommand
 
         $path = $this->getPath($name);
 
-        $this->files->put($path, $this->buildClass($name."Command"));
+        $this->files->put($path, $this->buildClass($name . "Command"));
 
-        $this->info($this->type.' created successfully.');
+        $this->info($this->type . ' created successfully.');
 
         Artisan::call('createCommandHandler', [
-            'name' => "{$name}Handler",
+            'name'   => "{$name}Handler",
             'domain' => $this->domain
         ]);
     }
@@ -80,7 +92,8 @@ class CreateCommand extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getPath($name)
@@ -95,7 +108,8 @@ class CreateCommand extends GeneratorCommand
     /**
      * Get the full namespace for a given class, without the class name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getNamespace($name)

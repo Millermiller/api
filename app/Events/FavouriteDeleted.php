@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;
@@ -11,6 +12,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 
 /**
  * Class FavouriteDeleted
+ *
  * @package App\Events
  */
 class FavouriteDeleted

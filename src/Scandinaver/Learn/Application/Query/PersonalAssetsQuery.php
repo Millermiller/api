@@ -8,9 +8,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class PersonalAssetsQuery
- * @package Scandinaver\Learn\Application\Query
  *
- * @see \Scandinaver\Learn\Application\Handlers\PersonalAssetsHandler
+ * @package Scandinaver\Learn\Application\Query
+ * @see     \Scandinaver\Learn\Application\Handlers\PersonalAssetsHandler
  */
 class PersonalAssetsQuery implements Query
 {
@@ -21,6 +21,7 @@ class PersonalAssetsQuery implements Query
 
     /**
      * PersonalAssetsQuery constructor.
+     *
      * @param User $user
      */
     public function __construct(User $user)

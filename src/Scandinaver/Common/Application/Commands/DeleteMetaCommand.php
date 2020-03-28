@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class DeleteMetaCommand
+ *
  * @package Scandinaver\Common\Application\Commands
  */
 class DeleteMetaCommand implements Command

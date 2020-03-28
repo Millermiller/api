@@ -7,6 +7,7 @@ use Scandinaver\Common\Application\Commands\UpdateMessageCommand;
 
 /**
  * Class UpdateMessageHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class UpdateMessageHandler implements UpdateMessageHandlerInterface
@@ -18,6 +19,7 @@ class UpdateMessageHandler implements UpdateMessageHandlerInterface
 
     /**
      * @param UpdateMessageCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

@@ -3,19 +3,20 @@
 
 namespace Scandinaver\User\Infrastructure\Persistence\Eloquent;
 
-use Mail;
-use Image;
-use Avatar;
-use Eloquent;
-use Carbon\Carbon;
 use App\Mail\ResetPassword;
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
+use Avatar;
+use Carbon\Carbon;
+use Eloquent;
 use Illuminate\Database\Eloquent\{Builder, Model};
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Image;
+use Intervention\Image\Constraint;
+use Laravel\Passport\HasApiTokens;
+use Mail;
 use Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Comment;
 use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset;
 use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result;
@@ -26,26 +27,25 @@ use Scandinaver\Text\Infrastructure\Persistence\Eloquent\TextResult;
 /**
  * Class UsersModel
  *
- * @property int $id
+ * @property int    $id
  * @property string $login
  * @property string $name
  * @property string $password
  * @property string $photo
  * @property string $restore_link
  * @property string $email
- * @property int $active
- * @property int $assets_opened
- * @property int $assets_created
- * @property Asset $favourite
+ * @property int    $active
+ * @property int    $assets_opened
+ * @property int    $assets_created
+ * @property Asset  $favourite
  * @property string $role
  * @property Carbon $created_at
- * @property int $last_online
- * @property int $plan_id
+ * @property int    $last_online
+ * @property int    $plan_id
  * @property Carbon $active_to
- * @property bool $premium
+ * @property bool   $premium
  * @property string $avatar
- * @property Plan $plan
- *
+ * @property Plan   $plan
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -53,17 +53,17 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens;
 
     const ROLE_ADMIN = 1;
-    const ROLE_USER = 0;
+    const ROLE_USER  = 0;
 
-    protected $table = 'users';
+    protected $table    = 'users';
 
     protected $fillable = ['name', 'login', 'email', 'password', 'openpass', 'role', 'active_to', 'plan_id'];
 
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden   = ['password', 'remember_token'];
 
-    protected $dates = ['active_to'];
+    protected $dates    = ['active_to'];
 
-    protected $appends = ['premium', 'avatar', 'favourite', 'cardsCreated'];
+    protected $appends  = ['premium', 'avatar', 'favourite', 'cardsCreated'];
 
     /**
      * @return void
@@ -83,7 +83,16 @@ class User extends Authenticatable
     }
 
     /**
+     * @return BelongsToMany|Puzzle[]
+     */
+    public function puzzles(): array
+    {
+        return $this->belongsToMany('App\Helpers\Eloquent\Puzzle', 'puzzles_users')->withTimestamps();
+    }
+
+    /**
      * @param string $username
+     *
      * @return User
      */
     public function findForPassport(string $username): User
@@ -113,14 +122,6 @@ class User extends Authenticatable
     public function plan(): Plan
     {
         return $this->belongsTo('App\Helpers\Eloquent\Plan');
-    }
-
-    /**
-     * @return BelongsToMany|Puzzle[]
-     */
-    public function puzzles(): array
-    {
-        return $this->belongsToMany('App\Helpers\Eloquent\Puzzle', 'puzzles_users')->withTimestamps();
     }
 
     /**
@@ -167,7 +168,7 @@ class User extends Authenticatable
                 $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
                 $avatar->resize(
                     300, null, function ($constraint) {
-                    /** @var \Intervention\Image\Constraint $constraint */
+                    /** @var Constraint $constraint */
                     $constraint->aspectRatio();
                 });
                 $avatar->save(public_path('/uploads/u/a/' . $this->photo));
@@ -180,6 +181,7 @@ class User extends Authenticatable
 
     /**
      * @param int $asset_id
+     *
      * @return bool
      */
     public function hasAsset(int $asset_id): bool
@@ -189,6 +191,7 @@ class User extends Authenticatable
 
     /**
      * @param int $text_id
+     *
      * @return bool
      */
     public function hasText(int $text_id): bool

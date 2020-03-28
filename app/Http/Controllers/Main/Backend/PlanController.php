@@ -16,6 +16,7 @@ use Scandinaver\User\Application\Query\PlansQuery;
 
 /**
  * Class SeoController
+ *
  * @package App\Http\Controllers\Main\Backend
  */
 class PlanController extends Controller
@@ -30,7 +31,9 @@ class PlanController extends Controller
     }
 
     /**TODO: bind model
+     *
      * @param int $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -40,7 +43,8 @@ class PlanController extends Controller
     }
 
     /**
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -53,7 +57,8 @@ class PlanController extends Controller
 
     /**
      * @param Request $request
-     * @param Plan $plan
+     * @param Plan    $plan
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -66,6 +71,7 @@ class PlanController extends Controller
 
     /**
      * @param Plan $plan
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

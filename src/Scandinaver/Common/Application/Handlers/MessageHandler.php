@@ -7,6 +7,7 @@ use Scandinaver\Common\Application\Query\MessageQuery;
 
 /**
  * Class MessageHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class MessageHandler implements MessageHandlerInterface
@@ -18,6 +19,7 @@ class MessageHandler implements MessageHandlerInterface
 
     /**
      * @param MessageQuery
+     *
      * @inheritDoc
      */
     public function handle($query)

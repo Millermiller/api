@@ -20,6 +20,7 @@ use Spatie\Activitylog\Models\Activity;
 
 /**
  * Class ProfileController
+ *
  * @package Application\Controllers
  */
 class ProfileController extends Controller
@@ -38,6 +39,7 @@ class ProfileController extends Controller
 
     /**
      * ProfileController constructor.
+     *
      * @param UserService $userService
      * @param FileService $fileService
      */
@@ -69,6 +71,7 @@ class ProfileController extends Controller
 
     /**
      * @param UploadAvatarRequest $request
+     *
      * @return JsonResponse
      */
     public function uploadImage(UploadAvatarRequest $request): JsonResponse
@@ -82,6 +85,7 @@ class ProfileController extends Controller
 
     /**
      * @param ProfileRequest $request
+     *
      * @return RedirectResponse
      */
     public function edit(ProfileRequest $request)
@@ -105,7 +109,7 @@ class ProfileController extends Controller
             'causer_id' => Auth::user()->getKey(),
             'log_name'  => 'public'
         ])->orderBy('id', 'DESC')
-            ->paginate(5);
+                        ->paginate(5);
 
         return view('main.frontend.profile.logs', ['logs' => $logs, 'user' => Auth::user()]);
     }

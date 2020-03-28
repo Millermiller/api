@@ -9,6 +9,7 @@ use Scandinaver\API\Infrastructure\ApiService;
 
 /**
  * Class AssetsHandler
+ *
  * @package Scandinaver\API\Application\Handlers
  */
 class AssetsHandler implements AssetsHandlerInterface
@@ -20,6 +21,7 @@ class AssetsHandler implements AssetsHandlerInterface
 
     /**
      * AssetsHandler constructor.
+     *
      * @param ApiService $apiService
      */
     public function __construct(ApiService $apiService)
@@ -29,6 +31,7 @@ class AssetsHandler implements AssetsHandlerInterface
 
     /**
      * @param AssetsQuery $query
+     *
      * @return array
      * @throws Exception
      */

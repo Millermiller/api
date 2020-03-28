@@ -7,6 +7,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
  * Interface BaseRepositoryInterface
+ *
  * @package Scandinaver\Shared\Contracts
  */
 interface BaseRepositoryInterface extends ObjectRepository

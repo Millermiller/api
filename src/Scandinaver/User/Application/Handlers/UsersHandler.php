@@ -8,6 +8,7 @@ use Scandinaver\User\Domain\Services\UserService;
 
 /**
  * Class UsersHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class UsersHandler implements UsersHandlerInterface
@@ -19,6 +20,7 @@ class UsersHandler implements UsersHandlerInterface
 
     /**
      * UsersHandler constructor.
+     *
      * @param UserService $userService
      */
     public function __construct(UserService $userService)
@@ -28,6 +30,7 @@ class UsersHandler implements UsersHandlerInterface
 
     /**
      * @param UsersQuery
+     *
      * @return array
      */
     public function handle($query): array

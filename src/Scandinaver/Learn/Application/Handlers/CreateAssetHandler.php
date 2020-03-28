@@ -4,12 +4,13 @@
 namespace Scandinaver\Learn\Application\Handlers;
 
 use App\Events\AssetCreated;
-use Doctrine\ORM\{ORMException, OptimisticLockException};
+use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Scandinaver\Learn\Application\Commands\CreateAssetCommand;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 
 /**
  * Class CreateAssetHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class CreateAssetHandler implements CreateAssetHandlerInteface
@@ -26,8 +27,9 @@ class CreateAssetHandler implements CreateAssetHandlerInteface
 
     /**
      * AssetController constructor.
+     *
      * @param AssetService $assetService
-     * @param CardService $cardService
+     * @param CardService  $cardService
      */
     public function __construct(AssetService $assetService, CardService $cardService)
     {
@@ -38,6 +40,7 @@ class CreateAssetHandler implements CreateAssetHandlerInteface
 
     /**
      * @param CreateAssetCommand $command
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */

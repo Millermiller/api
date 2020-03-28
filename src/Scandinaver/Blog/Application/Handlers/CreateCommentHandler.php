@@ -7,6 +7,7 @@ use Scandinaver\Blog\Application\Commands\CreateCommentCommand;
 
 /**
  * Class CreateCommentHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class CreateCommentHandler implements CreateCommentHandlerInterface
@@ -18,6 +19,7 @@ class CreateCommentHandler implements CreateCommentHandlerInterface
 
     /**
      * @param CreateCommentCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

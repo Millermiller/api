@@ -8,6 +8,7 @@ use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
 
 /**
  * Interface WordRepositoryInterface
+ *
  * @package Scandinaver\Learn\Domain\Contracts
  */
 interface WordRepositoryInterface extends BaseRepositoryInterface
@@ -19,12 +20,14 @@ interface WordRepositoryInterface extends BaseRepositoryInterface
 
     /**
      * @param Language $language
+     *
      * @return int
      */
     public function getCountByLanguage(Language $language): int;
 
     /**
      * @param Language $language
+     *
      * @return int
      */
     public function getCountAudioByLanguage(Language $language): int;

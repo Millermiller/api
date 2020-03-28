@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\WordService;
 
 /**
  * Class AddWordAndTranslateHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class AddWordAndTranslateHandler implements AddWordAndTranslateHandlerInterface
@@ -24,6 +25,7 @@ class AddWordAndTranslateHandler implements AddWordAndTranslateHandlerInterface
 
     /**
      * @param AddWordAndTranslateCommand $command
+     *
      * @inheritDoc   $translate = new Translate(['value' => $translate, 'sentence' => $issentence, 'word_id' => $word->id]);
      */
     public function handle($command): void

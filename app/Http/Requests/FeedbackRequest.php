@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class FeedbackRequest
+ *
+ * @package App\Http\Requests
+ */
 class FeedbackRequest extends FormRequest
 {
     /**
@@ -11,7 +17,7 @@ class FeedbackRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,15 +27,15 @@ class FeedbackRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
+            'name'    => 'required|max:255',
             'message' => 'required',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'required' => 'Поле обязательно для заполнения'

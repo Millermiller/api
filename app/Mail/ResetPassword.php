@@ -1,13 +1,18 @@
 <?php
 
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
+/**
+ * Class ResetPassword
+ *
+ * @package App\Mail
+ */
 class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
@@ -28,7 +33,7 @@ class ResetPassword extends Mailable
      * Create a new message instance.
      *
      * @param User $user
-     * @param $token
+     * @param      $token
      */
     public function __construct(User $user, $token)
     {
@@ -40,12 +45,12 @@ class ResetPassword extends Mailable
     /**
      * Build the message.
      *
-     * @return $this
+     * @return Message
      */
-    public function build()
+    public function build(): Message
     {
         return $this->from('support@scandinaver.org', "Scandinaver")
-            ->subject("Сброс пароля на сайте Scandinaver.org")
-            ->markdown('emails.reset');
+                    ->subject("Сброс пароля на сайте Scandinaver.org")
+                    ->markdown('emails.reset');
     }
 }

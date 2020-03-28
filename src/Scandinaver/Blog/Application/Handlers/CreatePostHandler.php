@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Services\BlogService;
 
 /**
  * Class CreatePostHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class CreatePostHandler implements CreatePostHandlerInterface
@@ -24,6 +25,7 @@ class CreatePostHandler implements CreatePostHandlerInterface
 
     /**
      * @param CreatePostCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

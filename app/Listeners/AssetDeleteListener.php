@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\AssetDelete;
 
+/**
+ * Class AssetDeleteListener
+ *
+ * @package App\Listeners
+ */
 class AssetDeleteListener
 {
     /**
@@ -19,10 +25,11 @@ class AssetDeleteListener
     /**
      * Handle the event.
      *
-     * @param  AssetDelete  $event
+     * @param AssetDelete $event
+     *
      * @return void
      */
-    public function handle(AssetDelete $event)
+    public function handle(AssetDelete $event): void
     {
         /*
         activity('public')

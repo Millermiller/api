@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class GiveNextLevelCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\GiveNextLevelHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\GiveNextLevelHandler
  */
 class GiveNextLevelCommand implements Command
 {
@@ -27,12 +27,13 @@ class GiveNextLevelCommand implements Command
 
     /**
      * GiveNextLevelCommand constructor.
-     * @param User $user
+     *
+     * @param User  $user
      * @param Asset $asset
      */
     public function __construct(User $user, Asset $asset)
     {
-        $this->user = $user;
+        $this->user  = $user;
         $this->asset = $asset;
     }
 

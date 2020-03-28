@@ -9,6 +9,7 @@ use Scandinaver\Text\Domain\TextService;
 
 /**
  * Class GetTextHandler
+ *
  * @package Scandinaver\Text\Application\Handlers
  */
 class GetTextHandler implements GetTextHandlerInterface
@@ -20,6 +21,7 @@ class GetTextHandler implements GetTextHandlerInterface
 
     /**
      * TextController constructor.
+     *
      * @param TextService $textService
      */
     public function __construct(TextService $textService)
@@ -29,6 +31,7 @@ class GetTextHandler implements GetTextHandlerInterface
 
     /**
      * @param GetTextQuery
+     *
      * @inheritDoc
      * @throws DBALException
      */

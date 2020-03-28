@@ -10,6 +10,7 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class LoginHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class LoginHandler implements LoginHandlerInterface
@@ -26,6 +27,7 @@ class LoginHandler implements LoginHandlerInterface
 
     /**
      * @param LoginQuery $query
+     *
      * @return User
      * @throws UserNotFoundException
      */

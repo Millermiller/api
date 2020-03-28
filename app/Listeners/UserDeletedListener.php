@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\UserUpdated;
 
+/**
+ * Class UserDeletedListener
+ *
+ * @package App\Listeners
+ */
 class UserDeletedListener
 {
     /**
@@ -19,11 +25,12 @@ class UserDeletedListener
     /**
      * Handle the event.
      *
-     * @param  UserUpdated  $event
+     * @param UserUpdated $event
+     *
      * @return void
      */
-    public function handle(UserUpdated $event)
+    public function handle(UserUpdated $event): void
     {
-       // activity('admin')->causedBy($event->user)->performedOn($event->asset)->log('Создан словарь');
+        // activity('admin')->causedBy($event->user)->performedOn($event->asset)->log('Создан словарь');
     }
 }

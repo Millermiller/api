@@ -9,6 +9,7 @@ use Scandinaver\User\Domain\Services\UserService;
 
 /**
  * Class GetStateHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class GetStateHandler implements GetStateHandlerInterface
@@ -20,6 +21,7 @@ class GetStateHandler implements GetStateHandlerInterface
 
     /**
      * GetStateHandler constructor.
+     *
      * @param UserService $userService
      */
     public function __construct(UserService $userService)
@@ -29,6 +31,7 @@ class GetStateHandler implements GetStateHandlerInterface
 
     /**
      * @param GetStateQuery $query
+     *
      * @return array
      * @throws Exception
      */

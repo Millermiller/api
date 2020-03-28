@@ -8,15 +8,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class TextWord
- * @package App\Models
  *
+ * @package App\Models
  * Created by PhpStorm.
  * User: user
  * Date: 20.10.2016
  * Time: 6:19
- *
- * @property int $text_id
- * @property int $sentence_num
+ * @property int    $text_id
+ * @property int    $sentence_num
  * @property string $word
  * @property string $orig
  */

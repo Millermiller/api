@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Providers;
 
 use App\Policies\{AssetPolicy, CardPolicy, TextPolicy};
@@ -8,6 +9,11 @@ use Laravel\Passport\Passport;
 use Scandinaver\Learn\Domain\{Asset, Card};
 use Scandinaver\Text\Domain\Text;
 
+/**
+ * Class AuthServiceProvider
+ *
+ * @package App\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -16,9 +22,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Card::class => CardPolicy::class,
+        Card::class  => CardPolicy::class,
         Asset::class => AssetPolicy::class,
-        Text::class => TextPolicy::class,
+        Text::class  => TextPolicy::class,
     ];
 
     /**

@@ -8,9 +8,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class DeleteUserCommand
- * @package Scandinaver\User\Application\Commands
  *
- * @see \Scandinaver\User\Application\Handlers\DeleteUserHandler
+ * @package Scandinaver\User\Application\Commands
+ * @see     \Scandinaver\User\Application\Handlers\DeleteUserHandler
  */
 class DeleteUserCommand implements Command
 {

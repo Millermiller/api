@@ -9,28 +9,27 @@ use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result;
 
 /**
  * Class Order
- * @package App\Models
  *
- * @property int $id
- * @property int $sum
+ * @package App\Models
+ * @property int    $id
+ * @property int    $sum
  * @property string $status
  * @property string $notification_type
  * @property string $datetime
  * @property string $codepro
  * @property string $sha1_hash
  * @property string $label
- * @property int $plan_id
- * @property int $user_id
- * @property int $sender
- *
- * @property User $user
- * @property Plan $plan
+ * @property int    $plan_id
+ * @property int    $user_id
+ * @property int    $sender
+ * @property User   $user
+ * @property Plan   $plan
  */
 class Order extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'orders';
+    protected $table    = 'orders';
 
     protected $fillable = ['sum', 'status', 'plan_id', 'user_id', 'notification_type', 'datetime', 'codepro', 'sender', 'sha1_hash', 'label'];
 

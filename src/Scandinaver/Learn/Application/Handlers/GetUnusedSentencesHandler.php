@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Services\WordService;
 
 /**
  * Class GetUnusedSentencesHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class GetUnusedSentencesHandler implements GetUnusedSentencesHandlerInterface
@@ -20,6 +21,7 @@ class GetUnusedSentencesHandler implements GetUnusedSentencesHandlerInterface
 
     /**
      * GetUnusedSentencesHandler constructor.
+     *
      * @param WordService $wordService
      */
     public function __construct(WordService $wordService)
@@ -29,6 +31,7 @@ class GetUnusedSentencesHandler implements GetUnusedSentencesHandlerInterface
 
     /**
      * @param GetUnusedSentencesQuery $query
+     *
      * @return array
      * @throws DBALException
      */

@@ -17,16 +17,17 @@ use Scandinaver\Learn\Domain\{Translate, Word};
  * User: whiskey
  * Date: 07.02.15
  * Time: 4:22
- *
  * Class CardsController
+ *
  * @package  App\Http\Controllers\Sub\Frontend
  */
 class CardsController extends Controller
 {
     /**
-     * @param Word $word
+     * @param Word      $word
      * @param Translate $translate
-     * @param Asset $asset
+     * @param Asset     $asset
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -39,6 +40,7 @@ class CardsController extends Controller
 
     /**
      * @param Card $card
+     *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws ReflectionException

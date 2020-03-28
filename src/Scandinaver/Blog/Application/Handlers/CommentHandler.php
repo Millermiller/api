@@ -7,6 +7,7 @@ use Scandinaver\Blog\Application\Query\CommentQuery;
 
 /**
  * Class CommentHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class CommentHandler implements CommentHandlerInterface
@@ -18,6 +19,7 @@ class CommentHandler implements CommentHandlerInterface
 
     /**
      * @param CommentQuery
+     *
      * @inheritDoc
      */
     public function handle($query)

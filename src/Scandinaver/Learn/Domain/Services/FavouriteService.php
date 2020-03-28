@@ -3,37 +3,37 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Scandinaver\Common\Domain\Language;
-use Scandinaver\User\Domain\User;
-use Doctrine\ORM\{ORMException, OptimisticLockException};
+use Scandinaver\Learn\Domain\{Translate, Word};
 use Scandinaver\Learn\Domain\Card;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
     CardRepositoryInterface,
-    TranslateRepositoryInterface
-};
-use Scandinaver\Learn\Domain\{Translate, Word};
+    TranslateRepositoryInterface};
+use Scandinaver\User\Domain\User;
 
 /**
  * Class FavouriteService
  *
  * @package App\Services
  */
-class FavouriteService {
+class FavouriteService
+{
     /**
      * @var CardRepositoryInterface
      */
     private $cardRepository;
-    
+
     /**
      * @var TranslateRepositoryInterface
      */
     private $translateRepository;
-    
+
     /**
      * @var AssetRepositoryInterface
      */
     private $assetRepository;
-    
+
     /**
      * FavouriteService constructor.
      *
@@ -47,11 +47,11 @@ class FavouriteService {
         AssetRepositoryInterface $assetRepository
     )
     {
-        $this->cardRepository = $cardRepository;
+        $this->cardRepository      = $cardRepository;
         $this->translateRepository = $translateRepository;
-        $this->assetRepository = $assetRepository;
+        $this->assetRepository     = $assetRepository;
     }
-    
+
     /**
      * @param Language  $language
      * @param User      $user
@@ -63,10 +63,10 @@ class FavouriteService {
     public function create(Language $language, User $user, Word $word, Translate $translate): Card
     {
         $asset = $this->assetRepository->getFavouriteAsset($language, $user);
-        
+
         return $this->cardRepository->save(new Card($word, $asset, $translate));
     }
-    
+
     /**
      * @param Language $language
      * @param User     $user
@@ -78,8 +78,8 @@ class FavouriteService {
     public function delete(Language $language, User $user, $id): void
     {
         $asset = $this->assetRepository->getFavouriteAsset($language, $user);
-        $card = $this->cardRepository->findOneBy(['wordId' => $id, 'assetId' => $asset->getId()]);
-        
+        $card  = $this->cardRepository->findOneBy(['wordId' => $id, 'assetId' => $asset->getId()]);
+
         app('em')->remove($card);
         app('em')->flush();
     }

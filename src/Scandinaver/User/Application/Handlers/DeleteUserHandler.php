@@ -8,6 +8,7 @@ use Scandinaver\User\Domain\Services\UserService;
 
 /**
  * Class DeleteUserHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class DeleteUserHandler implements DeleteUserHandlerInterface
@@ -19,6 +20,7 @@ class DeleteUserHandler implements DeleteUserHandlerInterface
 
     /**
      * UserHandler constructor.
+     *
      * @param UserService $userService
      */
     public function __construct(UserService $userService)
@@ -28,6 +30,7 @@ class DeleteUserHandler implements DeleteUserHandlerInterface
 
     /**
      * @param $command DeleteUserCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

@@ -6,6 +6,11 @@ namespace App\Providers;
 use Laravel\Passport\Passport;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AppServiceProvider
+ *
+ * @package App\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -15,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       // dd(Auth::user());
+        // dd(Auth::user());
     }
 
     /**

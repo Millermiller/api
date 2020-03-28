@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\AudioService;
 
 /**
  * Class UploadAudioHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class UploadAudioHandler implements UploadAudioHandlerInterface
@@ -24,6 +25,7 @@ class UploadAudioHandler implements UploadAudioHandlerInterface
 
     /**
      * @param UploadAudioCommand $command
+     *
      * @inheritDoc
      */
     public function handle($command): void

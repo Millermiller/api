@@ -1,8 +1,9 @@
 <?php
 
+
 namespace App\Events;
 
-use App\Entities\TextResult;
+use Scandinaver\Text\Infrastructure\Persistence\Eloquent\TextResult;
 use Scandinaver\User\Domain\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -10,6 +11,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
+/**
+ * Class NextTextLevel
+ *
+ * @package App\Events
+ */
 class NextTextLevel
 {
     use Dispatchable;
@@ -29,12 +35,12 @@ class NextTextLevel
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param User       $user
      * @param TextResult $result
      */
     public function __construct(User $user, TextResult $result)
     {
-        $this->user = $user;
+        $this->user   = $user;
         $this->result = $result;
     }
 

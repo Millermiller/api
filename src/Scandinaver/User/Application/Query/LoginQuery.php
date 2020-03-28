@@ -7,9 +7,9 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class LoginQuery
- * @package Scandinaver\User\Application\Query
  *
- * @see \Scandinaver\User\Application\Handlers\LoginHandler
+ * @package Scandinaver\User\Application\Query
+ * @see     \Scandinaver\User\Application\Handlers\LoginHandler
  */
 class LoginQuery implements Query
 {
@@ -22,6 +22,7 @@ class LoginQuery implements Query
      * @var string
      */
     private $password;
+
     /**
      * @var array
      */
@@ -29,6 +30,7 @@ class LoginQuery implements Query
 
     /**
      * LoginQuery constructor.
+     *
      * @param array $credentials
      */
     public function __construct(array $credentials)

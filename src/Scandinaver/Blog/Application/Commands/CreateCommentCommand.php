@@ -7,9 +7,9 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class CreateCommentCommand
- * @package Scandinaver\Blog\Application\Commands
  *
- * @see \Scandinaver\Blog\Application\Handlers\CreateCommentHandler
+ * @package Scandinaver\Blog\Application\Commands
+ * @see     \Scandinaver\Blog\Application\Handlers\CreateCommentHandler
  */
 class CreateCommentCommand implements Command
 {

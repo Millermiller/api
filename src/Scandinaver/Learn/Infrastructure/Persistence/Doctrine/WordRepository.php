@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Shared\BaseRepository;
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
+use Scandinaver\Shared\BaseRepository;
 
 /**
  * Class WordRepository
+ *
  * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
  */
 class WordRepository extends BaseRepository implements WordRepositoryInterface
@@ -24,14 +25,15 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(w.id)')
-            ->from($this->getEntityName(), 'w')
-            ->where($q->expr()->isNotNull('w.audio'))
-            ->getQuery()
-            ->getSingleScalarResult();
+                 ->from($this->getEntityName(), 'w')
+                 ->where($q->expr()->isNotNull('w.audio'))
+                 ->getQuery()
+                 ->getSingleScalarResult();
     }
 
     /**
      * @param Language $language
+     *
      * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -41,15 +43,16 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(w.id)')
-            ->from($this->getEntityName(), 'w')
-            ->where($q->expr()->eq('w.language', ':language'))
-            ->setParameter('language', $language)
-            ->getQuery()
-            ->getSingleScalarResult();
+                 ->from($this->getEntityName(), 'w')
+                 ->where($q->expr()->eq('w.language', ':language'))
+                 ->setParameter('language', $language)
+                 ->getQuery()
+                 ->getSingleScalarResult();
     }
 
     /**
      * @param Language $language
+     *
      * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -59,11 +62,11 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(w.id)')
-            ->from($this->getEntityName(), 'w')
-            ->where($q->expr()->eq('w.language', ':language'))
-            ->where($q->expr()->isNotNull('w.audio'))
-            ->setParameter('language', $language)
-            ->getQuery()
-            ->getSingleScalarResult();
+                 ->from($this->getEntityName(), 'w')
+                 ->where($q->expr()->eq('w.language', ':language'))
+                 ->where($q->expr()->isNotNull('w.audio'))
+                 ->setParameter('language', $language)
+                 ->getQuery()
+                 ->getSingleScalarResult();
     }
 }

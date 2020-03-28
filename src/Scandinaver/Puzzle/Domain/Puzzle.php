@@ -1,26 +1,25 @@
 <?php
 
 
-namespace  Scandinaver\Puzzle\Domain;
+namespace Scandinaver\Puzzle\Domain;
 
-use Scandinaver\Shared\Contracts\Response;
-use Scandinaver\User\Domain\User;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Scandinaver\Shared\Contracts\Response;
+use Scandinaver\User\Domain\User;
 
 /**
  * Puzzles
- *
  * @ORM\Table(name="puzzles")
+ *
  * @ORM\Entity
  */
 class Puzzle implements JsonSerializable, Response
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -29,42 +28,36 @@ class Puzzle implements JsonSerializable, Response
 
     /**
      * @var string|null
-     *
      * @ORM\Column(name="text", type="string", length=255, nullable=true)
      */
     private $text;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(name="translate", type="string", length=255, nullable=true)
      */
     private $translate;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(name="language_id", type="string", length=10, nullable=true)
      */
     private $languageId;
 
     /**
      * @var DateTime|null
-     *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
      * @var Collection|User[]
-     *
      * @ORM\ManytoMany(targetEntity="Scandinaver\User\Domain\User", mappedBy="puzzles")
      */
     private $users;
@@ -75,10 +68,10 @@ class Puzzle implements JsonSerializable, Response
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
-            'text' => $this->text,
+            'id'        => $this->id,
+            'text'      => $this->text,
             'translate' => $this->translate,
-            'success' =>  $this->users->count()
+            'success'   => $this->users->count()
         ];
     }
 
@@ -92,9 +85,10 @@ class Puzzle implements JsonSerializable, Response
 
     /**
      * @param User $user
+     *
      * @return $this
      */
-    public function addUser(User $user) : Puzzle
+    public function addUser(User $user): Puzzle
     {
         $this->users[] = $user;
 

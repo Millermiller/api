@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Main\Frontend;
 
 use Meta;
@@ -13,8 +14,8 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan;
  * User: john
  * Date: 29.06.2018
  * Time: 16:26
- *
  * Class ProfileController
+ *
  * @package Application\Controllers
  */
 class PaymentController extends Controller
@@ -26,6 +27,7 @@ class PaymentController extends Controller
 
     /**
      * PaymentController constructor.
+     *
      * @param PaymentService $paymentService
      */
     public function __construct(PaymentService $paymentService)
@@ -33,6 +35,9 @@ class PaymentController extends Controller
         $this->paymentService = $paymentService;
     }
 
+    /**
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
     public function index()
     {
         Meta::set('title', 'Scandinaver | Тарифы');
@@ -40,11 +45,16 @@ class PaymentController extends Controller
         return view('main.frontend.payment.index');
     }
 
+    /**
+     * @param $name
+     *
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
     public function plan($name)
     {
         $plan = Plan::where('name', $name)->firstOrFail();
 
-        Meta::set('title', 'Scandinaver | '.$plan->name);
+        Meta::set('title', 'Scandinaver | ' . $plan->name);
 
         return view('main.frontend.payment.plan', ['plan' => $plan]);
     }
@@ -52,12 +62,13 @@ class PaymentController extends Controller
     /**
      * Start handle process from route
      * TODO: сделать нормально!
+     *
      * @param Request $request
      */
     public function handlePayment(Request $request)
     {
         $order = $this->paymentService->make($request);
 
-        activity('admin')->withProperties($request->toArray())->log('Пришел платеж №'.$order->id);
+        activity('admin')->withProperties($request->toArray())->log('Пришел платеж №' . $order->id);
     }
 }

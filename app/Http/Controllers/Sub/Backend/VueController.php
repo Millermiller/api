@@ -1,8 +1,10 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Backend;
 
 use Auth;
+use Illuminate\Http\JsonResponse;
 use ReflectionException;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -19,8 +21,8 @@ use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
  * User: Миллер
  * Date: 29.05.2017
  * Time: 19:05
- *
  * Class VueController
+ *
  * @package Application\Controllers\Admin
  */
 class VueController extends Controller
@@ -32,6 +34,7 @@ class VueController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return array|Factory|RedirectResponse|Redirector|View|mixed|void
      * @throws ValidationException
      * @throws ReflectionException
@@ -41,7 +44,7 @@ class VueController extends Controller
         $this->validate(
             $request,
             [
-                'login' => 'required',
+                'login'    => 'required',
                 'password' => 'required',
             ],
             [
@@ -60,13 +63,15 @@ class VueController extends Controller
         try {//TODO: сделать нормально
             $this->queryBus->execute(new LoginQuery($request->only($login_type, 'password')));
             return redirect('/admin');
-        }
-        catch (UserNotFoundException $e){
+        } catch (UserNotFoundException $e) {
             return view('backend.login', ['error' => true]);
         }
     }
 
-    public function logout()
+    /**
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
     {
         setcookie('token', 'w', time() - 1000, '/', '.' . config('app.DOMAIN'));
         setcookie('user', 'w', time() - 1000, '/', '.' . config('app.DOMAIN'));

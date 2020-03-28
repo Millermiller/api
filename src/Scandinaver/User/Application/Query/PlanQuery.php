@@ -7,9 +7,9 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class PlanQuery
- * @package Scandinaver\User\Application\Query
  *
- * @see \Scandinaver\User\Application\Handlers\PlanHandler
+ * @package Scandinaver\User\Application\Query
+ * @see     \Scandinaver\User\Application\Handlers\PlanHandler
  */
 class PlanQuery implements Query
 {

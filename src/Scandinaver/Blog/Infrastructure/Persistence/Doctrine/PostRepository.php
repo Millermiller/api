@@ -10,6 +10,7 @@ use Scandinaver\Shared\BaseRepository;
 
 /**
  * Class UserRepository
+ *
  * @package App\Repositories\User
  */
 class PostRepository extends BaseRepository implements PostRepositoryInterface
@@ -22,17 +23,18 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('p', 'c', 'cy', 'u')
-            ->from($this::getEntityName(), 'p')
-            ->leftJoin('p.user', 'u', 'WITH')
-            ->leftJoin('p.comments', 'c', )
-            ->leftJoin('p.category', 'cy', 'WITH')
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getResult();
+                 ->from($this::getEntityName(), 'p')
+                 ->leftJoin('p.user', 'u', 'WITH')
+                 ->leftJoin('p.comments', 'c',)
+                 ->leftJoin('p.category', 'cy', 'WITH')
+                 ->orderBy('p.id', 'asc')
+                 ->getQuery()
+                 ->getResult();
     }
 
     /**
      * @param $id
+     *
      * @return Post
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -42,12 +44,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->where('u.id = :id')
-            ->setParameter('id', $id)
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getSingleResult();
+                 ->from($this::getEntityName(), 'u')
+                 ->join('u.plan', 'p', 'WITH')
+                 ->where('u.id = :id')
+                 ->setParameter('id', $id)
+                 ->orderBy('p.id', 'asc')
+                 ->getQuery()
+                 ->getSingleResult();
     }
 }

@@ -16,6 +16,7 @@ use Scandinaver\Blog\Domain\Category;
 
 /**
  * Class CategoryController
+ *
  * @package App\Http\Controllers\Main\Backend
  */
 class CategoryController extends Controller
@@ -31,6 +32,7 @@ class CategoryController extends Controller
 
     /**
      * @param int $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -41,6 +43,7 @@ class CategoryController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -52,8 +55,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Category $category
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -66,6 +70,7 @@ class CategoryController extends Controller
 
     /**
      * @param Category $category
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

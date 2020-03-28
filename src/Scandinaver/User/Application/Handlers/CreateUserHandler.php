@@ -7,6 +7,7 @@ use Scandinaver\User\Application\Commands\CreateUserCommand;
 
 /**
  * Class CreateUserHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class CreateUserHandler implements CreateUserHandlerInterface
@@ -18,6 +19,7 @@ class CreateUserHandler implements CreateUserHandlerInterface
 
     /**
      * @param CreateUserCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

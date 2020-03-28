@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Learn\Application\Handlers;
 
-use App\Helpers\Auth;
 use App\Events\AssetDelete;
+use App\Helpers\Auth;
 use Scandinaver\Learn\Application\Commands\DeleteAssetCommand;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 
 /**
  * Class DeleteAssetHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class DeleteAssetHandler implements DeleteAssetHandlerInterface
@@ -26,8 +27,9 @@ class DeleteAssetHandler implements DeleteAssetHandlerInterface
 
     /**
      * AssetController constructor.
+     *
      * @param AssetService $assetService
-     * @param CardService $cardService
+     * @param CardService  $cardService
      */
     public function __construct(AssetService $assetService, CardService $cardService)
     {

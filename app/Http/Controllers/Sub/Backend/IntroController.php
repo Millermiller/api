@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Backend;
 
 use ReflectionException;
@@ -15,8 +16,8 @@ use Scandinaver\Common\Application\Handlers\CreateIntroCommandHandler;
  * User: john
  * Date: 30.08.2017
  * Time: 20:36
- *
  * Class IntroController
+ *
  * @package Application\Controllers\Admin
  */
 class IntroController extends Controller
@@ -32,6 +33,7 @@ class IntroController extends Controller
 
     /**
      * @param int $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -42,12 +44,13 @@ class IntroController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
     public function store(Request $request)
     {
-        $intro =  new Intro();
+        $intro = new Intro();
 
         $this->commandBus->execute(new CreateIntroCommand($request->toArray()));
         return response()->json(null, 201);
@@ -64,7 +67,8 @@ class IntroController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */

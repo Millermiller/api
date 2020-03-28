@@ -3,12 +3,14 @@
 
 namespace Scandinaver\Shared;
 
+use ReflectionClass;
 use ReflectionException;
 use Scandinaver\Shared\Contracts\Command;
 use Scandinaver\Shared\Contracts\CommandHandler;
 
 /**
  * Class CommandBus
+ *
  * @package Scandinaver\Shared
  */
 class CommandBus
@@ -18,6 +20,7 @@ class CommandBus
 
     /**
      * @param Command $command
+     *
      * @throws ReflectionException
      */
     public function execute(Command $command): void
@@ -27,6 +30,7 @@ class CommandBus
 
     /**
      * @param Command $command
+     *
      * @return CommandHandler
      * @throws ReflectionException
      */
@@ -37,11 +41,12 @@ class CommandBus
 
     /**
      * @param Command $command
+     *
      * @return string
      * @throws ReflectionException
      */
     public function getHandlerClass(Command $command): string
     {
-        return str_replace(self::COMMAND_PREFIX, self::HANDLER_PREFIX, (new \ReflectionClass($command))->getShortName()).'Interface';
+        return str_replace(self::COMMAND_PREFIX, self::HANDLER_PREFIX, (new ReflectionClass($command))->getShortName()) . 'Interface';
     }
 }

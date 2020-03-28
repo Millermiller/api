@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Services\BlogService;
 
 /**
  * Class UpdatePostHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class UpdatePostHandler implements UpdatePostHandlerInterface

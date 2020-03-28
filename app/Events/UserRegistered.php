@@ -1,7 +1,9 @@
 <?php
 
+
 namespace App\Events;
 
+use Illuminate\Broadcasting\Channel;
 use Scandinaver\User\Domain\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -39,7 +41,7 @@ class UserRegistered
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {

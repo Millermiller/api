@@ -7,6 +7,7 @@ use Scandinaver\User\Application\Commands\UpdatePlanCommand;
 
 /**
  * Class UpdatePlanHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class UpdatePlanHandler implements UpdatePlanHandlerInterface
@@ -18,6 +19,7 @@ class UpdatePlanHandler implements UpdatePlanHandlerInterface
 
     /**
      * @param UpdatePlanCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

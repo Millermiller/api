@@ -7,9 +7,10 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Class TextServiceProvider
+ *
  * @package Scandinaver\Text\Application
  */
-class APIServiceProvider  extends ServiceProvider
+class APIServiceProvider extends ServiceProvider
 {
     public function register()
     {

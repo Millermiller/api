@@ -7,6 +7,7 @@ use Scandinaver\Blog\Application\Query\CategoryQuery;
 
 /**
  * Class CategoryHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class CategoryHandler implements CategoryHandlerInterface
@@ -18,6 +19,7 @@ class CategoryHandler implements CategoryHandlerInterface
 
     /**
      * @param CategoryQuery
+     *
      * @inheritDoc
      */
     public function handle($query)

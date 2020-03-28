@@ -8,6 +8,7 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class DeleteMessageCommand
+ *
  * @package Scandinaver\Common\Application\Commands
  */
 class DeleteMessageCommand implements Command

@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Services\CardService;
 
 /**
  * Class DeleteCardHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class DeleteCardFromAssetHandler implements DeleteCardFromAssetHandlerInterface
@@ -20,6 +21,7 @@ class DeleteCardFromAssetHandler implements DeleteCardFromAssetHandlerInterface
 
     /**
      * CardsController constructor.
+     *
      * @param CardService $cardService
      */
     public function __construct(CardService $cardService)

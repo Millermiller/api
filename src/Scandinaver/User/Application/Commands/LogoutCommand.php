@@ -8,9 +8,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class LogoutCommand
- * @package Scandinaver\User\Application\Commands
  *
- * @see \Scandinaver\User\Application\Handlers\LogoutHandler
+ * @package Scandinaver\User\Application\Commands
+ * @see     \Scandinaver\User\Application\Handlers\LogoutHandler
  */
 class LogoutCommand implements Command
 {

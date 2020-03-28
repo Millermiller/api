@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\Event;
 
+/**
+ * Class EventListener
+ *
+ * @package App\Listeners
+ */
 class EventListener
 {
     /**
@@ -19,7 +25,8 @@ class EventListener
     /**
      * Handle the event.
      *
-     * @param  Event  $event
+     * @param Event $event
+     *
      * @return void
      */
     public function handle(Event $event)

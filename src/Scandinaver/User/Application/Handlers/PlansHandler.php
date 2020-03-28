@@ -7,6 +7,7 @@ use Scandinaver\User\Application\Query\PlansQuery;
 
 /**
  * Class PlansHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class PlansHandler implements PlansHandlerInterface
@@ -18,6 +19,7 @@ class PlansHandler implements PlansHandlerInterface
 
     /**
      * @param PlansQuery
+     *
      * @inheritDoc
      */
     public function handle($query)

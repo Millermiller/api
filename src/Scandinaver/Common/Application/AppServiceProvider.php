@@ -3,21 +3,22 @@
 
 namespace Scandinaver\Common\Application;
 
-use Laravel\Passport\Passport;
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Blog\Domain\Post;
+use Laravel\Passport\Passport;
 use Scandinaver\Blog\Domain\Contracts\PostRepositoryInterface;
+use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
+use Scandinaver\Common\Domain\{Intro, Language, Message};
 use Scandinaver\Common\Domain\Contracts\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Contracts\MessageRepositoryInterface;
-use Scandinaver\Common\Domain\{Intro, Language, Message};
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\IntroRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\LanguageRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\MessageRepository;
 
 /**
  * Class AppServiceProvider
+ *
  * @package Scandinaver\Common\Application
  */
 class AppServiceProvider extends ServiceProvider
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       // dd(Auth::user());
+        // dd(Auth::user());
     }
 
     /**

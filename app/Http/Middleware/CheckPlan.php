@@ -1,12 +1,18 @@
 <?php
 
+
 namespace App\Http\Middleware;
 
 use App\Helpers\Auth;
-use Carbon\Carbon;
 use Closure;
+use Illuminate\Http\Request;
 use Scandinaver\User\Domain\Services\UserService;
 
+/**
+ * Class CheckPlan
+ *
+ * @package App\Http\Middleware
+ */
 class CheckPlan
 {
     private $userService;
@@ -19,11 +25,12 @@ class CheckPlan
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
+     *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next): Closure
     {
         if (\Auth::check()) {
             $this->userService->updatePlan(Auth::user());

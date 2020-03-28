@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;
@@ -11,6 +12,7 @@ use Scandinaver\Learn\Domain\Asset;
 
 /**
  * Class NextLevel
+ *
  * @package App\Events
  */
 class NextLevel
@@ -33,11 +35,11 @@ class NextLevel
      * Create a new event instance.
      *
      * @param Authenticatable $user
-     * @param Asset $nextAsset
+     * @param Asset           $nextAsset
      */
     public function __construct(Authenticatable $user, Asset $nextAsset)
     {
-        $this->user = $user;
+        $this->user      = $user;
         $this->nextAsset = $nextAsset;
     }
 

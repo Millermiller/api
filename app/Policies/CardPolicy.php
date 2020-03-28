@@ -1,11 +1,17 @@
 <?php
 
+
 namespace App\Policies;
 
 use Scandinaver\User\Domain\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Scandinaver\Learn\Domain\Card;
 
+/**
+ * Class CardPolicy
+ *
+ * @package App\Policies
+ */
 class CardPolicy
 {
     use HandlesAuthorization;
@@ -15,6 +21,7 @@ class CardPolicy
      *
      * @param User $user
      * @param Card $card
+     *
      * @return mixed
      */
     public function view(User $user, Card $card)
@@ -26,6 +33,7 @@ class CardPolicy
      * Determine whether the user can create cards.
      *
      * @param User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -38,6 +46,7 @@ class CardPolicy
      *
      * @param User $user
      * @param Card $card
+     *
      * @return mixed
      */
     public function update(User $user, Card $card)
@@ -50,9 +59,10 @@ class CardPolicy
      *
      * @param User $user
      * @param Card $card
-     * @return mixed
+     *
+     * @return bool
      */
-    public function delete(User $user, Card $card)
+    public function delete(User $user, Card $card): bool
     {
         return $user->hasAsset($card->getAsset()) || $user->isAdmin();
     }
@@ -62,6 +72,7 @@ class CardPolicy
      *
      * @param User $user
      * @param Card $card
+     *
      * @return mixed
      */
     public function restore(User $user, Card $card)
@@ -74,6 +85,7 @@ class CardPolicy
      *
      * @param User $user
      * @param Card $card
+     *
      * @return mixed
      */
     public function forceDelete(User $user, Card $card)

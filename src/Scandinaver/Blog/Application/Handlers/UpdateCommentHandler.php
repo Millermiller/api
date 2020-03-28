@@ -7,6 +7,7 @@ use Scandinaver\Blog\Application\Commands\UpdateCommentCommand;
 
 /**
  * Class UpdateCommentHandler
+ *
  * @package Scandinaver\Blog\Application\Handlers
  */
 class UpdateCommentHandler implements UpdateCommentHandlerInterface
@@ -18,6 +19,7 @@ class UpdateCommentHandler implements UpdateCommentHandlerInterface
 
     /**
      * @param UpdateCommentCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

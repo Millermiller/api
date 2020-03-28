@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
-use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class SaveTestResultCommand
- * @package Scandinaver\Learn\Application\Commands
  *
- * @see \Scandinaver\Learn\Application\Handlers\SaveTestResultHandler
+ * @package Scandinaver\Learn\Application\Commands
+ * @see     \Scandinaver\Learn\Application\Handlers\SaveTestResultHandler
  */
 class SaveTestResultCommand implements Command
 {
@@ -32,14 +32,15 @@ class SaveTestResultCommand implements Command
 
     /**
      * SaveTestResultCommand constructor.
-     * @param User $user
+     *
+     * @param User  $user
      * @param Asset $asset
-     * @param int $resultValue
+     * @param int   $resultValue
      */
     public function __construct(User $user, Asset $asset, int $resultValue)
     {
-        $this->user = $user;
-        $this->asset = $asset;
+        $this->user        = $user;
+        $this->asset       = $asset;
         $this->resultValue = $resultValue;
     }
 

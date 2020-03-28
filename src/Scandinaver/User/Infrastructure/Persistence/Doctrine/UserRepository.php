@@ -3,15 +3,16 @@
 
 namespace Scandinaver\User\Infrastructure\Persistence\Doctrine;
 
-use Doctrine\ORM\{NonUniqueResultException, NoResultException, ORMException, OptimisticLockException};
-use Scandinaver\Shared\BaseRepository;
+use Doctrine\ORM\{NonUniqueResultException, NoResultException, OptimisticLockException, ORMException};
 use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Text\Domain\Text;
+use Scandinaver\User\Domain\{Plan, User};
 use Scandinaver\User\Domain\Contracts\UserRepositoryInterface;
-use Scandinaver\User\Domain\{User, Plan};
 
 /**
  * Class UserRepository
+ *
  * @package App\Repositories\User
  */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
@@ -24,15 +25,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getResult();
+                 ->from($this::getEntityName(), 'u')
+                 ->join('u.plan', 'p', 'WITH')
+                 ->orderBy('p.id', 'asc')
+                 ->getQuery()
+                 ->getResult();
     }
 
     /**
      * @param $id
+     *
      * @return object|void|null
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -42,18 +44,19 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->where('u.id = :id')
-            ->setParameter('id', $id)
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getSingleResult();
+                 ->from($this::getEntityName(), 'u')
+                 ->join('u.plan', 'p', 'WITH')
+                 ->where('u.id = :id')
+                 ->setParameter('id', $id)
+                 ->orderBy('p.id', 'asc')
+                 ->getQuery()
+                 ->getSingleResult();
     }
 
     /**
-     * @param User $user
+     * @param User  $user
      * @param Asset $asset
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -69,6 +72,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @param User $user
      * @param Text $text
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -83,6 +87,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @param User $user
      * @param Plan $plan
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -93,8 +98,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param User $user
+     * @param User   $user
      * @param string $file
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -106,6 +112,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     /**
      * @param $string
+     *
      * @return array
      */
     public function findByNameOrEmail($string): array
@@ -113,14 +120,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->where('u.login = :login')
-            ->orWhere('u.email = :email')
-            ->orderBy('u.id', 'desc')
-            ->setParameter('login', $string)
-            ->setParameter('email', $string)
-            ->getQuery()
-            ->getResult();
+                 ->from($this::getEntityName(), 'u')
+                 ->join('u.plan', 'p', 'WITH')
+                 ->where('u.login = :login')
+                 ->orWhere('u.email = :email')
+                 ->orderBy('u.id', 'desc')
+                 ->setParameter('login', $string)
+                 ->setParameter('email', $string)
+                 ->getQuery()
+                 ->getResult();
     }
 }

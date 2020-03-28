@@ -10,9 +10,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class AssetsQuery
- * @package Scandinaver\API\Application\Query
  *
- * @see \Scandinaver\API\Application\Handlers\AssetsHandler
+ * @package Scandinaver\API\Application\Query
+ * @see     \Scandinaver\API\Application\Handlers\AssetsHandler
  */
 class AssetsQuery implements Query
 {
@@ -25,7 +25,7 @@ class AssetsQuery implements Query
      * @var string
      */
     private $language;
-    
+
     /**
      * AssetsQuery constructor.
      *
@@ -34,7 +34,7 @@ class AssetsQuery implements Query
      */
     public function __construct(Authenticatable $user, Language $language)
     {
-        $this->user = $user;
+        $this->user     = $user;
         $this->language = $language;
     }
 

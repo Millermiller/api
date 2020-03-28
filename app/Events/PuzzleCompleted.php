@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;
@@ -8,6 +9,11 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Scandinaver\Puzzle\Domain\Puzzle;
 
+/**
+ * Class PuzzleCompleted
+ *
+ * @package App\Events
+ */
 class PuzzleCompleted
 {
     use Dispatchable;
@@ -27,12 +33,12 @@ class PuzzleCompleted
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param User   $user
      * @param Puzzle $puzzle
      */
     public function __construct(User $user, Puzzle $puzzle)
     {
-        $this->user = $user;
+        $this->user   = $user;
         $this->puzzle = $puzzle;
     }
 

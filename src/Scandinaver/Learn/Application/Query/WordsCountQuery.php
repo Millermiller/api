@@ -8,9 +8,9 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class WordsCountQuery
- * @package Scandinaver\Learn\Application\Query
  *
- * @see \Scandinaver\Learn\Application\Handlers\WordsCountHandler
+ * @package Scandinaver\Learn\Application\Query
+ * @see     \Scandinaver\Learn\Application\Handlers\WordsCountHandler
  */
 class WordsCountQuery implements Query
 {
@@ -21,6 +21,7 @@ class WordsCountQuery implements Query
 
     /**
      * WordsCountQuery constructor.
+     *
      * @param Language $language
      */
     public function __construct(Language $language)

@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class CreateIntroCommand
+ *
  * @package Scandinaver\Common\Application\Commands
  */
 class CreateIntroCommand implements Command

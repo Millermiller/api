@@ -8,9 +8,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class UpdateUserCommand
- * @package Scandinaver\User\Application\Commands
  *
- * @see \Scandinaver\User\Application\Handlers\UpdateUserHandler
+ * @package Scandinaver\User\Application\Commands
+ * @see     \Scandinaver\User\Application\Handlers\UpdateUserHandler
  */
 class UpdateUserCommand implements Command
 {

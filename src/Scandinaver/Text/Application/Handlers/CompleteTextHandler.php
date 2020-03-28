@@ -8,6 +8,7 @@ use Scandinaver\Text\Domain\TextService;
 
 /**
  * Class CompleteTextHandler
+ *
  * @package Scandinaver\Text\Application\Handlers
  */
 class CompleteTextHandler implements CompleteTextHandlerInterface
@@ -19,6 +20,7 @@ class CompleteTextHandler implements CompleteTextHandlerInterface
 
     /**
      * TextController constructor.
+     *
      * @param TextService $textService
      */
     public function __construct(TextService $textService)
@@ -28,6 +30,7 @@ class CompleteTextHandler implements CompleteTextHandlerInterface
 
     /**
      * @param CompleteTextCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

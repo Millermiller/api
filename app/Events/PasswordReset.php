@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;
@@ -9,6 +10,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
+/**
+ * Class PasswordReset
+ *
+ * @package App\Events
+ */
 class PasswordReset
 {
     use Dispatchable;
@@ -29,7 +35,7 @@ class PasswordReset
      * Create a new event instance.
      *
      * @param User $user
-     * @param $password
+     * @param      $password
      */
     public function __construct(User $user, $password)
     {

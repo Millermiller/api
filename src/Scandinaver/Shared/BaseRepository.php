@@ -11,6 +11,7 @@ use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
 
 /**
  * Class BaseRepository
+ *
  * @package Scandinaver\Shared
  */
 class BaseRepository extends EntityRepository implements BaseRepositoryInterface
@@ -26,6 +27,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 
     /**
      * @param $id
+     *
      * @return object|null
      */
     public function get($id)
@@ -35,6 +37,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 
     /**
      * @param $object
+     *
      * @return mixed
      * @throws ORMException
      * @throws OptimisticLockException
@@ -48,7 +51,8 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 
     /**
      * @param object $entity
-     * @param array $data
+     * @param array  $data
+     *
      * @return object
      * @throws ORMException
      * @throws OptimisticLockException
@@ -58,7 +62,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
         foreach ($data as $key => $value) {
             $key = Inflector::camelize($key);
             if (property_exists($entity, $key)) {
-                $entity->{'set'.ucfirst($key)}($value);
+                $entity->{'set' . ucfirst($key)}($value);
             }
         }
         $this->_em->flush($entity);
@@ -67,6 +71,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 
     /**
      * @param $object
+     *
      * @return bool
      * @throws ORMException
      * @throws OptimisticLockException

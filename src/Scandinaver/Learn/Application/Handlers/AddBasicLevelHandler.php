@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\AssetService;
 
 /**
  * Class AddBasicLevelHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class AddBasicLevelHandler implements AddBasicLevelHandlerInterface
@@ -19,6 +20,7 @@ class AddBasicLevelHandler implements AddBasicLevelHandlerInterface
 
     /**
      * AddBasicLevelHandler constructor.
+     *
      * @param AssetService $assetService
      */
     public function __construct(AssetService $assetService)
@@ -28,6 +30,7 @@ class AddBasicLevelHandler implements AddBasicLevelHandlerInterface
 
     /**
      * @param AddBasicLevelCommand $command
+     *
      * @inheritDoc
      */
     public function handle($command): void

@@ -10,7 +10,9 @@ use Sunra\PhpSimple\HtmlDomParser;
 class ForvoParser implements AudioParserInterface
 {
     /** TODO: добавить авторизацию и использование cookies (где-то на bitbucket)
+     *
      * @param string $word
+     *
      * @return string
      * @throws AudioFileCantParsedException
      */

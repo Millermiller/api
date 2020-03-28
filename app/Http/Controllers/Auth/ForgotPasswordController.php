@@ -1,11 +1,19 @@
 <?php
 
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Class ForgotPasswordController
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class ForgotPasswordController extends Controller
 {
     /*
@@ -34,9 +42,10 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a successful password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @param string  $response
+     *
+     * @return RedirectResponse|JsonResponse
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
@@ -46,9 +55,10 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a failed password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @param string  $response
+     *
+     * @return RedirectResponse|JsonResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {

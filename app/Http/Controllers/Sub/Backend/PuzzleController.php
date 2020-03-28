@@ -1,24 +1,25 @@
 <?php
 
+
 namespace App\Http\Controllers\Sub\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Puzzle;
-use \Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Created by PhpStorm.
  * User: john
  * Date: 30.08.2017
  * Time: 20:39
- *
  * Class PuzzleController
+ *
  * @package Application\Controllers\Admin
  */
 class PuzzleController extends Controller
 {
 
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json(Puzzle::all());
     }
@@ -26,10 +27,11 @@ class PuzzleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     *
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json(Puzzle::findOrFail($id));
     }
@@ -37,10 +39,11 @@ class PuzzleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         return response()->json(Puzzle::create($request->all()), 201);
     }
@@ -48,11 +51,12 @@ class PuzzleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $puzzle = Puzzle::findOrFail($id);
         $puzzle->update($request->all());
@@ -63,11 +67,11 @@ class PuzzleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @param int $id
+     *
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $puzzle = Puzzle::findOrFail($id);
         $puzzle->delete();

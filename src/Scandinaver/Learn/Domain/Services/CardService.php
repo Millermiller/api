@@ -5,7 +5,6 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Common\Domain\Language;
-use Scandinaver\User\Domain\User;
 use Scandinaver\Learn\Domain\{Asset,
     Card,
     Contracts\AssetRepositoryInterface,
@@ -15,11 +14,12 @@ use Scandinaver\Learn\Domain\{Asset,
     Contracts\TranslateRepositoryInterface,
     Example,
     Translate,
-    Word
-};
+    Word};
+use Scandinaver\User\Domain\User;
 
 /**
  * Class CardService
+ *
  * @package app\Services
  */
 class CardService
@@ -51,10 +51,11 @@ class CardService
 
     /**
      * CardService constructor.
-     * @param AssetRepositoryInterface $assetRepository
-     * @param CardRepositoryInterface $cardRepository
-     * @param ResultRepositoryInterface $resultRepository
-     * @param ExampleRepositoryInterface $exampleRepository
+     *
+     * @param AssetRepositoryInterface     $assetRepository
+     * @param CardRepositoryInterface      $cardRepository
+     * @param ResultRepositoryInterface    $resultRepository
+     * @param ExampleRepositoryInterface   $exampleRepository
      * @param TranslateRepositoryInterface $translateRepository
      */
     public function __construct(
@@ -73,9 +74,10 @@ class CardService
     }
 
     /**
-     * @param Word $word
+     * @param Word      $word
      * @param Translate $translate
-     * @param Asset $asset
+     * @param Asset     $asset
+     *
      * @return Card
      */
     public function createCard(Word $word, Translate $translate, Asset $asset): Card
@@ -88,10 +90,11 @@ class CardService
     }
 
     /**
-     * @param Card $card
-     * @param Word $word
+     * @param Card      $card
+     * @param Word      $word
      * @param Translate $translate
-     * @param Asset $asset
+     * @param Asset     $asset
+     *
      * @return Card
      */
     public function updateCard(Card $card, Word $word, Translate $translate, Asset $asset): Card
@@ -114,11 +117,12 @@ class CardService
 
     /**
      * возвращает слова набора, транскрипцию и один вариант перевода
-     *
      * используется  при редактировании набора на /cards/
+     *
      * @param Language $language
-     * @param User $user
-     * @param Asset $asset
+     * @param User     $user
+     * @param Asset    $asset
+     *
      * @return array
      */
     public function getCards(Language $language, User $user, Asset $asset): array
@@ -134,16 +138,17 @@ class CardService
         }
 
         return [
-            'type' => $asset->getType(),
-            'cards' => $cards,
-            'title' => $asset->getTitle(),
+            'type'   => $asset->getType(),
+            'cards'  => $cards,
+            'title'  => $asset->getTitle(),
             'result' => $result->getValue(),
-            'level' => $asset->getLevel(),
+            'level'  => $asset->getLevel(),
         ];
     }
 
     /**
      * @param Card $card
+     *
      * @return Collection|Example[]|array
      */
     public function getExamples(Card $card): array
@@ -152,9 +157,10 @@ class CardService
     }
 
     /**
-     * @param Card $card
+     * @param Card   $card
      * @param string $text
      * @param string $value
+     *
      * @return Example
      */
     public function addExample(Card $card, string $text, string $value): Example
@@ -178,7 +184,8 @@ class CardService
 
     /**
      * @param Translate $translate
-     * @param string $text
+     * @param string    $text
+     *
      * @return Translate
      */
     public function editTranslate(Translate $translate, string $text): Translate

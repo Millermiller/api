@@ -15,6 +15,7 @@ use Scandinaver\Common\Application\Query\MetasQuery;
 
 /**
  * Class SeoController
+ *
  * @package App\Http\Controllers\Main\Backend
  */
 class MetaController extends Controller
@@ -29,7 +30,9 @@ class MetaController extends Controller
     }
 
     /**TODO: bind model
+     *
      * @param int $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -39,7 +42,8 @@ class MetaController extends Controller
     }
 
     /**
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -52,7 +56,8 @@ class MetaController extends Controller
 
     /**
      * @param Request $request
-     * @param Meta $meta
+     * @param Meta    $meta
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

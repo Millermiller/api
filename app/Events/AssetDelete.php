@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;
@@ -10,6 +11,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
+/**
+ * Class AssetDelete
+ *
+ * @package App\Events
+ */
 class AssetDelete
 {
     use Dispatchable;
@@ -30,11 +36,11 @@ class AssetDelete
      * Create a new event instance.
      *
      * @param Asset $asset
-     * @param User $user
+     * @param User  $user
      */
     public function __construct(User $user, Asset $asset)
     {
-        $this->user = $user;
+        $this->user  = $user;
         $this->asset = $asset;
     }
 

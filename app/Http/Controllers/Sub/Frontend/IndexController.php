@@ -18,6 +18,7 @@ use Scandinaver\User\Application\Query\GetUserQuery;
 
 /**
  * Class IndexController
+ *
  * @package App\Http\Controllers\Sub\Frontend
  */
 class IndexController extends Controller
@@ -27,7 +28,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-       return view('sub.frontend.index');
+        return view('sub.frontend.index');
     }
 
     /**
@@ -82,6 +83,7 @@ class IndexController extends Controller
 
     /**
      * @param Language $language
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

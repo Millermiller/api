@@ -8,6 +8,7 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class PuzzleService
+ *
  * @package Scandinaver\Puzzle\Domain
  */
 class PuzzleService
@@ -19,6 +20,7 @@ class PuzzleService
 
     /**
      * PuzzleService constructor.
+     *
      * @param PuzzleRepositoryInterface $puzzleRepository
      */
     public function __construct(PuzzleRepositoryInterface $puzzleRepository)
@@ -27,7 +29,7 @@ class PuzzleService
     }
 
     /**
-     * @param User $user
+     * @param User   $user
      * @param Puzzle $puzzle
      */
     public function completed(User $user, Puzzle $puzzle): void
@@ -37,6 +39,7 @@ class PuzzleService
 
     /**
      * @param User $user
+     *
      * @return array
      */
     public function getForUser(User $user): array

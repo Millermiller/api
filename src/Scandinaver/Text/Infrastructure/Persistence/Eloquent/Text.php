@@ -3,70 +3,36 @@
 
 namespace Scandinaver\Text\Infrastructure\Persistence\Eloquent;
 
-use DB;
 use Auth;
-use Illuminate\Database\Eloquent\{Model, Builder};
+use DB;
+use Illuminate\Database\Eloquent\{Builder, Model};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 
 /**
  * Class TextModel
- * @package App\Models
  *
- * @property int $id
- * @property int $level
+ * @package App\Models
+ * @property int    $id
+ * @property int    $level
  * @property string $title
  * @property string $image
  * @property string $description
  * @property string $text
  * @property string $translate
- * @property bool $published
- *
+ * @property bool   $published
  * @method static Builder domain()
- *
  */
 class Text extends Model
 {
-    protected $table = 'text';
+    protected $table    = 'text';
 
     protected $fillable = ['level', 'title', 'text', 'translate', 'published', 'description'];
 
-    protected $hidden = ['translate'];
-
-    /**
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeDomain($query): Builder
-    {
-        return $query->where('lang', config('app.lang'));
-    }
-
-    /**
-     * @return HasMany|TextExtra[]
-     */
-    public function textExtra(): array
-    {
-        return $this->hasMany('App\Helpers\Eloquent\TextExtra');
-    }
-
-    /**
-     * @return HasMany|TextWord[]
-     */
-    public function words(): array
-    {
-        return $this->hasMany('App\Helpers\Eloquent\TextWord');
-    }
-
-    /**
-     * @return BelongsTo|TextResult
-     */
-    public function result(): TextResult
-    {
-        return $this->belongsTo('App\Helpers\Eloquent\TextResult', 'id', 'text_id')->where('user_id', \Auth::id());
-    }
+    protected $hidden   = ['translate'];
 
     /**
      * @param int $textid
+     *
      * @return array
      */
     public static function getSynonyms(int $textid): array
@@ -93,6 +59,7 @@ class Text extends Model
 
     /**
      * @param int $id User Id
+     *
      * @return array
      */
     public static function getTextsByUser(int $id): array
@@ -124,6 +91,7 @@ class Text extends Model
 
     /**
      * @param int $id
+     *
      * @return bool
      */
     public static function getNextLevel(int $id): bool
@@ -140,11 +108,46 @@ class Text extends Model
 
     /**
      * @param array $attributes
+     *
      * @return mixed
      */
-    public static function create(array $attributes = array())
+    public static function create(array $attributes = [])
     {
         $attributes['level'] = DB::selectOne('select max(t.level) as level from text as t')->level + 1;
         return parent::create($attributes);
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeDomain($query): Builder
+    {
+        return $query->where('lang', config('app.lang'));
+    }
+
+    /**
+     * @return HasMany|TextExtra[]
+     */
+    public function textExtra(): array
+    {
+        return $this->hasMany('App\Helpers\Eloquent\TextExtra');
+    }
+
+    /**
+     * @return HasMany|TextWord[]
+     */
+    public function words(): array
+    {
+        return $this->hasMany('App\Helpers\Eloquent\TextWord');
+    }
+
+    /**
+     * @return BelongsTo|TextResult
+     */
+    public function result(): TextResult
+    {
+        return $this->belongsTo('App\Helpers\Eloquent\TextResult', 'id', 'text_id')->where('user_id', Auth::id());
     }
 }

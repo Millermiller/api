@@ -9,9 +9,9 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class CompleteTextCommand
- * @package Scandinaver\Text\Application\Commands
  *
- * @see \Scandinaver\Text\Application\Handlers\CompleteTextHandler
+ * @package Scandinaver\Text\Application\Commands
+ * @see     \Scandinaver\Text\Application\Handlers\CompleteTextHandler
  */
 class CompleteTextCommand implements Command
 {
@@ -27,6 +27,7 @@ class CompleteTextCommand implements Command
 
     /**
      * CompleteTextCommand constructor.
+     *
      * @param User $user
      * @param Text $text
      */

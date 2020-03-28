@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\Query;
 
 /**
  * Class MessageQuery
+ *
  * @package Scandinaver\Common\Application\Query
  */
 class MessageQuery implements Query

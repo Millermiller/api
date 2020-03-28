@@ -9,6 +9,7 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class UserHandler
+ *
  * @package Scandinaver\User\Application\Handlers
  */
 class UserHandler implements UserHandlerInterface
@@ -20,6 +21,7 @@ class UserHandler implements UserHandlerInterface
 
     /**
      * UserHandler constructor.
+     *
      * @param UserService $userService
      */
     public function __construct(UserService $userService)
@@ -29,6 +31,7 @@ class UserHandler implements UserHandlerInterface
 
     /**
      * @param UserQuery
+     *
      * @return User
      */
     public function handle($query): User

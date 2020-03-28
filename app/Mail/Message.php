@@ -1,11 +1,17 @@
 <?php
 
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Class Message
+ *
+ * @package App\Mail
+ */
 class Message extends Mailable
 {
     use Queueable, SerializesModels;
@@ -13,11 +19,11 @@ class Message extends Mailable
     public $data;
 
     /**
-     * Create a new message instance.
+     * Message constructor.
      *
-     * @param \App\Entities\Message $message
+     * @param \Scandinaver\Common\Domain\Message $message
      */
-    public function __construct(\App\Entities\Message $message)
+    public function __construct(\Scandinaver\Common\Domain\Message $message)
     {
         $this->data = $message;
     }
@@ -27,11 +33,11 @@ class Message extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): Message
     {
         return $this->from('support@scandinaver.org', "Scandinaver")
-            ->to('john@scandinaver.org')
-            ->subject("Получено сообщение")
-            ->markdown('emails.message');
+                    ->to('john@scandinaver.org')
+                    ->subject("Получено сообщение")
+                    ->markdown('emails.message');
     }
 }

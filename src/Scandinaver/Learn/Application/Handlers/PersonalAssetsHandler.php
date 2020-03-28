@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\AssetService;
 
 /**
  * Class PersonalAssetsHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class PersonalAssetsHandler implements PersonalAssetsHandlerInterface
@@ -19,6 +20,7 @@ class PersonalAssetsHandler implements PersonalAssetsHandlerInterface
 
     /**
      * AssetForUserByTypeHandler constructor.
+     *
      * @param AssetService $assetService
      */
     public function __construct(AssetService $assetService)
@@ -28,6 +30,7 @@ class PersonalAssetsHandler implements PersonalAssetsHandlerInterface
 
     /**
      * @param PersonalAssetsQuery $query
+     *
      * @return array
      */
     public function handle($query): array

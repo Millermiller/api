@@ -14,6 +14,7 @@ use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 
 /**
  * Class LoginController
+ *
  * @package App\Http\Controllers\Auth
  */
 class LoginController extends Controller
@@ -22,6 +23,7 @@ class LoginController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      * @throws ValidationException
@@ -38,18 +40,17 @@ class LoginController extends Controller
             ]
         );
         //TODO: повторяется
-        $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) ? 'email' : 'login';
+        $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'login';
 
         $request->merge([$login_type => $request->input('login')]);
 
-        try{//TODO: убрать success из ответов
+        try {//TODO: убрать success из ответов
             $this->queryBus->execute(new LoginQuery($request->only($login_type, 'password')));
 
             $tokenResult = auth()->user()->createToken('Personal Access Token');
             $tokenResult->token->save();
             return response()->json(['access_token' => $tokenResult->accessToken,]);
-        }
-        catch (UserNotFoundException $e){
+        } catch (UserNotFoundException $e) {
             return response()->json(['success' => false, 'message' => 'Неверный логин или пароль'], 403);
         }
     }

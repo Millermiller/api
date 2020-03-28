@@ -7,6 +7,7 @@ use Scandinaver\Common\Application\Commands\CreateMessageCommand;
 
 /**
  * Class CreateMessageHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class CreateMessageHandler implements CreateMessageHandlerInterface
@@ -18,6 +19,7 @@ class CreateMessageHandler implements CreateMessageHandlerInterface
 
     /**
      * @param CreateMessageCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

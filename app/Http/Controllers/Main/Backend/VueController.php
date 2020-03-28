@@ -18,6 +18,7 @@ use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 
 /**
  * Class IndexController
+ *
  * @package Application\Controllers\Admin
  * Created by PhpStorm.
  * User: whiskey
@@ -33,6 +34,7 @@ class VueController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return array|Factory|RedirectResponse|Redirector|View|mixed|void
      * @throws ValidationException
      * @throws ReflectionException
@@ -42,7 +44,7 @@ class VueController extends Controller
         $this->validate(
             $request,
             [
-                'login' => 'required',
+                'login'    => 'required',
                 'password' => 'required',
             ],
             [
@@ -61,7 +63,7 @@ class VueController extends Controller
         try {//TODO: сделать нормально
             $this->queryBus->execute(new LoginQuery($request->only($login_type, 'password')));
             return redirect('/admin');
-        }catch (UserNotFoundException $e){
+        } catch (UserNotFoundException $e) {
             return view('main.backend.login', ['error' => true]);
         }
     }
@@ -72,7 +74,7 @@ class VueController extends Controller
     public function logout(): JsonResponse
     {
         setcookie('token', 'w', time() - 1000, '/', '.' . config('app.DOMAIN'));
-        setcookie('user',  'w', time() - 1000, '/', '.' . config('app.DOMAIN'));
+        setcookie('user', 'w', time() - 1000, '/', '.' . config('app.DOMAIN'));
 
         Auth::logout();
 

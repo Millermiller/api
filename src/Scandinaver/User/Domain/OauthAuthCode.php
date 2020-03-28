@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class OauthAuthCode
+ *
  * @package App\Entities
  * @ORM\Entity
  * @ORM\Table(name="oauth_auth_codes")

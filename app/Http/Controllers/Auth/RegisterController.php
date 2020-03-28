@@ -17,6 +17,7 @@ use Scandinaver\User\Domain\User;
 
 /**
  * Class RegisterController
+ *
  * @package App\Http\Controllers\Auth
  */
 class RegisterController extends Controller
@@ -48,6 +49,7 @@ class RegisterController extends Controller
 
     /**
      * RegisterController constructor.
+     *
      * @param UserService $userService
      */
     public function __construct(UserService $userService)
@@ -58,28 +60,28 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
-     * @return \Illuminate\Validation\Validator
+     * @param array $data
+     *
+     * @return \Illuminate\Contracts\Validation\Validator|\Illuminate\Validation\Validator
      */
     protected function validator(array $data)
     {
-        Validator::extend('login', function($attribute, $value, $parameters)
-        {
+        Validator::extend('login', function ($attribute, $value, $parameters) {
             return preg_match('/^[a-zA-Z0-9_-]+$/u', $value);
         });
 
         return Validator::make($data, [
-            'login' => 'required|string|login|max:255|unique:App\Entities\User,login',
-            'email' => 'required|string|email|max:255|unique:App\Entities\User,email',
+            'login'    => 'required|string|login|max:255|unique:App\Entities\User,login',
+            'email'    => 'required|string|email|max:255|unique:App\Entities\User,email',
             'password' => 'required|string|min:6|confirmed',
         ],
             [
-                'required' => 'Обязательное поле',
-                'login' => 'Только латинские символы и цифры',
+                'required'  => 'Обязательное поле',
+                'login'     => 'Только латинские символы и цифры',
                 'confirmed' => 'Пароли не совпадают',
-                'unique' => 'Пользователь уже зарегистрирован',
-                'min' => 'Минимум :min символов',
-                'email' => 'Укажите корректный email',
+                'unique'    => 'Пользователь уже зарегистрирован',
+                'min'       => 'Минимум :min символов',
+                'email'     => 'Укажите корректный email',
             ]);
     }
 
@@ -87,6 +89,7 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ValidationException
      * @throws Exception
@@ -99,17 +102,18 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        Session::flash('message', 'Добро пожаловать, '.$user->getLogin().'.');
+        Session::flash('message', 'Добро пожаловать, ' . $user->getLogin() . '.');
         Session::flash('alert-class', 'success');
 
         return $this->registered($request, $user)
-            ?:  response()->json(['success' => false, 'message' => 'Произошла ошибка']);
+            ?: response()->json(['success' => false, 'message' => 'Произошла ошибка']);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
      * @param array $data
+     *
      * @return User
      * @throws Exception
      */
@@ -122,7 +126,8 @@ class RegisterController extends Controller
      * The user has been registered.
      *
      * @param Request $request
-     * @param  mixed  $user
+     * @param mixed   $user
+     *
      * @return JsonResponse
      */
     protected function registered(Request $request, $user): JsonResponse

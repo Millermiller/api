@@ -7,6 +7,7 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class UpdateMessageCommand
+ *
  * @package Scandinaver\Common\Application\Commands
  */
 class UpdateMessageCommand implements Command

@@ -7,6 +7,7 @@ use Scandinaver\Common\Application\Commands\DeleteMetaCommand;
 
 /**
  * Class DeleteMetaHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class DeleteMetaHandler implements DeleteMetaHandlerInterface
@@ -18,6 +19,7 @@ class DeleteMetaHandler implements DeleteMetaHandlerInterface
 
     /**
      * @param DeleteMetaCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

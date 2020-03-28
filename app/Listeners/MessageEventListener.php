@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Listeners;
 
 use App\Events\MessageEvent;
@@ -21,12 +22,13 @@ class MessageEventListener
     /**
      * Handle the event.
      *
-     * @param  MessageEvent  $event
+     * @param MessageEvent $event
+     *
      * @return void
      */
-    public function handle(MessageEvent $event)
+    public function handle(MessageEvent $event): void
     {
-      //  activity('admin')->performedOn($event->message)->log('Получено сообщение');
+        //  activity('admin')->performedOn($event->message)->log('Получено сообщение');
 
         Mail::send(new Message($event->message));
     }

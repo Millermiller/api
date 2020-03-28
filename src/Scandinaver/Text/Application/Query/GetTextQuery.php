@@ -8,9 +8,9 @@ use Scandinaver\Text\Domain\Text;
 
 /**
  * Class GetTextQuery
- * @package Scandinaver\Text\Application\Query
  *
- * @see \Scandinaver\Text\Application\Handlers\GetTextHandler
+ * @package Scandinaver\Text\Application\Query
+ * @see     \Scandinaver\Text\Application\Handlers\GetTextHandler
  */
 class GetTextQuery implements Query
 {
@@ -21,6 +21,7 @@ class GetTextQuery implements Query
 
     /**
      * GetTextQuery constructor.
+     *
      * @param Text $text
      */
     public function __construct(Text $text)

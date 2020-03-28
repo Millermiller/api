@@ -12,13 +12,12 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
  * Date: 12.05.2016
  * Time: 1:50
  *
- * @property int $id
- * @property int $post_id
+ * @property int    $id
+ * @property int    $post_id
  * @property string $text
- * @property int $user_id
- * @property int $created_at
- * @property int $updated_at
- *
+ * @property int    $user_id
+ * @property int    $created_at
+ * @property int    $updated_at
  */
 class Comment extends Model
 {

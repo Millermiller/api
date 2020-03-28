@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Events;
 
 use Scandinaver\User\Domain\User;
@@ -11,6 +12,7 @@ use Scandinaver\Learn\Domain\{Asset, Result};
 
 /**
  * Class TestResultSaved
+ *
  * @package App\Events
  */
 class TestResultSaved
@@ -32,12 +34,12 @@ class TestResultSaved
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param User   $user
      * @param Result $result
      */
     public function __construct(User $user, Result $result)
     {
-        $this->user = $user;
+        $this->user   = $user;
         $this->result = $result;
     }
 

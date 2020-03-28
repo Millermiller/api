@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Puzzle\Application\Commands;
 
-use Scandinaver\User\Domain\User;
 use Scandinaver\Puzzle\Domain\Puzzle;
 use Scandinaver\Shared\Contracts\Command;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class PuzzleCompleteCommand
- * @package Scandinaver\Puzzle\Application\Commands
  *
- * @see \Scandinaver\Puzzle\Application\Handlers\PuzzleCompleteHandler
+ * @package Scandinaver\Puzzle\Application\Commands
+ * @see     \Scandinaver\Puzzle\Application\Handlers\PuzzleCompleteHandler
  */
 class PuzzleCompleteCommand implements Command
 {
@@ -27,12 +27,13 @@ class PuzzleCompleteCommand implements Command
 
     /**
      * PuzzleCompleteCommand constructor.
-     * @param User $user
+     *
+     * @param User   $user
      * @param Puzzle $puzzle
      */
     public function __construct(User $user, Puzzle $puzzle)
     {
-        $this->user = $user;
+        $this->user   = $user;
         $this->puzzle = $puzzle;
     }
 

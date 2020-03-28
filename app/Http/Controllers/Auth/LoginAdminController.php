@@ -1,10 +1,18 @@
 <?php
 
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+/**
+ * Class LoginAdminController
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class LoginAdminController extends Controller
 {
     /*
@@ -20,6 +28,9 @@ class LoginAdminController extends Controller
 
     use AuthenticatesUsers;
 
+    /**
+     * @var string
+     */
     protected $redirectAfterLogout = '/admin';
 
     /**
@@ -31,9 +42,12 @@ class LoginAdminController extends Controller
 
     public function __construct()
     {
-       // $this->middleware('guest', ['except' => 'logout']);
+        // $this->middleware('guest', ['except' => 'logout']);
     }
 
+    /**
+     * @return array|Factory|View|mixed
+     */
     public function showLoginForm()
     {
         return config('app.lang') ? view('sub.backend.login') : view('main.backend.login');
@@ -45,7 +59,7 @@ class LoginAdminController extends Controller
      *
      * @return string
      */
-    public function username()
+    public function username(): string
     {
         return 'login';
     }

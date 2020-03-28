@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\CardService;
 
 /**
  * Class EditTranslateHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class EditTranslateHandler implements EditTranslateHandlerInterface
@@ -19,6 +20,7 @@ class EditTranslateHandler implements EditTranslateHandlerInterface
 
     /**
      * GetTranslatesByWordHandler constructor.
+     *
      * @param CardService $cardService
      */
     public function __construct(CardService $cardService)
@@ -28,6 +30,7 @@ class EditTranslateHandler implements EditTranslateHandlerInterface
 
     /**
      * @param EditTranslateCommand $command
+     *
      * @inheritDoc
      */
     public function handle($command): void

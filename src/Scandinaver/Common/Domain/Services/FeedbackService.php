@@ -9,6 +9,7 @@ use Scandinaver\Common\Domain\Message;
 
 /**
  * Class FeedbackService
+ *
  * @package app\Services
  */
 class FeedbackService
@@ -20,6 +21,7 @@ class FeedbackService
 
     /**
      * FeedbackService constructor.
+     *
      * @param MessageRepositoryInterface $messageRepository
      */
     public function __construct(MessageRepositoryInterface $messageRepository)
@@ -29,6 +31,7 @@ class FeedbackService
 
     /**
      * @param array $request
+     *
      * @return Message
      * @throws Exception
      */
@@ -38,7 +41,7 @@ class FeedbackService
 
         $this->messageRepository->save($message);
 
-      //  event(new MessageEvent($message));
+        //  event(new MessageEvent($message));
 
         return $message;
     }

@@ -1,25 +1,31 @@
 <?php
 
+
 namespace App\Http\Middleware;
 
 use Closure;
 use Request;
 
+/**
+ * Class ShowDebug
+ *
+ * @package App\Http\Middleware
+ */
 class ShowDebug
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
+     *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next): Closure
     {
         if (in_array(Request::ip(), ['127.0.0.1', '77.242.99.149', '192.168.10.1'])) {
             \Debugbar::enable();
-        }
-        else {
+        } else {
             \Debugbar::disable();
         }
 

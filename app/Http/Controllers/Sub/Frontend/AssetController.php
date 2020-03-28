@@ -15,8 +15,8 @@ use Scandinaver\Learn\Domain\Asset;
 
 /**
  * Class LearnController
- * @package App\Http\Controllers\Sub\Frontend
  *
+ * @package App\Http\Controllers\Sub\Frontend
  * Created by PhpStorm.
  * User: whiskey
  * Date: 10.03.15
@@ -26,7 +26,8 @@ class AssetController extends Controller
 {
     /**
      * @param Language $language
-     * @param Asset $asset
+     * @param Asset    $asset
+     *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws ReflectionException
@@ -40,7 +41,8 @@ class AssetController extends Controller
 
     /**
      * @param Language $language
-     * @param Request $request
+     * @param Request  $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -50,10 +52,10 @@ class AssetController extends Controller
 
         return response()->json(null, 201);
     }
-    
+
     /**
-     * @param Request  $request
-     * @param Asset    $asset
+     * @param Request $request
+     * @param Asset   $asset
      *
      * @return JsonResponse
      * @throws AuthorizationException
@@ -70,6 +72,7 @@ class AssetController extends Controller
 
     /**
      * @param Asset $asset
+     *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws ReflectionException

@@ -12,13 +12,15 @@ use Scandinaver\Learn\Domain\{Translate, Word};
 
 /**
  * Class FavouriteController
+ *
  * @package App\Http\Controllers\Sub\Frontend
  */
 class FavouriteController extends Controller
 {
     /**
-     * @param Word $word
+     * @param Word      $word
      * @param Translate $translate
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -31,6 +33,7 @@ class FavouriteController extends Controller
 
     /**
      * @param $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

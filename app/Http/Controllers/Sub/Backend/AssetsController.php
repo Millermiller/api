@@ -29,8 +29,8 @@ use Scandinaver\Learn\Domain\Word;
  * User: john
  * Date: 30.08.2017
  * Time: 20:29
- *
  * Class AssetsController
+ *
  * @package Application\Controllers\Admin
  */
 class AssetsController extends Controller
@@ -59,6 +59,7 @@ class AssetsController extends Controller
 
     /**
      * @param Word $word
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -69,6 +70,7 @@ class AssetsController extends Controller
 
     /**
      * @param Asset $asset
+     *
      * @return JsonResponse
      */
     public function showAsset(Asset $asset): JsonResponse
@@ -78,6 +80,7 @@ class AssetsController extends Controller
 
     /**
      * @param Word $word
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -88,6 +91,7 @@ class AssetsController extends Controller
 
     /**
      * @param Card $card
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -98,6 +102,7 @@ class AssetsController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -110,6 +115,7 @@ class AssetsController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -127,8 +133,9 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param Word $word
+     * @param Word    $word
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -150,7 +157,9 @@ class AssetsController extends Controller
 
     /**
      * TODO: сделать нормально
+     *
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -163,6 +172,7 @@ class AssetsController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -181,7 +191,8 @@ class AssetsController extends Controller
 
     /**
      * @param Request $request
-     * @param Asset $asset
+     * @param Asset   $asset
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */

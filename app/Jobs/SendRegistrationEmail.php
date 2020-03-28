@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Jobs;
 
 use App\Events\UserRegistered;
@@ -11,6 +12,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Class SendRegistrationEmail
+ *
+ * @package App\Jobs
+ */
 class SendRegistrationEmail implements ShouldQueue
 {
     use Dispatchable;
@@ -26,7 +32,7 @@ class SendRegistrationEmail implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param CreateUserForum $event
+     * @param UserRegistered $event
      */
     public function __construct(UserRegistered $event)
     {
@@ -38,7 +44,7 @@ class SendRegistrationEmail implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         Mail::to($this->event->user->getEmail())->send(new Welcome($this->event->data));
     }

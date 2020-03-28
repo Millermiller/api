@@ -4,33 +4,57 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class CreateQueryHandlerInterface
+ *
+ * @package App\Console\Commands
+ */
 class CreateQueryHandlerInterface extends GeneratorCommand
 {
+    /**
+     * @var string
+     */
     protected $name = 'createQueryHandlerInterface';
 
+    /**
+     * @var string
+     */
     private $domain;
+
+    /**
+     * @var string
+     */
+    protected $queryHandlerPath = 'Application/Handlers';
+
+    protected $type = 'QueryHandlerInterface';
 
     /**
      * @inheritDoc
      */
     protected function getStub()
     {
-        return __DIR__.'/Stubs/custom-query-handler-interface.stub';
+        return __DIR__ . '/Stubs/custom-query-handler-interface.stub';
     }
 
-    protected $queryHandlerPath = 'Application/Handlers';
-
-    protected $type = 'QueryHandlerInterface';
-
-    protected function getDefaultNamespace($rootNamespace)
+    /**
+     * @param string $rootNamespace
+     *
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
     }
 
-    public function handle()
+    /**
+     * @return bool|void|null
+     * @throws FileNotFoundException
+     */
+    public function handle(): void
     {
         $name = $this->getNameInput();
 
@@ -40,10 +64,13 @@ class CreateQueryHandlerInterface extends GeneratorCommand
 
         $this->files->put($path, $this->buildClass($name));
 
-        $this->info($this->type.' created successfully.');
+        $this->info($this->type . ' created successfully.');
     }
 
-    public function getArguments()
+    /**
+     * @return array
+     */
+    public function getArguments(): array
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the class'],
@@ -51,7 +78,12 @@ class CreateQueryHandlerInterface extends GeneratorCommand
         ];
     }
 
-    protected function getPath($name)
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function getPath($name): string
     {
         $name = Str::replaceFirst($this->getDefaultNamespace($name), '', $name);
         $name = str_replace('\\', '/', $name);
@@ -60,7 +92,12 @@ class CreateQueryHandlerInterface extends GeneratorCommand
         return "{$path}src/{$this->getDefaultNamespace($name)}/{$this->domain}/{$this->queryHandlerPath}/{$name}.php";
     }
 
-    protected function getNamespace($name)
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function getNamespace($name): string
     {
         $queryNamespace = str_replace('/', '\\', $this->queryHandlerPath);
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";

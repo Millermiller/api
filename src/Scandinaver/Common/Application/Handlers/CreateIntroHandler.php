@@ -8,6 +8,7 @@ use Scandinaver\Common\Domain\Services\IntroService;
 
 /**
  * Class CreateIntroHandler
+ *
  * @package Scandinaver\Common\Application\Handlers
  */
 class CreateIntroHandler implements CreateIntroHandlerInterface
@@ -24,6 +25,7 @@ class CreateIntroHandler implements CreateIntroHandlerInterface
 
     /**
      * @param CreateIntroCommand
+     *
      * @inheritDoc
      */
     public function handle($command): void

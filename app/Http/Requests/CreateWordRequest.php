@@ -1,9 +1,15 @@
 <?php
 
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class CreateWordRequest
+ *
+ * @package App\Http\Requests
+ */
 class CreateWordRequest extends FormRequest
 {
     /**
@@ -11,7 +17,7 @@ class CreateWordRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +27,10 @@ class CreateWordRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'orig' => 'required',
+            'orig'      => 'required',
             'translate' => 'required',
             'is_public' => 'required',
         ];

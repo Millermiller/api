@@ -10,8 +10,7 @@ use Scandinaver\Shared\Contracts\Query;
  * Class AssetsCountQuery
  *
  * @package Scandinaver\Learn\Application\Query
- *
- * @see \Scandinaver\Learn\Application\Handlers\AssetsCountHandler
+ * @see     \Scandinaver\Learn\Application\Handlers\AssetsCountHandler
  */
 class AssetsCountQuery implements Query
 {
@@ -22,6 +21,7 @@ class AssetsCountQuery implements Query
 
     /**
      * WordsCountQuery constructor.
+     *
      * @param Language $language
      */
     public function __construct(Language $language)

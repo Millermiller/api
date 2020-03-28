@@ -12,8 +12,8 @@ use Spatie\Activitylog\Models\Activity;
  * User: john
  * Date: 16.08.2018
  * Time: 0:54
- *
  * Class DashboardController
+ *
  * @package App\Http\Controllers\Main\Backend
  */
 class DashboardController extends Controller
@@ -28,25 +28,26 @@ class DashboardController extends Controller
         // $unread = Message::find(['readed' => 0]);
 
         return response()->json([
-            'users'      => User::all()->count(),
-            'log'        => Activity::with('causer', 'subject')->get(),
-            'messages'   => array_values(Message::all()->sortByDesc('created_at')->toArray())
+            'users'    => User::all()->count(),
+            'log'      => Activity::with('causer', 'subject')->get(),
+            'messages' => array_values(Message::all()->sortByDesc('created_at')->toArray())
         ]);
     }
 
     /**
      * @param $id
+     *
      * @return JsonResponse
      */
     public function readMessage($id): JsonResponse
     {
-        return response()->json(['success' =>  Message::find($id)->update(['readed' => 1])]);
+        return response()->json(['success' => Message::find($id)->update(['readed' => 1])]);
     }
 
     public function sendmail()
     {
-       // $mailer = new Mailer();
+        // $mailer = new Mailer();
 
-      //  return response()->json(['success' =>   $mailer->reg()]);
+        //  return response()->json(['success' =>   $mailer->reg()]);
     }
 }

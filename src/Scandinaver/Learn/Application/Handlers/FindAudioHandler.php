@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Services\AudioService;
 
 /**
  * Class FindAudioHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class FindAudioHandler implements FindAudioHandlerInterface
@@ -24,6 +25,7 @@ class FindAudioHandler implements FindAudioHandlerInterface
 
     /**
      * @param FindAudioQuery
+     *
      * @inheritDoc
      */
     public function handle($query)

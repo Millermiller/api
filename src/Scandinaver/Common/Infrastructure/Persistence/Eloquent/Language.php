@@ -6,7 +6,7 @@ namespace Scandinaver\Common\Infrastructure\Persistence\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $id
+ * @property int    $id
  * @property string $name
  * @property string $label
  * @property string $flag
@@ -14,11 +14,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Language extends Model
 {
-    protected $table = 'languages';
+    protected $table    = 'languages';
 
     protected $fillable = [];
 
-    protected $appends = ['value', 'image'];
+    protected $appends  = ['value', 'image'];
 
     /**
      * @return string

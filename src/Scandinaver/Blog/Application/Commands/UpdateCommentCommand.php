@@ -8,9 +8,9 @@ use Scandinaver\Shared\Contracts\Command;
 
 /**
  * Class UpdateCommentCommand
- * @package Scandinaver\Blog\Application\Commands
  *
- * @see \Scandinaver\Blog\Application\Handlers\UpdateCommentHandler
+ * @package Scandinaver\Blog\Application\Commands
+ * @see     \Scandinaver\Blog\Application\Handlers\UpdateCommentHandler
  */
 class UpdateCommentCommand implements Command
 {
@@ -27,7 +27,7 @@ class UpdateCommentCommand implements Command
     public function __construct(Comment $comment, array $data)
     {
         $this->comment = $comment;
-        $this->data = $data;
+        $this->data    = $data;
     }
 
     /**

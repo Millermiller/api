@@ -13,8 +13,8 @@ use Scandinaver\Blog\Application\Query\{PostQuery, PostsQuery};
 
 /**
  * Class ArticleController
- * @package App\Http\Controllers\Main\Backend
  *
+ * @package App\Http\Controllers\Main\Backend
  * Created by PhpStorm.
  * User: user
  * Date: 11.05.2016
@@ -33,6 +33,7 @@ class ArticleController extends Controller
 
     /**
      * @param int $id
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -42,7 +43,8 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -55,7 +57,8 @@ class ArticleController extends Controller
 
     /**
      * @param Request $request
-     * @param Post $post
+     * @param Post    $post
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -68,6 +71,7 @@ class ArticleController extends Controller
 
     /**
      * @param Post $post
+     *
      * @return JsonResponse
      * @throws ReflectionException
      */
@@ -79,17 +83,19 @@ class ArticleController extends Controller
     }
 
     /** TODO: доделать
+     *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function upload(Request $request): JsonResponse
     {
-        $file = $request->file('img');
+        $file            = $request->file('img');
         $destinationPath = public_path() . '/uploads/articles/';
-        $filename = str_random(20) . '.' . $file->getClientOriginalExtension() ?: 'png';
+        $filename        = str_random(20) . '.' . $file->getClientOriginalExtension() ?: 'png';
 
         $file->move($destinationPath, $filename);
 
-        return response()->json(['data' => '/uploads/articles/'. $filename]);
+        return response()->json(['data' => '/uploads/articles/' . $filename]);
     }
 }

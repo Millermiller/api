@@ -10,6 +10,7 @@ use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
 
 /**
  * Class CreateFavouriteHandler
+ *
  * @package Scandinaver\Learn\Application\Handlers
  */
 class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
@@ -26,7 +27,8 @@ class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
 
     /**
      * FavouriteController constructor.
-     * @param AssetService $assetService
+     *
+     * @param AssetService     $assetService
      * @param FavouriteService $favouriteService
      */
     public function __construct(AssetService $assetService, FavouriteService $favouriteService)
@@ -38,6 +40,7 @@ class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
 
     /**
      * @param DeleteFavouriteCommand $command
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */

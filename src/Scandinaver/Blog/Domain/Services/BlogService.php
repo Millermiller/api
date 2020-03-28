@@ -3,11 +3,13 @@
 
 namespace Scandinaver\Blog\Domain\Services;
 
+use Auth;
 use Scandinaver\Blog\Domain\Contracts\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\Post;
 
 /**
  * Class ArticleService
+ *
  * @package App\Services
  */
 class BlogService
@@ -19,6 +21,7 @@ class BlogService
 
     /**
      * PostService constructor.
+     *
      * @param PostRepositoryInterface $postRepository
      */
     public function __construct(PostRepositoryInterface $postRepository)
@@ -36,6 +39,7 @@ class BlogService
 
     /**
      * @param $id
+     *
      * @return Post
      */
     public function getOne($id): Post
@@ -45,13 +49,14 @@ class BlogService
 
     /**
      * @param array $data
+     *
      * @return Post
      */
     public function create(array $data): Post
     {
         $post = new Post();
 
-        $post->setUser(\Auth::user());
+        $post->setUser(Auth::user());
         $post->setTitle($data['title']);
         $post->setCategory($data['category']);
         $post->setContent($data['content']);
