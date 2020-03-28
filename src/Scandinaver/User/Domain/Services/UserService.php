@@ -198,7 +198,7 @@ class UserService
             'favourites' => $this->assetRepository->getFavouriteAsset($language, $user),
             'personal'   => $this->assetRepository->getCreatedAssets($language, $user),
 
-            'texts'       => $this->textService->getTextsForUser($user),
+            'texts'       => $this->textService->getTextsForUser($language, $user),
             'intro'       => $this->introRepository->getGrouppedIntro(),
             'sites'       => $this->languageRepository->all(),
             'currentsite' => $this->languageRepository->findOneBy(['name' => config('app.lang')]),

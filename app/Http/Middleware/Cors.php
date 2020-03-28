@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class Cors
 {
@@ -16,7 +17,7 @@ class Cors
      *
      * @return mixed
      */
-    public function handle($request, Closure $next): Closure
+    public function handle($request, Closure $next)
     {
         header("Access-Control-Allow-Origin: {$request->headers->get('Origin')}");
 

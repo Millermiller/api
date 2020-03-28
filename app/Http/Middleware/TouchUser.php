@@ -4,6 +4,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Response;
 use Request;
 
 /**
@@ -19,9 +20,9 @@ class TouchUser
      * @param Request $request
      * @param Closure $next
      *
-     * @return mixed
+     * @return Response
      */
-    public function handle($request, Closure $next): Closure
+    public function handle($request, Closure $next)
     {
         if (\Auth::check()) {
             // The user is logged in...

@@ -21,7 +21,7 @@ class ShowDebug
      *
      * @return mixed
      */
-    public function handle($request, Closure $next): Closure
+    public function handle($request, Closure $next)
     {
         if (in_array(Request::ip(), ['127.0.0.1', '77.242.99.149', '192.168.10.1'])) {
             \Debugbar::enable();

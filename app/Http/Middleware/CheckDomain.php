@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 
 use App\Http\Requests\BaseRequest;
 use Closure;
+use Illuminate\Http\Response;
 use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
 
 /**
@@ -35,9 +36,9 @@ class CheckDomain
      * @param BaseRequest $request
      * @param Closure     $next
      *
-     * @return mixed
+     * @return Response
      */
-    public function handle($request, Closure $next): Closure
+    public function handle($request, Closure $next)
     {
         if ($langname = request('language')) {
             switch ($langname) {

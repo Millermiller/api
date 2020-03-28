@@ -22,7 +22,7 @@ class AddUserName
      *
      * @return Closure
      */
-    public function handle($request, Closure $next): Closure
+    public function handle($request, Closure $next)
     {
         $request->request->add(['name' => Auth::user()->getLogin()]);
 

@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 use App\Helpers\Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Scandinaver\User\Domain\Services\UserService;
 
 /**
@@ -28,9 +29,9 @@ class CheckPlan
      * @param Request $request
      * @param Closure $next
      *
-     * @return mixed
+     * @return Response
      */
-    public function handle($request, Closure $next): Closure
+    public function handle($request, Closure $next)
     {
         if (\Auth::check()) {
             $this->userService->updatePlan(Auth::user());
