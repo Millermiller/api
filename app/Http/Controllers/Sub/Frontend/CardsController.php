@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Access\AuthorizationException;
 use Scandinaver\Learn\Application\Commands\{AddCardToAssetCommand, DeleteCardFromAssetCommand};
 use Scandinaver\Learn\Domain\{Asset, Card};
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\{Translate, Word};
 
 /**
@@ -39,13 +40,14 @@ class CardsController extends Controller
     }
 
     /**
-     * @param Card $card
+     * @param Language $language
+     * @param Card     $card
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws ReflectionException
      */
-    public function destroy(Card $card): JsonResponse
+    public function destroy(Language $language, Card $card): JsonResponse
     {
         $this->authorize('delete', $card);
 

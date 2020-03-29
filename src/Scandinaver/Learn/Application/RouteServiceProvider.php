@@ -30,8 +30,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group(
             [
-                'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan'],
-                'as'         => 'sub_frontend::'
+                'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan', 'auth:api'],
+                'as'         => 'sub_frontend::',
+                'namespace' => 'App\Http\Controllers',
             ],
             function () {
                 Route::get('/words', 'Sub\Frontend\IndexController@getWords')->name('words');
@@ -44,16 +45,16 @@ class RouteServiceProvider extends ServiceProvider
                 Route::put('/{language}/asset/{asset}', 'Sub\Frontend\AssetController@update');
                 Route::delete('/{language}/asset/{asset}', 'Sub\Frontend\AssetController@destroy');
 
-                Route::post('/favourite/{word}/{translate}', 'Sub\Frontend\FavouriteController@store')->name('add-favorite');
+                Route::post('/{language}/favourite/{word}/{translate}', 'Sub\Frontend\FavouriteController@store')->name('add-favorite');
                 Route::delete('/favourite/{id}', 'Sub\Frontend\FavouriteController@destroy')->name('delete-favorite');
 
                 Route::post('/result/{asset}', 'Sub\Frontend\TestController@result');
                 Route::post('/complete/{asset}', 'Sub\Frontend\TestController@complete');
 
                 Route::post('/card/{word}/{translate}/{asset}', 'CardsController@store')->name('add-card-to-asset');
-                Route::delete('/card/{card}', 'CardsController@destroy')->name('delete-card-from-asset');
+                Route::delete('/{language}/card/{card}', 'Sub\Frontend\CardsController@destroy')->name('delete-card-from-asset');
 
-                Route::get('/translate', 'WordController@search');
+                Route::get('/{language}/translate', 'Sub\Frontend\WordController@search');
                 Route::resource('/word', 'WordController', ['except' => ['delete', 'update']]);
             }
         );

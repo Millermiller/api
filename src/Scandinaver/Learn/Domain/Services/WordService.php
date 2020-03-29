@@ -88,12 +88,12 @@ class WordService
     }
 
     /**
+     * @param Language      $language
      * @param SearchRequest $request
      *
      * @return Translate[]|Builder[]|Collection|\Illuminate\Support\Collection
-     * @throws DBALException
      */
-    public function translate(SearchRequest $request)
+    public function translate(Language $language, SearchRequest $request)
     {
         $word = $request->get('word');
 
@@ -116,7 +116,7 @@ class WordService
                             and w.language_id = ?
                             order by score desc';
 
-        $params = [$word, $word, $word . "%", $word, $sentence, Auth::user()->getKey(), config('app.lang')];
+        $params = [$word, $word, $word . "%", $word, $sentence, Auth::user()->getKey(), $language->getId()];
 
         $stmt = app('em')->getConnection()->prepare($sql);
         $stmt->execute($params);

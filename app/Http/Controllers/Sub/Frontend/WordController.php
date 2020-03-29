@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Http\Controllers\Controller;
+use Scandinaver\Common\Domain\Language;
 use App\Http\Requests\{SearchRequest, CreateWordRequest};
 use Scandinaver\Learn\Domain\Services\WordService;
 use Doctrine\DBAL\DBALException;
@@ -93,14 +94,15 @@ class WordController extends Controller
     }
 
     /**
+     * @param Language      $language
      * @param SearchRequest $request
      *
      * @return JsonResponse
      * @throws DBALException
      */
-    public function search(SearchRequest $request): JsonResponse
+    public function search(Language $language, SearchRequest $request): JsonResponse
     {
-        $words = $this->wordService->translate($request);
+        $words = $this->wordService->translate($language, $request);
 
         return response()->json($words);
     }

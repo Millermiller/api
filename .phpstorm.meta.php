@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2020-03-28 09:26:45.
+    * Generated on 2020-03-28 20:22:38.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -44,6 +44,9 @@ namespace PHPSTORM_META {
         'LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager' => \LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager::class,
         'LaravelDoctrine\ORM\Extensions\ExtensionManager' => \LaravelDoctrine\ORM\Extensions\ExtensionManager::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
+        'Laravel\Telescope\Contracts\ClearableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\EntriesRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\PrunableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'LogoutHandlerInterface' => \Scandinaver\User\Application\Handlers\LogoutHandler::class,
@@ -241,6 +244,9 @@ namespace PHPSTORM_META {
         'LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager' => \LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager::class,
         'LaravelDoctrine\ORM\Extensions\ExtensionManager' => \LaravelDoctrine\ORM\Extensions\ExtensionManager::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
+        'Laravel\Telescope\Contracts\ClearableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\EntriesRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\PrunableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'LogoutHandlerInterface' => \Scandinaver\User\Application\Handlers\LogoutHandler::class,
@@ -438,6 +444,9 @@ namespace PHPSTORM_META {
         'LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager' => \LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager::class,
         'LaravelDoctrine\ORM\Extensions\ExtensionManager' => \LaravelDoctrine\ORM\Extensions\ExtensionManager::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
+        'Laravel\Telescope\Contracts\ClearableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\EntriesRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\PrunableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'LogoutHandlerInterface' => \Scandinaver\User\Application\Handlers\LogoutHandler::class,
@@ -635,6 +644,9 @@ namespace PHPSTORM_META {
         'LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager' => \LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager::class,
         'LaravelDoctrine\ORM\Extensions\ExtensionManager' => \LaravelDoctrine\ORM\Extensions\ExtensionManager::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
+        'Laravel\Telescope\Contracts\ClearableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\EntriesRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\PrunableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'LogoutHandlerInterface' => \Scandinaver\User\Application\Handlers\LogoutHandler::class,
@@ -832,6 +844,9 @@ namespace PHPSTORM_META {
         'LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager' => \LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager::class,
         'LaravelDoctrine\ORM\Extensions\ExtensionManager' => \LaravelDoctrine\ORM\Extensions\ExtensionManager::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
+        'Laravel\Telescope\Contracts\ClearableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\EntriesRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\PrunableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'LogoutHandlerInterface' => \Scandinaver\User\Application\Handlers\LogoutHandler::class,
@@ -1029,6 +1044,9 @@ namespace PHPSTORM_META {
         'LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager' => \LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager::class,
         'LaravelDoctrine\ORM\Extensions\ExtensionManager' => \LaravelDoctrine\ORM\Extensions\ExtensionManager::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
+        'Laravel\Telescope\Contracts\ClearableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\EntriesRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\PrunableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'LogoutHandlerInterface' => \Scandinaver\User\Application\Handlers\LogoutHandler::class,
@@ -1226,6 +1244,9 @@ namespace PHPSTORM_META {
         'LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager' => \LaravelDoctrine\ORM\Configuration\MetaData\MetaDataManager::class,
         'LaravelDoctrine\ORM\Extensions\ExtensionManager' => \LaravelDoctrine\ORM\Extensions\ExtensionManager::class,
         'Laravel\Scout\EngineManager' => \Laravel\Scout\EngineManager::class,
+        'Laravel\Telescope\Contracts\ClearableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\EntriesRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
+        'Laravel\Telescope\Contracts\PrunableRepository' => \Laravel\Telescope\Storage\DatabaseEntriesRepository::class,
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'LogoutHandlerInterface' => \Scandinaver\User\Application\Handlers\LogoutHandler::class,

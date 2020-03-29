@@ -26,7 +26,7 @@ class AssetPolicy
      */
     public function view(User $user, Asset $asset): bool
     {
-        return $user->hasAsset($asset);
+        return $user->isAdmin() || $user->hasAsset($asset);
     }
 
     /**

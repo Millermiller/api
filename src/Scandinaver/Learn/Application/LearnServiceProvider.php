@@ -4,14 +4,16 @@
 namespace Scandinaver\Learn\Application;
 
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Learn\Domain\{Asset, Card, Result, Translate, Word};
+use Scandinaver\Learn\Domain\{Asset, Card, Example, Result, Translate, Word};
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
     CardRepositoryInterface,
+    ExampleRepositoryInterface,
     ResultRepositoryInterface,
     TranslateRepositoryInterface,
     WordRepositoryInterface};
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\{AssetRepository,
     CardRepository,
+    ExampleRepository,
     ResultRepository,
     TranslateRepository,
     WordRepository};
@@ -57,6 +59,13 @@ class LearnServiceProvider extends ServiceProvider
             return new ResultRepository(
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Result::class)
+            );
+        });
+
+        $this->app->bind(ExampleRepositoryInterface::class, function () {
+            return new ExampleRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(Example::class)
             );
         });
 

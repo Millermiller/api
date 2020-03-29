@@ -36,6 +36,6 @@ class DeleteCardFromAssetHandler implements DeleteCardFromAssetHandlerInterface
     {
         $this->cardService->destroyCard($command->getCard());
 
-        event(new CardDeleted($command->getUser(), $command->getCard()));
+       // event(new CardDeleted($command->getUser(), $command->getCard()));
     }
 }

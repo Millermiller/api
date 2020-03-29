@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\{Translate, Word};
 use Scandinaver\Shared\Contracts\Command;
 use Scandinaver\User\Domain\User;
@@ -31,14 +32,21 @@ class CreateFavouriteCommand implements Command
     private $translate;
 
     /**
+     * @var Language
+     */
+    private $language;
+
+    /**
      * CreateFavouriteCommand constructor.
      *
+     * @param Language  $language
      * @param User      $user
      * @param Word      $word
      * @param Translate $translate
      */
-    public function __construct(User $user, Word $word, Translate $translate)
+    public function __construct(Language $language, User $user, Word $word, Translate $translate)
     {
+        $this->language      = $language;
         $this->user      = $user;
         $this->word      = $word;
         $this->translate = $translate;
@@ -66,5 +74,13 @@ class CreateFavouriteCommand implements Command
     public function getTranslate(): Translate
     {
         return $this->translate;
+    }
+
+    /**
+     * @return Language
+     */
+    public function getLanguage(): Language
+    {
+        return $this->language;
     }
 }

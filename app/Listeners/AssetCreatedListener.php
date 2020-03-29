@@ -5,6 +5,8 @@ namespace App\Listeners;
 
 use App\Events\AssetCreated;
 use App\Helpers\EloquentHelper;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset;
+use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
  * Class AssetCreatedListener
@@ -32,8 +34,8 @@ class AssetCreatedListener
      */
     public function handle(AssetCreated $event): void
     {
-        $user  = EloquentHelper::getEloquentModel($event->user);
-        $asset = EloquentHelper::getEloquentModel($event->asset);
+        $user  = User::find($event->user->getId())->first();
+        $asset = Asset::find($event->asset->getId())->first();
 
         activity('public')
             ->causedBy($user)
