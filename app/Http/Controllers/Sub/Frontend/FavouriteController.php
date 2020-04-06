@@ -34,14 +34,15 @@ class FavouriteController extends Controller
     }
 
     /**
-     * @param $id
+     * @param Language $language
+     * @param          $id
      *
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function destroy($id): JsonResponse
+    public function destroy(Language $language, $id): JsonResponse
     {
-        $this->commandBus->execute(new DeleteFavouriteCommand(Auth::user(), $id));
+        $this->commandBus->execute(new DeleteFavouriteCommand($language, Auth::user(), $id));
 
         return response()->json(null, 204);
     }

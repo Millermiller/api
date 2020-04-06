@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
                 Route::delete('/{language}/asset/{asset}', 'Sub\Frontend\AssetController@destroy');
 
                 Route::post('/{language}/favourite/{word}/{translate}', 'Sub\Frontend\FavouriteController@store')->name('add-favorite');
-                Route::delete('/favourite/{id}', 'Sub\Frontend\FavouriteController@destroy')->name('delete-favorite');
+                Route::delete('/{language}/favourite/{id}', 'Sub\Frontend\FavouriteController@destroy')->name('delete-favorite');
 
                 Route::post('/result/{asset}', 'Sub\Frontend\TestController@result');
                 Route::post('/complete/{asset}', 'Sub\Frontend\TestController@complete');

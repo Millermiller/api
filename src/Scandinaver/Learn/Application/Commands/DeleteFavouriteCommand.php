@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Commands;
 
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Shared\Contracts\Command;
 use Scandinaver\User\Domain\User;
 
@@ -25,13 +26,20 @@ class DeleteFavouriteCommand implements Command
     private $id;
 
     /**
+     * @var Language
+     */
+    private $language;
+
+    /**
      * CreateFavouriteCommand constructor.
      *
-     * @param User $user
-     * @param int  $id
+     * @param Language $language
+     * @param User     $user
+     * @param int      $id
      */
-    public function __construct(User $user, int $id)
+    public function __construct(Language $language, User $user, int $id)
     {
+        $this->language = $language;
         $this->user = $user;
         $this->id   = $id;
     }
@@ -50,5 +58,13 @@ class DeleteFavouriteCommand implements Command
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Language
+     */
+    public function getLanguage(): Language
+    {
+        return $this->language;
     }
 }
