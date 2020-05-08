@@ -87,7 +87,7 @@ class IndexController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function check(Language $language): JsonResponse
+    public function state(Language $language): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetStateQuery(Auth::user(), $language)));
     }

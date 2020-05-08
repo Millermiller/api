@@ -63,27 +63,21 @@ class Card implements JsonSerializable
     /**
      * @var Word
      * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Word", inversedBy="cards")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="word_id", referencedColumnName="id")
-     * })
+     * @ORM\JoinColumn(name="word_id", referencedColumnName="id")
      */
     private $word;
 
     /**
      * @var Asset
      * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Asset", inversedBy="cards")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
-     * })
+     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      */
     private $asset;
 
     /**
      * @var Translate
      * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Translate")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="translate_id", referencedColumnName="id")
-     * })
+     * @ORM\JoinColumn(name="translate_id", referencedColumnName="id")
      */
     private $translate;
 

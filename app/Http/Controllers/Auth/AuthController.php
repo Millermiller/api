@@ -3,12 +3,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Auth;
 use ReflectionException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Scandinaver\User\Application\Commands\LogoutCommand;
 use Scandinaver\User\Application\Query\LoginQuery;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 
@@ -17,7 +19,7 @@ use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
  *
  * @package App\Http\Controllers\Auth
  */
-class LoginController extends Controller
+class AuthController extends Controller
 {
     use AuthenticatesUsers;
 
@@ -51,7 +53,18 @@ class LoginController extends Controller
             $tokenResult->token->save();
             return response()->json(['access_token' => $tokenResult->accessToken,]);
         } catch (UserNotFoundException $e) {
-            return response()->json(['success' => false, 'message' => 'Неверный логин или пароль'], 403);
+            return response()->json('Неверный логин или пароль', 403);
         }
+    }
+
+    /**
+     * @return JsonResponse
+     * @throws ReflectionException
+     */
+    public function logout(): JsonResponse
+    {
+        $this->commandBus->execute(new LogoutCommand(Auth::user()));
+
+        return response()->json(null, 200);
     }
 }

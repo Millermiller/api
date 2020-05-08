@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Domain\Services;
 
+use Scandinaver\Puzzle\Domain\PuzzleService;
 use App\Events\{UserDeleted, UserRegistered};
 use Auth;
 use Carbon\Carbon;
@@ -68,6 +69,11 @@ class UserService
     private $textService;
 
     /**
+     * @var PuzzleService
+     */
+    private $puzzleService;
+
+    /**
      * UserService constructor.
      *
      * @param AssetRepositoryInterface    $assetRepository
@@ -78,6 +84,7 @@ class UserService
      * @param TextRepositoryInterface     $textRepository
      * @param IntroRepositoryInterface    $introRepository
      * @param TextService                 $textService
+     * @param PuzzleService               $puzzleService
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
@@ -87,7 +94,8 @@ class UserService
         LanguageRepositoryInterface $languageRepository,
         TextRepositoryInterface $textRepository,
         IntroRepositoryInterface $introRepository,
-        TextService $textService
+        TextService $textService,
+        PuzzleService $puzzleService
     )
     {
         $this->userRepository     = $userRepository;
@@ -98,6 +106,7 @@ class UserService
         $this->introRepository    = $introRepository;
         $this->assetService       = $assetService;
         $this->textService        = $textService;
+        $this->puzzleService      = $puzzleService;
     }
 
     /**
@@ -191,14 +200,13 @@ class UserService
     public function getState(User $user, Language $language): array
     {
         return [
-            'user'       => $this->getInfo(),
-            'site'       => config('app.MAIN_SITE'),
-            'words'      => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_WORDS),
-            'sentences'  => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_SENTENCES),
-            'favourites' => $this->assetRepository->getFavouriteAsset($language, $user),
-            'personal'   => $this->assetRepository->getCreatedAssets($language, $user),
-
+            'site'        => config('app.MAIN_SITE'),
+            'words'       => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_WORDS),
+            'sentences'   => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_SENTENCES),
+            'favourites'  => $this->assetRepository->getFavouriteAsset($language, $user),
+            'personal'    => $this->assetRepository->getCreatedAssets($language, $user),
             'texts'       => $this->textService->getTextsForUser($language, $user),
+            'puzzles'     => $this->puzzleService->getForUser($user),
             'intro'       => $this->introRepository->getGrouppedIntro(),
             'sites'       => $this->languageRepository->all(),
             'currentsite' => $this->languageRepository->findOneBy(['name' => config('app.lang')]),

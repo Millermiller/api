@@ -9,24 +9,16 @@
 
 /***************************** SUBDOMAIN - PUBLIC **********************************/
 
-Route::group([
-
-], function () {
-    Route::get('/login', 'Sub\Frontend\IndexController@index')->middleware('guest');
-    Route::post('/login', 'Auth\LoginSubController@login')->middleware('checkDomain')->name('login');
-});
+//Route::post('/login', 'Auth\AuthController@login')->middleware('checkDomain')->name('login');
 
 Route::group([
     'middleware' => ['checkDomain', 'touchUser', 'checkPlan', 'auth:api'],
     'namespace' => 'Sub\Frontend',
     'as' => 'sub_frontend::'
 ], function () {
-    Route::post('/logout', 'LogoutController@index');
-
     Route::get('/', 'IndexController@index');
 
-    Route::get('/{language}/check', 'IndexController@check')->name('check');
-    Route::get('/state', 'IndexController@getState');
+    Route::get('/{language}/state', 'IndexController@state')->name('state');
     Route::get('/user', 'IndexController@getUser')->name('user-info');
     Route::get('/info', 'IndexController@getInfo')->name('site-info');
 
