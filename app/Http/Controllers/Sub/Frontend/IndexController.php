@@ -24,14 +24,6 @@ use Scandinaver\User\Application\Query\GetUserQuery;
 class IndexController extends Controller
 {
     /**
-     * @return array|Factory|View|mixed
-     */
-    public function index()
-    {
-        return view('sub.frontend.index');
-    }
-
-    /**
      * @return JsonResponse
      * @throws ReflectionException
      */

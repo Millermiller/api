@@ -16,3 +16,9 @@ yarn-error.log
 /.env.testing
 /public/sub/backend/
 /.laradock/
+/storage/proxies/
+/storage/clockwork/
+/storage/debugbar/
+/storage/framework/
+/storage/logs/
+/storage/app/

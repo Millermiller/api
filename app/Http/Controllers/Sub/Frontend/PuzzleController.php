@@ -7,6 +7,7 @@ use ReflectionException;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Puzzle\Domain\Puzzle;
 use Scandinaver\Puzzle\Application\Commands\PuzzleCompleteCommand;
 use Scandinaver\Puzzle\Application\Query\UserPuzzlesQuery;
@@ -26,7 +27,7 @@ class PuzzleController extends Controller
      * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index(): JsonResponse
+    public function index(Language $language): JsonResponse
     {
         return response()->json($this->queryBus->execute(new UserPuzzlesQuery(Auth::user())));
     }

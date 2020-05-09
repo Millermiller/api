@@ -102,5 +102,10 @@ class UserServiceProvider extends ServiceProvider
             'GetStateHandlerInterface',
             'Scandinaver\User\Application\Handlers\GetStateHandler'
         );
+
+        $this->app->bind(
+            'GetUserHandlerInterface',
+            'Scandinaver\User\Application\Handlers\GetUserHandler'
+        );
     }
 }

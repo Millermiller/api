@@ -69,10 +69,8 @@ class Language implements JsonSerializable, UrlRoutable
      */
     private $results;
 
-    public function __construct(int $id, string $name)
+    public function __construct()
     {
-        $this->id     = $id;
-        $this->name   = $name;
         $this->assets = new ArrayCollection();
         $this->cards  = new ArrayCollection();
     }

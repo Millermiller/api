@@ -3,8 +3,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class RouteServiceProvider
@@ -14,21 +14,24 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * This namespace is applied to your controller routes.
-     * In addition, it is set as the URL generator's root namespace.
-     *
-     * @var string
-     */
-    protected $namespace = 'App\Http\Controllers';
-
-    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
-        //
+        Route::post('/feedback', 'Main\Frontend\IndexController@feedback');
+        Route::get('/{language}/state', 'App\Http\Controllers\Sub\Frontend\IndexController@state')->name('state')->middleware('auth:api');
+        Route::group(
+            [
+                'namespace' => 'App\Http\Controllers\API',
+                'as'        => 'mobile::'
+            ],
+            function () {
+                Route::get('/languages', 'ApiController@languages')->name('languages');
+                Route::get('/assets/{language}', 'ApiController@assets')->middleware('auth:api')->name('assets');
+            }
+        );
 
         parent::boot();
     }
@@ -40,37 +43,75 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(): void
     {
-        $this->mapApiRoutes();
-
         $this->mapWebRoutes();
 
-        //
+        $this->mapAuthRoutes();
+
+        $this->mapFrontendRoutes();
+        $this->mapBackendRoutes();
+
+        $this->mapSubfrontendRoutes();
     }
 
-    /**
-     * Define the "web" routes for the application.
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+        Route::middleware(['web'])
+             ->group(base_path('routes/web/routes.php'));
     }
 
-    /**
-     * Define the "api" routes for the application.
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes(): void
+    protected function mapAuthRoutes(): void
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+        Route::namespace('App\Http\Controllers\Auth')
+             ->as('auth::')
+             ->group(base_path('routes/api/auth.php'));
+    }
+
+    protected function mapBackendRoutes(): void
+    {
+        Route::middleware(['auth:api', 'checkAdmin'])
+             ->prefix('admin')
+             ->namespace('App\Http\Controllers\Main\Backend')
+             ->as('backend::')
+             ->group(base_path('routes/api/backend/routes.php'));
+    }
+
+    protected function mapFrontendRoutes(): void
+    {
+        Route::middleware(['auth:api', 'touchUser', 'checkPlan'])
+             ->namespace('App\Http\Controllers\Main\Frontend')
+             ->as('frontend::')
+             ->group(base_path('routes/api/frontend/profile.php'));
+    }
+
+    protected function mapSubfrontendRoutes(): void
+    {
+        Route::middleware(['auth:api','checkDomain', 'touchUser', 'checkPlan'])
+             ->namespace('App\Http\Controllers\Sub\Frontend')
+             ->as('sub_frontend::')
+             ->group(base_path('routes/api/subfrontend/common.php'));
+
+        Route::middleware(['checkDomain', 'touchUser', 'checkPlan', 'auth:api'])
+             ->namespace('App\Http\Controllers\Sub\Frontend')
+             ->as('sub_frontend::')
+             ->group(base_path('routes/api/subfrontend/learn.php'));
+
+        Route::middleware(['checkDomain', 'touchUser', 'checkPlan', 'auth:api'])
+             ->namespace('App\Http\Controllers\Sub\Frontend')
+             ->as('sub_frontend::')
+             ->group(base_path('routes/api/subfrontend/puzzle.php'));
+
+        Route::middleware(['checkDomain', 'touchUser', 'checkPlan', 'auth:api'])
+             ->namespace('App\Http\Controllers\Sub\Frontend')
+             ->as('sub_frontend::')
+             ->group(base_path('routes/api/subfrontend/translate.php'));
+    }
+
+    protected function mapSubBackendRoutes(): void
+    {
+        Route::middleware(['auth:api', 'checkAdmin'])
+             ->namespace('App\Http\Controllers\Sub\Backend')
+             ->as('sub_backend::')
+             ->prefix('admin')
+             ->group(base_path('routes/api/subbackend/routes.php'));
     }
 }

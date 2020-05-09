@@ -11,8 +11,4 @@
 |
 */
 
-
-
-include 'subdomains_routes.php';
-
-include 'main_routes.php';
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

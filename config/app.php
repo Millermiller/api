@@ -190,15 +190,11 @@ return [
          * Scandinaver Service Providers...
          */
         Scandinaver\Puzzle\Application\PuzzleServiceProvider::class,
-        Scandinaver\Puzzle\Application\RouteServiceProvider::class,
         Scandinaver\Translate\Application\TranslateServiceProvider::class,
-        Scandinaver\Translate\Application\RouteServiceProvider::class,
         Scandinaver\Learn\Application\LearnServiceProvider::class,
-        Scandinaver\Learn\Application\RouteServiceProvider::class,
         Scandinaver\Common\Application\AppServiceProvider::class,
         Scandinaver\User\Application\UserServiceProvider::class,
         Scandinaver\API\Application\APIServiceProvider::class,
-        Scandinaver\API\Application\RouteServiceProvider::class,
         Scandinaver\User\Application\UserServiceProvider::class,
     ],
 
