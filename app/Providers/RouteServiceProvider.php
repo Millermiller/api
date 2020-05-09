@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         Route::post('/feedback', 'Main\Frontend\IndexController@feedback');
-        Route::get('/{language}/state', 'App\Http\Controllers\Sub\Frontend\IndexController@state')->name('state')->middleware('auth:api');
+
         Route::group(
             [
                 'namespace' => 'App\Http\Controllers\API',
@@ -85,22 +85,22 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapSubfrontendRoutes(): void
     {
-        Route::middleware(['auth:api','checkDomain', 'touchUser', 'checkPlan'])
+        Route::middleware(['bindings', 'auth:api', 'touchUser', 'checkPlan'])
              ->namespace('App\Http\Controllers\Sub\Frontend')
              ->as('sub_frontend::')
              ->group(base_path('routes/api/subfrontend/common.php'));
 
-        Route::middleware(['checkDomain', 'touchUser', 'checkPlan', 'auth:api'])
+        Route::middleware(['bindings', 'auth:api', 'touchUser', 'checkPlan'])
              ->namespace('App\Http\Controllers\Sub\Frontend')
              ->as('sub_frontend::')
              ->group(base_path('routes/api/subfrontend/learn.php'));
 
-        Route::middleware(['checkDomain', 'touchUser', 'checkPlan', 'auth:api'])
+        Route::middleware(['bindings', 'auth:api','touchUser', 'checkPlan'])
              ->namespace('App\Http\Controllers\Sub\Frontend')
              ->as('sub_frontend::')
              ->group(base_path('routes/api/subfrontend/puzzle.php'));
 
-        Route::middleware(['checkDomain', 'touchUser', 'checkPlan', 'auth:api'])
+        Route::middleware(['bindings', 'auth:api', 'touchUser', 'checkPlan'])
              ->namespace('App\Http\Controllers\Sub\Frontend')
              ->as('sub_frontend::')
              ->group(base_path('routes/api/subfrontend/translate.php'));

@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/{language}/text/{text}', 'Sub\Frontend\TextController@show');
-Route::get('/{language}/syns/{id}', 'Sub\Frontend\TextController@getSyns');
-Route::post('/{language}/nextTLevel', 'Sub\Frontend\TextController@nextLevel');
+Route::get('/{language}/text/{text}', 'TextController@show');
+Route::get('/{language}/syns/{id}', 'TextController@getSyns');
+Route::post('/{language}/nextTLevel', 'TextController@nextLevel');
 
