@@ -10,20 +10,7 @@ use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result;
 /**
  * Class Order
  *
- * @package App\Models
- * @property int    $id
- * @property int    $sum
- * @property string $status
- * @property string $notification_type
- * @property string $datetime
- * @property string $codepro
- * @property string $sha1_hash
- * @property string $label
- * @property int    $plan_id
- * @property int    $user_id
- * @property int    $sender
- * @property User   $user
- * @property Plan   $plan
+ * @package Scandinaver\User\Infrastructure\Persistence\Eloquent
  */
 class Order extends Model
 {

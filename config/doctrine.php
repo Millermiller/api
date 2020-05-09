@@ -31,7 +31,7 @@ return [
                 base_path('src/Scandinaver/Blog/Domain'),
                 base_path('src/Scandinaver/Common/Domain'),
                 base_path('src/Scandinaver/Puzzle/Domain'),
-                base_path('src/Scandinaver/Text/Domain'),
+                base_path('src/Scandinaver/Translate/Domain'),
                 base_path('src/Scandinaver/User/Domain'),
             ],
             'repository'    => Doctrine\ORM\EntityRepository::class,

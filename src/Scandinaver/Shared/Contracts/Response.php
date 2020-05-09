@@ -6,7 +6,7 @@ namespace Scandinaver\Shared\Contracts;
 /**
  * Interface Response
  *
- * @package Scandinaver\Shared
+ * @package Scandinaver\Shared\Contracts
  */
 interface Response
 {

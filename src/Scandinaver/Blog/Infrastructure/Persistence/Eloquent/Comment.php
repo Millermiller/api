@@ -7,17 +7,9 @@ use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, SoftDeletes};
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
- * Created by PhpStorm.
- * User: user
- * Date: 12.05.2016
- * Time: 1:50
+ * Class Comment
  *
- * @property int    $id
- * @property int    $post_id
- * @property string $text
- * @property int    $user_id
- * @property int    $created_at
- * @property int    $updated_at
+ * @package Scandinaver\Blog\Infrastructure\Persistence\Eloquent
  */
 class Comment extends Model
 {

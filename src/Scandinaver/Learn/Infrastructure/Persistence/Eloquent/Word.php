@@ -5,30 +5,13 @@ namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
 use Auth;
 use DB;
-use Eloquent;
 use Illuminate\Database\Eloquent\{Model, Relations\HasMany, Relations\HasOne, SoftDeletes};
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
- * Created by PhpStorm.
- * User: whiskey
- * Date: 18.01.15
- * Time: 21:03
  * Class Word
  *
- * @package App\Models
- * @property int    id
- * @property string word
- * @property string transcription
- * @property string audio
- * @property string creator
- * @property string created_at
- * @property string updated_at
- * @property string deleted_at
- * @property int    sentence
- * @property int    is_public
- * @property User   user
- * @mixin Eloquent
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Eloquent
  */
 class Word extends Model
 {
@@ -73,7 +56,7 @@ class Word extends Model
                             and (w.is_public = 1 or (w.is_public = 0 and w.creator = ?))
                             and w.language_id = ?
                             order by score desc;
-                            ', [$word, $word, $word . "%", $word, $sentence, Auth::user()->id, config('app.lang')]);
+                            ', [$word, $word, $word . "%", $word, $sentence, Auth::user()->getAuthIdentifier(), config('app.lang')]);
     }
 
     /**

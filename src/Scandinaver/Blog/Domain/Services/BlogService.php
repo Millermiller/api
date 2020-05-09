@@ -8,9 +8,9 @@ use Scandinaver\Blog\Domain\Contracts\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\Post;
 
 /**
- * Class ArticleService
+ * Class BlogService
  *
- * @package App\Services
+ * @package Scandinaver\Blog\Domain\Services
  */
 class BlogService
 {

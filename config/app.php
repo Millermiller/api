@@ -191,8 +191,8 @@ return [
          */
         Scandinaver\Puzzle\Application\PuzzleServiceProvider::class,
         Scandinaver\Puzzle\Application\RouteServiceProvider::class,
-        Scandinaver\Text\Application\TextServiceProvider::class,
-        Scandinaver\Text\Application\RouteServiceProvider::class,
+        Scandinaver\Translate\Application\TranslateServiceProvider::class,
+        Scandinaver\Translate\Application\RouteServiceProvider::class,
         Scandinaver\Learn\Application\LearnServiceProvider::class,
         Scandinaver\Learn\Application\RouteServiceProvider::class,
         Scandinaver\Common\Application\AppServiceProvider::class,

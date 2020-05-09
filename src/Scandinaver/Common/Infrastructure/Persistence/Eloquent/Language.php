@@ -6,11 +6,9 @@ namespace Scandinaver\Common\Infrastructure\Persistence\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int    $id
- * @property string $name
- * @property string $label
- * @property string $flag
- * @property string $image
+ * Class Language
+ *
+ * @package Scandinaver\Common\Infrastructure\Persistence\Eloquent
  */
 class Language extends Model
 {

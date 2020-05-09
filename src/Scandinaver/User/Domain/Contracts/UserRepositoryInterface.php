@@ -5,7 +5,7 @@ namespace Scandinaver\User\Domain\Contracts;
 
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
-use Scandinaver\Text\Domain\Text;
+use Scandinaver\Translate\Domain\Text;
 use Scandinaver\User\Domain\{Plan, User};
 
 /**

@@ -6,15 +6,9 @@ namespace Scandinaver\Common\Infrastructure\Persistence\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Created by PhpStorm.
- * User: user
- * Date: 15.05.2016
- * Time: 18:21
+ * Class Meta
  *
- * @property string $url
- * @property string $title
- * @property string $description
- * @property string $keywords
+ * @package Scandinaver\Common\Infrastructure\Persistence\Eloquent
  */
 class Meta extends Model
 {

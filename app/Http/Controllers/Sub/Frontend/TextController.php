@@ -8,9 +8,10 @@ use ReflectionException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Access\AuthorizationException;
-use Scandinaver\Text\Application\Commands\CompleteTextCommand;
-use Scandinaver\Text\Application\Query\GetTextQuery;
-use Scandinaver\Text\Domain\Text;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Translate\Application\Commands\CompleteTextCommand;
+use Scandinaver\Translate\Application\Query\GetTextQuery;
+use Scandinaver\Translate\Domain\Text;
 
 /**
  * Class TextController
@@ -19,12 +20,14 @@ use Scandinaver\Text\Domain\Text;
 class TextController extends Controller
 {
     /**
-     * @param Text $text
+     * @param Language $language
+     * @param Text     $text
+     *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws ReflectionException
      */
-    public function show(Text $text): JsonResponse
+    public function show(Language $language, Text $text): JsonResponse
     {
         $this->authorize('view', $text);
 

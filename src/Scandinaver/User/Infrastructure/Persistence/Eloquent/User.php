@@ -22,30 +22,12 @@ use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset;
 use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result;
 use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word;
 use Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent\Puzzle;
-use Scandinaver\Text\Infrastructure\Persistence\Eloquent\TextResult;
+use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult;
 
 /**
- * Class UsersModel
+ * Class User
  *
- * @property int    $id
- * @property string $login
- * @property string $name
- * @property string $password
- * @property string $photo
- * @property string $restore_link
- * @property string $email
- * @property int    $active
- * @property int    $assets_opened
- * @property int    $assets_created
- * @property Asset  $favourite
- * @property string $role
- * @property Carbon $created_at
- * @property int    $last_online
- * @property int    $plan_id
- * @property Carbon $active_to
- * @property bool   $premium
- * @property string $avatar
- * @property Plan   $plan
+ * @package Scandinaver\User\Infrastructure\Persistence\Eloquent
  * @mixin Eloquent
  */
 class User extends Authenticatable

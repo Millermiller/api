@@ -9,11 +9,7 @@ use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, SoftDeletes};
 /**
  * Class Translate
  *
- * @package App\Models
- * @property int    $id
- * @property string $value
- * @property int    $word_id
- * @property bool   $sentence
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Eloquent
  * @mixin Eloquent
  */
 class Translate extends Model

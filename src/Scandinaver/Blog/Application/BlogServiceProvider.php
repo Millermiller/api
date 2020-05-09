@@ -9,9 +9,9 @@ use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
 
 /**
- * Class TextServiceProvider
+ * Class BlogServiceProvider
  *
- * @package Scandinaver\Text\Application
+ * @package Scandinaver\Blog\Application
  */
 class BlogServiceProvider extends ServiceProvider
 {

@@ -22,7 +22,7 @@ use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Learn\Domain\{Asset, Result};
 use Scandinaver\Puzzle\Domain\Puzzle;
-use Scandinaver\Text\Domain\Text;
+use Scandinaver\Translate\Domain\Text;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
 
 /**
@@ -165,7 +165,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     /**
      * @var Collection|Text[]
-     * @ManyToMany(targetEntity="Scandinaver\Text\Domain\Text", inversedBy="users")
+     * @ManyToMany(targetEntity="Scandinaver\Translate\Domain\Text", inversedBy="users")
      * @JoinTable(name="texts_users")
      */
     private $texts;

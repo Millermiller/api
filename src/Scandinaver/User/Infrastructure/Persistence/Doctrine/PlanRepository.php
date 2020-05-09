@@ -11,7 +11,7 @@ use Scandinaver\User\Domain\Plan;
 /**
  * Class PlanRepository
  *
- * @package App\Repositories\Plan
+ * @package Scandinaver\User\Infrastructure\Persistence\Doctrine
  */
 class PlanRepository extends BaseRepository implements PlanRepositoryInterface
 {

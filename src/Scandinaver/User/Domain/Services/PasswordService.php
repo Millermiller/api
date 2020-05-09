@@ -10,7 +10,7 @@ use Scandinaver\User\Domain\User;
 /**
  * Class PasswordService
  *
- * @package App\Services
+ * @package Scandinaver\User\Domain\Services
  */
 class PasswordService
 {

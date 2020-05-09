@@ -14,7 +14,7 @@ use Scandinaver\User\Domain\User;
 /**
  * Class AssetService
  *
- * @package app\Services
+ * @package Scandinaver\Learn\Domain\Services
  */
 class AssetService
 {

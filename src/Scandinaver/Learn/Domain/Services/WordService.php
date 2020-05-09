@@ -18,7 +18,7 @@ use Scandinaver\Learn\Domain\Word;
 /**
  * Class WordService
  *
- * @package App\Services
+ * @package Scandinaver\Learn\Domain\Services
  */
 class WordService
 {

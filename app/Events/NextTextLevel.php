@@ -3,7 +3,7 @@
 
 namespace App\Events;
 
-use Scandinaver\Text\Infrastructure\Persistence\Eloquent\TextResult;
+use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult;
 use Scandinaver\User\Domain\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;

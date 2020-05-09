@@ -32,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider
             [
                 'middleware' => ['web', 'checkDomain', 'touchUser', 'checkPlan', 'auth:api'],
                 'as'         => 'sub_frontend::',
-                'namespace' => 'App\Http\Controllers',
+                'namespace'  => 'App\Http\Controllers',
             ],
             function () {
                 Route::get('/words', 'Sub\Frontend\IndexController@getWords')->name('words');

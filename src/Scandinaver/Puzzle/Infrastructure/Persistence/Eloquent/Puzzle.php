@@ -6,18 +6,14 @@ namespace Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent;
 use App\Helpers\StringHelper;
 use Auth;
 use Illuminate\Database\Eloquent\{Builder, Model, Relations\BelongsToMany};
+use Eloquent;
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 /**
  * Class Puzzle
  *
- * @package App\Models
- * @property int    $id
- * @property string $text
- * @property string $translate
- * @property string $created_at
- * @property string $updated_at
- * @method static Builder domain()
+ * @package Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent
+ * @mixin Eloquent
  */
 class Puzzle extends Model
 {

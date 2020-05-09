@@ -5,7 +5,7 @@ namespace App\Policies;
 
 use Scandinaver\User\Domain\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Scandinaver\Text\Domain\Text;
+use Scandinaver\Translate\Domain\Text;
 
 /**
  * Class TextPolicy

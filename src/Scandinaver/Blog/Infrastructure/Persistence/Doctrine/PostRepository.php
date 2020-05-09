@@ -9,9 +9,9 @@ use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Shared\BaseRepository;
 
 /**
- * Class UserRepository
+ * Class PostRepository
  *
- * @package App\Repositories\User
+ * @package Scandinaver\Blog\Infrastructure\Persistence\Doctrine
  */
 class PostRepository extends BaseRepository implements PostRepositoryInterface
 {

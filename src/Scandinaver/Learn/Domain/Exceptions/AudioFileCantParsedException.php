@@ -8,7 +8,7 @@ use Exception;
 /**
  * Class AudioFileCantParsedException
  *
- * @package Scandinaver\Learn\Domain
+ * @package Scandinaver\Learn\Domain\Exceptions
  */
 class AudioFileCantParsedException extends Exception
 {

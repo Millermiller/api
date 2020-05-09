@@ -9,13 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Plan
  *
- * @property int    $id
- * @property string $name
- * @property string $period
- * @property int    $cost
- * @property int    $cost_per_month
+ * @package Scandinaver\User\Infrastructure\Persistence\Eloquent
  * @mixin Eloquent
- * @package App\Models
  */
 class Plan extends Model
 {

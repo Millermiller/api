@@ -19,9 +19,9 @@ use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\{AssetRepository,
     WordRepository};
 
 /**
- * Class TextServiceProvider
+ * Class LearnServiceProvider
  *
- * @package Scandinaver\Text\Application
+ * @package Scandinaver\Learn\Application
  */
 class LearnServiceProvider extends ServiceProvider
 {

@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Contracts\CardRepositoryInterface;
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Text\Domain\Text;
+use Scandinaver\Translate\Domain\Text;
 use Scandinaver\User\Domain\User;
 
 /**

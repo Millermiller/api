@@ -6,9 +6,9 @@ namespace Scandinaver\API\Application;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class TextServiceProvider
+ * Class APIServiceProvider
  *
- * @package Scandinaver\Text\Application
+ * @package Scandinaver\Api\Application
  */
 class APIServiceProvider extends ServiceProvider
 {

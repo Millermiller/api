@@ -7,6 +7,11 @@ use Scandinaver\Learn\Domain\Contracts\AudioParserInterface;
 use Scandinaver\Learn\Domain\Exceptions\AudioFileCantParsedException;
 use Sunra\PhpSimple\HtmlDomParser;
 
+/**
+ * Class ForvoParser
+ *
+ * @package Scandinaver\Learn\Infrastructure
+ */
 class ForvoParser implements AudioParserInterface
 {
     /** TODO: добавить авторизацию и использование cookies (где-то на bitbucket)

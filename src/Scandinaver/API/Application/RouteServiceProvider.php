@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Class RouteServiceProvider
  *
- * @package Scandinaver\Learn\Application
+ * @package Scandinaver\API\Application
  */
 class RouteServiceProvider extends ServiceProvider
 {

@@ -9,7 +9,7 @@ use PDO;
 /**
  * Class ColumnHydrator
  *
- * @package App\Hydrators
+ * @package Scandinaver\Common\Infrastructure\Persistence\Doctrine
  */
 class ColumnHydrator extends AbstractHydrator
 {

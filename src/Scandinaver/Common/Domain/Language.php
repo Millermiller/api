@@ -9,7 +9,7 @@ use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Blog\Domain\Post;
 use Scandinaver\Learn\Domain\{Asset, Result};
-use Scandinaver\Text\Domain\Text;
+use Scandinaver\Translate\Domain\Text;
 
 /**
  * Languages
@@ -53,7 +53,7 @@ class Language implements JsonSerializable, UrlRoutable
 
     /**
      * @var Collection|Text[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Text\Domain\Text", mappedBy="language")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Translate\Domain\Text", mappedBy="language")
      */
     private $texts;
 

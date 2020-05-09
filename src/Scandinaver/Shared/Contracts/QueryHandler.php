@@ -4,9 +4,9 @@
 namespace Scandinaver\Shared\Contracts;
 
 /**
- * Interface Handler
+ * Interface QueryHandler
  *
- * @package Scandinaver\Shared
+ * @package Scandinaver\Shared\Contracts
  */
 interface QueryHandler
 {

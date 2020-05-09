@@ -15,8 +15,8 @@ use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Learn\Domain\Contracts\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Services\AssetService;
-use Scandinaver\Text\Domain\Contracts\TextRepositoryInterface;
-use Scandinaver\Text\Domain\TextService;
+use Scandinaver\Translate\Domain\Contracts\TextRepositoryInterface;
+use Scandinaver\Translate\Domain\TextService;
 use Scandinaver\User\Domain\Contracts\{PlanRepositoryInterface, UserRepositoryInterface};
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 use Scandinaver\User\Domain\User;
@@ -24,7 +24,7 @@ use Scandinaver\User\Domain\User;
 /**
  * Class UserService
  *
- * @package app\Services
+ * @package Scandinaver\User\Domain\Services
  */
 class UserService
 {

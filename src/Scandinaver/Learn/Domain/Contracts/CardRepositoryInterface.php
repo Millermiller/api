@@ -8,9 +8,9 @@ use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
 use Scandinaver\User\Domain\User;
 
 /**
- * Interface TextRepositoryInterface
+ * Interface CardRepositoryInterface
  *
- * @package App\Repositories\Text
+ * @package Scandinaver\Learn\Domain\Contracts
  */
 interface CardRepositoryInterface extends BaseRepositoryInterface
 {

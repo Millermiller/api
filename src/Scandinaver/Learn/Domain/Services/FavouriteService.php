@@ -15,7 +15,7 @@ use Scandinaver\User\Domain\User;
 /**
  * Class FavouriteService
  *
- * @package App\Services
+ * @package Scandinaver\Learn\Domain\Services
  */
 class FavouriteService
 {

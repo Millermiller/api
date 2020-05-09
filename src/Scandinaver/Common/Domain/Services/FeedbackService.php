@@ -10,7 +10,7 @@ use Scandinaver\Common\Domain\Message;
 /**
  * Class FeedbackService
  *
- * @package app\Services
+ * @package Scandinaver\Common\Domain\Services
  */
 class FeedbackService
 {

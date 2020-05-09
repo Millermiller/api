@@ -9,10 +9,9 @@ use GuzzleHttp\Exception\GuzzleException;
 use Scandinaver\User\Domain\User;
 
 /**
- * Created by PhpStorm.
- * User: user
- * Date: 12.07.2015
- * Time: 16:44
+ * Class Requester
+ *
+ * @package Scandinaver\Common\Domain\Services
  */
 class Requester
 {

@@ -12,7 +12,7 @@ use Scandinaver\User\Domain\User;
 /**
  * Class ApiService
  *
- * @package app\Services
+ * @package Scandinaver\API\Infrastructure
  */
 class ApiService
 {

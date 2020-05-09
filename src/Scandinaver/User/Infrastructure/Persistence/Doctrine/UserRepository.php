@@ -6,14 +6,14 @@ namespace Scandinaver\User\Infrastructure\Persistence\Doctrine;
 use Doctrine\ORM\{NonUniqueResultException, NoResultException, OptimisticLockException, ORMException};
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Text\Domain\Text;
+use Scandinaver\Translate\Domain\Text;
 use Scandinaver\User\Domain\{Plan, User};
 use Scandinaver\User\Domain\Contracts\UserRepositoryInterface;
 
 /**
  * Class UserRepository
  *
- * @package App\Repositories\User
+ * @package Scandinaver\User\Infrastructure\Persistence\Doctrine
  */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {

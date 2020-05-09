@@ -3,27 +3,13 @@
 
 namespace Scandinaver\Blog\Infrastructure\Persistence\Eloquent;
 
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany, SoftDeletes};
 
 /**
- * Created by PhpStorm.
- * User: user
- * Date: 11.05.2016
- * Time: 18:10
+ * Class Post
  *
- * @property int    $id
- * @property string $title
- * @property string $post_author
- * @property string $content
- * @property int    $category_id
- * @property string $anonse
- * @property string $post_status
- * @property int    $status
- * @property int    $views
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @package Scandinaver\Blog\Infrastructure\Persistence\Eloquent
  */
 class Post extends Model
 {

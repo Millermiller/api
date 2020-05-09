@@ -8,15 +8,7 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 /**
  * Class Intro
  *
- * @package App\Models
- * @property int    id
- * @property string page
- * @property string element
- * @property string intro
- * @property string position
- * @property string tooltipClass
- * @property int    sort
- * @property int    active
+ * @package Scandinaver\Common\Infrastructure\Persistence\Eloquent
  */
 class Intro extends Model
 {

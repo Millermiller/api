@@ -10,7 +10,7 @@ use Scandinaver\User\Domain\Order;
 /**
  * Class PaymentService
  *
- * @package App\Services
+ * @package Scandinaver\User\Domain\Services
  */
 class PaymentService
 {
@@ -21,33 +21,33 @@ class PaymentService
      */
     public function make(Request $request): Order
     {
-        $order                    = new Order();
-        $order->sum               = $request->post('amount');
-        $order->status            = 1;
+        $order = new Order();
+        $order->setSum($request->post('amount'));
+        $order->setStatus(1);
         $order->plan_id           = explode('|', $request->post('label'))[1];
         $order->user_id           = explode('|', $request->post('label'))[0];
         $order->notification_type = $request->post('notification_type');
-        $order->datetime          = $request->post('datetime');
-        $order->codepro           = $request->post('codepro');
-        $order->sender            = $request->post('sender');
-        $order->sha1_hash         = $request->post('sha1_hash');
-        $order->label             = $request->post('label');
-        $order->save();
+        $order->setDatetime($request->post('datetime'));
+        $order->setCodepro($request->post('codepro'));
+        $order->setSender($request->post('sender'));
+        $order->setSha1Hash($request->post('sha1_hash'));
+        $order->setLabel($request->post('label'));
+        // $order->save();
 
-        if ($order->user->active_to < Carbon::now()) {
-            if ($order->plan->name == "Medium")
-                $order->user->active_to = Carbon::now()->addMonth(1)->format('D M d Y');
+        if ($order->getUser()->getActiveTo() < Carbon::now()) {
+            if ($order->getPlan()->getName() == "Medium")
+                $order->getUser()->active_to = Carbon::now()->addMonth(1)->format('D M d Y');
             else
-                $order->user->active_to = Carbon::now()->addMonth(3)->format('D M d Y');
+                $order->getUser()->active_to = Carbon::now()->addMonth(3)->format('D M d Y');
         } else {
-            if ($order->plan->name == "Medium")
-                $order->user->active_to = $order->user->active_to->addMonth(1)->format('D M d Y');
+            if ($order->getPlan()->getName() == "Medium")
+                $order->getUser()->active_to = $order->getUser()->getActiveTo()->addMonth(1)->format('D M d Y');
             else
-                $order->user->active_to = $order->user->active_to->addMonth(3)->format('D M d Y');
+                $order->getUser()->active_to = $order->getUser()->getActiveTo()->addMonth(3)->format('D M d Y');
         }
 
-        $order->user->plan()->associate($order->plan);
-        $order->user->save();
+        // $order->getUser()->getPlan()->associate($order->getPlan());
+        // $order->getUser()->save();
 
         return $order;
     }

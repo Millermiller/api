@@ -10,23 +10,9 @@ use Exception;
 use Illuminate\Database\Eloquent\{Builder, Model, Relations\BelongsTo, Relations\HasMany, SoftDeletes};
 
 /**
- * Created by PhpStorm.
- * User: user
- * Date: 05.09.2016
- * Time: 7:30
  * Class Asset
  *
- * @package App\Models
- * @property int    $id
- * @property string $title
- * @property string $language_id
- * @property bool   $basic
- * @property int    $level
- * @property int    $type
- * @property bool   $favorite
- * @property Card   cards
- * @property Result result
- * @method static Builder domain()
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Eloquent
  * @mixin Eloquent
  */
 class Asset extends Model

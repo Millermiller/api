@@ -8,11 +8,7 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 /**
  * Class Example
  *
- * @package App\Models
- * @property int    id
- * @property int    card_id
- * @property string text
- * @property string value
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Eloquent
  */
 class Example extends Model
 {

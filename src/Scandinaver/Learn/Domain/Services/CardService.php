@@ -20,7 +20,7 @@ use Scandinaver\User\Domain\User;
 /**
  * Class CardService
  *
- * @package app\Services
+ * @package Scandinaver\Learn\Domain\Services
  */
 class CardService
 {

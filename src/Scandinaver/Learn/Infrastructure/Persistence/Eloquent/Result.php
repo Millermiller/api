@@ -9,14 +9,8 @@ use Illuminate\Database\Eloquent\{Builder, Model, Relations\HasOne};
 /**
  * Class Result
  *
- * @package App\Models
- * @property int   id
- * @property int   asset_id
- * @property int   user_id
- * @property int   result
- * @property Asset asset
+ * @package Scandinaver\Learn\Infrastructure\Persistence\Eloquent
  * @mixin Eloquent
- * @method static Builder domain()
  */
 class Result extends Model
 {

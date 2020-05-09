@@ -11,7 +11,7 @@ use Scandinaver\User\Domain\Contracts\UserRepositoryInterface;
 /**
  * Class FileService
  *
- * @package Scandinaver\Common\Services
+ * @package Scandinaver\Common\Domain\Services
  */
 class FileService
 {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\{Model, Relations\HasMany, SoftDeletes};
 /**
  * Class Category
  *
- * @package Application\Models
+ * @package Scandinaver\Blog\Infrastructure\Persistence\Eloquent
  */
 class Category extends Model
 {

@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Application\Handlers;
 
 use Scandinaver\Learn\Application\Query\AssetsCountQuery;
-use Scandinaver\Text\Domain\TextService;
+use Scandinaver\Translate\Domain\TextService;
 
 /**
  * Class TextCountHandler
