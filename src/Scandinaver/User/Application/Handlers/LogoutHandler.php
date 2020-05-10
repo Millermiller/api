@@ -4,6 +4,7 @@
 namespace Scandinaver\User\Application\Handlers;
 
 use Auth;
+use Laravel\Passport\Token;
 use Scandinaver\User\Application\Commands\LogoutCommand;
 
 /**
@@ -25,9 +26,11 @@ class LogoutHandler implements LogoutHandlerInterface
      */
     public function handle($command): void
     {
-        setcookie('token', 'w', time() - 1000, '/', '.' . config('app.DOMAIN'));
-        setcookie('user', 'w', time() - 1000, '/', '.' . config('app.DOMAIN'));
+        setcookie('authfrontend._token.local', false, time() - 1000, '/', '.' . config('app.DOMAIN'));
 
-        Auth::logout();
+        /** @var Token $token */
+        $token = Auth::user()->token();
+
+        $token->revoke();
     }
 } 
