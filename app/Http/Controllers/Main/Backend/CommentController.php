@@ -3,10 +3,9 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use ReflectionException;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Scandinaver\Blog\Application\Commands\CreateCommentCommand;
 use Scandinaver\Blog\Application\Commands\DeleteCommentCommand;
 use Scandinaver\Blog\Application\Commands\UpdateCommentCommand;
@@ -23,7 +22,6 @@ class CommentController extends Controller
 {
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function index(): JsonResponse
     {
@@ -34,7 +32,6 @@ class CommentController extends Controller
      * @param int $id
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function show($id): JsonResponse
     {
@@ -45,13 +42,12 @@ class CommentController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateCommentCommand($request->toArray()));
 
-        return response()->json(null, 201);
+        return response()->json(NULL, 201);
     }
 
     /**
@@ -59,26 +55,24 @@ class CommentController extends Controller
      * @param Comment $comment
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function update(Request $request, Comment $comment): JsonResponse
     {
         $this->commandBus->execute(new UpdateCommentCommand($comment, $request->toArray()));
 
-        return response()->json(null, 201);
+        return response()->json(NULL, 201);
     }
 
     /**
      * @param Comment $comment
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function destroy(Comment $comment): JsonResponse
     {
         $this->commandBus->execute(new DeleteCommentCommand($comment));
 
-        return response()->json(null, 204);
+        return response()->json(NULL, 204);
     }
 
     public function search()

@@ -3,11 +3,21 @@
 
 namespace App\Http\Controllers\Sub\Backend;
 
-use ReflectionException;
-use Illuminate\Http\JsonResponse;
-use App\Http\Requests\BaseRequest;
 use App\Http\Controllers\Controller;
-use Scandinaver\Learn\Application\Query\{AssetsCountQuery, AudioCountQuery, TextsCountQuery, WordsCountQuery};
+use Illuminate\Http\JsonResponse;
+use Scandinaver\Common\Application\Query\MessagesQuery;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Learn\Application\Query\{AssetsCountByLanguageQuery,
+    AssetsCountQuery,
+    AudioCountByLanguageQuery,
+    AudioCountQuery,
+    TextsCountByLanguageQuery,
+    TextsCountQuery,
+    WordsCountByLanguageQuery,
+    WordsCountQuery
+};
+use Scandinaver\User\Application\Query\UsersQuery;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  * Created by PhpStorm.
@@ -21,46 +31,37 @@ use Scandinaver\Learn\Application\Query\{AssetsCountQuery, AudioCountQuery, Text
 class DashboardController extends Controller
 {
     /**
-     * @param BaseRequest $request
-     *
      * @return JsonResponse
-     * @throws ReflectionException
      */
-    public function wordsCount(BaseRequest $request)
+    public function all(): JsonResponse
     {
-        return response()->json($this->queryBus->execute(new WordsCountQuery($request->language)));
+        // $last_day_users = User::where('created_at', '>', Carbon::yesterday())->count();
+        // $message_count = Message::all()->count();
+        // $unread = Message::find(['readed' => 0]);
+
+        return response()->json([
+            'users'    => $this->queryBus->execute(new UsersQuery()),
+            'words'    => $this->queryBus->execute(new WordsCountQuery()),
+            'assets'   => $this->queryBus->execute(new AssetsCountQuery()),
+            'audio'    => $this->queryBus->execute(new AudioCountQuery()),
+            'texts'    => $this->queryBus->execute(new TextsCountQuery()),
+          //  'log'      => Activity::with('causer', 'subject')->get(),
+            'messages' => $this->queryBus->execute(new MessagesQuery()),
+        ]);
     }
 
     /**
-     * @param BaseRequest $request
+     * @param Language $language
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
-    public function assetsCount(BaseRequest $request)
+    public function one(Language $language)
     {
-        return response()->json($this->queryBus->execute(new AssetsCountQuery($request->language)));
-    }
-
-    /**
-     * @param BaseRequest $request
-     *
-     * @return JsonResponse
-     * @throws ReflectionException
-     */
-    public function audioCount(BaseRequest $request)
-    {
-        return response()->json($this->queryBus->execute(new AudioCountQuery($request->language)));
-    }
-
-    /**
-     * @param BaseRequest $request
-     *
-     * @return JsonResponse
-     * @throws ReflectionException
-     */
-    public function textsCount(BaseRequest $request)
-    {
-        return response()->json($this->queryBus->execute(new TextsCountQuery($request->language)));
+        return response()->json([
+            'words'  => $this->queryBus->execute(new WordsCountByLanguageQuery($language)),
+            'assets' => $this->queryBus->execute(new AssetsCountByLanguageQuery($language)),
+            'audio'  => $this->queryBus->execute(new AudioCountByLanguageQuery($language)),
+            'texts'  => $this->queryBus->execute(new TextsCountByLanguageQuery($language)),
+        ]);
     }
 }

@@ -6,13 +6,10 @@ namespace App\Http\Controllers\Sub\Frontend;
 use Exception;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use ReflectionException;
 use Scandinaver\Learn\Application\Query\{AssetForUserByTypeQuery, PersonalAssetsQuery};
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Asset;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\{JsonResponse};
-use Illuminate\View\View;
 use Scandinaver\User\Application\Query\GetStateQuery;
 use Scandinaver\User\Application\Query\GetUserQuery;
 
@@ -25,7 +22,6 @@ class IndexController extends Controller
 {
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function getUser(): JsonResponse
     {
@@ -64,7 +60,6 @@ class IndexController extends Controller
 
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function getPersonal(): JsonResponse
     {
@@ -77,7 +72,6 @@ class IndexController extends Controller
      * @param Language $language
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function state(Language $language): JsonResponse
     {

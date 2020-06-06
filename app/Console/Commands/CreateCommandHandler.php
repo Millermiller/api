@@ -122,7 +122,7 @@ class CreateCommandHandler extends GeneratorCommand
      *
      * @return string|string[]
      */
-    protected function replaceClass($stub, $name): array
+    protected function replaceClass($stub, $name)
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $commandNamespace = str_replace('/', '\\', 'Application/Commands');

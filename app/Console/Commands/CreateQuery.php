@@ -127,4 +127,15 @@ class CreateQuery extends GeneratorCommand
         $queryNamespace = str_replace('/', '\\', $this->queryPath);
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
     }
+
+    protected function replaceClass($stub, $name)
+    {
+        $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
+        $handlerNamespace = str_replace('/', '\\', 'Application/Handlers');
+        $handlerClass     = str_replace('Query', 'Handler', $class);
+        return str_replace([
+            'DummyClass',
+            'DummyHandlerClass',
+        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\$handlerClass"], $stub);
+    }
 }

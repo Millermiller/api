@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Spatie\Activitylog\Models\Activity;
 
 /**
- * Class SeoController
+ * Class LogController
  *
  * @package App\Http\Controllers\Main\Backend
  */

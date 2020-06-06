@@ -4,18 +4,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Helpers\Auth;
-use ReflectionException;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Scandinaver\User\Application\Commands\LogoutCommand;
 use Scandinaver\User\Application\Query\LoginQuery;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 
 /**
- * Class LoginController
+ * Class AuthController
  *
  * @package App\Http\Controllers\Auth
  */
@@ -27,7 +26,6 @@ class AuthController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
-     * @throws ReflectionException
      * @throws ValidationException
      */
     public function login(Request $request): JsonResponse
@@ -59,12 +57,11 @@ class AuthController extends Controller
 
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function logout(): JsonResponse
     {
         $this->commandBus->execute(new LogoutCommand(Auth::user()));
 
-        return response()->json(null, 200);
+        return response()->json(NULL, 200);
     }
 }

@@ -100,7 +100,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
      *
      * @return mixed
      */
-    public function getAssetsByType($language, int $type)
+    public function getAssetsByType($language, int $type): array
     {
         return $this->createQueryBuilder('asset')
                     ->select('a')

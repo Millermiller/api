@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 
 /**
  * Cards
@@ -14,7 +15,7 @@ use JsonSerializable;
  *
  * @ORM\Entity
  */
-class Card implements JsonSerializable
+class Card implements JsonSerializable, UrlRoutable
 {
     /**
      * @var int
@@ -231,5 +232,13 @@ class Card implements JsonSerializable
     public function setAssetId(int $assetId): void
     {
         $this->assetId = $assetId;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getRouteKeyName(): string
+    {
+        return 'id';
     }
 }

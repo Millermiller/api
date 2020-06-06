@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use ReflectionException;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -13,10 +12,6 @@ use Scandinaver\Learn\Application\Commands\{GiveNextLevelCommand, SaveTestResult
 use Scandinaver\Learn\Domain\Asset;
 
 /**
- * Created by PhpStorm.
- * User: user
- * Date: 10.05.2015
- * Time: 3:10
  * Class TestController
  *
  * @package App\Http\Controllers\Sub\Frontend
@@ -27,7 +22,6 @@ class TestController extends Controller
      * @param Asset $asset
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function complete(Asset $asset): JsonResponse
     {
@@ -43,7 +37,6 @@ class TestController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws ReflectionException
      */
     public function result(Asset $asset): JsonResponse
     {

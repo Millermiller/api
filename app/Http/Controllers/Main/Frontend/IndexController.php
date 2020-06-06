@@ -11,7 +11,7 @@ use Meta;
 /**
  * Class IndexController
  *
- * @package Application\Controllers
+ * @package App\Http\Controllers\Main\Frontend
  */
 class IndexController extends Controller
 {

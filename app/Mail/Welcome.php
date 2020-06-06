@@ -31,9 +31,9 @@ class Welcome extends Mailable
     /**
      * Build the message.
      *
-     * @return Message
+     * @return Welcome
      */
-    public function build(): Message
+    public function build(): Welcome
     {
         return $this->from('support@scandinaver.org', "Scandinaver")
                     ->subject("Регистрация на сайте Scandinaver.org")

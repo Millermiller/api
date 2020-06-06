@@ -60,7 +60,7 @@ interface AssetRepositoryInterface extends BaseRepositoryInterface
      *
      * @return mixed
      */
-    public function getAssetsByType(Language $language, int $type);
+    public function getAssetsByType(Language $language, int $type): array;
 
     /**
      * @param Language $language

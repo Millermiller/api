@@ -18,7 +18,7 @@ class DummyClass implements DummyClassInterface
     }
 
     /**
-     * @param DummyQueryClass
+     * @param $query DummyQueryClass
      *
      * @inheritDoc
      */

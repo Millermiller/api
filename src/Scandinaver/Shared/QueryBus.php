@@ -23,7 +23,6 @@ class QueryBus
      * @param Query $command
      *
      * @return Response|null
-     * @throws ReflectionException
      */
     public function execute(Query $command)
     {
@@ -31,14 +30,18 @@ class QueryBus
     }
 
     /**
-     * @param Query $command
+     * @param Query $query
      *
      * @return QueryHandler
-     * @throws ReflectionException
      */
-    public function resolveHandler(Query $command): QueryHandler
+    public function resolveHandler(Query $query): QueryHandler
     {
-        return app()->make($this->getHandlerClass($command));
+        try {
+            return app()->make($this->getHandlerClass($query));
+        }
+        catch (ReflectionException $e) {
+            return null;
+        }
     }
 
     /**

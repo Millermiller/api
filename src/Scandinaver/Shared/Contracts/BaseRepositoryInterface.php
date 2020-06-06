@@ -12,6 +12,8 @@ use Doctrine\Common\Persistence\ObjectRepository;
  */
 interface BaseRepositoryInterface extends ObjectRepository
 {
+    public function count(array $criteria);
+
     public function all();
 
     public function get($id);

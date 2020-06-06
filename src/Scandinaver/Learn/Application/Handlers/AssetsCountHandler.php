@@ -35,6 +35,6 @@ class AssetsCountHandler implements AssetsCountHandlerInterface
      */
     public function handle($query): int
     {
-        return $this->audioService->count($query->getLanguage());
+        return $this->audioService->count();
     }
 }
