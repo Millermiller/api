@@ -126,3 +126,10 @@ ncu -u
 ******************************** NVM *************************************
 nvm ls
 nmm use
+
+***************************** INSTALL
+docker-compose exec workspace bash
+cd api
+php artisan passport:install
+php artisan key:generate
+
