@@ -3,29 +3,25 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use ReflectionException;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Language;
-use Scandinaver\Puzzle\Domain\Puzzle;
 use Scandinaver\Puzzle\Application\Commands\PuzzleCompleteCommand;
 use Scandinaver\Puzzle\Application\Query\UserPuzzlesQuery;
+use Scandinaver\Puzzle\Domain\Puzzle;
 
 /**
  * Class PuzzleController
  *
  * @package App\Http\Controllers\Sub\Frontend
- * Created by PhpStorm.
- * User: john_
- * Date: 22.11.2018
- * Time: 4:35
  */
 class PuzzleController extends Controller
 {
     /**
+     * @param Language $language
+     *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function index(Language $language): JsonResponse
     {
@@ -36,7 +32,6 @@ class PuzzleController extends Controller
      * @param Puzzle $puzzle
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function update(Puzzle $puzzle): JsonResponse
     {

@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Application\Handlers;
 
 use Scandinaver\Learn\Application\Query\AudioCountQuery;
-use Scandinaver\Learn\Domain\Services\WordService;
+use Scandinaver\Learn\Domain\Services\AudioService;
 
 /**
  * Class AudioCountHandler
@@ -14,18 +14,18 @@ use Scandinaver\Learn\Domain\Services\WordService;
 class AudioCountHandler implements AudioCountHandlerInterface
 {
     /**
-     * @var WordService
+     * @var AudioService
      */
-    private $wordService;
+    private $audioService;
 
     /**
      * WordsCountHandler constructor.
      *
-     * @param WordService $wordService
+     * @param AudioService $audioService
      */
-    public function __construct(WordService $wordService)
+    public function __construct(AudioService $audioService)
     {
-        $this->wordService = $wordService;
+        $this->audioService = $audioService;
     }
 
     /**
@@ -35,6 +35,6 @@ class AudioCountHandler implements AudioCountHandlerInterface
      */
     public function handle($query): int
     {
-        return $this->wordService->count($query->getLanguage());
+        return $this->audioService->count();
     }
 }

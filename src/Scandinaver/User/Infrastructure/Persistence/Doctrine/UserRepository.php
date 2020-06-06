@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Infrastructure\Persistence\Doctrine;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\{NonUniqueResultException, NoResultException, OptimisticLockException, ORMException};
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Shared\BaseRepository;

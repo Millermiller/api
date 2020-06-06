@@ -44,7 +44,10 @@ class WordService
      * @param WordRepositoryInterface      $wordsRepository
      * @param LanguageRepositoryInterface  $languageRepository
      */
-    public function __construct(TranslateRepositoryInterface $translateRepository, WordRepositoryInterface $wordsRepository, LanguageRepositoryInterface $languageRepository)
+    public function __construct(
+        TranslateRepositoryInterface $translateRepository,
+        WordRepositoryInterface $wordsRepository,
+        LanguageRepositoryInterface $languageRepository)
     {
         $this->translateRepository = $translateRepository;
         $this->wordsRepository     = $wordsRepository;
@@ -52,11 +55,19 @@ class WordService
     }
 
     /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->wordsRepository->count([]);
+    }
+
+    /**
      * @param Language $language
      *
      * @return int
      */
-    public function count(Language $language): int
+    public function countByLanguage(Language $language): int
     {
         return $this->wordsRepository->getCountByLanguage($language);
     }
@@ -92,6 +103,7 @@ class WordService
      * @param SearchRequest $request
      *
      * @return Translate[]|Builder[]|Collection|\Illuminate\Support\Collection
+     * @throws DBALException
      */
     public function translate(Language $language, SearchRequest $request)
     {

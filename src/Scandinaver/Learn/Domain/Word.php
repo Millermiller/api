@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Common\Domain\Language;
 use Scandinaver\User\Domain\User;
 
@@ -16,7 +17,7 @@ use Scandinaver\User\Domain\User;
  *
  * @ORM\Entity
  */
-class Word implements JsonSerializable
+class Word implements JsonSerializable, UrlRoutable
 {
     /**
      * @var int
@@ -82,19 +83,15 @@ class Word implements JsonSerializable
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="Scandinaver\User\Domain\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="creator_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Scandinaver\User\Domain\User", fetch="LAZY")
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id")
      */
     private $creator;
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="Scandinaver\Common\Domain\Language")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="language_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Scandinaver\Common\Domain\Language", fetch="LAZY")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;
 
@@ -106,7 +103,7 @@ class Word implements JsonSerializable
 
     /**
      * @var Collection|Result[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Card", mappedBy="word")
+     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Card", mappedBy="word", fetch="LAZY")
      */
     private $cards;
 
@@ -212,5 +209,13 @@ class Word implements JsonSerializable
     public function setLanguage(Language $language): void
     {
         $this->language = $language;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getRouteKeyName(): string
+    {
+        return 'id';
     }
 }

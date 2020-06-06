@@ -3,21 +3,16 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Scandinaver\API\Application\Query\{AssetsQuery, LanguagesQuery};
 use Scandinaver\Common\Domain\Language;
 use Validator;
-use ReflectionException;
-use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
-use Scandinaver\API\Application\Query\{AssetsQuery, LanguagesQuery};
 
 /**
- * Created by PhpStorm.
- * User: whiskey
- * Date: 19.02.15
- * Time: 23:08
  * Class ApiController
  *
- * @package App\Http\Controllers\Main\Frontend
+ * @package App\Http\Controllers\API
  */
 class ApiController extends Controller
 {
@@ -31,7 +26,6 @@ class ApiController extends Controller
 
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function languages(): JsonResponse
     {
@@ -42,7 +36,6 @@ class ApiController extends Controller
      * @param Language $language
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function assets(Language $language): JsonResponse
     {

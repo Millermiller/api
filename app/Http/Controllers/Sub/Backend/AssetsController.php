@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Sub\Backend;
 
 use Request;
 use App\Helpers\Auth;
-use ReflectionException;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Application\Commands\AddBasicLevelCommand;
 use Scandinaver\Learn\Application\Commands\AddWordAndTranslateCommand;
 use Scandinaver\Learn\Application\Commands\CreateTranslateCommand;
@@ -17,6 +17,7 @@ use Scandinaver\Learn\Application\Commands\SetTranslateForCardCommand;
 use Scandinaver\Learn\Application\Commands\UpdateAssetCommand;
 use Scandinaver\Learn\Application\Commands\UploadAudioCommand;
 use Scandinaver\Learn\Application\Query\FindAudioQuery;
+use Scandinaver\Learn\Application\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learn\Application\Query\GetExamplesForCardQuery;
 use Scandinaver\Learn\Application\Query\GetTranslatesByWordQuery;
 use Scandinaver\Learn\Application\Query\GetUnusedSentencesQuery;
@@ -35,33 +36,23 @@ use Scandinaver\Learn\Domain\Word;
  */
 class AssetsController extends Controller
 {
-    public function index()
+    /**
+     * @param Language $language
+     *
+     * @return JsonResponse
+     */
+    public function index(Language $language)
     {
-        /*
         return response()->json([
-            'words' => array_values(Asset::domain()->withCount('cards')
-                ->where('basic', '=', '1')
-                ->where('type', '=', Asset::TYPE_WORDS)
-                ->get()
-                ->sortBy('level')
-                ->toArray()
-            ),
-            'sentences' => array_values(Asset::domain()->withCount('cards')
-                ->where('basic', '=', '1')
-                ->where('type', '=', Asset::TYPE_SENTENCES)
-                ->get()
-                ->sortBy('level')
-                ->toArray()
-            )
+            'words' => $this->queryBus->execute(new GetAssetsByTypeQuery($language, Asset::TYPE_WORDS)),
+            'sentences' => $this->queryBus->execute(new GetAssetsByTypeQuery($language, Asset::TYPE_SENTENCES)),
         ]);
-        */
     }
 
     /**
      * @param Word $word
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function findAudio(Word $word): JsonResponse
     {
@@ -79,23 +70,23 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param Word $word
+     * @param Language $language
+     * @param Word     $word
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
-    public function showValues(Word $word): JsonResponse
+    public function showValues(Language $language, Word $word): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetTranslatesByWordQuery($word)));
     }
 
     /**
-     * @param Card $card
+     * @param Language $language
+     * @param Card     $card
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
-    public function showExamples(Card $card): JsonResponse
+    public function showExamples(Language $language, Card $card): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetExamplesForCardQuery($card)));
     }
@@ -104,7 +95,6 @@ class AssetsController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function changeUsedTranslate(Request $request): JsonResponse
     {
@@ -117,7 +107,6 @@ class AssetsController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function editTranslate(Request $request): JsonResponse
     {
@@ -133,11 +122,10 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param Word    $word
      * @param Request $request
+     * @param Word    $word
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function uploadAudio(Request $request, Word $word): JsonResponse
     {
@@ -148,7 +136,6 @@ class AssetsController extends Controller
 
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function getSentences(): JsonResponse
     {
@@ -161,7 +148,6 @@ class AssetsController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function addBasicAssetLevel(Request $request): JsonResponse
     {
@@ -174,7 +160,6 @@ class AssetsController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function addPair(Request $request): JsonResponse
     {
@@ -194,7 +179,6 @@ class AssetsController extends Controller
      * @param Asset   $asset
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function changeAsset(Request $request, Asset $asset): JsonResponse
     {

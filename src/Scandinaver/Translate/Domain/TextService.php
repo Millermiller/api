@@ -42,11 +42,20 @@ class TextService
     }
 
     /**
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->textRepository->count([]);
+    }
+
+    /**
      * @param Language $language
      *
      * @return int
      */
-    public function count(Language $language): int
+    public function countByLanguage(Language $language): int
     {
         return $this->textRepository->getCountByLanguage($language);
     }

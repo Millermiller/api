@@ -35,6 +35,6 @@ class TextsCountHandler implements TextsCountHandlerInterface
      */
     public function handle($query): int
     {
-        return $this->textService->count($query->getLanguage());
+        return $this->textService->count();
     }
 }

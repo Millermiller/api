@@ -10,13 +10,9 @@ use Scandinaver\User\Domain\Services\PaymentService;
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan;
 
 /**
- * Created by PhpStorm.
- * User: john
- * Date: 29.06.2018
- * Time: 16:26
- * Class ProfileController
+ * Class PaymentController
  *
- * @package Application\Controllers
+ * @package App\Http\Controllers\Main\Frontend
  */
 class PaymentController extends Controller
 {

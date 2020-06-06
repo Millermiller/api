@@ -4,7 +4,6 @@
 namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Helpers\Auth;
-use ReflectionException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -15,6 +14,7 @@ use Scandinaver\Translate\Domain\Text;
 
 /**
  * Class TextController
+ *
  * @package App\Http\Controllers\Sub\Frontend
  */
 class TextController extends Controller
@@ -25,7 +25,6 @@ class TextController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws ReflectionException
      */
     public function show(Language $language, Text $text): JsonResponse
     {
@@ -36,8 +35,8 @@ class TextController extends Controller
 
     /**
      * @param Text $text
+     *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function complete(Text $text): JsonResponse
     {

@@ -3,16 +3,15 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use ReflectionException;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Scandinaver\Common\Domain\Message;
+use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Application\Commands\DeleteMessageCommand;
 use Scandinaver\Common\Application\Query\MessageQuery;
 use Scandinaver\Common\Application\Query\MessagesQuery;
+use Scandinaver\Common\Domain\Message;
 
 /**
- * Class SeoController
+ * Class MessageController
  *
  * @package App\Http\Controllers\Main\Backend
  */
@@ -20,7 +19,6 @@ class MessageController extends Controller
 {
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function index(): JsonResponse
     {
@@ -32,7 +30,6 @@ class MessageController extends Controller
      * @param int $id
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function show($id): JsonResponse
     {
@@ -43,12 +40,11 @@ class MessageController extends Controller
      * @param Message $message
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function destroy(Message $message): JsonResponse
     {
         $this->commandBus->execute(new DeleteMessageCommand($message));
 
-        return response()->json(null, 204);
+        return response()->json(NULL, 204);
     }
 }

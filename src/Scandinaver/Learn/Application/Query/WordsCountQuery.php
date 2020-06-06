@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Application\Query;
 
-use Scandinaver\Common\Domain\Language;
 use Scandinaver\Shared\Contracts\Query;
 
 /**
@@ -15,25 +14,11 @@ use Scandinaver\Shared\Contracts\Query;
 class WordsCountQuery implements Query
 {
     /**
-     * @var Language
-     */
-    private $language;
-
-    /**
      * WordsCountQuery constructor.
      *
-     * @param Language $language
      */
-    public function __construct(Language $language)
+    public function __construct()
     {
-        $this->language = $language;
-    }
 
-    /**
-     * @return Language
-     */
-    public function getLanguage(): Language
-    {
-        return $this->language;
     }
 }

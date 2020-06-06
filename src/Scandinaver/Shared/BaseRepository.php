@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Shared;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;

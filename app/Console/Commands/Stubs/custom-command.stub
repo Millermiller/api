@@ -9,6 +9,7 @@ use Scandinaver\Shared\Contracts\Command;
  * Class DummyClass
  *
  * @package DummyNamespace
+ * @see DummyHandlerClass
  */
 class DummyClass implements Command
 {

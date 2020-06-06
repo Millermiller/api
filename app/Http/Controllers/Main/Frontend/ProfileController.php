@@ -21,7 +21,7 @@ use Spatie\Activitylog\Models\Activity;
 /**
  * Class ProfileController
  *
- * @package Application\Controllers
+ * @package App\Http\Controllers\Main\Frontend
  */
 class ProfileController extends Controller
 {

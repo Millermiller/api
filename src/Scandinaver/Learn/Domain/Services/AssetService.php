@@ -111,6 +111,17 @@ class AssetService
     }
 
     /**
+     * @param Language $language
+     * @param int      $type
+     *
+     * @return array
+     */
+    public function getAssets(Language $language, int $type): array
+    {
+        return $this->assetRepository->getAssetsByType($language, $type);
+    }
+
+    /**
      * Возвращает массив словарей определенного типа для пользователя
      *
      * @param Language $language

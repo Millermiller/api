@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handlers;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Scandinaver\User\Application\Query\UsersQuery;
 use Scandinaver\User\Domain\Services\UserService;
 

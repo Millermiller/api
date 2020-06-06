@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Learn\Domain\{Asset, Card, Example, Result, Translate, Word};
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
+    AudioParserInterface,
     CardRepositoryInterface,
     ExampleRepositoryInterface,
     ResultRepositoryInterface,
@@ -155,7 +156,7 @@ class LearnServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'AudioParserInterface',
+            AudioParserInterface::class,
             'Scandinaver\Learn\Infrastructure\ForvoParser'
         );
 
@@ -202,6 +203,31 @@ class LearnServiceProvider extends ServiceProvider
         $this->app->bind(
             'AddWordAndTranslateHandlerInterface',
             'Scandinaver\Learn\Application\Handlers\AddWordAndTranslateHandler'
+        );
+
+        $this->app->bind(
+            'AssetsCountByLanguageHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AssetsCountByLanguageHandler'
+        );
+
+        $this->app->bind(
+            'WordsCountByLanguageHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\WordsCountByLanguageHandler'
+        );
+
+        $this->app->bind(
+            'TextsCountByLanguageHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\TextsCountByLanguageHandler'
+        );
+
+        $this->app->bind(
+            'AudioCountByLanguageHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\AudioCountByLanguageHandler'
+        );
+
+        $this->app->bind(
+            'GetAssetsByTypeHandlerInterface',
+            'Scandinaver\Learn\Application\Handlers\GetAssetsByTypeHandler'
         );
     }
 }

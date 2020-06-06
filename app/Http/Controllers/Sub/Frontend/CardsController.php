@@ -3,24 +3,19 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use ReflectionException;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Application\Commands\{AddCardToAssetCommand, DeleteCardFromAssetCommand};
 use Scandinaver\Learn\Domain\{Asset, Card};
-use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\{Translate, Word};
 
 /**
- * Created by PhpStorm.
- * User: whiskey
- * Date: 07.02.15
- * Time: 4:22
  * Class CardsController
  *
- * @package  App\Http\Controllers\Sub\Frontend
+ * @package App\Http\Controllers\Sub\Frontend
  */
 class CardsController extends Controller
 {
@@ -30,13 +25,12 @@ class CardsController extends Controller
      * @param Asset     $asset
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function store(Word $word, Translate $translate, Asset $asset): JsonResponse
     {
         $this->commandBus->execute(new AddCardToAssetCommand(Auth::user(), $word, $translate, $asset));
 
-        return response()->json(null, 201);
+        return response()->json(NULL, 201);
     }
 
     /**
@@ -45,7 +39,6 @@ class CardsController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws ReflectionException
      */
     public function destroy(Language $language, Card $card): JsonResponse
     {
@@ -53,6 +46,6 @@ class CardsController extends Controller
 
         $this->commandBus->execute(new DeleteCardFromAssetCommand(Auth::user(), $card));
 
-        return response()->json(null, 204);
+        return response()->json(NULL, 204);
     }
 }

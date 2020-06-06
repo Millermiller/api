@@ -3,30 +3,24 @@
 
 namespace App\Http\Controllers\Main\Backend;
 
-use ReflectionException;
-use \Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Scandinaver\User\Application\Query\UserQuery;
-use Scandinaver\User\Domain\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Scandinaver\User\Application\Commands\DeleteUserCommand;
 use Scandinaver\User\Application\Commands\UpdateUserCommand;
+use Scandinaver\User\Application\Query\UserQuery;
 use Scandinaver\User\Application\Query\UsersQuery;
+use Scandinaver\User\Domain\User;
 
 /**
  * Class UsersController
  *
  * @package App\Http\Controllers\Main\Backend
- * Created by PhpStorm.
- * User: whiskey
- * Date: 29.11.14
- * Time: 18:47
  */
 class UsersController extends Controller
 {
     /**
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function index(): JsonResponse
     {
@@ -37,7 +31,6 @@ class UsersController extends Controller
      * @param User $user
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function show(User $user): JsonResponse
     {
@@ -61,26 +54,24 @@ class UsersController extends Controller
      * @param User    $user
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function update(Request $request, User $user): JsonResponse
     {
         $this->commandBus->execute(new UpdateUserCommand($user, $request->toArray()));
 
-        return response()->json(null, 201);
+        return response()->json(NULL, 201);
     }
 
     /**
      * @param User $user
      *
      * @return JsonResponse
-     * @throws ReflectionException
      */
     public function destroy(User $user): JsonResponse
     {
         $this->commandBus->execute(new DeleteUserCommand($user));
 
-        return response()->json(null, 204);
+        return response()->json(NULL, 204);
     }
 
     public function active()

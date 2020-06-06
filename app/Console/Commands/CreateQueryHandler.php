@@ -122,7 +122,7 @@ class CreateQueryHandler extends GeneratorCommand
      *
      * @return string|string[]
      */
-    protected function replaceClass($stub, $name): array
+    protected function replaceClass($stub, $name)
     {
         $class          = str_replace($this->getNamespace($name) . '\\', '', $name);
         $queryNamespace = str_replace('/', '\\', 'Application/Query');

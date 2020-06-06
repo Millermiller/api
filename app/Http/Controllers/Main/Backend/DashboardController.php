@@ -8,10 +8,6 @@ use Illuminate\Http\JsonResponse;
 use Spatie\Activitylog\Models\Activity;
 
 /**
- * Created by PhpStorm.
- * User: john
- * Date: 16.08.2018
- * Time: 0:54
  * Class DashboardController
  *
  * @package App\Http\Controllers\Main\Backend

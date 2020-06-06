@@ -20,8 +20,6 @@ class CommandBus
 
     /**
      * @param Command $command
-     *
-     * @throws ReflectionException
      */
     public function execute(Command $command): void
     {
@@ -32,11 +30,15 @@ class CommandBus
      * @param Command $command
      *
      * @return CommandHandler
-     * @throws ReflectionException
      */
     public function resolveHandler(Command $command): CommandHandler
     {
-        return app()->make($this->getHandlerClass($command));
+        try {
+            return app()->make($this->getHandlerClass($command));
+        }
+        catch (ReflectionException $e) {
+            return null;
+        }
     }
 
     /**

@@ -41,11 +41,20 @@ class AudioService
     }
 
     /**
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->wordsRepository->countAudio();
+    }
+
+    /**
      * @param Language $language
      *
      * @return int
      */
-    public function count(Language $language): int
+    public function countByLanguage(Language $language): int
     {
         return $this->wordsRepository->getCountAudioByLanguage($language);
     }

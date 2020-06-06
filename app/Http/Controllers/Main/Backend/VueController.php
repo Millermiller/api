@@ -17,13 +17,9 @@ use Scandinaver\User\Application\Query\LoginQuery;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 
 /**
- * Class IndexController
+ * Class VueController
  *
- * @package Application\Controllers\Admin
- * Created by PhpStorm.
- * User: whiskey
- * Date: 23.11.14
- * Time: 18:07
+ * @package App\Http\Controllers\Main\Backend
  */
 class VueController extends Controller
 {

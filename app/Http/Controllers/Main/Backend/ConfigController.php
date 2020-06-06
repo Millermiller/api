@@ -8,11 +8,7 @@ use App\Http\Controllers\Controller;
 /**
  * Class ConfigController
  *
- * @package Application\Controllers\Admin
- * Created by PhpStorm.
- * User: whiskey
- * Date: 29.11.14
- * Time: 18:49
+ * @package App\Http\Controllers\Main\Backend
  */
 class ConfigController extends Controller
 {

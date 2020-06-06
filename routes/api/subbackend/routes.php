@@ -1,23 +1,51 @@
 <?php
 
-Route::get('/dashboard', 'DashboardController@index');
-Route::delete('/log/{id}', 'DashboardController@deleteLog');
-Route::delete('/message/{id}', 'DashboardController@deleteMessage');
+Route::get('/articles/search', 'ArticleController@search')->name('search');
+Route::post('/articles/upload', 'ArticleController@upload')->name('upload');
+Route::resource('/articles', 'ArticleController',
+    ['except' => ['create', 'edit']]
+);
+
+Route::resource('/categories', 'CategoryController',
+    ['except' => ['edit', 'create']]
+);
+
+Route::get('/comments/search', 'CommentController@search')->name('search');
+Route::resource('/comments', 'CommentController',
+    ['except' => ['edit', 'create']]
+);
+
+Route::resource('/meta', 'MetaController',
+    ['except' => ['edit', 'create']]
+);
+
+Route::resource('/plan', 'PlanController');
+
+Route::post('/send', 'VueController@testmail');
+
+Route::get('/dashboard', 'DashboardController@all');
+
+Route::get('/users/search', 'UsersController@search')->name('search');
+Route::resource('/users', 'UsersController',
+    ['except' => ['create', 'edit']]
+);
+
+Route::resource('/log', 'LogController', ['except' => ['edit', 'create']]);
+Route::resource('/message', 'MessageController', ['except' => ['edit', 'create']]);
 Route::post('/message/read/{id}', 'DashboardController@readMessage');
 
 Route::resource('/intro', 'IntroController');
-
 
 Route::get('/wordscount', 'DashboardController@wordscount');
 Route::get('/assetscount', 'DashboardController@assetscount');
 Route::get('/audiocount', 'DashboardController@audiocount');
 Route::get('/textscount', 'DashboardController@textscount');
 
-Route::get('/assets', 'AssetsController@index');
+Route::get(' /{language}/assets', 'AssetsController@index');
 Route::post('/forvo/{id}', 'AssetsController@findAudio');
-Route::get('/asset/{id}', 'AssetsController@showAsset');
-Route::get('/values/{id}', 'AssetsController@showValues');
-Route::get('/examples/{id}', 'AssetsController@showExamples');
+Route::get('/asset/{asset}', 'AssetsController@showAsset');
+Route::get('/{language}/values/{word}', 'AssetsController@showValues');
+Route::get('/{language}/examples/{card}', 'AssetsController@showExamples');
 Route::post('/asset/{id}', 'AssetsController@changeAsset');
 Route::post('/changeUsedTranslate', 'AssetsController@changeUsedTranslate');
 Route::post('/translate', 'AssetsController@editTranslate');

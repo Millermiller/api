@@ -35,6 +35,6 @@ class WordsCountHandler implements WordsCountHandlerInterface
      */
     public function handle($query): int
     {
-        return $this->wordService->count($query->getLanguage());
+        return $this->wordService->count();
     }
 }
