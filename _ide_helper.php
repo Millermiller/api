@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.28 on 2020-05-08 15:47:46.
+ * Generated for Laravel 5.7.29 on 2020-06-20 13:17:47.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -8997,7 +8997,9 @@ namespace Illuminate\Support\Facades {
          * Gets the preferred format for the response by inspecting, in the following order:
          *   * the request format set using setRequestFormat
          *   * the values of the Accept HTTP header
-         *   * the content type of the body of the request.
+         * 
+         * Note that if you use this method, you should send the "Vary: Accept" header
+         * in the response to prevent any issues with intermediary HTTP caches.
          *
          * @static 
          */ 
@@ -15170,6 +15172,36 @@ namespace Clockwork\Support\Laravel {
          *
          * @static 
          */ 
+        public static function resolveAsCommand($name, $exitCode = null, $arguments = array(), $options = array(), $argumentsDefaults = array(), $optionsDefaults = array(), $output = null)
+        {
+            return \Clockwork\Clockwork::resolveAsCommand($name, $exitCode, $arguments, $options, $argumentsDefaults, $optionsDefaults, $output);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveAsQueueJob($name, $description = null, $status = 'processed', $payload = array(), $queue = null, $connection = null, $options = array())
+        {
+            return \Clockwork\Clockwork::resolveAsQueueJob($name, $description, $status, $payload, $queue, $connection, $options);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveAsTest($name, $status = 'passed', $statusMessage = null, $asserts = array())
+        {
+            return \Clockwork\Clockwork::resolveAsTest($name, $status, $statusMessage, $asserts);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
         public static function extendRequest($request = null)
         {
             return \Clockwork\Clockwork::extendRequest($request);
@@ -15183,6 +15215,16 @@ namespace Clockwork\Support\Laravel {
         public static function storeRequest()
         {
             return \Clockwork\Clockwork::storeRequest();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function reset()
+        {
+            return \Clockwork\Clockwork::reset();
         }
         
         /**
@@ -15453,16 +15495,6 @@ namespace Clockwork\Support\Laravel {
         public static function subrequest($url, $id, $path = null)
         {
             return \Clockwork\Clockwork::subrequest($url, $id, $path);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setAuthenticatedUser($username, $id = null, $data = array())
-        {
-            return \Clockwork\Clockwork::setAuthenticatedUser($username, $id, $data);
         }
         
         /**

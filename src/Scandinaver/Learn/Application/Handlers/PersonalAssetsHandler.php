@@ -35,6 +35,6 @@ class PersonalAssetsHandler implements PersonalAssetsHandlerInterface
      */
     public function handle($query): array
     {
-        return $this->assetService->getPersonalAssets($query->getUser());
+        return $this->assetService->getPersonalAssets($query->getLanguage(), $query->getUser());
     }
 }

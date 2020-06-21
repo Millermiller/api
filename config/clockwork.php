@@ -81,7 +81,7 @@ return [
 	|
 	*/
 
-	'storage_expiration' => env('CLOCKWORK_STORAGE_EXPIRATION', 60 * 24 * 7),
+	'storage_expiration' => env('CLOCKWORK_STORAGE_EXPIRATION', 60 * 24 * 1),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -113,9 +113,9 @@ return [
 	*/
 
 	'filter' => [
-		'cacheQueries', // collecting cache queries in cache-heavy might have a negative performance impact and use a lot of disk space
-		'routes', // collecting routes data on every request might use a lot of disk space
-		'viewsData', // collecting views data, including all variables passed to the view on every request might use a lot of disk space
+		//'cacheQueries', // collecting cache queries in cache-heavy might have a negative performance impact and use a lot of disk space
+		//'routes', // collecting routes data on every request might use a lot of disk space
+		//'viewsData', // collecting views data, including all variables passed to the view on every request might use a lot of disk space
 	],
 
 	/*
@@ -207,6 +207,6 @@ return [
 	|
 	*/
 
-	'server_timing' => env('CLOCKWORK_SERVER_TIMING', 10)
-
+	'server_timing' => env('CLOCKWORK_SERVER_TIMING', 10),
+    'serialization_depth' => env('CLOCKWORK_SERIALIZATION_DEPTH', 10),
 ];

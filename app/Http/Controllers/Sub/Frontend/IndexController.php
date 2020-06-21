@@ -59,11 +59,13 @@ class IndexController extends Controller
     }
 
     /**
+     * @param Language $language
+     *
      * @return JsonResponse
      */
-    public function getPersonal(): JsonResponse
+    public function getPersonal(Language $language): JsonResponse
     {
-        $personal = $this->queryBus->execute(new PersonalAssetsQuery(Auth::user()));
+        $personal = $this->queryBus->execute(new PersonalAssetsQuery(Auth::user(), $language));
 
         return response()->json($personal);
     }

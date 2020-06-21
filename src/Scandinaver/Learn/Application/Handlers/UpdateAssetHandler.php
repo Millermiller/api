@@ -42,7 +42,7 @@ class UpdateAssetHandler implements UpdateAssetHandlerInteface
      */
     public function handle($command): void
     {
-        $asset = $this->assetService->updateAsset($command->getAsset(), ['title' => $command->getTitle(), 'level' => $command->getLevel()]);
+        $asset = $this->assetService->updateAsset($command->getAsset(), $command->getData());
 
         event(new AssetUpdated($command->getUser(), $asset));
     }

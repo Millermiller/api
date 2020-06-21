@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 
 Route::get('/words', 'IndexController@getWords')->name('words');
-Route::get('/personal', 'IndexController@getPersonal')->name('personal');
+Route::get('/{language}/personal', 'IndexController@getPersonal')->name('personal');
 
 Route::get('/assetInfo/{id}', 'AssetController@assetInfo');
 

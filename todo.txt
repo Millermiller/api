@@ -132,4 +132,4 @@ docker-compose exec workspace bash
 cd api
 php artisan passport:install
 php artisan key:generate
-
+mkdir storage/framework/cache/data

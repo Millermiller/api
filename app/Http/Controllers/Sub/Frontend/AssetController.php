@@ -47,28 +47,31 @@ class AssetController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Asset   $asset
+     * @param Language $language
+     * @param Asset    $asset
      *
+     * @param Request  $request
+     * @template
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, Asset $asset): JsonResponse
+    public function update(Language $language, Asset $asset, Request $request): JsonResponse
     {
         $this->authorize('update', $asset);
 
-        $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->get('title')));
+        $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->toArray()));
 
         return response()->json(NULL, 200);
     }
 
     /**
-     * @param Asset $asset
+     * @param Language $language
+     * @param Asset    $asset
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function destroy(Asset $asset): JsonResponse
+    public function destroy(Language $language, Asset $asset): JsonResponse
     {
         $this->authorize('delete', $asset);
 

@@ -72,4 +72,12 @@ class UpdateAssetCommand implements Command
     {
         return $this->data['level'] ? $this->data['level'] : 0;
     }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
 }
