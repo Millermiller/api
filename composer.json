@@ -28,6 +28,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.7.0",
         "laravolt/avatar": "^2.1",
+        "mpociot/laravel-apidoc-generator": "^4.8",
         "predis/predis": "^1.1",
         "profideo-ci/phpexcel": "1.8.0",
         "rap2hpoutre/laravel-log-viewer": "^0.22.1",

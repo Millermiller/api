@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(): void
     {
+        Route::get('/', 'App\Http\Controllers\Main\Frontend\IndexController@index');
+
         $this->mapWebRoutes();
 
         $this->mapAuthRoutes();

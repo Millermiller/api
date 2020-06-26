@@ -15,14 +15,9 @@ use Meta;
  */
 class IndexController extends Controller
 {
-    /**
-     * @return Factory|View
-     */
+
     public function index()
     {
-        Meta::set('title', 'Scandinaver');
-        Meta::set('description', 'Scandinaver');
-
-        return view('main.frontend.index.home');
+        echo 'hello';
     }
 }

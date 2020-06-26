@@ -1,8 +1,5 @@
 <?php
 
-
-Route::get('/', 'IndexController@index')->name('home');
-
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/profile/settings', 'ProfileController@settings')->name('profile-settings');
 Route::get('/profile/log', 'ProfileController@log')->name('profile-log');
