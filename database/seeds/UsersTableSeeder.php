@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset;
+use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,9 +13,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Helpers\Eloquent\User::class, 5)->create()->each(function($user) {
-            /*** @var App\Helpers\Eloquent\User $user*/
-            $user->assets()->saveMany(factory(App\Helpers\Eloquent\Asset::class, 4)->make());
+        factory(User::class, 5)->create()->each(function($user) {
+            /*** @var User $user*/
+            $user->assets()->saveMany(factory(Asset::class, 4)->make());
 
             $favoriteId = DB::table('assets')->insertGetId([
                                            'title' => 'Избранное',

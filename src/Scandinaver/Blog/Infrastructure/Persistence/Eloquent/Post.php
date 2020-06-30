@@ -41,7 +41,7 @@ class Post extends Model
      */
     public function comments(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\Comment');
+        return $this->hasMany('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Comment');
     }
 
     /**
@@ -49,6 +49,6 @@ class Post extends Model
      */
     public function category(): Category
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Category');
+        return $this->belongsTo('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Category');
     }
 }

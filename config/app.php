@@ -179,13 +179,13 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
+        // App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ApiProvider::class,
         Eusonlito\LaravelMeta\MetaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Reliese\Coders\CodersServiceProvider::class,
-
+        LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
         /*
          * Scandinaver Service Providers...
          */

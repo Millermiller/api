@@ -21,9 +21,9 @@ class CommandBus
     /**
      * @param Command $command
      */
-    public function execute(Command $command): void
+    public function execute(Command $command)
     {
-        $this->resolveHandler($command)->handle($command);
+        return $this->resolveHandler($command)->handle($command);
     }
 
     /**
@@ -31,7 +31,7 @@ class CommandBus
      *
      * @return CommandHandler
      */
-    public function resolveHandler(Command $command): CommandHandler
+    public function resolveHandler(Command $command): ?CommandHandler
     {
         try {
             return app()->make($this->getHandlerClass($command));

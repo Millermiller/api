@@ -3,12 +3,14 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany, SoftDeletes};
 
 /**
  * Class Card
  *
  * @package Scandinaver\Learn\Infrastructure\Persistence\Eloquent
+ * @mixin Eloquent
  */
 class Card extends Model
 {
@@ -25,7 +27,7 @@ class Card extends Model
      */
     public function word(): Word
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Word');
+        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word');
     }
 
     /**
@@ -33,7 +35,7 @@ class Card extends Model
      */
     public function translate(): Translate
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Translate');
+        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate');
     }
 
     /**
@@ -41,7 +43,7 @@ class Card extends Model
      */
     public function asset(): Asset
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Asset');
+        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset');
     }
 
     /**
@@ -49,6 +51,6 @@ class Card extends Model
      */
     public function examples(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\Example');
+        return $this->hasMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Example');
     }
 }

@@ -69,7 +69,7 @@ class User extends Authenticatable
      */
     public function puzzles(): array
     {
-        return $this->belongsToMany('App\Helpers\Eloquent\Puzzle', 'puzzles_users')->withTimestamps();
+        return $this->belongsToMany('Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent\Puzzle', 'puzzles_users')->withTimestamps();
     }
 
     /**
@@ -87,15 +87,15 @@ class User extends Authenticatable
      */
     public function comments(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\Comment');
+        return $this->hasMany('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Comment');
     }
 
     /**
      * @return BelongsToMany|Asset[]
      */
-    public function assets(): array
+    public function assets()
     {
-        return $this->belongsToMany('App\Helpers\Eloquent\Asset', 'assets_users', 'user_id', 'asset_id');
+        return $this->belongsToMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset', 'assets_users', 'user_id', 'asset_id');
     }
 
     /**
@@ -103,7 +103,7 @@ class User extends Authenticatable
      */
     public function plan(): Plan
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Plan');
+        return $this->belongsTo('Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan');
     }
 
     /**
@@ -111,7 +111,7 @@ class User extends Authenticatable
      */
     public function getPremiumAttribute(): bool
     {
-        return (Carbon::parse($this->active_to) > Carbon::now()) ? true : false;
+        return Carbon::parse($this->active_to) > Carbon::now();
     }
 
     /**

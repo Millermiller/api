@@ -37,23 +37,25 @@ class IndexController extends Controller
     }
 
     /**
+     * @param Language $language
+     *
      * @return JsonResponse
-     * @throws Exception
      */
-    public function getWords(): JsonResponse
+    public function getWords(Language $language): JsonResponse
     {
-        $words = $this->queryBus->execute(new AssetForUserByTypeQuery(Auth::user(), Asset::TYPE_WORDS));
+        $words = $this->queryBus->execute(new AssetForUserByTypeQuery($language, Auth::user(), Asset::TYPE_WORDS));
 
         return response()->json($words);
     }
 
     /**
+     * @param Language $language
+     *
      * @return JsonResponse
-     * @throws Exception
      */
-    public function getSentences(): JsonResponse
+    public function getSentences(Language $language): JsonResponse
     {
-        $sentences = $this->queryBus->execute(new AssetForUserByTypeQuery(Auth::user(), Asset::TYPE_SENTENCES));
+        $sentences = $this->queryBus->execute(new AssetForUserByTypeQuery($language, Auth::user(), Asset::TYPE_SENTENCES));
 
         return response()->json($sentences);
     }

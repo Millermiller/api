@@ -281,7 +281,7 @@ class Asset implements JsonSerializable, UrlRoutable
             'level'       => $this->level,
             'result'      => $this->results->count() ? $this->results->toArray()[0]->getValue() : 0,
             'basic'       => $this->basic,
-            'language_id' => $this->languageId,
+            'language' => $this->language,
             'count'       => $this->cards ? $this->cards->count() : 0,
             'cards'       => [],
         ];

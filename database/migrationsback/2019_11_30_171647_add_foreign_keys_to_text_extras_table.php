@@ -28,7 +28,7 @@ class AddForeignKeysToTextExtrasTable extends Migration {
 	{
 		Schema::table('text_extras', function(Blueprint $table)
 		{
-			$table->dropForeign('text_extras_ibfk_1');
+			//  $table->dropForeign('text_extras_ibfk_1');
 		});
 	}
 

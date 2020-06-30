@@ -33,6 +33,6 @@ class Order extends Model
      */
     public function plan(): Result
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Plan');
+        return $this->belongsTo('Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan');
     }
 }

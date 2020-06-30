@@ -2,7 +2,8 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\User\Domain\Plan;
+use Scandinaver\Common\Domain\Language;
+use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\User\Domain\User;
 
 
@@ -19,19 +20,11 @@ use Scandinaver\User\Domain\User;
 
 
 /** @var Factory $factory */
-$factory->define(User::class, function (Faker $faker) {
-
-    $plan = entity(Plan::class)->create();
+$factory->define(\Scandinaver\Common\Domain\Language::class, function (Faker $faker) {
 
     return [
-        'name' => $faker->name,
-        'login' => $faker->unique()->firstName,
-        'email' => $faker->unique()->safeEmail,
-        'role' => User::ROLE_ADMIN,
-        'plan' => $plan,
-        'photo' => '5cb37ef3791a9.jpg',
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'remember_token' => str_random(10),
-        'activeTo' => new DateTime()
+        'name' => 'is',
+        'label' => 'Исландский!',
+        'flag' => '/img/is_round.png',
     ];
 });

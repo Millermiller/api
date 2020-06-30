@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Card;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word;
 
 class CardsTableSeeder extends Seeder
 {
@@ -11,18 +15,18 @@ class CardsTableSeeder extends Seeder
      */
     public function run()
     {
-        $wordsIds     = App\Helpers\Eloquent\Word::pluck('id')->toArray();
-        $translateIds = App\Helpers\Eloquent\Translate::pluck('id')->toArray();
-        $assetIds     = App\Helpers\Eloquent\Asset::pluck('id')->toArray();
+        $wordsIds     = Word::pluck('id')->toArray();
+        $translateIds = Translate::pluck('id')->toArray();
+        $assetIds     = Asset::pluck('id')->toArray();
 
         foreach($assetIds as $id){
-            $cards = factory(App\Helpers\Eloquent\Card::class, 25)->make()->each(function($card) use ($wordsIds, $translateIds, $id) {
+            $cards = factory(Card::class, 25)->make()->each(function($card) use ($wordsIds, $translateIds, $id) {
                 $card->asset_id = $id;
                 $card->word_id = array_random($wordsIds);
                 $card->translate_id = array_random($translateIds);
             })->toArray();
 
-            App\Helpers\Eloquent\Card::insert($cards);
+            Card::insert($cards);
         }
     }
 }

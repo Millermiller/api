@@ -1,14 +1,18 @@
 <?php
 
 use Faker\Generator as Faker;
+use LaravelDoctrine\ORM\Testing\Factory;
+use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Result;
+use Scandinaver\Learn\Domain\Word;
+use Scandinaver\User\Domain\User;
 
-$factory->define(App\Helpers\Eloquent\Word::class, function (Faker $faker) {
+/** @var Factory $factory */
+$factory->define(\Scandinaver\Learn\Domain\Word::class, function (Faker $faker, array $attributes) {
+
     return [
-        'word' => $faker->unique()->word,
-        'transcription' => '[au:]',
-        'audio' => '/files/audio/36b7148acc1b607c473a15a47fa17706.mp3',
-        'sentence' => 0,
-        'is_public' => 1,
-        'language_id' => 1,
+        'word' => $faker->unique()->word(),
+        'translate' => $faker->unique()->word(),
+        'language' => $attributes['language']
     ];
 });

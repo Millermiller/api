@@ -29,7 +29,7 @@ class Translate extends Model
      */
     public function word(): Word
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Word');
+        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word');
     }
 
     /**

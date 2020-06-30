@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\Infrastructure\Persistence\Eloquent;
 
 use Auth;
 use DB;
+use Eloquent;
 use Illuminate\Database\Eloquent\{Model, Relations\HasMany, Relations\HasOne, SoftDeletes};
 use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
 
@@ -12,6 +13,7 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
  * Class Word
  *
  * @package Scandinaver\Learn\Infrastructure\Persistence\Eloquent
+ * @mixin Eloquent
  */
 class Word extends Model
 {
@@ -95,9 +97,9 @@ class Word extends Model
     /**
      * @return HasMany|Card[]
      */
-    public function translates(): array
+    public function translates()
     {
-        return $this->hasMany('App\Helpers\Eloquent\Translate');
+        return $this->hasMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 
 /**
@@ -21,9 +22,15 @@ class CheckAuth
      * @param Closure $next
      *
      * @return mixed
+     * @throws AuthenticationException
      */
     public function handle($request, Closure $next)
     {
-        return (Auth::check()) ? $next($request) : redirect('/login');
+        if (Auth::check()) {
+            return $next($request);
+        }
+        throw new AuthenticationException(
+            'Unauthenticated.'
+        );
     }
 }

@@ -35,6 +35,6 @@ class Result extends Model
      */
     public function asset(): Asset
     {
-        return $this->hasOne('App\Helpers\Eloquent\Asset', 'id', 'asset_id');
+        return $this->hasOne('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset', 'id', 'asset_id');
     }
 }

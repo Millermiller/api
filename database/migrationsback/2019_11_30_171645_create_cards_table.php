@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateMetaTable extends Migration {
+class CreateCardsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,14 @@ class CreateMetaTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('meta', function(Blueprint $table)
+		Schema::create('cards', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('url')->index('url');
-			$table->string('title');
-			$table->string('description');
-			$table->string('keywords');
+			$table->integer('asset_id');
+			$table->integer('word_id');
+			$table->integer('translate_id');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -31,7 +31,7 @@ class CreateMetaTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('meta');
+		Schema::drop('cards');
 	}
 
 }

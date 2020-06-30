@@ -5,6 +5,7 @@ namespace Scandinaver\API\Infrastructure;
 
 use Exception;
 use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Asset;
 use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultRepositoryInterface};
 use Scandinaver\User\Domain\User;
@@ -54,16 +55,14 @@ class ApiService
     }
 
     /**
-     * @param      $language
-     * @param User $user
+     * @param Language $language
+     * @param User     $user
      *
      * @return array
      * @throws Exception
      */
-    public function getAssets($language, User $user): array
+    public function getAssets(Language $language, User $user): array
     {
-        $language = $this->languageRepository->getByName($language);
-
         $assets = [];
 
         $activeArray  = $this->resultRepository->getActiveIds($user, $language);
@@ -86,13 +85,13 @@ class ApiService
             foreach ($item->getCards() as $card) {
                 $word = $card->getWord();
 
-                if ($word === null) continue;
+                if ($word === NULL) continue;
 
                 $cards[] = [
                     'id'       => $card->getId(),
                     'word'     => $word->getValue(),
                     'trans'    => preg_replace('/^(\d\\)\s)/', '', $card->getTranslate()->getValue()),
-                    'asset_id' => $card->getAsset()->getId(),
+                    'asset_id' => $item->getId(),
                     'examples' => $card->getExamples()
                 ];
             }

@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Scandinaver\API\Application\Query\{AssetsQuery, LanguagesQuery};
 use Scandinaver\Common\Domain\Language;
 use Validator;
+use Illuminate\Http\Request;
 
 /**
  * Class ApiController
@@ -35,23 +36,25 @@ class ApiController extends Controller
     /**
      * @param Language $language
      *
+     * @param Request  $request
+     *
      * @return JsonResponse
      */
     public function assets(Language $language): JsonResponse
     {
-        $validator = Validator::make(
-            ['language' => $language],
-            [
-                'language' => 'exists:Scandinaver\Common\Domain\Language,name'
-            ],
-            [
-                'exists' => 'Неверный параметр'
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([$validator->errors()], 400);
-        }
+       // $validator = Validator::make(
+       //     ['language' => $language],
+       //     [
+       //         'language' => 'exists:Scandinaver\Common\Domain\Language,name'
+       //     ],
+       //     [
+       //         'exists' => 'Неверный параметр'
+       //     ]
+       // );
+       //
+       // if ($validator->fails()) {
+       //     return response()->json([$validator->errors()], 400);
+       // }
 
         return response()->json($this->queryBus->execute(new AssetsQuery(auth('api')->user(), $language)));
     }

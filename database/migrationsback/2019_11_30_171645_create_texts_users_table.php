@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCardsTable extends Migration {
+class CreateTextsUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateCardsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('cards', function(Blueprint $table)
+		Schema::create('texts_users', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('asset_id');
-			$table->integer('word_id');
-			$table->integer('translate_id')->index('translate_id');
+			$table->integer('language_id')->nullable();
+			$table->integer('text_id')->nullable();
+			$table->integer('user_id')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -31,7 +31,7 @@ class CreateCardsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('cards');
+		Schema::drop('texts_users');
 	}
 
 }

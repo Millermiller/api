@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration {
 			$table->bigInteger('user_id')->unsigned()->default(0)->index('post_author');
 			$table->text('content')->nullable();
 			$table->integer('category_id');
-			$table->text('anonse', 65535)->nullable();
+			$table->text('anonse')->nullable();
 			$table->boolean('status')->default(1);
 			$table->integer('comment_status')->default(1);
 			$table->bigInteger('views')->default(0);

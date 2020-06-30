@@ -34,7 +34,7 @@ class QueryBus
      *
      * @return QueryHandler
      */
-    public function resolveHandler(Query $query): QueryHandler
+    public function resolveHandler(Query $query): ?QueryHandler
     {
         try {
             return app()->make($this->getHandlerClass($query));

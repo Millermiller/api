@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateWordInTextTable extends Migration {
+class CreateAssetsUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,14 @@ class CreateWordInTextTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('word_in_text', function(Blueprint $table)
+		Schema::create('assets_users', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('text_id');
-			$table->integer('sentence_num');
-			$table->string('word');
-			$table->string('orig');
+			$table->integer('asset_id');
+			$table->integer('user_id');
+			$table->integer('result')->default(0);
+			$table->integer('language_id')->nullable();
 			$table->timestamps();
-			$table->index(['text_id','sentence_num','word'], 'text_id');
 		});
 	}
 
@@ -32,7 +31,7 @@ class CreateWordInTextTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('word_in_text');
+		Schema::drop('assets_users');
 	}
 
 }

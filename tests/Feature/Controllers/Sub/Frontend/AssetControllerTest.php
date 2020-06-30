@@ -3,7 +3,9 @@
 
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
+use Scandinaver\Common\Domain\Language;
 use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Result;
 use Scandinaver\User\Domain\User;
 use Tests\TestCase;
 
@@ -13,14 +15,41 @@ use Tests\TestCase;
  */
 class AssetControllerTest extends TestCase
 {
+    /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * @var Asset
+     */
+    private $asset;
+
+    /**
+     * @var Asset
+     */
+    private $favouriteAsset;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        /** @var Language $language */
+        $language = entity(Language::class)->create();
+
+        $this->user           = entity(User::class)->create();
+        $this->asset          = entity(Asset::class)->create(['user' => $this->user, 'language' => $language]);
+        $this->favouriteAsset = entity(Asset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
+
+        entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->asset]);
+        entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
+    }
+
     public function testShow()
     {
-        $user  = app('em')->getRepository(User::class)->find(1);
-        $asset = app('em')->getRepository(Asset::class)->find(1);
+        $this->actingAs($this->user, 'api');
 
-        $this->actingAs($user);
-
-        $response = $this->get(route('sub_frontend::asset.show', ['domain' => 'is','asset' => $asset->getId()]));
+        $response = $this->get(route('sub_frontend::asset.show', ['language' => 'is','asset' => $this->asset->getId()]));
 
         $response->assertJsonStructure(['type', 'cards' => [
             [
@@ -62,17 +91,6 @@ class AssetControllerTest extends TestCase
                         ]
                     ]
                 ],
-                'asset' => [
-                    'id',
-                    'title',
-                    'type',
-                    'level',
-                    'level',
-                    'result',
-                    'basic',
-                    'language_id',
-                    'count',
-                ]
             ]
         ], 'title']);
 
@@ -80,10 +98,9 @@ class AssetControllerTest extends TestCase
 
     public function testStore()
     {
-        $user  = app('em')->getRepository(User::class)->find(1);
-        $this->actingAs($user);
+        $this->actingAs($this->user, 'api');
 
-        $response = $this->post(route('sub_frontend::asset.store', ['domain' => 'is', 'title' => 'TEST CREATE ASSET']));
+        $response = $this->post(route('sub_frontend::asset.store', ['language' => 'is']), ['title' => 'TEST CREATE ASSET']);
 
         $response->assertJsonStructure(
             [
@@ -93,7 +110,7 @@ class AssetControllerTest extends TestCase
                 'level',
                 'result',
                 'basic',
-                'language_id',
+                'language',
                 'count',
                 'cards'
             ]
@@ -105,14 +122,15 @@ class AssetControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $user  = app('em')->getRepository(User::class)->find(1);
-        $asset = app('em')->getRepository(Asset::class)->find(1);
+        $this->actingAs($this->user, 'api');
 
-        $this->actingAs($user);
+        $response = $this->put(route('sub_frontend::asset.update', [
+            'domain' => 'is',
+            'title' => 'TEST CREATE ASSET',
+            'asset' => $this->asset->getId()
+        ]));
 
-        $response = $this->put(route('sub_frontend::asset.update', ['domain' => 'is', 'title' => 'TEST CREATE ASSET', 'asset' => $asset->getId()]));
-
-        $response->assertJsonStructure(['id', 'title', 'basic', 'level', 'language_id']);
+        $response->assertJsonStructure(['id', 'title', 'basic', 'level', 'language']);
 
         $data = $response->decodeResponseJson();
         $this->assertEquals('TEST CREATE ASSET', $data['title']);
@@ -120,20 +138,16 @@ class AssetControllerTest extends TestCase
 
     public function testDestroy()
     {
-        $asset = app('em')->getRepository(Asset::class)->find(1);
-        $user  = app('em')->getRepository(User::class)->find(1);
-        $this->actingAs($user);
+        $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('sub_frontend::asset.destroy', ['domain' => 'is', 'asset' => $asset->getId()]));
+        $response = $this->delete(route('sub_frontend::asset.destroy', ['domain' => 'is', 'asset' => $this->asset->getId()]));
 
         $this->assertEquals(204, $response->getStatusCode());
     }
 
     public function testDestroyUnauthorized()
     {
-        $asset = app('em')->getRepository(Asset::class)->find(1);
-
-        $response = $this->delete(route('sub_frontend::asset.destroy', ['domain' => 'is', 'asset' => $asset->getId()]));
+        $response = $this->delete(route('sub_frontend::asset.destroy', ['domain' => 'is', 'asset' => $this->asset->getId()]));
 
         $this->assertEquals(403, $response->getStatusCode());
     }

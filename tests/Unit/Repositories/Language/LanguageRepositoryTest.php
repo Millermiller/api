@@ -35,8 +35,11 @@ class LanguageRepositoryTest extends TestCase
 
     }
 
-    public function testGetByName()
-    {
-        $this->assertInstanceOf( Language::class, $this->repository->getByName('is'));
-    }
+   public function testGetByName()
+   {
+       /** @var Language $language */
+       $language = entity(Language::class)->create();
+
+       $this->assertInstanceOf( Language::class, $this->repository->getByName($language->getName()));
+   }
 }

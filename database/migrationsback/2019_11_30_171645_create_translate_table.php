@@ -15,8 +15,8 @@ class CreateTranslateTable extends Migration {
 		Schema::create('translate', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('value')->index('fulltext');
-			$table->integer('word_id')->index('word_id');
+			$table->string('value');
+			$table->integer('word_id');
 			$table->string('variant')->nullable();
 			$table->integer('form')->nullable();
 			$table->integer('sentence')->default(0);

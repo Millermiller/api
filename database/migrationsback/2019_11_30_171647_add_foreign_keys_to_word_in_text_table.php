@@ -28,7 +28,7 @@ class AddForeignKeysToWordInTextTable extends Migration {
 	{
 		Schema::table('word_in_text', function(Blueprint $table)
 		{
-			$table->dropForeign('word_in_text_ibfk_1');
+			// $table->dropForeign('word_in_text_ibfk_1');
 		});
 	}
 

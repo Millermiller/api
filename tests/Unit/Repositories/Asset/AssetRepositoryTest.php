@@ -25,9 +25,29 @@ class AssetRepositoryTest extends TestCase
      */
     private $repository;
 
+    /**
+     * @var Language
+     */
+    private $language;
+
+    /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * @var Asset[]
+     */
+    private $assets;
+
     public function setUp()
     {
         parent::setUp();
+
+        $this->language = entity(Language::class)->create();
+
+        $this->user   = entity(User::class)->create();
+        $this->assets = entity(Asset::class, 2)->create(['user' => $this->user, 'language' => $this->language])->toArray();
 
         $this->entityManager = app('Doctrine\ORM\EntityManager');
 
@@ -37,40 +57,28 @@ class AssetRepositoryTest extends TestCase
 
     public function testGetFirstAsset()
     {
-        $language = new Language(1, 'is');
+        $asset = $this->repository->getFirstAsset($this->language, Asset::TYPE_WORDS);
 
-        $this->assertInstanceOf( Asset::class, $this->repository->getFirstAsset($language, Asset::TYPE_WORDS));
+        $this->assertInstanceOf( Asset::class, $asset);
     }
 
     public function testGetPublicAssets()
     {
-        $language = new Language(1, 'is');
-
-        $assets = $this->repository->getPublicAssets($language);
+        $assets = $this->repository->getPublicAssets($this->language);
 
         $this->assertIsArray($assets);
 
         $this->assertInstanceOf(Asset::class, $assets[0]);
     }
 
-    public function testGetPersonalAssets()
-    {
-        $language = new Language(1, 'is');
-
-        $plan = new Plan();
-        $plan->setId(1);
-
-        $user = new User();
-        $user->setId(1);
-        $user->setLogin('admin');
-        $user->setEmail('john@scandinaver.org');
-        $user->setPassword('$2y$10$wHzJJzCmyoI0hZUgoHGOI.6IXwc7p289G4DIbhpzvRiGCc5fZRt8W');
-        $user->setPlan($plan);
-
-        $assets = $this->repository->getPersonalAssets($language, $user);
-
-        $this->assertIsArray($assets);
-
-        $this->assertInstanceOf(Asset::class, $assets[0]);
-    }
+    //public function testGetPersonalAssets()
+    //{
+        // $user = entity(User::class)->create();
+//
+        // $assets = $this->repository->getPersonalAssets($this->language, $user);
+//
+        // $this->assertIsArray($assets);
+//
+        // $this->assertInstanceOf(Asset::class, $assets[0]);
+    //}
 }

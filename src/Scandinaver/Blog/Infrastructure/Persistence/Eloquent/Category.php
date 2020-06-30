@@ -27,6 +27,6 @@ class Category extends Model
      */
     public function posts(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\Post');
+        return $this->hasMany('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Post');
     }
 }

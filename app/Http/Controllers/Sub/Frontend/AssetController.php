@@ -41,9 +41,9 @@ class AssetController extends Controller
      */
     public function store(Language $language, Request $request): JsonResponse
     {
-        $this->commandBus->execute(new CreateAssetCommand($language, Auth::user(), $request->get('title')));
+        $asset = $this->commandBus->execute(new CreateAssetCommand($language, Auth::user(), $request->get('title')));
 
-        return response()->json(NULL, 201);
+        return response()->json($asset, 201);
     }
 
     /**
@@ -59,9 +59,9 @@ class AssetController extends Controller
     {
         $this->authorize('update', $asset);
 
-        $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->toArray()));
+        $asset = $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->toArray()));
 
-        return response()->json(NULL, 200);
+        return response()->json($asset, 200);
     }
 
     /**

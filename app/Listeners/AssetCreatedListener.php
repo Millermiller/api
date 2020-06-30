@@ -34,13 +34,13 @@ class AssetCreatedListener
      */
     public function handle(AssetCreated $event): void
     {
-        $user  = User::find($event->user->getId())->first();
-        $asset = Asset::find($event->asset->getId())->first();
+        //$user  = User::find($event->user->getId())->first();
+        //$asset = Asset::find($event->asset->getId())->first();
 
-        activity('public')
-            ->causedBy($user)
-            ->withProperties(['lang' => config('app.lang')])
-            ->performedOn($asset)
-            ->log('Создан словарь');
+        //activity('public')
+        //    ->causedBy($user)
+        //    ->withProperties(['lang' => config('app.lang')])
+        //    ->performedOn($asset)
+        //    ->log('Создан словарь');
     }
 }

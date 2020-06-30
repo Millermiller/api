@@ -24,6 +24,6 @@ class TextExtra extends Model
      */
     public function text(): Text
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Text');
+        return $this->belongsTo('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text');
     }
 }

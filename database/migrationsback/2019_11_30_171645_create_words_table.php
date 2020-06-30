@@ -15,7 +15,7 @@ class CreateWordsTable extends Migration {
 		Schema::create('words', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('word')->index('word');
+			$table->string('word');
 			$table->string('transcription')->nullable();
 			$table->string('audio')->nullable();
 			$table->integer('sentence')->nullable()->default(0);

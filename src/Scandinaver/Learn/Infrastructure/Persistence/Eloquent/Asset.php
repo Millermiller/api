@@ -132,7 +132,7 @@ class Asset extends Model
      */
     public function cards(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\Card');
+        return $this->hasMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Card');
     }
 
     /**
@@ -140,6 +140,6 @@ class Asset extends Model
      */
     public function result(): Result
     {
-        return $this->belongsTo('App\Helpers\Eloquent\Result', 'id', 'asset_id')->where('user_id', Auth::id());
+        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result', 'id', 'asset_id')->where('user_id', Auth::id());
     }
 }

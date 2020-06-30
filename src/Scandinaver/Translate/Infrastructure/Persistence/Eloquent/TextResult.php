@@ -36,6 +36,6 @@ class TextResult extends Model
      */
     public function text(): Text
     {
-        return $this->hasOne('App\Helpers\Eloquent\Text', 'id', 'text_id');
+        return $this->hasOne('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text', 'id', 'text_id');
     }
 }

@@ -123,7 +123,7 @@ class Text extends Model
      */
     public function textExtra(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\TextExtra');
+        return $this->hasMany('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextExtra');
     }
 
     /**
@@ -131,7 +131,7 @@ class Text extends Model
      */
     public function words(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\TextWord');
+        return $this->hasMany('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextWord');
     }
 
     /**
@@ -139,6 +139,6 @@ class Text extends Model
      */
     public function result(): TextResult
     {
-        return $this->belongsTo('App\Helpers\Eloquent\TextResult', 'id', 'text_id')->where('user_id', Auth::id());
+        return $this->belongsTo('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult', 'id', 'text_id')->where('user_id', Auth::id());
     }
 }

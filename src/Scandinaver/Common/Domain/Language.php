@@ -46,36 +46,6 @@ class Language implements JsonSerializable, UrlRoutable
     private $flag;
 
     /**
-     * @var Collection|Asset[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Asset", mappedBy="language")
-     */
-    private $assets;
-
-    /**
-     * @var Collection|Text[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Translate\Domain\Text", mappedBy="language")
-     */
-    private $texts;
-
-    /**
-     * @var Collection|Post[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Blog\Domain\Post", mappedBy="language")
-     */
-    private $posts;
-
-    /**
-     * @var Collection|Result[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Result", mappedBy="language")
-     */
-    private $results;
-
-    public function __construct()
-    {
-        $this->assets = new ArrayCollection();
-        $this->cards  = new ArrayCollection();
-    }
-
-    /**
      * @return string
      */
     public static function getRouteKeyName(): string
@@ -149,29 +119,8 @@ class Language implements JsonSerializable, UrlRoutable
             'label'  => $this->label,
             'flag'   => config('app.SITE') . $this->flag,
             'letter' => $this->name,
-            'cards'  => $this->getCards()->count(),
+            'cards'  => 0,
             'value'  => 'https://' . $this->name . '.' . config('app.DOMAIN')
         ];
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getCards()
-    {
-        $cardsCollection = new ArrayCollection();
-
-        foreach ($this->assets as $asset) {
-            foreach ($asset->getCards() as $card) {
-                $cardsCollection->add($card);
-            }
-        }
-
-        return $cardsCollection;
-    }
-
-    public function getAssets()
-    {
-        return $this->assets;
     }
 }

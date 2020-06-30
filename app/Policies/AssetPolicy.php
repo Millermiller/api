@@ -62,7 +62,7 @@ class AssetPolicy
      */
     public function update(User $user, Asset $asset): bool
     {
-        return $user->hasAsset($asset);
+        return $user->isAdmin() || $user->hasAsset($asset);
     }
 
     /**
@@ -75,6 +75,6 @@ class AssetPolicy
      */
     public function delete(User $user, Asset $asset): bool
     {
-        return $user->hasAsset($asset);
+        return $user->isAdmin() || $user->hasAsset($asset);
     }
 }

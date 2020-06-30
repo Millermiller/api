@@ -13,5 +13,5 @@ interface CommandHandler
     /**
      * @param Command $command
      */
-    public function handle(Command $command): void;
+    public function handle(Command $command);
 }

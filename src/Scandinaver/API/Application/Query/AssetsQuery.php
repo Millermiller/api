@@ -47,9 +47,9 @@ class AssetsQuery implements Query
     }
 
     /**
-     * @return string
+     * @return Language
      */
-    public function getLanguage(): string
+    public function getLanguage(): Language
     {
         return $this->language;
     }

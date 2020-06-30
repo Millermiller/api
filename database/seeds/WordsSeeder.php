@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate;
+use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word;
 
 class WordsSeeder extends Seeder
 {
@@ -11,10 +13,10 @@ class WordsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Helpers\Eloquent\Word::class, 50)->create()->each(
+        factory(Word::class, 50)->create()->each(
           function ($word) {
-              /*** @var App\Helpers\Eloquent\Word $word*/
-            $word->translates()->saveMany(factory(App\Helpers\Eloquent\Translate::class, 2)->make());
+              /*** @var Word $word*/
+            $word->translates()->saveMany(factory(Translate::class, 2)->make());
         });
     }
 }

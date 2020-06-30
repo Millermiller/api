@@ -37,6 +37,6 @@ class AssetForUserByTypeHandler implements AssetForUserByTypeHandlerInterface
      */
     public function handle($query)
     {
-        return $this->assetService->getAssetsByType($query->getUser(), $query->getType());
+        return $this->assetService->getAssetsByType($query->getLanguage(), $query->getUser(), $query->getType());
     }
 }

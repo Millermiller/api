@@ -28,6 +28,6 @@ class TextWord extends Model
      */
     public function synonyms(): array
     {
-        return $this->hasMany('App\Helpers\Eloquent\Synonym');
+        return $this->hasMany('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Synonym');
     }
 }
