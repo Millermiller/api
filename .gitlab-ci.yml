@@ -35,6 +35,5 @@ deploy_production:
   environment:
     name: production
     url: http://185.87.193.247
-  when: manual
   only:
     - master

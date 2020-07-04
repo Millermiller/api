@@ -39,5 +39,5 @@
     echo 'Linking current release'
     ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
 
-    chmod -R 777 bootstrap/
+    chmod -R 777 {{ $new_release_dir }}/bootstrap/
 @endtask
