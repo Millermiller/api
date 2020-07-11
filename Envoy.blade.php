@@ -40,4 +40,7 @@
     ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
 
     chmod -R 777 {{ $new_release_dir }}/bootstrap/
+
+    echo "Remove releases older then 10 days"
+    find /var/www/app/releases/* -type d -ctime +10 | xargs rm -rf
 @endtask
