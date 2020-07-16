@@ -71,8 +71,8 @@ class RegisterController extends Controller
         });
 
         return Validator::make($data, [
-            'login'    => 'required|string|login|max:255|unique:App\Entities\User,login',
-            'email'    => 'required|string|email|max:255|unique:App\Entities\User,email',
+            'login'    => 'required|string|login|max:255|unique:Scandinaver\User\Domain\User,login',
+            'email'    => 'required|string|email|max:255|unique:Scandinaver\User\Domain\User,email',
             'password' => 'required|string|min:6|confirmed',
         ],
             [

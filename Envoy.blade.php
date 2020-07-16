@@ -41,6 +41,6 @@
 
     chmod -R 777 {{ $new_release_dir }}/bootstrap/
 
-    echo "Remove releases older then 10 days"
-    find /var/www/app/releases/* -type d -ctime +10 | xargs rm -rf
+    echo "Remove releases except 3 last"
+    ls /var/www/app/releases/ -t | tail -n +4 | xargs rm -f --
 @endtask
