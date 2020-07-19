@@ -4,9 +4,7 @@
 namespace App\Http\Controllers\Main\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\View\View;
-use Meta;
+
 
 /**
  * Class IndexController
@@ -18,6 +16,6 @@ class IndexController extends Controller
 
     public function index()
     {
-        echo 'hello';
+        echo 'v. '. json_decode(file_get_contents(base_path('/composer.json')))->version;
     }
 }
