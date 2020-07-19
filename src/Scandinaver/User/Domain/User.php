@@ -389,7 +389,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
             'id'             => $this->id,
             'login'          => $this->login,
             'email'          => $this->email,
-            'active_to'      => $this->getActiveTo()->format("Y-m-d H:i:s"),
+            'active_to'      => $this->getActiveTo() ? $this->getActiveTo()->format("Y-m-d H:i:s") : null,
             'plan'           => $this->plan,
             'plan_id'        => $this->planId,
             'name'           => $this->name,
@@ -404,7 +404,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     /**
      * @return DateTime
      */
-    public function getActiveTo(): DateTime
+    public function getActiveTo(): ?DateTime
     {
         return $this->activeTo;
     }
