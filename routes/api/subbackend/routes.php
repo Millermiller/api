@@ -1,75 +1,75 @@
 <?php
 
-Route::get('/articles/search', 'ArticleController@search')->name('search');
-Route::post('/articles/upload', 'ArticleController@upload')->name('upload');
-Route::resource('/articles', 'ArticleController',
+Route::get('/articles/search', 'AApp\Http\Controllers\Backend\rticleController@search')->name('search');
+Route::post('/articles/upload', 'App\Http\Controllers\Backend\ArticleController@upload')->name('upload');
+Route::resource('/articles', 'App\Http\Controllers\Backend\ArticleController',
     ['except' => ['create', 'edit']]
 );
 
-Route::resource('/categories', 'CategoryController',
+Route::resource('/categories', 'App\Http\Controllers\Backend\CategoryController',
     ['except' => ['edit', 'create']]
 );
 
-Route::get('/comments/search', 'CommentController@search')->name('search');
-Route::resource('/comments', 'CommentController',
+Route::get('/comments/search', 'App\Http\Controllers\Backend\CommentController@search')->name('search');
+Route::resource('/comments', 'App\Http\Controllers\Backend\CommentController',
     ['except' => ['edit', 'create']]
 );
 
-Route::resource('/meta', 'MetaController',
+Route::resource('/meta', 'App\Http\Controllers\Backend\MetaController',
     ['except' => ['edit', 'create']]
 );
 
-Route::resource('/plan', 'PlanController');
+Route::resource('/plan', 'App\Http\Controllers\Backend\PlanController');
 
-Route::post('/send', 'VueController@testmail');
+Route::post('/send', 'App\Http\Controllers\Backend\VueController@testmail');
 
-Route::get('/dashboard', 'DashboardController@all');
+Route::get('/dashboard', 'App\Http\Controllers\Backend\DashboardController@all');
 
-Route::get('/users/search', 'UsersController@search')->name('search');
-Route::resource('/users', 'UsersController',
+Route::get('/users/search', 'App\Http\Controllers\Backend\UsersController@search')->name('search');
+Route::resource('/users', 'App\Http\Controllers\Backend\UsersController',
     ['except' => ['create', 'edit']]
 );
 
-Route::resource('/log', 'LogController', ['except' => ['edit', 'create']]);
-Route::resource('/message', 'MessageController', ['except' => ['edit', 'create']]);
-Route::post('/message/read/{id}', 'DashboardController@readMessage');
+Route::resource('/log', 'App\Http\Controllers\Backend\LogController', ['except' => ['edit', 'create']]);
+Route::resource('/message', 'App\Http\Controllers\Backend\MessageController', ['except' => ['edit', 'create']]);
+Route::post('/message/read/{id}', 'App\Http\Controllers\Backend\DashboardController@readMessage');
 
-Route::resource('/intro', 'IntroController');
+Route::resource('/intro', 'App\Http\Controllers\Backend\IntroController');
 
-Route::get('/wordscount', 'DashboardController@wordscount');
-Route::get('/assetscount', 'DashboardController@assetscount');
-Route::get('/audiocount', 'DashboardController@audiocount');
-Route::get('/textscount', 'DashboardController@textscount');
+Route::get('/wordscount', 'App\Http\Controllers\Backend\DashboardController@wordscount');
+Route::get('/assetscount', 'App\Http\Controllers\Backend\DashboardController@assetscount');
+Route::get('/audiocount', 'App\Http\Controllers\Backend\DashboardController@audiocount');
+Route::get('/textscount', 'App\Http\Controllers\Backend\DashboardController@textscount');
 
-Route::get(' /{language}/assets', 'AssetsController@index');
-Route::post('/forvo/{id}', 'AssetsController@findAudio');
-Route::get('/asset/{asset}', 'AssetsController@showAsset');
-Route::get('/{language}/values/{word}', 'AssetsController@showValues');
-Route::get('/{language}/examples/{card}', 'AssetsController@showExamples');
-Route::post('/asset/{id}', 'AssetsController@changeAsset');
-Route::post('/changeUsedTranslate', 'AssetsController@changeUsedTranslate');
-Route::post('/translate', 'AssetsController@editTranslate');
-Route::post('/audio', 'AssetsController@uploadAudio');
+Route::get(' /{language}/assets', 'App\Http\Controllers\Backend\AssetsController@index');
+Route::post('/forvo/{id}', 'App\Http\Controllers\Backend\AssetsController@findAudio');
+Route::get('/asset/{asset}', 'App\Http\Controllers\Backend\AssetsController@showAsset');
+Route::get('/{language}/values/{word}', 'App\Http\Controllers\Backend\AssetsController@showValues');
+Route::get('/{language}/examples/{card}', 'App\Http\Controllers\Backend\AssetsController@showExamples');
+Route::post('/asset/{id}', 'App\Http\Controllers\Backend\AssetsController@changeAsset');
+Route::post('/changeUsedTranslate', 'App\Http\Controllers\Backend\AssetsController@changeUsedTranslate');
+Route::post('/translate', 'App\Http\Controllers\Backend\AssetsController@editTranslate');
+Route::post('/audio', 'App\Http\Controllers\Backend\AssetsController@uploadAudio');
 
-Route::post('/card', 'CardsController@addWordToAsset'); //TODO: frontend route!
-Route::post('/level', 'AssetsController@addBasicAssetLevel');
-Route::delete('/translate/{id}', 'AssetsController@deleteTranslate');
+Route::post('/card', 'App\Http\Controllers\Backend\CardsController@addWordToAsset'); //TODO: frontend route!
+Route::post('/level', 'App\Http\Controllers\Backend\AssetsController@addBasicAssetLevel');
+Route::delete('/translate/{id}', 'App\Http\Controllers\Backend\AssetsController@deleteTranslate');
 
-Route::post('/wordfile', 'AssetsController@uploadSentences');
-Route::post('/card', 'AssetsController@addPair');
+Route::post('/wordfile', 'App\Http\Controllers\Backend\AssetsController@uploadSentences');
+Route::post('/card', 'App\Http\Controllers\Backend\AssetsController@addPair');
 
-Route::resource('/puzzle', 'PuzzleController');
+Route::resource('/puzzle', 'App\Http\Controllers\Backend\PuzzleController');
 
-Route::get('/texts', 'TextController@index');
-Route::post('/text/publish', 'TextController@publish');
-Route::post('/text/{id}', 'TextController@textedit');
-Route::post('/text', 'TextController@textcreate');
-Route::delete('/text/{id}', 'TextController@textdelete');
-Route::get('/text/{id}', 'TextController@getText');
-Route::post('/text/extra', 'TextController@addExtras');
-Route::post('/text/sentences', 'TextController@saveSentences');
-Route::get('/text/synonyms/{id}', 'TextController@getSynonyms');
-Route::post('/text/synonym', 'TextController@addSynonym');
-Route::delete('/text/synonym/{id}', 'TextController@deleteSynonym');
-Route::post('/text/image/{id}', 'TextController@uploadImage');
-Route::post('/text/description/{id}', 'TextController@updateDescription');
+Route::get('/texts', 'App\Http\Controllers\Backend\TextController@index');
+Route::post('/text/publish', 'App\Http\Controllers\Backend\TextController@publish');
+Route::post('/text/{id}', 'App\Http\Controllers\Backend\TextController@textedit');
+Route::post('/text', 'App\Http\Controllers\Backend\TextController@textcreate');
+Route::delete('/text/{id}', 'App\Http\Controllers\Backend\TextController@textdelete');
+Route::get('/text/{id}', 'App\Http\Controllers\Backend\TextController@getText');
+Route::post('/text/extra', 'App\Http\Controllers\Backend\TextController@addExtras');
+Route::post('/text/sentences', 'App\Http\Controllers\Backend\TextController@saveSentences');
+Route::get('/text/synonyms/{id}', 'App\Http\Controllers\Backend\TextController@getSynonyms');
+Route::post('/text/synonym', 'App\Http\Controllers\Backend\TextController@addSynonym');
+Route::delete('/text/synonym/{id}', 'App\Http\Controllers\Backend\TextController@deleteSynonym');
+Route::post('/text/image/{id}', 'App\Http\Controllers\Backend\TextController@uploadImage');
+Route::post('/text/description/{id}', 'App\Http\Controllers\Backend\TextController@updateDescription');

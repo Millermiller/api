@@ -17,7 +17,7 @@ class BlogService
     /**
      * @var PostRepositoryInterface
      */
-    private $postRepository;
+    private PostRepositoryInterface $postRepository;
 
     /**
      * PostService constructor.

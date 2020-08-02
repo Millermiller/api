@@ -189,6 +189,7 @@ return [
         /*
          * Scandinaver Service Providers...
          */
+        Scandinaver\Blog\Application\BlogServiceProvider::class,
         Scandinaver\Puzzle\Application\PuzzleServiceProvider::class,
         Scandinaver\Translate\Application\TranslateServiceProvider::class,
         Scandinaver\Learn\Application\LearnServiceProvider::class,

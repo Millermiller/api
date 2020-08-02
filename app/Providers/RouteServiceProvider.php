@@ -52,9 +52,10 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAuthRoutes();
 
         $this->mapFrontendRoutes();
-       // $this->mapSubBackendRoutes();
 
         $this->mapSubfrontendRoutes();
+
+        $this->mapSubBackendRoutes();
     }
 
     protected function mapWebRoutes(): void
@@ -113,7 +114,6 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapSubBackendRoutes(): void
     {
         Route::middleware(['bindings', 'auth:api', 'checkAdmin'])
-             ->namespace('App\Http\Controllers\Sub\Backend')
              ->as('sub_backend::')
              ->group(base_path('routes/api/subbackend/routes.php'));
     }
