@@ -1,0 +1,110 @@
+Scandinaver\Learn\Domain\Model\Asset:
+    type: entity
+    table: asset
+    indexes:
+        id:
+            columns:
+                - id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        title:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        basic:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        type:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        level:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        favorite:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: updated_at
+    manyToMany:
+        users:
+            targetEntity: Scandinaver\User\Domain\Model\User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: assets
+            inversedBy: null
+            joinTable: {  }
+            orderBy: null
+    manyToOne:
+        language:
+            targetEntity: Scandinaver\Common\Domain\Model\Language
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: assets
+            joinColumns:
+                language_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        cards:
+            targetEntity: Scandinaver\Learn\Domain\Model\Card
+            cascade:
+                - remove
+            fetch: EAGER
+            mappedBy: asset
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        results:
+            targetEntity: Scandinaver\Learn\Domain\Model\Result
+            cascade:
+                - remove
+            fetch: LAZY
+            mappedBy: asset
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks: {  }

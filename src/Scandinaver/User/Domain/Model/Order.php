@@ -4,85 +4,38 @@
 namespace Scandinaver\User\Domain\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Orders
- * @ORM\Table(name="order", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="plan_id", columns={"plan_id"})})
+ * Class Order
  *
- * @ORM\Entity
+ * @package Scandinaver\User\Domain\Model
  */
 class Order
 {
-    /**
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
     private int $id;
 
-    /**
-     * @var int
-     * @ORM\Column(name="sum", type="integer", nullable=false)
-     */
     private int $sum;
 
-    /**
-     * @ORM\Column(name="status", type="string", length=50, nullable=true)
-     */
     private ?string $status;
 
-    /**
-     * @ORM\Column(name="notification_type", type="string", length=255,
-     *   nullable=true)
-     */
     private ?string $notificationType;
 
-    /**
-     * @ORM\Column(name="datetime", type="string", length=255, nullable=true)
-     */
     private ?string $datetime;
 
-    /**
-     * @ORM\Column(name="codepro", type="string", length=255, nullable=true)
-     */
     private ?string $codepro;
 
-    /**
-     * @ORM\Column(name="sender", type="string", length=255, nullable=true)
-     */
     private ?string $sender;
 
-    /**
-     * @ORM\Column(name="sha1_hash", type="string", length=255, nullable=true)
-     */
     private ?string $sha1Hash;
 
-    /**
-     * @ORM\Column(name="label", type="string", length=255, nullable=true)
-     */
     private ?string $label;
 
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     */
     private DateTime $createdAt;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
     private ?DateTime $updatedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Plan")
-     * @ORM\JoinColumn(name="plan_id", referencedColumnName="id")
-     */
     private Plan $plan;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
     private User $user;
 
     public function setUpdatedAt(?DateTime $updatedAt): void

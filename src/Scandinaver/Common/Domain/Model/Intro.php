@@ -4,77 +4,34 @@
 namespace Scandinaver\Common\Domain\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 /**
- * Intro
- * @ORM\Table(name="intro")
+ * Class Intro
  *
- * @ORM\Entity
+ * @package Scandinaver\Common\Domain\Model
  */
 class Intro implements JsonSerializable
 {
-    /**
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
     private int $id;
 
-    /**
-     * @ORM\Column(name="page", type="string", length=50, nullable=true)
-     */
     private string $page;
 
-    /**
-     * @ORM\Column(name="element", type="string", length=255, nullable=true,
-     *   options={"default"="undefined"})
-     */
     private string $element = 'undefined';
 
-    /**
-     * @ORM\Column(name="intro", type="text", length=65535, nullable=true)
-     */
     private ?string $intro = null;
 
-    /**
-     * @ORM\Column(name="position", type="string", length=255, nullable=true,
-     *   options={"default"="false"})
-     */
-    private string $position ;
+    private string $position;
 
-    /**
-     * @ORM\Column(name="tooltipClass", type="string", length=255,
-     *   nullable=true)
-     */
     private string $tooltipclass;
 
-    /**
-     * @ORM\Column(name="sort", type="integer", nullable=true,
-     *   options={"default"="100"})
-     */
     private int $sort;
 
-    /**
-     * @ORM\Column(name="active", type="integer", nullable=true)
-     */
-    private int $active;
+    private bool $active;
 
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     */
     private DateTime $createdAt;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
     private DateTime $updatedAt;
-
-    /**
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
-     */
-    private DateTime $deletedAt;
 
     public function setActive(int $active): void
     {

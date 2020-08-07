@@ -24,21 +24,14 @@ use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
 use Doctrine\ORM\Mapping\{JoinTable, ManyToMany};
+
 /**
- * Users
- * @ORM\Table(name="user",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="email",
- *   columns={"email"})}, indexes={
- *     @ORM\Index(name="restore_link", columns={"restore_link"}),
- *     @ORM\Index(name="plan_id", columns={"plan_id"}),
- *     @ORM\Index(name="last_online", columns={"last_online"})
- * })
+ * Class User
  *
- * @ORM\Entity
+ * @package Scandinaver\User\Domain\Model
  */
 class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable
 {
-
     use Authenticatable;
     use CanResetPassword;
     use HasApiTokens;
@@ -48,110 +41,42 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     const ROLE_ADMIN = 1;
     const ROLE_USER = 0;
 
-    /**
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
     private int $id;
 
-    /**
-     * @ORM\Column(name="login", type="string", length=255, nullable=false)
-     */
     private string $login;
 
-    /**
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     */
     private string $email;
 
-    /**
-     * @ORM\Column(name="active_to", type="datetime", nullable=true,
-     *   nullable=true)
-     */
     private ?DateTime $activeTo;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     */
     private ?string $name;
 
-    /**
-     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
-     */
     private ?string $photo;
 
-    /**
-     * @ORM\Column(name="restore_link", type="string", length=255,
-     *   nullable=true)
-     */
     private ?string $restoreLink;
 
-    /**
-     * @ORM\Column(name="active", type="integer", nullable=false, options={"default"="1"})
-     */
     private int $active;
 
-    /**
-     * @ORM\Column(name="role", type="integer", nullable=true)
-     */
     private int $role;
 
-    /**
-     * @ORM\Column(name="assets_opened", type="integer", nullable=false, options={"default"="0"})
-     */
     private int $assetsOpened;
 
-    /**
-     * @ORM\Column(name="assets_created", type="integer", nullable=false, options={"default"="0"})
-     */
     private int $assetsCreated;
 
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
     private DateTime $createdAt;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
     private DateTime $updatedAt;
 
-    /**
-     * @ORM\Column(name="last_online", type="datetime", nullable=true)
-     */
     private DateTime $lastOnline;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Plan")
-     */
     private Plan $plan;
 
-    /**
-     * @var Collection|Asset[]
-     * @ManyToMany(targetEntity="Scandinaver\Learn\Domain\Model\Asset", inversedBy="users", cascade={"persist"})
-     * @JoinTable(name="asset_user")
-     */
     private $assets;
 
-    /**
-     * @var Collection|Puzzle[]
-     * @ManyToMany(targetEntity="\Scandinaver\Puzzle\Domain\Model\Puzzle", inversedBy="users")
-     * @JoinTable(name="puzzles_users")
-     */
     private $puzzles;
 
-    /**
-     * @var Collection|Text[]
-     * @ManyToMany(targetEntity="Scandinaver\Translate\Domain\Model\Text", inversedBy="users")
-     * @JoinTable(name="texts_users")
-     */
     private $texts;
 
-    /**
-     * @var Collection|Post[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Blog\Domain\Model\Post", mappedBy="user")
-     */
     private $posts;
 
     public function getKey(): int
@@ -303,7 +228,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     /**
      * @return UrlGenerator|string
      */
-    public function getAvatar()
+    public function getAvatar(): string
     {
         if ($this->photo) {
             if (file_exists(public_path('/uploads/u/a/').$this->photo)) {
@@ -343,11 +268,6 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         $this->assetsCreated++;
     }
 
-    /**
-     * @param Asset $asset
-     *
-     * @return bool
-     */
     public function hasAsset(Asset $asset): bool
     {
         foreach ($this->assets as $a) {
@@ -358,11 +278,6 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         return false;
     }
 
-    /**
-     * @param Text $text
-     *
-     * @return bool
-     */
     public function hasText(Text $text): bool
     {
         foreach ($this->texts as $t) {

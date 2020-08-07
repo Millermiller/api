@@ -1,0 +1,82 @@
+Scandinaver\Learn\Domain\Model\Card:
+    type: entity
+    table: card
+    indexes:
+        word_id:
+            columns:
+                - word_id
+        translate_id:
+            columns:
+                - translate_id
+        asset_id:
+            columns:
+                - asset_id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+    manyToOne:
+        word:
+            targetEntity: Scandinaver\Learn\Domain\Model\Word
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: cards
+            joinColumns:
+                word_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        asset:
+            targetEntity: Scandinaver\Learn\Domain\Model\Asset
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: cards
+            joinColumns:
+                asset_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        translate:
+            targetEntity: Scandinaver\Learn\Domain\Model\Translate
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                translate_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        examples:
+            targetEntity: Scandinaver\Learn\Domain\Model\Example
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: card
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks: {  }

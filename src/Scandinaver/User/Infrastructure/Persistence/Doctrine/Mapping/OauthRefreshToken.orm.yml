@@ -1,0 +1,41 @@
+Scandinaver\User\Domain\Model\OauthRefreshToken:
+    type: entity
+    table: oauth_refresh_tokens
+    indexes:
+        access_token_index:
+            columns:
+                - access_token_id
+    id:
+        id:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+    fields:
+        accessTokenId:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: false
+            precision: 0
+            column: access_token_id
+        revoked:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        expiresAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: expires_at
+    lifecycleCallbacks: {  }

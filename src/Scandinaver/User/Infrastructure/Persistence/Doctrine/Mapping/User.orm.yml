@@ -1,0 +1,231 @@
+Scandinaver\User\Domain\Model\User:
+    type: entity
+    table: user
+    indexes:
+        restore_link:
+            columns:
+                - restore_link
+        plan_id:
+            columns:
+                - plan_id
+        last_online:
+            columns:
+                - last_online
+    uniqueConstraints:
+        email:
+            columns:
+                - email
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        login:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        email:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        activeTo:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: active_to
+        name:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        photo:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        restoreLink:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+            column: restore_link
+        active:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            options:
+                default: '1'
+        role:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        assetsOpened:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            options:
+                default: '0'
+            column: assets_opened
+        assetsCreated:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            options:
+                default: '0'
+            column: assets_created
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+        lastOnline:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: last_online
+        password:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        rememberToken:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: remember_token
+    manyToOne:
+        plan:
+            targetEntity: Scandinaver\User\Domain\Model\Plan
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                plan_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        assets:
+            targetEntity: Scandinaver\Learn\Domain\Model\Asset
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: users
+            joinTable:
+                name: asset_user
+                schema: null
+                joinColumns:
+                    -
+                        name: user_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: asset_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        puzzles:
+            targetEntity: Scandinaver\Puzzle\Domain\Model\Puzzle
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: users
+            joinTable:
+                name: puzzles_users
+                schema: null
+                joinColumns:
+                    -
+                        name: user_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: puzzle_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        texts:
+            targetEntity: Scandinaver\Translate\Domain\Model\Text
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: users
+            joinTable:
+                name: texts_users
+                schema: null
+                joinColumns:
+                    -
+                        name: user_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: text_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+    oneToMany:
+        posts:
+            targetEntity: Scandinaver\Blog\Domain\Model\Post
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: user
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks: {  }

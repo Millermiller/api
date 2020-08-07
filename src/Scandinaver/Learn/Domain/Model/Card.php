@@ -4,58 +4,28 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 
 /**
- * Cards
- * @ORM\Table(name="card", indexes={@ORM\Index(name="word_id", columns={"word_id"}), @ORM\Index(name="translate_id", columns={"translate_id"}), @ORM\Index(name="asset_id", columns={"asset_id"})})
+ * Class Card
  *
- * @ORM\Entity
+ * @package Scandinaver\Learn\Domain\Model
  */
 class Card implements JsonSerializable, UrlRoutable
 {
-    /**
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
     private int $id;
 
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     */
     private DateTime $createdAt;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
     private DateTime $updatedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Model\Word", inversedBy="cards")
-     * @ORM\JoinColumn(name="word_id", referencedColumnName="id")
-     */
     private Word $word;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Model\Asset", inversedBy="cards")
-     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
-     */
     private Asset $asset;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Model\Translate")
-     * @ORM\JoinColumn(name="translate_id", referencedColumnName="id")
-     */
     private Translate $translate;
 
-    /**
-     * @var Collection|Example[]
-     * @ORM\OneToMany(targetEntity="Scandinaver\Learn\Domain\Model\Example", mappedBy="card")
-     */
     private $examples;
 
     private $favourite;
@@ -79,9 +49,6 @@ class Card implements JsonSerializable, UrlRoutable
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
@@ -141,32 +108,23 @@ class Card implements JsonSerializable, UrlRoutable
     }
 
     /**
-     * @return Example[]|Collection
+     * @return Example[]
      */
     public function getExamples()
     {
         return $this->examples->toArray();
     }
 
-    /**
-     * @return bool
-     */
     public function isFavourite(): bool
     {
         return (bool) $this->asset->getFavorite();
     }
 
-    /**
-     * @param  mixed  $favourite
-     */
-    public function setFavourite($favourite): void
+    public function setFavourite(bool $favourite): void
     {
         $this->favourite = $favourite;
     }
 
-    /**
-     * @return string
-     */
     public static function getRouteKeyName(): string
     {
         return 'id';

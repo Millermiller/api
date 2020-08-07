@@ -1,0 +1,76 @@
+Scandinaver\Blog\Domain\Model\Comment:
+    type: entity
+    table: comment
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        postId:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: post_id
+        text:
+            type: text
+            scale: 0
+            length: 65535
+            unique: false
+            nullable: true
+            precision: 0
+        userId:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: user_id
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+    manyToOne:
+        post:
+            targetEntity: Scandinaver\Blog\Domain\Model\Post
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: comments
+            joinColumns:
+                post_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: Scandinaver\User\Domain\Model\User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

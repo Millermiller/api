@@ -4,49 +4,25 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 /**
- * Examples
- * @ORM\Table(name="example", indexes={@ORM\Index(name="card_id", columns={"card_id"})})
+ * Class Example
  *
- * @ORM\Entity
+ * @package Scandinaver\Learn\Domain\Model
  */
 class Example implements JsonSerializable
 {
-    /**
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
     private int $id;
 
-    /**
-     * @ORM\Column(name="text", type="text", length=65535, nullable=false)
-     */
     private string $text;
 
-    /**
-     * @ORM\Column(name="value", type="text", length=65535, nullable=false)
-     */
     private string $value;
 
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     */
     private DateTime $createdAt;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
     private ?DateTime $updatedAt;
 
-    /**
-     * @var Card
-     * @ORM\ManyToOne(targetEntity="Scandinaver\Learn\Domain\Model\Card", inversedBy="examples")
-     * @ORM\JoinColumn(name="card_id", referencedColumnName="id")
-     */
     private Card $card;
 
     /**

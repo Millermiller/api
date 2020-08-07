@@ -1,0 +1,131 @@
+Scandinaver\Blog\Domain\Model\Post:
+    type: entity
+    table: post
+    indexes:
+        post_name:
+            columns:
+                - title
+        post_author:
+            columns:
+                - user_id
+        id:
+            columns:
+                - id
+    id:
+        id:
+            type: bigint
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        title:
+            type: string
+            scale: 0
+            length: 200
+            unique: false
+            nullable: false
+            precision: 0
+        content:
+            type: text
+            scale: 0
+            length: 0
+            unique: false
+            nullable: true
+            precision: 0
+        anonse:
+            type: text
+            scale: 0
+            length: 65535
+            unique: false
+            nullable: true
+            precision: 0
+        status:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            options:
+                default: '1'
+        commentStatus:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            options:
+                default: '1'
+            column: comment_status
+        views:
+            type: bigint
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+    oneToMany:
+        comments:
+            targetEntity: Scandinaver\Blog\Domain\Model\Comment
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: post
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    manyToOne:
+        user:
+            targetEntity: Scandinaver\User\Domain\Model\User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: posts
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        category:
+            targetEntity: Scandinaver\Blog\Domain\Model\Category
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: posts
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        language:
+            targetEntity: Scandinaver\Common\Domain\Model\Language
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: posts
+            joinColumns:
+                language_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

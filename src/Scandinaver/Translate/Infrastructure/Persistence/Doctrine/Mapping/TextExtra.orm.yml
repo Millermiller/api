@@ -1,0 +1,66 @@
+Scandinaver\Translate\Domain\Model\TextExtra:
+    type: entity
+    table: text_extra
+    indexes:
+        text_id:
+            columns:
+                - text_id
+                - orig
+                - extra
+        IDX_3317FC22698D3548:
+            columns:
+                - text_id
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        orig:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        extra:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+    manyToOne:
+        text:
+            targetEntity: Scandinaver\Translate\Domain\Model\Text
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: extra
+            joinColumns:
+                text_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
