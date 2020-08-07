@@ -4,7 +4,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Http\Request;
-use Scandinaver\Common\Domain\Language;
+use Scandinaver\Common\Domain\Model\Language;
 
 /**
  * Class BaseRequest

@@ -4,7 +4,7 @@
 namespace App\Events;
 
 use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

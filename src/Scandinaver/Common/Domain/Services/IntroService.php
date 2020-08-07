@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Common\Domain\Services;
 
-use Scandinaver\Common\Domain\Contracts\IntroRepositoryInterface;
-use Scandinaver\Common\Domain\Intro;
+use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
+use Scandinaver\Common\Domain\Model\Intro;
 
 /**
  * Class IntroService
@@ -13,15 +13,12 @@ use Scandinaver\Common\Domain\Intro;
  */
 class IntroService
 {
-    /**
-     * @var IntroRepositoryInterface
-     */
-    private $introRepository;
+    private IntroRepositoryInterface $introRepository;
 
     /**
      * IntroService constructor.
      *
-     * @param IntroRepositoryInterface $introRepository
+     * @param  IntroRepositoryInterface  $introRepository
      */
     public function __construct(IntroRepositoryInterface $introRepository)
     {
@@ -35,7 +32,7 @@ class IntroService
     }
 
     /**
-     * @param $id
+     * @param integer $id
      *
      * @return Intro
      */
@@ -45,7 +42,7 @@ class IntroService
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      *
      * @return Intro
      */

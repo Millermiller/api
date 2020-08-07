@@ -3,11 +3,11 @@
 
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Card;
-use Scandinaver\Learn\Domain\Result;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
 /**

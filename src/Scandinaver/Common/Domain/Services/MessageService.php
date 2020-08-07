@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\Domain\Services;
 
-use Scandinaver\Common\Domain\Contracts\MessageRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\Repository\MessageRepositoryInterface;
 
 /**
  * Class MessageService
@@ -12,15 +12,12 @@ use Scandinaver\Common\Domain\Contracts\MessageRepositoryInterface;
  */
 class MessageService
 {
-    /**
-     * @var MessageRepositoryInterface
-     */
-    private $messageRepository;
+    private MessageRepositoryInterface $messageRepository;
 
     /**
      * MessageService constructor.
      *
-     * @param MessageRepositoryInterface $messageRepository
+     * @param  MessageRepositoryInterface  $messageRepository
      */
     public function __construct(MessageRepositoryInterface $messageRepository)
     {

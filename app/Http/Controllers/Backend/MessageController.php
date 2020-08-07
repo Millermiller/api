@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Application\Commands\DeleteMessageCommand;
-use Scandinaver\Common\Application\Query\MessageQuery;
-use Scandinaver\Common\Application\Query\MessagesQuery;
 use Scandinaver\Common\Domain\Message;
+use Scandinaver\Common\UI\Command\DeleteMessageCommand;
+use Scandinaver\Common\UI\Query\MessageQuery;
+use Scandinaver\Common\UI\Query\MessagesQuery;
 
 /**
  * Class MessageController

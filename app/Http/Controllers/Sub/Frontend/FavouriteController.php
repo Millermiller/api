@@ -6,9 +6,10 @@ namespace App\Http\Controllers\Sub\Frontend;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Application\Commands\{CreateFavouriteCommand, DeleteFavouriteCommand};
-use Scandinaver\Learn\Domain\{Translate, Word};
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
+use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
+use Scandinaver\Learn\Domain\Model\{Translate, Word};
 
 /**
  * Class FavouriteController

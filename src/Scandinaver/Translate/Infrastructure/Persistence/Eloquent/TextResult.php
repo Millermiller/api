@@ -15,14 +15,15 @@ use Illuminate\Database\Eloquent\{Builder, Model, Relations\HasOne};
  */
 class TextResult extends Model
 {
-    protected $table    = 'texts_to_users';
+
+    protected $table = 'texts_to_users';
 
     protected $fillable = ['text_id', 'user_id', 'language_id'];
 
-    protected $hidden   = ['created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      *
      * @return Builder
      */
@@ -36,6 +37,11 @@ class TextResult extends Model
      */
     public function text(): Text
     {
-        return $this->hasOne('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text', 'id', 'text_id');
+        return $this->hasOne(
+            'Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text',
+            'id',
+            'text_id'
+        );
     }
+
 }

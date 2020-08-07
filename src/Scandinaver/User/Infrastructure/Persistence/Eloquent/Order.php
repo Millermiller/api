@@ -14,11 +14,23 @@ use Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result;
  */
 class Order extends Model
 {
+
     use SoftDeletes;
 
-    protected $table    = 'orders';
+    protected $table = 'orders';
 
-    protected $fillable = ['sum', 'status', 'plan_id', 'user_id', 'notification_type', 'datetime', 'codepro', 'sender', 'sha1_hash', 'label'];
+    protected $fillable = [
+        'sum',
+        'status',
+        'plan_id',
+        'user_id',
+        'notification_type',
+        'datetime',
+        'codepro',
+        'sender',
+        'sha1_hash',
+        'label',
+    ];
 
     /**
      * @return User|BelongsTo
@@ -33,6 +45,9 @@ class Order extends Model
      */
     public function plan(): Result
     {
-        return $this->belongsTo('Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan');
+        return $this->belongsTo(
+            'Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan'
+        );
     }
+
 }

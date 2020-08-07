@@ -12,9 +12,19 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
  */
 class Intro extends Model
 {
+
     use SoftDeletes;
 
-    protected $table    = 'intro';
+    protected $table = 'intro';
 
-    protected $fillable = ['page', 'element', 'intro', 'sort', 'position', 'tooltipClass', 'active'];
+    protected $fillable = [
+        'page',
+        'element',
+        'intro',
+        'sort',
+        'position',
+        'tooltipClass',
+        'active',
+    ];
+
 }

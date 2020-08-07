@@ -14,19 +14,21 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Plan extends Model
 {
-    public    $timestamps = false;
 
-    protected $table      = 'plans';
+    public $timestamps = false;
 
-    protected $casts      = [
-        'cost'           => 'int',
-        'cost_per_month' => 'int'
+    protected $table = 'plans';
+
+    protected $casts = [
+        'cost' => 'int',
+        'cost_per_month' => 'int',
     ];
 
-    protected $fillable   = [
+    protected $fillable = [
         'name',
         'period',
         'cost',
-        'cost_per_month'
+        'cost_per_month',
     ];
+
 }

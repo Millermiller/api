@@ -2,8 +2,8 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\User\Domain\Plan;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\Plan;
+use Scandinaver\User\Domain\Model\User;
 
 
 /*

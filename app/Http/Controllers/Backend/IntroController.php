@@ -7,9 +7,10 @@ use ReflectionException;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Scandinaver\Common\Application\Query\{IntroQuery, IntrosQuery};
-use Scandinaver\Common\Application\Commands\CreateIntroCommand;
-use Scandinaver\Common\Application\Handlers\CreateIntroCommandHandler;
+use Scandinaver\Common\Domain\Intro;
+use Scandinaver\Common\UI\Command\CreateIntroCommand;
+use Scandinaver\Common\UI\Query\IntroQuery;
+use Scandinaver\Common\UI\Query\IntrosQuery;
 
 /**
  * Created by PhpStorm.

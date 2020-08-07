@@ -3,17 +3,17 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use App\Http\Requests\{SearchRequest};
 use Auth;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Database\Eloquent\{Builder, Collection};
 use PDO;
-use Scandinaver\Common\Domain\Contracts\LanguageRepositoryInterface;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Contracts\TranslateRepositoryInterface;
-use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
-use Scandinaver\Learn\Domain\Translate;
-use Scandinaver\Learn\Domain\Word;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Translate;
+use Scandinaver\Learn\Domain\Model\Word;
 
 /**
  * Class WordService
@@ -22,36 +22,27 @@ use Scandinaver\Learn\Domain\Word;
  */
 class WordService
 {
-    /**
-     * @var LanguageRepositoryInterface
-     */
-    protected $languageRepository;
+    protected LanguageRepositoryInterface $languageRepository;
 
-    /**
-     * @var TranslateRepositoryInterface
-     */
-    private $translateRepository;
+    private TranslateRepositoryInterface $translateRepository;
 
-    /**
-     * @var WordRepositoryInterface
-     */
-    private $wordsRepository;
+    private WordRepositoryInterface $wordsRepository;
 
     /**
      * WordService constructor.
      *
-     * @param TranslateRepositoryInterface $translateRepository
-     * @param WordRepositoryInterface      $wordsRepository
-     * @param LanguageRepositoryInterface  $languageRepository
+     * @param  TranslateRepositoryInterface  $translateRepository
+     * @param  WordRepositoryInterface       $wordsRepository
+     * @param  LanguageRepositoryInterface   $languageRepository
      */
     public function __construct(
         TranslateRepositoryInterface $translateRepository,
         WordRepositoryInterface $wordsRepository,
-        LanguageRepositoryInterface $languageRepository)
-    {
+        LanguageRepositoryInterface $languageRepository
+    ) {
         $this->translateRepository = $translateRepository;
-        $this->wordsRepository     = $wordsRepository;
-        $this->languageRepository  = $languageRepository;
+        $this->wordsRepository = $wordsRepository;
+        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -63,7 +54,7 @@ class WordService
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return int
      */
@@ -74,15 +65,19 @@ class WordService
 
     /**TODO: проверить
      *
-     * @param        $lang
-     * @param string $word
-     * @param int    $isSentence
-     * @param string $translate
+     * @param          $lang
+     * @param  string  $word
+     * @param  int     $isSentence
+     * @param  string  $translate
      *
      * @return Word
      */
-    public function create($lang, string $word, int $isSentence, string $translate): Word
-    {
+    public function create(
+        $lang,
+        string $word,
+        int $isSentence,
+        string $translate
+    ): Word {
         $language = $this->languageRepository->get($lang);
 
         $word = new Word();
@@ -99,8 +94,8 @@ class WordService
     }
 
     /**
-     * @param Language      $language
-     * @param SearchRequest $request
+     * @param  Language       $language
+     * @param  SearchRequest  $request
      *
      * @return Translate[]|Builder[]|Collection|\Illuminate\Support\Collection
      * @throws DBALException
@@ -128,7 +123,15 @@ class WordService
                             and w.language_id = ?
                             order by score desc';
 
-        $params = [$word, $word, $word . "%", $word, $sentence, Auth::user()->getKey(), $language->getId()];
+        $params = [
+            $word,
+            $word,
+            $word."%",
+            $word,
+            $sentence,
+            Auth::user()->getKey(),
+            $language->getId(),
+        ];
 
         $stmt = app('em')->getConnection()->prepare($sql);
         $stmt->execute($params);
@@ -138,7 +141,7 @@ class WordService
     }
 
     /**
-     * @param Word $word
+     * @param  Word  $word
      *
      * @return Translate[]
      */

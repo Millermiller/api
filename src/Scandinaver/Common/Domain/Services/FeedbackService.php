@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\Domain\Services;
 
 use Exception;
-use Scandinaver\Common\Domain\Contracts\MessageRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\Repository\MessageRepositoryInterface;
 use Scandinaver\Common\Domain\Message;
 
 /**
@@ -14,15 +14,12 @@ use Scandinaver\Common\Domain\Message;
  */
 class FeedbackService
 {
-    /**
-     * @var MessageRepositoryInterface
-     */
-    private $messageRepository;
+    private MessageRepositoryInterface $messageRepository;
 
     /**
      * FeedbackService constructor.
      *
-     * @param MessageRepositoryInterface $messageRepository
+     * @param  MessageRepositoryInterface  $messageRepository
      */
     public function __construct(MessageRepositoryInterface $messageRepository)
     {
@@ -30,12 +27,12 @@ class FeedbackService
     }
 
     /**
-     * @param array $request
+     * @param  array  $request
      *
      * @return Message
      * @throws Exception
      */
-    public function saveFeedback(array $request)
+    public function saveFeedback(array $request): Message
     {
         $message = new Message($request['name'], $request['message']);
 

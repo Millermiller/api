@@ -4,7 +4,7 @@
 namespace App\Helpers;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Auth

@@ -29,7 +29,7 @@ class CreateCommandHandler extends GeneratorCommand
     /**
      * @var string
      */
-    protected $commandHandlerPath = 'Application/Handlers';
+    protected $commandHandlerPath = 'Application/Handler/Command';
 
     /**
      * @var string
@@ -67,6 +67,8 @@ class CreateCommandHandler extends GeneratorCommand
         $path = $this->getPath($name);
 
         $this->files->put($path, $this->buildClass($name));
+
+        $this->files->chmod($path, 0777);
 
         $this->info($this->type . ' created successfully.');
 
@@ -125,12 +127,20 @@ class CreateCommandHandler extends GeneratorCommand
     protected function replaceClass($stub, $name)
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
-        $commandNamespace = str_replace('/', '\\', 'Application/Commands');
+        $commandNamespace = str_replace('/', '\\', 'UI/Command');
         $commandClass     = str_replace('Handler', 'Command', $class);
+        $commandInterface = $class.'Interface';
+
         return str_replace([
             'DummyClass',
             'DummyCommandClass',
-            'DummyCommandNamespace'
-        ], [$class, $commandClass, "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace\\$commandClass"], $stub);
+            'DummyCommandNamespace',
+            'DummyInterface'
+        ], [
+          $class,
+          $commandClass,
+          "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace\\$commandClass",
+          "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\$commandInterface"
+        ], $stub);
     }
 }

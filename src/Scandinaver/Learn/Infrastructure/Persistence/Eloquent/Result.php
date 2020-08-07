@@ -14,14 +14,15 @@ use Illuminate\Database\Eloquent\{Builder, Model, Relations\HasOne};
  */
 class Result extends Model
 {
-    protected $table    = 'assets_users';
+
+    protected $table = 'assets_users';
 
     protected $fillable = ['asset_id', 'user_id', 'result', 'language_id'];
 
-    protected $hidden   = ['created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      *
      * @return mixed
      */
@@ -35,6 +36,11 @@ class Result extends Model
      */
     public function asset(): Asset
     {
-        return $this->hasOne('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset', 'id', 'asset_id');
+        return $this->hasOne(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset',
+            'id',
+            'asset_id'
+        );
     }
+
 }

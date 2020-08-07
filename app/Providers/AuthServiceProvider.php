@@ -6,8 +6,8 @@ namespace App\Providers;
 use App\Policies\{AssetPolicy, CardPolicy, TextPolicy};
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
-use Scandinaver\Learn\Domain\{Asset, Card};
-use Scandinaver\Translate\Domain\Text;
+use Scandinaver\Learn\Domain\Model\{Asset, Card};
+use Scandinaver\Translate\Domain\Model\Text;
 
 /**
  * Class AuthServiceProvider

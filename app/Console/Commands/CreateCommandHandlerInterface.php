@@ -3,6 +3,7 @@
 
 namespace App\Console\Commands;
 
+use Artisan;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
@@ -28,7 +29,7 @@ class CreateCommandHandlerInterface extends GeneratorCommand
     /**
      * @var string
      */
-    protected $commandHandlerPath = 'Application/Handlers';
+    protected $commandHandlerPath = 'Domain/Contract';
 
     /**
      * @var string
@@ -67,7 +68,14 @@ class CreateCommandHandlerInterface extends GeneratorCommand
 
         $this->files->put($path, $this->buildClass($name));
 
+        $this->files->chmod($path, 0777);
+
         $this->info($this->type . ' created successfully.');
+
+       // Artisan::call('updateServiceProvider', [
+       //   'name'   => "{$name}Interface",
+       //   'domain' => $this->domain
+       // ]);
     }
 
     /**

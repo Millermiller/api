@@ -5,11 +5,11 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Contracts\AudioParserInterface;
-use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\AudioFileCantParsedException;
-use Scandinaver\Learn\Domain\Word;
+use Scandinaver\Learn\Domain\Model\Word;
 
 /**
  * Class AudioService
@@ -18,26 +18,22 @@ use Scandinaver\Learn\Domain\Word;
  */
 class AudioService
 {
-    /**
-     * @var WordRepositoryInterface
-     */
-    private $wordsRepository;
+    private WordRepositoryInterface $wordsRepository;
 
-    /**
-     * @var AudioParserInterface
-     */
-    private $parser;
+    private AudioParserInterface $parser;
 
     /**
      * WordService constructor.
      *
-     * @param WordRepositoryInterface $wordsRepository
-     * @param AudioParserInterface    $parser
+     * @param  WordRepositoryInterface  $wordsRepository
+     * @param  AudioParserInterface     $parser
      */
-    public function __construct(WordRepositoryInterface $wordsRepository, AudioParserInterface $parser)
-    {
+    public function __construct(
+        WordRepositoryInterface $wordsRepository,
+        AudioParserInterface $parser
+    ) {
         $this->wordsRepository = $wordsRepository;
-        $this->parser          = $parser;
+        $this->parser = $parser;
     }
 
     /**
@@ -50,7 +46,7 @@ class AudioService
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return int
      */
@@ -60,8 +56,8 @@ class AudioService
     }
 
     /**
-     * @param Word         $word
-     * @param UploadedFile $file
+     * @param  Word          $word
+     * @param  UploadedFile  $file
      *
      * @return Word
      */
@@ -79,7 +75,7 @@ class AudioService
     /**
      * TODO: use laravel curl wrapper and Storage
      *
-     * @param Word $word
+     * @param  Word  $word
      *
      * @return string
      */
@@ -89,7 +85,11 @@ class AudioService
             $link = $this->parser->parse($word->getWord());
 
             $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, 'https://forvo.com/player-mp3Handler.php?path=' . $link);
+            curl_setopt(
+                $curl,
+                CURLOPT_URL,
+                'https://forvo.com/player-mp3Handler.php?path='.$link
+            );
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             //curl_setopt($curl, CURLOPT_COOKIEFILE, BASE_URL . '/temp/cookie.txt');
             $file = curl_exec($curl);
@@ -97,13 +97,13 @@ class AudioService
 
             $filename = Str::random(32);
 
-            touch(public_path() . '/audio/' . $filename . '.mp3');
-            $fp       = fopen(public_path() . '/audio/' . $filename . '.mp3', 'w');
+            touch(public_path().'/audio/'.$filename.'.mp3');
+            $fp = fopen(public_path().'/audio/'.$filename.'.mp3', 'w');
             $filesize = fwrite($fp, $file);
             fclose($fp);
 
             if ($filesize > 0) {
-                $word->setAudio('/audio/' . $filename . '.mp3');
+                $word->setAudio('/audio/'.$filename.'.mp3');
                 $this->wordsRepository->save($word);
             }
 

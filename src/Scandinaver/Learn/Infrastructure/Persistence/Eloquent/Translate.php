@@ -14,22 +14,31 @@ use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, SoftDeletes};
  */
 class Translate extends Model
 {
+
     use SoftDeletes;
 
-    protected $table    = 'translate';
+    protected $table = 'translate';
 
     protected $fillable = ['id', 'value', 'word_id', 'sentence'];
 
-    protected $hidden   = ['created_at', 'updated_at', 'deleted_at', 'variant', 'form'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'variant',
+        'form',
+    ];
 
-    protected $appends  = ['active'];
+    protected $appends = ['active'];
 
     /**
      * @return BelongsTo|Word
      */
     public function word(): Word
     {
-        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word');
+        return $this->belongsTo(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word'
+        );
     }
 
     /**
@@ -39,4 +48,5 @@ class Translate extends Model
     {
         return $this->attributes['active'] = false;
     }
+
 }

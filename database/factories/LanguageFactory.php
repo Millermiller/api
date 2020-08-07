@@ -2,9 +2,9 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\User\Domain\Model\User;
 
 
 /*
@@ -20,7 +20,7 @@ use Scandinaver\User\Domain\User;
 
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\Common\Domain\Language::class, function (Faker $faker) {
+$factory->define(\Scandinaver\Common\Domain\Model\Language::class, function (Faker $faker) {
 
     return [
         'name' => 'is',

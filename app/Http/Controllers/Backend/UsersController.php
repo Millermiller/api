@@ -6,11 +6,11 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\User\Application\Commands\DeleteUserCommand;
-use Scandinaver\User\Application\Commands\UpdateUserCommand;
-use Scandinaver\User\Application\Query\UserQuery;
-use Scandinaver\User\Application\Query\UsersQuery;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\UI\Command\DeleteUserCommand;
+use Scandinaver\User\UI\Command\UpdateUserCommand;
+use Scandinaver\User\UI\Query\UserQuery;
+use Scandinaver\User\UI\Query\UsersQuery;
 
 /**
  * Class UsersController

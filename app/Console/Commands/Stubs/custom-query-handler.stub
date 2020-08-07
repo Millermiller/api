@@ -4,6 +4,7 @@
 namespace DummyNamespace;
 
 use DummyQueryNamespace;
+use DummyInterface;
 
 /**
  * Class DummyClass

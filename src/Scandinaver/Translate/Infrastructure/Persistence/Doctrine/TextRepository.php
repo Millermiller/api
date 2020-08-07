@@ -4,11 +4,11 @@
 namespace Scandinaver\Translate\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
-use Scandinaver\Common\Domain\Language;
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Translate\Domain\{Result, Text};
-use Scandinaver\Translate\Domain\Contracts\TextRepositoryInterface;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Translate\Domain\Model\{Result, Text};
+use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class TextRepository
@@ -18,7 +18,7 @@ use Scandinaver\User\Domain\User;
 class TextRepository extends BaseRepository implements TextRepositoryInterface
 {
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return Text
      * @throws NoResultException
@@ -27,19 +27,19 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
     public function getFirstText(Language $language): Text
     {
         return $this->createQueryBuilder('asset')
-                    ->select('a')
-                    ->from($this->getEntityName(), 'a')
-                    ->where('a.level = :level')
-                    ->andWhere('a.languageId = :language')
-                    ->setParameter('level', 1)
-                    ->setParameter('language', $language->getId())
-                    ->getQuery()
-                    ->getSingleResult();
+            ->select('a')
+            ->from($this->getEntityName(), 'a')
+            ->where('a.level = :level')
+            ->andWhere('a.languageId = :language')
+            ->setParameter('level', 1)
+            ->setParameter('language', $language->getId())
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**
-     * @param User     $user
-     * @param Language $language
+     * @param  User      $user
+     * @param  Language  $language
      *
      * @return array
      */
@@ -47,17 +47,20 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
     {
         $q = $this->_em->createQueryBuilder();
 
-        app('em')->getConfiguration()->addCustomHydrationMode('ColumnHydrator', 'Scandinaver\Common\Infrastructure\Persistence\Doctrine\ColumnHydrator');
+        app('em')->getConfiguration()->addCustomHydrationMode(
+            'ColumnHydrator',
+            'Scandinaver\Common\Infrastructure\Persistence\Doctrine\ColumnHydrator'
+        );
 
         return $q->select('r.textId')
-                 ->from(Result::class, 'r')
-                 ->join('r.text', 't')
-                 ->where($q->expr()->eq('r.user', ':user'))
-                 ->andWhere($q->expr()->eq('t.language', ':language'))
-                 ->setParameter('user', $user)
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getResult('ColumnHydrator');
+            ->from(Result::class, 'r')
+            ->join('r.text', 't')
+            ->where($q->expr()->eq('r.user', ':user'))
+            ->andWhere($q->expr()->eq('t.language', ':language'))
+            ->setParameter('user', $user)
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getResult('ColumnHydrator');
     }
 
 
@@ -70,7 +73,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return array | Text[]
      */
@@ -79,20 +82,20 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('t')
-                 ->from(Text::class, 't')
-                 ->where('t.published = :published')
-                 ->andWhere($q->expr()->eq('t.language', ':language'))
-                 ->setParameter('published', 1)
-                 ->setParameter('language', $language)
-                 ->orderBy('t.level', 'asc')
-                 ->getQuery()
-                 ->getResult();
+            ->from(Text::class, 't')
+            ->where('t.published = :published')
+            ->andWhere($q->expr()->eq('t.language', ':language'))
+            ->setParameter('published', 1)
+            ->setParameter('language', $language)
+            ->orderBy('t.level', 'asc')
+            ->getQuery()
+            ->getResult();
     }
 
 
     /**
-     * @param Text     $text
-     * @param Language $language
+     * @param  Text      $text
+     * @param  Language  $language
      *
      * @return Text
      * @throws NoResultException
@@ -103,18 +106,18 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('t')
-                 ->from($this->getEntityName(), 't')
-                 ->where('a.level = :level')
-                 ->andWhere('a.language = :language')
-                 ->setParameter('level', $text->getLevel() + 1)
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getSingleResult();
+            ->from($this->getEntityName(), 't')
+            ->where('a.level = :level')
+            ->andWhere('a.language = :language')
+            ->setParameter('level', $text->getLevel() + 1)
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**TODO: повторяется
      *
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return int
      * @throws NoResultException
@@ -125,10 +128,10 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(t.id)')
-                 ->from($this->getEntityName(), 't')
-                 ->where($q->expr()->eq('t.language', ':language'))
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getSingleScalarResult();
+            ->from($this->getEntityName(), 't')
+            ->where($q->expr()->eq('t.language', ':language'))
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

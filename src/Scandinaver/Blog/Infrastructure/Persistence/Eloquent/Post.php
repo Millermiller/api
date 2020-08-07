@@ -13,16 +13,25 @@ use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany,
  */
 class Post extends Model
 {
+
     use SoftDeletes;
 
-    const STATUS_ACTIVE   = 1;
+    const STATUS_ACTIVE = 1;
+
     const STATUS_INACTIVE = 0;
 
-    protected $table    = 'posts';
+    protected $table = 'posts';
 
-    protected $fillable = ['title', 'post_author', 'content', 'category_id', 'anonse', 'status'];
+    protected $fillable = [
+        'title',
+        'post_author',
+        'content',
+        'category_id',
+        'anonse',
+        'status',
+    ];
 
-    protected $dates    = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     /**
      * @return bool
@@ -33,6 +42,7 @@ class Post extends Model
         if (parent::delete()) {
             $this->comments()->delete();
         }
+
         return true;
     }
 
@@ -41,7 +51,9 @@ class Post extends Model
      */
     public function comments(): array
     {
-        return $this->hasMany('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Comment');
+        return $this->hasMany(
+            'Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Comment'
+        );
     }
 
     /**
@@ -49,6 +61,9 @@ class Post extends Model
      */
     public function category(): Category
     {
-        return $this->belongsTo('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Category');
+        return $this->belongsTo(
+            'Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Category'
+        );
     }
+
 }

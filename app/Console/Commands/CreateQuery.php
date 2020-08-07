@@ -31,7 +31,7 @@ class CreateQuery extends GeneratorCommand
     /**
      * @var string
      */
-    protected $queryPath = 'Application/Query';
+    protected $queryPath = 'UI/Query';
 
     /**
      * The console command description.
@@ -91,6 +91,8 @@ class CreateQuery extends GeneratorCommand
 
         $this->files->put($path, $this->buildClass($name . "Query"));
 
+        $this->files->chmod($path, 0777);
+
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('createQueryHandler', [
@@ -131,11 +133,11 @@ class CreateQuery extends GeneratorCommand
     protected function replaceClass($stub, $name)
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
-        $handlerNamespace = str_replace('/', '\\', 'Application/Handlers');
+        $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
         $handlerClass     = str_replace('Query', 'Handler', $class);
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\$handlerClass"], $stub);
+        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass"], $stub);
     }
 }

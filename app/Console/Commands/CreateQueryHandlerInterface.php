@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateQueryHandlerInterface extends GeneratorCommand
 {
+
     /**
      * @var string
      */
@@ -28,7 +29,7 @@ class CreateQueryHandlerInterface extends GeneratorCommand
     /**
      * @var string
      */
-    protected $queryHandlerPath = 'Application/Handlers';
+    protected $queryHandlerPath = 'Domain/Contract';
 
     /**
      * @var string
@@ -40,11 +41,11 @@ class CreateQueryHandlerInterface extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/Stubs/custom-query-handler-interface.stub';
+        return __DIR__.'/Stubs/custom-query-handler-interface.stub';
     }
 
     /**
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      *
      * @return string
      */
@@ -67,7 +68,9 @@ class CreateQueryHandlerInterface extends GeneratorCommand
 
         $this->files->put($path, $this->buildClass($name));
 
-        $this->info($this->type . ' created successfully.');
+        $this->files->chmod($path, 0777);
+
+        $this->info($this->type.' created successfully.');
     }
 
     /**
@@ -76,13 +79,13 @@ class CreateQueryHandlerInterface extends GeneratorCommand
     public function getArguments(): array
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the class'],
-            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
+          ['name', InputArgument::REQUIRED, 'The name of the class'],
+          ['domain', InputArgument::REQUIRED, 'The name of the domain'],
         ];
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -96,13 +99,15 @@ class CreateQueryHandlerInterface extends GeneratorCommand
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
     protected function getNamespace($name): string
     {
         $queryNamespace = str_replace('/', '\\', $this->queryHandlerPath);
+
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
     }
+
 }

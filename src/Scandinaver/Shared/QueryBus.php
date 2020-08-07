@@ -5,9 +5,9 @@ namespace Scandinaver\Shared;
 
 use ReflectionClass;
 use ReflectionException;
-use Scandinaver\Shared\Contracts\Query;
-use Scandinaver\Shared\Contracts\QueryHandler;
-use Scandinaver\Shared\Contracts\Response;
+use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\QueryHandler;
+use Scandinaver\Shared\Contract\Response;
 
 /**
  * Class CommandBus
@@ -16,11 +16,13 @@ use Scandinaver\Shared\Contracts\Response;
  */
 class QueryBus
 {
+
     private const COMMAND_PREFIX = 'Query';
+
     private const HANDLER_PREFIX = 'Handler';
 
     /**
-     * @param Query $command
+     * @param  Query  $command
      *
      * @return Response|null
      */
@@ -30,7 +32,7 @@ class QueryBus
     }
 
     /**
-     * @param Query $query
+     * @param  Query  $query
      *
      * @return QueryHandler
      */
@@ -38,20 +40,24 @@ class QueryBus
     {
         try {
             return app()->make($this->getHandlerClass($query));
-        }
-        catch (ReflectionException $e) {
+        } catch (ReflectionException $e) {
             return null;
         }
     }
 
     /**
-     * @param Query $command
+     * @param  Query  $command
      *
      * @return string
      * @throws ReflectionException
      */
     public function getHandlerClass(Query $command): string
     {
-        return str_replace(self::COMMAND_PREFIX, self::HANDLER_PREFIX, (new ReflectionClass($command))->getShortName()) . 'Interface';
+        return str_replace(
+                self::COMMAND_PREFIX,
+                self::HANDLER_PREFIX,
+                (new ReflectionClass($command))->getShortName()
+            ).'Interface';
     }
+
 }

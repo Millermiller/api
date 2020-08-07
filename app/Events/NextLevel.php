@@ -3,12 +3,12 @@
 
 namespace App\Events;
 
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\{PrivateChannel, InteractsWithSockets, Channel};
 use Illuminate\Foundation\Events\Dispatchable;
-use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Model\Asset;
 
 /**
  * Class NextLevel

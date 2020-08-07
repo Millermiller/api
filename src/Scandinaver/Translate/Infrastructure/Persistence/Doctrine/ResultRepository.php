@@ -4,7 +4,7 @@
 namespace Scandinaver\Translate\Infrastructure\Persistence\Doctrine;
 
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Translate\Domain\Contracts\ResultRepositoryInterface;
+use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 
 /**
  * Class ResultRepository

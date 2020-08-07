@@ -12,9 +12,11 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
  */
 class Message extends Model
 {
+
     use SoftDeletes;
 
-    protected $table    = 'messages';
+    protected $table = 'messages';
 
     protected $fillable = ['name', 'message'];
+
 }

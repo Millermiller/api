@@ -3,12 +3,11 @@
 
 namespace Scandinaver\Shared;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Scandinaver\Shared\Contracts\BaseRepositoryInterface;
+use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**
  * Class BaseRepository
@@ -47,12 +46,13 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     {
         $this->_em->persist($object);
         $this->_em->flush($object);
+
         return $object;
     }
 
     /**
-     * @param object $entity
-     * @param array  $data
+     * @param  object  $entity
+     * @param  array   $data
      *
      * @return object
      * @throws ORMException
@@ -63,10 +63,11 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
         foreach ($data as $key => $value) {
             $key = Inflector::camelize($key);
             if (property_exists($entity, $key)) {
-                $entity->{'set' . ucfirst($key)}($value);
+                $entity->{'set'.ucfirst($key)}($value);
             }
         }
         $this->_em->flush($entity);
+
         return $entity;
     }
 
@@ -82,4 +83,5 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
         $this->_em->remove($object);
         $this->_em->flush($object);
     }
+
 }

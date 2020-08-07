@@ -16,20 +16,18 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateQueryHandler extends GeneratorCommand
 {
+
     /**
      * @var string
      */
     protected $name = 'createQueryHandler';
 
-    /**
-     * @var string
-     */
-    private $domain;
+    private string $domain;
 
     /**
      * @var string
      */
-    protected $queryHandlerPath = 'Application/Handlers';
+    protected string $queryHandlerPath = 'Application/Handler/Query';
 
     /**
      * @var string
@@ -41,11 +39,11 @@ class CreateQueryHandler extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/Stubs/custom-query-handler.stub';
+        return __DIR__.'/Stubs/custom-query-handler.stub';
     }
 
     /**
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      *
      * @return string
      */
@@ -68,12 +66,17 @@ class CreateQueryHandler extends GeneratorCommand
 
         $this->files->put($path, $this->buildClass($name));
 
-        $this->info($this->type . ' created successfully.');
+        $this->files->chmod($path, 0777);
 
-        Artisan::call('createQueryHandlerInterface', [
+        $this->info($this->type.' created successfully.');
+
+        Artisan::call(
+          'createQueryHandlerInterface',
+          [
             'name'   => "{$name}Interface",
-            'domain' => $this->domain
-        ]);
+            'domain' => $this->domain,
+          ]
+        );
     }
 
     /**
@@ -82,15 +85,15 @@ class CreateQueryHandler extends GeneratorCommand
     public function getArguments(): array
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the class'],
-            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
+          ['name', InputArgument::REQUIRED, 'The name of the class'],
+          ['domain', InputArgument::REQUIRED, 'The name of the domain'],
         ];
     }
 
     /**
      * Get the destination class path.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -106,31 +109,49 @@ class CreateQueryHandler extends GeneratorCommand
     /**
      * Get the full namespace for a given class, without the class name.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
     protected function getNamespace($name): string
     {
         $queryNamespace = str_replace('/', '\\', $this->queryHandlerPath);
+
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
     }
 
     /**
-     * @param string $stub
-     * @param string $name
+     * @param  string  $stub
+     * @param  string  $name
      *
      * @return string|string[]
      */
     protected function replaceClass($stub, $name)
     {
-        $class          = str_replace($this->getNamespace($name) . '\\', '', $name);
-        $queryNamespace = str_replace('/', '\\', 'Application/Query');
+        $class          = str_replace(
+          $this->getNamespace($name).'\\',
+          '',
+          $name
+        );
+        $queryNamespace = str_replace('/', '\\', 'UI/Query');
         $queryClass     = str_replace('Handler', 'Query', $class);
-        return str_replace([
+        $queryInterface = $class.'Interface';
+
+        return str_replace(
+          [
             'DummyClass',
             'DummyQueryClass',
-            'DummyQueryNamespace'
-        ], [$class, $queryClass, "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass"], $stub);
+            'DummyQueryNamespace',
+            'DummyInterface',
+          ],
+          [
+            $class,
+            $queryClass,
+            "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass",
+            "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\$queryInterface",
+          ],
+          $stub
+        );
     }
+
 }

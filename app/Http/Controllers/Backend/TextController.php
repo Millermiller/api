@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\ImageManagerStatic as Image;
+use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text;
+use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextWord;
 use Upload\File;
 use Upload\Storage\FileSystem;
 use Upload\Validation\Mimetype;

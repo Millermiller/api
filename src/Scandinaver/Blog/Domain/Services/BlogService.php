@@ -4,8 +4,8 @@
 namespace Scandinaver\Blog\Domain\Services;
 
 use Auth;
-use Scandinaver\Blog\Domain\Contracts\PostRepositoryInterface;
-use Scandinaver\Blog\Domain\Post;
+use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
+use Scandinaver\Blog\Domain\Model\Post;
 
 /**
  * Class BlogService
@@ -22,7 +22,7 @@ class BlogService
     /**
      * PostService constructor.
      *
-     * @param PostRepositoryInterface $postRepository
+     * @param  PostRepositoryInterface  $postRepository
      */
     public function __construct(PostRepositoryInterface $postRepository)
     {
@@ -48,7 +48,7 @@ class BlogService
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      *
      * @return Post
      */
@@ -70,7 +70,7 @@ class BlogService
     }
 
     /**
-     * @param Post $post
+     * @param  Post  $post
      */
     public function deletePost(Post $post)
     {

@@ -2,10 +2,10 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Result;
-use Scandinaver\Learn\Domain\Word;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\User\Domain\Model\User;
 
 /** @var Factory $factory */
 $factory->define(\Scandinaver\Learn\Domain\Card::class, function (Faker $faker, array $attributes) {

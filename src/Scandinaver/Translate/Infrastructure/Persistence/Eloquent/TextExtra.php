@@ -13,17 +13,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class TextExtra extends Model
 {
-    protected $table    = 'text_extras';
+
+    protected $table = 'text_extras';
 
     protected $fillable = ['text_id', 'orig', 'extra'];
 
-    protected $hidden   = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     /**
      * @return BelongsTo|Text
      */
     public function text(): Text
     {
-        return $this->belongsTo('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text');
+        return $this->belongsTo(
+            'Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text'
+        );
     }
+
 }

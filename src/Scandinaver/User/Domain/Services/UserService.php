@@ -3,23 +3,25 @@
 
 namespace Scandinaver\User\Domain\Services;
 
-use Scandinaver\Puzzle\Domain\PuzzleService;
-use App\Events\{UserDeleted, UserRegistered};
 use Auth;
+use Illuminate\Auth\Authenticatable;
+use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
+use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
+use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
+use Scandinaver\User\Domain\Model\User;
+use App\Events\{UserDeleted, UserRegistered};
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Scandinaver\Common\Domain\Contracts\{IntroRepositoryInterface, LanguageRepositoryInterface};
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Contracts\AssetRepositoryInterface;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Services\AssetService;
-use Scandinaver\Translate\Domain\Contracts\TextRepositoryInterface;
+use Scandinaver\Puzzle\Domain\PuzzleService;
 use Scandinaver\Translate\Domain\TextService;
-use Scandinaver\User\Domain\Contracts\{PlanRepositoryInterface, UserRepositoryInterface};
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\Domain\User;
 
 /**
  * Class UserService
@@ -28,63 +30,36 @@ use Scandinaver\User\Domain\User;
  */
 class UserService
 {
-    /**
-     * @var AssetService
-     */
-    protected $assetService;
+    protected AssetService $assetService;
 
-    /**
-     * @var UserRepositoryInterface
-     */
-    protected $userRepository;
+    protected UserRepositoryInterface $userRepository;
 
-    /**
-     * @var PlanRepositoryInterface
-     */
-    protected $planRepository;
+    protected PlanRepositoryInterface $planRepository;
 
-    /**
-     * @var LanguageRepositoryInterface
-     */
-    protected $languageRepository;
+    protected LanguageRepositoryInterface $languageRepository;
 
-    /**
-     * @var AssetRepositoryInterface
-     */
-    protected $assetRepository;
+    protected AssetRepositoryInterface $assetRepository;
 
-    /**
-     * @var TextRepositoryInterface
-     */
-    protected $textRepository;
+    protected TextRepositoryInterface $textRepository;
 
-    /**
-     * @var IntroRepositoryInterface
-     */
-    protected $introRepository;
+    protected IntroRepositoryInterface $introRepository;
 
-    /**
-     * @var
-     */
-    private $textService;
+    private TextService $textService;
 
-    /**
-     * @var PuzzleService
-     */
-    private $puzzleService;
+    private PuzzleService $puzzleService;
 
     /**
      * UserService constructor.
      *
-     * @param AssetRepositoryInterface    $assetRepository
-     * @param AssetService                $assetService
-     * @param UserRepositoryInterface     $userRepository
-     * @param PlanRepositoryInterface     $planRepository
-     * @param LanguageRepositoryInterface $languageRepository
-     * @param TextRepositoryInterface     $textRepository
-     * @param IntroRepositoryInterface    $introRepository
-     * @param TextService                 $textService
-     * @param PuzzleService               $puzzleService
+     * @param  AssetRepositoryInterface     $assetRepository
+     * @param  AssetService                 $assetService
+     * @param  UserRepositoryInterface      $userRepository
+     * @param  PlanRepositoryInterface      $planRepository
+     * @param  LanguageRepositoryInterface  $languageRepository
+     * @param  TextRepositoryInterface      $textRepository
+     * @param  IntroRepositoryInterface     $introRepository
+     * @param  TextService                  $textService
+     * @param  PuzzleService                $puzzleService
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
@@ -96,17 +71,16 @@ class UserService
         IntroRepositoryInterface $introRepository,
         TextService $textService,
         PuzzleService $puzzleService
-    )
-    {
-        $this->userRepository     = $userRepository;
-        $this->planRepository     = $planRepository;
+    ) {
+        $this->userRepository = $userRepository;
+        $this->planRepository = $planRepository;
         $this->languageRepository = $languageRepository;
-        $this->assetRepository    = $assetRepository;
-        $this->textRepository     = $textRepository;
-        $this->introRepository    = $introRepository;
-        $this->assetService       = $assetService;
-        $this->textService        = $textService;
-        $this->puzzleService      = $puzzleService;
+        $this->assetRepository = $assetRepository;
+        $this->textRepository = $textRepository;
+        $this->introRepository = $introRepository;
+        $this->assetService = $assetService;
+        $this->textService = $textService;
+        $this->puzzleService = $puzzleService;
     }
 
     /**
@@ -118,7 +92,7 @@ class UserService
     }
 
     /**
-     * @param string $string
+     * @param  string  $string
      *
      * @return array
      */
@@ -128,7 +102,7 @@ class UserService
     }
 
     /**
-     * @param array $credentials
+     * @param  array  $credentials
      *
      * @return Authenticatable|User|null
      * @throws UserNotFoundException
@@ -139,14 +113,14 @@ class UserService
         if (!Auth::attempt($credentials)) {
             throw new UserNotFoundException();
         }
+
         return \App\Helpers\Auth::user();
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      *
      * @return User
-     * @throws Exception
      */
     public function registration(array $data): User
     {
@@ -168,16 +142,28 @@ class UserService
         foreach ($languages as $language) {
 
             //даем пользователю избранное
-            $favourite = new Asset('Избранное', false, Asset::TYPE_FAVORITES, 1, $language);
+            $favourite = new Asset(
+                'Избранное',
+                false,
+                Asset::TYPE_FAVORITES,
+                1,
+                $language
+            );
             $favourite = $this->assetRepository->save($favourite);
             $this->userRepository->addAsset($user, $favourite);
 
             //даем пользователю первый словарь слов
-            $firstWordAsset = $this->assetRepository->getFirstAsset($language, Asset::TYPE_WORDS);
+            $firstWordAsset = $this->assetRepository->getFirstAsset(
+                $language,
+                Asset::TYPE_WORDS
+            );
             $this->userRepository->addAsset($user, $firstWordAsset);
 
             //даем пользователю первый словарь предложений
-            $firstSentencesAsset = $this->assetRepository->getFirstAsset($language, Asset::TYPE_SENTENCES);
+            $firstSentencesAsset = $this->assetRepository->getFirstAsset(
+                $language,
+                Asset::TYPE_SENTENCES
+            );
             $this->userRepository->addAsset($user, $firstSentencesAsset);
 
             //даем пользователю первый текст
@@ -191,8 +177,8 @@ class UserService
     }
 
     /**
-     * @param Authenticatable|User $user
-     * @param Language             $language
+     * @param  Authenticatable|User  $user
+     * @param  Language              $language
      *
      * @return array
      * @throws Exception
@@ -200,17 +186,36 @@ class UserService
     public function getState(User $user, Language $language): array
     {
         return [
-            'site'        => config('app.MAIN_SITE'),
-            'words'       => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_WORDS),
-            'sentences'   => $this->assetService->getAssetsByType($language, $user, Asset::TYPE_SENTENCES),
-            'favourites'  => $this->assetRepository->getFavouriteAsset($language, $user),
-            'personal'    => $this->assetRepository->getCreatedAssets($language, $user),
-            'texts'       => $this->textService->getTextsForUser($language, $user),
-            'puzzles'     => $this->puzzleService->getForUser($user),
-            'intro'       => $this->introRepository->getGrouppedIntro(),
-            'sites'       => $this->languageRepository->all(),
-            'currentsite' => $this->languageRepository->findOneBy(['name' => config('app.lang')]),
-            'domain'      => config('app.lang'),
+            'site' => config('app.MAIN_SITE'),
+            'words' => $this->assetService->getAssetsByType(
+                $language,
+                $user,
+                Asset::TYPE_WORDS
+            ),
+            'sentences' => $this->assetService->getAssetsByType(
+                $language,
+                $user,
+                Asset::TYPE_SENTENCES
+            ),
+            'favourites' => $this->assetRepository->getFavouriteAsset(
+                $language,
+                $user
+            ),
+            'personal' => $this->assetRepository->getCreatedAssets(
+                $language,
+                $user
+            ),
+            'texts' => $this->textService->getTextsForUser(
+                $language,
+                $user
+            ),
+            'puzzles' => $this->puzzleService->getForUser($user),
+            'intro' => $this->introRepository->getGrouppedIntro(),
+            'sites' => $this->languageRepository->all(),
+            'currentsite' => $this->languageRepository->findOneBy(
+                ['name' => config('app.lang')]
+            ),
+            'domain' => config('app.lang'),
         ];
     }
 
@@ -220,18 +225,18 @@ class UserService
     public function getInfo(): array
     {
         return [
-            'id'        => Auth::user()->getKey(),
-            'login'     => Auth::user()->getLogin(),
-            'avatar'    => Auth::user()->getAvatar(),
-            'email'     => Auth::user()->getEmail(),
-            'active'    => Auth::user()->getActive(),
-            'plan'      => Auth::user()->getPlan(),
-            'active_to' => Auth::user()->getActiveTo()
+            'id' => Auth::user()->getKey(),
+            'login' => Auth::user()->getLogin(),
+            'avatar' => Auth::user()->getAvatar(),
+            'email' => Auth::user()->getEmail(),
+            'active' => Auth::user()->getActive(),
+            'plan' => Auth::user()->getPlan(),
+            'active_to' => Auth::user()->getActiveTo(),
         ];
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      *
      * @return void
      */
@@ -244,7 +249,7 @@ class UserService
     }
 
     /**
-     * @param array $request
+     * @param  array  $request
      *
      * @return void
      */
@@ -254,14 +259,16 @@ class UserService
 
         //Requester::updateForumUser($request, $user->getEmail());
 
-        $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->getPassword();
+        $request['password'] = isset($request['password']) ? bcrypt(
+            $request['password']
+        ) : $user->getPassword();
 
         $this->userRepository->update($user, $request);
     }
 
     /**
-     * @param User  $user
-     * @param array $data
+     * @param  User   $user
+     * @param  array  $data
      *
      * @return User
      */
@@ -272,11 +279,6 @@ class UserService
         return $this->userRepository->update($user, $data);
     }
 
-    /**
-     * @param User $user
-     *
-     * @return void
-     */
     public function delete(User $user): void
     {
         $this->userRepository->delete($user);
@@ -284,11 +286,6 @@ class UserService
         event(new UserDeleted($user));
     }
 
-    /**
-     * @param int $id
-     *
-     * @return User
-     */
     public function getOne(int $id): User
     {
         return $this->userRepository->get($id);

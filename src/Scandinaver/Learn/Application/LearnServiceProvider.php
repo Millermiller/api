@@ -4,20 +4,24 @@
 namespace Scandinaver\Learn\Application;
 
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Learn\Domain\{Asset, Card, Example, Result, Translate, Word};
-use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface,
-    AudioParserInterface,
-    CardRepositoryInterface,
-    ExampleRepositoryInterface,
-    ResultRepositoryInterface,
-    TranslateRepositoryInterface,
-    WordRepositoryInterface};
+use Scandinaver\Learn\Domain\Model\{Asset,
+    Card,
+    Example,
+    Result,
+    Translate,
+    Word};
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\{AssetRepository,
     CardRepository,
     ExampleRepository,
     ResultRepository,
     TranslateRepository,
     WordRepository};
+use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 
 /**
  * Class LearnServiceProvider
@@ -28,131 +32,149 @@ class LearnServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind(CardRepositoryInterface::class, function () {
-            return new CardRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Card::class)
-            );
-        });
+        $this->app->bind(
+            CardRepositoryInterface::class,
+            function () {
+                return new CardRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Card::class)
+                );
+            }
+        );
 
-        $this->app->bind(TranslateRepositoryInterface::class, function () {
-            return new TranslateRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Translate::class)
-            );
-        });
+        $this->app->bind(
+            TranslateRepositoryInterface::class,
+            function () {
+                return new TranslateRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Translate::class)
+                );
+            }
+        );
 
-        $this->app->bind(WordRepositoryInterface::class, function () {
-            return new WordRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Word::class)
-            );
-        });
+        $this->app->bind(
+            WordRepositoryInterface::class,
+            function () {
+                return new WordRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Word::class)
+                );
+            }
+        );
 
-        $this->app->bind(AssetRepositoryInterface::class, function () {
-            return new AssetRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Asset::class)
-            );
-        });
+        $this->app->bind(
+            AssetRepositoryInterface::class,
+            function () {
+                return new AssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Asset::class)
+                );
+            }
+        );
 
-        $this->app->bind(ResultRepositoryInterface::class, function () {
-            return new ResultRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Result::class)
-            );
-        });
+        $this->app->bind(
+            ResultRepositoryInterface::class,
+            function () {
+                return new ResultRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Result::class)
+                );
+            }
+        );
 
-        $this->app->bind(ExampleRepositoryInterface::class, function () {
-            return new ExampleRepository(
-                $this->app['em'],
-                $this->app['em']->getClassMetadata(Example::class)
-            );
-        });
+        $this->app->bind(
+            ExampleRepositoryInterface::class,
+            function () {
+                return new ExampleRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Example::class)
+                );
+            }
+        );
 
         $this->app->bind(
             'CreateFavouriteHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\CreateFavouriteHandler'
+            'Scandinaver\Learn\Application\Handler\Command\CreateFavouriteHandler'
         );
 
         $this->app->bind(
             'DeleteFavouriteHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\DeleteFavouriteHandler'
+            'Scandinaver\Learn\Application\Handler\Command\DeleteFavouriteHandler'
         );
 
         $this->app->bind(
             'CreateAssetHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\CreateAssetHandler'
+            'Scandinaver\Learn\Application\Handler\Command\CreateAssetHandler'
         );
 
         $this->app->bind(
             'DeleteAssetHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\DeleteAssetHandler'
+            'Scandinaver\Learn\Application\Handler\Command\DeleteAssetHandler'
         );
 
         $this->app->bind(
             'UpdateAssetHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\UpdateAssetHandler'
+            'Scandinaver\Learn\Application\Handler\Command\UpdateAssetHandler'
         );
 
         $this->app->bind(
             'CardsOfAssetHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\CardsOfAssetHandler'
+            'Scandinaver\Learn\Application\Handler\Query\CardsOfAssetHandler'
         );
 
         $this->app->bind(
             'DeleteCardFromAssetHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\DeleteCardFromAssetHandler'
+            'Scandinaver\Learn\Application\Handler\Command\DeleteCardFromAssetHandler'
         );
 
         $this->app->bind(
             'AddCardToAssetHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AddCardToAssetHandler'
+            'Scandinaver\Learn\Application\Handler\Command\AddCardToAssetHandler'
         );
 
         $this->app->bind(
             'SaveTestResultHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\SaveTestResultHandler'
+            'Scandinaver\Learn\Application\Handler\Command\SaveTestResultHandler'
         );
 
         $this->app->bind(
             'GiveNextLevelHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\GiveNextLevelHandler'
+            'Scandinaver\Learn\Application\Handler\Query\GiveNextLevelHandler'
         );
 
         $this->app->bind(
             'AssetForUserByTypeHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AssetForUserByTypeHandler'
+            'Scandinaver\Learn\Application\Handler\Query\AssetForUserByTypeHandler'
         );
 
         $this->app->bind(
             'PersonalAssetsHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\PersonalAssetsHandler'
+            'Scandinaver\Learn\Application\Handler\Query\PersonalAssetsHandler'
         );
 
         $this->app->bind(
             'WordsCountHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\WordsCountHandler'
+            'Scandinaver\Learn\Application\Handler\Query\WordsCountHandler'
         );
 
         $this->app->bind(
             'TextsCountHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\TextsCountHandler'
+            'Scandinaver\Learn\Application\Handler\Query\TextsCountHandler'
         );
 
         $this->app->bind(
             'AudioCountHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AudioCountHandler'
+            'Scandinaver\Learn\Application\Handler\Query\AudioCountHandler'
         );
 
         $this->app->bind(
             'AssetsCountHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AssetsCountHandler'
+            'Scandinaver\Learn\Application\Handler\Query\AssetsCountHandler'
         );
 
         $this->app->bind(
             'FindAudioHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\FindAudioHandler'
+            'Scandinaver\Learn\Application\Handler\Query\FindAudioHandler'
         );
 
         $this->app->bind(
@@ -162,72 +184,72 @@ class LearnServiceProvider extends ServiceProvider
 
         $this->app->bind(
             'GetTranslatesByWordHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\GetTranslatesByWordHandler'
+            'Scandinaver\Learn\Application\Handler\Query\GetTranslatesByWordHandler'
         );
 
         $this->app->bind(
             'GetExamplesForCardHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\GetExamplesForCardHandler'
+            'Scandinaver\Learn\Application\Handler\Query\GetExamplesForCardHandler'
         );
 
         $this->app->bind(
             'SetTranslateForCardHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\SetTranslateForCardHandler'
+            'Scandinaver\Learn\Application\Handler\Command\SetTranslateForCardHandler'
         );
 
         $this->app->bind(
             'EditTranslateHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\EditTranslateHandler'
+            'Scandinaver\Learn\Application\Handler\Command\EditTranslateHandler'
         );
 
         $this->app->bind(
             'CreateTranslateHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\CreateTranslateHandler'
+            'Scandinaver\Learn\Application\Handler\Command\CreateTranslateHandler'
         );
 
         $this->app->bind(
             'UploadAudioHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\UploadAudioHandler'
+            'Scandinaver\Learn\Application\Handler\Command\UploadAudioHandler'
         );
 
         $this->app->bind(
             'GetUnusedSentencesHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\GetUnusedSentencesHandler'
+            'Scandinaver\Learn\Application\Handler\Query\GetUnusedSentencesHandler'
         );
 
         $this->app->bind(
             'AddBasicLevelHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AddBasicLevelHandler'
+            'Scandinaver\Learn\Application\Handler\Command\AddBasicLevelHandler'
         );
 
         $this->app->bind(
             'AddWordAndTranslateHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AddWordAndTranslateHandler'
+            'Scandinaver\Learn\Application\Handler\Command\AddWordAndTranslateHandler'
         );
 
         $this->app->bind(
             'AssetsCountByLanguageHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AssetsCountByLanguageHandler'
+            'Scandinaver\Learn\Application\Handler\Query\AssetsCountByLanguageHandler'
         );
 
         $this->app->bind(
             'WordsCountByLanguageHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\WordsCountByLanguageHandler'
+            'Scandinaver\Learn\Application\Handler\Query\WordsCountByLanguageHandler'
         );
 
         $this->app->bind(
             'TextsCountByLanguageHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\TextsCountByLanguageHandler'
+            'Scandinaver\Learn\Application\Handler\Query\TextsCountByLanguageHandler'
         );
 
         $this->app->bind(
             'AudioCountByLanguageHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\AudioCountByLanguageHandler'
+            'Scandinaver\Learn\Application\Handler\Query\AudioCountByLanguageHandler'
         );
 
         $this->app->bind(
             'GetAssetsByTypeHandlerInterface',
-            'Scandinaver\Learn\Application\Handlers\GetAssetsByTypeHandler'
+            'Scandinaver\Learn\Application\Handler\Query\GetAssetsByTypeHandler'
         );
     }
 }

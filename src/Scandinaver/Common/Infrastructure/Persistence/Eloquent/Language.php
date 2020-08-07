@@ -12,18 +12,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Language extends Model
 {
-    protected $table    = 'languages';
+
+    protected $table = 'languages';
 
     protected $fillable = [];
 
-    protected $appends  = ['value', 'image'];
+    protected $appends = ['value', 'image'];
 
     /**
      * @return string
      */
     public function getValueAttribute(): string
     {
-        return 'https://' . $this->name . '.' . config('app.DOMAIN');
+        return 'https://'.$this->name.'.'.config('app.DOMAIN');
     }
 
     /**
@@ -31,6 +32,7 @@ class Language extends Model
      */
     public function getImageAttribute(): string
     {
-        return config('app.SITE') . $this->flag;
+        return config('app.SITE').$this->flag;
     }
+
 }

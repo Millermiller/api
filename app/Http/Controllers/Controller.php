@@ -20,15 +20,9 @@ class Controller extends BaseController
     use DispatchesJobs;
     use ValidatesRequests;
 
-    /**
-     * @var CommandBus
-     */
-    protected $commandBus;
+    protected CommandBus $commandBus;
 
-    /**
-     * @var QueryBus
-     */
-    protected $queryBus;
+    protected QueryBus $queryBus;
 
     /**
      * Controller constructor.

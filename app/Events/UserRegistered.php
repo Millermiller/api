@@ -4,7 +4,7 @@
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;

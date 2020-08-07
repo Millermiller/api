@@ -5,11 +5,11 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Exception;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\{Asset, Result};
-use Scandinaver\Learn\Domain\Contracts\{AssetRepositoryInterface, ResultRepositoryInterface};
-use Scandinaver\User\Domain\User;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\{Asset,Result};
+use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AssetService
@@ -36,23 +36,22 @@ class AssetService
     /**
      * AssetService constructor.
      *
-     * @param AssetRepositoryInterface  $assetsRepository
-     * @param ResultRepositoryInterface $resultRepository
-     * @param AssetRepositoryInterface  $assetRepository
+     * @param  AssetRepositoryInterface   $assetsRepository
+     * @param  ResultRepositoryInterface  $resultRepository
+     * @param  AssetRepositoryInterface   $assetRepository
      */
     public function __construct(
         AssetRepositoryInterface $assetsRepository,
         ResultRepositoryInterface $resultRepository,
         AssetRepositoryInterface $assetRepository
-    )
-    {
+    ) {
         $this->assetsRepository = $assetsRepository;
         $this->resultRepository = $resultRepository;
-        $this->assetRepository  = $assetRepository;
+        $this->assetRepository = $assetRepository;
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return int
      */
@@ -62,9 +61,9 @@ class AssetService
     }
 
     /**
-     * @param Language $language
-     * @param User     $user
-     * @param string   $title
+     * @param  Language  $language
+     * @param  User      $user
+     * @param  string    $title
      *
      * @return Asset
      * @throws ORMException
@@ -72,7 +71,7 @@ class AssetService
      */
     public function create(Language $language, User $user, string $title): Asset
     {
-        $asset  = new Asset($title, 0, Asset::TYPE_PERSONAL, 0, $language);
+        $asset = new Asset($title, 0, Asset::TYPE_PERSONAL, 0, $language);
         $result = new Result($asset, $user, $language);
         $user->incrementAssetCounter();
 
@@ -84,8 +83,8 @@ class AssetService
     }
 
     /**
-     * @param Language $language
-     * @param int      $asset_id
+     * @param  Language  $language
+     * @param  int       $asset_id
      *
      * @return Asset
      */
@@ -93,7 +92,9 @@ class AssetService
     {
         $asset = new Asset($asset_id, 1, $asset_id, 0, $language);
 
-        $asset->setLevel($this->assetRepository->getLastAsset($language, $asset_id)->getLevel() + 1);
+        $asset->setLevel(
+            $this->assetRepository->getLastAsset($language, $asset_id)->getLevel() + 1
+        );
 
         $this->assetRepository->save($asset);
 
@@ -101,7 +102,7 @@ class AssetService
     }
 
     /**
-     * @param Asset $asset
+     * @param  Asset  $asset
      *
      * @return void
      */
@@ -111,8 +112,8 @@ class AssetService
     }
 
     /**
-     * @param Language $language
-     * @param int      $type
+     * @param  Language  $language
+     * @param  int       $type
      *
      * @return array
      */
@@ -124,9 +125,9 @@ class AssetService
     /**
      * Возвращает массив словарей определенного типа для пользователя
      *
-     * @param Language $language
-     * @param User     $user
-     * @param int      $type
+     * @param  Language  $language
+     * @param  User      $user
+     * @param  int       $type
      *
      * @return array
      * @throws Exception
@@ -134,46 +135,53 @@ class AssetService
     public function getAssetsByType(Language $language, User $user, int $type)
     {
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
-        $assets      = $this->assetsRepository->getAssetsByType($language, $type);
+        $assets = $this->assetsRepository->getAssetsByType(
+            $language,
+            $type
+        );
 
-        $canopen  = true;
+        $canopen = true;
         $testlink = false;
-        $counter  = 0;
+        $counter = 0;
 
         /** @var Asset $asset */
         foreach ($assets as &$asset) {
             $counter++;
             if (in_array($asset->getId(), $activeArray)) {
                 $asset = [
-                    'count'    => $asset->getCards()->count(),
-                    'title'    => $asset->getTitle(),
-                    'id'       => $asset->getId(),
-                    'level'    => $asset->getLevel(),
-                    'active'   => true,
+                    'count' => $asset->getCards()->count(),
+                    'title' => $asset->getTitle(),
+                    'id' => $asset->getId(),
+                    'level' => $asset->getLevel(),
+                    'active' => true,
                     'testlink' => false,
-                    'canopen'  => false,
-                    'result'   => $this->resultRepository->getResult($user, $asset)->getValue(),
-                    'type'     => $asset->getType()
+                    'canopen' => false,
+                    'result' => $this->resultRepository->getResult(
+                        $user,
+                        $asset
+                    )->getValue(),
+                    'type' => $asset->getType(),
                 ];
             } else {
-                $asset   = [
-                    'count'    => $asset->getCards()->count(),
-                    'title'    => $asset->getTitle(),
-                    'id'       => $asset->getId(),
-                    'level'    => $asset->getLevel(),
-                    'active'   => false,
-                    'canopen'  => $canopen,
+                $asset = [
+                    'count' => $asset->getCards()->count(),
+                    'title' => $asset->getTitle(),
+                    'id' => $asset->getId(),
+                    'level' => $asset->getLevel(),
+                    'active' => false,
+                    'canopen' => $canopen,
                     'testlink' => $testlink,
-                    'result'   => 0,
-                    'type'     => $asset->getType()
+                    'result' => 0,
+                    'type' => $asset->getType(),
                 ];
                 $canopen = false;
             }
 
-            if ($counter < 10 || $user->isPremium())
+            if ($counter < 10 || $user->isPremium()) {
                 $asset['available'] = true;
-            else
+            } else {
                 $asset['available'] = false;
+            }
 
             $testlink = $asset['id'];
         }
@@ -182,8 +190,8 @@ class AssetService
     }
 
     /**
-     * @param Language $language
-     * @param User     $user
+     * @param  Language  $language
+     * @param  User      $user
      *
      * @return array
      */
@@ -193,19 +201,26 @@ class AssetService
     }
 
     /**
-     * @param Language $language
-     * @param User     $user
-     * @param Asset    $asset
+     * @param  Language  $language
+     * @param  User      $user
+     * @param  Asset     $asset
      *
      * @return Asset
      */
-    public function giveNextLevel(Language $language, User $user, Asset $asset): Asset
-    {
+    public function giveNextLevel(
+        Language $language,
+        User $user,
+        Asset $asset
+    ): Asset {
         $nextAsset = $this->assetsRepository->getNextAsset($asset, $language);
 
-        $result = $this->resultRepository->findOneBy(['user' => $user, 'asset' => $asset]);
+        $result = $this->resultRepository->findOneBy(
+            ['user' => $user, 'asset' => $asset]
+        );
 
-        if ($result === null) $result = new Result($nextAsset, $user, $language);
+        if ($result === null) {
+            $result = new Result($nextAsset, $user, $language);
+        }
 
         $this->resultRepository->save($result);
 
@@ -213,18 +228,26 @@ class AssetService
     }
 
     /**
-     * @param Language             $language
-     * @param Authenticatable|User $user
-     * @param Asset                $asset
-     * @param int                  $resultValue
+     * @param  Language              $language
+     * @param  Authenticatable|User  $user
+     * @param  Asset                 $asset
+     * @param  int                   $resultValue
      *
      * @return Result
      */
-    public function saveTestResult(Language $language, User $user, Asset $asset, int $resultValue): Result
-    {
-        $result = $this->resultRepository->findOneBy(['user' => $user, 'asset' => $asset]);
+    public function saveTestResult(
+        Language $language,
+        User $user,
+        Asset $asset,
+        int $resultValue
+    ): Result {
+        $result = $this->resultRepository->findOneBy(
+            ['user' => $user, 'asset' => $asset]
+        );
 
-        if ($result === null) $result = new Result($asset, $user, $language);
+        if ($result === null) {
+            $result = new Result($asset, $user, $language);
+        }
 
         $result->setValue($resultValue);
 
@@ -232,8 +255,8 @@ class AssetService
     }
 
     /**
-     * @param Asset $asset
-     * @param array $data
+     * @param  Asset  $asset
+     * @param  array  $data
      *
      * @return Asset
      */

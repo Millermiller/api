@@ -15,20 +15,29 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
  */
 class Text extends Model
 {
-    protected $table    = 'text';
 
-    protected $fillable = ['level', 'title', 'text', 'translate', 'published', 'description'];
+    protected $table = 'text';
 
-    protected $hidden   = ['translate'];
+    protected $fillable = [
+        'level',
+        'title',
+        'text',
+        'translate',
+        'published',
+        'description',
+    ];
+
+    protected $hidden = ['translate'];
 
     /**
-     * @param int $textid
+     * @param  int  $textid
      *
      * @return array
      */
     public static function getSynonyms(int $textid): array
     {
-        $words = DB::select(' select 
+        $words = DB::select(
+            ' select 
                               w.word as word,  w.orig
                                   from word_in_text as w
                                     where text_id = ? and w.orig != ""
@@ -38,26 +47,34 @@ class Text extends Model
                                       left join synonym as s
                                         on s.word_id = w.id
                                       where text_id = ?
-                                    ', [$textid, $textid]);
+                                    ',
+            [$textid, $textid]
+        );
 
         $result = [];
 
-        foreach ($words as $w)
+        foreach ($words as $w) {
             $result[mb_strtolower($w->word)][] = trim($w->orig);
+        }
 
         return $result;
     }
 
     /**
-     * @param int $id User Id
+     * @param  int  $id  User Id
      *
      * @return array
      */
     public static function getTextsByUser(int $id): array
     {
-        $activeArray = TextResult::domain()->where('user_id', $id)->pluck('text_id')->toArray();
+        $activeArray = TextResult::domain()->where('user_id', $id)->pluck(
+            'text_id'
+        )->toArray();
 
-        $rez = DB::select('SELECT id, title, image, description  FROM text WHERE published = 1 AND language_id = ? order by id asc', [config('app.lang')]);
+        $rez = DB::select(
+            'SELECT id, title, image, description  FROM text WHERE published = 1 AND language_id = ? order by id asc',
+            [config('app.lang')]
+        );
 
         $counter = 0;
 
@@ -65,51 +82,71 @@ class Text extends Model
 
             $counter++;
 
-            if (in_array($r->id, $activeArray))
-                $r = ['id' => $r->id, 'title' => $r->title, 'active' => true, 'image' => $r->image, 'description' => $r->description];
-            else
-                $r = ['id' => $r->id, 'title' => $r->title, 'active' => false, 'image' => $r->image, 'description' => $r->description];
+            if (in_array($r->id, $activeArray)) {
+                $r = [
+                    'id' => $r->id,
+                    'title' => $r->title,
+                    'active' => true,
+                    'image' => $r->image,
+                    'description' => $r->description,
+                ];
+            } else {
+                $r = [
+                    'id' => $r->id,
+                    'title' => $r->title,
+                    'active' => false,
+                    'image' => $r->image,
+                    'description' => $r->description,
+                ];
+            }
 
 
-            if ($counter < 3 || Auth::user()->getActive())
+            if ($counter < 3 || Auth::user()->getActive()) {
                 $r['available'] = true;
-            else
+            } else {
                 $r['available'] = false;
+            }
         }
 
         return $rez;
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      *
      * @return bool
      */
     public static function getNextLevel(int $id): bool
     {
-        $id = DB::selectOne('
+        $id = DB::selectOne(
+            '
                    SELECT id
                    FROM text as t
                    WHERE t.published = 1
                    AND t.level = (SELECT t1.level from text as t1 where t1.id = ?) + 1
-                   ', [$id])->id;
+                   ',
+            [$id]
+        )->id;
 
         return ($id > 0) ? $id : false;
     }
 
     /**
-     * @param array $attributes
+     * @param  array  $attributes
      *
      * @return mixed
      */
     public static function create(array $attributes = [])
     {
-        $attributes['level'] = DB::selectOne('select max(t.level) as level from text as t')->level + 1;
+        $attributes['level'] = DB::selectOne(
+                'select max(t.level) as level from text as t'
+            )->level + 1;
+
         return parent::create($attributes);
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      *
      * @return Builder
      */
@@ -123,7 +160,9 @@ class Text extends Model
      */
     public function textExtra(): array
     {
-        return $this->hasMany('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextExtra');
+        return $this->hasMany(
+            'Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextExtra'
+        );
     }
 
     /**
@@ -131,7 +170,9 @@ class Text extends Model
      */
     public function words(): array
     {
-        return $this->hasMany('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextWord');
+        return $this->hasMany(
+            'Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextWord'
+        );
     }
 
     /**
@@ -139,6 +180,11 @@ class Text extends Model
      */
     public function result(): TextResult
     {
-        return $this->belongsTo('Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult', 'id', 'text_id')->where('user_id', Auth::id());
+        return $this->belongsTo(
+            'Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult',
+            'id',
+            'text_id'
+        )->where('user_id', Auth::id());
     }
+
 }

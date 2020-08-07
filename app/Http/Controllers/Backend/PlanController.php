@@ -6,12 +6,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\User\Application\Commands\CreatePlanCommand;
-use Scandinaver\User\Application\Commands\DeletePlanCommand;
-use Scandinaver\User\Application\Commands\UpdatePlanCommand;
-use Scandinaver\User\Application\Query\PlanQuery;
-use Scandinaver\User\Application\Query\PlansQuery;
-use Scandinaver\User\Domain\Plan;
+use Scandinaver\User\Domain\Model\Plan;
+use Scandinaver\User\UI\Command\CreatePlanCommand;
+use Scandinaver\User\UI\Command\DeletePlanCommand;
+use Scandinaver\User\UI\Command\UpdatePlanCommand;
+use Scandinaver\User\UI\Query\PlanQuery;
+use Scandinaver\User\UI\Query\PlansQuery;
 
 /**
  * Class PlanController

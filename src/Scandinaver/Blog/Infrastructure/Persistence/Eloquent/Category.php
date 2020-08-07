@@ -12,21 +12,24 @@ use Illuminate\Database\Eloquent\{Model, Relations\HasMany, SoftDeletes};
  */
 class Category extends Model
 {
+
     use SoftDeletes;
 
-    public    $timestamps = true;
+    public $timestamps = true;
 
-    protected $table      = 'categories';
+    protected $table = 'categories';
 
-    protected $fillable   = ['name'];
+    protected $fillable = ['name'];
 
-    protected $dates      = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     /**
      * @return HasMany|Post[]
      */
     public function posts(): array
     {
-        return $this->hasMany('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Post');
+        return $this->hasMany(
+            'Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Post'
+        );
     }
 }

@@ -8,9 +8,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\{Request, JsonResponse};
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\Application\Query\{LoginQuery, UserStateQuery};
+use Scandinaver\User\UI\Query\LoginCommand;
+use Scandinaver\User\UI\Query\UserStateQuery;
 
 /**
  * Class LoginSubController
@@ -41,7 +42,7 @@ class LoginSubController extends Controller
 
         try {
             /** @var User $user */
-            $user  = $this->queryBus->execute(new LoginQuery($request->only($login_type, 'password')));
+            $user  = $this->queryBus->execute(new LoginCommand($request->only($login_type, 'password')));
             $state = $this->queryBus->execute(new UserStateQuery($user));
             return response()->json(['token' => '', 'state' => $state], 200);
         } catch (UserNotFoundException $e) {

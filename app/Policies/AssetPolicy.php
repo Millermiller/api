@@ -3,9 +3,9 @@
 
 namespace App\Policies;
 
-use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Model\Asset;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AssetPolicy

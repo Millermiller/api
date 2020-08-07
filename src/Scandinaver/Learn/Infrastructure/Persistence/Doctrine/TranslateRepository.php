@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
-use Scandinaver\Learn\Domain\Contracts\TranslateRepositoryInterface;
-use Scandinaver\Learn\Domain\Translate;
+use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Shared\BaseRepository;
 
 /**
@@ -15,7 +15,7 @@ use Scandinaver\Shared\BaseRepository;
 class TranslateRepository extends BaseRepository implements TranslateRepositoryInterface
 {
     /**
-     * @param array $ids
+     * @param  array  $ids
      *
      * @return Translate[]
      */
@@ -23,13 +23,15 @@ class TranslateRepository extends BaseRepository implements TranslateRepositoryI
     {
         $q = $this->_em->createQueryBuilder();
 
-        return $q->select("t, field(t.id, " . implode(", ", $ids) . ") as HIDDEN field")
-                 ->from($this->getEntityName(), 't')
-                 ->join('t.word', 'w')
-                 ->where('t.id IN (:ids)')
-                 ->setParameter('ids', $ids)
-                 ->orderBy('field')
-                 ->getQuery()
-                 ->getResult();
+        return $q->select(
+            "t, field(t.id, ".implode(", ", $ids).") as HIDDEN field"
+        )
+            ->from($this->getEntityName(), 't')
+            ->join('t.word', 'w')
+            ->where('t.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->orderBy('field')
+            ->getQuery()
+            ->getResult();
     }
 }

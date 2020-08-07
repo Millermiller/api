@@ -6,12 +6,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Blog\Application\Commands\CreateCategoryCommand;
-use Scandinaver\Blog\Application\Commands\DeleteCategoryCommand;
-use Scandinaver\Blog\Application\Commands\UpdateCategoryCommand;
-use Scandinaver\Blog\Application\Query\CategoriesQuery;
-use Scandinaver\Blog\Application\Query\CategoryQuery;
-use Scandinaver\Blog\Domain\Category;
+use Scandinaver\Blog\Domain\Model\Category;
+use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
+use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
+use Scandinaver\Blog\UI\Command\UpdateCategoryCommand;
+use Scandinaver\Blog\UI\Query\CategoriesQuery;
+use Scandinaver\Blog\UI\Query\CategoryQuery;
 
 /**
  * Class CategoryController

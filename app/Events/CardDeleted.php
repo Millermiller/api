@@ -3,13 +3,13 @@
 
 namespace App\Events;
 
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Scandinaver\Learn\Domain\Card;
+use Scandinaver\Learn\Domain\Model\Card;
 
 /**
  * Class FavouriteDeleted

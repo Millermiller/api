@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Domain\Traits;
 
 use EntityManager;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Trait UsesPasswordGrant
@@ -14,7 +14,7 @@ use Scandinaver\User\Domain\User;
 trait UsesPasswordGrant
 {
     /**
-     * @param string $userIdentifier
+     * @param  string  $userIdentifier
      *
      * @return User|object
      */
@@ -26,8 +26,10 @@ trait UsesPasswordGrant
             ? 'email'
             : 'login';
 
-        return $userRepository->findOneBy([
-            $login_type => $userIdentifier
-        ]);
+        return $userRepository->findOneBy(
+            [
+                $login_type => $userIdentifier,
+            ]
+        );
     }
 }

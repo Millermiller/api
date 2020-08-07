@@ -7,10 +7,11 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Application\Commands\{AddCardToAssetCommand, DeleteCardFromAssetCommand};
-use Scandinaver\Learn\Domain\{Asset, Card};
-use Scandinaver\Learn\Domain\{Translate, Word};
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\{Asset, Card};
+use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
+use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
+use Scandinaver\Learn\Domain\Model\{Translate, Word};
 
 /**
  * Class CardsController

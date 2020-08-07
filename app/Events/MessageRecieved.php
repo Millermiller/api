@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Scandinaver\Common\Domain\Message;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class MessageRecieved

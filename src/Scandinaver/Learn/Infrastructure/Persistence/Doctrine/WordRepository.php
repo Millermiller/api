@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Contracts\WordRepositoryInterface;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Shared\BaseRepository;
 
 /**
@@ -25,14 +25,14 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(w.id)')
-                 ->from($this->getEntityName(), 'w')
-                 ->where($q->expr()->isNotNull('w.audio'))
-                 ->getQuery()
-                 ->getSingleScalarResult();
+            ->from($this->getEntityName(), 'w')
+            ->where($q->expr()->isNotNull('w.audio'))
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return int
      * @throws NoResultException
@@ -43,15 +43,15 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(w.id)')
-                 ->from($this->getEntityName(), 'w')
-                 ->where($q->expr()->eq('w.language', ':language'))
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getSingleScalarResult();
+            ->from($this->getEntityName(), 'w')
+            ->where($q->expr()->eq('w.language', ':language'))
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return int
      * @throws NoResultException
@@ -62,11 +62,11 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(w.id)')
-                 ->from($this->getEntityName(), 'w')
-                 ->where($q->expr()->eq('w.language', ':language'))
-                 ->where($q->expr()->isNotNull('w.audio'))
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getSingleScalarResult();
+            ->from($this->getEntityName(), 'w')
+            ->where($q->expr()->eq('w.language', ':language'))
+            ->where($q->expr()->isNotNull('w.audio'))
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

@@ -4,8 +4,8 @@
 namespace Scandinaver\Blog\Application;
 
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Blog\Domain\Contracts\PostRepositoryInterface;
-use Scandinaver\Blog\Domain\Post;
+use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
+use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
 
 /**
@@ -15,6 +15,7 @@ use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
  */
 class BlogServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
         $this->app->bind(PostRepositoryInterface::class, function () {
@@ -22,81 +23,82 @@ class BlogServiceProvider extends ServiceProvider
                 $this->app['em'],
                 $this->app['em']->getClassMetadata(Post::class)
             );
-        });
+        }
+        );
 
         $this->app->bind(
             'CategoriesHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\CategoriesHandler'
+            'Scandinaver\Blog\Application\Handler\Query\CategoriesHandler'
         );
 
         $this->app->bind(
             'CategoryHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\CategoryHandler'
+            'Scandinaver\Blog\Application\Handler\Query\CategoryHandler'
         );
 
         $this->app->bind(
             'CommentHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\CommentHandler'
+            'Scandinaver\Blog\Application\Handler\Query\CommentHandler'
         );
 
         $this->app->bind(
             'CommentsHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\CommentsHandler'
+            'Scandinaver\Blog\Application\Handler\Query\CommentsHandler'
         );
 
         $this->app->bind(
             'CreateCategoryHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\CreateCategoryHandler'
+            'Scandinaver\Blog\Application\Handler\Command\CreateCategoryHandler'
         );
 
         $this->app->bind(
             'CreateCommentHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\CreateCommentHandler'
+            'Scandinaver\Blog\Application\Handler\Command\CreateCommentHandler'
         );
 
         $this->app->bind(
             'CreatePostHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\CreatePostHandler'
+            'Scandinaver\Blog\Application\Handler\Command\CreatePostHandler'
         );
 
         $this->app->bind(
             'DeleteCategoryHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\DeleteCategoryHandler'
+            'Scandinaver\Blog\Application\Handler\Command\DeleteCategoryHandler'
         );
 
         $this->app->bind(
             'DeleteCommentHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\DeleteCommentHandler'
+            'Scandinaver\Blog\Application\Handler\Command\DeleteCommentHandler'
         );
 
         $this->app->bind(
             'DeletePostHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\DeletePostHandler'
+            'Scandinaver\Blog\Application\Handler\Command\DeletePostHandler'
         );
 
         $this->app->bind(
             'PostHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\PostHandler'
+            'Scandinaver\Blog\Application\Handler\Query\PostHandler'
         );
 
         $this->app->bind(
             'PostsHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\PostsHandler'
+            'Scandinaver\Blog\Application\Handler\Query\PostsHandler'
         );
 
         $this->app->bind(
             'UpdateCategoryHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\UpdateCategoryHandler'
+            'Scandinaver\Blog\Application\Handler\Command\UpdateCategoryHandler'
         );
 
         $this->app->bind(
             'UpdateCommentHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\UpdateCommentHandler'
+            'Scandinaver\Blog\Application\Handler\Command\UpdateCommentHandler'
         );
 
         $this->app->bind(
             'UpdatePostHandlerInterface',
-            'Scandinaver\Blog\Application\Handlers\UpdatePostHandler'
+            'Scandinaver\Blog\Application\Handler\Command\UpdatePostHandler'
         );
     }
 }

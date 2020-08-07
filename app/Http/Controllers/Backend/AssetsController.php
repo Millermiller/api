@@ -8,22 +8,22 @@ use App\Helpers\Auth;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Application\Commands\AddBasicLevelCommand;
-use Scandinaver\Learn\Application\Commands\AddWordAndTranslateCommand;
-use Scandinaver\Learn\Application\Commands\CreateTranslateCommand;
-use Scandinaver\Learn\Application\Commands\EditTranslateCommand;
-use Scandinaver\Learn\Application\Commands\SetTranslateForCardCommand;
-use Scandinaver\Learn\Application\Commands\UpdateAssetCommand;
-use Scandinaver\Learn\Application\Commands\UploadAudioCommand;
-use Scandinaver\Learn\Application\Query\FindAudioQuery;
-use Scandinaver\Learn\Application\Query\GetAssetsByTypeQuery;
-use Scandinaver\Learn\Application\Query\GetExamplesForCardQuery;
-use Scandinaver\Learn\Application\Query\GetTranslatesByWordQuery;
-use Scandinaver\Learn\Application\Query\GetUnusedSentencesQuery;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Card;
-use Scandinaver\Learn\Domain\Word;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\UI\Command\AddBasicLevelCommand;
+use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
+use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
+use Scandinaver\Learn\UI\Command\EditTranslateCommand;
+use Scandinaver\Learn\UI\Command\SetTranslateForCardCommand;
+use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
+use Scandinaver\Learn\UI\Command\UploadAudioCommand;
+use Scandinaver\Learn\UI\Query\FindAudioQuery;
+use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
+use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
+use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
+use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;
 
 /**
  * Created by PhpStorm.

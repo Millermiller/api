@@ -6,12 +6,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Blog\Application\Commands\CreateCommentCommand;
-use Scandinaver\Blog\Application\Commands\DeleteCommentCommand;
-use Scandinaver\Blog\Application\Commands\UpdateCommentCommand;
-use Scandinaver\Blog\Application\Query\CommentQuery;
-use Scandinaver\Blog\Application\Query\CommentsQuery;
-use Scandinaver\Blog\Domain\Comment;
+use Scandinaver\Blog\Domain\Model\Comment;
+use Scandinaver\Blog\UI\Command\CreateCommentCommand;
+use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
+use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
+use Scandinaver\Blog\UI\Query\CommentQuery;
+use Scandinaver\Blog\UI\Query\CommentsQuery;
 
 /**
  * Class CommentController

@@ -6,10 +6,10 @@ namespace App\Http\Controllers\Sub\Frontend;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Puzzle\Application\Commands\PuzzleCompleteCommand;
-use Scandinaver\Puzzle\Application\Query\UserPuzzlesQuery;
-use Scandinaver\Puzzle\Domain\Puzzle;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;
+use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
 
 /**
  * Class PuzzleController

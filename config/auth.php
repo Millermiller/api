@@ -72,12 +72,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'doctrine',
-            'model' => Scandinaver\User\Domain\User::class,
+            'model' => Scandinaver\User\Domain\Model\User::class,
         ],
 
         'admin' => [
             'driver' => 'doctrine',
-            'model' => Scandinaver\User\Domain\User::class,
+            'model' => Scandinaver\User\Domain\Model\User::class,
         ],
     ],
 

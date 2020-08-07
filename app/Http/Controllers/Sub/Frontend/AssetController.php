@@ -7,10 +7,12 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Application\Commands\{CreateAssetCommand, DeleteAssetCommand, UpdateAssetCommand};
-use Scandinaver\Learn\Application\Query\CardsOfAssetQuery;
-use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\UI\Command\CreateAssetCommand;
+use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
+use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
+use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
 
 /**
  * Class AssetController

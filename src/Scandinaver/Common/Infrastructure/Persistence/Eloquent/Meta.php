@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Meta extends Model
 {
-    protected $table    = 'meta';
+
+    protected $table = 'meta';
 
     protected $fillable = ['url', 'title', 'description', 'keywords'];
+
 }

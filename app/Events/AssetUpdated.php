@@ -3,8 +3,8 @@
 
 namespace App\Events;
 
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\User\Domain\Model\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

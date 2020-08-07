@@ -7,7 +7,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\{InteractsWithSockets, PrivateChannel};
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 
 class UserDeleted
 {

@@ -12,16 +12,17 @@ use Illuminate\Support\ServiceProvider;
  */
 class APIServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
         $this->app->bind(
             'LanguagesHandlerInterface',
-            'Scandinaver\API\Application\Handlers\LanguagesHandler'
+            'Scandinaver\API\Application\Handler\Query\LanguagesHandler'
         );
 
         $this->app->bind(
             'AssetsHandlerInterface',
-            'Scandinaver\API\Application\Handlers\AssetsHandler'
+            'Scandinaver\API\Application\Handler\Query\AssetsHandler'
         );
     }
 }

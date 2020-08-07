@@ -3,15 +3,15 @@
 
 namespace App\Http\Controllers\Sub\Frontend;
 
-use Exception;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use Scandinaver\Learn\Application\Query\{AssetForUserByTypeQuery, PersonalAssetsQuery};
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
 use Illuminate\Http\{JsonResponse};
-use Scandinaver\User\Application\Query\GetStateQuery;
-use Scandinaver\User\Application\Query\GetUserQuery;
+use Scandinaver\Learn\UI\Query\AssetForUserByTypeQuery;
+use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
+use Scandinaver\User\UI\Query\GetStateQuery;
+use Scandinaver\User\UI\Query\GetUserQuery;
 
 /**
  * Class IndexController

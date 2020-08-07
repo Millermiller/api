@@ -4,10 +4,10 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\User\Domain\Plan;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\User\Domain\Model\Plan;
+use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
 /**

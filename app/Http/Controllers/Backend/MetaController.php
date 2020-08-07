@@ -6,12 +6,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Common\Application\Commands\CreateMetaCommand;
-use Scandinaver\Common\Application\Commands\DeleteMetaCommand;
-use Scandinaver\Common\Application\Commands\UpdateMetaCommand;
-use Scandinaver\Common\Application\Query\MetaQuery;
-use Scandinaver\Common\Application\Query\MetasQuery;
 use Scandinaver\Common\Infrastructure\Persistence\Eloquent\Meta;
+use Scandinaver\Common\UI\Command\CreateMetaCommand;
+use Scandinaver\Common\UI\Command\DeleteMetaCommand;
+use Scandinaver\Common\UI\Command\UpdateMetaCommand;
+use Scandinaver\Common\UI\Query\MetaQuery;
+use Scandinaver\Common\UI\Query\MetasQuery;
 
 /**
  * Class MetaController

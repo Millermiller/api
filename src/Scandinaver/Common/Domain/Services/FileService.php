@@ -6,7 +6,7 @@ namespace Scandinaver\Common\Domain\Services;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Scandinaver\User\Domain\Contracts\UserRepositoryInterface;
+use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 
 /**
  * Class FileService
@@ -15,15 +15,12 @@ use Scandinaver\User\Domain\Contracts\UserRepositoryInterface;
  */
 class FileService
 {
-    /**
-     * @var UserRepositoryInterface
-     */
-    private $userRepository;
+    private UserRepositoryInterface $userRepository;
 
     /**
      * FileService constructor.
      *
-     * @param UserRepositoryInterface $userRepository
+     * @param  UserRepositoryInterface  $userRepository
      */
     public function __construct(UserRepositoryInterface $userRepository)
     {
@@ -37,9 +34,12 @@ class FileService
      */
     public function uploadAvatar(Request $request)
     {
-        $name = Str::random(40) . '.' . $request->file('photo')->extension();
+        $name = Str::random(40).'.'.$request->file('photo')->extension();
 
-        $path = $request->file('photo')->move(public_path('/uploads/u/'), $name);
+        $path = $request->file('photo')->move(
+            public_path('/uploads/u/'),
+            $name
+        );
 
         $this->userRepository->setAvatar(Auth::user(), $name);
 

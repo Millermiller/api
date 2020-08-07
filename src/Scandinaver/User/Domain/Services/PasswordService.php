@@ -5,7 +5,7 @@ namespace Scandinaver\User\Domain\Services;
 
 use Exception;
 use Illuminate\Contracts\Hashing\Hasher;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class PasswordService
@@ -14,13 +14,12 @@ use Scandinaver\User\Domain\User;
  */
 class PasswordService
 {
-    /**
-     * @var Hasher
-     */
-    private $hasher;
+    private Hasher $hasher;
 
     /**
-     * @param Hasher $hasher
+     * PasswordService constructor.
+     *
+     * @param  Hasher  $hasher
      */
     public function __construct(Hasher $hasher)
     {
@@ -30,8 +29,8 @@ class PasswordService
     /**
      * Validate and change the given users password
      *
-     * @param User   $user
-     * @param string $password
+     * @param  User    $user
+     * @param  string  $password
      *
      * @return void
      * @throws Exception

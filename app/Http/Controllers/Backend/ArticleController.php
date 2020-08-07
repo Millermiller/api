@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\Blog\Application\Commands\{CreatePostCommand, UpdatePostCommand};
-use Scandinaver\Blog\Application\Commands\DeletePostCommand;
-use Scandinaver\Blog\Application\Query\{PostQuery, PostsQuery};
-use Scandinaver\Blog\Domain\Post;
+use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Blog\UI\Command\CreatePostCommand;
+use Scandinaver\Blog\UI\Command\DeletePostCommand;
+use Scandinaver\Blog\UI\Command\UpdatePostCommand;
+use Scandinaver\Blog\UI\Query\PostQuery;
+use Scandinaver\Blog\UI\Query\PostsQuery;
 
 /**
  * Class ArticleController

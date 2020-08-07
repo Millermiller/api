@@ -3,10 +3,10 @@
 
 namespace Tests\Repositories\Asset;
 
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Asset;
-use Scandinaver\Learn\Domain\Contracts\AssetRepositoryInterface;
-use Scandinaver\User\Domain\{Plan, User};
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\User\Domain\Model\{Plan, User};
 use Tests\TestCase;
 
 /**

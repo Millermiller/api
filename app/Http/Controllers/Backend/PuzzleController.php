@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent\Puzzle;
 
 /**
  * Created by PhpStorm.

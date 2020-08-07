@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Puzzle\Domain;
 
-use Scandinaver\Puzzle\Domain\Contracts\PuzzleRepositoryInterface;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
+use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class PuzzleService
@@ -13,15 +14,12 @@ use Scandinaver\User\Domain\User;
  */
 class PuzzleService
 {
-    /**
-     * @var PuzzleRepositoryInterface
-     */
-    private $puzzleRepository;
+    private PuzzleRepositoryInterface $puzzleRepository;
 
     /**
      * PuzzleService constructor.
      *
-     * @param PuzzleRepositoryInterface $puzzleRepository
+     * @param  PuzzleRepositoryInterface  $puzzleRepository
      */
     public function __construct(PuzzleRepositoryInterface $puzzleRepository)
     {
@@ -29,8 +27,8 @@ class PuzzleService
     }
 
     /**
-     * @param User   $user
-     * @param Puzzle $puzzle
+     * @param  User    $user
+     * @param  Puzzle  $puzzle
      */
     public function completed(User $user, Puzzle $puzzle): void
     {
@@ -38,7 +36,7 @@ class PuzzleService
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      *
      * @return array
      */

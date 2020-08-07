@@ -13,6 +13,7 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
  */
 class Comment extends Model
 {
+
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
@@ -34,4 +35,5 @@ class Comment extends Model
     {
         return $this->belongsTo('Application\Models\Post');
     }
+
 }

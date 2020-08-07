@@ -30,7 +30,7 @@ class CreateCommand extends GeneratorCommand
     /**
      * @var string
      */
-    protected $commandPath = 'Application/Commands';
+    protected $commandPath = 'UI/Command';
 
     /**
      * The console command description.
@@ -81,6 +81,8 @@ class CreateCommand extends GeneratorCommand
 
         $this->files->put($path, $this->buildClass($name . "Command"));
 
+        $this->files->chmod($path, 0777);
+
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('createCommandHandler', [
@@ -121,11 +123,11 @@ class CreateCommand extends GeneratorCommand
     protected function replaceClass($stub, $name)
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
-        $handlerNamespace = str_replace('/', '\\', 'Application/Handlers');
+        $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
         $handlerClass     = str_replace('Command', 'Handler', $class);
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\$handlerClass"], $stub);
+        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"], $stub);
     }
 }

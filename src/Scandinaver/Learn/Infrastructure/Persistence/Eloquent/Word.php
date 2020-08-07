@@ -20,13 +20,25 @@ class Word extends Model
 
     use SoftDeletes;
 
-    protected $table    = 'words';
+    protected $table = 'words';
 
-    protected $fillable = ['word', 'transcription', 'audio', 'sentence', 'is_public', 'creator'];
+    protected $fillable = [
+        'word',
+        'transcription',
+        'audio',
+        'sentence',
+        'is_public',
+        'creator',
+    ];
 
-    protected $hidden   = ['created_at', 'updated_at', 'deleted_at', 'transcription'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'transcription',
+    ];
 
-    protected $appends  = ['variants', 'login'];
+    protected $appends = ['variants', 'login'];
 
     /**
      * Переводит слово с русского языка
@@ -34,14 +46,15 @@ class Word extends Model
      * только публичные слова
      * и приватные текущего пользователя
      *
-     * @param string $word
-     * @param string $sentence
+     * @param  string  $word
+     * @param  string  $sentence
      *
      * @return array
      */
     public static function tr(string $word, string $sentence): array
     {
-        return DB::select('
+        return DB::select(
+            '
                             select t.id,
                             MATCH (t.value) AGAINST (? IN NATURAL LANGUAGE MODE) as score
                               from translate as t
@@ -58,7 +71,17 @@ class Word extends Model
                             and (w.is_public = 1 or (w.is_public = 0 and w.creator = ?))
                             and w.language_id = ?
                             order by score desc;
-                            ', [$word, $word, $word . "%", $word, $sentence, Auth::user()->getAuthIdentifier(), config('app.lang')]);
+                            ',
+            [
+                $word,
+                $word,
+                $word."%",
+                $word,
+                $sentence,
+                Auth::user()->getAuthIdentifier(),
+                config('app.lang'),
+            ]
+        );
     }
 
     /**
@@ -68,14 +91,16 @@ class Word extends Model
      */
     public static function getSentences(): array
     {
-        return DB::select('
+        return DB::select(
+            '
                          SELECT w.id, w.word, t.value, t.id as translate_id
                          FROM words as w
                          JOIN translate as t
                             ON w.id = t.word_id
                          WHERE w.sentence = 1
                          AND w.id NOT IN(SELECT word_id FROM cards)
-                         AND w.deleted_at is NULL ');
+                         AND w.deleted_at is NULL '
+        );
     }
 
     /**
@@ -83,7 +108,11 @@ class Word extends Model
      */
     public function getVariantsAttribute(): bool
     {
-        return $this->attributes['variants'] = Translate::where('word_id', '=', $this->id)->count();
+        return $this->attributes['variants'] = Translate::where(
+            'word_id',
+            '=',
+            $this->id
+        )->count();
     }
 
     /**
@@ -99,7 +128,9 @@ class Word extends Model
      */
     public function translates()
     {
-        return $this->hasMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate');
+        return $this->hasMany(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate'
+        );
     }
 
     /**
@@ -109,4 +140,5 @@ class Word extends Model
     {
         return $this->hasOne('App\User', 'id', 'creator');
     }
+
 }

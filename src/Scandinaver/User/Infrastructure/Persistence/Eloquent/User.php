@@ -32,20 +32,31 @@ use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult;
  */
 class User extends Authenticatable
 {
+
     use Notifiable, HasApiTokens;
 
     const ROLE_ADMIN = 1;
-    const ROLE_USER  = 0;
 
-    protected $table    = 'users';
+    const ROLE_USER = 0;
 
-    protected $fillable = ['name', 'login', 'email', 'password', 'openpass', 'role', 'active_to', 'plan_id'];
+    protected $table = 'users';
 
-    protected $hidden   = ['password', 'remember_token'];
+    protected $fillable = [
+        'name',
+        'login',
+        'email',
+        'password',
+        'openpass',
+        'role',
+        'active_to',
+        'plan_id',
+    ];
 
-    protected $dates    = ['active_to'];
+    protected $hidden = ['password', 'remember_token'];
 
-    protected $appends  = ['premium', 'avatar', 'favourite', 'cardsCreated'];
+    protected $dates = ['active_to'];
+
+    protected $appends = ['premium', 'avatar', 'favourite', 'cardsCreated'];
 
     /**
      * @return void
@@ -54,14 +65,18 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::deleted(function ($user) {
-            /** @var User $user */
-            activity('admin')->causedBy($user)->log('Удален пользователь id:' . $user->id . ' login: ' . $user->login);
+        static::deleted(
+            function ($user) {
+                /** @var User $user */
+                activity('admin')->causedBy($user)->log(
+                    'Удален пользователь id:'.$user->id.' login: '.$user->login
+                );
 
-            Result::where('user_id', $user->id)->delete();
-            TextResult::where('user_id', $user->id)->delete();
-            $user->puzzles()->detach();
-        });
+                Result::where('user_id', $user->id)->delete();
+                TextResult::where('user_id', $user->id)->delete();
+                $user->puzzles()->detach();
+            }
+        );
     }
 
     /**
@@ -69,17 +84,22 @@ class User extends Authenticatable
      */
     public function puzzles(): array
     {
-        return $this->belongsToMany('Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent\Puzzle', 'puzzles_users')->withTimestamps();
+        return $this->belongsToMany(
+            'Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent\Puzzle',
+            'puzzles_users'
+        )->withTimestamps();
     }
 
     /**
-     * @param string $username
+     * @param  string  $username
      *
      * @return User
      */
     public function findForPassport(string $username): User
     {
-        return $this->where('email', $username)->orWhere('login', $username)->first();
+        return $this->where('email', $username)
+            ->orWhere('login', $username)
+            ->first();
     }
 
     /**
@@ -87,7 +107,9 @@ class User extends Authenticatable
      */
     public function comments(): array
     {
-        return $this->hasMany('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Comment');
+        return $this->hasMany(
+            'Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Comment'
+        );
     }
 
     /**
@@ -95,7 +117,12 @@ class User extends Authenticatable
      */
     public function assets()
     {
-        return $this->belongsToMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset', 'assets_users', 'user_id', 'asset_id');
+        return $this->belongsToMany(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset',
+            'assets_users',
+            'user_id',
+            'asset_id'
+        );
     }
 
     /**
@@ -103,7 +130,9 @@ class User extends Authenticatable
      */
     public function plan(): Plan
     {
-        return $this->belongsTo('Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan');
+        return $this->belongsTo(
+            'Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan'
+        );
     }
 
     /**
@@ -131,11 +160,14 @@ class User extends Authenticatable
     }
 
     /**
-     * @param string $value
+     * @param  string  $value
      */
     public function setActiveToAttribute(string $value): void
     {
-        $this->attributes['active_to'] = Carbon::createFromFormat('D M d Y', $value);
+        $this->attributes['active_to'] = Carbon::createFromFormat(
+            'D M d Y',
+            $value
+        );
     }
 
     /**
@@ -144,17 +176,21 @@ class User extends Authenticatable
     public function getAvatarAttribute(): string
     {
         if ($this->photo) {
-            if (file_exists(public_path('/uploads/u/a/') . $this->photo)) {
-                return url('/uploads/u/a/' . $this->photo);
+            if (file_exists(public_path('/uploads/u/a/').$this->photo)) {
+                return url('/uploads/u/a/'.$this->photo);
             } else {
-                $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
+                $avatar = Image::make(public_path('/uploads/u/').$this->photo);
                 $avatar->resize(
-                    300, null, function ($constraint) {
-                    /** @var Constraint $constraint */
-                    $constraint->aspectRatio();
-                });
-                $avatar->save(public_path('/uploads/u/a/' . $this->photo));
-                return url('/uploads/u/a/' . $this->photo);
+                    300,
+                    null,
+                    function ($constraint) {
+                        /** @var Constraint $constraint */
+                        $constraint->aspectRatio();
+                    }
+                );
+                $avatar->save(public_path('/uploads/u/a/'.$this->photo));
+
+                return url('/uploads/u/a/'.$this->photo);
             }
         } else {
             return Avatar::create($this->login)->toBase64()->encoded;
@@ -162,27 +198,30 @@ class User extends Authenticatable
     }
 
     /**
-     * @param int $asset_id
+     * @param  int  $asset_id
      *
      * @return bool
      */
     public function hasAsset(int $asset_id): bool
     {
-        return Result::where(['asset_id' => $asset_id, 'user_id' => $this->id])->exists();
+        return Result::where(['asset_id' => $asset_id, 'user_id' => $this->id])
+            ->exists();
     }
 
     /**
-     * @param int $text_id
+     * @param  int  $text_id
      *
      * @return bool
      */
     public function hasText(int $text_id): bool
     {
-        return TextResult::where(['text_id' => $text_id, 'user_id' => $this->id])->exists();
+        return TextResult::where(
+            ['text_id' => $text_id, 'user_id' => $this->id]
+        )->exists();
     }
 
     /**
-     * @param string $token
+     * @param  string  $token
      */
     public function sendPasswordResetNotification($token)
     {
@@ -195,9 +234,12 @@ class User extends Authenticatable
     public function getFavouriteAttribute(): Asset
     {
         return Asset::domain()->whereHas(
-            'result', function ($q) {
-            /** @var Builder $q */
-            $q->where('user_id', $this->id);
-        })->where('type', Asset::TYPE_FAVORITES)->first();
+            'result',
+            function ($q) {
+                /** @var Builder $q */
+                $q->where('user_id', $this->id);
+            }
+        )->where('type', Asset::TYPE_FAVORITES)->first();
     }
+
 }

@@ -14,20 +14,23 @@ use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, Relations\HasMany,
  */
 class Card extends Model
 {
+
     use SoftDeletes;
 
-    protected $table    = 'cards';
+    protected $table = 'cards';
 
     protected $fillable = ['asset_id', 'word_id', 'translate_id'];
 
-    protected $hidden   = ['created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
      * @return BelongsTo|Word
      */
     public function word(): Word
     {
-        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word');
+        return $this->belongsTo(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Word'
+        );
     }
 
     /**
@@ -35,7 +38,9 @@ class Card extends Model
      */
     public function translate(): Translate
     {
-        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate');
+        return $this->belongsTo(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Translate'
+        );
     }
 
     /**
@@ -43,7 +48,9 @@ class Card extends Model
      */
     public function asset(): Asset
     {
-        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset');
+        return $this->belongsTo(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Asset'
+        );
     }
 
     /**
@@ -51,6 +58,9 @@ class Card extends Model
      */
     public function examples(): array
     {
-        return $this->hasMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Example');
+        return $this->hasMany(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Example'
+        );
     }
+
 }

@@ -9,6 +9,7 @@ use Scandinaver\Shared\Contracts\Query;
  * Class DummyClass
  *
  * @package DummyNamespace
+ *
  * @see DummyHandlerClass
  */
 class DummyClass implements Query

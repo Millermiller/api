@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\Infrastructure\Persistence\Doctrine;
 
-use Scandinaver\Common\Domain\Contracts\IntroRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Shared\BaseRepository;
 
 /**
@@ -23,17 +23,18 @@ class IntroRepository extends BaseRepository implements IntroRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         $items = $q->select('i')
-                   ->from($this->getEntityName(), 'i')
-                   ->where('i.active = :active')
-                   ->setParameter('active', 1)
-                   ->orderBy('i.sort', 'asc')
+            ->from($this->getEntityName(), 'i')
+            ->where('i.active = :active')
+            ->setParameter('active', 1)
+            ->orderBy('i.sort', 'asc')
             //->groupBy('i.page')
-                   ->getQuery()
-                   ->getResult();
+            ->getQuery()
+            ->getResult();
 
         foreach ($items as $item) {
-            if (!isset($collection[$item->getPage()]))
+            if (!isset($collection[$item->getPage()])) {
                 $collection[$item->getPage()] = [];
+            }
 
             array_push($collection[$item->getPage()], $item);
         }

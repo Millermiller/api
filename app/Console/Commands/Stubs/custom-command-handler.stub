@@ -4,6 +4,7 @@
 namespace DummyNamespace;
 
 use DummyCommandNamespace;
+use DummyInterface;
 
 /**
  * Class DummyClass

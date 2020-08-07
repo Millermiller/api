@@ -5,12 +5,11 @@ namespace Scandinaver\Translate\Domain;
 
 use App\Events\NextTextLevel;
 use Doctrine\DBAL\DBALException;
-use Illuminate\Contracts\Auth\Authenticatable;
 use PDO;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Translate\Domain\Contracts\ResultRepositoryInterface;
-use Scandinaver\Translate\Domain\Contracts\TextRepositoryInterface;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class TextService
@@ -19,25 +18,21 @@ use Scandinaver\User\Domain\User;
  */
 class TextService
 {
-    /**
-     * @var ResultRepositoryInterface
-     */
-    protected $resultRepository;
+    protected ResultRepositoryInterface $resultRepository;
 
-    /**
-     * @var TextRepositoryInterface
-     */
-    private $textRepository;
+    private TextRepositoryInterface $textRepository;
 
     /**
      * TextService constructor.
      *
-     * @param TextRepositoryInterface   $textRepository
-     * @param ResultRepositoryInterface $resultRepository
+     * @param  TextRepositoryInterface    $textRepository
+     * @param  ResultRepositoryInterface  $resultRepository
      */
-    public function __construct(TextRepositoryInterface $textRepository, ResultRepositoryInterface $resultRepository)
-    {
-        $this->textRepository   = $textRepository;
+    public function __construct(
+        TextRepositoryInterface $textRepository,
+        ResultRepositoryInterface $resultRepository
+    ) {
+        $this->textRepository = $textRepository;
         $this->resultRepository = $resultRepository;
     }
 
@@ -51,7 +46,7 @@ class TextService
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return int
      */
@@ -61,8 +56,8 @@ class TextService
     }
 
     /**
-     * @param Language $language
-     * @param User     $user
+     * @param  Language  $language
+     * @param  User      $user
      *
      * @return array
      */
@@ -79,19 +74,19 @@ class TextService
 
             if (in_array($text->getId(), $activeArray)) {
                 $text = [
-                    'id'          => $text->getId(),
-                    'title'       => $text->getTitle(),
-                    'active'      => true,
-                    'image'       => $text->getImage(),
-                    'description' => $text->getDescription()
+                    'id' => $text->getId(),
+                    'title' => $text->getTitle(),
+                    'active' => true,
+                    'image' => $text->getImage(),
+                    'description' => $text->getDescription(),
                 ];
             } else {
                 $text = [
-                    'id'          => $text->getId(),
-                    'title'       => $text->getTitle(),
-                    'active'      => false,
-                    'image'       => $text->getImage(),
-                    'description' => $text->getDescription()
+                    'id' => $text->getId(),
+                    'title' => $text->getTitle(),
+                    'active' => false,
+                    'image' => $text->getImage(),
+                    'description' => $text->getDescription(),
                 ];
             }
 
@@ -107,7 +102,7 @@ class TextService
     }
 
     /**
-     * @param Text $text
+     * @param  Text  $text
      *
      * @return Text
      * @throws DBALException
@@ -145,19 +140,26 @@ class TextService
     }
 
     /**
-     * @param Language             $language
-     * @param Authenticatable|User $user
-     * @param Text                 $text
+     * @param  Language  $language
+     * @param  User      $user
+     * @param  Text      $text
      *
      * @return Text
      */
-    public function giveNextLevel(Language $language, Authenticatable $user, Text $text): Text
-    {
+    public function giveNextLevel(
+        Language $language,
+        User $user,
+        Text $text
+    ): Text {
         $nextText = $this->textRepository->getNextText($text, $language);
 
-        $result = $this->resultRepository->findOneBy(['user' => $user, 'text' => $text]);
+        $result = $this->resultRepository->findOneBy(
+            ['user' => $user, 'text' => $text]
+        );
 
-        if ($result === null) $result = new Result($nextText, $user, $language);
+        if ($result === null) {
+            $result = new Result($nextText, $user, $language);
+        }
 
         $result = $this->resultRepository->save($result);
 

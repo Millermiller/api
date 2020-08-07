@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\ValidationException;
 use Scandinaver\User\Domain\Services\UserService;
-use Scandinaver\User\Domain\User;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class RegisterController
@@ -71,8 +71,8 @@ class RegisterController extends Controller
         });
 
         return Validator::make($data, [
-            'login'    => 'required|string|login|max:255|unique:Scandinaver\User\Domain\User,login',
-            'email'    => 'required|string|email|max:255|unique:Scandinaver\User\Domain\User,email',
+            'login'    => 'required|string|login|max:255|unique:Scandinaver\User\Domain\Model\User,login',
+            'email'    => 'required|string|email|max:255|unique:Scandinaver\User\Domain\Model\User,email',
             'password' => 'required|string|min:6|confirmed',
         ],
             [

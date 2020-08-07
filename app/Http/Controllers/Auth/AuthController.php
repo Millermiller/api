@@ -9,9 +9,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Scandinaver\User\Application\Commands\LogoutCommand;
-use Scandinaver\User\Application\Query\LoginQuery;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
+use Scandinaver\User\UI\Command\LoginCommand;
+use Scandinaver\User\UI\Command\LogoutCommand;
 
 /**
  * Class AuthController
@@ -45,7 +45,7 @@ class AuthController extends Controller
         $request->merge([$login_type => $request->input('login')]);
 
         try {//TODO: убрать success из ответов
-            $this->queryBus->execute(new LoginQuery($request->only($login_type, 'password')));
+            $this->commandBus->execute(new LoginCommand($request->only($login_type, 'password')));
 
             $tokenResult = auth()->user()->createToken('Personal Access Token');
             $tokenResult->token->save();

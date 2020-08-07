@@ -7,10 +7,10 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Access\AuthorizationException;
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Translate\Application\Commands\CompleteTextCommand;
-use Scandinaver\Translate\Application\Query\GetTextQuery;
-use Scandinaver\Translate\Domain\Text;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\Translate\UI\Command\CompleteTextCommand;
+use Scandinaver\Translate\UI\Query\GetTextQuery;
 
 /**
  * Class TextController

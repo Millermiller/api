@@ -3,11 +3,11 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
-use Scandinaver\Common\Domain\Language;
-use Scandinaver\Learn\Domain\Contracts\CardRepositoryInterface;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Translate\Domain\Text;
-use Scandinaver\User\Domain\User;
+use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class CardRepository
@@ -25,7 +25,7 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
     }
 
     /**
-     * @param Language $language
+     * @param  Language  $language
      *
      * @return array | Text[]
      */
@@ -34,13 +34,13 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('t')
-                 ->from(Text::class, 't')
-                 ->where('t.published = :published')
-                 ->andWhere($q->expr()->eq('t.language', ':language'))
-                 ->setParameter('published', 1)
-                 ->setParameter('language', $language)
-                 ->orderBy('t.level', 'asc')
-                 ->getQuery()
-                 ->getResult();
+            ->from(Text::class, 't')
+            ->where('t.published = :published')
+            ->andWhere($q->expr()->eq('t.language', ':language'))
+            ->setParameter('published', 1)
+            ->setParameter('language', $language)
+            ->orderBy('t.level', 'asc')
+            ->getQuery()
+            ->getResult();
     }
 }

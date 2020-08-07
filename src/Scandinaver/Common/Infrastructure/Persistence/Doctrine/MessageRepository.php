@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\Infrastructure\Persistence\Doctrine;
 
-use Scandinaver\Common\Domain\Contracts\MessageRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\Repository\MessageRepositoryInterface;
 use Scandinaver\Shared\BaseRepository;
 
 /**

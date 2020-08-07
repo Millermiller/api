@@ -3,13 +3,12 @@
 
 namespace Scandinaver\User\Infrastructure\Persistence\Doctrine;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\{NonUniqueResultException, NoResultException, OptimisticLockException, ORMException};
-use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Translate\Domain\Text;
-use Scandinaver\User\Domain\{Plan, User};
-use Scandinaver\User\Domain\Contracts\UserRepositoryInterface;
+use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\User\Domain\Model\{Plan, User};
+use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 
 /**
  * Class UserRepository
@@ -26,11 +25,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-                 ->from($this::getEntityName(), 'u')
-                 ->join('u.plan', 'p', 'WITH')
-                 ->orderBy('p.id', 'asc')
-                 ->getQuery()
-                 ->getResult();
+            ->from($this::getEntityName(), 'u')
+            ->join('u.plan', 'p', 'WITH')
+            ->orderBy('p.id', 'asc')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -45,18 +44,18 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-                 ->from($this::getEntityName(), 'u')
-                 ->join('u.plan', 'p', 'WITH')
-                 ->where('u.id = :id')
-                 ->setParameter('id', $id)
-                 ->orderBy('p.id', 'asc')
-                 ->getQuery()
-                 ->getSingleResult();
+            ->from($this::getEntityName(), 'u')
+            ->join('u.plan', 'p', 'WITH')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('p.id', 'asc')
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**
-     * @param User  $user
-     * @param Asset $asset
+     * @param  User   $user
+     * @param  Asset  $asset
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -71,8 +70,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param User $user
-     * @param Text $text
+     * @param  User  $user
+     * @param  Text  $text
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -86,8 +85,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param User $user
-     * @param Plan $plan
+     * @param  User  $user
+     * @param  Plan  $plan
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -99,8 +98,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param User   $user
-     * @param string $file
+     * @param  User    $user
+     * @param  string  $file
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -121,14 +120,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-                 ->from($this::getEntityName(), 'u')
-                 ->join('u.plan', 'p', 'WITH')
-                 ->where('u.login = :login')
-                 ->orWhere('u.email = :email')
-                 ->orderBy('u.id', 'desc')
-                 ->setParameter('login', $string)
-                 ->setParameter('email', $string)
-                 ->getQuery()
-                 ->getResult();
+            ->from($this::getEntityName(), 'u')
+            ->join('u.plan', 'p', 'WITH')
+            ->where('u.login = :login')
+            ->orWhere('u.email = :email')
+            ->orderBy('u.id', 'desc')
+            ->setParameter('login', $string)
+            ->setParameter('email', $string)
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -8,8 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Auth\Access\AuthorizationException;
-use Scandinaver\Learn\Application\Commands\{GiveNextLevelCommand, SaveTestResultCommand};
-use Scandinaver\Learn\Domain\Asset;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\UI\Command\GiveNextLevelCommand;
+use Scandinaver\Learn\UI\Command\SaveTestResultCommand;
 
 /**
  * Class TestController

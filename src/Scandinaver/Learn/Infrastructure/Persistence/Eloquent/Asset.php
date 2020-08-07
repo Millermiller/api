@@ -17,32 +17,44 @@ use Illuminate\Database\Eloquent\{Builder, Model, Relations\BelongsTo, Relations
  */
 class Asset extends Model
 {
+
     use SoftDeletes;
 
-    const TYPE_PERSONAL  = 0;
-    const TYPE_WORDS     = 1;
+    const TYPE_PERSONAL = 0;
+
+    const TYPE_WORDS = 1;
+
     const TYPE_SENTENCES = 2;
+
     const TYPE_FAVORITES = 3;
 
-    protected $table    = 'assets';
+    protected $table = 'assets';
 
-    protected $fillable = ['title', 'basic', 'favorite', 'type', 'level', 'language_id'];
+    protected $fillable = [
+        'title',
+        'basic',
+        'favorite',
+        'type',
+        'level',
+        'language_id',
+    ];
 
-    protected $hidden   = ['created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
      * Удаляет набор и все с ним связанное
      * TODO: объединить запрос. использовать внешние ключи.
      *
-     * @param int $id Asset Id
+     * @param  int  $id  Asset Id
      *
      * @return bool
      * @throws Exception
      */
     public static function deleteAsset(int $id): bool
     {
-        if (!Auth::user()->hasAsset($id) && !Auth::user()->_admin)
+        if (!Auth::user()->hasAsset($id) && !Auth::user()->_admin) {
             return false;
+        }
 
         DB::beginTransaction();
 
@@ -69,32 +81,36 @@ class Asset extends Model
      * Возвращает его id или false если не находит
      * TODO: сократить вложенные запросы
      *
-     * @param int $asset_id Asset Id
+     * @param  int  $asset_id  Asset Id
      *
      * @return int
      */
     public static function getNextLevel(int $asset_id): int
     {
-        return DB::select('
+        return DB::select(
+            '
                    SELECT id
                    FROM assets as a
                    WHERE a.basic = 1
                    AND a.type = (SELECT a1.type from assets as a1 where a1.id = ?)
                    AND a.level = (SELECT a1.level from assets as a1 where a1.id = ?) + 1
-                   ', [$asset_id, $asset_id])[0];
+                   ',
+            [$asset_id, $asset_id]
+        )[0];
     }
 
     /**
      * Добавляет basic набор следующего уровня
      * возвращает инфу о новом наборе
      *
-     * @param int $asset_id
+     * @param  int  $asset_id
      *
      * @return Asset
      */
     public static function addLevel(int $asset_id): Asset
     {
-        DB::insert('
+        DB::insert(
+            '
                    INSERT INTO assets
                    SET title = ?,
                        basic = 1,
@@ -106,7 +122,15 @@ class Asset extends Model
                                     from assets as a2
                                         where a2.type = ?
                                         and a2.language_id = ?) + 1
-                   ', [$asset_id, $asset_id, config('app.lang'), $asset_id, config('app.lang')]);
+                   ',
+            [
+                $asset_id,
+                $asset_id,
+                config('app.lang'),
+                $asset_id,
+                config('app.lang'),
+            ]
+        );
 
 
         return Asset::find(DB::getPdo()->lastInsertId());
@@ -118,7 +142,7 @@ class Asset extends Model
     // }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      *
      * @return Builder
      */
@@ -132,7 +156,9 @@ class Asset extends Model
      */
     public function cards(): array
     {
-        return $this->hasMany('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Card');
+        return $this->hasMany(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Card'
+        );
     }
 
     /**
@@ -140,6 +166,11 @@ class Asset extends Model
      */
     public function result(): Result
     {
-        return $this->belongsTo('Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result', 'id', 'asset_id')->where('user_id', Auth::id());
+        return $this->belongsTo(
+            'Scandinaver\Learn\Infrastructure\Persistence\Eloquent\Result',
+            'id',
+            'asset_id'
+        )->where('user_id', Auth::id());
     }
+
 }
