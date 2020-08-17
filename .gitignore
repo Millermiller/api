@@ -13,7 +13,7 @@ yarn-error.log
 /.env.example
 /.env
 /.env.dusk.local
-/.env.testing
+/.env.testing.example
 /public/sub/backend/
 /.laradock/
 /storage

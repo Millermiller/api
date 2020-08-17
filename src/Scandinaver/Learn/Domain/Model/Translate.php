@@ -13,8 +13,7 @@ use JsonSerializable;
  */
 class Translate implements JsonSerializable
 {
-
-    private int $id;
+    private $id;
 
     private string $value;
 
@@ -56,5 +55,10 @@ class Translate implements JsonSerializable
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getWord(): Word
+    {
+        return $this->word;
     }
 }

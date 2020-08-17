@@ -86,7 +86,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(
             'Scandinaver\Puzzle\Infrastructure\Persistence\Eloquent\Puzzle',
-            'puzzles_users'
+            'puzzle_user'
         )->withTimestamps();
     }
 

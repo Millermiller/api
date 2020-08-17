@@ -49,7 +49,7 @@ class WordController extends Controller
      *
      * @return JsonResponse
      */
-    public function store(CreateWordRequest $request): JsonResponse
+    public function store(Language $language, CreateWordRequest $request): JsonResponse
     {
         $item = $this->wordService->create($request);
 

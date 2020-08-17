@@ -72,7 +72,9 @@ class AssetService
     public function create(Language $language, User $user, string $title): Asset
     {
         $asset = new Asset($title, 0, Asset::TYPE_PERSONAL, 0, $language);
+        $asset->setLevel(0);
         $result = new Result($asset, $user, $language);
+        $result->setValue(0);
         $user->incrementAssetCounter();
 
         app('em')->persist($asset);

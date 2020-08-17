@@ -27,7 +27,7 @@ class Asset implements JsonSerializable, UrlRoutable
 
     public const TYPE_FAVORITES = 3;
 
-    private int $id;
+    private $id;
 
     private string $title;
 

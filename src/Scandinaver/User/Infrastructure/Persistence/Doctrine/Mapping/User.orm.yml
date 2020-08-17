@@ -186,7 +186,7 @@ Scandinaver\User\Domain\Model\User:
             mappedBy: null
             inversedBy: users
             joinTable:
-                name: puzzles_users
+                name: puzzle_user
                 schema: null
                 joinColumns:
                     -
@@ -206,7 +206,7 @@ Scandinaver\User\Domain\Model\User:
             mappedBy: null
             inversedBy: users
             joinTable:
-                name: texts_users
+                name: text_user
                 schema: null
                 joinColumns:
                     -

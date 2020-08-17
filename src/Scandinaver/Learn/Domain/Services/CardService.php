@@ -71,7 +71,7 @@ class CardService
         Asset $asset
     ): Card {
         $card = new Card($word, $asset, $translate);
-        $card->setAssetId($asset->getId());
+        $card->setAsset($asset);
         $this->cardRepository->save($card);
 
         return $card;
@@ -138,6 +138,7 @@ class CardService
         }
 
         return [
+            'id' => $asset->getId(),
             'type' => $asset->getType(),
             'cards' => $cards,
             'title' => $asset->getTitle(),

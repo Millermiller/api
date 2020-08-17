@@ -15,7 +15,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class Result implements JsonSerializable
 {
-    private int $id;
+    private $id;
 
     private int $result;
 

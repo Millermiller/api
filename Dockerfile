@@ -1,5 +1,5 @@
 # Set the base image for subsequent instructions
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 # Update packages
 RUN apt-get update
@@ -11,6 +11,8 @@ RUN apt-get update \
         libmcrypt-dev \
         libpq-dev \
         libicu-dev \
+        libonig-dev \
+        libpq-dev \
         zlib1g-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -35,7 +37,7 @@ RUN apt-get clean
 # Install needed extensions
 # Here you can install any other extension that you need during the test and deployment process
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install \
         intl \
         bcmath \

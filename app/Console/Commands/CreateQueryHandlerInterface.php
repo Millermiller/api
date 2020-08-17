@@ -29,7 +29,7 @@ class CreateQueryHandlerInterface extends GeneratorCommand
     /**
      * @var string
      */
-    protected $queryHandlerPath = 'Domain/Contract';
+    protected $queryHandlerPath = 'Domain/Contract/Query';
 
     /**
      * @var string

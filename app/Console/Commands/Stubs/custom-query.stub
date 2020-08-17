@@ -3,7 +3,7 @@
 
 namespace DummyNamespace;
 
-use Scandinaver\Shared\Contracts\Query;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class DummyClass

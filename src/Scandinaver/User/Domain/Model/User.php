@@ -41,7 +41,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     const ROLE_ADMIN = 1;
     const ROLE_USER = 0;
 
-    private int $id;
+    private $id;
 
     private string $login;
 
@@ -59,9 +59,9 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     private int $role;
 
-    private int $assetsOpened;
+    private int $assetsOpened = 0;
 
-    private int $assetsCreated;
+    private int $assetsCreated = 0;
 
     private DateTime $createdAt;
 
@@ -200,7 +200,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
                     "Y-m-d H:i:s"
                 ) : null,
             'plan' => $this->plan,
-            'plan_id' => $this->planId,
+            'plan_id' => $this->plan->getId(),
             'name' => $this->name,
             'photo' => $this->photo,
             'assets_opened' => $this->assetsOpened,
@@ -286,5 +286,13 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
             }
         }
         return false;
+    }
+
+    /**
+     * @param  mixed  $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 }

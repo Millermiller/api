@@ -11,6 +11,10 @@ use Scandinaver\User\Domain\Model\User;
 $factory->define(\Scandinaver\Learn\Domain\Model\Word::class, function (Faker $faker, array $attributes) {
 
     return [
+        //'id' => random_int(1, 999),
+        'audio' => 'fakeurl',
+        'sentence' => 0,
+        'isPublic' => true,
         'word' => $faker->unique()->word(),
         'translate' => $faker->unique()->word(),
         'language' => $attributes['language']

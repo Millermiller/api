@@ -15,6 +15,7 @@ $factory->define(Asset::class, function (Faker $faker, array $attributes) {
     $cards = entity(\Scandinaver\Learn\Domain\Model\Card::class, 2)->create(['language' => $attributes['language']])->toArray();
 
     return [
+      //  'id' => random_int(1, 999),
         'title' => $faker->unique()->text(50),
         'basic' => 1,
         'type' => 1, //array_rand([0, 1, 2, 3]),

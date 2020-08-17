@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers\Sub\Frontend;
 
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Result;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
@@ -26,6 +27,12 @@ class AssetControllerTest extends TestCase
     private $asset;
 
     /**
+     * @var Card
+     */
+    private $card;
+
+
+    /**
      * @var Asset
      */
     private $favouriteAsset;
@@ -40,6 +47,7 @@ class AssetControllerTest extends TestCase
         $this->user           = entity(User::class)->create();
         $this->asset          = entity(Asset::class)->create(['user' => $this->user, 'language' => $language]);
         $this->favouriteAsset = entity(Asset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
+        $this->card           = entity(Card::class)->create(['language' => $language, 'asset' => $this->asset ]);
 
         entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->asset]);
         entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
@@ -54,7 +62,7 @@ class AssetControllerTest extends TestCase
         $response->assertJsonStructure(['type', 'cards' => [
             [
                 'id',
-                'asset_id',
+               // 'asset_id',
                 'word_id',
                 'translate_id',
                 'favourite',

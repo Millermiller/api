@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/articles/search', 'AApp\Http\Controllers\Backend\rticleController@search')->name('search');
+Route::get('/articles/search', 'App\Http\Controllers\Backend\rticleController@search')->name('search');
 Route::post('/articles/upload', 'App\Http\Controllers\Backend\ArticleController@upload')->name('upload');
 Route::resource('/articles', 'App\Http\Controllers\Backend\ArticleController',
     ['except' => ['create', 'edit']]

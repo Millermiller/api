@@ -35,8 +35,8 @@ class Puzzle implements JsonSerializable, AggregateRoot
     {
         return [
             'id' => $this->id,
-            'text' => $this->text,
-            'translate' => $this->translate,
+            'text' => $this->text->toNative(),
+            'translate' => $this->translate->toNative(),
         ];
     }
 

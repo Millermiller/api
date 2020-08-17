@@ -148,7 +148,7 @@ class CreateQueryHandler extends GeneratorCommand
             $class,
             $queryClass,
             "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass",
-            "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\$queryInterface",
+            "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Query\\$queryInterface",
           ],
           $stub
         );

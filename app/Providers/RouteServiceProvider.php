@@ -96,7 +96,6 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/api/subfrontend/common.php'));
 
         Route::middleware(['bindings', 'auth:api', 'touchUser', 'checkPlan'])
-             ->namespace('App\Http\Controllers\Sub\Frontend')
              ->as('sub_frontend::')
              ->group(base_path('routes/api/subfrontend/learn.php'));
 

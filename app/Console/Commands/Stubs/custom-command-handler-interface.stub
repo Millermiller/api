@@ -3,7 +3,7 @@
 
 namespace DummyNamespace;
 
-use Scandinaver\Shared\Contracts\CommandHandler;
+use Scandinaver\Shared\Contract\CommandHandler;
 
 /**
  * Class DummyClass

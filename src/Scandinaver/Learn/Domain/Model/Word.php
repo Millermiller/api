@@ -17,7 +17,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class Word implements JsonSerializable, UrlRoutable
 {
-    private int $id;
+    private $id;
 
     private string $word;
 

@@ -12,42 +12,16 @@ class Version20200627151711 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->addSql(
-            'CREATE TABLE users (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
-                    name VARCHAR(255), 
-                    login VARCHAR(255), 
-                    email VARCHAR(255), 
-                    plan_id VARCHAR(255),
-                    photo VARCHAR(255),
-                    password VARCHAR(255),
-                    active VARCHAR(255),
-                    assets_opened VARCHAR(255),
-                    assets_created VARCHAR(255),
-                    role VARCHAR(255),
-                    remember_token VARCHAR(255),
-                    updated_at VARCHAR(255),
-                    active_to VARCHAR(255),
-                    restore_link VARCHAR(255),
-                    created_at VARCHAR(255),
-                    deleted_at VARCHAR(255),
-                    last_online VARCHAR(255))');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', 'THIS MIGRATIONS CAN ONLY BE EXECUTED ON SQLITE!');
 
         $this->addSql(
-            'CREATE TABLE assets (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
-                    title VARCHAR(255), 
-                    basic VARCHAR(255), 
-                    type VARCHAR(255), 
-                    level VARCHAR(255),
-                    favorite VARCHAR(255),
-                    language_id VARCHAR(255),
-                    updated_at VARCHAR(255),
-                    created_at VARCHAR(255),
-                    deleted_at VARCHAR(255))');
+            'CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name VARCHAR(255),login VARCHAR(255),email VARCHAR(255),plan_id VARCHAR(255),photo VARCHAR(255),password VARCHAR(255),active VARCHAR(255),assets_opened VARCHAR(255),assets_created VARCHAR(255),role VARCHAR(255),remember_token VARCHAR(255),updated_at VARCHAR(255),active_to VARCHAR(255),restore_link VARCHAR(255),created_at VARCHAR(255),deleted_at VARCHAR(255),last_online VARCHAR(255))');
 
         $this->addSql(
-            'CREATE TABLE assets_users (
+            'CREATE TABLE asset(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,title VARCHAR(255), basic VARCHAR(255), type VARCHAR(255), level VARCHAR(255),favorite VARCHAR(255),language_id VARCHAR(255),updated_at VARCHAR(255),created_at VARCHAR(255),deleted_at VARCHAR(255))');
+
+        $this->addSql(
+            'CREATE TABLE asset_user (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     asset_id VARCHAR(255), 
                     user_id VARCHAR(255), 
@@ -57,18 +31,7 @@ class Version20200627151711 extends AbstractMigration
                     language_id VARCHAR(255))');
 
         $this->addSql(
-            'CREATE TABLE words (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
-                    word VARCHAR(255), 
-                    transcription VARCHAR(255), 
-                    audio VARCHAR(255), 
-                    sentence VARCHAR(255), 
-                    is_public VARCHAR(255), 
-                    creator_id VARCHAR(255), 
-                    language_id VARCHAR(255), 
-                    updated_at VARCHAR(255), 
-                    created_at VARCHAR(255), 
-                    deleted_at VARCHAR(255))');
+            'CREATE TABLE word (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,word VARCHAR(255),transcription VARCHAR(255),audio VARCHAR(255),sentence VARCHAR(255),is_public VARCHAR(255),creator_id VARCHAR(255),language_id VARCHAR(255),updated_at VARCHAR(255),created_at VARCHAR(255),deleted_at VARCHAR(255))');
 
         $this->addSql(
             'CREATE TABLE translate (
@@ -83,14 +46,14 @@ class Version20200627151711 extends AbstractMigration
                     deleted_at VARCHAR(255))');
 
         $this->addSql(
-            'CREATE TABLE languages (
+            'CREATE TABLE language (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     name VARCHAR(255), 
                     label VARCHAR(255), 
                     flag VARCHAR(255))');
 
         $this->addSql(
-            'CREATE TABLE cards (
+            'CREATE TABLE card (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     asset_id VARCHAR(255), 
                     translate_id VARCHAR(255), 
@@ -100,7 +63,7 @@ class Version20200627151711 extends AbstractMigration
                      deleted_at VARCHAR(255))');
 
         $this->addSql(
-            'CREATE TABLE plans (
+            'CREATE TABLE plan (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     name VARCHAR(255), 
                     period VARCHAR(255), 

@@ -30,10 +30,10 @@ class AssetsQuery implements Query
     /**
      * AssetsQuery constructor.
      *
-     * @param  Authenticatable  $user
+     * @param  User  $user
      * @param  Language         $language
      */
-    public function __construct(Authenticatable $user, Language $language)
+    public function __construct(User $user, Language $language)
     {
         $this->user = $user;
         $this->language = $language;

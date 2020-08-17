@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Domain\Services;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
+use Scandinaver\Learn\Domain\Model\Card;
 use App\Http\Requests\{SearchRequest};
 use Auth;
 use Doctrine\DBAL\DBALException;
@@ -109,9 +110,9 @@ class WordService
         $sql = 'select t.id,
                             MATCH (t.value) AGAINST (? IN NATURAL LANGUAGE MODE) as score
                               from translate as t
-                                left join words as w
+                                left join word as w
                                   on t.word_id = w.id
-                                left join users as u 
+                                left join user as u 
                                   on u.id = w.creator_id
                             where (MATCH(t.value) AGAINST(? IN BOOLEAN MODE)
                                 or t.value like ?
@@ -137,7 +138,17 @@ class WordService
         $stmt->execute($params);
         $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-        return $ids ? $this->translateRepository->searchByIds($ids) : [];
+        $result = [];
+
+        if ($ids) {
+            $translates = $ids ? $this->translateRepository->searchByIds($ids) : [];
+            /** @var Translate $translate */
+            foreach ($translates as $translate) {
+                $card = new Card($translate->getWord(), null, $translate);
+                $result[] = $card;
+            }
+        }
+        return $result;
     }
 
     /**

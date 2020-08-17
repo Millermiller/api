@@ -29,7 +29,7 @@ class CreateCommandHandlerInterface extends GeneratorCommand
     /**
      * @var string
      */
-    protected $commandHandlerPath = 'Domain/Contract';
+    protected $commandHandlerPath = 'Domain/Contract/Command';
 
     /**
      * @var string

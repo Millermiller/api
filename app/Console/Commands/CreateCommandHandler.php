@@ -140,7 +140,7 @@ class CreateCommandHandler extends GeneratorCommand
           $class,
           $commandClass,
           "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace\\$commandClass",
-          "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\$commandInterface"
+          "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Command\\$commandInterface"
         ], $stub);
     }
 }

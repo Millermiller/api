@@ -14,7 +14,7 @@ use LaravelDoctrine\ORM\Contracts\UrlRoutable;
  */
 class Card implements JsonSerializable, UrlRoutable
 {
-    private int $id;
+    private $id;
 
     private DateTime $createdAt;
 
@@ -22,7 +22,11 @@ class Card implements JsonSerializable, UrlRoutable
 
     private Word $word;
 
-    private Asset $asset;
+    private $asset;
+
+    // TODO: need to remove. used in favourites
+    private $wordId;
+    private $assetId;
 
     private Translate $translate;
 
@@ -37,7 +41,7 @@ class Card implements JsonSerializable, UrlRoutable
      * @param  Asset      $asset
      * @param  Translate  $translate
      */
-    public function __construct(Word $word, Asset $asset, Translate $translate)
+    public function __construct(Word $word, ?Asset $asset, Translate $translate)
     {
         $this->word = $word;
         $this->asset = $asset;
@@ -96,7 +100,7 @@ class Card implements JsonSerializable, UrlRoutable
     {
         return [
             'id' => $this->id,
-            'asset_id' => $this->asset->getId(),
+           // 'asset_id' => $this->asset->getId(),
             'word_id' => $this->word->getId(),
             'translate_id' => $this->translate->getId(),
             'favourite' => $this->favourite,

@@ -39,6 +39,16 @@ Scandinaver\Learn\Domain\Model\Card:
             nullable: true
             precision: 0
             column: updated_at
+        wordId:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+        assetId:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
     manyToOne:
         word:
             targetEntity: Scandinaver\Learn\Domain\Model\Word

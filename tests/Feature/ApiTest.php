@@ -23,7 +23,7 @@ class ApiTest extends TestCase
 
         /** @var Language $language */
         $language = entity(Language::class)->create();
-
+        $plan   = entity(Plan::class)->create();
         $user   = entity(User::class)->create();
         $assets = entity(Asset::class, 2)->create(['user' => $user, 'language' => $language])->toArray();
 

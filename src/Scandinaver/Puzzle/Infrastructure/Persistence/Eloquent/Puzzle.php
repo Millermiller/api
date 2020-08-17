@@ -65,7 +65,7 @@ class Puzzle extends Model
      */
     public function users(): array
     {
-        return $this->belongsToMany('App\User', 'puzzles_users')
+        return $this->belongsToMany('App\User', 'puzzle_user')
             ->withTimestamps();
     }
 
