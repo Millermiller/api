@@ -81,8 +81,8 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param Language $language
-     * @param Card     $card
+     * @param Language    $language
+     * @param Card  $card
      *
      * @return JsonResponse
      */

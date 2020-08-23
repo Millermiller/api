@@ -15,9 +15,6 @@ use Scandinaver\API\UI\Query\AssetsQuery;
  */
 class AssetsHandler implements AssetsHandlerInterface
 {
-    /**
-     * @var ApiService
-     */
     private ApiService $apiService;
 
     /**

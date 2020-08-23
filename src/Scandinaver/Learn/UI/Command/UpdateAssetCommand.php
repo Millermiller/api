@@ -15,20 +15,11 @@ use Scandinaver\User\Domain\Model\User;
  */
 class UpdateAssetCommand implements Command
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var array
-     */
-    private $data;
+    private array $data;
 
-    /**
-     * @var Asset
-     */
-    private $asset;
+    private Asset $asset;
 
     /**
      * CreateAssetCommand constructor.
@@ -44,25 +35,16 @@ class UpdateAssetCommand implements Command
         $this->asset = $asset;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Asset
-     */
     public function getAsset(): Asset
     {
         return $this->asset;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->data['title'];
@@ -73,9 +55,6 @@ class UpdateAssetCommand implements Command
         return $this->data['level'] ? $this->data['level'] : 0;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;

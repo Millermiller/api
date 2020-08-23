@@ -17,15 +17,9 @@ use Scandinaver\User\Domain\Model\User;
 class AssetsQuery implements Query
 {
 
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var string
-     */
-    private $language;
+    private Language $language;
 
     /**
      * AssetsQuery constructor.
@@ -39,17 +33,11 @@ class AssetsQuery implements Query
         $this->language = $language;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;

@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
 use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
-use Scandinaver\Learn\Domain\Model\{Translate, Word};
+use Scandinaver\Learn\Domain\Model\{Card, Translate, Word};
 
 /**
  * Class FavouriteController
@@ -25,22 +25,17 @@ class FavouriteController extends Controller
      *
      * @return JsonResponse
      */
-    public function store(Language $language, Word $word, Translate $translate): JsonResponse
+    public function store(Language $language, Card $card): JsonResponse
     {
-        $this->commandBus->execute(new CreateFavouriteCommand($language, Auth::user(), $word, $translate));
+        $this->commandBus->execute(new CreateFavouriteCommand($language, Auth::user(), $card));
 
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Language $language
-     * @param          $id
-     *
-     * @return JsonResponse
-     */
-    public function destroy(Language $language, $id): JsonResponse
+
+    public function destroy(Language $language, Card $card): JsonResponse
     {
-        $this->commandBus->execute(new DeleteFavouriteCommand($language, Auth::user(), $id));
+        $this->commandBus->execute(new DeleteFavouriteCommand($language, Auth::user(), $card));
 
         return response()->json(NULL, 204);
     }

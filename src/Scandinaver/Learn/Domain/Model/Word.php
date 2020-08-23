@@ -59,7 +59,7 @@ class Word implements JsonSerializable, UrlRoutable
     {
         return [
             'id' => $this->id,
-            'word' => $this->word,
+            'value' => $this->word,
             'audio' => $this->audio,
             'sentence' => $this->sentence,
             'is_public' => $this->isPublic,

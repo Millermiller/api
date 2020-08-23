@@ -4,7 +4,9 @@
 namespace Scandinaver\Shared;
 
 use Doctrine\Common\Inflector\Inflector;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
@@ -16,6 +18,8 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
  */
 class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 {
+
+  //  use EventSourcingTrait;
 
     /**
      * @return array
@@ -47,6 +51,8 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
         $this->_em->persist($object);
         $this->_em->flush($object);
 
+       // $this->fireEvents($object);
+
         return $object;
     }
 
@@ -67,7 +73,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
             }
         }
         $this->_em->flush($entity);
-
+      //  $this->fireEvents($entity);
         return $entity;
     }
 
@@ -82,6 +88,6 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     {
         $this->_em->remove($object);
         $this->_em->flush($object);
+      //  $this->fireEvents($object);
     }
-
 }

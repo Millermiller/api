@@ -6,9 +6,11 @@ namespace Scandinaver\Learn\Domain\Services;
 use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Exception;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\{Asset,Result};
+use Scandinaver\Learn\Domain\Model\{Asset, PersonalAsset, Result};
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -18,43 +20,34 @@ use Scandinaver\User\Domain\Model\User;
  */
 class AssetService
 {
-    /**
-     * @var AssetRepositoryInterface
-     */
-    protected $assetsRepository;
+    protected AssetRepositoryInterface $assetsRepository;
 
-    /**
-     * @var ResultRepositoryInterface
-     */
-    protected $resultRepository;
+    protected ResultRepositoryInterface $resultRepository;
 
-    /**
-     * @var AssetRepositoryInterface
-     */
-    private $assetRepository;
+    private AssetRepositoryInterface $assetRepository;
+
+    private PersonalAssetRepositoryInterface $personalAssetRepository;
 
     /**
      * AssetService constructor.
      *
-     * @param  AssetRepositoryInterface   $assetsRepository
-     * @param  ResultRepositoryInterface  $resultRepository
-     * @param  AssetRepositoryInterface   $assetRepository
+     * @param  AssetRepositoryInterface          $assetsRepository
+     * @param  ResultRepositoryInterface         $resultRepository
+     * @param  AssetRepositoryInterface          $assetRepository
+     * @param  PersonalAssetRepositoryInterface  $personalAssetRepository
      */
     public function __construct(
         AssetRepositoryInterface $assetsRepository,
         ResultRepositoryInterface $resultRepository,
-        AssetRepositoryInterface $assetRepository
+        AssetRepositoryInterface $assetRepository,
+        PersonalAssetRepositoryInterface $personalAssetRepository
     ) {
         $this->assetsRepository = $assetsRepository;
         $this->resultRepository = $resultRepository;
         $this->assetRepository = $assetRepository;
+        $this->personalAssetRepository = $personalAssetRepository;
     }
 
-    /**
-     * @param  Language  $language
-     *
-     * @return int
-     */
     public function count(Language $language): int
     {
         return $this->assetsRepository->getCountByLanguage($language);
@@ -71,7 +64,7 @@ class AssetService
      */
     public function create(Language $language, User $user, string $title): Asset
     {
-        $asset = new Asset($title, 0, Asset::TYPE_PERSONAL, 0, $language);
+        $asset = new PersonalAsset($title, 0,  0, $language);
         $asset->setLevel(0);
         $result = new Result($asset, $user, $language);
         $result->setValue(0);
@@ -124,23 +117,13 @@ class AssetService
         return $this->assetRepository->getAssetsByType($language, $type);
     }
 
-    /**
-     * Возвращает массив словарей определенного типа для пользователя
-     *
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  int       $type
-     *
-     * @return array
-     * @throws Exception
-     */
-    public function getAssetsByType(Language $language, User $user, int $type)
+    public function getAssetsByType(Language $language, User $user, int $type): array
     {
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
-        $assets = $this->assetsRepository->getAssetsByType(
-            $language,
-            $type
-        );
+
+        $repository = AssetRepositoryFactory::getByType($type);
+
+        $assets = $repository->getByLanguage($language);
 
         $canopen = true;
         $testlink = false;
@@ -199,7 +182,7 @@ class AssetService
      */
     public function getPersonalAssets(Language $language, User $user): array
     {
-        return $this->assetRepository->getCreatedAssets($language, $user);
+        return $this->personalAssetRepository->getCreatedAssets($language, $user);
     }
 
     /**

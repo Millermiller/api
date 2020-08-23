@@ -1,6 +1,15 @@
 Scandinaver\Learn\Domain\Model\Asset:
     type: entity
     table: asset
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: type
+        type: integer
+    discriminatorMap:
+        0: Scandinaver\Learn\Domain\Model\PersonalAsset
+        1: Scandinaver\Learn\Domain\Model\WordAsset
+        2: Scandinaver\Learn\Domain\Model\SentenceAsset
+        3: Scandinaver\Learn\Domain\Model\FavouriteAsset
     indexes:
         id:
             columns:
@@ -25,13 +34,6 @@ Scandinaver\Learn\Domain\Model\Asset:
             nullable: false
             precision: 0
         basic:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-        type:
             type: integer
             scale: 0
             length: null
@@ -75,7 +77,30 @@ Scandinaver\Learn\Domain\Model\Asset:
             fetch: LAZY
             mappedBy: assets
             inversedBy: null
-            joinTable: {  }
+            joinTable:
+                name: asset_user
+                joinColumns:
+                    asset_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    user_id:
+                        referencedColumnName: id
+            orderBy: null
+        cards:
+            targetEntity: Scandinaver\Learn\Domain\Model\Card
+            joinTable:
+                name: asset_cards
+                joinColumns:
+                    asset_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    card_id:
+                        referencedColumnName: id
+                        unique: true
+            cascade:
+                - remove
+            fetch: EAGER
+            orphanRemoval: false
             orderBy: null
     manyToOne:
         language:
@@ -89,15 +114,6 @@ Scandinaver\Learn\Domain\Model\Asset:
                     referencedColumnName: id
             orphanRemoval: false
     oneToMany:
-        cards:
-            targetEntity: Scandinaver\Learn\Domain\Model\Card
-            cascade:
-                - remove
-            fetch: EAGER
-            mappedBy: asset
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
         results:
             targetEntity: Scandinaver\Learn\Domain\Model\Result
             cascade:

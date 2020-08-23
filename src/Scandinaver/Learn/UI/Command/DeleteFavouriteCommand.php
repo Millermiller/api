@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Model\User;
 
@@ -15,20 +16,11 @@ use Scandinaver\User\Domain\Model\User;
  */
 class DeleteFavouriteCommand implements Command
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var int
-     */
-    private $id;
+    private Language $language;
 
-    /**
-     * @var Language
-     */
-    private $language;
+    private Card $card;
 
     /**
      * CreateFavouriteCommand constructor.
@@ -37,34 +29,25 @@ class DeleteFavouriteCommand implements Command
      * @param  User      $user
      * @param  int       $id
      */
-    public function __construct(Language $language, User $user, int $id)
+    public function __construct(Language $language, User $user, Card $card)
     {
         $this->language = $language;
         $this->user = $user;
-        $this->id = $id;
+        $this->card = $card;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;
+    }
+
+    public function getCard(): Card
+    {
+        return $this->card;
     }
 }

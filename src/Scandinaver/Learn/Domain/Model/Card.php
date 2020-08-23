@@ -3,64 +3,44 @@
 
 namespace Scandinaver\Learn\Domain\Model;
 
-use DateTime;
-use JsonSerializable;
-use LaravelDoctrine\ORM\Contracts\UrlRoutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Card
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-class Card implements JsonSerializable, UrlRoutable
+class Card extends AggregateRoot
 {
-    private $id;
-
-    private DateTime $createdAt;
-
-    private DateTime $updatedAt;
+    private int $id;
 
     private Word $word;
 
-    private $asset;
-
-    // TODO: need to remove. used in favourites
-    private $wordId;
-    private $assetId;
-
     private Translate $translate;
 
-    private $examples;
+    private User $creator;
 
-    private $favourite;
+    private \DateTime $createdAt;
+
+    private \DateTime $updatedAt;
+
+    private Collection $assets;
+
+    private bool $favourite;
 
     /**
-     * Card constructor.
-     *
-     * @param  Word       $word
-     * @param  Asset      $asset
-     * @param  Translate  $translate
+     * @var Example[]
      */
-    public function __construct(Word $word, ?Asset $asset, Translate $translate)
-    {
-        $this->word = $word;
-        $this->asset = $asset;
-        $this->translate = $translate;
-    }
+    private Collection $examples;
 
-    public function setUpdatedAt(DateTime $updatedAt): void
+    public function __construct()
     {
-        $this->updatedAt = $updatedAt;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getCreatedAt(): ?DateTime
-    {
-        return $this->createdAt;
+        $this->word = new Word();
+        $this->translate = new Translate();
+        $this->examples = new ArrayCollection();
     }
 
     public function getWord(): Word
@@ -73,55 +53,19 @@ class Card implements JsonSerializable, UrlRoutable
         $this->word = $word;
     }
 
-    public function getAsset(): Asset
-    {
-        return $this->asset;
-    }
-
-    public function setAsset(Asset $asset): void
-    {
-        $this->asset = $asset;
-    }
-
-    public function getTranslate(): Translate
-    {
-        return $this->translate;
-    }
-
     public function setTranslate(Translate $translate): void
     {
         $this->translate = $translate;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
+    public function setCreator(User $creator): void
     {
-        return [
-            'id' => $this->id,
-           // 'asset_id' => $this->asset->getId(),
-            'word_id' => $this->word->getId(),
-            'translate_id' => $this->translate->getId(),
-            'favourite' => $this->favourite,
-            'word' => $this->word,
-            'translate' => $this->translate,
-            'asset' => $this->asset,
-            'examples' => $this->examples,
-        ];
+        $this->creator = $creator;
     }
 
-    /**
-     * @return Example[]
-     */
-    public function getExamples()
+    public function getId(): int
     {
-        return $this->examples->toArray();
-    }
-
-    public function isFavourite(): bool
-    {
-        return (bool) $this->asset->getFavorite();
+        return $this->id;
     }
 
     public function setFavourite(bool $favourite): void
@@ -129,8 +73,24 @@ class Card implements JsonSerializable, UrlRoutable
         $this->favourite = $favourite;
     }
 
-    public static function getRouteKeyName(): string
+    public function toDTO(): CardDTO
     {
-        return 'id';
+        return new CardDTO($this);
+    }
+    
+    public function isFavourite(): bool
+    {
+        return $this->favourite;
+    }
+
+
+    public function getTranslate(): Translate
+    {
+        return $this->translate;
+    }
+
+    public function getExamples(): Collection
+    {
+        return $this->examples;
     }
 }

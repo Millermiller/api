@@ -47,7 +47,7 @@ class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
      */
     public function handle($command): void
     {
-        $this->favouriteService->delete($command->getLanguage(), $command->getUser(), $command->getId());
+        $this->favouriteService->delete($command->getLanguage(), $command->getUser(), $command->getCard());
 
         event(new FavouriteDeleted($command->getUser()));
     }

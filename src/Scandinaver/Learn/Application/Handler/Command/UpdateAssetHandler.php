@@ -16,14 +16,8 @@ use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
  */
 class UpdateAssetHandler implements UpdateAssetHandlerInteface
 {
-    /**
-     * @var CardService
-     */
     protected CardService $cardService;
 
-    /**
-     * @var AssetService
-     */
     protected AssetService $assetService;
 
     /**

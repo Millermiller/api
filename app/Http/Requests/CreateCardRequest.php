@@ -30,9 +30,8 @@ class CreateCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'word_id'      => 'required',
-            'translate_id' => 'required',
-            'asset_id'     => 'required',
+            'word'      => 'required',
+            'translate' => 'required',
         ];
     }
 }

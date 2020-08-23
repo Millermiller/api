@@ -6,6 +6,7 @@ namespace Scandinaver\API\Domain;
 use Exception;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
@@ -18,36 +19,32 @@ use Scandinaver\User\Domain\Model\User;
  */
 class ApiService
 {
-    /**
-     * @var LanguageRepositoryInterface
-     */
     protected LanguageRepositoryInterface $languageRepository;
 
-    /**
-     * @var AssetRepositoryInterface
-     */
     protected AssetRepositoryInterface $assetsRepository;
 
-    /**
-     * @var ResultRepositoryInterface
-     */
     protected ResultRepositoryInterface $resultRepository;
+
+    private PersonalAssetRepositoryInterface $personalAssetRepository;
 
     /**
      * ApiService constructor.
      *
-     * @param  LanguageRepositoryInterface  $languageRepository
-     * @param  AssetRepositoryInterface     $assetsRepository
-     * @param  ResultRepositoryInterface    $resultRepository
+     * @param  LanguageRepositoryInterface       $languageRepository
+     * @param  AssetRepositoryInterface          $assetsRepository
+     * @param  ResultRepositoryInterface         $resultRepository
+     * @param  PersonalAssetRepositoryInterface  $personalAssetRepository
      */
     public function __construct(
         LanguageRepositoryInterface $languageRepository,
         AssetRepositoryInterface $assetsRepository,
-        ResultRepositoryInterface $resultRepository
+        ResultRepositoryInterface $resultRepository,
+        PersonalAssetRepositoryInterface $personalAssetRepository
     ) {
         $this->languageRepository = $languageRepository;
         $this->assetsRepository = $assetsRepository;
         $this->resultRepository = $resultRepository;
+        $this->personalAssetRepository = $personalAssetRepository;
     }
 
     /**
@@ -70,7 +67,7 @@ class ApiService
         $assets = [];
 
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
-        $personaldata = $this->assetsRepository->getPersonalAssets(
+        $personaldata = $this->personalAssetRepository->getCreatedAssets(
             $language,
             $user
         );

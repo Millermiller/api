@@ -15,14 +15,8 @@ use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
  */
 class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
 {
-    /**
-     * @var FavouriteService
-     */
     protected FavouriteService $favouriteService;
 
-    /**
-     * @var AssetService
-     */
     protected AssetService $assetService;
 
     /**
@@ -43,9 +37,8 @@ class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
      */
     public function handle($command): void
     {
-        $card = $this->favouriteService->create($command->getLanguage(), $command->getUser(), $command->getWord(),
-            $command->getTranslate());
+        $this->favouriteService->create($command->getLanguage(), $command->getUser(), $command->getCard());
 
-        event(new FavouriteCreated($command->getUser(), $card));
+        event(new FavouriteCreated($command->getUser(), $command->getCard()));
     }
 }

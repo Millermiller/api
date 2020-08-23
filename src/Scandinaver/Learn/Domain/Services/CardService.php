@@ -5,15 +5,11 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\{Asset,
-    Card,
-    Example,
-    Translate,
-    Word
-};
+use Scandinaver\Learn\Domain\Model\{Asset, Card, Example, Translate, Word};
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\User\Domain\Model\User;
@@ -35,27 +31,37 @@ class CardService
 
     private ExampleRepositoryInterface $exampleRepository;
 
+    private CardFabric $cardFabric;
+
+    private FavouriteAssetRepositoryInterface $favouriteAssetRepository;
+
     /**
      * CardService constructor.
      *
-     * @param  AssetRepositoryInterface      $assetRepository
-     * @param  CardRepositoryInterface       $cardRepository
-     * @param  ResultRepositoryInterface     $resultRepository
-     * @param  ExampleRepositoryInterface    $exampleRepository
-     * @param  TranslateRepositoryInterface  $translateRepository
+     * @param  AssetRepositoryInterface           $assetRepository
+     * @param  CardRepositoryInterface            $cardRepository
+     * @param  ResultRepositoryInterface          $resultRepository
+     * @param  ExampleRepositoryInterface         $exampleRepository
+     * @param  TranslateRepositoryInterface       $translateRepository
+     * @param  FavouriteAssetRepositoryInterface  $favouriteAssetRepository
+     * @param  CardFabric                         $cardFabric
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         CardRepositoryInterface $cardRepository,
         ResultRepositoryInterface $resultRepository,
         ExampleRepositoryInterface $exampleRepository,
-        TranslateRepositoryInterface $translateRepository
+        TranslateRepositoryInterface $translateRepository,
+        FavouriteAssetRepositoryInterface $favouriteAssetRepository,
+        CardFabric $cardFabric
     ) {
         $this->assetRepository = $assetRepository;
         $this->cardRepository = $cardRepository;
         $this->resultRepository = $resultRepository;
         $this->exampleRepository = $exampleRepository;
         $this->translateRepository = $translateRepository;
+        $this->cardFabric = $cardFabric;
+        $this->favouriteAssetRepository = $favouriteAssetRepository;
     }
 
     /**
@@ -65,23 +71,27 @@ class CardService
      *
      * @return Card
      */
-    public function createCard(
-        Word $word,
-        Translate $translate,
-        Asset $asset
-    ): Card {
-        $card = new Card($word, $asset, $translate);
-        $card->setAsset($asset);
+    public function createCard(User $user, Language $language, string $word, string $translate): Card
+    {
+        $data = [
+            'word' => $word,
+            'translate' => $translate,
+            'creator' => $user,
+            'language' => $language,
+        ];
+
+        $card = $this->cardFabric->build($data);
+
         $this->cardRepository->save($card);
 
         return $card;
     }
 
     /**
-     * @param  Card       $card
-     * @param  Word       $word
-     * @param  Translate  $translate
-     * @param  Asset      $asset
+     * @param  Card  $card
+     * @param  Word        $word
+     * @param  Translate   $translate
+     * @param  Asset       $asset
      *
      * @return Card
      */
@@ -99,12 +109,10 @@ class CardService
         return $card;
     }
 
-    /**
-     * @param  Card  $card
-     */
-    public function destroyCard(Card $card)
+    public function destroyCard(Card $card, Asset $asset): void
     {
-        $this->cardRepository->delete($card);
+        $asset->removeCard($card);
+        $this->assetRepository->save($asset);
     }
 
     /**
@@ -122,25 +130,28 @@ class CardService
         User $user,
         Asset $asset
     ): array {
-        $favouriteAsset = $this->assetRepository->getFavouriteAsset(
+        $favouriteAsset = $this->favouriteAssetRepository->getFavouriteAsset(
             $language,
             $user
         );
 
         $result = $this->resultRepository->getResult($user, $asset);
 
-        $cards = $asset->getCards()->toArray();
+        $cards = $asset->getCards();
 
-        foreach ($cards as &$c) {
-            $c->setFavourite(
-                in_array($c->getWord()->getId(), $favouriteAsset->getWordsIds())
+        $cardsDTO = [];
+
+        foreach ($cards as &$card) {
+            $card->setFavourite(
+                in_array($card->getWord()->getId(), $favouriteAsset->getWordsIds())
             );
+            $cardsDTO[] = $card->toDTO();
         }
 
         return [
             'id' => $asset->getId(),
             'type' => $asset->getType(),
-            'cards' => $cards,
+            'cards' => $cardsDTO,
             'title' => $asset->getTitle(),
             'result' => $result->getValue(),
             'level' => $asset->getLevel(),
@@ -157,13 +168,6 @@ class CardService
         return $card->getExamples();
     }
 
-    /**
-     * @param  Card    $card
-     * @param  string  $text
-     * @param  string  $value
-     *
-     * @return Example
-     */
     public function addExample(Card $card, string $text, string $value): Example
     {
         $example = new Example($text, $value, $card);
@@ -173,9 +177,6 @@ class CardService
         return $example;
     }
 
-    /**
-     * @param  Card  $card
-     */
     public function deleteExamplesOfCard(Card $card)
     {
         foreach ($card->getExamples() as $example) {
@@ -183,12 +184,6 @@ class CardService
         }
     }
 
-    /**
-     * @param  Translate  $translate
-     * @param  string     $text
-     *
-     * @return Translate
-     */
     public function editTranslate(Translate $translate, string $text): Translate
     {
         $translate->setValue($text);

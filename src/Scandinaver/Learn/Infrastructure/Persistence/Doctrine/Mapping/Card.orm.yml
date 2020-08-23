@@ -1,6 +1,6 @@
 Scandinaver\Learn\Domain\Model\Card:
     type: entity
-    table: card
+    table: cards
     indexes:
         word_id:
             columns:
@@ -39,35 +39,15 @@ Scandinaver\Learn\Domain\Model\Card:
             nullable: true
             precision: 0
             column: updated_at
-        wordId:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-        assetId:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
     manyToOne:
         word:
             targetEntity: Scandinaver\Learn\Domain\Model\Word
             cascade: {  }
-            fetch: LAZY
+            fetch: EAGER
             mappedBy: null
             inversedBy: cards
             joinColumns:
                 word_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-        asset:
-            targetEntity: Scandinaver\Learn\Domain\Model\Asset
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: cards
-            joinColumns:
-                asset_id:
                     referencedColumnName: id
             orphanRemoval: false
         translate:
@@ -84,9 +64,17 @@ Scandinaver\Learn\Domain\Model\Card:
         examples:
             targetEntity: Scandinaver\Learn\Domain\Model\Example
             cascade: {  }
-            fetch: LAZY
+            fetch: EAGER
             mappedBy: card
-            inversedBy: null
+            inversedBy: examples
+            joinColumns:
+                card_id:
+                    referencedColumnName: id
             orphanRemoval: false
             orderBy: null
+    manyToMany:
+        assets:
+            targetEntity: Scandinaver\User\Domain\Model\User
+            mappedBy: Scandinaver\Learn\Domain\Model\Asset
+
     lifecycleCallbacks: {  }

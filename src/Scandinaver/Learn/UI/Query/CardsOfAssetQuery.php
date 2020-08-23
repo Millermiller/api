@@ -16,20 +16,11 @@ use Scandinaver\User\Domain\Model\User;
  */
 class CardsOfAssetQuery implements Query
 {
-    /**
-     * @var Asset
-     */
-    private $asset;
+    private Asset $asset;
 
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var Language
-     */
-    private $language;
+    private Language $language;
 
     /**
      * CardsOfAssetQuery constructor.
@@ -45,25 +36,16 @@ class CardsOfAssetQuery implements Query
         $this->user = $user;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Asset
-     */
     public function getAsset(): Asset
     {
         return $this->asset;
     }
 
-    /**
-     * @return Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;

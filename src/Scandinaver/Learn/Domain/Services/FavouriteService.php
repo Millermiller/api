@@ -7,9 +7,11 @@ use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\{Contract\Repository\AssetRepositoryInterface,
     Contract\Repository\CardRepositoryInterface,
+    Contract\Repository\FavouriteAssetRepositoryInterface,
     Contract\Repository\TranslateRepositoryInterface,
     Model\Translate,
-    Model\Word};
+    Model\Word
+};
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\User\Domain\Model\User;
 
@@ -20,64 +22,34 @@ use Scandinaver\User\Domain\Model\User;
  */
 class FavouriteService
 {
-    private CardRepositoryInterface $cardRepository;
-
-    private TranslateRepositoryInterface $translateRepository;
-
-    private AssetRepositoryInterface $assetRepository;
+    private FavouriteAssetRepositoryInterface $favouriteAssetRepository;
 
     /**
      * FavouriteService constructor.
      *
-     * @param  CardRepositoryInterface       $cardRepository
-     * @param  TranslateRepositoryInterface  $translateRepository
-     * @param  AssetRepositoryInterface      $assetRepository
+     * @param  FavouriteAssetRepositoryInterface  $assetRepository
      */
     public function __construct(
-        CardRepositoryInterface $cardRepository,
-        TranslateRepositoryInterface $translateRepository,
-        AssetRepositoryInterface $assetRepository
+        FavouriteAssetRepositoryInterface $favouriteAssetRepository
     ) {
-        $this->cardRepository = $cardRepository;
-        $this->translateRepository = $translateRepository;
-        $this->assetRepository = $assetRepository;
+        $this->favouriteAssetRepository = $favouriteAssetRepository;
     }
 
-    /**
-     * @param  Language   $language
-     * @param  User       $user
-     * @param  Word       $word
-     * @param  Translate  $translate
-     *
-     * @return Card
-     */
-    public function create(
-        Language $language,
-        User $user,
-        Word $word,
-        Translate $translate
-    ): Card {
-        $asset = $this->assetRepository->getFavouriteAsset($language, $user);
-
-        return $this->cardRepository->save(new Card($word, $asset, $translate));
-    }
-
-    /**
-     * @param  Language  $language
-     * @param  User      $user
-     * @param            $id
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function delete(Language $language, User $user, $id): void
+    public function create(Language $language, User $user, Card $card): void
     {
-        $asset = $this->assetRepository->getFavouriteAsset($language, $user);
-        $card = $this->cardRepository->findOneBy(
-            ['wordId' => $id, 'assetId' => $asset->getId()]
-        );
+        $asset = $this->favouriteAssetRepository->getFavouriteAsset($language, $user);
 
-        app('em')->remove($card);
-        app('em')->flush();
+        $asset->addCard($card);
+
+        $this->favouriteAssetRepository->save($asset);
+    }
+
+    public function delete(Language $language, User $user, Card $card): void
+    {
+        $asset = $this->favouriteAssetRepository->getFavouriteAsset($language, $user);
+
+        $asset->removeCard($card);
+
+        $this->favouriteAssetRepository->save($asset);
     }
 }

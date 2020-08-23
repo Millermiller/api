@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\Domain\Contract\Query;
 use Scandinaver\Shared\Contract\QueryHandler;
 
 /**
- * Class WordsCountByLanguageHandlerInterface
+ * Interface WordsCountByLanguageHandlerInterface
  *
  * @package Scandinaver\Learn\Domain\Contract\Query
  */

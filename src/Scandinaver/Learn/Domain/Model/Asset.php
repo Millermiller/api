@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Contract\AssetInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -17,7 +18,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-class Asset implements JsonSerializable, UrlRoutable
+abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
 {
     public const TYPE_PERSONAL = 0;
 
@@ -33,8 +34,6 @@ class Asset implements JsonSerializable, UrlRoutable
 
     private int $basic;
 
-    private int $type;
-
     private int $level;
 
     private ?int $favorite;
@@ -47,7 +46,7 @@ class Asset implements JsonSerializable, UrlRoutable
 
     private Language $language;
 
-    private $cards;
+    protected $cards;
 
     private $results;
 
@@ -63,13 +62,11 @@ class Asset implements JsonSerializable, UrlRoutable
     public function __construct(
         string $title,
         int $basic,
-        int $type,
         ?int $favorite,
         Language $language
     ) {
         $this->title = $title;
         $this->basic = $basic;
-        $this->type = $type;
         $this->favorite = $favorite;
         $this->language = $language;
         $this->users = new ArrayCollection();
@@ -119,12 +116,6 @@ class Asset implements JsonSerializable, UrlRoutable
         $this->basic = $basic;
     }
 
-
-    public function getType(): int
-    {
-        return $this->type;
-    }
-
     public function setType(int $type): void
     {
         $this->type = $type;
@@ -163,6 +154,16 @@ class Asset implements JsonSerializable, UrlRoutable
         return $this->cards;
     }
 
+    public function addCard(Card $card): void
+    {
+        $this->cards->add($card);
+    }
+
+    public function removeCard(Card $card): void
+    {
+        $this->cards->removeElement($card);
+    }
+
     /**
      * @inheritDoc
      */
@@ -171,7 +172,6 @@ class Asset implements JsonSerializable, UrlRoutable
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'type' => $this->type,
             'level' => $this->level,
             'result' => $this->results->count() ? $this->results->toArray()[0]->getValue() : 0,
             'basic' => $this->basic,

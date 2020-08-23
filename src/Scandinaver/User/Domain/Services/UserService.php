@@ -8,6 +8,9 @@ use Illuminate\Auth\Authenticatable;
 use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
@@ -40,6 +43,10 @@ class UserService
 
     protected AssetRepositoryInterface $assetRepository;
 
+    protected FavouriteAssetRepositoryInterface $favouriteAssetRepository;
+
+    protected PersonalAssetRepositoryInterface $personalAssetRepository;
+
     protected TextRepositoryInterface $textRepository;
 
     protected IntroRepositoryInterface $introRepository;
@@ -51,18 +58,22 @@ class UserService
     /**
      * UserService constructor.
      *
-     * @param  AssetRepositoryInterface     $assetRepository
-     * @param  AssetService                 $assetService
-     * @param  UserRepositoryInterface      $userRepository
-     * @param  PlanRepositoryInterface      $planRepository
-     * @param  LanguageRepositoryInterface  $languageRepository
-     * @param  TextRepositoryInterface      $textRepository
-     * @param  IntroRepositoryInterface     $introRepository
-     * @param  TextService                  $textService
-     * @param  PuzzleService                $puzzleService
+     * @param  AssetRepositoryInterface           $assetRepository
+     * @param  FavouriteAssetRepositoryInterface  $favouriteAssetRepository
+     * @param  PersonalAssetRepositoryInterface   $personalAssetRepository
+     * @param  AssetService                       $assetService
+     * @param  UserRepositoryInterface            $userRepository
+     * @param  PlanRepositoryInterface            $planRepository
+     * @param  LanguageRepositoryInterface        $languageRepository
+     * @param  TextRepositoryInterface            $textRepository
+     * @param  IntroRepositoryInterface           $introRepository
+     * @param  TextService                        $textService
+     * @param  PuzzleService                      $puzzleService
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
+        FavouriteAssetRepositoryInterface $favouriteAssetRepository,
+        PersonalAssetRepositoryInterface $personalAssetRepository,
         AssetService $assetService,
         UserRepositoryInterface $userRepository,
         PlanRepositoryInterface $planRepository,
@@ -81,6 +92,8 @@ class UserService
         $this->assetService = $assetService;
         $this->textService = $textService;
         $this->puzzleService = $puzzleService;
+        $this->favouriteAssetRepository = $favouriteAssetRepository;
+        $this->personalAssetRepository = $personalAssetRepository;
     }
 
     /**
@@ -142,7 +155,7 @@ class UserService
         foreach ($languages as $language) {
 
             //даем пользователю избранное
-            $favourite = new Asset(
+            $favourite = new FavouriteAsset(
                 'Избранное',
                 false,
                 Asset::TYPE_FAVORITES,
@@ -197,11 +210,11 @@ class UserService
                 $user,
                 Asset::TYPE_SENTENCES
             ),
-            'favourites' => $this->assetRepository->getFavouriteAsset(
+            'favourites' => $this->favouriteAssetRepository->getFavouriteAsset(
                 $language,
                 $user
             ),
-            'personal' => $this->assetRepository->getCreatedAssets(
+            'personal' => $this->personalAssetRepository->getCreatedAssets(
                 $language,
                 $user
             ),

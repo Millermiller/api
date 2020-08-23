@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\Domain\Contract\Query;
 use Scandinaver\Shared\Contract\QueryHandler;
 
 /**
- * Class AudioCountByLanguageHandlerInterface
+ * Interface AudioCountByLanguageHandlerInterface
  *
  * @package Scandinaver\Learn\Domain\Contract\Query
  */

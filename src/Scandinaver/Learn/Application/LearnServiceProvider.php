@@ -7,20 +7,33 @@ use Illuminate\Support\ServiceProvider;
 use Scandinaver\Learn\Domain\Model\{Asset,
     Card,
     Example,
+    FavouriteAsset,
+    PersonalAsset,
     Result,
+    SentenceAsset,
     Translate,
-    Word};
+    Word,
+    WordAsset};
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\{AssetRepository,
     CardRepository,
     ExampleRepository,
+    FavouriteAssetRepository,
+    PersonalAssetRepository,
     ResultRepository,
+    SentenceAssetRepository,
     TranslateRepository,
+    WordAssetRepository,
     WordRepository};
+use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\SentenceAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\WordAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 
 /**
@@ -68,6 +81,46 @@ class LearnServiceProvider extends ServiceProvider
                 return new AssetRepository(
                     $this->app['em'],
                     $this->app['em']->getClassMetadata(Asset::class)
+                );
+            }
+        );
+
+        $this->app->bind(
+            FavouriteAssetRepositoryInterface::class,
+            function () {
+                return new FavouriteAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(FavouriteAsset::class)
+                );
+            }
+        );
+
+        $this->app->bind(
+            WordAssetRepositoryInterface::class,
+            function () {
+                return new WordAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(WordAsset::class)
+                );
+            }
+        );
+
+        $this->app->bind(
+            SentenceAssetRepositoryInterface::class,
+            function () {
+                return new SentenceAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(SentenceAsset::class)
+                );
+            }
+        );
+
+        $this->app->bind(
+            PersonalAssetRepositoryInterface::class,
+            function () {
+                return new PersonalAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(PersonalAsset::class)
                 );
             }
         );

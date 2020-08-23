@@ -17,14 +17,8 @@ use Scandinaver\Learn\UI\Command\CreateAssetCommand;
  */
 class CreateAssetHandler implements CreateAssetHandlerInterface
 {
-    /**
-     * @var CardService
-     */
     protected CardService $cardService;
 
-    /**
-     * @var AssetService
-     */
     protected AssetService $assetService;
 
     /**

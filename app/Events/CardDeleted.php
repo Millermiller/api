@@ -34,8 +34,8 @@ class CardDeleted
     /**
      * Create a new event instance.
      *
-     * @param User $user
-     * @param Card $card
+     * @param User        $user
+     * @param Card  $card
      */
     public function __construct(User $user, Card $card)
     {

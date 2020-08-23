@@ -11,7 +11,7 @@ use JsonSerializable;
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-class Example implements JsonSerializable
+class Example
 {
     private int $id;
 
@@ -28,9 +28,9 @@ class Example implements JsonSerializable
     /**
      * Example constructor.
      *
-     * @param  string  $text
-     * @param  string  $value
-     * @param  Card    $card
+     * @param  string      $text
+     * @param  string      $value
+     * @param  Card  $card
      */
     public function __construct(string $text, string $value, Card $card)
     {
@@ -84,16 +84,8 @@ class Example implements JsonSerializable
         $this->card = $card;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
+    public function toDTO(): ExampleDTO
     {
-        return [
-            'id' => $this->id,
-            'card_id' => $this->card->getId(),
-            'text' => $this->text,
-            'value' => $this->value,
-        ];
+        return new ExampleDTO($this);
     }
 }

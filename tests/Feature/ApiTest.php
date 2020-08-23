@@ -6,6 +6,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\Plan;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
@@ -25,7 +26,7 @@ class ApiTest extends TestCase
         $language = entity(Language::class)->create();
         $plan   = entity(Plan::class)->create();
         $user   = entity(User::class)->create();
-        $assets = entity(Asset::class, 2)->create(['user' => $user, 'language' => $language])->toArray();
+        $assets = entity(WordAsset::class, 2)->create(['user' => $user, 'language' => $language])->toArray();
 
         foreach ($assets as $asset) {
          // $cards = entity(\Scandinaver\Learn\Domain\Card::class, 2)->create(['asset' => $asset])->toArray();

@@ -15,20 +15,11 @@ use Scandinaver\User\Domain\Model\User;
  */
 class CreateAssetCommand implements Command
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var string
-     */
-    private $title;
+    private string $title;
 
-    /**
-     * @var Language
-     */
-    private $language;
+    private Language $language;
 
     /**
      * CreateAssetCommand constructor.
@@ -44,25 +35,16 @@ class CreateAssetCommand implements Command
         $this->title = $title;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;

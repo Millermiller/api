@@ -17,7 +17,7 @@ class Card extends Model
 
     use SoftDeletes;
 
-    protected $table = 'cards';
+    protected $table = 'card';
 
     protected $fillable = ['asset_id', 'word_id', 'translate_id'];
 

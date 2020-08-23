@@ -63,6 +63,23 @@ class Version20200627151711 extends AbstractMigration
                      deleted_at VARCHAR(255))');
 
         $this->addSql(
+            'CREATE TABLE cards (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    language_id VARCHAR(255), 
+                    translate_id VARCHAR(255), 
+                    word_id VARCHAR(255), 
+                    user_id VARCHAR(255), 
+                    type VARCHAR(255), 
+                    updated_at VARCHAR(255), 
+                    created_at VARCHAR(255))');
+
+        $this->addSql(
+            'CREATE TABLE asset_cards (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    asset_id VARCHAR(255), 
+                    card_id VARCHAR(255))');
+
+        $this->addSql(
             'CREATE TABLE plan (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     name VARCHAR(255), 
