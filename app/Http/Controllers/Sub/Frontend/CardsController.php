@@ -22,25 +22,14 @@ use Scandinaver\Learn\Domain\Model\{Translate, Word};
  */
 class CardsController extends Controller
 {
-    /**
-     * @param Language $language
-     * @param Word      $word
-     * @param Translate $translate
-     * @param Asset     $asset
-     *
-     * @return JsonResponse
-     */
-    public function store(Language $language, Word $word, Translate $translate, Asset $asset): JsonResponse
+    public function store(Language $language, Card $card, Asset $asset): JsonResponse
     {
-        $this->commandBus->execute(new AddCardToAssetCommand(Auth::user(), $word, $translate, $asset));
+        $this->commandBus->execute(new AddCardToAssetCommand(Auth::user(), $language, $card, $asset));
 
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @return JsonResponse
-     */
-    public function create(Language $language, CreateCardRequest $request)
+    public function create(Language $language, CreateCardRequest $request): JsonResponse
     {
         $card = $this->commandBus->execute(new CreateCardCommand(
             Auth::user(), $language, $request->get('word'), $request->get('translate')

@@ -10,6 +10,7 @@ use Scandinaver\Learn\Domain\Model\PersonalAsset;
 use Scandinaver\Learn\Domain\Model\SentenceAsset;
 use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
+use Scandinaver\Shared\BaseRepository;
 
 /**
  * Class AssetRepositoryFactory
@@ -18,7 +19,7 @@ use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
  */
 class AssetRepositoryFactory
 {
-    public static function getByType(int $type): AssetRepository
+    public static function getByType(int $type): BaseRepository
     {
         switch ($type) {
             case Asset::TYPE_PERSONAL:

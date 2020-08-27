@@ -103,7 +103,8 @@ class AssetService
      */
     public function delete(Asset $asset): void
     {
-        $this->assetsRepository->delete($asset);
+        $repository = AssetRepositoryFactory::getByType($asset->getType());
+        $repository->delete($asset);
     }
 
     /**
@@ -247,6 +248,7 @@ class AssetService
      */
     public function updateAsset(Asset $asset, array $data): Asset
     {
-        return $this->assetsRepository->update($asset, $data);
+        $repository = AssetRepositoryFactory::getByType($asset->getType());
+        return $repository->update($asset, $data);
     }
 }

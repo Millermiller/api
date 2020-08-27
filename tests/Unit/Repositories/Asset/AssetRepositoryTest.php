@@ -5,8 +5,10 @@ namespace Tests\Repositories\Asset;
 
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\WordAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\User\Domain\Model\{Plan, User};
+use Scandinaver\Learn\Domain\Model\WordAsset;
 use Tests\TestCase;
 
 /**
@@ -36,9 +38,9 @@ class AssetRepositoryTest extends TestCase
     private $user;
 
     /**
-     * @var Asset[]
+     * @var WordAsset[]
      */
-    private $assets;
+    private $wordassets;
 
     public function setUp()
     {
@@ -46,12 +48,12 @@ class AssetRepositoryTest extends TestCase
 
         $this->language = entity(Language::class)->create();
 
-        $this->user   = entity(User::class)->create();
-        $this->assets = entity(Asset::class, 2)->create(['user' => $this->user, 'language' => $this->language])->toArray();
+        $this->user       = entity(User::class)->create();
+        $this->wordassets = entity(WordAsset::class, 2)->create(['user' => $this->user, 'language' => $this->language])->toArray();
 
         $this->entityManager = app('Doctrine\ORM\EntityManager');
 
-        $this->repository = $this->app->make(AssetRepositoryInterface::class);
+        $this->repository = $this->app->make(WordAssetRepositoryInterface::class);
 
     }
 

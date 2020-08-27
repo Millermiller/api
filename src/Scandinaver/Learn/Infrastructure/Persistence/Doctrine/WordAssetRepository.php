@@ -74,9 +74,7 @@ class WordAssetRepository extends AssetRepository implements WordAssetRepository
             ->from($this->getEntityName(), 'a')
             ->where('a.level = :level')
             ->andWhere($q->expr()->eq('a.language', ':language'))
-            ->andWhere('a.type = :type')
             ->setParameter('level', 1)
-            ->setParameter('type', $type)
             ->setParameter('language', $language)
             ->getQuery()
             ->getSingleResult();

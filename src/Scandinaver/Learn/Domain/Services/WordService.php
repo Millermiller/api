@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Model\Card;
@@ -29,6 +30,8 @@ class WordService
 
     private WordRepositoryInterface $wordsRepository;
 
+    private CardRepositoryInterface $cardRepository;
+
     /**
      * WordService constructor.
      *
@@ -39,11 +42,13 @@ class WordService
     public function __construct(
         TranslateRepositoryInterface $translateRepository,
         WordRepositoryInterface $wordsRepository,
+        CardRepositoryInterface $cardRepository,
         LanguageRepositoryInterface $languageRepository
     ) {
         $this->translateRepository = $translateRepository;
         $this->wordsRepository = $wordsRepository;
         $this->languageRepository = $languageRepository;
+        $this->cardRepository = $cardRepository;
     }
 
     /**
@@ -112,8 +117,6 @@ class WordService
                               from translate as t
                                 left join word as w
                                   on t.word_id = w.id
-                                left join user as u 
-                                  on u.id = w.creator_id
                             where (MATCH(t.value) AGAINST(? IN BOOLEAN MODE)
                                 or t.value like ?
                                 or t.value = ?
@@ -144,8 +147,13 @@ class WordService
             $translates = $ids ? $this->translateRepository->searchByIds($ids) : [];
             /** @var Translate $translate */
             foreach ($translates as $translate) {
-                $card = new Card($translate->getWord(), null, $translate);
-                $result[] = $card;
+                /** @var Card $card */
+                $card = $this->cardRepository->findOneBy([
+                    'translate' => $translate
+                ]);
+                if ($card !== null) {
+                    $result[] = $card->toDTO();
+                }
             }
         }
         return $result;

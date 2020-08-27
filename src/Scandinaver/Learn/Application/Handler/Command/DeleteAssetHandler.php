@@ -16,14 +16,8 @@ use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
  */
 class DeleteAssetHandler implements DeleteAssetHandlerInterface
 {
-    /**
-     * @var CardService
-     */
     protected CardService $cardService;
 
-    /**
-     * @var AssetService
-     */
     protected AssetService $assetService;
 
     /**

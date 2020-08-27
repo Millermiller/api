@@ -64,6 +64,17 @@ class CardService
         $this->favouriteAssetRepository = $favouriteAssetRepository;
     }
 
+    public function addCardToAsset(User $user, Language $language, Card $card, Asset $asset): Card
+    {
+        $repository = AssetRepositoryFactory::getByType($asset->getType());
+
+        $asset->addCard($card);
+
+        $repository->save($asset);
+
+        return $card;
+    }
+
     /**
      * @param  Word       $word
      * @param  Translate  $translate

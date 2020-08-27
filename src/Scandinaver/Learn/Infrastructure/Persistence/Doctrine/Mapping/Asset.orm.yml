@@ -107,8 +107,7 @@ Scandinaver\Learn\Domain\Model\Asset:
             targetEntity: Scandinaver\Common\Domain\Model\Language
             cascade: {  }
             fetch: LAZY
-            mappedBy: null
-            inversedBy: assets
+            mappedBy: language
             joinColumns:
                 language_id:
                     referencedColumnName: id

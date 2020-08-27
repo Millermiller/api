@@ -6,7 +6,9 @@ namespace Tests\Feature\Controllers\Sub\Frontend;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
@@ -16,25 +18,13 @@ use Tests\TestCase;
  */
 class CardsControllerTest extends TestCase
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var Asset
-     */
-    private $asset;
+    private WordAsset $asset;
 
-    /**
-     * @var Asset
-     */
-    private $favouriteAsset;
+    private FavouriteAsset $favouriteAsset;
 
-    /**
-     * @var Card
-     */
-    private $card;
+    private Card $card;
 
     public function setUp()
     {
@@ -44,8 +34,8 @@ class CardsControllerTest extends TestCase
         $language = entity(Language::class)->create();
 
         $this->user           = entity(User::class)->create();
-        $this->asset          = entity(Asset::class)->create(['user' => $this->user, 'language' => $language]);
-        $this->favouriteAsset = entity(Asset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
+        $this->asset          = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $language]);
+        $this->favouriteAsset = entity(FavouriteAsset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
 
         entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->asset]);
         entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
@@ -91,7 +81,9 @@ class CardsControllerTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('sub_frontend::delete-card-from-asset', ['language' => 'is', 'card' => $this->card->getId()]));
+        $response = $this->delete(route('sub_frontend::delete-card-from-asset', [
+            'language' => 'is', 'card' => $this->card->getId(), 'asset' => $this->asset->getId()
+        ]));
 
         $this->assertEquals(204, $response->getStatusCode());
     }

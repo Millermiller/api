@@ -14,10 +14,7 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeleteAssetCommand implements Command
 {
-    /**
-     * @var Asset
-     */
-    private $asset;
+    private Asset $asset;
 
     /**
      * DeleteAssetCommand constructor.
@@ -29,9 +26,6 @@ class DeleteAssetCommand implements Command
         $this->asset = $asset;
     }
 
-    /**
-     * @return Asset
-     */
     public function getAsset(): Asset
     {
         return $this->asset;

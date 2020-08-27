@@ -72,9 +72,9 @@ Scandinaver\Learn\Domain\Model\Card:
                     referencedColumnName: id
             orphanRemoval: false
             orderBy: null
-    manyToMany:
-        assets:
-            targetEntity: Scandinaver\User\Domain\Model\User
-            mappedBy: Scandinaver\Learn\Domain\Model\Asset
+    #manyToMany:
+    #    assets:
+    #        targetEntity: Scandinaver\User\Domain\Model\User
+    #        mappedBy: Scandinaver\Learn\Domain\Model\Asset
 
     lifecycleCallbacks: {  }

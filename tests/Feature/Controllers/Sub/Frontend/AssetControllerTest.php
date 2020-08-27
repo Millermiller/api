@@ -24,7 +24,7 @@ class AssetControllerTest extends TestCase
     private $user;
 
     /**
-     * @var Asset
+     * @var WordAsset
      */
     private $asset;
 
@@ -67,7 +67,7 @@ class AssetControllerTest extends TestCase
                 'favourite',
                 'word' => [
                     'id',
-                    'word',
+                    'value',
                     'audio',
                     'sentence',
                     'is_public',
@@ -82,10 +82,9 @@ class AssetControllerTest extends TestCase
                 'translate' => [
                     'id',
                     'value',
-                    'word_id',
                     'word' => [
                         'id',
-                        'word',
+                        'value',
                         'audio',
                         'sentence',
                         'is_public',
@@ -132,14 +131,14 @@ class AssetControllerTest extends TestCase
 
         $response = $this->put(route('sub_frontend::asset.update', [
             'domain' => 'is',
-            'title' => 'TEST CREATE ASSET',
+            'title' => 'TEST UPDATE ASSET',
             'asset' => $this->asset->getId()
         ]));
 
         $response->assertJsonStructure(['id', 'title', 'basic', 'level', 'language']);
 
         $data = $response->decodeResponseJson();
-        $this->assertEquals('TEST CREATE ASSET', $data['title']);
+        $this->assertEquals('TEST UPDATE ASSET', $data['title']);
     }
 
     public function testDestroy()

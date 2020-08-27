@@ -20,7 +20,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
 {
-    public const TYPE_PERSONAL = 0;
+    public const TYPE_PERSONAL = 4;
 
     public const TYPE_WORDS = 1;
 
@@ -30,7 +30,7 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
 
     private $id;
 
-    private string $title;
+    protected string $title;
 
     private int $basic;
 

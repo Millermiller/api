@@ -29,7 +29,7 @@ class Card extends AggregateRoot
 
     private Collection $assets;
 
-    private bool $favourite;
+    private bool $favourite = false;
 
     /**
      * @var Example[]
@@ -73,7 +73,7 @@ class Card extends AggregateRoot
         $this->favourite = $favourite;
     }
 
-    public function toDTO(): CardDTO
+    public function toDTO()
     {
         return new CardDTO($this);
     }

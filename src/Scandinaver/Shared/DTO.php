@@ -4,7 +4,9 @@
 namespace Scandinaver\Shared;
 
 
-abstract class DTO implements \JsonSerializable
+use JsonSerializable;
+
+abstract class DTO implements JsonSerializable
 {
 
 }

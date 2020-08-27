@@ -9,7 +9,7 @@ abstract class AggregateRoot
 
     public abstract function getId(): int;
 
-    public abstract function toDTO(): DTO;
+    public abstract function toDTO();
 
     final public function pullEvents(): array
     {

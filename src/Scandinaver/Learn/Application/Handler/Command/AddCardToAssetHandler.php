@@ -15,10 +15,7 @@ use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
  */
 class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
 {
-    /**
-     * @var CardService
-     */
-    protected $cardService;
+    protected CardService $cardService;
 
     /**
      * CardsController constructor.
@@ -35,7 +32,9 @@ class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
      */
     public function handle($command): void
     {
-        $card = $this->cardService->createCard($command->getWord(), $command->getTranslate(), $command->getAsset());
+        $card = $this->cardService->addCardToAsset(
+            $command->getUser(), $command->getLanguage(), $command->getCard(), $command->getAsset()
+        );
 
         event(new CardAdded($command->getUser(), $card));
     }
