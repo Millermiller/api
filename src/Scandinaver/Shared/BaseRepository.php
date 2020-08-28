@@ -66,7 +66,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function delete($object): bool
+    public function delete($object): void
     {
         $this->_em->remove($object);
         $this->_em->flush($object);
