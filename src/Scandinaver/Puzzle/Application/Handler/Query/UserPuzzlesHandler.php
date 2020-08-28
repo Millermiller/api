@@ -14,16 +14,8 @@ use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
  */
 class UserPuzzlesHandler implements UserPuzzlesHandlerInterface
 {
-    /**
-     * @var PuzzleService
-     */
     private PuzzleService $puzzleService;
 
-    /**
-     * PuzzleCompletedHandler constructor.
-     *
-     * @param  PuzzleService  $puzzleService
-     */
     public function __construct(PuzzleService $puzzleService)
     {
         $this->puzzleService = $puzzleService;

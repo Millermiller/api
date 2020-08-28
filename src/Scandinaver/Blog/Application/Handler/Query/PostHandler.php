@@ -15,9 +15,6 @@ use Scandinaver\Blog\UI\Query\PostQuery;
  */
 class PostHandler implements PostHandlerInterface
 {
-    /**
-     * @var BlogService
-     */
     private BlogService $blogService;
 
     public function __construct(BlogService $blogService)

@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
  */
 class DeleteCardFromAssetHandler implements DeleteCardFromAssetHandlerInterface
 {
-    /**
-     * @var CardService
-     */
-    protected $cardService;
+    protected CardService $cardService;
 
-    /**
-     * CardsController constructor.
-     *
-     * @param  CardService  $cardService
-     */
     public function __construct(CardService $cardService)
     {
         $this->cardService = $cardService;

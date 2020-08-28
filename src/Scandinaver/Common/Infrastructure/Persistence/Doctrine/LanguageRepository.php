@@ -16,9 +16,6 @@ use Scandinaver\Shared\BaseRepository;
 class LanguageRepository extends BaseRepository implements LanguageRepositoryInterface
 {
     /**
-     * @param  string  $name
-     *
-     * @return Language
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

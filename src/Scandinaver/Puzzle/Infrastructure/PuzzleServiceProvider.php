@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Puzzle\Application;
+namespace Scandinaver\Puzzle\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
@@ -15,7 +15,6 @@ use Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine\PuzzleRepository;
  */
 class PuzzleServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
         $this->app->bind(

@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Query\WordsCountQuery;
  */
 class WordsCountHandler implements WordsCountHandlerInterface
 {
-    /**
-     * @var WordService
-     */
-    private $wordService;
+    private WordService $wordService;
 
-    /**
-     * WordsCountHandler constructor.
-     *
-     * @param  WordService  $wordService
-     */
     public function __construct(WordService $wordService)
     {
         $this->wordService = $wordService;

@@ -39,11 +39,6 @@ class CardsController extends Controller
     }
 
     /**
-     * @param  Language  $language
-     * @param  Card      $card
-     * @param  Asset     $asset
-     *
-     * @return JsonResponse
      * @throws AuthorizationException
      */
     public function destroy(Language $language, Card $card, Asset $asset): JsonResponse

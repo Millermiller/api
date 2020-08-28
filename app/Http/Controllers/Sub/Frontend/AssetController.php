@@ -22,10 +22,6 @@ use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
 class AssetController extends Controller
 {
     /**
-     * @param Language $language
-     * @param Asset    $asset
-     *
-     * @return JsonResponse
      * @throws AuthorizationException
      */
     public function show(Language $language, Asset $asset): JsonResponse
@@ -35,12 +31,6 @@ class AssetController extends Controller
         return response()->json($this->queryBus->execute(new CardsOfAssetQuery($language, Auth::user(), $asset)));
     }
 
-    /**
-     * @param Language $language
-     * @param Request  $request
-     *
-     * @return JsonResponse
-     */
     public function store(Language $language, Request $request): JsonResponse
     {
         $asset = $this->commandBus->execute(new CreateAssetCommand($language, Auth::user(), $request->get('title')));
@@ -49,12 +39,6 @@ class AssetController extends Controller
     }
 
     /**
-     * @param Language $language
-     * @param Asset    $asset
-     *
-     * @param Request  $request
-     * @template
-     * @return JsonResponse
      * @throws AuthorizationException
      */
     public function update(Language $language, Asset $asset, Request $request): JsonResponse
@@ -67,10 +51,6 @@ class AssetController extends Controller
     }
 
     /**
-     * @param Language $language
-     * @param Asset    $asset
-     *
-     * @return JsonResponse
      * @throws AuthorizationException
      */
     public function destroy(Language $language, Asset $asset): JsonResponse

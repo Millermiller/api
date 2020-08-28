@@ -14,9 +14,6 @@ use Scandinaver\Blog\Domain\Model\Post;
  */
 class BlogService
 {
-    /**
-     * @var PostRepositoryInterface
-     */
     private PostRepositoryInterface $postRepository;
 
     /**
@@ -29,29 +26,16 @@ class BlogService
         $this->postRepository = $postRepository;
     }
 
-    /**
-     * @return array
-     */
     public function getAll(): array
     {
         return $this->postRepository->all();
     }
 
-    /**
-     * @param $id
-     *
-     * @return Post
-     */
     public function getOne($id): Post
     {
         return $this->postRepository->get($id);
     }
 
-    /**
-     * @param  array  $data
-     *
-     * @return Post
-     */
     public function create(array $data): Post
     {
         $post = new Post();
@@ -69,9 +53,6 @@ class BlogService
         $this->postRepository->update($post, $data);
     }
 
-    /**
-     * @param  Post  $post
-     */
     public function deletePost(Post $post)
     {
         $this->postRepository->delete($post);

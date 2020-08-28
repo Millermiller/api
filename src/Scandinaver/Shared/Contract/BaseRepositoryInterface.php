@@ -12,7 +12,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
  */
 interface BaseRepositoryInterface extends ObjectRepository
 {
-
     public function count(array $criteria);
 
     public function all();
@@ -24,5 +23,4 @@ interface BaseRepositoryInterface extends ObjectRepository
     public function update(object $entity, array $data);
 
     public function delete($object);
-
 }

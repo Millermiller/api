@@ -15,16 +15,8 @@ use Scandinaver\User\UI\Query\GetStateQuery;
  */
 class GetStateHandler implements GetStateHandlerInterface
 {
-    /**
-     * @var UserService
-     */
-    protected $userService;
+    protected UserService $userService;
 
-    /**
-     * GetStateHandler constructor.
-     *
-     * @param  UserService  $userService
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;

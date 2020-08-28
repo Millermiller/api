@@ -141,11 +141,6 @@ class Asset extends Model
     //     return $this->belongsTo('App\Helpers\Eloquent\User', 'role_user', 'user_id', 'role_id');
     // }
 
-    /**
-     * @param  Builder  $query
-     *
-     * @return Builder
-     */
     public function scopeDomain(Builder $query): Builder
     {
         return $query->where('language_id', config('app.lang'));

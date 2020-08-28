@@ -12,19 +12,13 @@ use Scandinaver\Shared\Contract\Command;
  */
 class CreateMetaCommand implements Command
 {
-    /**
-     * @var array
-     */
-    public $data;
+    public array $data;
 
     public function __construct(array $data)
     {
         $this->data = $data;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;

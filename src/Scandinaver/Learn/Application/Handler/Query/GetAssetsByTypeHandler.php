@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
  */
 class GetAssetsByTypeHandler implements GetAssetsByTypeHandlerInterface
 {
-    /**
-     * @var AssetService
-     */
     private AssetService $assetService;
 
-    /**
-     * GetAssetsByTypeHandler constructor.
-     *
-     * @param  AssetService  $assetService
-     */
     public function __construct(AssetService $assetService)
     {
         $this->assetService = $assetService;

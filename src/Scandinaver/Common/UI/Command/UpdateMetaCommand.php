@@ -14,10 +14,7 @@ class UpdateMetaCommand implements Command
 {
     private $meta;
 
-    /**
-     * @var array
-     */
-    private $data;
+    private array $data;
 
     public function __construct($meta, $data)
     {
@@ -25,17 +22,11 @@ class UpdateMetaCommand implements Command
         $this->data = $data;
     }
 
-    /**
-     * @return mixed
-     */
     public function getMeta()
     {
         return $this->meta;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;

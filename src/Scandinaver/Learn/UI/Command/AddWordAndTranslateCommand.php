@@ -13,20 +13,11 @@ use Scandinaver\Shared\Contract\Command;
  */
 class AddWordAndTranslateCommand implements Command
 {
-    /**
-     * @var string
-     */
-    private $word;
+    private string $word;
 
-    /**
-     * @var string
-     */
-    private $translate;
+    private string $translate;
 
-    /**
-     * @var int
-     */
-    private $issentence;
+    private int $issentence;
 
     public function __construct(array $data)
     {
@@ -35,25 +26,16 @@ class AddWordAndTranslateCommand implements Command
         $this->issentence = $data['issentence'];
     }
 
-    /**
-     * @return string
-     */
     public function getWord(): string
     {
         return $this->word;
     }
 
-    /**
-     * @return string
-     */
     public function getTranslate(): string
     {
         return $this->translate;
     }
 
-    /**
-     * @return int
-     */
     public function getIssentence(): int
     {
         return $this->issentence;

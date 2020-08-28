@@ -13,10 +13,6 @@ use Scandinaver\Shared\Contract\Query;
  */
 class AssetsCountQuery implements Query
 {
-    /**
-     * WordsCountQuery constructor.
-     *
-     */
     public function __construct()
     {
 

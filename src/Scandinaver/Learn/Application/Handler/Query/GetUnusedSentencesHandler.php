@@ -15,16 +15,8 @@ use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;
  */
 class GetUnusedSentencesHandler implements GetUnusedSentencesHandlerInterface
 {
-    /**
-     * @var WordService
-     */
     private WordService $wordService;
 
-    /**
-     * GetUnusedSentencesHandler constructor.
-     *
-     * @param  WordService  $wordService
-     */
     public function __construct(WordService $wordService)
     {
         $this->wordService = $wordService;

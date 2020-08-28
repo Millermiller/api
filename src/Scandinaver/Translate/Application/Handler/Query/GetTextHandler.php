@@ -17,11 +17,6 @@ class GetTextHandler implements GetTextHandlerInterface
 {
     private TextService $textService;
 
-    /**
-     * TextController constructor.
-     *
-     * @param  TextService  $textService
-     */
     public function __construct(TextService $textService)
     {
         $this->textService = $textService;

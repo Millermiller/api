@@ -16,11 +16,6 @@ class DeleteAssetCommand implements Command
 {
     private Asset $asset;
 
-    /**
-     * DeleteAssetCommand constructor.
-     *
-     * @param  Asset  $asset
-     */
     public function __construct(Asset $asset)
     {
         $this->asset = $asset;

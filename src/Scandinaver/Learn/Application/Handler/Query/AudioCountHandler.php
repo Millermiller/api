@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Query\AudioCountQuery;
  */
 class AudioCountHandler implements AudioCountHandlerInterface
 {
-    /**
-     * @var AudioService
-     */
     private AudioService $audioService;
 
-    /**
-     * WordsCountHandler constructor.
-     *
-     * @param  AudioService  $audioService
-     */
     public function __construct(AudioService $audioService)
     {
         $this->audioService = $audioService;

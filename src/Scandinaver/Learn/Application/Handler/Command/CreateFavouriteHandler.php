@@ -19,12 +19,6 @@ class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
 
     protected AssetService $assetService;
 
-    /**
-     * FavouriteController constructor.
-     *
-     * @param  AssetService      $assetService
-     * @param  FavouriteService  $favouriteService
-     */
     public function __construct(AssetService $assetService, FavouriteService $favouriteService)
     {
         $this->favouriteService = $favouriteService;

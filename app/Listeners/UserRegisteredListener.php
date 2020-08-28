@@ -15,21 +15,11 @@ use App\Jobs\SendRegistrationEmail;
  */
 class UserRegisteredListener
 {
-    /**
-     * Create the event listener.
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param UserRegistered $event
-     *
-     * @return void
-     */
     public function handle(UserRegistered $event): void
     {
         dispatch(new SendRegistrationEmail($event));

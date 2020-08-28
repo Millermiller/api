@@ -25,38 +25,16 @@ class PuzzleController extends Controller
         return response()->json(Puzzle::all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
     public function show($id): JsonResponse
     {
         return response()->json(Puzzle::findOrFail($id));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         return response()->json(Puzzle::create($request->all()), 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return JsonResponse
-     */
     public function update(Request $request, $id): JsonResponse
     {
         $puzzle = Puzzle::findOrFail($id);
@@ -65,13 +43,6 @@ class PuzzleController extends Controller
         return response()->json($puzzle, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
     public function destroy($id): JsonResponse
     {
         $puzzle = Puzzle::findOrFail($id);

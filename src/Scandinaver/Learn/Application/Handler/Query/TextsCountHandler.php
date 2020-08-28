@@ -14,16 +14,8 @@ use Scandinaver\Translate\Domain\TextService;
  */
 class TextsCountHandler implements TextsCountHandlerInterface
 {
-    /**
-     * @var TextService
-     */
     private TextService $textService;
 
-    /**
-     * TextCountHandler constructor.
-     *
-     * @param  TextService  $textService
-     */
     public function __construct(TextService $textService)
     {
         $this->textService = $textService;

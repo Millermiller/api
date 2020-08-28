@@ -24,11 +24,6 @@ class FavouriteService
 {
     private FavouriteAssetRepositoryInterface $favouriteAssetRepository;
 
-    /**
-     * FavouriteService constructor.
-     *
-     * @param  FavouriteAssetRepositoryInterface  $assetRepository
-     */
     public function __construct(
         FavouriteAssetRepositoryInterface $favouriteAssetRepository
     ) {

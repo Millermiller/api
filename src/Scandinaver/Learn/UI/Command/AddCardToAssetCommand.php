@@ -24,14 +24,6 @@ class AddCardToAssetCommand implements Command
 
     private Card $card;
 
-    /**
-     * CreateAssetCommand constructor.
-     *
-     * @param  User       $user
-     * @param  Word       $word
-     * @param  Translate  $translate
-     * @param  Asset      $asset
-     */
     public function __construct(
         User $user,
         Language $language,

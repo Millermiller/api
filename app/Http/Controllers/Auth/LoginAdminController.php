@@ -28,17 +28,9 @@ class LoginAdminController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * @var string
-     */
-    protected $redirectAfterLogout = '/admin';
+    protected string $redirectAfterLogout = '/admin';
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/admin';
+    protected string $redirectTo = '/admin';
 
     public function __construct()
     {

@@ -14,11 +14,6 @@ class CardDTO extends DTO
 {
     private Card $card;
 
-    /**
-     * CardDTO constructor.
-     *
-     * @param  Card  $card
-     */
     public function __construct(Card $card)
     {
 

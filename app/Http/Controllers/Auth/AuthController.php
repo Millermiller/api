@@ -55,9 +55,6 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function logout(): JsonResponse
     {
         $this->commandBus->execute(new LogoutCommand(Auth::user()));

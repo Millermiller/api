@@ -14,24 +14,13 @@ use Scandinaver\User\Domain\Model\User;
  */
 class UserStateQuery implements Query
 {
-    /**
-     * @var User
-     */
     private User $user;
 
-    /**
-     * UserStateQuery constructor.
-     *
-     * @param  User  $user
-     */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;

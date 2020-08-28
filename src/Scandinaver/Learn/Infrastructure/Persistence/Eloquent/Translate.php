@@ -41,9 +41,6 @@ class Translate extends Model
         );
     }
 
-    /**
-     * @return bool
-     */
     public function getActiveAttribute(): bool
     {
         return $this->attributes['active'] = false;

@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
  */
 class Text extends Model
 {
-
     protected $table = 'text';
 
     protected $fillable = [
@@ -29,11 +28,6 @@ class Text extends Model
 
     protected $hidden = ['translate'];
 
-    /**
-     * @param  int  $textid
-     *
-     * @return array
-     */
     public static function getSynonyms(int $textid): array
     {
         $words = DB::select(
@@ -60,11 +54,6 @@ class Text extends Model
         return $result;
     }
 
-    /**
-     * @param  int  $id  User Id
-     *
-     * @return array
-     */
     public static function getTextsByUser(int $id): array
     {
         $activeArray = TextResult::domain()->where('user_id', $id)->pluck(
@@ -111,11 +100,6 @@ class Text extends Model
         return $rez;
     }
 
-    /**
-     * @param  int  $id
-     *
-     * @return bool
-     */
     public static function getNextLevel(int $id): bool
     {
         $id = DB::selectOne(
@@ -131,11 +115,6 @@ class Text extends Model
         return ($id > 0) ? $id : false;
     }
 
-    /**
-     * @param  array  $attributes
-     *
-     * @return mixed
-     */
     public static function create(array $attributes = [])
     {
         $attributes['level'] = DB::selectOne(
@@ -145,11 +124,6 @@ class Text extends Model
         return parent::create($attributes);
     }
 
-    /**
-     * @param  Builder  $query
-     *
-     * @return Builder
-     */
     public function scopeDomain($query): Builder
     {
         return $query->where('lang', config('app.lang'));

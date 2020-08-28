@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Blog\Application;
+namespace Scandinaver\Blog\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;

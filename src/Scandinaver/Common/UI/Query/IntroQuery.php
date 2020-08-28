@@ -14,11 +14,6 @@ class IntroQuery implements Query
 {
     private int $id;
 
-    /**
-     * IntroQuery constructor.
-     *
-     * @param  integer  $id
-     */
     public function __construct(int $id)
     {
         $this->id = $id;

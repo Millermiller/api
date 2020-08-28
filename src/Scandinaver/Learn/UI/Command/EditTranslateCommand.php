@@ -17,30 +17,15 @@ use Scandinaver\Shared\Contract\Command;
  */
 class EditTranslateCommand implements Command
 {
-    /**
-     * @var int
-     */
-    private $translate_id;
+    private int $translate_id;
 
-    /**
-     * @var int
-     */
-    private $card_id;
+    private int $card_id;
 
-    /**
-     * @var string
-     */
-    private $text;
+    private string $text;
 
-    /**
-     * @var TranslateRepositoryInterface
-     */
-    private $translateRepository;
+    private TranslateRepositoryInterface $translateRepository;
 
-    /**
-     * @var CardRepositoryInterface
-     */
-    private $cardRepository;
+    private CardRepositoryInterface $cardRepository;
 
     public function __construct(array $data)
     {
@@ -54,25 +39,16 @@ class EditTranslateCommand implements Command
         $this->cardRepository = app()->make('CardRepositoryInterface');
     }
 
-    /**
-     * @return Translate
-     */
-    public function getTranslate(): object
+    public function getTranslate(): Translate
     {
         return $this->translateRepository->find($this->translate_id);
     }
 
-    /**
-     * @return Card
-     */
-    public function getCard(): object
+    public function getCard(): Card
     {
         return $this->cardRepository->find($this->card_id);
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;

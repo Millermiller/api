@@ -14,22 +14,12 @@ use Scandinaver\Common\Domain\Services\Requester;
  */
 class PasswordResetListener
 {
-    /**
-     * Create the event listener.
-     */
+
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param PasswordReset $event
-     *
-     * @return void
-     * @throws GuzzleException
-     */
     public function handle(PasswordReset $event): void
     {
         Requester::updateForumUser([

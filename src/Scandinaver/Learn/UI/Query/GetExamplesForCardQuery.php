@@ -14,24 +14,13 @@ use Scandinaver\Shared\Contract\Query;
  */
 class GetExamplesForCardQuery implements Query
 {
-    /**
-     * @var Card
-     */
-    private $card;
+    private Card $card;
 
-    /**
-     * GetExamplesForCardQuery constructor.
-     *
-     * @param  Card  $card
-     */
     public function __construct(Card $card)
     {
         $this->card = $card;
     }
 
-    /**
-     * @return Card
-     */
     public function getCard(): Card
     {
         return $this->card;

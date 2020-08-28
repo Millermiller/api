@@ -16,16 +16,8 @@ use Scandinaver\Learn\UI\Command\SaveTestResultCommand;
  */
 class SaveTestResultHandler implements SaveTestResultHandlerInterface
 {
-    /**
-     * @var AssetService
-     */
-    private $assetService;
+    private AssetService $assetService;
 
-    /**
-     * SaveTestResultHandler constructor.
-     *
-     * @param  AssetService  $assetService
-     */
     public function __construct(AssetService $assetService)
     {
         $this->assetService = $assetService;

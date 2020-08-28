@@ -14,9 +14,6 @@ use Scandinaver\Learn\UI\Command\UploadAudioCommand;
  */
 class UploadAudioHandler implements UploadAudioHandlerInterface
 {
-    /**
-     * @var AudioService
-     */
     private AudioService $audioService;
 
     public function __construct(AudioService $audioService)

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\API\UI\Query;
+namespace Scandinaver\Learn\UI\Query;
 
 use Illuminate\Auth\Authenticatable;
 use Scandinaver\Common\Domain\Model\Language;
@@ -11,8 +11,8 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class AssetsQuery
  *
- * @see     \Scandinaver\API\Application\Handler\Query\AssetsHandler
- * @package Scandinaver\API\UI\Query
+ * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsHandler
+ * @package Scandinaver\Learn\UI\Query
  */
 class AssetsQuery implements Query
 {

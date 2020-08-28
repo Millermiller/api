@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\Application\Handler\Query;
 
 use Scandinaver\Common\Domain\Contract\Query\IntroHandlerInterface;
-use Scandinaver\Common\Domain\Intro;
+use Scandinaver\Common\Domain\Model\Intro;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Query\IntroQuery;
 
@@ -15,10 +15,7 @@ use Scandinaver\Common\UI\Query\IntroQuery;
  */
 class IntroHandler implements IntroHandlerInterface
 {
-    /**
-     * @var IntroService
-     */
-    private $introService;
+    private IntroService $introService;
 
     /**
      * MessagesHandler constructor.
@@ -32,8 +29,6 @@ class IntroHandler implements IntroHandlerInterface
 
     /**
      * @param  IntroQuery  $query
-     *
-     * @return Intro
      */
     public function handle($query): Intro
     {

@@ -13,22 +13,12 @@ use Scandinaver\Common\Domain\Services\Requester;
  */
 class UserPhotoUpdatedListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
     /**
-     * Handle the event.
-     *
-     * @param UserPhotoUpdated $event
-     *
-     * @return void
      * @throws GuzzleException
      */
     public function handle(UserPhotoUpdated $event): void

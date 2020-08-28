@@ -12,10 +12,5 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
  */
 interface TranslateRepositoryInterface extends BaseRepositoryInterface
 {
-    /**
-     * @param  array  $ids
-     *
-     * @return array
-     */
     public function searchByIds(array $ids): array;
 }

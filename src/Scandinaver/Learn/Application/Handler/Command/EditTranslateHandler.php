@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Command\EditTranslateCommand;
  */
 class EditTranslateHandler implements EditTranslateHandlerInterface
 {
-    /**
-     * @var CardService
-     */
-    private $cardService;
+    private CardService $cardService;
 
-    /**
-     * GetTranslatesByWordHandler constructor.
-     *
-     * @param  CardService  $cardService
-     */
     public function __construct(CardService $cardService)
     {
         $this->cardService = $cardService;

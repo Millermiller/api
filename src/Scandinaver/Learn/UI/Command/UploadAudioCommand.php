@@ -15,39 +15,21 @@ use Scandinaver\Shared\Contract\Command;
  */
 class UploadAudioCommand implements Command
 {
-    /**
-     * @var Word
-     */
-    private $word;
+    private Word $word;
 
-    /**
-     * @var UploadedFile UploadedFile
-     */
-    private $file;
+    private UploadedFile $file;
 
-    /**
-     * UploadAudioCommand constructor.
-     *
-     * @param  Word          $word
-     * @param  UploadedFile  $file
-     */
     public function __construct(Word $word, UploadedFile $file)
     {
         $this->word = $word;
         $this->file = $file;
     }
 
-    /**
-     * @return Word
-     */
     public function getWord(): Word
     {
         return $this->word;
     }
 
-    /**
-     * @return UploadedFile
-     */
     public function getFile(): UploadedFile
     {
         return $this->file;

@@ -14,11 +14,6 @@ class MetaQuery implements Query
 {
     private int $id;
 
-    /**
-     * MetaQuery constructor.
-     *
-     * @param  int  $id
-     */
     public function __construct(int $id)
     {
         $this->id = $id;

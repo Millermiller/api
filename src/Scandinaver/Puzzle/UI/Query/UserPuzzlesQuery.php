@@ -16,11 +16,6 @@ class UserPuzzlesQuery implements Query
 {
     private User $user;
 
-    /**
-     * UserPuzzlesQuery constructor.
-     *
-     * @param  User  $user
-     */
     public function __construct(User $user)
     {
         $this->user = $user;

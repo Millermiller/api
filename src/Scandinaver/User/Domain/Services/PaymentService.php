@@ -14,12 +14,6 @@ use Scandinaver\User\Domain\Model\Order;
  */
 class PaymentService
 {
-
-    /**
-     * @param  Request  $request
-     *
-     * @return Order
-     */
     public function make(Request $request): Order
     {
         $order = new Order();

@@ -16,7 +16,6 @@ use Scandinaver\Shared\BaseRepository;
 class WordRepository extends BaseRepository implements WordRepositoryInterface
 {
     /**
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -32,9 +31,6 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
     }
 
     /**
-     * @param  Language  $language
-     *
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -51,9 +47,6 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
     }
 
     /**
-     * @param  Language  $language
-     *
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

@@ -13,9 +13,6 @@ use Scandinaver\Shared\Contract\Query;
  */
 class AudioCountQuery implements Query
 {
-    /**
-     * WordsCountQuery constructor.
-     */
     public function __construct()
     {
 

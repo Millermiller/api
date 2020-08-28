@@ -24,35 +24,21 @@ class Puzzle extends Model
 
     protected $appends = ['success'];
 
-    /**
-     * @param  Builder  $query
-     *
-     * @return Builder
-     */
     public function scopeDomain(Builder $query): Builder
     {
         return $query->where('language_id', config('app.lang'));
     }
 
-    /**
-     * @param  string  $value
-     */
     public function setTextAttribute(string $value): void
     {
         $this->attributes['text'] = StringHelper::cleartext($value);
     }
 
-    /**
-     * @param  string  $value
-     */
     public function setTranslateAttribute(string $value): void
     {
         $this->attributes['translate'] = StringHelper::cleartext($value);
     }
 
-    /**
-     * @return boolean
-     */
     public function getSuccessAttribute(): bool
     {
         return $this->users()

@@ -32,13 +32,6 @@ class WordService
 
     private CardRepositoryInterface $cardRepository;
 
-    /**
-     * WordService constructor.
-     *
-     * @param  TranslateRepositoryInterface  $translateRepository
-     * @param  WordRepositoryInterface       $wordsRepository
-     * @param  LanguageRepositoryInterface   $languageRepository
-     */
     public function __construct(
         TranslateRepositoryInterface $translateRepository,
         WordRepositoryInterface $wordsRepository,
@@ -51,19 +44,11 @@ class WordService
         $this->cardRepository = $cardRepository;
     }
 
-    /**
-     * @return int
-     */
     public function count(): int
     {
         return $this->wordsRepository->count([]);
     }
 
-    /**
-     * @param  Language  $language
-     *
-     * @return int
-     */
     public function countByLanguage(Language $language): int
     {
         return $this->wordsRepository->getCountByLanguage($language);

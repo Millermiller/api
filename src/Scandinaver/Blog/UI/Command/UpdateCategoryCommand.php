@@ -24,17 +24,11 @@ class UpdateCategoryCommand implements Command
         $this->data = $data;
     }
 
-    /**
-     * @return Category
-     */
     public function getCategory(): Category
     {
         return $this->category;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;

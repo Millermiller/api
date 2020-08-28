@@ -14,19 +14,13 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeletePostCommand implements Command
 {
-    /**
-     * @var Post
-     */
-    private $post;
+    private Post $post;
 
     public function __construct(Post $post)
     {
         $this->post = $post;
     }
 
-    /**
-     * @return Post
-     */
     public function getPost(): Post
     {
         return $this->post;

@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
  */
 class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
 {
-    /**
-     * @var CardService
-     */
     protected CardService $cardService;
 
-    /**
-     * CardsOfAssetHandler constructor.
-     *
-     * @param  CardService  $cardService
-     */
     public function __construct(CardService $cardService)
     {
         $this->cardService = $cardService;

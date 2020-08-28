@@ -55,21 +55,6 @@ class UserService
 
     private PuzzleService $puzzleService;
 
-    /**
-     * UserService constructor.
-     *
-     * @param  AssetRepositoryInterface           $assetRepository
-     * @param  FavouriteAssetRepositoryInterface  $favouriteAssetRepository
-     * @param  PersonalAssetRepositoryInterface   $personalAssetRepository
-     * @param  AssetService                       $assetService
-     * @param  UserRepositoryInterface            $userRepository
-     * @param  PlanRepositoryInterface            $planRepository
-     * @param  LanguageRepositoryInterface        $languageRepository
-     * @param  TextRepositoryInterface            $textRepository
-     * @param  IntroRepositoryInterface           $introRepository
-     * @param  TextService                        $textService
-     * @param  PuzzleService                      $puzzleService
-     */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         FavouriteAssetRepositoryInterface $favouriteAssetRepository,
@@ -96,28 +81,17 @@ class UserService
         $this->personalAssetRepository = $personalAssetRepository;
     }
 
-    /**
-     * @return array
-     */
     public function getAll(): array
     {
         return $this->userRepository->all();
     }
 
-    /**
-     * @param  string  $string
-     *
-     * @return array
-     */
     public function find($string): array
     {
         return $this->userRepository->findByNameOrEmail($string);
     }
 
     /**
-     * @param  array  $credentials
-     *
-     * @return Authenticatable|User|null
      * @throws UserNotFoundException
      * @throws Exception
      */
@@ -130,11 +104,6 @@ class UserService
         return \App\Helpers\Auth::user();
     }
 
-    /**
-     * @param  array  $data
-     *
-     * @return User
-     */
     public function registration(array $data): User
     {
         $plan = $this->planRepository->get(1);
@@ -189,13 +158,6 @@ class UserService
         return $user;
     }
 
-    /**
-     * @param  Authenticatable|User  $user
-     * @param  Language              $language
-     *
-     * @return array
-     * @throws Exception
-     */
     public function getState(User $user, Language $language): array
     {
         return [
@@ -232,9 +194,6 @@ class UserService
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getInfo(): array
     {
         return [
@@ -248,11 +207,6 @@ class UserService
         ];
     }
 
-    /**
-     * @param  User  $user
-     *
-     * @return void
-     */
     public function updatePlan(User $user): void
     {
         if ($user->getActiveTo() < Carbon::now()) {
@@ -261,11 +215,6 @@ class UserService
         }
     }
 
-    /**
-     * @param  array  $request
-     *
-     * @return void
-     */
     public function updateUserInfo(array $request): void
     {
         $user = Auth::user();
@@ -279,12 +228,6 @@ class UserService
         $this->userRepository->update($user, $request);
     }
 
-    /**
-     * @param  User   $user
-     * @param  array  $data
-     *
-     * @return User
-     */
     public function updateUser(User $user, array $data): User
     {
         $data['plan'] = $this->planRepository->get($data['plan']['id']);

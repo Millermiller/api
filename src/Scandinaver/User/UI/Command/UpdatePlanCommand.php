@@ -14,15 +14,9 @@ use Scandinaver\User\Domain\Model\Plan;
  */
 class UpdatePlanCommand implements Command
 {
-    /**
-     * @var Plan
-     */
-    private $plan;
+    private Plan $plan;
 
-    /**
-     * @var array
-     */
-    private $data;
+    private array $data;
 
     public function __construct(Plan $plan, array $data)
     {
@@ -30,17 +24,11 @@ class UpdatePlanCommand implements Command
         $this->data = $data;
     }
 
-    /**
-     * @return Plan
-     */
     public function getPlan(): Plan
     {
         return $this->plan;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;

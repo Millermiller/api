@@ -21,13 +21,6 @@ class UpdateAssetCommand implements Command
 
     private Asset $asset;
 
-    /**
-     * CreateAssetCommand constructor.
-     *
-     * @param  User   $user
-     * @param  Asset  $asset
-     * @param  array  $data
-     */
     public function __construct(User $user, Asset $asset, array $data)
     {
         $this->user = $user;

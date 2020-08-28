@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Command\AddBasicLevelCommand;
  */
 class AddBasicLevelHandler implements AddBasicLevelHandlerInterface
 {
-    /**
-     * @var AssetService
-     */
     protected AssetService $assetService;
 
-    /**
-     * AddBasicLevelHandler constructor.
-     *
-     * @param  AssetService  $assetService
-     */
     public function __construct(AssetService $assetService)
     {
         $this->assetService = $assetService;

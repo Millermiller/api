@@ -19,42 +19,21 @@ use Scandinaver\User\UI\Query\UsersQuery;
  */
 class UsersController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new UsersQuery()));
     }
 
-    /**
-     * @param User $user
-     *
-     * @return JsonResponse
-     */
     public function show(User $user): JsonResponse
     {
         return response()->json($this->queryBus->execute(new UserQuery($user->getKey())));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return void
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * @param Request $request
-     * @param User    $user
-     *
-     * @return JsonResponse
-     */
     public function update(Request $request, User $user): JsonResponse
     {
         $this->commandBus->execute(new UpdateUserCommand($user, $request->toArray()));
@@ -62,11 +41,6 @@ class UsersController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param User $user
-     *
-     * @return JsonResponse
-     */
     public function destroy(User $user): JsonResponse
     {
         $this->commandBus->execute(new DeleteUserCommand($user));

@@ -14,10 +14,7 @@ use Scandinaver\Blog\UI\Query\PostsQuery;
  */
 class PostsHandler implements PostsHandlerInterface
 {
-    /**
-     * @var BlogService
-     */
-    private $blogService;
+    private BlogService $blogService;
 
     public function __construct(BlogService $blogService)
     {

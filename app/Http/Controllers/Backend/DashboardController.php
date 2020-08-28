@@ -28,9 +28,7 @@ use Scandinaver\User\UI\Query\UsersQuery;
  */
 class DashboardController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
+
     public function all(): JsonResponse
     {
         // $last_day_users = User::where('created_at', '>', Carbon::yesterday())->count();
@@ -48,12 +46,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    /**
-     * @param  Language  $language
-     *
-     * @return JsonResponse
-     */
-    public function one(Language $language)
+    public function one(Language $language): JsonResponse
     {
         return response()->json([
             'words' => $this->queryBus->execute(new WordsCountByLanguageQuery($language)),

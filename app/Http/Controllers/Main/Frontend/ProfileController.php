@@ -27,15 +27,9 @@ class ProfileController extends Controller
 {
     use ValidatesRequests;
 
-    /**
-     * @var UserService
-     */
-    protected $userService;
+    protected UserService $userService;
 
-    /**
-     * @var FileService
-     */
-    protected $fileService;
+    protected FileService $fileService;
 
     /**
      * ProfileController constructor.

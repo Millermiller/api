@@ -21,13 +21,6 @@ class CreateAssetCommand implements Command
 
     private Language $language;
 
-    /**
-     * CreateAssetCommand constructor.
-     *
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  string    $title
-     */
     public function __construct(Language $language, User $user, string $title)
     {
         $this->language = $language;

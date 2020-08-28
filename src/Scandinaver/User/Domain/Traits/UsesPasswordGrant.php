@@ -13,11 +13,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 trait UsesPasswordGrant
 {
-    /**
-     * @param  string  $userIdentifier
-     *
-     * @return User|object
-     */
     public function findForPassport($userIdentifier)
     {
         $userRepository = EntityManager::getRepository(get_class($this));

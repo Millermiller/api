@@ -15,28 +15,12 @@ use Scandinaver\User\Domain\Model\User;
  */
 class AssetForUserByTypeQuery implements Query
 {
-    /**
-     * @var string
-     */
-    private $type;
+    private string $type;
 
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var Language
-     */
-    private $language;
+    private Language $language;
 
-    /**
-     * AssetByForUserByTypeQuery constructor.
-     *
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  string    $type
-     */
     public function __construct(Language $language, User $user, string $type)
     {
         $this->user = $user;
@@ -44,25 +28,16 @@ class AssetForUserByTypeQuery implements Query
         $this->language = $language;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;

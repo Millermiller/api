@@ -35,17 +35,6 @@ class CardService
 
     private FavouriteAssetRepositoryInterface $favouriteAssetRepository;
 
-    /**
-     * CardService constructor.
-     *
-     * @param  AssetRepositoryInterface           $assetRepository
-     * @param  CardRepositoryInterface            $cardRepository
-     * @param  ResultRepositoryInterface          $resultRepository
-     * @param  ExampleRepositoryInterface         $exampleRepository
-     * @param  TranslateRepositoryInterface       $translateRepository
-     * @param  FavouriteAssetRepositoryInterface  $favouriteAssetRepository
-     * @param  CardFabric                         $cardFabric
-     */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         CardRepositoryInterface $cardRepository,
@@ -75,13 +64,6 @@ class CardService
         return $card;
     }
 
-    /**
-     * @param  Word       $word
-     * @param  Translate  $translate
-     * @param  Asset      $asset
-     *
-     * @return Card
-     */
     public function createCard(User $user, Language $language, string $word, string $translate): Card
     {
         $data = [
@@ -98,14 +80,6 @@ class CardService
         return $card;
     }
 
-    /**
-     * @param  Card  $card
-     * @param  Word        $word
-     * @param  Translate   $translate
-     * @param  Asset       $asset
-     *
-     * @return Card
-     */
     public function updateCard(
         Card $card,
         Word $word,

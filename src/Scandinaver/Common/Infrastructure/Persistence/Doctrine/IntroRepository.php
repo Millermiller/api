@@ -13,10 +13,7 @@ use Scandinaver\Shared\BaseRepository;
  */
 class IntroRepository extends BaseRepository implements IntroRepositoryInterface
 {
-    /**
-     * @return array
-     */
-    public function getGrouppedIntro()
+    public function getGrouppedIntro(): array
     {
         $collection = [];
 

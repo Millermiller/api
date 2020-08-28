@@ -7,7 +7,7 @@ use ReflectionException;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Scandinaver\Common\Domain\Intro;
+use Scandinaver\Common\Domain\Model\Intro;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
 use Scandinaver\Common\UI\Query\IntroQuery;
 use Scandinaver\Common\UI\Query\IntrosQuery;
@@ -24,32 +24,19 @@ use Scandinaver\Common\UI\Query\IntrosQuery;
 class IntroController extends Controller
 {
     /**
-     * @return JsonResponse
      * @throws ReflectionException
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new IntrosQuery()));
     }
 
-    /**
-     * @param int $id
-     *
-     * @return JsonResponse
-     * @throws ReflectionException
-     */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new IntroQuery($id)));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     * @throws ReflectionException
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $intro = new Intro();
 
@@ -57,7 +44,7 @@ class IntroController extends Controller
         return response()->json(null, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $intro = Intro::findOrFail($id);
         $intro->update($request->all());
@@ -65,15 +52,7 @@ class IntroController extends Controller
         return response()->json($intro, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
-     */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $puzzle = Intro::findOrFail($id);
         $puzzle->delete();

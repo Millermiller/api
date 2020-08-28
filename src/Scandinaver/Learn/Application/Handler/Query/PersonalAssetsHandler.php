@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
  */
 class PersonalAssetsHandler implements PersonalAssetsHandlerInterface
 {
-    /**
-     * @var AssetService
-     */
     protected AssetService $assetService;
 
-    /**
-     * AssetForUserByTypeHandler constructor.
-     *
-     * @param  AssetService  $assetService
-     */
     public function __construct(AssetService $assetService)
     {
         $this->assetService = $assetService;

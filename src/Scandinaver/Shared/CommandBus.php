@@ -15,24 +15,15 @@ use Scandinaver\Shared\Contract\CommandHandler;
  */
 class CommandBus
 {
-
     private const COMMAND_PREFIX = 'Command';
 
     private const HANDLER_PREFIX = 'Handler';
 
-    /**
-     * @param  Command  $command
-     */
     public function execute(Command $command)
     {
         return $this->resolveHandler($command)->handle($command);
     }
 
-    /**
-     * @param  Command  $command
-     *
-     * @return CommandHandler
-     */
     public function resolveHandler(Command $command): ?CommandHandler
     {
         try {
@@ -43,9 +34,6 @@ class CommandBus
     }
 
     /**
-     * @param  Command  $command
-     *
-     * @return string
      * @throws ReflectionException
      */
     public function getHandlerClass(Command $command): string

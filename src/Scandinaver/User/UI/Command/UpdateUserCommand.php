@@ -14,15 +14,9 @@ use Scandinaver\User\Domain\Model\User;
  */
 class UpdateUserCommand implements Command
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var array
-     */
-    private $data;
+    private array $data;
 
     public function __construct(User $user, array $data)
     {
@@ -30,17 +24,11 @@ class UpdateUserCommand implements Command
         $this->data = $data;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;

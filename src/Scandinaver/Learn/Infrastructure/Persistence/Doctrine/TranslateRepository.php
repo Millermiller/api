@@ -15,8 +15,6 @@ use Scandinaver\Shared\BaseRepository;
 class TranslateRepository extends BaseRepository implements TranslateRepositoryInterface
 {
     /**
-     * @param  array  $ids
-     *
      * @return Translate[]
      */
     public function searchByIds(array $ids): array

@@ -25,13 +25,6 @@ class Example
 
     private Card $card;
 
-    /**
-     * Example constructor.
-     *
-     * @param  string      $text
-     * @param  string      $value
-     * @param  Card  $card
-     */
     public function __construct(string $text, string $value, Card $card)
     {
         $this->setText($text);

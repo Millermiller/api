@@ -13,8 +13,5 @@ use Scandinaver\Common\Domain\Model\Language;
  */
 class BaseRequest extends Request
 {
-    /**
-     * @var Language
-     */
-    public $language;
+    public Language $language;
 }

@@ -14,7 +14,6 @@ use JsonSerializable;
  */
 class Word implements JsonSerializable
 {
-
     private int $id;
 
     private int $sentenceNum;

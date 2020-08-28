@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\API\UI\Query\AssetsQuery;
-use Scandinaver\API\UI\Query\LanguagesQuery;
+use Scandinaver\Learn\UI\Query\AssetsQuery;
+use Scandinaver\Common\UI\Query\LanguagesQuery;
 use Scandinaver\Common\Domain\Model\Language;
 
 /**

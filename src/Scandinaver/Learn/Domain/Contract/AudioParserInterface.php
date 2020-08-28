@@ -10,10 +10,5 @@ namespace Scandinaver\Learn\Domain\Contract;
  */
 interface AudioParserInterface
 {
-    /**
-     * @param  string  $word
-     *
-     * @return string
-     */
     public function parse(string $word): string;
 }

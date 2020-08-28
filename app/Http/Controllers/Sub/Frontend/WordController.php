@@ -17,10 +17,7 @@ use Illuminate\Http\{Request, JsonResponse};
  */
 class WordController extends Controller
 {
-    /**
-     * @var WordService
-     */
-    protected $wordService;
+    protected WordService $wordService;
 
     /**
      * WordController constructor.
@@ -42,13 +39,6 @@ class WordController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param CreateWordRequest $request
-     *
-     * @return JsonResponse
-     */
     public function store(Language $language, CreateWordRequest $request): JsonResponse
     {
         $item = $this->wordService->create($request);
@@ -56,47 +46,22 @@ class WordController extends Controller
         return response()->json($item, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return void
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return void
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return void
-     */
     public function destroy($id)
     {
         //
     }
 
     /**
-     * @param Language      $language
-     * @param SearchRequest $request
-     *
      * @return JsonResponse
      * @throws DBALException
      */

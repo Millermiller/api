@@ -28,14 +28,6 @@ class AssetService
 
     private PersonalAssetRepositoryInterface $personalAssetRepository;
 
-    /**
-     * AssetService constructor.
-     *
-     * @param  AssetRepositoryInterface          $assetsRepository
-     * @param  ResultRepositoryInterface         $resultRepository
-     * @param  AssetRepositoryInterface          $assetRepository
-     * @param  PersonalAssetRepositoryInterface  $personalAssetRepository
-     */
     public function __construct(
         AssetRepositoryInterface $assetsRepository,
         ResultRepositoryInterface $resultRepository,
@@ -54,11 +46,6 @@ class AssetService
     }
 
     /**
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  string    $title
-     *
-     * @return Asset
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -77,12 +64,6 @@ class AssetService
         return $asset;
     }
 
-    /**
-     * @param  Language  $language
-     * @param  int       $asset_id
-     *
-     * @return Asset
-     */
     public function addBasic(Language $language, int $asset_id): Asset
     {
         $asset = new Asset($asset_id, 1, $asset_id, 0, $language);
@@ -96,23 +77,12 @@ class AssetService
         return $asset;
     }
 
-    /**
-     * @param  Asset  $asset
-     *
-     * @return void
-     */
     public function delete(Asset $asset): void
     {
         $repository = AssetRepositoryFactory::getByType($asset->getType());
         $repository->delete($asset);
     }
 
-    /**
-     * @param  Language  $language
-     * @param  int       $type
-     *
-     * @return array
-     */
     public function getAssets(Language $language, int $type): array
     {
         return $this->assetRepository->getAssetsByType($language, $type);
@@ -175,24 +145,11 @@ class AssetService
         return $assets;
     }
 
-    /**
-     * @param  Language  $language
-     * @param  User      $user
-     *
-     * @return array
-     */
     public function getPersonalAssets(Language $language, User $user): array
     {
         return $this->personalAssetRepository->getCreatedAssets($language, $user);
     }
 
-    /**
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  Asset     $asset
-     *
-     * @return Asset
-     */
     public function giveNextLevel(
         Language $language,
         User $user,
@@ -213,14 +170,6 @@ class AssetService
         return $nextAsset;
     }
 
-    /**
-     * @param  Language              $language
-     * @param  Authenticatable|User  $user
-     * @param  Asset                 $asset
-     * @param  int                   $resultValue
-     *
-     * @return Result
-     */
     public function saveTestResult(
         Language $language,
         User $user,
@@ -240,15 +189,85 @@ class AssetService
         return $this->resultRepository->save($result);
     }
 
-    /**
-     * @param  Asset  $asset
-     * @param  array  $data
-     *
-     * @return Asset
-     */
     public function updateAsset(Asset $asset, array $data): Asset
     {
         $repository = AssetRepositoryFactory::getByType($asset->getType());
         return $repository->update($asset, $data);
+    }
+
+    public function getAssetsForApp(Language $language, User $user): array
+    {
+        $assets = [];
+
+        $activeArray = $this->resultRepository->getActiveIds($user, $language);
+        $personaldata = $this->personalAssetRepository->getCreatedAssets(
+            $language,
+            $user
+        );
+        $publicdata = $this->assetsRepository->getPublicAssets($language);
+
+        $data = $publicdata + $personaldata;
+
+        $counter = [
+            Asset::TYPE_WORDS => 0,
+            Asset::TYPE_SENTENCES => 0,
+            Asset::TYPE_PERSONAL => 0,
+            Asset::TYPE_FAVORITES => 0,
+        ];
+
+        foreach ($data as $item) {
+            $cards = [];
+
+            /** @var Asset $item */
+            foreach ($item->getCards() as $card) {
+                $word = $card->getWord();
+
+                if ($word === null) {
+                    continue;
+                }
+
+                $cards[] = [
+                    'id' => $card->getId(),
+                    'word' => $word->getValue(),
+                    'trans' => preg_replace(
+                        '/^(\d\\)\s)/',
+                        '',
+                        $card->getTranslate()->getValue()
+                    ),
+                    'asset_id' => $item->getId(),
+                    'examples' => $card->getExamples(),
+                ];
+            }
+
+            $asset = [
+                'id' => $item->getId(),
+                'active' => in_array($item->getId(), $activeArray),
+                'count' => $item->getCards()->count(),
+                'result' => 0,
+                'level' => $item->getLevel(),
+                'title' => $item->getTitle(),
+                'type' => $item->getType(),
+                'basic' => $item->getBasic(),
+                'cards' => $cards,
+            ];
+
+            $counter[$item->getType()] = $counter[$item->getType()] + 1;
+
+            if ((in_array(
+                        $item->getType(),
+                        [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]
+                    ) && $counter[$item->getType()] < 10) || $user->isPremium() || in_array(
+                    $item->getType(),
+                    [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]
+                )) {
+                $asset['available'] = true;
+            } else {
+                $asset['available'] = false;
+            }
+
+            $assets[] = $asset;
+        }
+
+        return $assets;
     }
 }

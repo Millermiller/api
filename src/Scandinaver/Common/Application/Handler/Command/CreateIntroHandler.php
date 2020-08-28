@@ -14,9 +14,6 @@ use Scandinaver\Common\UI\Command\CreateIntroCommand;
  */
 class CreateIntroHandler implements CreateIntroHandlerInterface
 {
-    /**
-     * @var IntroService
-     */
     private IntroService $introService;
 
     public function __construct(IntroService $introService)

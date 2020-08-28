@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
  */
 class Intro extends Model
 {
-
     use SoftDeletes;
 
     protected $table = 'intro';
@@ -26,5 +25,4 @@ class Intro extends Model
         'tooltipClass',
         'active',
     ];
-
 }

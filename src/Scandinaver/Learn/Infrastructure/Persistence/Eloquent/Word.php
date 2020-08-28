@@ -115,9 +115,6 @@ class Word extends Model
         )->count();
     }
 
-    /**
-     * @return string
-     */
     public function getLoginAttribute(): string
     {
         return ($this->user) ? $this->user->login : '';

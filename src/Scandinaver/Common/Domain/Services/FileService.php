@@ -27,11 +27,6 @@ class FileService
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @param $request
-     *
-     * @return mixed
-     */
     public function uploadAvatar(Request $request)
     {
         $name = Str::random(40).'.'.$request->file('photo')->extension();

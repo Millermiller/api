@@ -18,20 +18,12 @@ use Scandinaver\Learn\Domain\Model\{Card, Translate, Word};
  */
 class FavouriteController extends Controller
 {
-    /**
-     * @param Language  $language
-     * @param Word      $word
-     * @param Translate $translate
-     *
-     * @return JsonResponse
-     */
     public function store(Language $language, Card $card): JsonResponse
     {
         $this->commandBus->execute(new CreateFavouriteCommand($language, Auth::user(), $card));
 
         return response()->json(NULL, 201);
     }
-
 
     public function destroy(Language $language, Card $card): JsonResponse
     {

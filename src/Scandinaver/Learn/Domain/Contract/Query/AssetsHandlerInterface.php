@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\API\Domain\Contract\Query;
+namespace Scandinaver\Learn\Domain\Contract\Query;
 
 use Scandinaver\Shared\Contract\QueryHandler;
 

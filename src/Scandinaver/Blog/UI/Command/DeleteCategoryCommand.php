@@ -14,19 +14,13 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeleteCategoryCommand implements Command
 {
-    /**
-     * @var Category
-     */
-    private $category;
+    private Category $category;
 
     public function __construct(Category $category)
     {
         $this->category = $category;
     }
 
-    /**
-     * @return Category
-     */
     public function getCategory(): Category
     {
         return $this->category;

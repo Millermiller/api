@@ -10,7 +10,6 @@ namespace Scandinaver\Shared;
  */
 trait EventTrait
 {
-
     /**
      * @var DomainEvent[]
      */

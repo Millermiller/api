@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Common\Application;
+namespace Scandinaver\Common\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
@@ -119,6 +119,12 @@ class AppServiceProvider extends ServiceProvider
             'UpdateMessageHandlerInterface',
             'Scandinaver\Common\Application\Handler\Command\UpdateMessageHandler'
         );
+
+        $this->app->bind(
+            'LanguagesHandlerInterface',
+            'Scandinaver\Common\Application\Handler\Query\LanguagesHandler'
+        );
+
     }
 
 }

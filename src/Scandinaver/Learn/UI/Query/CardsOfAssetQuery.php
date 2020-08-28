@@ -22,13 +22,6 @@ class CardsOfAssetQuery implements Query
 
     private Language $language;
 
-    /**
-     * CardsOfAssetQuery constructor.
-     *
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  Asset     $asset
-     */
     public function __construct(Language $language, User $user, Asset $asset)
     {
         $this->language = $language;

@@ -14,11 +14,6 @@ class ExampleDTO extends DTO
 {
     private Example $example;
 
-    /**
-     * ExampleDTO constructor.
-     *
-     * @param  Example  $example
-     */
     public function __construct(Example $example)
     {
         $this->example = $example;

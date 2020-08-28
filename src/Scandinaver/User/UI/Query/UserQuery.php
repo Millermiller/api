@@ -20,9 +20,6 @@ class UserQuery implements Query
         $this->key = $key;
     }
 
-    /**
-     * @return mixed
-     */
     public function getKey()
     {
         return $this->key;

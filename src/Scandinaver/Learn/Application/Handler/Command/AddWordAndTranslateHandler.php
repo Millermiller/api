@@ -14,10 +14,7 @@ use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
  */
 class AddWordAndTranslateHandler implements AddWordAndTranslateHandlerInterface
 {
-    /**
-     * @var WordService
-     */
-    private $wordService;
+    private WordService $wordService;
 
     public function __construct(WordService $wordService)
     {

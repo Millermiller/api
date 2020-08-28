@@ -14,24 +14,13 @@ use Scandinaver\Shared\Contract\Query;
  */
 class AudioCountByLanguageQuery implements Query
 {
-    /**
-     * @var Language
-     */
-    private $language;
+    private Language $language;
 
-    /**
-     * AudioCountByLanguageQuery constructor.
-     *
-     * @param  Language  $language
-     */
     public function __construct(Language $language)
     {
         $this->language = $language;
     }
 
-    /**
-     * @return Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;

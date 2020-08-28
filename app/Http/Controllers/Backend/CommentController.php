@@ -20,29 +20,16 @@ use Scandinaver\Blog\UI\Query\CommentsQuery;
  */
 class CommentController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CommentsQuery()));
     }
 
-    /**
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
     public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CommentQuery($id)));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateCommentCommand($request->toArray()));
@@ -50,12 +37,6 @@ class CommentController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Request $request
-     * @param Comment $comment
-     *
-     * @return JsonResponse
-     */
     public function update(Request $request, Comment $comment): JsonResponse
     {
         $this->commandBus->execute(new UpdateCommentCommand($comment, $request->toArray()));
@@ -63,11 +44,6 @@ class CommentController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Comment $comment
-     *
-     * @return JsonResponse
-     */
     public function destroy(Comment $comment): JsonResponse
     {
         $this->commandBus->execute(new DeleteCommentCommand($comment));

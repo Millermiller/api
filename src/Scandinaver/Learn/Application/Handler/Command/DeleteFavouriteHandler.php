@@ -16,22 +16,10 @@ use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
  */
 class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
 {
-    /**
-     * @var FavouriteService
-     */
-    protected $favouriteService;
+    protected FavouriteService $favouriteService;
 
-    /**
-     * @var AssetService
-     */
-    protected $assetService;
+    protected AssetService $assetService;
 
-    /**
-     * FavouriteController constructor.
-     *
-     * @param  AssetService      $assetService
-     * @param  FavouriteService  $favouriteService
-     */
     public function __construct(AssetService $assetService, FavouriteService $favouriteService)
     {
         $this->favouriteService = $favouriteService;

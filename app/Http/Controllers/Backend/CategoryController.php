@@ -20,29 +20,16 @@ use Scandinaver\Blog\UI\Query\CategoryQuery;
  */
 class CategoryController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CategoriesQuery()));
     }
 
-    /**
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
     public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new CategoryQuery($id)));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateCategoryCommand($request->toArray()));
@@ -50,12 +37,6 @@ class CategoryController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Request  $request
-     * @param Category $category
-     *
-     * @return JsonResponse
-     */
     public function update(Request $request, Category $category): JsonResponse
     {
         $this->commandBus->execute(new UpdateCategoryCommand($category, $request->toArray()));
@@ -63,11 +44,6 @@ class CategoryController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Category $category
-     *
-     * @return JsonResponse
-     */
     public function destroy(Category $category): JsonResponse
     {
         $this->commandBus->execute(new DeleteCategoryCommand($category));

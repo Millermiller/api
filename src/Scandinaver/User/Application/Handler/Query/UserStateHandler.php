@@ -15,10 +15,7 @@ use Scandinaver\User\Domain\Services\UserService;
  */
 class UserStateHandler implements UserStateHandlerInterface
 {
-    /**
-     * @var UserService
-     */
-    protected $userService;
+    protected UserService $userService;
 
     public function __construct(UserService $userService)
     {

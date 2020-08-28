@@ -31,13 +31,6 @@ class Result implements JsonSerializable
 
     private Language $language;
 
-    /**
-     * Result constructor.
-     *
-     * @param  Asset     $asset
-     * @param  User      $user
-     * @param  Language  $language
-     */
     public function __construct(Asset $asset, User $user, Language $language)
     {
         $this->asset = $asset;

@@ -13,9 +13,6 @@ use Scandinaver\Shared\Contract\Query;
  */
 class TextsCountQuery implements Query
 {
-    /**
-     * WordsCountQuery constructor.
-     */
     public function __construct()
     {
 

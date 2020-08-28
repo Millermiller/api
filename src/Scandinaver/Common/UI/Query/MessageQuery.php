@@ -14,11 +14,6 @@ class MessageQuery implements Query
 {
     private int $id;
 
-    /**
-     * MessageQuery constructor.
-     *
-     * @param  int  $id
-     */
     public function __construct(int $id)
     {
         $this->id = $id;

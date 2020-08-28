@@ -28,13 +28,6 @@ class Result
 
     private Text $text;
 
-    /**
-     * Result constructor.
-     *
-     * @param  Text      $text
-     * @param  User      $user
-     * @param  Language  $language
-     */
     public function __construct(Text $text, User $user, Language $language)
     {
         $this->language = $language;

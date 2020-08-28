@@ -17,11 +17,6 @@ class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
 {
     protected CardService $cardService;
 
-    /**
-     * CardsController constructor.
-     *
-     * @param  CardService  $cardService
-     */
     public function __construct(CardService $cardService)
     {
         $this->cardService = $cardService;

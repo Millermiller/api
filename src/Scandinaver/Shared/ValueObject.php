@@ -13,7 +13,6 @@ use Scandinaver\Shared\Contract\ValueObjectInterface;
  */
 class ValueObject implements ValueObjectInterface
 {
-
     protected $value;
 
     public function isNull(): bool
@@ -35,5 +34,4 @@ class ValueObject implements ValueObjectInterface
     {
         return $this->value;
     }
-
 }

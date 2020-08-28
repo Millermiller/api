@@ -20,27 +20,16 @@ use Scandinaver\User\UI\Query\GetUserQuery;
  */
 class IndexController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function getUser(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetUserQuery(Auth::user())));
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function getInfo(): JsonResponse
     {
         return response()->json(['site' => config('app.MAIN_SITE')]);
     }
 
-    /**
-     * @param Language $language
-     *
-     * @return JsonResponse
-     */
     public function getWords(Language $language): JsonResponse
     {
         $words = $this->queryBus->execute(new AssetForUserByTypeQuery($language, Auth::user(), Asset::TYPE_WORDS));
@@ -48,11 +37,6 @@ class IndexController extends Controller
         return response()->json($words);
     }
 
-    /**
-     * @param Language $language
-     *
-     * @return JsonResponse
-     */
     public function getSentences(Language $language): JsonResponse
     {
         $sentences = $this->queryBus->execute(new AssetForUserByTypeQuery($language, Auth::user(), Asset::TYPE_SENTENCES));
@@ -60,11 +44,6 @@ class IndexController extends Controller
         return response()->json($sentences);
     }
 
-    /**
-     * @param Language $language
-     *
-     * @return JsonResponse
-     */
     public function getPersonal(Language $language): JsonResponse
     {
         $personal = $this->queryBus->execute(new PersonalAssetsQuery(Auth::user(), $language));
@@ -72,11 +51,6 @@ class IndexController extends Controller
         return response()->json($personal);
     }
 
-    /**
-     * @param Language $language
-     *
-     * @return JsonResponse
-     */
     public function state(Language $language): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetStateQuery(Auth::user(), $language)));

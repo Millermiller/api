@@ -13,10 +13,7 @@ use Scandinaver\Shared\Contract\Query;
  */
 class CommentQuery implements Query
 {
-    /**
-     * @var integer
-     */
-    private $id;
+    private int $id;
 
     public function __construct(int $id)
     {

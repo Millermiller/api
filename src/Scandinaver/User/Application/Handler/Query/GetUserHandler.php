@@ -14,9 +14,6 @@ use Scandinaver\User\UI\Query\GetUserQuery;
  */
 class GetUserHandler implements GetUserHandlerInterface
 {
-    /**
-     * @var UserService
-     */
     protected UserService $userService;
 
     public function __construct(UserService $userService)

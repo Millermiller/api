@@ -12,9 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Synonym extends Model
 {
-
     protected $table = 'synonym';
 
     protected $fillable = ['word_id', 'synonym'];
-
 }

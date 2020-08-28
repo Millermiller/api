@@ -15,28 +15,12 @@ use Scandinaver\User\Domain\Model\User;
  */
 class SaveTestResultCommand implements Command
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var Asset
-     */
-    private $asset;
+    private Asset $asset;
 
-    /**
-     * @var int
-     */
-    private $resultValue;
+    private int $resultValue;
 
-    /**
-     * SaveTestResultCommand constructor.
-     *
-     * @param  User   $user
-     * @param  Asset  $asset
-     * @param  int    $resultValue
-     */
     public function __construct(User $user, Asset $asset, int $resultValue)
     {
         $this->user = $user;
@@ -44,25 +28,16 @@ class SaveTestResultCommand implements Command
         $this->resultValue = $resultValue;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Asset
-     */
     public function getAsset(): Asset
     {
         return $this->asset;
     }
 
-    /**
-     * @return int
-     */
     public function getResultValue(): int
     {
         return $this->resultValue;

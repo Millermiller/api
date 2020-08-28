@@ -14,16 +14,8 @@ use Scandinaver\User\UI\Command\DeleteUserCommand;
  */
 class DeleteUserHandler implements DeleteUserHandlerInterface
 {
-    /**
-     * @var UserService
-     */
     private UserService $userService;
 
-    /**
-     * UserHandler constructor.
-     *
-     * @param  UserService  $userService
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;

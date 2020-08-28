@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Translate\Application;
+namespace Scandinaver\Translate\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\{ResultRepository, TextRepository};

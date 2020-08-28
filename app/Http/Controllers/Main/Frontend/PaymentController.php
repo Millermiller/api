@@ -16,10 +16,7 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\Plan;
  */
 class PaymentController extends Controller
 {
-    /**
-     * @var PaymentService
-     */
-    private $paymentService;
+    private PaymentService $paymentService;
 
     /**
      * PaymentController constructor.

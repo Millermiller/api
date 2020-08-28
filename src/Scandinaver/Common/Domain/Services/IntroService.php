@@ -25,27 +25,16 @@ class IntroService
         $this->introRepository = $introRepository;
     }
 
-
     public function all()
     {
         return $this->introRepository->all();
     }
 
-    /**
-     * @param integer $id
-     *
-     * @return Intro
-     */
-    public function one($id): object
+    public function one(int $id): Intro
     {
         return $this->introRepository->find($id);
     }
 
-    /**
-     * @param  array  $data
-     *
-     * @return Intro
-     */
     public function create(array $data): Intro
     {
         $intro = new Intro();

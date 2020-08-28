@@ -48,11 +48,6 @@ class Puzzle implements JsonSerializable, AggregateRoot
         return $this->users;
     }
 
-    /**
-     * @param User $user
-     *
-     * @return $this
-     */
     public function addUser(User $user): Puzzle
     {
         $this->users[] = $user;

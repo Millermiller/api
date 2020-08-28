@@ -14,17 +14,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 interface CardRepositoryInterface extends BaseRepositoryInterface
 {
-    /**
-     * @param  User  $user
-     *
-     * @return mixed
-     */
     public function getForUser(User $user): array;
 
-    /**
-     * @param  Language  $language
-     *
-     * @return array
-     */
     public function getByLanguage(Language $language): array;
 }

@@ -16,9 +16,6 @@ use Scandinaver\User\Domain\Model\Plan;
 class PlanRepository extends BaseRepository implements PlanRepositoryInterface
 {
     /**
-     * @param  string  $name
-     *
-     * @return Plan
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

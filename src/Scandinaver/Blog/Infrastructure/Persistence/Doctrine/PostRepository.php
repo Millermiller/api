@@ -15,9 +15,6 @@ use Scandinaver\Shared\BaseRepository;
  */
 class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
-    /**
-     * @return array|mixed
-     */
     public function all(): array
     {
         $q = $this->_em->createQueryBuilder();
@@ -33,9 +30,6 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     }
 
     /**
-     * @param $id
-     *
-     * @return Post
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

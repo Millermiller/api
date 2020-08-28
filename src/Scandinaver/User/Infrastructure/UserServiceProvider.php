@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\User\Application;
+namespace Scandinaver\User\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;

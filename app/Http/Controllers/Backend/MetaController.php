@@ -20,30 +20,16 @@ use Scandinaver\Common\UI\Query\MetasQuery;
  */
 class MetaController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new MetasQuery()));
     }
 
-    /**TODO: bind model
-     *
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
     public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new MetaQuery($id)));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreateMetaCommand($request->toArray()));
@@ -51,12 +37,6 @@ class MetaController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Request $request
-     * @param Meta    $meta
-     *
-     * @return JsonResponse
-     */
     public function update(Request $request, Meta $meta): JsonResponse
     {
         $this->commandBus->execute(new UpdateMetaCommand($meta, $request->toArray()));
@@ -64,11 +44,6 @@ class MetaController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Meta $meta
-     *
-     * @return JsonResponse
-     */
     public function destroy(Meta $meta): JsonResponse
     {
         $this->commandBus->execute(new DeleteMetaCommand($meta));

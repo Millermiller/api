@@ -21,28 +21,17 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 
   //  use EventSourcingTrait;
 
-    /**
-     * @return array
-     */
-    public function all()
+    public function all(): array
     {
         return $this->findAll();
     }
 
-    /**
-     * @param $id
-     *
-     * @return object|null
-     */
     public function get($id)
     {
         return $this->find($id);
     }
 
     /**
-     * @param $object
-     *
-     * @return mixed
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -57,10 +46,6 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     }
 
     /**
-     * @param  object  $entity
-     * @param  array   $data
-     *
-     * @return object
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -78,13 +63,10 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     }
 
     /**
-     * @param $object
-     *
-     * @return bool
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function delete($object)
+    public function delete($object): bool
     {
         $this->_em->remove($object);
         $this->_em->flush($object);

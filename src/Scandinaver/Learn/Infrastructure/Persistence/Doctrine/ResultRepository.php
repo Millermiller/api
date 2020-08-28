@@ -18,12 +18,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 class ResultRepository extends BaseRepository implements ResultRepositoryInterface
 {
-    /**
-     * @param  User      $user
-     * @param  Language  $language
-     *
-     * @return array
-     */
     public function getActiveIds(User $user, Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
@@ -45,10 +39,6 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
     }
 
     /**
-     * @param  User   $user
-     * @param  Asset  $asset
-     *
-     * @return Result
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

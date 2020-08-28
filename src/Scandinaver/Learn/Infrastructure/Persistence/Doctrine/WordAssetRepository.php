@@ -59,10 +59,6 @@ class WordAssetRepository extends AssetRepository implements WordAssetRepository
     }
 
     /**
-     * @param  Language  $language
-     * @param  int       $type
-     *
-     * @return Asset
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

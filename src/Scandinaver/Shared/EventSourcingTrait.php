@@ -3,14 +3,13 @@
 
 namespace Scandinaver\Shared;
 
-
-use Scandinaver\Shared\Contract\EventBus;
-
+/**
+ * Trait EventSourcingTrait
+ *
+ * @package Scandinaver\Shared
+ */
 trait EventSourcingTrait
 {
-    /**
-     * @var EventBus
-     */
     private EventBus $eventBus;
 
     public function __construct(EventBus $eventBus)

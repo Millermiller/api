@@ -20,10 +20,6 @@ use Scandinaver\Translate\UI\Query\GetTextQuery;
 class TextController extends Controller
 {
     /**
-     * @param Language $language
-     * @param Text     $text
-     *
-     * @return JsonResponse
      * @throws AuthorizationException
      */
     public function show(Language $language, Text $text): JsonResponse
@@ -33,11 +29,6 @@ class TextController extends Controller
         return response()->json($this->queryBus->execute(new GetTextQuery($text)));
     }
 
-    /**
-     * @param Text $text
-     *
-     * @return JsonResponse
-     */
     public function complete(Text $text): JsonResponse
     {
         $this->commandBus->execute(new CompleteTextCommand(Auth::user(), $text));

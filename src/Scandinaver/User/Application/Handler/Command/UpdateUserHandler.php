@@ -14,16 +14,8 @@ use Scandinaver\User\UI\Command\UpdateUserCommand;
  */
 class UpdateUserHandler implements UpdateUserHandlerInterface
 {
-    /**
-     * @var UserService
-     */
-    private $userService;
+    private UserService $userService;
 
-    /**
-     * UserHandler constructor.
-     *
-     * @param  UserService  $userService
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;

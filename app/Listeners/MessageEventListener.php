@@ -7,25 +7,18 @@ use App\Events\MessageEvent;
 use App\Mail\Message;
 use Mail;
 
+/**
+ * Class MessageEventListener
+ *
+ * @package App\Listeners
+ */
 class MessageEventListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param MessageEvent $event
-     *
-     * @return void
-     */
     public function handle(MessageEvent $event): void
     {
         //  activity('admin')->performedOn($event->message)->log('Получено сообщение');

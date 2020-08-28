@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Common\Domain\Message;
+use Scandinaver\Common\Domain\Model\Message;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -13,9 +13,6 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeleteMessageCommand implements Command
 {
-    /**
-     * @var Message
-     */
     private Message $message;
 
     public function __construct(Message $message)
@@ -23,9 +20,6 @@ class DeleteMessageCommand implements Command
         $this->message = $message;
     }
 
-    /**
-     * @return Message
-     */
     public function getMessage(): Message
     {
         return $this->message;

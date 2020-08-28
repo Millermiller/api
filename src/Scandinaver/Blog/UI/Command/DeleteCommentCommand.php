@@ -14,9 +14,6 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeleteCommentCommand implements Command
 {
-    /**
-     * @var Comment
-     */
     private Comment $comment;
 
     public function __construct(Comment $comment)
@@ -24,9 +21,6 @@ class DeleteCommentCommand implements Command
         $this->comment = $comment;
     }
 
-    /**
-     * @return Comment
-     */
     public function getComment(): Comment
     {
         return $this->comment;

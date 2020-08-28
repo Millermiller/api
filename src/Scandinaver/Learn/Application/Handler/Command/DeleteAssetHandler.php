@@ -20,12 +20,6 @@ class DeleteAssetHandler implements DeleteAssetHandlerInterface
 
     protected AssetService $assetService;
 
-    /**
-     * AssetController constructor.
-     *
-     * @param  AssetService  $assetService
-     * @param  CardService   $cardService
-     */
     public function __construct(AssetService $assetService, CardService $cardService)
     {
         $this->assetService = $assetService;

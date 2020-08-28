@@ -13,7 +13,6 @@ use Scandinaver\Blog\UI\Query\CategoriesQuery;
  */
 class CategoriesHandler implements CategoriesHandlerInterface
 {
-
     public function __construct()
     {
 

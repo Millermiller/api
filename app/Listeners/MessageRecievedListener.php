@@ -13,23 +13,11 @@ use App\Helpers\EloquentHelper;
  */
 class MessageRecievedListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param MessageRecieved $event
-     *
-     * @return void
-     */
     public function handle(MessageRecieved $event): void
     {
         $user    = EloquentHelper::getEloquentModel($event->user);

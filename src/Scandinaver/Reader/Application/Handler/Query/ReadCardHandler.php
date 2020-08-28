@@ -16,11 +16,6 @@ class ReadCardHandler implements ReadCardHandlerInterface
 {
     private ReaderInterface $reader;
 
-    /**
-     * ReadCardHandler constructor.
-     *
-     * @param  ReaderInterface  $reader
-     */
     public function __construct(ReaderInterface $reader)
     {
         $this->reader = $reader;

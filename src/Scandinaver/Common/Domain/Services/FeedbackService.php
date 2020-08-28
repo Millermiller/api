@@ -5,7 +5,7 @@ namespace Scandinaver\Common\Domain\Services;
 
 use Exception;
 use Scandinaver\Common\Domain\Contract\Repository\MessageRepositoryInterface;
-use Scandinaver\Common\Domain\Message;
+use Scandinaver\Common\Domain\Model\Message;
 
 /**
  * Class FeedbackService
@@ -26,12 +26,6 @@ class FeedbackService
         $this->messageRepository = $messageRepository;
     }
 
-    /**
-     * @param  array  $request
-     *
-     * @return Message
-     * @throws Exception
-     */
     public function saveFeedback(array $request): Message
     {
         $message = new Message($request['name'], $request['message']);

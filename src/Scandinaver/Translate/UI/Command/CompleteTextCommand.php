@@ -19,29 +19,17 @@ class CompleteTextCommand implements Command
 
     private Text $text;
 
-    /**
-     * CompleteTextCommand constructor.
-     *
-     * @param  User  $user
-     * @param  Text  $text
-     */
     public function __construct(User $user, Text $text)
     {
         $this->user = $user;
         $this->text = $text;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Text
-     */
     public function getText(): Text
     {
         return $this->text;

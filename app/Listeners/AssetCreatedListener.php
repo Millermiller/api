@@ -15,23 +15,11 @@ use Scandinaver\User\Infrastructure\Persistence\Eloquent\User;
  */
 class AssetCreatedListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
     public function __construct()
     {
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param AssetCreated $event
-     *
-     * @return void
-     */
     public function handle(AssetCreated $event): void
     {
         //$user  = User::find($event->user->getId())->first();

@@ -14,16 +14,8 @@ use Scandinaver\User\UI\Query\UsersQuery;
  */
 class UsersHandler implements UsersHandlerInterface
 {
-    /**
-     * @var UserService
-     */
     private UserService $userService;
 
-    /**
-     * UsersHandler constructor.
-     *
-     * @param  UserService  $userService
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;

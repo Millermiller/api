@@ -14,19 +14,11 @@ class MessageService
 {
     private MessageRepositoryInterface $messageRepository;
 
-    /**
-     * MessageService constructor.
-     *
-     * @param  MessageRepositoryInterface  $messageRepository
-     */
     public function __construct(MessageRepositoryInterface $messageRepository)
     {
         $this->messageRepository = $messageRepository;
     }
 
-    /**
-     * @return array
-     */
     public function all(): array
     {
         return $this->messageRepository->all();

@@ -16,11 +16,6 @@ class CompleteTextHandler implements CompleteTextHandlerInterface
 {
     private TextService $textService;
 
-    /**
-     * TextController constructor.
-     *
-     * @param  TextService  $textService
-     */
     public function __construct(TextService $textService)
     {
         $this->textService = $textService;

@@ -14,16 +14,8 @@ use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
  */
 class CreateTranslateHandler implements CreateTranslateHandlerInterface
 {
-    /**
-     * @var CardService
-     */
     private CardService $cardService;
 
-    /**
-     * GetTranslatesByWordHandler constructor.
-     *
-     * @param  CardService  $cardService
-     */
     public function __construct(CardService $cardService)
     {
         $this->cardService = $cardService;

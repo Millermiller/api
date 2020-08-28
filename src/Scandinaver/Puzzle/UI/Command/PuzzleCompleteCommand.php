@@ -19,12 +19,6 @@ class PuzzleCompleteCommand implements Command
 
     private Puzzle $puzzle;
 
-    /**
-     * PuzzleCompleteCommand constructor.
-     *
-     * @param  User    $user
-     * @param  Puzzle  $puzzle
-     */
     public function __construct(User $user, Puzzle $puzzle)
     {
         $this->user = $user;

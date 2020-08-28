@@ -15,16 +15,8 @@ use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
  */
 class GetTranslatesByWordHandler implements GetTranslatesByWordHandlerInterface
 {
-    /**
-     * @var WordService
-     */
     private WordService $wordService;
 
-    /**
-     * GetTranslatesByWordHandler constructor.
-     *
-     * @param  WordService  $wordService
-     */
     public function __construct(WordService $wordService)
     {
         $this->wordService = $wordService;

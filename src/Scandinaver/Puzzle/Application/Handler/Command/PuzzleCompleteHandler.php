@@ -15,16 +15,8 @@ use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;
  */
 class PuzzleCompleteHandler implements PuzzleCompleteHandlerInterface
 {
-    /**
-     * @var PuzzleService
-     */
     private PuzzleService $puzzleService;
 
-    /**
-     * PuzzleCompletedHandler constructor.
-     *
-     * @param  PuzzleService  $puzzleService
-     */
     public function __construct(PuzzleService $puzzleService)
     {
         $this->puzzleService = $puzzleService;

@@ -3,6 +3,11 @@
 
 namespace Scandinaver\Shared;
 
+/**
+ * Class AggregateRoot
+ *
+ * @package Scandinaver\Shared
+ */
 abstract class AggregateRoot
 {
     private array $domainEvents = [];

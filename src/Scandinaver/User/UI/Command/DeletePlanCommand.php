@@ -14,19 +14,13 @@ use Scandinaver\User\Domain\Model\Plan;
  */
 class DeletePlanCommand implements Command
 {
-    /**
-     * @var Plan
-     */
-    private $plan;
+    private Plan $plan;
 
     public function __construct(Plan $plan)
     {
         $this->plan = $plan;
     }
 
-    /**
-     * @return Plan
-     */
     public function getPlan(): Plan
     {
         return $this->plan;

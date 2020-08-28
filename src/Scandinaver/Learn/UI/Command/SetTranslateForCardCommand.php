@@ -20,41 +20,18 @@ use Scandinaver\Shared\Contract\Command;
  */
 class SetTranslateForCardCommand implements Command
 {
-    /**
-     * @var int
-     */
-    private $card_id;
+    private int $card_id;
 
-    /**
-     * @var int
-     */
-    private $word_id;
+    private int $word_id;
 
-    /**
-     * @var int
-     */
-    private $translate_id;
+    private int $translate_id;
 
-    /**
-     * @var CardRepositoryInterface
-     */
-    private $cardRepository;
+    private CardRepositoryInterface $cardRepository;
 
-    /**
-     * @var WordRepositoryInterface
-     */
-    private $wordRepository;
+    private WordRepositoryInterface $wordRepository;
 
-    /**
-     * @var TranslateRepositoryInterface
-     */
-    private $translateRepository;
+    private TranslateRepositoryInterface $translateRepository;
 
-    /**
-     * SetTranslateForCardCommand constructor.
-     *
-     * @param  array  $data
-     */
     public function __construct(array $data)
     {
         $this->card_id = $data['card_id'];
@@ -68,34 +45,22 @@ class SetTranslateForCardCommand implements Command
         );
     }
 
-    /**
-     * @return Word
-     */
-    public function getWord(): object
+    public function getWord(): Word
     {
         return $this->wordRepository->find($this->word_id);
     }
 
-    /**
-     * @return Translate
-     */
-    public function getTranslate(): object
+    public function getTranslate(): Translate
     {
         return $this->translateRepository->find($this->translate_id);
     }
 
-    /**
-     * @return Asset
-     */
     public function getAsset(): Asset
     {
         return $this->getCard()->getAsset();
     }
 
-    /**
-     * @return Card
-     */
-    public function getCard(): object
+    public function getCard(): Card
     {
         return $this->cardRepository->find($this->card_id);
     }

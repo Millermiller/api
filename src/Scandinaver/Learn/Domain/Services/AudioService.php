@@ -22,12 +22,6 @@ class AudioService
 
     private AudioParserInterface $parser;
 
-    /**
-     * WordService constructor.
-     *
-     * @param  WordRepositoryInterface  $wordsRepository
-     * @param  AudioParserInterface     $parser
-     */
     public function __construct(
         WordRepositoryInterface $wordsRepository,
         AudioParserInterface $parser
@@ -36,31 +30,16 @@ class AudioService
         $this->parser = $parser;
     }
 
-    /**
-     *
-     * @return int
-     */
     public function count(): int
     {
         return $this->wordsRepository->countAudio();
     }
 
-    /**
-     * @param  Language  $language
-     *
-     * @return int
-     */
     public function countByLanguage(Language $language): int
     {
         return $this->wordsRepository->getCountAudioByLanguage($language);
     }
 
-    /**
-     * @param  Word          $word
-     * @param  UploadedFile  $file
-     *
-     * @return Word
-     */
     public function upload(Word $word, UploadedFile $file): Word
     {
         $path = $file->store('audio');

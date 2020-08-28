@@ -16,11 +16,6 @@ class GetTextQuery implements Query
 {
     private Text $text;
 
-    /**
-     * GetTextQuery constructor.
-     *
-     * @param  Text  $text
-     */
     public function __construct(Text $text)
     {
         $this->text = $text;

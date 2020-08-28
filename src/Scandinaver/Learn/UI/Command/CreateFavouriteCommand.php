@@ -22,14 +22,6 @@ class CreateFavouriteCommand implements Command
 
     private Card $card;
 
-    /**
-     * CreateFavouriteCommand constructor.
-     *
-     * @param  Language   $language
-     * @param  User       $user
-     * @param  Word       $word
-     * @param  Translate  $translate
-     */
     public function __construct(
         Language $language,
         User $user,

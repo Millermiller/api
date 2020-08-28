@@ -189,14 +189,12 @@ return [
         /*
          * Scandinaver Service Providers...
          */
-        Scandinaver\Blog\Application\BlogServiceProvider::class,
-        Scandinaver\Puzzle\Application\PuzzleServiceProvider::class,
-        Scandinaver\Translate\Application\TranslateServiceProvider::class,
-        Scandinaver\Learn\Application\LearnServiceProvider::class,
-        Scandinaver\Common\Application\AppServiceProvider::class,
-        Scandinaver\User\Application\UserServiceProvider::class,
-        Scandinaver\API\Application\APIServiceProvider::class,
-        Scandinaver\User\Application\UserServiceProvider::class,
+        Scandinaver\Blog\Infrastructure\BlogServiceProvider::class,
+        Scandinaver\Puzzle\Infrastructure\PuzzleServiceProvider::class,
+        Scandinaver\Translate\Infrastructure\TranslateServiceProvider::class,
+        Scandinaver\Learn\Infrastructure\LearnServiceProvider::class,
+        Scandinaver\Common\Infrastructure\AppServiceProvider::class,
+        Scandinaver\User\Infrastructure\UserServiceProvider::class,
     ],
 
     /*

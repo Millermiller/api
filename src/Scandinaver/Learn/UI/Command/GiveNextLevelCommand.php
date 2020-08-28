@@ -15,39 +15,21 @@ use Scandinaver\User\Domain\Model\User;
  */
 class GiveNextLevelCommand implements Command
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var Asset
-     */
-    private $asset;
+    private Asset $asset;
 
-    /**
-     * GiveNextLevelCommand constructor.
-     *
-     * @param  User   $user
-     * @param  Asset  $asset
-     */
     public function __construct(User $user, Asset $asset)
     {
         $this->user = $user;
         $this->asset = $asset;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Asset
-     */
     public function getAsset(): Asset
     {
         return $this->asset;

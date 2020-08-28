@@ -14,9 +14,6 @@ use Scandinaver\Blog\UI\Command\UpdatePostCommand;
  */
 class UpdatePostHandler implements UpdatePostHandlerInterface
 {
-    /**
-     * @var BlogService
-     */
     private BlogService $blogService;
 
     public function __construct(BlogService $blogService)

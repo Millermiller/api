@@ -14,9 +14,6 @@ use Scandinaver\Learn\UI\Query\FindAudioQuery;
  */
 class FindAudioHandler implements FindAudioHandlerInterface
 {
-    /**
-     * @var AudioService
-     */
     private AudioService $audioService;
 
     public function __construct(AudioService $audioService)

@@ -22,13 +22,6 @@ class DeleteFavouriteCommand implements Command
 
     private Card $card;
 
-    /**
-     * CreateFavouriteCommand constructor.
-     *
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  int       $id
-     */
     public function __construct(Language $language, User $user, Card $card)
     {
         $this->language = $language;

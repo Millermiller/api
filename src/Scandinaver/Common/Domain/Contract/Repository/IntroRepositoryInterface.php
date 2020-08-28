@@ -12,7 +12,5 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
  */
 interface IntroRepositoryInterface extends BaseRepositoryInterface
 {
-
     public function getGrouppedIntro();
-
 }

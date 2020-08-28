@@ -15,39 +15,21 @@ use Scandinaver\User\Domain\Model\User;
  */
 class GetStateQuery implements Query
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var Language
-     */
-    private $language;
+    private Language $language;
 
-    /**
-     * GetStateQuery constructor.
-     *
-     * @param  User      $user
-     * @param  Language  $language
-     */
     public function __construct(User $user, Language $language)
     {
         $this->user = $user;
         $this->language = $language;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;

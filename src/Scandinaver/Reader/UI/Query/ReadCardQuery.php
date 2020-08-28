@@ -15,14 +15,8 @@ use Scandinaver\Shared\Contract\Query;
  */
 class ReadCardQuery implements Query
 {
-
     private Card $card;
 
-    /**
-     * ReadCardQuery constructor.
-     *
-     * @param  Card  $card
-     */
     public function __construct(Card $card)
     {
 

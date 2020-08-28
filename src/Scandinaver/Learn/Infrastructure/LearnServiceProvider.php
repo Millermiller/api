@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Learn\Application;
+namespace Scandinaver\Learn\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Learn\Domain\Model\{Asset,
@@ -303,6 +303,11 @@ class LearnServiceProvider extends ServiceProvider
         $this->app->bind(
             'GetAssetsByTypeHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Query\GetAssetsByTypeHandler'
+        );
+
+        $this->app->bind(
+            'AssetsHandlerInterface',
+            'Scandinaver\Learn\Application\Handler\Query\AssetsHandler'
         );
     }
 }

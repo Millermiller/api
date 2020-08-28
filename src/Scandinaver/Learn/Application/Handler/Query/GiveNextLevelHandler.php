@@ -15,16 +15,8 @@ use Scandinaver\Learn\UI\Command\GiveNextLevelCommand;
  */
 class GiveNextLevelHandler implements GiveNextLevelHandlerInterface
 {
-    /**
-     * @var AssetService
-     */
     private AssetService $assetService;
 
-    /**
-     * GiveNextLevelHandler constructor.
-     *
-     * @param  AssetService  $assetService
-     */
     public function __construct(AssetService $assetService)
     {
         $this->assetService = $assetService;

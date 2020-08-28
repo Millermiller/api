@@ -19,29 +19,16 @@ use Scandinaver\Blog\UI\Query\PostsQuery;
  */
 class ArticleController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new PostsQuery()));
     }
 
-    /**
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
     public function show($id): JsonResponse
     {
         return response()->json($this->queryBus->execute(new PostQuery($id)));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         $this->commandBus->execute(new CreatePostCommand($request->toArray()));
@@ -49,12 +36,6 @@ class ArticleController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Request $request
-     * @param Post    $post
-     *
-     * @return JsonResponse
-     */
     public function update(Request $request, Post $post): JsonResponse
     {
         $this->commandBus->execute(new UpdatePostCommand($post, $request->toArray()));
@@ -62,11 +43,6 @@ class ArticleController extends Controller
         return response()->json(NULL, 201);
     }
 
-    /**
-     * @param Post $post
-     *
-     * @return JsonResponse
-     */
     public function destroy(Post $post): JsonResponse
     {
         $this->commandBus->execute(new DeletePostCommand($post));
@@ -76,9 +52,6 @@ class ArticleController extends Controller
 
     /** TODO: доделать
      *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     public function upload(Request $request): JsonResponse
     {

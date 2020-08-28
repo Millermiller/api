@@ -18,9 +18,6 @@ use Scandinaver\User\Domain\Model\User;
 class TextRepository extends BaseRepository implements TextRepositoryInterface
 {
     /**
-     * @param  Language  $language
-     *
-     * @return Text
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -37,12 +34,6 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
             ->getSingleResult();
     }
 
-    /**
-     * @param  User      $user
-     * @param  Language  $language
-     *
-     * @return array
-     */
     public function getActiveIds(User $user, Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
@@ -94,10 +85,6 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
 
 
     /**
-     * @param  Text      $text
-     * @param  Language  $language
-     *
-     * @return Text
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

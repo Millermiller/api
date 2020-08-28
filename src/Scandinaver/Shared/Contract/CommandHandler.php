@@ -10,10 +10,5 @@ namespace Scandinaver\Shared\Contract;
  */
 interface CommandHandler
 {
-
-    /**
-     * @param  Command  $command
-     */
     public function handle(Command $command);
-
 }

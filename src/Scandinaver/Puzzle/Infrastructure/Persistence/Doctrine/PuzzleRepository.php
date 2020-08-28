@@ -16,11 +16,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterface
 {
-    /**
-     * @param  User  $user
-     *
-     * @return array
-     */
     public function getForUser(User $user): array
     {
         $q = $this->_em->createQueryBuilder();
@@ -35,9 +30,6 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
     }
 
     /**
-     * @param  User    $user
-     * @param  Puzzle  $puzzle
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */

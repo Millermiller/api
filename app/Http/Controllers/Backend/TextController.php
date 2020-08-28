@@ -26,17 +26,12 @@ use Upload\Validation\Size;
  */
 class TextController extends Controller
 {
-    /**
-     * @return JsonResponse
-     */
+
     public function index(): JsonResponse
     {
         return response()->json(Text::all()->sortBy('id'));
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function publish(): JsonResponse
     {
         $publish = (int)Input::get('published');
@@ -47,9 +42,6 @@ class TextController extends Controller
         return response()->json(['success' => $result]);
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function textcreate(): JsonResponse
     {
         $title     = $this->cleartext(Input::get('title'));
@@ -75,11 +67,6 @@ class TextController extends Controller
         return response()->json(['success' => true, 'id' => $text->id]);
     }
 
-    /**
-     * @param $id
-     *
-     * @return JsonResponse
-     */
     public function textdelete($id): JsonResponse
     {
         try {
@@ -98,11 +85,6 @@ class TextController extends Controller
 
     }
 
-    /**
-     * @param $id
-     *
-     * @return JsonResponse
-     */
     public function getText($id): JsonResponse
     {
         $sentences = [];
@@ -134,10 +116,6 @@ class TextController extends Controller
 
     }
 
-    /**
-     * @return JsonResponse
-     * @throws Exception
-     */
     public function addExtras(): JsonResponse
     {
         $data = Input::get('data');
@@ -159,10 +137,6 @@ class TextController extends Controller
 
     }
 
-    /**
-     * @return JsonResponse
-     * @throws Exception
-     */
     public function saveSentences(): JsonResponse
     {
         $data   = Input::get('data');
@@ -184,11 +158,6 @@ class TextController extends Controller
 
     }
 
-    /**
-     * @param $id
-     *
-     * @return JsonResponse
-     */
     public function getSynonyms($id): JsonResponse
     {
         return response()->json([
@@ -197,9 +166,6 @@ class TextController extends Controller
         ]);
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function addSynonym(): JsonResponse
     {
         $word_id = Input::get('word_id');
@@ -208,21 +174,11 @@ class TextController extends Controller
         return response()->json(['success' => Synonym::create(['word_id' => $word_id, 'synonym' => $synonym])]);
     }
 
-    /**
-     * @param $id
-     *
-     * @return JsonResponse
-     */
     public function deleteSynonym($id): JsonResponse
     {
         return response()->json(['success' => Synonym::destroy($id)]);
     }
 
-    /**
-     * @param $id
-     *
-     * @return JsonResponse
-     */
     public function uploadImage($id): JsonResponse
     {
         $storage      = new FileSystem(public_path() . '/uploads/photo/');
@@ -268,21 +224,11 @@ class TextController extends Controller
         }
     }
 
-    /**
-     * @param $id
-     *
-     * @return JsonResponse
-     */
     public function updateDescription($id): JsonResponse
     {
         return response()->json(['success' => Text::updateOrCreate(['id' => $id], ['description' => Input::get('content')])]);
     }
 
-    /**
-     * @param $text
-     *
-     * @return string
-     */
     protected function cleartext($text): string
     {
         return str_replace(["\r\n", "\r", "\n"], '', strip_tags(trim($text)));

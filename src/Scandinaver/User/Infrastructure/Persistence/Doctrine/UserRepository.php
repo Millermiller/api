@@ -17,9 +17,6 @@ use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
  */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    /**
-     * @return array|mixed
-     */
     public function all(): array
     {
         $q = $this->_em->createQueryBuilder();
@@ -33,9 +30,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param $id
-     *
-     * @return object|void|null
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -54,9 +48,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User   $user
-     * @param  Asset  $asset
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -70,9 +61,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  Text  $text
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -85,9 +73,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  Plan  $plan
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -98,9 +83,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User    $user
-     * @param  string  $file
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -110,11 +92,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->_em->flush();
     }
 
-    /**
-     * @param $string
-     *
-     * @return array
-     */
     public function findByNameOrEmail($string): array
     {
         $q = $this->_em->createQueryBuilder();

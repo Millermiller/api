@@ -14,10 +14,7 @@ use Scandinaver\Blog\UI\Command\CreatePostCommand;
  */
 class CreatePostHandler implements CreatePostHandlerInterface
 {
-    /**
-     * @var BlogService
-     */
-    private $blogService;
+    private BlogService $blogService;
 
     public function __construct(BlogService $blogService)
     {

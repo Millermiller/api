@@ -22,13 +22,6 @@ class DeleteCardFromAssetCommand implements Command
 
     private Asset $asset;
 
-    /**
-     * DeleteCardFromAssetCommand constructor.
-     *
-     * @param  User   $user
-     * @param  Card   $card
-     * @param  Asset  $asset
-     */
     public function __construct(User $user, Card $card, Asset $asset)
     {
         $this->user = $user;

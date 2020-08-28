@@ -36,11 +36,6 @@ use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;
  */
 class AssetsController extends Controller
 {
-    /**
-     * @param Language $language
-     *
-     * @return JsonResponse
-     */
     public function index(Language $language)
     {
         return response()->json([
@@ -49,53 +44,26 @@ class AssetsController extends Controller
         ]);
     }
 
-    /**
-     * @param Word $word
-     *
-     * @return JsonResponse
-     */
     public function findAudio(Word $word): JsonResponse
     {
         return response()->json($this->queryBus->execute(new FindAudioQuery($word)));
     }
 
-    /**
-     * @param Asset $asset
-     *
-     * @return JsonResponse
-     */
     public function showAsset(Asset $asset): JsonResponse
     {
         return response()->json($asset);
     }
 
-    /**
-     * @param Language $language
-     * @param Word     $word
-     *
-     * @return JsonResponse
-     */
     public function showValues(Language $language, Word $word): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetTranslatesByWordQuery($word)));
     }
 
-    /**
-     * @param Language    $language
-     * @param Card  $card
-     *
-     * @return JsonResponse
-     */
     public function showExamples(Language $language, Card $card): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetExamplesForCardQuery($card)));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function changeUsedTranslate(Request $request): JsonResponse
     {
         $this->commandBus->execute(new SetTranslateForCardCommand($request->toArray()));
@@ -103,11 +71,6 @@ class AssetsController extends Controller
         return response()->json(null, 200);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function editTranslate(Request $request): JsonResponse
     {
         $this->commandBus->execute(new EditTranslateCommand($request->toArray()));
@@ -121,12 +84,6 @@ class AssetsController extends Controller
         return response()->json(null, 200);
     }
 
-    /**
-     * @param Request $request
-     * @param Word    $word
-     *
-     * @return JsonResponse
-     */
     public function uploadAudio(Request $request, Word $word): JsonResponse
     {
         $this->commandBus->execute(new UploadAudioCommand($word, $request->file('audiofile')));
@@ -134,9 +91,6 @@ class AssetsController extends Controller
         return response()->json(null, 200);
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function getSentences(): JsonResponse
     {
         return response()->json($this->queryBus->execute(new GetUnusedSentencesQuery()));
@@ -145,9 +99,6 @@ class AssetsController extends Controller
     /**
      * TODO: сделать нормально
      *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     public function addBasicAssetLevel(Request $request): JsonResponse
     {
@@ -156,11 +107,6 @@ class AssetsController extends Controller
         return response()->json(null, 201);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function addPair(Request $request): JsonResponse
     {
         $this->commandBus->execute(new AddWordAndTranslateCommand($request->toArray()));
@@ -174,12 +120,6 @@ class AssetsController extends Controller
         // TODO: импорт предложений Excel
     }
 
-    /**
-     * @param Request $request
-     * @param Asset   $asset
-     *
-     * @return JsonResponse
-     */
     public function changeAsset(Request $request, Asset $asset): JsonResponse
     {
         $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->toArray()));

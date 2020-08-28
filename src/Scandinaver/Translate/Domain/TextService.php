@@ -9,6 +9,7 @@ use PDO;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
+use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -22,12 +23,6 @@ class TextService
 
     private TextRepositoryInterface $textRepository;
 
-    /**
-     * TextService constructor.
-     *
-     * @param  TextRepositoryInterface    $textRepository
-     * @param  ResultRepositoryInterface  $resultRepository
-     */
     public function __construct(
         TextRepositoryInterface $textRepository,
         ResultRepositoryInterface $resultRepository
@@ -36,32 +31,17 @@ class TextService
         $this->resultRepository = $resultRepository;
     }
 
-    /**
-     *
-     * @return int
-     */
     public function count(): int
     {
         return $this->textRepository->count([]);
     }
 
-    /**
-     * @param  Language  $language
-     *
-     * @return int
-     */
     public function countByLanguage(Language $language): int
     {
         return $this->textRepository->getCountByLanguage($language);
     }
 
-    /**
-     * @param  Language  $language
-     * @param  User      $user
-     *
-     * @return array
-     */
-    public function getTextsForUser(Language $language, User $user)
+    public function getTextsForUser(Language $language, User $user): array
     {
         $activeArray = $this->textRepository->getActiveIds($user, $language);
 
@@ -102,9 +82,6 @@ class TextService
     }
 
     /**
-     * @param  Text  $text
-     *
-     * @return Text
      * @throws DBALException
      */
     public function prepareText(Text $text)
@@ -139,13 +116,6 @@ class TextService
         return $text;
     }
 
-    /**
-     * @param  Language  $language
-     * @param  User      $user
-     * @param  Text      $text
-     *
-     * @return Text
-     */
     public function giveNextLevel(
         Language $language,
         User $user,

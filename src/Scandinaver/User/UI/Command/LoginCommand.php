@@ -13,50 +13,27 @@ use Scandinaver\Shared\Contract\Command;
  */
 class LoginCommand implements Command
 {
-    /**
-     * @var string
-     */
-    private $login;
+    private string $login;
 
-    /**
-     * @var string
-     */
-    private $password;
+    private string $password;
 
-    /**
-     * @var array
-     */
-    private $credentials;
+    private array $credentials;
 
-    /**
-     * LoginCommand constructor.
-     *
-     * @param  array  $credentials
-     */
     public function __construct(array $credentials)
     {
         $this->credentials = $credentials;
     }
 
-    /**
-     * @return string
-     */
     public function getLogin(): string
     {
         return $this->login;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * @return array
-     */
     public function getCredentials(): array
     {
         return $this->credentials;

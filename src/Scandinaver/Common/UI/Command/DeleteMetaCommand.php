@@ -19,9 +19,6 @@ class DeleteMetaCommand implements Command
         $this->meta = $meta;
     }
 
-    /**
-     * @return mixed
-     */
     public function getMeta()
     {
         return $this->meta;

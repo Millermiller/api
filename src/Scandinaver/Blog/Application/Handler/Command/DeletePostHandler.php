@@ -14,10 +14,7 @@ use Scandinaver\Blog\UI\Command\DeletePostCommand;
  */
 class DeletePostHandler implements DeletePostHandlerInterface
 {
-    /**
-     * @var BlogService
-     */
-    private $blogService;
+    private BlogService $blogService;
 
     public function __construct(BlogService $blogService)
     {
