@@ -64,7 +64,12 @@ class Word implements JsonSerializable, UrlRoutable
             'sentence' => $this->sentence,
             'is_public' => $this->isPublic,
             'creator' => $this->creator,
-            'language' => $this->language,
+            'language' => [
+                'name' => $this->language->getLabel(),
+                'label' => $this->language->getLabel(),
+                'flag' => config('app.SITE').$this->language->getFlag(),
+                'letter' => $this->language->getName(),
+            ]
         ];
     }
 

@@ -76,7 +76,6 @@ class AssetControllerTest extends TestCase
                         'name',
                         'flag',
                         'letter',
-                        'cards',
                     ]
                 ],
                 'translate' => [
@@ -93,7 +92,6 @@ class AssetControllerTest extends TestCase
                             'name',
                             'flag',
                             'letter',
-                            'cards',
                         ]
                     ]
                 ],

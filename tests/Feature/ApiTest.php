@@ -51,7 +51,8 @@ class ApiTest extends TestCase
                     'name',
                     'letter',
                     'flag',
-                    'cards'
+                    'cardsAvailable',
+                    'cardsAll',
                 ]
             ]);
     }
@@ -67,7 +68,7 @@ class ApiTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $response = $this->get("/assets/is");
+        $response = $this->get("/is/assets-mobile");
         $response
             ->assertJsonStructure([
                 [
@@ -102,7 +103,7 @@ class ApiTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $response = $this->get('/assets/wronglanguagename');
+        $response = $this->get('/wronglanguagename/assets-mobile');
         $response->assertStatus(500);
     }
 }
