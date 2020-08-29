@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
             ],
             function () {
                 Route::get('/languages', 'ApiController@languages')->name('languages');
-                Route::get('/assets/{language}', 'ApiController@assets')
+                Route::get('/{language}/assets-mobile', 'ApiController@assets')
                      ->middleware(['auth:api', 'bindings'])
                      ->name('assets');
             }

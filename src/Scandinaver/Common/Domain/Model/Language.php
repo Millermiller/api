@@ -11,7 +11,7 @@ use LaravelDoctrine\ORM\Contracts\UrlRoutable;
  *
  * @package Scandinaver\Common\Domain\Model
  */
-class Language implements JsonSerializable, UrlRoutable
+class Language implements UrlRoutable
 {
     private int $id;
 
@@ -59,20 +59,5 @@ class Language implements JsonSerializable, UrlRoutable
     public function setFlag(string $flag): void
     {
         $this->flag = $flag;
-    }
-
-    /**
-     * @return array|mixed
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'name' => $this->label,
-            'label' => $this->label,
-            'flag' => config('app.SITE').$this->flag,
-            'letter' => $this->name,
-            'cards' => 0,
-            'value' => 'https://'.$this->name.'.'.config('app.DOMAIN'),
-        ];
     }
 }
