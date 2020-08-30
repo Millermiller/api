@@ -235,7 +235,12 @@ class AssetService
                         $card->getTranslate()->getValue()
                     ),
                     'asset_id' => $item->getId(),
-                    'examples' => $card->getExamples(),
+                    'examples' => $card->getExamples()->map(fn($example) => [
+                        'id' => $example->getId(),
+                        'card_id' => $example->getCard()->getId(),
+                        'text' => $example->getText(),
+                        'value' => $example->getValue(),
+                    ])->toArray(),
                 ];
             }
 

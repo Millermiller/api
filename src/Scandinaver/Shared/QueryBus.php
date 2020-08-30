@@ -21,16 +21,16 @@ class QueryBus
     private const HANDLER_PREFIX = 'Handler';
 
     public function execute(Query $command)
-    {
+    {$v = $this->resolveHandler($command)->handle($command);
         return $this->resolveHandler($command)->handle($command);
     }
 
     public function resolveHandler(Query $query): ?QueryHandler
-    {
+    {$c = $this->getHandlerClass($query);
         try {
             return app()->make($this->getHandlerClass($query));
         } catch (ReflectionException $e) {
-            return null;
+            return $e->getMessage();
         }
     }
 

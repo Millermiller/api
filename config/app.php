@@ -186,6 +186,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Reliese\Coders\CodersServiceProvider::class,
         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
+        //Aws\Laravel\AwsServiceProvider::class,
+
         /*
          * Scandinaver Service Providers...
          */

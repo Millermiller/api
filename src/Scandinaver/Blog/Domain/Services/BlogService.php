@@ -33,7 +33,7 @@ class BlogService
 
     public function getOne($id): Post
     {
-        return $this->postRepository->get($id);
+        return $this->postRepository->find($id);
     }
 
     public function create(array $data): Post

@@ -4,7 +4,10 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Scandinaver\Common\Application\Handler\Query\LanguagesHandler;
+use Scandinaver\Common\Domain\Contract\Query\LanguagesHandlerInterface;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Services\LanguageService;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\Plan;
@@ -105,5 +108,21 @@ class ApiTest extends TestCase
 
         $response = $this->get('/wronglanguagename/assets-mobile');
         $response->assertStatus(500);
+    }
+
+    public function testExample()
+    {
+        $handlerMock = $this->getMockBuilder(LanguagesHandlerInterface::class)
+            ->setMethods(['handle'])
+            ->getMock();
+        $handlerMock->method('handle')->willReturn('foo');
+
+        $this->app->bind(LanguagesHandler::class, function() use ($handlerMock){
+            return $handlerMock;
+        });
+
+        $response = $this->get('/languages');
+        $data = $response->decodeResponseJson();
+        $this->assertEquals('foo', $data);
     }
 }

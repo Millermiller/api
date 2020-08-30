@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\User\Domain\Model\User;
@@ -33,7 +34,7 @@ class Post implements JsonSerializable
 
     private DateTime $createdAt;
 
-    private array $comments;
+    private Collection $comments;
 
     private User $user;
 

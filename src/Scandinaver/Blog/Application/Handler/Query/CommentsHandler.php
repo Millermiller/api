@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\CommentsHandlerInterface;
+use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Query\CommentsQuery;
 
 /**
@@ -13,9 +14,12 @@ use Scandinaver\Blog\UI\Query\CommentsQuery;
  */
 class CommentsHandler implements CommentsHandlerInterface
 {
-    public function __construct()
-    {
 
+    private CommentService $service;
+
+    public function __construct(CommentService $service)
+    {
+        $this->service = $service;
     }
 
     /**
@@ -23,6 +27,6 @@ class CommentsHandler implements CommentsHandlerInterface
      */
     public function handle($query)
     {
-        // TODO: Implement handle() method.
+        return $this->service->getAll();
     }
 } 

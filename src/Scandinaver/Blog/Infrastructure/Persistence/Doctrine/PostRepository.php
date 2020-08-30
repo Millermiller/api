@@ -28,22 +28,4 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             ->getQuery()
             ->getResult();
     }
-
-    /**
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function get($id): Post
-    {
-        $q = $this->_em->createQueryBuilder();
-
-        return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->where('u.id = :id')
-            ->setParameter('id', $id)
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getSingleResult();
-    }
 }

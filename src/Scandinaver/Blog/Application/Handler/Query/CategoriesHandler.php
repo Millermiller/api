@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\CategoriesHandlerInterface;
+use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoriesQuery;
 
 /**
@@ -13,9 +14,13 @@ use Scandinaver\Blog\UI\Query\CategoriesQuery;
  */
 class CategoriesHandler implements CategoriesHandlerInterface
 {
-    public function __construct()
+
+    private CategoryService $service;
+
+    public function __construct(CategoryService $service)
     {
 
+        $this->service = $service;
     }
 
     /**
@@ -25,6 +30,6 @@ class CategoriesHandler implements CategoriesHandlerInterface
      */
     public function handle($query)
     {
-        // TODO: Implement handle() method.
+        return $this->service->getAll();
     }
 }
