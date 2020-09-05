@@ -29,5 +29,6 @@
         <env name="DB_CONNECTION" value="sqlite_testing" />
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="DB_DATABASE" value=":memory:"/>
+        <env name="DOCTRINE_CACHE" value="array"/>
     </php>
 </phpunit>
