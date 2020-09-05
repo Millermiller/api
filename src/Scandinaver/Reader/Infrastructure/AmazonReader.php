@@ -35,7 +35,7 @@ class AmazonReader implements ReaderInterface
         $this->format = config('aws.polly.output_format');
         $this->speed = config('aws.polly.speed');
 
-        $credits = new Credentials('AKIAIOSMR72CKHF2DS3Q', 'TKNp+Eth/J5/NfgAEUcRrMI/8+JS66PgwpAzC6R3');
+        $credits = new Credentials(config('aws.credentials.key'), config('aws.credentials.secret'));
 
         $config = [
             'version' => 'latest',
