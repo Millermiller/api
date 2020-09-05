@@ -92,9 +92,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'support@scandinaver.org'),
+    'username' => env('MAIL_USERNAME'),
 
-    'password' => env('MAIL_PASSWORD', 'hO9nTyNK4v'),
+    'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------

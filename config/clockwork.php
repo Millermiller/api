@@ -29,38 +29,38 @@ return [
 	|
 	*/
 
-	'web' => env('CLOCKWORK_WEB', true),
+    'web' => env('CLOCKWORK_WEB', false),
 
-	'web_dark_theme' => env('CLOCKWORK_WEB_DARK_THEME', false),
+    'web_dark_theme' => env('CLOCKWORK_WEB_DARK_THEME', false),
 
-	/*
-	|--------------------------------------------------------------------------
-	| Enable data collection, when Clockwork is disabled
-	|--------------------------------------------------------------------------
-	|
-	| This setting controls, whether data about application requests will be
-	| recorded even when Clockwork is disabled (useful for later analysis).
-	| Default: false
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Enable data collection, when Clockwork is disabled
+    |--------------------------------------------------------------------------
+    |
+    | This setting controls, whether data about application requests will be
+    | recorded even when Clockwork is disabled (useful for later analysis).
+    | Default: false
+    |
+    */
 
-	'collect_data_always' => env('CLOCKWORK_COLLECT_DATA_ALWAYS', false),
+    'collect_data_always' => env('CLOCKWORK_COLLECT_DATA_ALWAYS', false),
 
-	/*
-	|--------------------------------------------------------------------------
-	| Metadata storage
-	|--------------------------------------------------------------------------
-	|
-	| You can configure how are the metadata collected by Clockwork stored.
-	| Valid options are: files or sql.
-	| Files storage stores the metadata in one-per-request files in a specified
-	| directory.
-	| Sql storage stores the metadata as rows in a sql database. You can specify
-	| the database by name if defined in database.php or by path to Sqlite
-	| database. Database table will be automatically created.
-	| Sql storage requires PDO.
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Metadata storage
+    |--------------------------------------------------------------------------
+    |
+    | You can configure how are the metadata collected by Clockwork stored.
+    | Valid options are: files or sql.
+    | Files storage stores the metadata in one-per-request files in a specified
+    | directory.
+    | Sql storage stores the metadata as rows in a sql database. You can specify
+    | the database by name if defined in database.php or by path to Sqlite
+    | database. Database table will be automatically created.
+    | Sql storage requires PDO.
+    |
+    */
 
 	'storage' => env('CLOCKWORK_STORAGE', 'files'),
 

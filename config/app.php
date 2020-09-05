@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Scandinaver'),
+    'name' => env('APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://scandinaver.org'),
+    'url' => env('APP_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,19 +108,16 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'CRIPTKEY' => 'vPnMEnkUUnKAPNjW',
-    'CRYPTIV' => 'vPnMEnkUUnKAPNjW',
-    'FORVO_LOGIN' => 'day_at_the_way@mail.ru',
-    'FORVO_PASSWORD' => '901018Marina',
-    'SHORTLANG' => 'is',
-    'SITE' => env('SITE', 'https://api.scandinaver.org'),
-    'DOMAIN' => env('DOMAIN','scandinaver.org'),
-    'MAIN_SITE' => env('MAIN_SITE','https://scandinaver.org'),
-    'FORUM' => env('FORUM','https://forum.scandinaver.org'),
+    'FORVO_LOGIN' => env('FORVO_LOGIN'),
+    'FORVO_PASSWORD' => env('FORVO_PASSWORD'),
+    'SITE' => env('SITE'),
+    'DOMAIN' => env('DOMAIN'),
+    'MAIN_SITE' => env('MAIN_SITE'),
+    'FORUM' => env('FORUM_URL'),
 
-    'ysecret' => '+Jmfs1bsSCHx7+GNQnzyFqcF',
-    'yreceiver' => '410018910260978',
-    'yandex_successUrl' => env('YANDEX_SUCCESS_URL', 'https://scandinaver.org/profile'),
+    'ysecret' => env('YSECRET'),
+    'yreceiver' => env('YRECEIVER'),
+    'yandex_successUrl' => env('Y_SUCCESS_URL'),
 
     'lang' => false,
     'write_eloquent_model_mixins' => true,
@@ -186,7 +183,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Reliese\Coders\CodersServiceProvider::class,
         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
-        //Aws\Laravel\AwsServiceProvider::class,
+        Aws\Laravel\AwsServiceProvider::class,
 
         /*
          * Scandinaver Service Providers...
@@ -197,6 +194,7 @@ return [
         Scandinaver\Learn\Infrastructure\LearnServiceProvider::class,
         Scandinaver\Common\Infrastructure\AppServiceProvider::class,
         Scandinaver\User\Infrastructure\UserServiceProvider::class,
+        Scandinaver\Reader\Infrastructure\ReaderServiceProvider::class,
     ],
 
     /*

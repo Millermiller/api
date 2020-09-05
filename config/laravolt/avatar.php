@@ -2,6 +2,9 @@
 /*
  * Set specific configuration variables here
  */
+
+use Laravolt\Avatar\Generator\DefaultGenerator;
+
 return [
 
     /*
@@ -16,43 +19,43 @@ return [
     | Supported: "gd", "imagick"
     |
     */
-    'driver'    => 'gd',
+    'driver' => env('AVATAR_DRIVER'),
 
     // Initial generator class
-    'generator' => \Laravolt\Avatar\Generator\DefaultGenerator::class,
+    'generator' => DefaultGenerator::class,
 
     // Whether all characters supplied must be replaced with their closest ASCII counterparts
-    'ascii'    => false,
+    'ascii' => env('AVATAR_ASCII'),
 
     // Image shape: circle or square
-    'shape' => 'circle',
+    'shape' => env('AVATAR_SHAPE'),
 
     // Image width, in pixel
-    'width'    => 200,
+    'width' => env('AVATAR_WIDTH'),
 
     // Image height, in pixel
-    'height'   => 200,
+    'height' => env('AVATAR_HEIGHT'),
 
     // Number of characters used as initials. If name consists of single word, the first N character will be used
-    'chars'    => 1,
+    'chars' => env('AVATAR_CHARS'),
 
     // font size
-    'fontSize' => 88,
+    'fontSize' => env('AVATAR_FONTSIZE'),
 
     // convert initial letter in uppercase
-    'uppercase' => true,
+    'uppercase' => env('AVATAR_UPPERCASE'),
 
     // Fonts used to render text.
     // If contains more than one fonts, randomly selected based on name supplied
-    'fonts'    => [__DIR__.'/../fonts/OpenSans-Bold.ttf', __DIR__.'/../fonts/rockwell.ttf'],
+    'fonts' => [__DIR__.'/../fonts/OpenSans-Bold.ttf', __DIR__.'/../fonts/rockwell.ttf'],
 
     // List of foreground colors to be used, randomly selected based on name supplied
-    'foregrounds'   => [
+    'foregrounds' => [
         '#FFFFFF',
     ],
 
     // List of background colors to be used, randomly selected based on name supplied
-    'backgrounds'   => [
+    'backgrounds' => [
         '#f44336',
         '#E91E63',
         '#9C27B0',
@@ -71,7 +74,7 @@ return [
     ],
 
     'border'    => [
-        'size'  => 0,
+        'size' => env('AVATAR_BORDER_SIZE'),
 
         // border color, available value are:
         // 'foreground' (same as foreground color)

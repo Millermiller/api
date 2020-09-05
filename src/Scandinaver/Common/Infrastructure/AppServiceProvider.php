@@ -8,12 +8,15 @@ use Laravel\Passport\Passport;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
-use Scandinaver\Common\Domain\{Contract\Repository\IntroRepositoryInterface,
-    Contract\Repository\LanguageRepositoryInterface,
-    Contract\Repository\MessageRepositoryInterface,
+use Scandinaver\Common\Domain\{Contract\HashInterface,
+    Contract\RedisInterface,
     Model\Intro,
     Model\Language,
-    Model\Message};
+    Model\Message
+};
+use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\Repository\MessageRepositoryInterface;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\IntroRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\LanguageRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\MessageRepository;
@@ -125,6 +128,9 @@ class AppServiceProvider extends ServiceProvider
             'Scandinaver\Common\Application\Handler\Query\LanguagesHandler'
         );
 
+        $this->app->bind(HashInterface::class, LaravelHash::class);
+
+        $this->app->bind(RedisInterface::class, LaravelRedis::class);
     }
 
 }

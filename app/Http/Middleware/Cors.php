@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class Cors
 {
@@ -28,7 +27,7 @@ class Cors
         ];
 
         if ($request->cookie('authfrontend._token.local')) {
-            $request->headers->set('Authorization', 'Bearer ' . $request->cookie('authfrontend._token.local'));
+            $request->headers->set('Authorization', 'Bearer '.$request->cookie('authfrontend._token.local'));
         }
 
         if ($request->getMethod() == "OPTIONS") {
@@ -37,8 +36,8 @@ class Cors
         }
 
         $response = $next($request);
-        foreach ($headers as $key => $value)
-            $response->header($key, $value);
+        //foreach ($headers as $key => $value)
+        //    $response->header($key, $value);
         return $response;
     }
 }

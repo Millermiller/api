@@ -15,6 +15,6 @@ return [
     |
     */
 
-    'driver' => 'gd'
+    'driver' => env('AVATAR_DRIVER'),
 
 ];

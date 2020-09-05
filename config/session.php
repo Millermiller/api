@@ -151,7 +151,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', '.scandinaver.org'),
+    'domain' => env('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------

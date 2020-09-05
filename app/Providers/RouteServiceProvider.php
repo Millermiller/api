@@ -91,7 +91,6 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapSubfrontendRoutes(): void
     {
         Route::middleware(['bindings', 'auth:api', 'touchUser', 'checkPlan'])
-             ->namespace('App\Http\Controllers\Sub\Frontend')
              ->as('sub_frontend::')
              ->group(base_path('routes/api/subfrontend/common.php'));
 
