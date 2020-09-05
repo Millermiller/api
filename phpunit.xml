@@ -30,5 +30,6 @@
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="DB_DATABASE" value=":memory:"/>
         <env name="DOCTRINE_CACHE" value="array"/>
+        <env name="DOCTRINE_METADATA" value="simplified_yaml"/>
     </php>
 </phpunit>
