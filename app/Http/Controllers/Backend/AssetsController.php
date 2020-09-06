@@ -36,7 +36,7 @@ use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;
  */
 class AssetsController extends Controller
 {
-    public function index(Language $language)
+    public function index(Language $language): JsonResponse
     {
         return response()->json([
             'words' => $this->queryBus->execute(new GetAssetsByTypeQuery($language, Asset::TYPE_WORDS)),
@@ -91,9 +91,9 @@ class AssetsController extends Controller
         return response()->json(null, 200);
     }
 
-    public function getSentences(): JsonResponse
+    public function getSentences(Language $language): JsonResponse
     {
-        return response()->json($this->queryBus->execute(new GetUnusedSentencesQuery()));
+        return response()->json($this->queryBus->execute(new GetUnusedSentencesQuery($language)));
     }
 
     /**

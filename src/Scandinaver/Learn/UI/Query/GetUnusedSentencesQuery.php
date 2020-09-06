@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -13,8 +14,16 @@ use Scandinaver\Shared\Contract\Query;
  */
 class GetUnusedSentencesQuery implements Query
 {
-    public function __construct()
-    {
 
+    private Language $language;
+
+    public function __construct(Language $language)
+    {
+        $this->language = $language;
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
     }
 }

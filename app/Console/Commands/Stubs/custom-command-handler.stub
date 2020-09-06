@@ -19,9 +19,7 @@ class DummyClass implements DummyClassInterface
     }
 
     /**
-     * @param $command DummyCommandClass
-     *
-     * @inheritDoc
+     * @param DummyCommandClass $command
      */
     public function handle($command): void
     {

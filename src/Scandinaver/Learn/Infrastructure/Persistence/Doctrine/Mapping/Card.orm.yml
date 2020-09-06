@@ -39,6 +39,11 @@ Scandinaver\Learn\Domain\Model\Card:
             nullable: true
             precision: 0
             column: updated_at
+        type:
+            type: integer
+            unique: false
+            nullable: false
+            column: type
     manyToOne:
         word:
             targetEntity: Scandinaver\Learn\Domain\Model\Word
@@ -58,6 +63,16 @@ Scandinaver\Learn\Domain\Model\Card:
             inversedBy: null
             joinColumns:
                 translate_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        language:
+            targetEntity: Scandinaver\Common\Domain\Model\Language
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                language_id:
                     referencedColumnName: id
             orphanRemoval: false
     oneToMany:

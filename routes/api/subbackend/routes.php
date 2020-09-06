@@ -44,6 +44,7 @@ Route::get('/audiocount', 'App\Http\Controllers\Backend\DashboardController@audi
 Route::get('/textscount', 'App\Http\Controllers\Backend\DashboardController@textscount');
 
 Route::get(' /{language}/assets', 'App\Http\Controllers\Backend\AssetsController@index');
+Route::get(' /{language}/cards/sentence', 'App\Http\Controllers\Backend\AssetsController@getSentences');
 Route::post('/forvo/{id}', 'App\Http\Controllers\Backend\AssetsController@findAudio');
 Route::get('/asset/{asset}', 'App\Http\Controllers\Backend\AssetsController@showAsset');
 Route::get('/{language}/values/{word}', 'App\Http\Controllers\Backend\AssetsController@showValues');
@@ -62,7 +63,7 @@ Route::post('/card', 'App\Http\Controllers\Backend\AssetsController@addPair');
 
 Route::resource('/puzzle', 'App\Http\Controllers\Backend\PuzzleController');
 
-Route::get('/texts', 'App\Http\Controllers\Backend\TextController@index');
+Route::get('/{language}/texts', 'App\Http\Controllers\Backend\TextController@all');
 Route::post('/text/publish', 'App\Http\Controllers\Backend\TextController@publish');
 Route::post('/text/{id}', 'App\Http\Controllers\Backend\TextController@textedit');
 Route::post('/text', 'App\Http\Controllers\Backend\TextController@textcreate');

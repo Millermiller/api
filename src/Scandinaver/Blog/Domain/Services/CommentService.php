@@ -22,8 +22,6 @@ class CommentService
 
     public function getAll(): array
     {
-        $comments =  $this->commentRepository->all();
-
-        return $comments;
+        return $this->commentRepository->all();
     }
 }

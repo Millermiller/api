@@ -26,10 +26,9 @@ class GetUnusedSentencesHandler implements GetUnusedSentencesHandlerInterface
      * @param  GetUnusedSentencesQuery  $query
      *
      * @return array
-     * @throws DBALException
      */
     public function handle($query): array
     {
-        return $this->wordService->getSentences();
+        return $this->wordService->getSentences($query->getLanguage());
     }
 } 

@@ -4,12 +4,24 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
-use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\Text;
-use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextWord;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Translate\Domain\Model\Synonym;
+use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\Translate\Domain\Model\Word;
+use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
+use Scandinaver\Translate\UI\Command\CreateTextCommand;
+use Scandinaver\Translate\UI\Command\CreateTextExtraCommand;
+use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
+use Scandinaver\Translate\UI\Command\DeleteTextCommand;
+use Scandinaver\Translate\UI\Command\PublishTextCommand;
+use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
+use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
+use Scandinaver\Translate\UI\Query\GetTextQuery;
+use Scandinaver\Translate\UI\Query\GetTextsQuery;
 use Upload\File;
 use Upload\Storage\FileSystem;
 use Upload\Validation\Mimetype;
@@ -27,160 +39,237 @@ use Upload\Validation\Size;
 class TextController extends Controller
 {
 
-    public function index(): JsonResponse
+    /**
+     * @param  Language  $language
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function all(Language $language): JsonResponse
     {
-        return response()->json(Text::all()->sortBy('id'));
+        $this->authorize('all', Text::class);
+
+        return response()->json($this->queryBus->execute(new GetTextsQuery($language)));
     }
 
-    public function publish(): JsonResponse
+    /**
+     * @param  Text  $text
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function view(Text $text): JsonResponse
     {
-        $publish = (int)Input::get('published');
-        $id      = Input::get('id');
+        $this->authorize('view', $text);
 
-        $result = Text::find($id)->update(['published' => $publish]);
+        return response()->json($this->queryBus->execute(new GetTextQuery($text)));
 
-        return response()->json(['success' => $result]);
+        // $sentences = [];
+        // $extras    = TextExtra::where('text_id', '=', $id)->get();
+        // $synonims  = Text::getSynonyms($id);
+        // $text      = Text::withCount('words')->find($id)->makeVisible('translate');
+        // $cleartext = $text->text;
+        // foreach ($extras as $extra) {
+        //     $text->text = str_replace($extra['orig'],
+        //         '<a href="#" class="tooltip-extra text-success" rel="tooltip" data-id="' . $extra['id'] . '" data-placement="top" data-original-title="' . $extra['extra'] . '">' . $extra['orig'] . '</a>',
+        //         $text->text);
+        // }
+        // $words = TextWord::where('text_id', '=', $id)->orderBy('id', 'ASC')->get();
+        // foreach ($words as $w){
+        //     $sentences[$w['sentence_num']][] = $w;
+        // }
+        // return response()->json([
+        //     'text'      => $text,
+        //     'cleartext' => $cleartext,
+        //     'sentences' => $sentences,
+        //     'extras'    => $extras,
+        //     'synonyms'  => $synonims,
+        //     'success'   => true,
+        // ]);
     }
 
-    public function textcreate(): JsonResponse
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function store(Request $request): JsonResponse
     {
-        $title     = $this->cleartext(Input::get('title'));
-        $origtext  = $this->cleartext(Input::get('origtext'));
-        $translate = $this->cleartext(Input::get('translate'));
+        $this->authorize('create', Text::class);
 
-        $text = Text::create(['title' => $title, 'text' => $origtext, 'translate' => $translate]);
+        return response()->json($this->commandBus->execute(new CreateTextCommand()));
 
-        $sentences = explode('.', trim($translate));
-        array_pop($sentences);
-
-        foreach ($sentences as $num => $sentence) {
-            $words           = explode(' ', str_replace(',', '', trim($sentence)));
-            $sentences[$num] = $words;
-        }
-
-        foreach ($sentences as $num => $sentence) {
-            foreach ($sentence as $word) {
-                TextWord::create(['text_id' => $text->id, 'sentence_num' => $num, 'word' => $word]);
-            }
-        }
-
-        return response()->json(['success' => true, 'id' => $text->id]);
+        // $title     = $this->cleartext(Input::get('title'));
+        // $origtext  = $this->cleartext(Input::get('origtext'));
+        // $translate = $this->cleartext(Input::get('translate'));
+        // $text = Text::create(['title' => $title, 'text' => $origtext, 'translate' => $translate]);
+        // $sentences = explode('.', trim($translate));
+        // array_pop($sentences);
+        // foreach ($sentences as $num => $sentence) {
+        //     $words           = explode(' ', str_replace(',', '', trim($sentence)));
+        //     $sentences[$num] = $words;
+        // }
+        // foreach ($sentences as $num => $sentence) {
+        //     foreach ($sentence as $word) {
+        //         TextWord::create(['text_id' => $text->id, 'sentence_num' => $num, 'word' => $word]);
+        //     }
+        // }
+        // return response()->json(['success' => true, 'id' => $text->id]);
     }
 
-    public function textdelete($id): JsonResponse
+    /**
+     * @param  Text  $text
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function publish(Text $text): JsonResponse
     {
-        try {
-            /** @var Text $text */
-            $text = Text::findOrFail($id);
-            $text->result()->delete();
-            return response()->json(['success' => $text->delete()]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
+        $this->authorize('update', $text);
 
-        }
+        return $this->commandBus->execute(new PublishTextCommand($text));
+
+        // $publish = (int)Input::get('published');
+        // $id      = Input::get('id');
+        // $result = Text::find($id)->update(['published' => $publish]);
+        // return response()->json(['success' => $result]);
     }
 
-    public function textedit()
+    /**
+     * @param  Text  $text
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function destroy(Text $text): JsonResponse
     {
+        $this->authorize('delete', $text);
 
+        return $this->commandBus->execute(new DeleteTextCommand($text));
+
+        // try {
+        //     /** @var Text $text */
+        //     $text = Text::findOrFail($id);
+        //     $text->result()->delete();
+        //     return response()->json(['success' => $text->delete()]);
+        // } catch (\Exception $e) {
+        //     return response()->json(['success' => false, 'msg' => $e->getMessage()]);
+        // }
     }
 
-    public function getText($id): JsonResponse
+    public function update(Text $text)
     {
-        $sentences = [];
-        $extras    = TextExtra::where('text_id', '=', $id)->get();
-        $synonims  = Text::getSynonyms($id);
-        $text      = Text::withCount('words')->find($id)->makeVisible('translate');
-        $cleartext = $text->text;
-
-        foreach ($extras as $extra) {
-            $text->text = str_replace($extra['orig'],
-                '<a href="#" class="tooltip-extra text-success" rel="tooltip" data-id="' . $extra['id'] . '" data-placement="top" data-original-title="' . $extra['extra'] . '">' . $extra['orig'] . '</a>',
-                $text->text);
-        }
-
-        $words = TextWord::where('text_id', '=', $id)->orderBy('id', 'ASC')->get();
-
-        foreach ($words as $w)
-            $sentences[$w['sentence_num']][] = $w;
-
-
-        return response()->json([
-            'text'      => $text,
-            'cleartext' => $cleartext,
-            'sentences' => $sentences,
-            'extras'    => $extras,
-            'synonyms'  => $synonims,
-            'success'   => true,
-        ]);
-
-    }
-
-    public function addExtras(): JsonResponse
-    {
-        $data = Input::get('data');
-
-        $textid = trim(Input::get('text_id'));
-
-        TextExtra::where('text_id', $textid)->delete();
-
-        foreach ($data as $extra) {
-            $textExtra = new TextExtra(
-                [
-                    'text_id' => $textid,
-                    'orig'    => trim($extra['orig']),
-                    'extra'   => trim($extra['extra'])
-                ]
-            );
-        }
-        return response()->json(['success' => true]);
-
-    }
-
-    public function saveSentences(): JsonResponse
-    {
-        $data   = Input::get('data');
-        $textId = Input::get('text_id');
-
-        TextWord::where('text_id', $textId)->delete();
-
-        foreach ($data as $sentence) {
-            foreach ($sentence as $word) {
-                $model = new TextWord([
-                    'text_id'      => $word['text_id'],
-                    'word'         => $word['word'],
-                    'orig'         => $word['orig'],
-                    'sentence_num' => $word['sentence_num']
-                ]);
-            }
-        }
-        return response()->json(['success' => true]);
 
     }
 
-    public function getSynonyms($id): JsonResponse
+    /**
+     * @param  Text     $text
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function addExtras(Text $text, Request $request): JsonResponse
     {
-        return response()->json([
-            'success'  => true,
-            'synonyms' => Synonym::where('word_id', $id)->get()
-        ]);
+        $this->authorize('update', $text);
+
+        return $this->commandBus->execute(new CreateTextExtraCommand());
+
+        // $data = Input::get('data');
+        // $textid = trim(Input::get('text_id'));
+        // TextExtra::where('text_id', $textid)->delete();
+        // foreach ($data as $extra) {
+        //     $textExtra = new TextExtra(
+        //         [
+        //             'text_id' => $textid,
+        //             'orig'    => trim($extra['orig']),
+        //             'extra'   => trim($extra['extra'])
+        //         ]
+        //     );
+        // }
+        // return response()->json(['success' => true]);
     }
 
-    public function addSynonym(): JsonResponse
+    /**
+     * @param  Text     $text
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function saveSentences(Text $text, Request $request): JsonResponse
     {
-        $word_id = Input::get('word_id');
-        $synonym = Input::get('synonym');
+        $this->authorize('update', $text);
 
-        return response()->json(['success' => Synonym::create(['word_id' => $word_id, 'synonym' => $synonym])]);
+        // $data   = Input::get('data');
+        // $textId = Input::get('text_id');
+        // TextWord::where('text_id', $textId)->delete();
+        // foreach ($data as $sentence) {
+        //     foreach ($sentence as $word) {
+        //         $model = new TextWord([
+        //             'text_id'      => $word['text_id'],
+        //             'word'         => $word['word'],
+        //             'orig'         => $word['orig'],
+        //             'sentence_num' => $word['sentence_num']
+        //         ]);
+        //     }
+        // }
+        // return response()->json(['success' => true]);
     }
 
-    public function deleteSynonym($id): JsonResponse
+    public function getSynonyms(Word $word): JsonResponse
     {
-        return response()->json(['success' => Synonym::destroy($id)]);
+        return $this->queryBus->execute(new GetSynonymsQuery($word));
+
+        //return response()->json([
+        //    'success'  => true,
+        //    'synonyms' => Synonym::where('word_id', $id)->get()
+        //]);
     }
 
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function addSynonym(Request $request): JsonResponse
+    {
+        $this->authorize('update', Text::class);
+
+        return $this->commandBus->execute(new CreateSynonymCommand($request));
+
+        // $word_id = Input::get('word_id');
+        // $synonym = Input::get('synonym');
+        // return response()->json(['success' => Synonym::create(['word_id' => $word_id, 'synonym' => $synonym])]);
+    }
+
+    /**
+     * @param  Synonym  $synonym
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function deleteSynonym(Synonym $synonym): JsonResponse
+    {
+        $this->authorize('update', Text::class);
+
+        return $this->commandBus->execute(new DeleteSynonymCommand($synonym));
+
+        // return response()->json(['success' => Synonym::destroy($id)]);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
     public function uploadImage($id): JsonResponse
     {
+        $this->authorize('update', Text::class);
+
         $storage      = new FileSystem(public_path() . '/uploads/photo/');
         $file         = new File('file', $storage);
         $new_filename = uniqid();
@@ -189,7 +278,6 @@ class TextController extends Controller
             new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
             new Size('5M')
         ]);
-
         try {
             $file->upload();
             $url = '/uploads/photo/' . $file->getNameWithExtension();
@@ -224,13 +312,19 @@ class TextController extends Controller
         }
     }
 
-    public function updateDescription($id): JsonResponse
+    /**
+     * @param  Text     $text
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function updateDescription(Text $text, Request $request): JsonResponse
     {
-        return response()->json(['success' => Text::updateOrCreate(['id' => $id], ['description' => Input::get('content')])]);
-    }
+        $this->authorize('update', $text);
 
-    protected function cleartext($text): string
-    {
-        return str_replace(["\r\n", "\r", "\n"], '', strip_tags(trim($text)));
+        return $this->commandBus->execute(new UpdateDescriptionCommand($text));
+
+        // return response()->json(['success' => Text::updateOrCreate(['id' => $id], ['description' => Input::get('content')])]);
     }
 }

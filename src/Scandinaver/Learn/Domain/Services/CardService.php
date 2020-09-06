@@ -31,7 +31,7 @@ class CardService
 
     private ExampleRepositoryInterface $exampleRepository;
 
-    private CardFabric $cardFabric;
+    private CardFactory $cardFabric;
 
     private FavouriteAssetRepositoryInterface $favouriteAssetRepository;
 
@@ -42,7 +42,7 @@ class CardService
         ExampleRepositoryInterface $exampleRepository,
         TranslateRepositoryInterface $translateRepository,
         FavouriteAssetRepositoryInterface $favouriteAssetRepository,
-        CardFabric $cardFabric
+        CardFactory $cardFabric
     ) {
         $this->assetRepository = $assetRepository;
         $this->cardRepository = $cardRepository;

@@ -48,7 +48,7 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
 
     protected $cards;
 
-    private $results;
+    private Collection $results;
 
     /**
      * Asset constructor.
@@ -205,5 +205,13 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
             },
             $this->cards->toArray()
         );
+    }
+
+
+    public function addResult(Result $result): void
+    {
+        if (!$this->results->contains($result)) {
+            $this->results->add($result);
+        }
     }
 }

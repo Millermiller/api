@@ -43,4 +43,9 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
             ->getQuery()
             ->getResult();
     }
+
+    public function getSentences(Language $language): array
+    {
+
+    }
 }

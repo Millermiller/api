@@ -12,9 +12,9 @@ abstract class AggregateRoot
 {
     private array $domainEvents = [];
 
-    public abstract function getId(): int;
+    abstract public function getId(): int;
 
-    public abstract function toDTO();
+    abstract public function toDTO(): DTO;
 
     final public function pullEvents(): array
     {

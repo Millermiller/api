@@ -12,38 +12,32 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Blog\Domain\Model
  */
-class Comment implements JsonSerializable
+class Comment
 {
     private int $id;
 
-    private ?int $postId;
-
     private ?string $text;
-
-    private int $userId;
-
-    private DateTime $createdAt;
-
-    private ?DateTime $updatedAt;
 
     private Post $post;
 
     private User $user;
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->getId(),
-            'text' => $this->text,
-            'asc' => 'asc',
-        ];
-    }
+    private DateTime $createdAt;
+
+    private ?DateTime $updatedAt;
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }

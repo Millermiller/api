@@ -41,6 +41,20 @@ class TextService
         return $this->textRepository->getCountByLanguage($language);
     }
 
+    public function getAllByLanguage(Language $language): array
+    {
+        $result = [];
+
+        /** @var Text $texts */
+        $texts = $this->textRepository->findBy(['language' => $language]);
+
+        foreach ($texts as $text) {
+            $result[] = $text->toDTO();
+        }
+
+        return $result;
+    }
+
     public function getTextsForUser(Language $language, User $user): array
     {
         $activeArray = $this->textRepository->getActiveIds($user, $language);

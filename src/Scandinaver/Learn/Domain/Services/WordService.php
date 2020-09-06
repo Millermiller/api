@@ -144,33 +144,25 @@ class WordService
         return $result;
     }
 
-    /**
-     * @param  Word  $word
-     *
-     * @return Translate[]
-     */
     public function getTranslates(Word $word): array
     {
         return $this->translateRepository->searchByIds([$word->getId()]);
     }
 
-    /**
-     * @return array
-     * @throws DBALException
-     */
-    public function getSentences(): array
+    public function getSentences(Language $language): array
     {
-        $sql = 'SELECT w.id, w.word, t.value, t.id as translate_id
-                         FROM words as w
-                         JOIN translate as t
-                            ON w.id = t.word_id
-                         WHERE w.sentence = 1
-                         AND w.id NOT IN(SELECT word_id FROM cards)
-                         AND w.deleted_at is NULL ';
+        $result = [];
 
-        $stmt = app('em')->getConnection()->prepare($sql);
-        $stmt->execute();
+        /** @var Card[] $cards */
+        $cards = $this->cardRepository->findBy([
+            'language' => $language,
+            'type' => 1
+        ]);
 
-        return $stmt->fetchAll();
+        foreach ($cards as $card) {
+            $result[] = $card->toDTO();
+        }
+
+        return $result;
     }
 }

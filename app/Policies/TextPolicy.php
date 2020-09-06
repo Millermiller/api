@@ -16,33 +16,28 @@ class TextPolicy
 {
     use HandlesAuthorization;
 
+    public function all(User $user)
+    {
+        return $user->isAdmin();
+    }
+
     public function view(User $user, Text $text): bool
     {
-        return $user->hasText($text);
+        return $user->isAdmin() || $user->hasText($text);
     }
 
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     public function update(User $user, Text $Text)
     {
-        //
+        return true;
     }
 
     public function delete(User $user, Text $Text)
     {
-
-    }
-
-    public function restore(User $user, Text $Text)
-    {
-        //
-    }
-
-    public function forceDelete(User $user, Text $Text)
-    {
-        //
+        return true;
     }
 }

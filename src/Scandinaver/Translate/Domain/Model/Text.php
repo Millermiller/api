@@ -4,9 +4,10 @@
 namespace Scandinaver\Translate\Domain\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -14,7 +15,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Translate\Domain\Model
  */
-class Text implements JsonSerializable
+class Text extends AggregateRoot
 {
     private int $id;
 
@@ -28,7 +29,7 @@ class Text implements JsonSerializable
 
     private string $translate;
 
-    private int $published;
+    private bool $published;
 
     private DateTime $createdAt;
 
@@ -40,13 +41,11 @@ class Text implements JsonSerializable
 
     private Language $language;
 
-    private $extra;
+    private Collection $extra;
 
-    private $words;
+    private Collection $words;
 
     private $textResults;
-
-    private $synonyms;
 
     public function getTitle(): string
     {
@@ -81,7 +80,7 @@ class Text implements JsonSerializable
     /**
      * @return Collection|User[]
      */
-    public function getUsers()
+    public function getUsers(): Collection
     {
         return $this->users;
     }
@@ -91,31 +90,54 @@ class Text implements JsonSerializable
         return $this->id;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'language' => $this->language,
-            'level' => $this->level,
-            'description' => $this->description,
-            'text' => $this->text,
-            'image' => $this->image,
-            'count' => $this->words->count(),
-            'extra' => $this->extra->toArray(),
-            'synonyms' => $this->synonims,
-        ];
-    }
-
-    public function setSynonyms(array $data): void
-    {
-        $this->synonyms = $data;
-    }
-
     public function getLevel(): int
     {
         return $this->level;
+    }
+
+    public function toDTO(): TextDTO
+    {
+        return new TextDTO($this);
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
+    }
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    /**
+     * @return Collection|Word[]
+     */
+    public function getWords(): Collection
+    {
+        return $this->words;
+    }
+
+    /**
+     * @return Collection|TextExtra[]
+     */
+    public function getExtra(): Collection
+    {
+        return $this->extra;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): void
+    {
+        $this->published = $published;
+    }
+
+    public function getTextResults()
+    {
+        return $this->textResults;
     }
 }

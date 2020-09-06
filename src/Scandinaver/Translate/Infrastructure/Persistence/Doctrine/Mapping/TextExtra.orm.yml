@@ -1,6 +1,6 @@
 Scandinaver\Translate\Domain\Model\TextExtra:
     type: entity
-    table: text_extra
+    table: text_extras
     indexes:
         text_id:
             columns:

@@ -5,13 +5,16 @@ namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
 use JsonSerializable;
+use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Shared\Contract\Collection;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class Category
  *
  * @package Scandinaver\Blog\Domain\Model
  */
-class Category implements JsonSerializable
+class Category extends AggregateRoot
 {
     private int $id;
 
@@ -21,24 +24,28 @@ class Category implements JsonSerializable
 
     private ?DateTime $updatedAt;
 
-    private $posts;
+    private Collection $posts;
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
+    public function getId(): int
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-        ];
+        return $this->id;
     }
 
     /**
-     * @return Post[]
+     * @return Collection|Post[]
      */
-    public function getPosts(): array
+    public function getPosts(): Collection
     {
         return $this->posts;
+    }
+
+    public function toDTO(): DTO
+    {
+        return new CategoryDTO($this);
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

@@ -22,9 +22,7 @@ class ReadCardHandler implements ReadCardHandlerInterface
     }
 
     /**
-     * @param $query ReadCardQuery
-     *
-     * @inheritDoc
+     * @param ReadCardQuery $query
      */
     public function handle($query)
     {

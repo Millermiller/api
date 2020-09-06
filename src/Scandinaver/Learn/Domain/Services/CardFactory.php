@@ -12,7 +12,7 @@ use Scandinaver\Learn\Domain\Model\Word;
  *
  * @package Scandinaver\Learn\Domain\Services
  */
-class CardFabric
+class CardFactory
 {
     public function build($data): Card
     {

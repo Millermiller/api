@@ -37,12 +37,7 @@ class IntroService
 
     public function create(array $data): Intro
     {
-        $intro = new Intro();
-
-        $intro->setPage($data['page']);
-        $intro->setElement($data['element']);
-        $intro->setPosition($data['position']);
-        $intro->setIntro($data['intro']);
+        $intro = IntroFactory::build($data);
 
         return $this->introRepository->save($intro);
     }

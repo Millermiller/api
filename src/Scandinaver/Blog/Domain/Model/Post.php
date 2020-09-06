@@ -7,6 +7,8 @@ use DateTime;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -14,7 +16,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Blog\Domain\Model
  */
-class Post implements JsonSerializable
+class Post extends AggregateRoot
 {
     private int $id;
 
@@ -24,7 +26,7 @@ class Post implements JsonSerializable
 
     private ?string $anonse;
 
-    private bool $status;
+    private int $status;
 
     private int $commentStatus;
 
@@ -43,38 +45,16 @@ class Post implements JsonSerializable
     private Language $language;
 
     /**
-     * @return Comment[]
+     * @return Collection|Comment[]
      */
-    public function getComments()
+    public function getComments(): Collection
     {
         return $this->comments;
     }
 
-    /**
-     * @param  Comment[] $comments
-     */
-    public function setComments($comments): void
+    public function setComments(Collection $comments): void
     {
         $this->comments = $comments;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'content' => $this->content,
-            'user' => $this->user,
-            'views' => $this->views,
-            'category' => $this->category,
-            'comments' => $this->comments->toArray(),
-            'status' => $this->status,
-            'comment_status' => $this->commentStatus,
-            'created_at' => $this->getCreatedAt()->format("Y-m-d H:i:s"),
-        ];
     }
 
     public function getCreatedAt(): ?DateTime
@@ -115,5 +95,35 @@ class Post implements JsonSerializable
     public function setContent(string $content): void
     {
         $this->content = $content;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function toDTO(): PostDTO
+    {
+        return new PostDTO($this);
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    public function getCommentStatus(): int
+    {
+        return $this->commentStatus;
     }
 }

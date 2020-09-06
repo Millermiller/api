@@ -22,7 +22,7 @@ class GetAssetsByTypeHandler implements GetAssetsByTypeHandlerInterface
     }
 
     /**
-     * @param $query GetAssetsByTypeQuery
+     * @param  GetAssetsByTypeQuery  $query
      *
      * @inheritDoc
      */

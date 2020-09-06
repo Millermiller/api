@@ -45,21 +45,18 @@ class AssetService
         return $this->assetsRepository->getCountByLanguage($language);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
+
     public function create(Language $language, User $user, string $title): Asset
     {
-        $asset = new PersonalAsset($title, 0,  0, $language);
-        $asset->setLevel(0);
-        $result = new Result($asset, $user, $language);
-        $result->setValue(0);
-        $user->incrementAssetCounter();
+        $data = [
+            'title' => $title,
+            'language' => $language,
+            'user' => $user,
+        ];
 
-        app('em')->persist($asset);
-        app('em')->persist($result);
-        app('em')->flush();
+        $asset = AssetFactory::build($data);
+
+        $this->assetRepository->save($asset);
 
         return $asset;
     }
@@ -77,6 +74,12 @@ class AssetService
         return $asset;
     }
 
+    /**
+     * @param  Asset  $asset
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function delete(Asset $asset): void
     {
         $repository = AssetRepositoryFactory::getByType($asset->getType());
@@ -85,7 +88,9 @@ class AssetService
 
     public function getAssets(Language $language, int $type): array
     {
-        return $this->assetRepository->getAssetsByType($language, $type);
+        $repository = AssetRepositoryFactory::getByType($type);
+
+        return $repository->getByLanguage($language);
     }
 
     public function getAssetsByType(Language $language, User $user, int $type): array
