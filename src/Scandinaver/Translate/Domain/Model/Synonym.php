@@ -16,6 +16,8 @@ class Synonym
 
     private string $synonym;
 
+    private Word $word;
+
     private DateTime $createdAt;
 
     private ?DateTime $updatedAt;

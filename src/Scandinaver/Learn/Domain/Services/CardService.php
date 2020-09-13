@@ -12,6 +12,7 @@ use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -31,9 +32,10 @@ class CardService
 
     private ExampleRepositoryInterface $exampleRepository;
 
-    private CardFactory $cardFabric;
+    private CardFactory $cardFactory;
 
     private FavouriteAssetRepositoryInterface $favouriteAssetRepository;
+    private WordRepositoryInterface $wordRepository;
 
     public function __construct(
         AssetRepositoryInterface $assetRepository,
@@ -42,15 +44,17 @@ class CardService
         ExampleRepositoryInterface $exampleRepository,
         TranslateRepositoryInterface $translateRepository,
         FavouriteAssetRepositoryInterface $favouriteAssetRepository,
-        CardFactory $cardFabric
+        WordRepositoryInterface $wordRepository,
+        CardFactory $cardFactory
     ) {
         $this->assetRepository = $assetRepository;
         $this->cardRepository = $cardRepository;
         $this->resultRepository = $resultRepository;
         $this->exampleRepository = $exampleRepository;
         $this->translateRepository = $translateRepository;
-        $this->cardFabric = $cardFabric;
+        $this->cardFactory = $cardFactory;
         $this->favouriteAssetRepository = $favouriteAssetRepository;
+        $this->wordRepository = $wordRepository;
     }
 
     public function addCardToAsset(User $user, Language $language, Card $card, Asset $asset): Card
@@ -73,28 +77,50 @@ class CardService
             'language' => $language,
         ];
 
-        $card = $this->cardFabric->build($data);
+        $card = $this->cardFactory->build($data);
 
         $this->cardRepository->save($card);
 
         return $card;
     }
 
-    public function updateCard(
-        Card $card,
-        Word $word,
-        Translate $translate,
-        Asset $asset
-    ): Card {
-        $card->setWord($word);
-        $card->setTranslate($translate);
-        $card->setAsset($asset);
+    public function updateCard(Card $card, array $data): Card
+    {
+        $translate = $card->getTranslate();
+        $translate->setValue($data['translate']['value']);
+        $this->translateRepository->save($translate);
+
+        $word = $card->getWord();
+        $word->setValue($data['word']['value']);
+        $this->wordRepository->save($word);
+
+        $card->clearExamples();
+
+        foreach ($data['examples'] as $exampleData) {
+            if (isset($exampleData['id'])) {
+                /** @var Example $example */
+                $example = $this->exampleRepository->find($exampleData['id']);
+                if ($example === null) {
+                    $example = new Example($exampleData['text'], $exampleData['value'], $card);
+                }
+                else {
+                    $example->setText($exampleData['text']);
+                    $example->setValue($exampleData['value']);
+                }
+            }
+            else {
+                $example = new Example($exampleData['text'], $exampleData['value'], $card);
+            }
+            $this->exampleRepository->save($example);
+            $card->addExample($example);
+        }
+
         $this->cardRepository->save($card);
 
         return $card;
     }
 
-    public function destroyCard(Card $card, Asset $asset): void
+    public function removeCardFromAsset(Card $card, Asset $asset): void
     {
         $asset->removeCard($card);
         $this->assetRepository->save($asset);

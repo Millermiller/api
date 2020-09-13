@@ -36,9 +36,6 @@ class Card extends AggregateRoot
 
     private int $type;
 
-    /**
-     * @var Example[]
-     */
     private Collection $examples;
 
     public function __construct()
@@ -94,11 +91,6 @@ class Card extends AggregateRoot
         return $this->translate;
     }
 
-    public function getExamples(): Collection
-    {
-        return $this->examples;
-    }
-
     public function getLanguage(): Language
     {
         return $this->language;
@@ -107,5 +99,41 @@ class Card extends AggregateRoot
     public function getCreator(): ?User
     {
         return $this->creator;
+    }
+
+    /**
+     * @param  ArrayCollection|Collection  $examples
+     */
+    public function setExamples(Collection $examples): void
+    {
+        $this->examples = $examples;
+    }
+
+    public function addExample(Example $example): void
+    {
+        if (!$this->examples->contains($example)) {
+            $example->setCard($this);
+            $this->examples->add($example);
+        }
+    }
+
+    public function removeExample(Example $example)
+    {
+        if ($this->examples->contains($example)) {
+            $this->examples->removeElement($example);
+        }
+    }
+
+    /**
+     * @return Collection|Example[]
+     */
+    public function getExamples(): Collection
+    {
+        return $this->examples;
+    }
+
+    public function clearExamples()
+    {
+        $this->examples->clear();
     }
 }

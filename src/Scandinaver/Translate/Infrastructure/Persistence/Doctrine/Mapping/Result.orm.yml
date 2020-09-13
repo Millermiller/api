@@ -50,7 +50,7 @@ Scandinaver\Translate\Domain\Model\Result:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: results
+            inversedBy: null
             joinColumns:
                 language_id:
                     referencedColumnName: id

@@ -39,6 +39,9 @@ Scandinaver\Learn\Domain\Model\Example:
             nullable: true
             precision: 0
             column: created_at
+            gedmo:
+                timestampable:
+                    on: create
         updatedAt:
             type: datetime
             scale: 0
@@ -47,10 +50,13 @@ Scandinaver\Learn\Domain\Model\Example:
             nullable: true
             precision: 0
             column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
     manyToOne:
         card:
             targetEntity: Scandinaver\Learn\Domain\Model\Card
-            cascade: {  }
+            cascade: ["persist", "merge"]
             fetch: LAZY
             mappedBy: null
             inversedBy: examples

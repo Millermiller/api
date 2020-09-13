@@ -3,10 +3,10 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Request;
 use App\Helpers\Auth;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
@@ -120,7 +120,7 @@ class AssetsController extends Controller
         // TODO: импорт предложений Excel
     }
 
-    public function changeAsset(Request $request, Asset $asset): JsonResponse
+    public function changeAsset(Asset $asset, Request $request): JsonResponse
     {
         $this->commandBus->execute(new UpdateAssetCommand(Auth::user(), $asset, $request->toArray()));
 

@@ -10,4 +10,6 @@ class SentenceAsset extends Asset
     {
         return Asset::TYPE_SENTENCES;
     }
+
+    protected int $category = 2;
 }

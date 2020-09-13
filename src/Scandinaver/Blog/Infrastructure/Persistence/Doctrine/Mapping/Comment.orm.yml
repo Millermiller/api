@@ -13,14 +13,6 @@ Scandinaver\Blog\Domain\Model\Comment:
             generator:
                 strategy: IDENTITY
     fields:
-        postId:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: post_id
         text:
             type: text
             scale: 0
@@ -28,14 +20,6 @@ Scandinaver\Blog\Domain\Model\Comment:
             unique: false
             nullable: true
             precision: 0
-        userId:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: user_id
         createdAt:
             type: datetime
             scale: 0

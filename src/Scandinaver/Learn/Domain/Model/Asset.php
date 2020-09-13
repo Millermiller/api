@@ -28,27 +28,29 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
 
     public const TYPE_FAVORITES = 3;
 
-    private $id;
+    protected $id;
 
     protected string $title;
 
-    private int $basic;
+    protected int $basic;
 
-    private int $level;
+    protected int $level;
 
-    private ?int $favorite;
+    protected ?int $favorite;
 
-    private DateTime $createdAt;
+    protected DateTime $createdAt;
 
-    private ?DateTime $updatedAt;
+    protected ?DateTime $updatedAt;
 
-    private $users;
+    protected $users;
 
-    private Language $language;
+    protected Language $language;
 
     protected $cards;
 
-    private Collection $results;
+    protected Collection $results;
+
+    protected int $category;
 
     /**
      * Asset constructor.

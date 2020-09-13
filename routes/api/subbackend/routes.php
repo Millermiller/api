@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/articles/search', 'App\Http\Controllers\Backend\rticleController@search')->name('search');
+
+Route::get('/articles/search', 'App\Http\Controllers\Backend\ArticleController@search')->name('search');
 Route::post('/articles/upload', 'App\Http\Controllers\Backend\ArticleController@upload')->name('upload');
 Route::resource('/articles', 'App\Http\Controllers\Backend\ArticleController',
     ['except' => ['create', 'edit']]
@@ -49,7 +50,7 @@ Route::post('/forvo/{id}', 'App\Http\Controllers\Backend\AssetsController@findAu
 Route::get('/asset/{asset}', 'App\Http\Controllers\Backend\AssetsController@showAsset');
 Route::get('/{language}/values/{word}', 'App\Http\Controllers\Backend\AssetsController@showValues');
 Route::get('/{language}/examples/{card}', 'App\Http\Controllers\Backend\AssetsController@showExamples');
-Route::post('/asset/{id}', 'App\Http\Controllers\Backend\AssetsController@changeAsset');
+Route::put('/asset/{asset}', 'App\Http\Controllers\Backend\AssetsController@changeAsset');
 Route::post('/changeUsedTranslate', 'App\Http\Controllers\Backend\AssetsController@changeUsedTranslate');
 Route::post('/translate', 'App\Http\Controllers\Backend\AssetsController@editTranslate');
 Route::post('/audio', 'App\Http\Controllers\Backend\AssetsController@uploadAudio');
@@ -60,6 +61,7 @@ Route::delete('/translate/{id}', 'App\Http\Controllers\Backend\AssetsController@
 
 Route::post('/wordfile', 'App\Http\Controllers\Backend\AssetsController@uploadSentences');
 Route::post('/card', 'App\Http\Controllers\Backend\AssetsController@addPair');
+Route::put('/card/{card}', 'App\Http\Controllers\Backend\CardController@update');
 
 Route::resource('/puzzle', 'App\Http\Controllers\Backend\PuzzleController');
 

@@ -56,7 +56,8 @@ Scandinaver\Learn\Domain\Model\Translate:
     manyToOne:
         word:
             targetEntity: Scandinaver\Learn\Domain\Model\Word
-            cascade: {  }
+            cascade:
+                - persist
             fetch: LAZY
             mappedBy: null
             inversedBy: null

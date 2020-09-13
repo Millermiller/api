@@ -8,9 +8,6 @@ Scandinaver\Learn\Domain\Model\Card:
         translate_id:
             columns:
                 - translate_id
-        asset_id:
-            columns:
-                - asset_id
     id:
         id:
             type: integer
@@ -47,18 +44,16 @@ Scandinaver\Learn\Domain\Model\Card:
     manyToOne:
         word:
             targetEntity: Scandinaver\Learn\Domain\Model\Word
-            cascade: {  }
+            cascade: ["persist", "merge"]
             fetch: EAGER
-            mappedBy: null
-            inversedBy: cards
             joinColumns:
                 word_id:
                     referencedColumnName: id
             orphanRemoval: false
         translate:
             targetEntity: Scandinaver\Learn\Domain\Model\Translate
-            cascade: {  }
-            fetch: LAZY
+            cascade: ["persist", "merge"]
+            fetch: EAGER
             mappedBy: null
             inversedBy: null
             joinColumns:
@@ -78,18 +73,27 @@ Scandinaver\Learn\Domain\Model\Card:
     oneToMany:
         examples:
             targetEntity: Scandinaver\Learn\Domain\Model\Example
-            cascade: {  }
+            cascade: ["persist", "merge"]
             fetch: EAGER
             mappedBy: card
-            inversedBy: examples
+            inversedBy: null
             joinColumns:
                 card_id:
                     referencedColumnName: id
-            orphanRemoval: false
+            orphanRemoval: true
             orderBy: null
     #manyToMany:
     #    assets:
-    #        targetEntity: Scandinaver\User\Domain\Model\User
-    #        mappedBy: Scandinaver\Learn\Domain\Model\Asset
+    #        targetEntity:  Scandinaver\Learn\Domain\Model\Asset
+    #        joinTable:
+    #            name: asset_cards
+    #            joinColumns:
+    #                asset_id:
+    #                    referencedColumnName: id
+    #            inverseJoinColumns:
+    #                card_id:
+    #                    referencedColumnName: id
+    #
+
 
     lifecycleCallbacks: {  }

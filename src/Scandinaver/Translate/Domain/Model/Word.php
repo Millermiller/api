@@ -4,6 +4,7 @@
 namespace Scandinaver\Translate\Domain\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -27,6 +28,8 @@ class Word implements JsonSerializable
     private ?DateTime $updatedAt;
 
     private Text $text;
+
+    private Collection $synonyms;
 
     /**
      * @inheritDoc

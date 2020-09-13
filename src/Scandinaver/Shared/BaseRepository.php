@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\UnitOfWork;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**
@@ -53,8 +54,11 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     {
         foreach ($data as $key => $value) {
             $key = Inflector::camelize($key);
-            if (property_exists($entity, $key)) {
-                $entity->{'set'.ucfirst($key)}($value);
+            if (property_exists($entity, $key) && !is_array($value)) {
+                $method = 'set'.ucfirst($key);
+                if (method_exists($entity, $method)) {
+                    $entity->{$method}($value);
+                }
             }
         }
         $this->_em->flush($entity);

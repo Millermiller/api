@@ -10,4 +10,6 @@ class PersonalAsset extends Asset
     {
         return Asset::TYPE_PERSONAL;
     }
+
+    protected int $category = 0;
 }

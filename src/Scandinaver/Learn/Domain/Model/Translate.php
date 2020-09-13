@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 
 /**

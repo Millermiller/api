@@ -86,21 +86,21 @@ Scandinaver\Translate\Domain\Model\Text:
             nullable: true
             precision: 0
     manyToMany:
-        users:
-            targetEntity: Scandinaver\User\Domain\Model\User
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: texts
-            inversedBy: null
-            joinTable: {  }
-            orderBy: null
+        #users:
+        #    targetEntity: Scandinaver\User\Domain\Model\User
+        #    cascade: {  }
+        #    fetch: LAZY
+        #    mappedBy: texts
+        #    inversedBy: null
+        #    joinTable: {  }
+        #    orderBy: null
     manyToOne:
         language:
             targetEntity: Scandinaver\Common\Domain\Model\Language
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: texts
+            inversedBy: null
             joinColumns:
                 language_id:
                     referencedColumnName: id

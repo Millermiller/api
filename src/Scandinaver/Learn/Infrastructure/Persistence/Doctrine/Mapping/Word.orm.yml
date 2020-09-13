@@ -5,6 +5,7 @@ Scandinaver\Learn\Domain\Model\Word:
         word:
             columns:
                 - word
+                - creator_id
     id:
         id:
             type: integer
@@ -83,13 +84,4 @@ Scandinaver\Learn\Domain\Model\Word:
                 language_id:
                     referencedColumnName: id
             orphanRemoval: false
-    oneToMany:
-        cards:
-            targetEntity: Scandinaver\Learn\Domain\Model\Card
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: word
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
     lifecycleCallbacks: {  }

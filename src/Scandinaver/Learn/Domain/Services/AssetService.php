@@ -197,7 +197,9 @@ class AssetService
     public function updateAsset(Asset $asset, array $data): Asset
     {
         $repository = AssetRepositoryFactory::getByType($asset->getType());
-        return $repository->update($asset, $data);
+        /** @var  Asset $asset */
+        $asset = $repository->update($asset, $data);
+        return $asset;
     }
 
     public function getAssetsForApp(Language $language, User $user): array

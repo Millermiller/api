@@ -24,6 +24,7 @@ use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\{AssetRepository,
     TranslateRepository,
     WordAssetRepository,
     WordRepository};
+use Scandinaver\Learn\Application\Handler\Command\UpdateCardHandler;
 use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
@@ -308,6 +309,10 @@ class LearnServiceProvider extends ServiceProvider
         $this->app->bind(
             'AssetsHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Query\AssetsHandler'
+        );
+
+        $this->app->bind(
+            'UpdateCardHandlerInterface', UpdateCardHandler::class
         );
     }
 }

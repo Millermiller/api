@@ -79,7 +79,7 @@ class Word implements JsonSerializable, UrlRoutable
     }
 
 
-    public function setWord(string $word): void
+    public function setValue(string $word): void
     {
         $this->word = $word;
     }

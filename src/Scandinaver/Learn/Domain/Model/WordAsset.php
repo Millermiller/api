@@ -12,4 +12,6 @@ class WordAsset extends Asset implements AssetInterface
     {
         return Asset::TYPE_WORDS;
     }
+
+    protected int $category = 1;
 }

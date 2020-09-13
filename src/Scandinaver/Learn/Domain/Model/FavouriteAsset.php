@@ -10,4 +10,6 @@ class FavouriteAsset extends Asset
     {
         return Asset::TYPE_FAVORITES;
     }
+
+    protected int $category = 3;
 }

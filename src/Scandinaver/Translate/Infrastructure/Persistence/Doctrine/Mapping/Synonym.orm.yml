@@ -41,4 +41,15 @@ Scandinaver\Translate\Domain\Model\Synonym:
             nullable: true
             precision: 0
             column: updated_at
+    manyToOne:
+        word:
+            targetEntity: Scandinaver\Translate\Domain\Model\Word
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: synonyms
+            joinColumns:
+                word_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }
