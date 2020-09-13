@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Sub\Frontend;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCardRequest;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Model\Language;
@@ -24,8 +25,11 @@ class CardsController extends Controller
 {
     public function store(Language $language, Card $card, Asset $asset): JsonResponse
     {
-        $this->commandBus->execute(new AddCardToAssetCommand(Auth::user(), $language, $card, $asset));
-
+        try {
+            $this->commandBus->execute(new AddCardToAssetCommand(Auth::user(), $language, $card, $asset));
+        } catch (UniqueConstraintViolationException $e) {
+            return response()->json('Карточка уже добавлена', 500);
+        }
         return response()->json(NULL, 201);
     }
 
