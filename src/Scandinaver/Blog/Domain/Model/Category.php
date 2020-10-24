@@ -4,9 +4,9 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
-use JsonSerializable;
+use Scandinaver\Blog\Domain\Events\CategoryDeleted;
+use Scandinaver\Blog\Domain\Events\CategoryNameUpdated;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\Contract\Collection;
 use Scandinaver\Shared\DTO;
 
 /**
@@ -24,22 +24,17 @@ class Category extends AggregateRoot
 
     private ?DateTime $updatedAt;
 
-    private Collection $posts;
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection|Post[]
-     */
-    public function getPosts(): Collection
-    {
-        return $this->posts;
-    }
-
-    public function toDTO(): DTO
+    public function toDTO(): CategoryDTO
     {
         return new CategoryDTO($this);
     }
@@ -47,5 +42,16 @@ class Category extends AggregateRoot
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+        $this->pushEvent(new CategoryNameUpdated($this));
+    }
+
+    public function delete()
+    {
+        $this->pushEvent(new CategoryDeleted($this));
     }
 }

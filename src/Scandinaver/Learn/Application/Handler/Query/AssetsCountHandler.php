@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\AssetsCountHandlerInterface;
+use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\Domain\Services\AudioService;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
 
@@ -14,11 +15,11 @@ use Scandinaver\Learn\UI\Query\AssetsCountQuery;
  */
 class AssetsCountHandler implements AssetsCountHandlerInterface
 {
-    private AudioService $audioService;
+    private AssetService $assetService;
 
-    public function __construct(AudioService $audioService)
+    public function __construct(AssetService $assetService)
     {
-        $this->audioService = $audioService;
+        $this->assetService = $assetService;
     }
 
     /**
@@ -28,6 +29,6 @@ class AssetsCountHandler implements AssetsCountHandlerInterface
      */
     public function handle($query): int
     {
-        return $this->audioService->count();
+        return $this->assetService->count($query->getLanguage());
     }
 }

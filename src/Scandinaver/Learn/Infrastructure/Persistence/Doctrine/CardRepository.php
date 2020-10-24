@@ -3,8 +3,11 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
+use Doctrine\ORM\Query\Expr\Join;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
+use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Model\User;
@@ -46,6 +49,16 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
 
     public function getSentences(Language $language): array
     {
+    }
 
+    public function search(Language $language, string $word, bool $sentence)
+    {
+        $q = $this->_em->createQueryBuilder();
+        return $q->select('card')->from(Card::class, 'card')
+            ->leftJoin(Word::class, 'word', Join::WITH, 'card.word = word.id')
+            ->where('word.word LIKE :word')
+            ->setParameter('word', "%$word%")
+            ->getQuery()
+            ->getResult();
     }
 }

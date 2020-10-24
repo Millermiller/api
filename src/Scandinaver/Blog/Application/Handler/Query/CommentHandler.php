@@ -4,6 +4,8 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\CommentHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
+use Scandinaver\Blog\Domain\Model\CommentDTO;
 use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Query\CommentQuery;
 
@@ -24,9 +26,12 @@ class CommentHandler implements CommentHandlerInterface
 
     /**
      * @param  CommentQuery  $query
+     *
+     * @return CommentDTO
+     * @throws CommentNotFoundException
      */
-    public function handle($query)
+    public function handle($query): CommentDTO
     {
-        return $this->service->getAll();
+        return $this->service->one($query->getId());
     }
 } 

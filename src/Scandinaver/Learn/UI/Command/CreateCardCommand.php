@@ -12,22 +12,21 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see \Scandinaver\Learn\Application\Handler\Command\CreateCardHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\CreateCardHandler
  */
 class CreateCardCommand implements Command
 {
 
     private User $user;
 
-    private Language $language;
+    private string $languageId;
 
     private string $word;
 
     private string $translate;
 
-    public function __construct(User $user, Language $language, string $word, string $translate)
+    public function __construct(User $user, string $languageId, string $word, string $translate)
     {
-
         $this->user = $user;
         $this->language = $language;
         $this->word = $word;

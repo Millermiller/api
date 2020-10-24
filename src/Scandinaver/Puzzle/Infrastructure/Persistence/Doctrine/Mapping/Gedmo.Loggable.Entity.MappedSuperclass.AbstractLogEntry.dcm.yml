@@ -1,5 +1,5 @@
 Gedmo\Loggable\Entity\MappedSuperclass\AbstractLogEntry:
-    type: mappedSuperclass
-    table: abstract_log_entries
-    id: {  }
-    lifecycleCallbacks: {  }
+  type: mappedSuperclass
+  table: abstract_log_entries
+  id: {  }
+  lifecycleCallbacks: {  }

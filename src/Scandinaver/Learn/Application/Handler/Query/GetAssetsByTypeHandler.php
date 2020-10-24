@@ -24,7 +24,7 @@ class GetAssetsByTypeHandler implements GetAssetsByTypeHandlerInterface
     /**
      * @param  GetAssetsByTypeQuery  $query
      *
-     * @inheritDoc
+     * @return array
      */
     public function handle($query)
     {

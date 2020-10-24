@@ -3,9 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Artisan;
 
 abstract class TestCase extends BaseTestCase
@@ -19,18 +17,23 @@ abstract class TestCase extends BaseTestCase
         return require __DIR__.'/../bootstrap/app.php';
     }
 
-    public function setUp()
+    protected function setUp(): void
     {
+        if (file_exists(__DIR__.'/../bootstrap/cache/config.php')) {
+            unlink(__DIR__.'/../bootstrap/cache/config.php');
+        }
+
         parent::setUp();
         $this->prepareForTests();
         $this->withoutMiddleware(\App\Http\Middleware\Cors::class);
     }
     private function prepareForTests()
     {
+        \Config::set('migrations.default.directory', database_path('migrations_test'));
         Artisan::call('doctrine:migrations:migrate');
-       // Artisan::call('db:seed');
     }
-    public function tearDown()
+
+    public function tearDown(): void
     {
         parent::tearDown();
     }

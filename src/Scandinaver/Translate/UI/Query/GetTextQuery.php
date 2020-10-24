@@ -4,7 +4,6 @@
 namespace Scandinaver\Translate\UI\Query;
 
 use Scandinaver\Shared\Contract\Query;
-use Scandinaver\Translate\Domain\Model\Text;
 
 /**
  * Class GetTextQuery
@@ -14,14 +13,14 @@ use Scandinaver\Translate\Domain\Model\Text;
  */
 class GetTextQuery implements Query
 {
-    private Text $text;
+    private int $text;
 
-    public function __construct(Text $text)
+    public function __construct(int $text)
     {
         $this->text = $text;
     }
 
-    public function getText(): Text
+    public function getText(): int
     {
         return $this->text;
     }

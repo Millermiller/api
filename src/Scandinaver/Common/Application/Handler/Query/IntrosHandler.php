@@ -14,16 +14,8 @@ use Scandinaver\Common\UI\Query\IntrosQuery;
  */
 class IntrosHandler implements IntrosHandlerInterface
 {
-    /**
-     * @var IntroService
-     */
-    private $introService;
+    private IntroService $introService;
 
-    /**
-     * MessagesHandler constructor.
-     *
-     * @param  IntroService  $introService
-     */
     public function __construct(IntroService $introService)
     {
         $this->introService = $introService;

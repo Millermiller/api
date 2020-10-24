@@ -20,11 +20,11 @@ use Scandinaver\User\Domain\Model\User;
 
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\Common\Domain\Model\Language::class, function (Faker $faker) {
+$factory->define(\Scandinaver\Common\Domain\Model\Language::class, function (Faker $faker, array $attributes) {
 
     return [
-        'name' => 'is',
-        'label' => 'Исландский!',
+        'name' => $attributes['name'],
+        'label' => $faker->unique()->text(10),
         'flag' => '/img/is_round.png',
     ];
 });

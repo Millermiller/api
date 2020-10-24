@@ -32,7 +32,6 @@ class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
     public function handle($command): void
     {
         $this->favouriteService->create($command->getLanguage(), $command->getUser(), $command->getCard());
-
-        event(new FavouriteCreated($command->getUser(), $command->getCard()));
+        // event(new FavouriteCreated($command->getUser(), $command->getCard()));
     }
 }

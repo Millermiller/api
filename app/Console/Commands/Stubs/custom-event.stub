@@ -1,0 +1,20 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use Scandinaver\Shared\DomainEvent;
+
+/**
+ * Class DummyClass
+ *
+ * @package DummyNamespace
+ *
+ */
+class DummyClass implements DomainEvent
+{
+    public function __construct()
+    {
+
+    }
+}

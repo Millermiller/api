@@ -16,48 +16,32 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateCommandHandlerInterface extends GeneratorCommand
 {
-    /**
-     * @var string
-     */
     protected $name = 'createCommandHandlerInterface';
 
-    /**
-     * @var
-     */
-    private $domain;
+    private ?string $domain;
 
-    /**
-     * @var string
-     */
-    protected $commandHandlerPath = 'Domain/Contract/Command';
+    protected string $commandHandlerPath = 'Domain/Contract/Command';
 
-    /**
-     * @var string
-     */
     protected $type = 'CommandHandlerInterface';
 
-    /**
-     * @inheritDoc
-     */
     protected function getStub(): string
     {
         return __DIR__ . '/Stubs/custom-command-handler-interface.stub';
     }
 
-    /**
-     * @param string $rootNamespace
-     *
-     * @return string
-     */
     protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
     }
 
-    /**
-     * @return bool|void|null
-     * @throws FileNotFoundException
-     */
+    protected function getArguments(): array
+    {
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
+        ];
+    }
+
     public function handle(): void
     {
         $name = $this->getNameInput();
@@ -72,28 +56,11 @@ class CreateCommandHandlerInterface extends GeneratorCommand
 
         $this->info($this->type . ' created successfully.');
 
-       // Artisan::call('updateServiceProvider', [
-       //   'name'   => "{$name}Interface",
-       //   'domain' => $this->domain
-       // ]);
+        Artisan::call('scandinaver:rebuild:commands', [
+          'domain' => $this->domain
+        ]);
     }
 
-    /**
-     * @return array
-     */
-    public function getArguments(): array
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the class'],
-            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
-        ];
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
     protected function getPath($name): string
     {
         $name = Str::replaceFirst($this->getDefaultNamespace($name), '', $name);
@@ -103,11 +70,6 @@ class CreateCommandHandlerInterface extends GeneratorCommand
         return "{$path}src/{$this->getDefaultNamespace($name)}/{$this->domain}/{$this->commandHandlerPath}/{$name}.php";
     }
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
     protected function getNamespace($name): string
     {
         $commandNamespace = str_replace('/', '\\', $this->commandHandlerPath);

@@ -22,9 +22,9 @@ class FindAudioHandler implements FindAudioHandlerInterface
     }
 
     /**
-     * @param  FindAudioQuery
+     * @param  FindAudioQuery  $query
      *
-     * @inheritDoc
+     * @return string
      */
     public function handle($query)
     {

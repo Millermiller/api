@@ -10,12 +10,14 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see \Scandinaver\Translate\Application\Handler\Command\DeleteTextHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\DeleteTextHandler
  */
 class DeleteTextCommand implements Command
 {
-    public function __construct()
-    {
+    private int $text;
 
+    public function __construct(int $text)
+    {
+        $this->text = $text;
     }
 }

@@ -19,7 +19,7 @@ class LanguagesHandler implements LanguagesHandlerInterface
     /**
      * LanguagesHandler constructor.
      *
-     * @param  LanguageService $languageService
+     * @param  LanguageService  $languageService
      */
     public function __construct(LanguageService $languageService)
     {

@@ -15,13 +15,11 @@ class PublishTextHandler implements PublishTextHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $command PublishTextCommand
+     * @param  PublishTextCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

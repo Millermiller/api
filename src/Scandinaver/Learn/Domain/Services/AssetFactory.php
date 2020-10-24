@@ -13,7 +13,7 @@ class AssetFactory
 {
     public static function build(array $data): Asset
     {
-        $asset = new PersonalAsset($data['title'], 0,  0, $data['language']);
+        $asset = new PersonalAsset($data['title'], 0, 0, $data['language']);
         $asset->setLevel(0);
 
         /** @var User $user */

@@ -68,7 +68,6 @@ class Text extends Model
         $counter = 0;
 
         foreach ($rez as &$r) {
-
             $counter++;
 
             if (in_array($r->id, $activeArray)) {

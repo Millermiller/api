@@ -38,8 +38,8 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     use Notifiable;
     use UsesPasswordGrant;
 
-    const ROLE_ADMIN = 1;
-    const ROLE_USER = 0;
+    public const ROLE_ADMIN = 1;
+    public const ROLE_USER = 0;
 
     private $id;
 
@@ -47,7 +47,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     private string $email;
 
-    private ?DateTime $activeTo;
+    private DateTime $activeTo;
 
     private ?string $name;
 
@@ -260,7 +260,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     public function getActive(): bool
     {
-        return (bool) $this->active;
+        return (bool)$this->active;
     }
 
     public function incrementAssetCounter(): void
@@ -275,6 +275,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
                 return true;
             }
         }
+
         return false;
     }
 
@@ -285,6 +286,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
                 return true;
             }
         }
+
         return false;
     }
 

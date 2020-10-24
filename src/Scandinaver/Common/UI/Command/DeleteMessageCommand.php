@@ -8,20 +8,20 @@ use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteMessageCommand
- *
+ * @see \Scandinaver\Common\Application\Handler\Command\DeleteMessageHandler
  * @package Scandinaver\Common\UI\Command
  */
 class DeleteMessageCommand implements Command
 {
-    private Message $message;
+    private int $messageId;
 
-    public function __construct(Message $message)
+    public function __construct(int $messageId)
     {
-        $this->message = $message;
+        $this->messageId = $messageId;
     }
 
-    public function getMessage(): Message
+    public function getMessageId(): int
     {
-        return $this->message;
+        return $this->messageId;
     }
 }

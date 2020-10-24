@@ -28,8 +28,11 @@ class SaveTestResultHandler implements SaveTestResultHandlerInterface
      */
     public function handle($command): void
     {
-        $result = $this->assetService->saveTestResult($command->getUser(), $command->getAsset(),
-            $command->getResultValue());
+        $result = $this->assetService->saveTestResult(
+            $command->getUser(),
+            $command->getAsset(),
+            $command->getResultValue()
+        );
 
         event(new TestResultSaved(Auth::user(), $result));
     }

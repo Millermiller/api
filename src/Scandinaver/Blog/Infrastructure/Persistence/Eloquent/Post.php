@@ -16,9 +16,9 @@ class Post extends Model
 
     use SoftDeletes;
 
-    const STATUS_ACTIVE = 1;
+    public const STATUS_ACTIVE = 1;
 
-    const STATUS_INACTIVE = 0;
+    public const STATUS_INACTIVE = 0;
 
     protected $table = 'posts';
 

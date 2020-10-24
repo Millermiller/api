@@ -18,14 +18,12 @@ class ReadHandler implements ReadHandlerInterface
 
     public function __construct(ReaderInterface $reader)
     {
-        $c = ReaderInterface::class;
         $this->reader = $reader;
     }
 
     /**
-     * @param $query ReadQuery
+     * @param  ReadQuery  $query
      *
-     * @inheritDoc
      */
     public function handle($query)
     {

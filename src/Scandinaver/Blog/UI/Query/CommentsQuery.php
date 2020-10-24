@@ -15,6 +15,5 @@ class CommentsQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

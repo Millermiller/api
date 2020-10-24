@@ -15,7 +15,6 @@ class CreateUserHandler implements CreateUserHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

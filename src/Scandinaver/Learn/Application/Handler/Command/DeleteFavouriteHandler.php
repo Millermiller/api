@@ -30,8 +30,6 @@ class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
     /**
      * @param  DeleteFavouriteCommand  $command
      *
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function handle($command): void
     {

@@ -24,7 +24,7 @@ return [
         | the migrations on disk haven't actually been run in the database.
         |
         */
-        'table'     => 'migrationsD',
+        'table'     => 'migrations',
         /*
         |--------------------------------------------------------------------------
         | Migration Directory
@@ -56,7 +56,7 @@ return [
         |
         */
         'schema'    => [
-            'filter' => '/^(?!password_resets|failed_jobs).*$/'
+            'filter' => '/^(?!password_resets|failed_jobs|jobs).*$/'
         ]
     ],
 ];

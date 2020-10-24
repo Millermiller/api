@@ -1,87 +1,110 @@
 Scandinaver\Learn\Domain\Model\Word:
-    type: entity
-    table: word
-    indexes:
-        word:
-            columns:
-                - word
-                - creator_id
+  type: entity
+  table: word
+  indexes:
+    word:
+      columns:
+        - word
+        - creator_id
+  id:
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        word:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: false
-            precision: 0
-        audio:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-        sentence:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-        isPublic:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            column: is_public
-        createdAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            column: created_at
-        updatedAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: updated_at
-    manyToOne:
-        creator:
-            targetEntity: Scandinaver\User\Domain\Model\User
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                creator_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-        language:
-            targetEntity: Scandinaver\Common\Domain\Model\Language
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                language_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-    lifecycleCallbacks: {  }
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    word:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: false
+      precision: 0
+    morph:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    frequency:
+      type: float
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    audio:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    sentence:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+    isPublic:
+      type: boolean
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      column: is_public
+      options:
+        default: 1
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    creator:
+      targetEntity: Scandinaver\User\Domain\Model\User
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      nullable: true
+      joinColumns:
+        creator_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  oneToMany:
+    translates:
+      targetEntity: Scandinaver\Learn\Domain\Model\Translate
+      cascade:
+        - remove
+      fetch: EAGER
+      mappedBy: word
+      inversedBy: null
+      orphanRemoval: false
+
+  lifecycleCallbacks: {  }

@@ -14,23 +14,23 @@ use Scandinaver\Shared\Contract\Command;
  */
 class UpdateCommentCommand implements Command
 {
-    private Comment $comment;
-
     private array $data;
 
-    public function __construct(Comment $comment, array $data)
-    {
-        $this->comment = $comment;
-        $this->data = $data;
-    }
+    private int $commentId;
 
-    public function getComment(): Comment
+    public function __construct(int $commentId, array $data)
     {
-        return $this->comment;
+        $this->commentId = $commentId;
+        $this->data = $data;
     }
 
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function getCommentId(): int
+    {
+        return $this->commentId;
     }
 }

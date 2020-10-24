@@ -14,6 +14,5 @@ class UpdateMessageCommand implements Command
 {
     public function __construct()
     {
-
     }
 }

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Shared\Contract\Command;
 
@@ -32,9 +31,9 @@ class CreateTranslateCommand implements Command
         $this->cardRepository = app()->make('CardRepositoryInterface');
     }
 
-    public function getCard(): Card
+    public function getCard(): int
     {
-        return $this->cardRepository->find($this->card_id);
+        return $this->card_id;
     }
 
     public function getText(): string

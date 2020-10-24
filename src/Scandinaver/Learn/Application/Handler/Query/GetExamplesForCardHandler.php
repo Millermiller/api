@@ -17,6 +17,7 @@ use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
 class GetExamplesForCardHandler implements GetExamplesForCardHandlerInterface
 {
     private CardService $cardService;
+
     public function __construct(CardService $cardService)
     {
         $this->cardService = $cardService;

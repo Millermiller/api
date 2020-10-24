@@ -1,44 +1,44 @@
 Scandinaver\Common\Domain\Model\Language:
-    type: entity
-    table: language
-    indexes:
-        name:
-            columns:
-                - name
-        id:
-            columns:
-                - id
+  type: entity
+  table: language
+  indexes:
+    name:
+      columns:
+        - name
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        name:
-            type: string
-            scale: 0
-            length: 50
-            unique: false
-            nullable: false
-            precision: 0
-        label:
-            type: string
-            scale: 0
-            length: 50
-            unique: false
-            nullable: false
-            precision: 0
-        flag:
-            type: string
-            scale: 0
-            length: 50
-            unique: false
-            nullable: false
-            precision: 0
-    lifecycleCallbacks: {  }
+      columns:
+        - id
+  id:
+    id:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    name:
+      type: string
+      scale: 0
+      length: 50
+      unique: false
+      nullable: false
+      precision: 0
+    label:
+      type: string
+      scale: 0
+      length: 50
+      unique: false
+      nullable: false
+      precision: 0
+    flag:
+      type: string
+      scale: 0
+      length: 50
+      unique: false
+      nullable: false
+      precision: 0
+  lifecycleCallbacks: {  }

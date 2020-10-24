@@ -15,6 +15,5 @@ class TextsCountQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

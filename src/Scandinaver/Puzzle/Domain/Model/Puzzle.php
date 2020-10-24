@@ -4,9 +4,9 @@
 namespace Scandinaver\Puzzle\Domain\Model;
 
 use DateTime;
-use JsonSerializable;
-use Scandinaver\Puzzle\Domain\Events\PuzzleCreatedEvent;
-use Scandinaver\Shared\Contract\AggregateRoot;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Puzzle\Domain\Events\PuzzleCreated;
+use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Shared\EventTrait;
 use Scandinaver\User\Domain\Model\User;
 
@@ -15,7 +15,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Puzzle\Domain\Model
  */
-class Puzzle implements JsonSerializable, AggregateRoot
+class Puzzle extends AggregateRoot
 {
     use EventTrait;
 
@@ -31,13 +31,14 @@ class Puzzle implements JsonSerializable, AggregateRoot
 
     private $users;
 
-    public function jsonSerialize()
+    private Language $language;
+
+    public function __construct(PuzzleText $text, PuzzleTranslate $translate)
     {
-        return [
-            'id' => $this->id,
-            'text' => $this->text->toNative(),
-            'translate' => $this->translate->toNative(),
-        ];
+        $this->text = $text;
+        $this->translate = $translate;
+
+        $this->pushEvent(new PuzzleCreated($this));
     }
 
     /**
@@ -60,13 +61,39 @@ class Puzzle implements JsonSerializable, AggregateRoot
         return $this->id;
     }
 
-    public function getText(): string
+    public function getText(): PuzzleText
     {
-        return $this->text->toNative();
+        return $this->text;
     }
 
     public function setText(PuzzleText $text): void
     {
         $this->text = $text;
+    }
+
+    public function toDTO(): PuzzleDTO
+    {
+        return new PuzzleDTO($this);
+    }
+
+    public function getTranslate(): PuzzleTranslate
+    {
+        return $this->translate;
+    }
+
+    public function setTranslate(PuzzleTranslate $translate): void
+    {
+        $this->translate = $translate;
+    }
+
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
+    }
+
+    //todo: implement
+    public function delete()
+    {
+        // $this->pushEvent(PuzzleDeleted($this));
     }
 }

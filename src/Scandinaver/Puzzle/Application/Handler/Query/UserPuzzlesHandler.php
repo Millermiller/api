@@ -28,6 +28,6 @@ class UserPuzzlesHandler implements UserPuzzlesHandlerInterface
      */
     public function handle($query): array
     {
-        return $this->puzzleService->getForUser($query->getUser());
+        return $this->puzzleService->getForUser($query->getLanguage(), $query->getUser());
     }
 }

@@ -10,12 +10,14 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Translate\UI\Query
  *
- * @see \Scandinaver\Translate\Application\Handler\Query\GetSynonymsHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Query\GetSynonymsHandler
  */
 class GetSynonymsQuery implements Query
 {
-    public function __construct()
-    {
+    private int $word;
 
+    public function __construct(int $word)
+    {
+        $this->word = $word;
     }
 }

@@ -10,12 +10,11 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see \Scandinaver\Translate\Application\Handler\Command\CreateTextHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\CreateTextHandler
  */
 class CreateTextCommand implements Command
 {
     public function __construct()
     {
-
     }
 }

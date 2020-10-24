@@ -30,7 +30,7 @@ class WordAssetRepository extends AssetRepository implements WordAssetRepository
             ->getResult();
     }
 
-    public function getNextAsset(Asset $asset, Language $language): Asset
+    public function getNextAsset(Asset $asset): Asset
     {
         $q = $this->_em->createQueryBuilder();
 
@@ -39,23 +39,31 @@ class WordAssetRepository extends AssetRepository implements WordAssetRepository
             ->where('a.level = :level')
             ->andWhere('a.language = :language')
             ->setParameter('level', $asset->getLevel() + 1)
-            ->setParameter('language', $language)
+            ->setParameter('language', $asset->getLanguage())
             ->getQuery()
             ->getSingleResult();
     }
 
-    public function getLastAsset(Language $language, int $type): Asset
+    /**
+     * TODO: move to parent
+     * @param  Language  $language
+     * @param  int       $type
+     *
+     * @return Asset|null
+     * @throws NonUniqueResultException
+     */
+    public function getLastAsset(Language $language, int $type): ?Asset
     {
         $q = $this->createQueryBuilder('asset');
 
         return $q->select('a')
             ->from($this->getEntityName(), 'a')
-            ->where('a.level = :level')
-            ->andWhere($q->expr()->eq('a.language', ':language'))
-            ->setParameter('level', 1)
+            ->where($q->expr()->eq('a.language', ':language'))
             ->setParameter('language', $language)
+            ->orderBy('a.level', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     /**

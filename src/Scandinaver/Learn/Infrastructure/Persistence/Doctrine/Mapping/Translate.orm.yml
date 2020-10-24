@@ -1,68 +1,84 @@
 Scandinaver\Learn\Domain\Model\Translate:
-    type: entity
-    table: translate
-    indexes:
-        word_id_2:
-            columns:
-                - word_id
-        word_id:
-            columns:
-                - word_id
-        fulltext:
-            columns:
-                - value
+  type: entity
+  table: translate
+  indexes:
+    word_id_2:
+      columns:
+        - word_id
+    word_id:
+      columns:
+        - word_id
+    fulltext:
+      columns:
+        - value
+  id:
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        value:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: false
-            precision: 0
-        sentence:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-        createdAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            column: created_at
-        updatedAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: updated_at
-    manyToOne:
-        word:
-            targetEntity: Scandinaver\Learn\Domain\Model\Word
-            cascade:
-                - persist
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                word_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-    lifecycleCallbacks: {  }
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    value:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: false
+      precision: 0
+    sentence:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    word:
+      targetEntity: Scandinaver\Learn\Domain\Model\Word
+      cascade:
+        - persist
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: translates
+      joinColumns:
+        word_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    language:
+      targetEntity: Scandinaver\Common\Domain\Model\Language
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        language_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: {  }

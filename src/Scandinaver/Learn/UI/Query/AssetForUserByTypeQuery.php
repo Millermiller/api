@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Model\User;
 
@@ -19,9 +18,9 @@ class AssetForUserByTypeQuery implements Query
 
     private User $user;
 
-    private Language $language;
+    private string $language;
 
-    public function __construct(Language $language, User $user, string $type)
+    public function __construct(string $language, User $user, string $type)
     {
         $this->user = $user;
         $this->type = $type;
@@ -38,7 +37,7 @@ class AssetForUserByTypeQuery implements Query
         return $this->user;
     }
 
-    public function getLanguage(): Language
+    public function getLanguage(): string
     {
         return $this->language;
     }

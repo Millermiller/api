@@ -8,6 +8,8 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class CreateIntroCommand
  *
+ * @see  \Scandinaver\Common\Application\Handler\Command\CreateIntroHandler
+ *
  * @package Scandinaver\Common\UI\Command
  */
 class CreateIntroCommand implements Command

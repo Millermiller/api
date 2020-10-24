@@ -5,6 +5,8 @@ namespace Scandinaver\Translate\Application\Handler\Query;
 
 use Doctrine\DBAL\DBALException;
 use Scandinaver\Translate\Domain\Contract\Query\GetTextHandlerInterface;
+use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
+use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\Translate\Domain\TextService;
 use Scandinaver\Translate\UI\Query\GetTextQuery;
 
@@ -23,9 +25,11 @@ class GetTextHandler implements GetTextHandlerInterface
     }
 
     /**
-     * @param  GetTextQuery
+     * @param  GetTextQuery  $query
      *
+     * @return Text
      * @throws DBALException
+     * @throws TextNotFoundException
      */
     public function handle($query)
     {

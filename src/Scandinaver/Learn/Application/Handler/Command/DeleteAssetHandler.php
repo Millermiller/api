@@ -3,8 +3,6 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use App\Events\AssetDelete;
-use App\Helpers\Auth;
 use Scandinaver\Learn\Domain\Contract\Command\DeleteAssetHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
@@ -29,11 +27,10 @@ class DeleteAssetHandler implements DeleteAssetHandlerInterface
 
     /**
      * @param  DeleteAssetCommand  $command
+     *
      */
     public function handle($command): void
     {
         $this->assetService->delete($command->getAsset());
-
-        event(new AssetDelete(Auth::user(), $command->getAsset()));
     }
 }

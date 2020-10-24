@@ -22,10 +22,10 @@ class ReadCardHandler implements ReadCardHandlerInterface
     }
 
     /**
-     * @param ReadCardQuery $query
+     * @param  ReadCardQuery  $query
      */
     public function handle($query)
     {
-        return $this->reader->read();
+        // return $this->reader->read();
     }
 } 

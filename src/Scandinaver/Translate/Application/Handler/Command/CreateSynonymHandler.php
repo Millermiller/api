@@ -15,13 +15,11 @@ class CreateSynonymHandler implements CreateSynonymHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $command CreateSynonymCommand
+     * @param  CreateSynonymCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

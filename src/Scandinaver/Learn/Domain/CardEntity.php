@@ -97,7 +97,7 @@ class CardEntity implements JsonSerializable, UrlRoutable
     {
         return [
             'id' => $this->id,
-           // 'asset_id' => $this->asset->getId(),
+            // 'asset_id' => $this->asset->getId(),
             'word_id' => $this->word->getId(),
             'translate_id' => $this->translate->getId(),
             'favourite' => $this->favourite,
@@ -118,7 +118,7 @@ class CardEntity implements JsonSerializable, UrlRoutable
 
     public function isFavourite(): bool
     {
-        return (bool) $this->asset->getFavorite();
+        return (bool)$this->asset->getFavorite();
     }
 
     public function setFavourite(bool $favourite): void

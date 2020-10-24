@@ -15,6 +15,5 @@ class CreateUserCommand implements Command
 {
     public function __construct()
     {
-
     }
 }

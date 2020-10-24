@@ -17,12 +17,5 @@ trait EventSourcingTrait
         $this->eventBus = $eventBus;
     }
 
-    private function fireEvents(object $entity) {
-        if ($entity instanceof AggregateRoot) {
-            $events = $entity->pullEvents();
-            foreach ($events as $event) {
-                $this->eventBus->handle($event);
-            }
-        }
-    }
+
 }

@@ -5,10 +5,11 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\AudioFileCantParsedException;
+use Scandinaver\Learn\Domain\Exceptions\WordNotFoundException;
 use Scandinaver\Learn\Domain\Model\Word;
 
 /**
@@ -18,6 +19,9 @@ use Scandinaver\Learn\Domain\Model\Word;
  */
 class AudioService
 {
+    use WordTrait;
+    use LanguageTrait;
+
     private WordRepositoryInterface $wordsRepository;
 
     private AudioParserInterface $parser;
@@ -35,13 +39,17 @@ class AudioService
         return $this->wordsRepository->countAudio();
     }
 
-    public function countByLanguage(Language $language): int
+    public function countByLanguage(string $language): int
     {
+        $language = $this->getLanguage($language);
+
         return $this->wordsRepository->getCountAudioByLanguage($language);
     }
 
-    public function upload(Word $word, UploadedFile $file): Word
+    public function upload(int $word, UploadedFile $file): Word
     {
+        $word = $this->getWord($word);
+
         $path = $file->store('audio');
 
         $word->setAudio($path);
@@ -52,14 +60,17 @@ class AudioService
     }
 
     /**
-     * TODO: use laravel curl wrapper and Storage
+     * TODO: use laravel curl wrapper and Storage. Move to infrastructure
      *
-     * @param  Word  $word
+     * @param  int  $word
      *
      * @return string
+     * @throws WordNotFoundException
      */
-    public function parse(Word $word): string
+    public function parse(int $word): string
     {
+        $word = $this->getWord($word);
+
         try {
             $link = $this->parser->parse($word->getWord());
 
@@ -85,7 +96,6 @@ class AudioService
                 $word->setAudio('/audio/'.$filename.'.mp3');
                 $this->wordsRepository->save($word);
             }
-
         } catch (AudioFileCantParsedException $e) {
             //
         }

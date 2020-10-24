@@ -8,7 +8,7 @@ namespace Scandinaver\Shared;
  *
  * @package Scandinaver\Shared
  */
-class DomainEvent
+interface DomainEvent
 {
 
 }

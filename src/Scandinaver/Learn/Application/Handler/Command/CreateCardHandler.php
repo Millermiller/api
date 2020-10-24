@@ -23,11 +23,17 @@ class CreateCardHandler implements CreateCardHandlerInterface
     }
 
     /**
-     * @param $command CreateCardCommand
+     * @param  CreateCardCommand  $command
+     *
+     * @return Card
      */
     public function handle($command): Card
     {
-        return $this->service->createCard($command->getUser(), $command->getLanguage(), $command->getWord(),
-            $command->getTranslate());
+        return $this->service->createCard(
+            $command->getUser(),
+            $command->getLanguage(),
+            $command->getWord(),
+            $command->getTranslate()
+        );
     }
 } 

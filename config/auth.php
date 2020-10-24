@@ -45,11 +45,6 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
-
-        'admin' =>[
-            'driver' => 'session',
-            'provider' => 'admin',
-        ],
     ],
 
     /*
@@ -71,11 +66,6 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'doctrine',
-            'model' => Scandinaver\User\Domain\Model\User::class,
-        ],
-
-        'admin' => [
             'driver' => 'doctrine',
             'model' => Scandinaver\User\Domain\Model\User::class,
         ],

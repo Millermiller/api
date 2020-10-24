@@ -7,8 +7,10 @@ use App\Events\NextTextLevel;
 use Doctrine\DBAL\DBALException;
 use PDO;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
+use Scandinaver\Translate\Domain\Model\Result;
 use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Model\User;
 
@@ -19,6 +21,9 @@ use Scandinaver\User\Domain\Model\User;
  */
 class TextService
 {
+    use LanguageTrait;
+    use TextTrait;
+
     protected ResultRepositoryInterface $resultRepository;
 
     private TextRepositoryInterface $textRepository;
@@ -36,13 +41,17 @@ class TextService
         return $this->textRepository->count([]);
     }
 
-    public function countByLanguage(Language $language): int
+    public function countByLanguage(string $language): int
     {
+        $language = $this->getLanguage($language);
+
         return $this->textRepository->getCountByLanguage($language);
     }
 
-    public function getAllByLanguage(Language $language): array
+    public function getAllByLanguage(string $language): array
     {
+        $language = $this->getLanguage($language);
+
         $result = [];
 
         /** @var Text $texts */
@@ -55,8 +64,10 @@ class TextService
         return $result;
     }
 
-    public function getTextsForUser(Language $language, User $user): array
+    public function getTextsForUser(string $language, User $user): array
     {
+        $language = $this->getLanguage($language);
+
         $activeArray = $this->textRepository->getActiveIds($user, $language);
 
         $texts = $this->textRepository->getByLanguage($language);
@@ -96,10 +107,16 @@ class TextService
     }
 
     /**
+     * @param  int  $textId
+     *
+     * @return Text
      * @throws DBALException
+     * @throws Exception\TextNotFoundException
      */
-    public function prepareText(Text $text)
+    public function prepareText(int $textId)
     {
+        $text = $this->getText($textId);
+
         $sql = 'select 
                               w.word as word,  w.orig
                                   from word_in_text as w
@@ -130,19 +147,18 @@ class TextService
         return $text;
     }
 
-    public function giveNextLevel(
-        Language $language,
-        User $user,
-        Text $text
-    ): Text {
-        $nextText = $this->textRepository->getNextText($text, $language);
+    public function giveNextLevel(User $user, int $textId): Text
+    {
+        $text = $this->getText($textId);
+
+        $nextText = $this->textRepository->getNextText($text);
 
         $result = $this->resultRepository->findOneBy(
             ['user' => $user, 'text' => $text]
         );
 
         if ($result === null) {
-            $result = new Result($nextText, $user, $language);
+            $result = new Result($nextText, $user, $text->getLanguage());
         }
 
         $result = $this->resultRepository->save($result);

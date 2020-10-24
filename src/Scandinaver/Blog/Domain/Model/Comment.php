@@ -4,7 +4,8 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
-use JsonSerializable;
+use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -12,7 +13,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Blog\Domain\Model
  */
-class Comment
+class Comment extends AggregateRoot
 {
     private int $id;
 
@@ -39,5 +40,31 @@ class Comment
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function toDTO(): CommentDTO
+    {
+        return new CommentDTO($this);
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
+    }
+
+    public function setText(?string $text): void
+    {
+        $this->text = $text;
+    }
+
+    public function setPost(Post $post): void
+    {
+        $post->addComment($this);
+        $this->post = $post;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }

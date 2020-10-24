@@ -24,7 +24,6 @@ class EditTranslateHandler implements EditTranslateHandlerInterface
     /**
      * @param  EditTranslateCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

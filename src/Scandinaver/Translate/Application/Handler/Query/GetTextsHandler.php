@@ -23,6 +23,8 @@ class GetTextsHandler implements GetTextsHandlerInterface
 
     /**
      * @param  GetTextsQuery  $query
+     *
+     * @return array
      */
     public function handle($query)
     {

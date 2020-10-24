@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Exception;
 use Scandinaver\Learn\Domain\Contract\Command\AddBasicLevelHandlerInterface;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\UI\Command\AddBasicLevelCommand;
@@ -24,10 +25,10 @@ class AddBasicLevelHandler implements AddBasicLevelHandlerInterface
     /**
      * @param  AddBasicLevelCommand  $command
      *
-     * @inheritDoc
+     * @throws Exception
      */
     public function handle($command): void
     {
-        $this->assetService->addBasic($command->getAssetId());
+        $this->assetService->addBasic($command->getLanguage(), $command->getType());
     }
 } 

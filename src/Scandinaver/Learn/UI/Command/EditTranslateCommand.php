@@ -3,10 +3,8 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -17,9 +15,9 @@ use Scandinaver\Shared\Contract\Command;
  */
 class EditTranslateCommand implements Command
 {
-    private int $translate_id;
+    private int $translateId;
 
-    private int $card_id;
+    private int $cardId;
 
     private string $text;
 
@@ -29,8 +27,8 @@ class EditTranslateCommand implements Command
 
     public function __construct(array $data)
     {
-        $this->translate_id = $data['id'];
-        $this->card_id = $data['card_id'];
+        $this->translateId = $data['id'];
+        $this->cardId = $data['card_id'];
         $this->text = $data['text'];
 
         $this->translateRepository = app()->make(
@@ -39,14 +37,14 @@ class EditTranslateCommand implements Command
         $this->cardRepository = app()->make('CardRepositoryInterface');
     }
 
-    public function getTranslate(): Translate
+    public function getTranslate(): int
     {
-        return $this->translateRepository->find($this->translate_id);
+        return $this->translateId;
     }
 
-    public function getCard(): Card
+    public function getCard(): int
     {
-        return $this->cardRepository->find($this->card_id);
+        return $this->cardId;
     }
 
     public function getText(): string

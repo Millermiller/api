@@ -15,13 +15,11 @@ class DeleteSynonymHandler implements DeleteSynonymHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $command DeleteSynonymCommand
+     * @param  DeleteSynonymCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

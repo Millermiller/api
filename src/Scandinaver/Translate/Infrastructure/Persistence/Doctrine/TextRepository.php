@@ -88,7 +88,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getNextText(Text $text, Language $language): Text
+    public function getNextText(Text $text): Text
     {
         $q = $this->_em->createQueryBuilder();
 
@@ -97,7 +97,7 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
             ->where('a.level = :level')
             ->andWhere('a.language = :language')
             ->setParameter('level', $text->getLevel() + 1)
-            ->setParameter('language', $language)
+            ->setParameter('language', $text->getLanguage())
             ->getQuery()
             ->getSingleResult();
     }

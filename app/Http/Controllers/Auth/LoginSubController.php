@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Scandinaver\User\Domain\Model\User;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\UI\Query\LoginCommand;
+use Scandinaver\User\UI\Command\LoginCommand;
 use Scandinaver\User\UI\Query\UserStateQuery;
 
 /**

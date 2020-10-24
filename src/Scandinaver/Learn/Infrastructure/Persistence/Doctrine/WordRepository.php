@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
@@ -47,6 +48,9 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
     }
 
     /**
+     * @param  Language  $language
+     *
+     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -61,5 +65,18 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface
             ->setParameter('language', $language)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function getUntranslated($language): array
+    {
+        $q = $this->_em->createQueryBuilder();
+
+        return $q->select('w', 't')
+            ->from($this->getEntityName(), 'w')
+            ->leftJoin('w.translates', 't', Join::WITH, $q->expr()->eq('t.language', ':language'))
+            ->where($q->expr()->isNull('t.id'))
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getResult();
     }
 }

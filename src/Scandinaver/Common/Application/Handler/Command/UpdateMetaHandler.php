@@ -15,7 +15,6 @@ class UpdateMetaHandler implements UpdateMetaHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

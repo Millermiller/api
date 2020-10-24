@@ -1,4 +1,4 @@
 Scandinaver\Puzzle\Domain\Model\PuzzleText:
-    type: embeddable
-    fields:
-        value: { type: string }
+  type: embeddable
+  fields:
+    value: { type: string }

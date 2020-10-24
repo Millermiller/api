@@ -29,7 +29,7 @@ class LoginHandler implements LoginHandlerInterface
      * @return User
      * @throws UserNotFoundException
      */
-    public function handle($query): User
+    public function handle($query): ?User
     {
         return $this->userService->login($query->getCredentials());
     }

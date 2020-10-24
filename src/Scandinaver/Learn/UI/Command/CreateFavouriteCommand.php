@@ -3,8 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\{Card, Translate, Word};
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Model\User;
 
@@ -18,14 +16,14 @@ class CreateFavouriteCommand implements Command
 {
     private User $user;
 
-    private Language $language;
+    private string $language;
 
-    private Card $card;
+    private int $card;
 
     public function __construct(
-        Language $language,
+        string $language,
         User $user,
-        Card $card
+        int $card
     ) {
         $this->language = $language;
         $this->user = $user;
@@ -37,12 +35,12 @@ class CreateFavouriteCommand implements Command
         return $this->user;
     }
 
-    public function getLanguage(): Language
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
-    public function getCard(): Card
+    public function getCard(): int
     {
         return $this->card;
     }

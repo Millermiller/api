@@ -18,4 +18,6 @@ interface WordRepositoryInterface extends BaseRepositoryInterface
     public function getCountByLanguage(Language $language): int;
 
     public function getCountAudioByLanguage(Language $language): int;
+
+    public function getUntranslated(Language $language): array;
 }

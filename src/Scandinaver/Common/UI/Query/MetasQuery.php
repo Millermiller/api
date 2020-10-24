@@ -14,6 +14,5 @@ class MetasQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

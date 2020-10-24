@@ -3,14 +3,12 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Exception;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\{Asset, PersonalAsset, Result};
+use Scandinaver\Learn\Domain\Model\{Asset, AssetDTO, Result, SentenceAsset, WordAsset};
+use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -20,7 +18,8 @@ use Scandinaver\User\Domain\Model\User;
  */
 class AssetService
 {
-    protected AssetRepositoryInterface $assetsRepository;
+    use AssetTrait;
+    use LanguageTrait;
 
     protected ResultRepositoryInterface $resultRepository;
 
@@ -29,25 +28,26 @@ class AssetService
     private PersonalAssetRepositoryInterface $personalAssetRepository;
 
     public function __construct(
-        AssetRepositoryInterface $assetsRepository,
         ResultRepositoryInterface $resultRepository,
         AssetRepositoryInterface $assetRepository,
         PersonalAssetRepositoryInterface $personalAssetRepository
     ) {
-        $this->assetsRepository = $assetsRepository;
         $this->resultRepository = $resultRepository;
         $this->assetRepository = $assetRepository;
         $this->personalAssetRepository = $personalAssetRepository;
     }
 
-    public function count(Language $language): int
+    public function count(string $language): int
     {
-        return $this->assetsRepository->getCountByLanguage($language);
+        $language = $this->getLanguage($language);
+
+        return $this->assetRepository->getCountByLanguage($language);
     }
 
-
-    public function create(Language $language, User $user, string $title): Asset
+    public function create(string $language, User $user, string $title): AssetDTO
     {
+        $language = $this->getLanguage($language);
+
         $data = [
             'title' => $title,
             'language' => $language,
@@ -58,43 +58,69 @@ class AssetService
 
         $this->assetRepository->save($asset);
 
-        return $asset;
+        return $asset->toDTO();
     }
 
-    public function addBasic(Language $language, int $asset_id): Asset
+    public function addBasic(string $language, int $type): Asset
     {
-        $asset = new Asset($asset_id, 1, $asset_id, 0, $language);
+        $language = $this->getLanguage($language);
 
-        $asset->setLevel(
-            $this->assetRepository->getLastAsset($language, $asset_id)->getLevel() + 1
-        );
+        switch ($type) {
+            case Asset::TYPE_WORDS:
+                $asset = new WordAsset('New asset', 1, 0, $language);
+                break;
+            case Asset::TYPE_SENTENCES:
+                $asset = new SentenceAsset('New asset', 1, 0, $language);
+                break;
+            default:
+                throw new Exception('undefined type');
+        }
+
+        $repository = AssetRepositoryFactory::getByType($type);
+
+        /** @var Asset $lastAsset */
+        $lastAsset = $repository->getLastAsset($language, $type);
+        if ($lastAsset === null) {
+            $level = 1;
+        }
+        else {
+            $level = $lastAsset->getLevel() + 1;
+        }
+
+        $asset->setLevel($level);
 
         $this->assetRepository->save($asset);
 
         return $asset;
     }
 
-    /**
-     * @param  Asset  $asset
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function delete(Asset $asset): void
+    public function delete(int $asset): void
     {
+        $asset = $this->getAsset($asset);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
+        $asset->delete();
         $repository->delete($asset);
     }
 
-    public function getAssets(Language $language, int $type): array
+    public function getAssets(string $language, int $type): array
     {
+        $result = [];
+        $language = $this->getLanguage($language);
         $repository = AssetRepositoryFactory::getByType($type);
 
-        return $repository->getByLanguage($language);
+        /** @var Asset[] $assets */
+        $assets = $repository->getByLanguage($language);
+        foreach ($assets as $asset) {
+            $result[] = $asset->toDTO();
+        }
+
+        return $result;
     }
 
-    public function getAssetsByType(Language $language, User $user, int $type): array
+    public function getAssetsByType(string $language, User $user, int $type): array
     {
+        $language = $this->getLanguage($language);
+
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
 
         $repository = AssetRepositoryFactory::getByType($type);
@@ -150,24 +176,25 @@ class AssetService
         return $assets;
     }
 
-    public function getPersonalAssets(Language $language, User $user): array
+    public function getPersonalAssets(string $language, User $user): array
     {
+        $language = $this->getLanguage($language);
+
         return $this->personalAssetRepository->getCreatedAssets($language, $user);
     }
 
-    public function giveNextLevel(
-        Language $language,
-        User $user,
-        Asset $asset
-    ): Asset {
-        $nextAsset = $this->assetsRepository->getNextAsset($asset, $language);
+    public function giveNextLevel(User $user, int $asset): Asset
+    {
+        $asset = $this->getAsset($asset);
+
+        $nextAsset = $this->assetRepository->getNextAsset($asset);
 
         $result = $this->resultRepository->findOneBy(
             ['user' => $user, 'asset' => $asset]
         );
 
         if ($result === null) {
-            $result = new Result($nextAsset, $user, $language);
+            $result = new Result($nextAsset, $user, $asset->getLanguage());
         }
 
         $this->resultRepository->save($result);
@@ -175,18 +202,16 @@ class AssetService
         return $nextAsset;
     }
 
-    public function saveTestResult(
-        Language $language,
-        User $user,
-        Asset $asset,
-        int $resultValue
-    ): Result {
+    public function saveTestResult(User $user, int $asset, int $resultValue): Result
+    {
+        $asset = $this->getAsset($asset);
+
         $result = $this->resultRepository->findOneBy(
             ['user' => $user, 'asset' => $asset]
         );
 
         if ($result === null) {
-            $result = new Result($asset, $user, $language);
+            $result = new Result($asset, $user, $asset->getLanguage());
         }
 
         $result->setValue($resultValue);
@@ -194,16 +219,20 @@ class AssetService
         return $this->resultRepository->save($result);
     }
 
-    public function updateAsset(Asset $asset, array $data): Asset
+    public function updateAsset(int $asset, array $data): AssetDTO
     {
+        $asset = $this->getAsset($asset);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
         /** @var  Asset $asset */
         $asset = $repository->update($asset, $data);
-        return $asset;
+
+        return $asset->toDTO();
     }
 
-    public function getAssetsForApp(Language $language, User $user): array
+    public function getAssetsForApp(string $language, User $user): array
     {
+        $language = $this->getLanguage($language);
+
         $assets = [];
 
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
@@ -211,7 +240,7 @@ class AssetService
             $language,
             $user
         );
-        $publicdata = $this->assetsRepository->getPublicAssets($language);
+        $publicdata = $this->assetRepository->getPublicAssets($language);
 
         $data = $publicdata + $personaldata;
 
@@ -242,12 +271,14 @@ class AssetService
                         $card->getTranslate()->getValue()
                     ),
                     'asset_id' => $item->getId(),
-                    'examples' => $card->getExamples()->map(fn($example) => [
-                        'id' => $example->getId(),
-                        'card_id' => $example->getCard()->getId(),
-                        'text' => $example->getText(),
-                        'value' => $example->getValue(),
-                    ])->toArray(),
+                    'examples' => $card->getExamples()->map(
+                        fn($example) => [
+                            'id' => $example->getId(),
+                            'card_id' => $example->getCard()->getId(),
+                            'text' => $example->getText(),
+                            'value' => $example->getValue(),
+                        ]
+                    )->toArray(),
                 ];
             }
 

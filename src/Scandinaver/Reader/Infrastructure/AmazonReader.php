@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Stream;
 use Scandinaver\Common\Domain\Contract\HashInterface;
 use Scandinaver\Common\Domain\Contract\RedisInterface;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
 use Scandinaver\User\Domain\Model\User;
 use Storage;
@@ -20,6 +21,8 @@ use Storage;
  */
 class AmazonReader implements ReaderInterface
 {
+    use LanguageTrait;
+
     private PollyClient $pollyClient;
 
     private HashInterface $hasher;
@@ -48,8 +51,9 @@ class AmazonReader implements ReaderInterface
         $this->redisClient = $redisClient;
     }
 
-    public function read(User $user, Language $language, string $text)
+    public function read(User $user, string $language, string $text)
     {
+        $language = $this->getLanguage($language);
         $ssmltext = $this->generateSsmlString($text);
 
         $polly_args = [

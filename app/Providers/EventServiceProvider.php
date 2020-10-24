@@ -42,12 +42,6 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\MessageRecieved'  => [
             'App\Listeners\MessageRecievedListener',
         ],
-        'App\Events\AssetCreated'     => [
-            'App\Listeners\AssetCreatedListener',
-        ],
-        'App\Events\AssetDelete'      => [
-            'App\Listeners\AssetDeleteListener',
-        ],
         'App\Events\NextLevel'        => [
             'App\Listeners\NextLevelListener',
         ],

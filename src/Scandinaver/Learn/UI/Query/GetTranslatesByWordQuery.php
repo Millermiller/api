@@ -14,14 +14,14 @@ use Scandinaver\Shared\Contract\Query;
  */
 class GetTranslatesByWordQuery implements Query
 {
-    private Word $word;
+    private int $word;
 
-    public function __construct(Word $word)
+    public function __construct(int $word)
     {
         $this->word = $word;
     }
 
-    public function getWord(): Word
+    public function getWord(): int
     {
         return $this->word;
     }

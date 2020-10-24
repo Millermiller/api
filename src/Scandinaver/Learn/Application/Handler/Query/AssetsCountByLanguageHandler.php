@@ -15,7 +15,6 @@ class AssetsCountByLanguageHandler implements AssetsCountByLanguageHandlerInterf
 {
     public function __construct()
     {
-
     }
 
     /**

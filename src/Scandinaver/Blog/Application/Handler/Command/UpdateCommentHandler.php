@@ -4,6 +4,8 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\UpdateCommentHandlerInterface;
+use Scandinaver\Blog\Domain\Model\CommentDTO;
+use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
 
 /**
@@ -13,18 +15,21 @@ use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
  */
 class UpdateCommentHandler implements UpdateCommentHandlerInterface
 {
-    public function __construct()
-    {
 
+    private CommentService $service;
+
+    public function __construct(CommentService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param  UpdateCommentCommand
+     * @param  UpdateCommentCommand  $command
      *
-     * @inheritDoc
+     * @return CommentDTO
      */
-    public function handle($command): void
+    public function handle($command): CommentDTO
     {
-        // TODO: Implement handle() method.
+        return $this->service->update($command->getCommentId(), $command->getData());
     }
 } 

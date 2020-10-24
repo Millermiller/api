@@ -1,0 +1,23 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+
+/**
+ * Class DummyClass
+ *
+ * @package DummyNamespace
+ */
+class EventServiceProvider extends ServiceProvider
+{
+    protected $listen = [
+        events
+    ];
+
+    public function boot()
+    {
+        parent::boot();
+    }
+}

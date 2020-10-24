@@ -15,13 +15,11 @@ class UnpublishTextHandler implements UnpublishTextHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $command UnpublishTextCommand
+     * @param  UnpublishTextCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

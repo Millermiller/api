@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\CreateIntroHandlerInterface;
+use Scandinaver\Common\Domain\Model\IntroDTO;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
 
@@ -24,10 +25,10 @@ class CreateIntroHandler implements CreateIntroHandlerInterface
     /**
      * @param  CreateIntroCommand  $command
      *
-     * @inheritDoc
+     * @return IntroDTO
      */
-    public function handle($command): void
+    public function handle($command): IntroDTO
     {
-        $this->introService->create($command->getData());
+        return $this->introService->create($command->getData());
     }
 } 

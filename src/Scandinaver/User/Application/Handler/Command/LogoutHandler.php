@@ -17,7 +17,6 @@ class LogoutHandler implements LogoutHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

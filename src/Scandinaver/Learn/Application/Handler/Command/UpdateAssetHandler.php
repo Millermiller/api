@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use App\Events\AssetUpdated;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Contract\Command\UpdateAssetHandlerInteface;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
+use Scandinaver\Learn\Domain\Model\AssetDTO;
 use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
 
 /**
@@ -36,9 +36,9 @@ class UpdateAssetHandler implements UpdateAssetHandlerInteface
     /**
      * @param  UpdateAssetCommand  $command
      *
-     * @return Asset
+     * @return AssetDTO
      */
-    public function handle($command): Asset
+    public function handle($command): AssetDTO
     {
         $asset = $this->assetService->updateAsset($command->getAsset(), $command->getData());
 

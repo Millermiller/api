@@ -15,7 +15,6 @@ class DeleteMetaHandler implements DeleteMetaHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

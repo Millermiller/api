@@ -23,9 +23,11 @@ class CommentsHandler implements CommentsHandlerInterface
     }
 
     /**
-     * @param  CommentsQuery  $query
+     * @param CommentsQuery $query
+     *
+     * @return array
      */
-    public function handle($query)
+    public function handle($query): array
     {
         return $this->service->getAll();
     }

@@ -26,7 +26,7 @@ class ResultRepositoryTest extends TestCase
      */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +38,7 @@ class ResultRepositoryTest extends TestCase
 
     public function testGetActiveIds()
     {
-        $language = entity(Language::class)->create();
+        $language = entity(Language::class)->create(['name' => 'is']);
         $user = entity(User::class)->create();
 
         $assets = $this->repository->getActiveIds($user, $language);

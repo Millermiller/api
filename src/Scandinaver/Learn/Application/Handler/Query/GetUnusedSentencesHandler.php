@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
-use Doctrine\DBAL\DBALException;
 use Scandinaver\Learn\Domain\Contract\Query\GetUnusedSentencesHandlerInterface;
 use Scandinaver\Learn\Domain\Services\WordService;
 use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;

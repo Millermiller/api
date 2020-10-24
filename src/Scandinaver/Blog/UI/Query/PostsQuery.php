@@ -15,6 +15,5 @@ class PostsQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

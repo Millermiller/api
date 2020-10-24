@@ -4,7 +4,6 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -15,17 +14,17 @@ use Scandinaver\Shared\Contract\Command;
  */
 class UploadAudioCommand implements Command
 {
-    private Word $word;
+    private int $word;
 
     private UploadedFile $file;
 
-    public function __construct(Word $word, UploadedFile $file)
+    public function __construct(int $word, UploadedFile $file)
     {
         $this->word = $word;
         $this->file = $file;
     }
 
-    public function getWord(): Word
+    public function getWord(): int
     {
         return $this->word;
     }

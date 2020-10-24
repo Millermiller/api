@@ -19,12 +19,11 @@ class UpdateCardHandler implements UpdateCardHandlerInterface
 
     public function __construct(CardService $cardService)
     {
-
         $this->cardService = $cardService;
     }
 
     /**
-     * @param UpdateCardCommand $command
+     * @param  UpdateCardCommand  $command
      */
     public function handle($command): void
     {

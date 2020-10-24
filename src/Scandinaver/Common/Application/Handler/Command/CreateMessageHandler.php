@@ -15,7 +15,6 @@ class CreateMessageHandler implements CreateMessageHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

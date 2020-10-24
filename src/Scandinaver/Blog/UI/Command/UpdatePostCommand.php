@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -14,13 +13,13 @@ use Scandinaver\Shared\Contract\Command;
  */
 class UpdatePostCommand implements Command
 {
-    private Post $post;
+    private int $postId;
 
     private array $data;
 
-    public function __construct(Post $post, array $data)
+    public function __construct(int $postId, array $data)
     {
-        $this->post = $post;
+        $this->postId = $postId;
         $this->data = $data;
     }
 
@@ -29,8 +28,8 @@ class UpdatePostCommand implements Command
         return $this->data;
     }
 
-    public function getPost(): Post
+    public function getPostId(): int
     {
-        return $this->post;
+        return $this->postId;
     }
 }

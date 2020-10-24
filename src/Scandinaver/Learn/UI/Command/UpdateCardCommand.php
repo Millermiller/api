@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -11,22 +10,22 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see \Scandinaver\Learn\Application\Handler\Command\UpdateCardHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\UpdateCardHandler
  */
 class UpdateCardCommand implements Command
 {
 
-    private Card $card;
+    private int $card;
 
     private array $data;
 
-    public function __construct(Card $card, array $data)
+    public function __construct(int $card, array $data)
     {
         $this->card = $card;
         $this->data = $data;
     }
 
-    public function getCard(): Card
+    public function getCard(): int
     {
         return $this->card;
     }

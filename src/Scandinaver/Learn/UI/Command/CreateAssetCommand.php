@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Model\User;
 
@@ -18,14 +17,13 @@ class CreateAssetCommand implements Command
     private User $user;
 
     private string $title;
+    private string $language;
 
-    private Language $language;
-
-    public function __construct(Language $language, User $user, string $title)
+    public function __construct(string $language, User $user, string $title)
     {
-        $this->language = $language;
         $this->user = $user;
         $this->title = $title;
+        $this->language = $language;
     }
 
     public function getUser(): User
@@ -38,7 +36,7 @@ class CreateAssetCommand implements Command
         return $this->title;
     }
 
-    public function getLanguage(): Language
+    public function getLanguage(): string
     {
         return $this->language;
     }

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Puzzle\UI\Command;
 
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Model\User;
 
@@ -17,9 +16,9 @@ class PuzzleCompleteCommand implements Command
 {
     private User $user;
 
-    private Puzzle $puzzle;
+    private int $puzzle;
 
-    public function __construct(User $user, Puzzle $puzzle)
+    public function __construct(User $user, int $puzzle)
     {
         $this->user = $user;
         $this->puzzle = $puzzle;
@@ -30,7 +29,7 @@ class PuzzleCompleteCommand implements Command
         return $this->user;
     }
 
-    public function getPuzzle(): Puzzle
+    public function getPuzzle(): int
     {
         return $this->puzzle;
     }

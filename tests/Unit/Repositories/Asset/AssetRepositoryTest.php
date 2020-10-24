@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Repositories\Asset;
+namespace Tests\Unit\Repositories\Asset;
 
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
@@ -42,11 +42,11 @@ class AssetRepositoryTest extends TestCase
      */
     private $wordassets;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->language = entity(Language::class)->create();
+        $this->language = entity(Language::class)->create(['name' => 'is']);
 
         $this->user       = entity(User::class)->create();
         $this->wordassets = entity(WordAsset::class, 2)->create(['user' => $this->user, 'language' => $this->language])->toArray();

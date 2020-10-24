@@ -11,6 +11,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\UnitOfWork;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Shared\Contract\EventBusInterface;
 
 /**
  * Class BaseRepository
@@ -19,8 +20,6 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
  */
 class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 {
-
-  //  use EventSourcingTrait;
 
     public function all(): array
     {
@@ -40,8 +39,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     {
         $this->_em->persist($object);
         $this->_em->flush($object);
-
-       // $this->fireEvents($object);
+        $this->fireEvents($object);
 
         return $object;
     }
@@ -62,11 +60,14 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
             }
         }
         $this->_em->flush($entity);
-      //  $this->fireEvents($entity);
+        $this->fireEvents($entity);
+
         return $entity;
     }
 
     /**
+     * @param $object
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -74,6 +75,17 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     {
         $this->_em->remove($object);
         $this->_em->flush($object);
-      //  $this->fireEvents($object);
+        $this->fireEvents($object);
+    }
+
+    private function fireEvents(object $entity): void
+    {
+        if ($entity instanceof AggregateRoot) {
+            $events = $entity->pullEvents();
+            foreach ($events as $event) {
+                $dispatcher = app('EventBusInterface');
+                $dispatcher->dispatch($event);
+            }
+        }
     }
 }

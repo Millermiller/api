@@ -3,8 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Learn\Domain\Model\{Asset, Card, Translate, Word};
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Model\User;
 
@@ -18,17 +16,17 @@ class AddCardToAssetCommand implements Command
 {
     private User $user;
 
-    private Asset $asset;
+    private int $asset;
 
-    private Language $language;
+    private string $language;
 
-    private Card $card;
+    private int $card;
 
     public function __construct(
         User $user,
-        Language $language,
-        Card $card,
-        Asset $asset
+        string $language,
+        int $card,
+        int $asset
     ) {
         $this->user = $user;
         $this->asset = $asset;
@@ -41,17 +39,17 @@ class AddCardToAssetCommand implements Command
         return $this->user;
     }
 
-    public function getAsset(): Asset
+    public function getAsset(): int
     {
         return $this->asset;
     }
 
-    public function getCard(): Card
+    public function getCard(): int
     {
         return $this->card;
     }
 
-    public function getLanguage(): Language
+    public function getLanguage(): string
     {
         return $this->language;
     }

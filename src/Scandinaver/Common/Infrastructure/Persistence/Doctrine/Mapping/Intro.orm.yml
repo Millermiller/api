@@ -1,88 +1,88 @@
 Scandinaver\Common\Domain\Model\Intro:
-    type: entity
-    table: intro
+  type: entity
+  table: intro
+  id:
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        page:
-            type: string
-            scale: 0
-            length: 50
-            unique: false
-            nullable: true
-            precision: 0
-        element:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            options:
-                default: undefined
-        intro:
-            type: text
-            scale: 0
-            length: 65535
-            unique: false
-            nullable: true
-            precision: 0
-        position:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            options:
-                default: 'false'
-        tooltipclass:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: tooltipClass
-        sort:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            options:
-                default: '100'
-        active:
-            type: boolean
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-        createdAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: created_at
-        updatedAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: updated_at
-    lifecycleCallbacks: {  }
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    page:
+      type: string
+      scale: 0
+      length: 50
+      unique: false
+      nullable: true
+      precision: 0
+    target:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+      options:
+        default: undefined
+    content:
+      type: text
+      scale: 0
+      length: 65535
+      unique: false
+      nullable: true
+      precision: 0
+    position:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+      options:
+        default: 'false'
+    tooltipClass:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+      column: tooltipClass
+    sort:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      options:
+        default: '100'
+    active:
+      type: boolean
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: created_at
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+  lifecycleCallbacks: {  }

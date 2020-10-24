@@ -15,7 +15,6 @@ class MetaHandler implements MetaHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

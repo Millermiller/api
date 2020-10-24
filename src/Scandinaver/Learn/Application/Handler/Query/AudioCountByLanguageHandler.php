@@ -15,7 +15,6 @@ class AudioCountByLanguageHandler implements AudioCountByLanguageHandlerInterfac
 {
     public function __construct()
     {
-
     }
 
     /**

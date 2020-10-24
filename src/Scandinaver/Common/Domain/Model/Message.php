@@ -6,13 +6,15 @@ namespace Scandinaver\Common\Domain\Model;
 use DateTime;
 use Exception;
 use JsonSerializable;
+use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class Message
  *
  * @package Scandinaver\Common\Domain\Model
  */
-class Message implements JsonSerializable
+class Message extends AggregateRoot
 {
     private int $id;
 
@@ -59,15 +61,13 @@ class Message implements JsonSerializable
         return $this->createdAt;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
+    public function toDTO(): MessageDTO
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'message' => $this->message,
-        ];
+        return new MessageDTO($this);
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
     }
 }

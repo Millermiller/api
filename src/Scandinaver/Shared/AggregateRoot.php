@@ -18,7 +18,7 @@ abstract class AggregateRoot
 
     final public function pullEvents(): array
     {
-        $domainEvents       = $this->domainEvents;
+        $domainEvents = $this->domainEvents;
         $this->domainEvents = [];
 
         return $domainEvents;
@@ -28,4 +28,6 @@ abstract class AggregateRoot
     {
         $this->domainEvents[] = $domainEvent;
     }
+
+    abstract public function delete();
 }

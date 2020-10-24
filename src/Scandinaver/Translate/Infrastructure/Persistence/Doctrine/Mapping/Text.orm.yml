@@ -1,134 +1,134 @@
 Scandinaver\Translate\Domain\Model\Text:
-    type: entity
-    table: text
-    indexes:
-        language_id:
-            columns:
-                - language_id
-        title:
-            columns:
-                - title
+  type: entity
+  table: text
+  indexes:
+    language_id:
+      columns:
+        - language_id
+    title:
+      columns:
+        - title
+  id:
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        level:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-        title:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: false
-            precision: 0
-        description:
-            type: text
-            scale: 0
-            length: 65535
-            unique: false
-            nullable: true
-            precision: 0
-        text:
-            type: text
-            scale: 0
-            length: 65535
-            unique: false
-            nullable: false
-            precision: 0
-        translate:
-            type: text
-            scale: 0
-            length: 65535
-            unique: false
-            nullable: false
-            precision: 0
-        published:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-        createdAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            column: created_at
-        updatedAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: updated_at
-        image:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-    manyToMany:
-        #users:
-        #    targetEntity: Scandinaver\User\Domain\Model\User
-        #    cascade: {  }
-        #    fetch: LAZY
-        #    mappedBy: texts
-        #    inversedBy: null
-        #    joinTable: {  }
-        #    orderBy: null
-    manyToOne:
-        language:
-            targetEntity: Scandinaver\Common\Domain\Model\Language
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                language_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-    oneToMany:
-        extra:
-            targetEntity: Scandinaver\Translate\Domain\Model\TextExtra
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: text
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
-        words:
-            targetEntity: Scandinaver\Translate\Domain\Model\Word
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: text
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
-        textResults:
-            targetEntity: Scandinaver\Translate\Domain\Model\Result
-            cascade:
-                - remove
-            fetch: LAZY
-            mappedBy: text
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
-    lifecycleCallbacks: {  }
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    level:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+    title:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: false
+      precision: 0
+    description:
+      type: text
+      scale: 0
+      length: 65535
+      unique: false
+      nullable: true
+      precision: 0
+    text:
+      type: text
+      scale: 0
+      length: 65535
+      unique: false
+      nullable: false
+      precision: 0
+    translate:
+      type: text
+      scale: 0
+      length: 65535
+      unique: false
+      nullable: false
+      precision: 0
+    published:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      column: created_at
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+    image:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+  manyToMany:
+  #users:
+  #    targetEntity: Scandinaver\User\Domain\Model\User
+  #    cascade: {  }
+  #    fetch: LAZY
+  #    mappedBy: texts
+  #    inversedBy: null
+  #    joinTable: {  }
+  #    orderBy: null
+  manyToOne:
+    language:
+      targetEntity: Scandinaver\Common\Domain\Model\Language
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        language_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  oneToMany:
+    extra:
+      targetEntity: Scandinaver\Translate\Domain\Model\TextExtra
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: text
+      inversedBy: null
+      orphanRemoval: false
+      orderBy: null
+    words:
+      targetEntity: Scandinaver\Translate\Domain\Model\Word
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: text
+      inversedBy: null
+      orphanRemoval: false
+      orderBy: null
+    textResults:
+      targetEntity: Scandinaver\Translate\Domain\Model\Result
+      cascade:
+        - remove
+      fetch: LAZY
+      mappedBy: text
+      inversedBy: null
+      orphanRemoval: false
+      orderBy: null
+  lifecycleCallbacks: {  }

@@ -1,0 +1,74 @@
+Scandinaver\Common\Domain\Model\Log:
+  type: entity
+  table: log
+  indexes:
+    id:
+      columns:
+        - id
+  id:
+    id:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    message:
+      type: text
+      scale: 0
+      unique: false
+      nullable: false
+      precision: 0
+    level:
+      type: integer
+      scale: 0
+      length: 1
+      unique: false
+      nullable: true
+      precision: 0
+    levelName:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    context:
+      type: array
+      scale: 0
+      unique: false
+      nullable: true
+      precision: 0
+    extra:
+      type: array
+      scale: 0
+      unique: false
+      nullable: true
+      precision: 0
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+  manyToOne:
+    owner:
+      targetEntity: Scandinaver\User\Domain\Model\User
+      cascade: ["persist", "merge"]
+      fetch: LAZY
+      joinColumns:
+        occured_on:
+          referencedColumnName: id
+      orphanRemoval: false
+      orderBy: null
+      nullable: true
+  lifecycleCallbacks: {  }

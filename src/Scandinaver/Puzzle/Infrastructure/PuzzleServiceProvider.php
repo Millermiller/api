@@ -4,32 +4,41 @@
 namespace Scandinaver\Puzzle\Infrastructure;
 
 use Illuminate\Support\ServiceProvider;
-use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
-use Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine\PuzzleRepository;
 
 /**
  * Class PuzzleServiceProvider
  *
- * @package Scandinaver\Puzzle\Application
+ * @package Scandinaver\Puzzle\Infrastructure
  */
 class PuzzleServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        /** COMMAND **/
         $this->app->bind(
-            PuzzleRepositoryInterface::class,
-            function () {
-                return new PuzzleRepository(
-                    $this->app['em'],
-                    $this->app['em']->getClassMetadata(Puzzle::class)
-                );
-            }
+            'CreatePuzzleHandlerInterface',
+            'Scandinaver\Puzzle\Application\Handler\Command\CreatePuzzleHandler'
+        );
+
+        $this->app->bind(
+            'DeletePuzzleHandlerInterface',
+            'Scandinaver\Puzzle\Application\Handler\Command\DeletePuzzleHandler'
         );
 
         $this->app->bind(
             'PuzzleCompleteHandlerInterface',
             'Scandinaver\Puzzle\Application\Handler\Command\PuzzleCompleteHandler'
+        );
+
+        /** QUERY **/
+        $this->app->bind(
+            'PuzzleHandlerInterface',
+            'Scandinaver\Puzzle\Application\Handler\Query\PuzzleHandler'
+        );
+
+        $this->app->bind(
+            'PuzzlesHandlerInterface',
+            'Scandinaver\Puzzle\Application\Handler\Query\PuzzlesHandler'
         );
 
         $this->app->bind(

@@ -22,9 +22,8 @@ class CompleteTextHandler implements CompleteTextHandlerInterface
     }
 
     /**
-     * @param  CompleteTextCommand
+     * @param  CompleteTextCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

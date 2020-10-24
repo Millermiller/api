@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\UpdatePostHandlerInterface;
+use Scandinaver\Blog\Domain\Model\PostDTO;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Command\UpdatePostCommand;
 
@@ -22,10 +23,12 @@ class UpdatePostHandler implements UpdatePostHandlerInterface
     }
 
     /**
-     * @param  UpdatePostCommand
+     * @param  UpdatePostCommand  $command
+     *
+     * @return PostDTO
      */
-    public function handle($command): void
+    public function handle($command): PostDTO
     {
-        $this->blogService->updatePost($command->getPost(), $command->getData());
+        return $this->blogService->updatePost($command->getPostId(), $command->getData());
     }
 } 

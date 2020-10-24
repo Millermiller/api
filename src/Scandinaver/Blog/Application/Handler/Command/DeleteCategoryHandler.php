@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\DeleteCategoryHandlerInterface;
+use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
 
 /**
@@ -13,18 +14,19 @@ use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
  */
 class DeleteCategoryHandler implements DeleteCategoryHandlerInterface
 {
-    public function __construct()
-    {
 
+    private CategoryService $service;
+
+    public function __construct(CategoryService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param  DeleteCategoryCommand
-     *
-     * @inheritDoc
+     * @param  DeleteCategoryCommand  $command
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->delete($command->getCategoryId());
     }
 } 

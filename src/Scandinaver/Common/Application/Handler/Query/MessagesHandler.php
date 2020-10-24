@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\Application\Handler\Query;
 
 use Scandinaver\Common\Domain\Contract\Query\MessagesHandlerInterface;
+use Scandinaver\Common\Domain\Services\MessageService;
 use Scandinaver\Common\UI\Query\MessagesQuery;
 
 /**
@@ -13,18 +14,19 @@ use Scandinaver\Common\UI\Query\MessagesQuery;
  */
 class MessagesHandler implements MessagesHandlerInterface
 {
-    public function __construct()
-    {
 
+    private MessageService $messageService;
+
+    public function __construct(MessageService $messageService)
+    {
+        $this->messageService = $messageService;
     }
 
     /**
-     * @param  MessagesQuery
-     *
-     * @inheritDoc
+     * @param MessagesQuery $query
      */
     public function handle($query)
     {
-        // TODO: Implement handle() method.
+        return $this->messageService->all();
     }
 } 

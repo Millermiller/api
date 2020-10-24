@@ -3,15 +3,17 @@
 
 namespace Scandinaver\Common\Domain\Model;
 
-use JsonSerializable;
+
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
+use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class Language
  *
  * @package Scandinaver\Common\Domain\Model
  */
-class Language implements UrlRoutable
+class Language extends AggregateRoot implements UrlRoutable
 {
     private int $id;
 
@@ -59,5 +61,15 @@ class Language implements UrlRoutable
     public function setFlag(string $flag): void
     {
         $this->flag = $flag;
+    }
+
+    public function toDTO(): LanguageDTO
+    {
+        return new LanguageDTO($this, 0, 0);
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
     }
 }

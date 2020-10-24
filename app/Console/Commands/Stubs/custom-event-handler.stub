@@ -1,0 +1,25 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use DummyEventNamespace;
+
+/**
+ * Class DummyClass
+ *
+ * @package DummyNamespace
+ *
+ */
+class DummyClass
+{
+    public function __construct()
+    {
+
+    }
+
+    public function handle(DummyEventClass $event)
+    {
+
+    }
+}

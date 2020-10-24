@@ -14,6 +14,5 @@ class CreateMessageCommand implements Command
 {
     public function __construct()
     {
-
     }
 }

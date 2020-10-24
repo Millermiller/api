@@ -3,6 +3,7 @@
 
 namespace App\Console\Commands;
 
+use Artisan;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
@@ -71,6 +72,10 @@ class CreateQueryHandlerInterface extends GeneratorCommand
         $this->files->chmod($path, 0777);
 
         $this->info($this->type.' created successfully.');
+
+        Artisan::call('scandinaver:rebuild:commands', [
+            'domain' => $this->domain
+        ]);
     }
 
     /**

@@ -14,15 +14,17 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeleteCommentCommand implements Command
 {
-    private Comment $comment;
 
-    public function __construct(Comment $comment)
+    private int $commentId;
+
+    public function __construct(int $commentId)
     {
-        $this->comment = $comment;
+        $this->commentId = $commentId;
     }
 
-    public function getComment(): Comment
+    public function getCommentId(): int
     {
-        return $this->comment;
+        return $this->commentId;
     }
+
 }

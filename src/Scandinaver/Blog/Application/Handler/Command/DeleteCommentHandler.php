@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\DeleteCommentHandlerInterface;
+use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 
 /**
@@ -13,18 +14,19 @@ use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
  */
 class DeleteCommentHandler implements DeleteCommentHandlerInterface
 {
-    public function __construct()
-    {
 
+    private CommentService $service;
+
+    public function __construct(CommentService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param  DeleteCommentCommand
-     *
-     * @inheritDoc
+     * @param DeleteCommentCommand $command
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->delete($command->getCommentId());
     }
 } 

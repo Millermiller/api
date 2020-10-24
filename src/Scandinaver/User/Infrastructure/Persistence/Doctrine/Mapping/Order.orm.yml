@@ -1,118 +1,118 @@
 Scandinaver\User\Domain\Model\Order:
-    type: entity
-    table: order
-    indexes:
-        user_id:
-            columns:
-                - user_id
-        plan_id:
-            columns:
-                - plan_id
+  type: entity
+  table: order
+  indexes:
+    user_id:
+      columns:
+        - user_id
+    plan_id:
+      columns:
+        - plan_id
+  id:
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        sum:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-        status:
-            type: string
-            scale: 0
-            length: 50
-            unique: false
-            nullable: true
-            precision: 0
-        notificationType:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: notification_type
-        datetime:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-        codepro:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-        sender:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-        sha1Hash:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: sha1_hash
-        label:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-        createdAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: created_at
-        updatedAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: updated_at
-    manyToOne:
-        plan:
-            targetEntity: Scandinaver\User\Domain\Model\Plan
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                plan_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-        user:
-            targetEntity: Scandinaver\User\Domain\Model\User
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                user_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-    lifecycleCallbacks: {  }
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    sum:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+    status:
+      type: string
+      scale: 0
+      length: 50
+      unique: false
+      nullable: true
+      precision: 0
+    notificationType:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+      column: notification_type
+    datetime:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    codepro:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    sender:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    sha1Hash:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+      column: sha1_hash
+    label:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: true
+      precision: 0
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: created_at
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+  manyToOne:
+    plan:
+      targetEntity: Scandinaver\User\Domain\Model\Plan
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        plan_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    user:
+      targetEntity: Scandinaver\User\Domain\Model\User
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        user_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: {  }

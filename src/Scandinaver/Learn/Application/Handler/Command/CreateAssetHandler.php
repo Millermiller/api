@@ -3,11 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use App\Events\AssetCreated;
-use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Contract\Command\CreateAssetHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
+use Scandinaver\Learn\Domain\Model\AssetDTO;
 use Scandinaver\Learn\UI\Command\CreateAssetCommand;
 
 /**
@@ -31,15 +30,11 @@ class CreateAssetHandler implements CreateAssetHandlerInterface
     /**
      * @param  CreateAssetCommand  $command
      *
-     * @return Asset
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @return AssetDTO
      */
-    public function handle($command): Asset
+    public function handle($command): AssetDTO
     {
         $asset = $this->assetService->create($command->getLanguage(), $command->getUser(), $command->getTitle());
-
-        event(new AssetCreated($command->getUser(), $asset));
 
         return $asset;
     }

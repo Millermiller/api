@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\CategoryHandlerInterface;
+use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoryQuery;
 
 /**
@@ -13,18 +14,20 @@ use Scandinaver\Blog\UI\Query\CategoryQuery;
  */
 class CategoryHandler implements CategoryHandlerInterface
 {
-    public function __construct()
-    {
 
+    private CategoryService $service;
+
+    public function __construct(CategoryService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param  CategoryQuery
+     * @param CategoryQuery $query
      *
-     * @inheritDoc
      */
     public function handle($query)
     {
-        // TODO: Implement handle() method.
+        return $this->service->one($query->getId());
     }
 } 

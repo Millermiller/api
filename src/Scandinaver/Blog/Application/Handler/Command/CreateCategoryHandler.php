@@ -4,6 +4,8 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\CreateCategoryHandlerInterface;
+use Scandinaver\Blog\Domain\Model\CategoryDTO;
+use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 
 /**
@@ -14,18 +16,20 @@ use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 class CreateCategoryHandler implements CreateCategoryHandlerInterface
 {
 
-    public function __construct()
-    {
+    private CategoryService $service;
 
+    public function __construct(CategoryService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param  CreateCategoryCommand
+     * @param  CreateCategoryCommand  $command
      *
-     * @inheritDoc
+     * @return CategoryDTO
      */
-    public function handle($command): void
+    public function handle($command): CategoryDTO
     {
-        // TODO: Implement handle() method.
+        return $this->service->create($command->getData());
     }
 }

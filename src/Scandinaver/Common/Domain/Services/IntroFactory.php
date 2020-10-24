@@ -13,9 +13,11 @@ class IntroFactory
         $intro = new Intro();
 
         $intro->setPage($data['page']);
-        $intro->setElement($data['element']);
+        $intro->setTarget($data['target']);
         $intro->setPosition($data['position']);
-        $intro->setIntro($data['intro']);
+        $intro->setContent($data['content']);
+        $intro->setTooltipclass($data['tooltipClass']);
+        $intro->setSort($data['sort']);
 
         return $intro;
     }

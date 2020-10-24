@@ -23,7 +23,7 @@ interface TextRepositoryInterface extends BaseRepositoryInterface
 
     public function getByLanguage(Language $language): array;
 
-    public function getNextText(Text $text, Language $language): Text;
+    public function getNextText(Text $text): Text;
 
     public function getCountByLanguage(Language $language): int;
 }

@@ -15,7 +15,6 @@ class UpdatePlanHandler implements UpdatePlanHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

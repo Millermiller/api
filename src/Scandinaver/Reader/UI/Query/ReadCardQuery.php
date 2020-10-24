@@ -11,7 +11,7 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Reader\UI\Query
  *
- * @see \Scandinaver\Reader\Application\Handler\Query\ReadCardHandler
+ * @see     \Scandinaver\Reader\Application\Handler\Query\ReadCardHandler
  */
 class ReadCardQuery implements Query
 {
@@ -19,7 +19,6 @@ class ReadCardQuery implements Query
 
     public function __construct(Card $card)
     {
-
         $this->card = $card;
     }
 

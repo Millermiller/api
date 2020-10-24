@@ -4,7 +4,6 @@
 namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\Command;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class DeleteUserCommand
@@ -14,14 +13,14 @@ use Scandinaver\User\Domain\Model\User;
  */
 class DeleteUserCommand implements Command
 {
-    private User $user;
+    private int $user;
 
-    public function __construct(User $user)
+    public function __construct(int $user)
     {
         $this->user = $user;
     }
 
-    public function getUser(): User
+    public function getUser(): int
     {
         return $this->user;
     }

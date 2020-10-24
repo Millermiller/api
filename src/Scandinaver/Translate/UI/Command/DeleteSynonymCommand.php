@@ -10,12 +10,14 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see \Scandinaver\Translate\Application\Handler\Command\DeleteSynonymHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\DeleteSynonymHandler
  */
 class DeleteSynonymCommand implements Command
 {
-    public function __construct()
-    {
+    private int $synonym;
 
+    public function __construct(int $synonym)
+    {
+        $this->synonym = $synonym;
     }
 }

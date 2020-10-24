@@ -22,12 +22,10 @@ class DeletePostHandler implements DeletePostHandlerInterface
     }
 
     /**
-     * @param  DeletePostCommand
-     *
-     * @inheritDoc
+     * @param  DeletePostCommand  $command
      */
     public function handle($command): void
     {
-        $this->blogService->deletePost($command->getPost());
+        $this->blogService->deletePost($command->getPostId());
     }
 } 

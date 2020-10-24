@@ -15,17 +15,9 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateCommand extends GeneratorCommand
 {
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
     protected $name = 'scandinaver:command';
 
-    /**
-     * @var string
-     */
-    protected $domain;
+    protected string $domain;
 
     /**
      * @var string
@@ -56,17 +48,14 @@ class CreateCommand extends GeneratorCommand
         return __DIR__ . '/Stubs/custom-command.stub';
     }
 
-    /**
-     * @return array
-     */
-    public function getArguments()
+    protected function getArguments(): array
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the class'],
         ];
     }
 
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
     }

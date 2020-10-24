@@ -28,7 +28,6 @@ class GiveNextLevelHandler implements GiveNextLevelHandlerInterface
     public function handle($command): void
     {
         $nextAsset = $this->assetService->giveNextLevel($command->getUser(), $command->getAsset());
-
-        event(new NextLevel($command->getUser(), $nextAsset));
+        //  event(new NextLevel($command->getUser(), $nextAsset));
     }
 }

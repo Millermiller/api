@@ -24,7 +24,6 @@ class UploadAudioHandler implements UploadAudioHandlerInterface
     /**
      * @param  UploadAudioCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

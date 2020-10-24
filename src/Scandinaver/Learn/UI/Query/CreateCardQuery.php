@@ -10,12 +10,11 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see \Scandinaver\Learn\Application\Handler\Query\CreateCardHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\CreateCardHandler
  */
 class CreateCardQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

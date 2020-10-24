@@ -140,4 +140,9 @@ class Text extends AggregateRoot
     {
         return $this->textResults;
     }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
+    }
 }

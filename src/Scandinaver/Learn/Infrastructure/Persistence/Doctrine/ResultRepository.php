@@ -27,7 +27,7 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
             'Scandinaver\Common\Infrastructure\Persistence\Doctrine\ColumnHydrator'
         );
 
-        return $q->select('r.assetId')
+        return $q->select('a.id')
             ->from($this->getEntityName(), 'r')
             ->join('r.asset', 'a')
             ->where($q->expr()->eq('r.user', ':user'))
@@ -39,10 +39,13 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
     }
 
     /**
-     * @throws NoResultException
+     * @param  User   $user
+     * @param  Asset  $asset
+     *
+     * @return Result
      * @throws NonUniqueResultException
      */
-    public function getResult(User $user, Asset $asset): Result
+    public function getResult(User $user, Asset $asset): ?Result
     {
         $q = $this->_em->createQueryBuilder();
 
@@ -53,6 +56,6 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
             ->setParameter('user', $user)
             ->setParameter('asset', $asset)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 }

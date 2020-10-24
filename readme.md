@@ -1,5 +1,6 @@
-php artisan scandinaver:command
-php artisan scandinaver:query
+php artisan scandinaver:command CommandName
+php artisan scandinaver:query QueryName
+php artisan scandinaver:update Domain
 
 
 START TRANSACTION;
@@ -13,3 +14,6 @@ SELECT card.asset_id, cards.id FROM card
 JOIN cards ON(card.word_id = cards.word_id AND card.translate_id=cards.translate_id);
 
 COMMIT;
+
+
+php artisan ide-helper:generate

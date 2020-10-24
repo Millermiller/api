@@ -5,12 +5,17 @@ namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\AssetInterface;
+use Scandinaver\Learn\Domain\Events\AssetCreated;
+use Scandinaver\Learn\Domain\Events\AssetDeleted;
+use Scandinaver\Learn\Domain\Events\CardAddedToAsset;
+use Scandinaver\Learn\Domain\Events\CardRemovedFromAsset;
+use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
+use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -18,7 +23,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
+abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterface
 {
     public const TYPE_PERSONAL = 4;
 
@@ -52,6 +57,8 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
 
     protected int $category;
 
+    protected ?User $owner;
+
     /**
      * Asset constructor.
      *
@@ -74,6 +81,8 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
         $this->users = new ArrayCollection();
         $this->results = new ArrayCollection();
         $this->cards = new ArrayCollection();
+
+        $this->pushEvent(new AssetCreated($this));
     }
 
     public static function getRouteKeyName(): string
@@ -156,31 +165,28 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
         return $this->cards;
     }
 
+    /**
+     * @param  Card  $card
+     *
+     * @throws CardAlreadyAddedException
+     */
     public function addCard(Card $card): void
     {
+        if ($this->cards->contains($card)) {
+            throw new CardAlreadyAddedException('Карточка уже добавлена');
+        }
+
         $this->cards->add($card);
+        $this->pushEvent(new CardAddedToAsset($this, $card));
     }
+
 
     public function removeCard(Card $card): void
     {
-        $this->cards->removeElement($card);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'level' => $this->level,
-            'result' => $this->results->count() ? $this->results->toArray()[0]->getValue() : 0,
-            'basic' => $this->basic,
-            'language' => $this->language,
-            'count' => $this->cards ? $this->cards->count() : 0,
-            'cards' => [],
-        ];
+        if ($this->cards->contains($card)) {
+            $this->cards->removeElement($card);
+            $this->pushEvent(new CardRemovedFromAsset($this, $card));
+        }
     }
 
     /**
@@ -215,5 +221,20 @@ abstract class Asset implements JsonSerializable, UrlRoutable, AssetInterface
         if (!$this->results->contains($result)) {
             $this->results->add($result);
         }
+    }
+
+    public function toDTO(): AssetDTO
+    {
+        return new AssetDTO($this);
+    }
+
+    public function delete()
+    {
+        $this->pushEvent(new AssetDeleted($this));
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
     }
 }

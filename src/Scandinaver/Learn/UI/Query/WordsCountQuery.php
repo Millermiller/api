@@ -15,6 +15,5 @@ class WordsCountQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

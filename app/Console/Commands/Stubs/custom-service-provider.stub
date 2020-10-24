@@ -1,0 +1,23 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use Illuminate\Support\ServiceProvider;
+
+/**
+ * Class DummyClass
+ *
+ * @package DummyNamespace
+ */
+class DummyClass extends ServiceProvider
+{
+    public function register()
+    {
+        /** COMMAND **/
+        commands
+
+        /** QUERY **/
+        queryes
+    }
+}

@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\PostHandlerInterface;
-use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Blog\Domain\Model\PostDTO;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Query\PostQuery;
 
@@ -23,11 +23,11 @@ class PostHandler implements PostHandlerInterface
     }
 
     /**
-     * @param $query PostQuery
+     * @param  PostQuery  $query
      *
-     * @return Post
+     * @return PostDTO
      */
-    public function handle($query): Post
+    public function handle($query): PostDTO
     {
         return $this->blogService->getOne($query->getId());
     }

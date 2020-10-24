@@ -20,13 +20,13 @@ class Asset extends Model
 
     use SoftDeletes;
 
-    const TYPE_PERSONAL = 0;
+    public const TYPE_PERSONAL = 0;
 
-    const TYPE_WORDS = 1;
+    public const TYPE_WORDS = 1;
 
-    const TYPE_SENTENCES = 2;
+    public const TYPE_SENTENCES = 2;
 
-    const TYPE_FAVORITES = 3;
+    public const TYPE_FAVORITES = 3;
 
     protected $table = 'assets';
 
@@ -69,7 +69,6 @@ class Asset extends Model
 
             return true;
         } catch (Exception $e) {
-
             DB::rollback();
 
             return false;

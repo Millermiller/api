@@ -15,13 +15,11 @@ class GetSynonymsHandler implements GetSynonymsHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $query GetSynonymsQuery
+     * @param  GetSynonymsQuery  $query
      *
-     * @inheritDoc
      */
     public function handle($query)
     {

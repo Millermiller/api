@@ -15,6 +15,5 @@ class UsersQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

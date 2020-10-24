@@ -15,7 +15,6 @@ class DeletePlanHandler implements DeletePlanHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

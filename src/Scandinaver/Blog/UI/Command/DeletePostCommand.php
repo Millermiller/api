@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -14,15 +13,16 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeletePostCommand implements Command
 {
-    private Post $post;
 
-    public function __construct(Post $post)
+    private int $postId;
+
+    public function __construct(int $postId)
     {
-        $this->post = $post;
+        $this->postId = $postId;
     }
 
-    public function getPost(): Post
+    public function getPostId(): int
     {
-        return $this->post;
+        return $this->postId;
     }
 }

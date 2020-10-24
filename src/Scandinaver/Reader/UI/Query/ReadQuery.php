@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Reader\UI\Query;
 
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Model\User;
 
@@ -20,9 +19,9 @@ class ReadQuery implements Query
 
     private User $user;
 
-    private Language $language;
+    private string $language;
 
-    public function __construct(User $user, Language $language, string $text)
+    public function __construct(User $user, string $language, string $text)
     {
         $this->text = $text;
         $this->user = $user;
@@ -39,7 +38,7 @@ class ReadQuery implements Query
         return $this->user;
     }
 
-    public function getLanguage(): Language
+    public function getLanguage(): string
     {
         return $this->language;
     }

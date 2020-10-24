@@ -16,13 +16,21 @@ class UserPuzzlesQuery implements Query
 {
     private User $user;
 
-    public function __construct(User $user)
+    private string $language;
+
+    public function __construct(string $language, User $user)
     {
         $this->user = $user;
+        $this->language = $language;
     }
 
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
     }
 }

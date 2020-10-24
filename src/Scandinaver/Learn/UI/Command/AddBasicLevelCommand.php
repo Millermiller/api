@@ -13,15 +13,23 @@ use Scandinaver\Shared\Contract\Command;
  */
 class AddBasicLevelCommand implements Command
 {
-    private int $assetId;
+    private int $type;
 
-    public function __construct(array $data)
+    private string $language;
+
+    public function __construct(string $language, array $data)
     {
-        $this->assetId = $data['asset_id'];
+        $this->type = $data['asset_id'];
+        $this->language = $language;
     }
 
-    public function getAssetId(): int
+    public function getType(): int
     {
-        return $this->assetId;
+        return $this->type;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
     }
 }

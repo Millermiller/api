@@ -1,67 +1,67 @@
 Scandinaver\Learn\Domain\Model\Example:
-    type: entity
-    table: example
-    indexes:
-        card_id:
-            columns:
-                - card_id
+  type: entity
+  table: example
+  indexes:
+    card_id:
+      columns:
+        - card_id
+  id:
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        text:
-            type: text
-            scale: 0
-            length: 65535
-            unique: false
-            nullable: false
-            precision: 0
-        value:
-            type: text
-            scale: 0
-            length: 65535
-            unique: false
-            nullable: false
-            precision: 0
-        createdAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: created_at
-            gedmo:
-                timestampable:
-                    on: create
-        updatedAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: updated_at
-            gedmo:
-                timestampable:
-                    on: update
-    manyToOne:
-        card:
-            targetEntity: Scandinaver\Learn\Domain\Model\Card
-            cascade: ["persist", "merge"]
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: examples
-            joinColumns:
-                card_id:
-                    referencedColumnName: id
-            orphanRemoval: false
-    lifecycleCallbacks: {  }
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    text:
+      type: text
+      scale: 0
+      length: 65535
+      unique: false
+      nullable: false
+      precision: 0
+    value:
+      type: text
+      scale: 0
+      length: 65535
+      unique: false
+      nullable: false
+      precision: 0
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    card:
+      targetEntity: Scandinaver\Learn\Domain\Model\Card
+      cascade: ["persist", "merge"]
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: examples
+      joinColumns:
+        card_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: {  }

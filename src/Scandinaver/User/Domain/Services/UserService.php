@@ -4,9 +4,9 @@
 namespace Scandinaver\User\Domain\Services;
 
 use Auth;
-use Illuminate\Auth\Authenticatable;
-use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Services\IntroService;
+use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
@@ -28,11 +28,14 @@ use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 
 /**
  * Class UserService
+ * todo: refactor
  *
  * @package Scandinaver\User\Domain\Services
  */
 class UserService
 {
+    use LanguageTrait;
+
     protected AssetService $assetService;
 
     protected UserRepositoryInterface $userRepository;
@@ -49,11 +52,11 @@ class UserService
 
     protected TextRepositoryInterface $textRepository;
 
-    protected IntroRepositoryInterface $introRepository;
-
     private TextService $textService;
 
     private PuzzleService $puzzleService;
+
+    private IntroService $introService;
 
     public function __construct(
         AssetRepositoryInterface $assetRepository,
@@ -64,21 +67,21 @@ class UserService
         PlanRepositoryInterface $planRepository,
         LanguageRepositoryInterface $languageRepository,
         TextRepositoryInterface $textRepository,
-        IntroRepositoryInterface $introRepository,
         TextService $textService,
-        PuzzleService $puzzleService
+        PuzzleService $puzzleService,
+        IntroService $introService
     ) {
         $this->userRepository = $userRepository;
         $this->planRepository = $planRepository;
         $this->languageRepository = $languageRepository;
         $this->assetRepository = $assetRepository;
         $this->textRepository = $textRepository;
-        $this->introRepository = $introRepository;
         $this->assetService = $assetService;
         $this->textService = $textService;
         $this->puzzleService = $puzzleService;
         $this->favouriteAssetRepository = $favouriteAssetRepository;
         $this->personalAssetRepository = $personalAssetRepository;
+        $this->introService = $introService;
     }
 
     public function getAll(): array
@@ -122,7 +125,6 @@ class UserService
         $user = $this->userRepository->save($user);
 
         foreach ($languages as $language) {
-
             //даем пользователю избранное
             $favourite = new FavouriteAsset(
                 'Избранное',
@@ -158,17 +160,19 @@ class UserService
         return $user;
     }
 
-    public function getState(User $user, Language $language): array
+    public function getState(User $user, string $language): array
     {
+       $language = $this->getLanguage($language);
+
         return [
             'site' => config('app.MAIN_SITE'),
             'words' => $this->assetService->getAssetsByType(
-                $language,
+                $language->getName(),
                 $user,
                 Asset::TYPE_WORDS
             ),
             'sentences' => $this->assetService->getAssetsByType(
-                $language,
+                $language->getName(),
                 $user,
                 Asset::TYPE_SENTENCES
             ),
@@ -181,11 +185,11 @@ class UserService
                 $user
             ),
             'texts' => $this->textService->getTextsForUser(
-                $language,
+                $language->getName(),
                 $user
             ),
-            'puzzles' => $this->puzzleService->getForUser($user),
-            'intro' => $this->introRepository->getGrouppedIntro(),
+            'puzzles' => $this->puzzleService->getForUser($language->getName(), $user),
+            'intro' => $this->introService->all(),
             'sites' => $this->languageRepository->all(),
             'currentsite' => $this->languageRepository->findOneBy(
                 ['name' => config('app.lang')]

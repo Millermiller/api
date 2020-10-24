@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\DeleteMessageHandlerInterface;
+use Scandinaver\Common\Domain\Services\MessageService;
 use Scandinaver\Common\UI\Command\DeleteMessageCommand;
 
 /**
@@ -13,18 +14,19 @@ use Scandinaver\Common\UI\Command\DeleteMessageCommand;
  */
 class DeleteMessageHandler implements DeleteMessageHandlerInterface
 {
-    public function __construct()
-    {
 
+    private MessageService $messageService;
+
+    public function __construct(MessageService $messageService)
+    {
+        $this->messageService = $messageService;
     }
 
     /**
-     * @param  DeleteMessageCommand
-     *
-     * @inheritDoc
+     * @param DeleteMessageCommand $command
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->messageService->delete($command->getMessageId());
     }
 } 

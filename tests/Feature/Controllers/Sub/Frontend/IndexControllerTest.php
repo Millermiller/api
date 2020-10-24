@@ -44,12 +44,12 @@ class IndexControllerTest extends TestCase
      */
     private $favouriteCard;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         /** @var Language $language */
-        $language = entity(Language::class)->create();
+        $language = entity(Language::class)->create(['name' => 'is']);
 
         $this->user           = entity(User::class)->create();
         $this->wordasset      = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $language]);
@@ -72,7 +72,7 @@ class IndexControllerTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('sub_frontend::user-info', ['domain' => 'is']));
+        $response = $this->get(route('user-info', ['domain' => 'is']));
 
         $response->assertJsonStructure(['id', 'login', 'avatar', 'email', 'active', 'plan', 'active_to']);
     }
@@ -81,7 +81,7 @@ class IndexControllerTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('sub_frontend::site-info', ['language' => 'is']));
+        $response = $this->get(route('site-info', ['language' => 'is']));
 
         $response->assertJsonStructure(['site']);
     }
@@ -91,7 +91,7 @@ class IndexControllerTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('sub_frontend::words', ['language' => 'is']));
+        $response = $this->get(route('words', ['language' => 'is']));
 
         $response->assertJsonStructure([['count', 'id', 'title', 'level', 'active', 'testlink', 'canopen', 'result', 'type', 'available']]);
     }
@@ -100,7 +100,7 @@ class IndexControllerTest extends TestCase
     //{
     //    $this->actingAs($this->user, 'api');
 
-    //    $response = $this->get(route('sub_frontend::sentences', ['language' => 'is']));
+    //    $response = $this->get(route('sentences', ['language' => 'is']));
 
     //    $response->assertJsonStructure([['count', 'id', 'title', 'level', 'active', 'testlink', 'canopen', 'result', 'type', 'available']]);
     //}
@@ -109,7 +109,7 @@ class IndexControllerTest extends TestCase
     //{
     //    $this->actingAs($this->user, 'api');
 
-    //    $response = $this->get(route('sub_frontend::personal', ['language' => 'is']));
+    //    $response = $this->get(route('personal', ['language' => 'is']));
 
     //    $response->assertJsonStructure([['count', 'id', 'title', 'level', 'result', 'type']]);
     //}
@@ -118,7 +118,7 @@ class IndexControllerTest extends TestCase
     //{
     //    $this->actingAs($this->user, 'api');
 
-    //    $response = $this->get(route('sub_frontend::state', ['language' => 'is']));
+    //    $response = $this->get(route('state', ['language' => 'is']));
     //  //  dd($response);
     //    $response->assertJsonStructure(['auth', 'state' => ['user']]);
 
@@ -130,7 +130,7 @@ class IndexControllerTest extends TestCase
 
     //public function testCheckFail()
     //{
-    //    $response = $this->get(route('sub_frontend::state', ['language' => 'is']));
+    //    $response = $this->get(route('state', ['language' => 'is']));
 
     //    $response->assertJsonStructure(['auth', 'state' => []]);
 
@@ -142,7 +142,7 @@ class IndexControllerTest extends TestCase
     //{
     //    $this->actingAs($this->user, 'api');
 
-    //    $response = $this->post(route('sub_frontend::subdomain-feedback', ['language' => 'is', 'message' => 'testmessage']));
+    //    $response = $this->post(route('subdomain-feedback', ['language' => 'is', 'message' => 'testmessage']));
 
     //    $this->assertEquals(201, $response->getStatusCode());
 

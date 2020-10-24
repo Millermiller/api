@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Model\User;
 
@@ -19,9 +18,9 @@ class UpdateAssetCommand implements Command
 
     private array $data;
 
-    private Asset $asset;
+    private int $asset;
 
-    public function __construct(User $user, Asset $asset, array $data)
+    public function __construct(User $user, int $asset, array $data)
     {
         $this->user = $user;
         $this->data = $data;
@@ -31,11 +30,6 @@ class UpdateAssetCommand implements Command
     public function getUser(): User
     {
         return $this->user;
-    }
-
-    public function getAsset(): Asset
-    {
-        return $this->asset;
     }
 
     public function getTitle(): string
@@ -51,5 +45,10 @@ class UpdateAssetCommand implements Command
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function getAsset(): int
+    {
+        return $this->asset;
     }
 }

@@ -15,7 +15,6 @@ class WordsCountByLanguageHandler implements WordsCountByLanguageHandlerInterfac
 {
     public function __construct()
     {
-
     }
 
     /**

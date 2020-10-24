@@ -4,7 +4,6 @@
 namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\Command;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class UpdateUserCommand
@@ -14,17 +13,17 @@ use Scandinaver\User\Domain\Model\User;
  */
 class UpdateUserCommand implements Command
 {
-    private User $user;
+    private int $user;
 
     private array $data;
 
-    public function __construct(User $user, array $data)
+    public function __construct(int $user, array $data)
     {
         $this->user = $user;
         $this->data = $data;
     }
 
-    public function getUser(): User
+    public function getUser(): int
     {
         return $this->user;
     }

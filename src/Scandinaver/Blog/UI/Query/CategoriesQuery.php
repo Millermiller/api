@@ -15,6 +15,5 @@ class CategoriesQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

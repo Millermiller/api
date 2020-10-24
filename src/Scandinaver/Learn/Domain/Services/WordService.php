@@ -4,16 +4,17 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Model\Card;
 use App\Http\Requests\{SearchRequest};
 use Auth;
 use Doctrine\DBAL\DBALException;
 use Illuminate\Database\Eloquent\{Builder, Collection};
 use PDO;
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
 
@@ -24,6 +25,8 @@ use Scandinaver\Learn\Domain\Model\Word;
  */
 class WordService
 {
+    use LanguageTrait;
+
     protected LanguageRepositoryInterface $languageRepository;
 
     private TranslateRepositoryInterface $translateRepository;
@@ -49,14 +52,16 @@ class WordService
         return $this->wordsRepository->count([]);
     }
 
-    public function countByLanguage(Language $language): int
+    public function countByLanguage(string $language): int
     {
+        $language = $this->languageRepository->get($language);
+
         return $this->wordsRepository->getCountByLanguage($language);
     }
 
     /**TODO: проверить
      *
-     * @param          $lang
+     * @param  string  $language
      * @param  string  $word
      * @param  int     $isSentence
      * @param  string  $translate
@@ -64,12 +69,12 @@ class WordService
      * @return Word
      */
     public function create(
-        $lang,
+        string $language,
         string $word,
         int $isSentence,
         string $translate
     ): Word {
-        $language = $this->languageRepository->get($lang);
+        $language = $this->languageRepository->get($language);
 
         $word = new Word();
         $word->setLanguage($language);
@@ -85,17 +90,22 @@ class WordService
     }
 
     /**
-     * @param  Language       $language
+     * @param  string  $language
      * @param  SearchRequest  $request
      *
      * @return Translate[]|Builder[]|Collection|\Illuminate\Support\Collection
      * @throws DBALException
+     * @throws LanguageNotFoundException
      */
-    public function translate(Language $language, SearchRequest $request)
+    public function translate(string $language, SearchRequest $request)
     {
-        $word = $request->get('word');
+        $language = $this->getLanguage($language);
+
+        $word = $request->get('query');
 
         $sentence = intval($request->get('sentence'));
+
+        $cards = $this->cardRepository->search($language, $word, (bool)$sentence);
 
         $sql = 'select t.id,
                             MATCH (t.value) AGAINST (? IN NATURAL LANGUAGE MODE) as score
@@ -107,7 +117,7 @@ class WordService
                                 or t.value = ?
                                 )
                             and t.sentence = ?
-                            and w.deleted_at is null 
+                           -- and w.deleted_at is null 
                             and (w.is_public = 1 or (w.is_public = 0 and w.creator_id = ?))
                             and w.language_id = ?
                             order by score desc';
@@ -122,42 +132,52 @@ class WordService
             $language->getId(),
         ];
 
-        $stmt = app('em')->getConnection()->prepare($sql);
-        $stmt->execute($params);
-        $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+       // $stmt = app('em')->getConnection()->prepare($sql);
+       // $stmt->execute($params);
+       // $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
         $result = [];
 
-        if ($ids) {
-            $translates = $ids ? $this->translateRepository->searchByIds($ids) : [];
-            /** @var Translate $translate */
-            foreach ($translates as $translate) {
-                /** @var Card $card */
-                $card = $this->cardRepository->findOneBy([
-                    'translate' => $translate
-                ]);
-                if ($card !== null) {
-                    $result[] = $card->toDTO();
-                }
-            }
+        //if ($ids) {
+        //    $translates = $ids ? $this->translateRepository->searchByIds($ids) : [];
+        //    /** @var Translate $translate */
+        //    foreach ($translates as $translate) {
+        //        /** @var Card $card */
+        //        $card = $this->cardRepository->findOneBy(
+        //            [
+        //                'translate' => $translate,
+        //            ]
+        //        );
+        //        if ($card !== null) {
+        //            $result[] = $card->toDTO();
+        //        }
+        //    }
+        //}
+
+        foreach ($cards as $card) {
+            $result[] = $card->toDTO();
         }
         return $result;
     }
 
-    public function getTranslates(Word $word): array
+    public function getTranslates(int $word): array
     {
-        return $this->translateRepository->searchByIds([$word->getId()]);
+        return $this->translateRepository->searchByIds([$word]);
     }
 
-    public function getSentences(Language $language): array
+    public function getSentences(string $language): array
     {
+        $language = $this->getLanguage($language);
+
         $result = [];
 
         /** @var Card[] $cards */
-        $cards = $this->cardRepository->findBy([
-            'language' => $language,
-            'type' => 1
-        ]);
+        $cards = $this->cardRepository->findBy(
+            [
+                'language' => $language,
+                'type' => 1,
+            ]
+        );
 
         foreach ($cards as $card) {
             $result[] = $card->toDTO();

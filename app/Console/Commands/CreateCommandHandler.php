@@ -16,48 +16,32 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateCommandHandler extends GeneratorCommand
 {
-    /**
-     * @var string
-     */
     protected $name = 'createCommandHandler';
 
-    /**
-     * @var string
-     */
-    private $domain;
+    private ?string $domain;
 
-    /**
-     * @var string
-     */
-    protected $commandHandlerPath = 'Application/Handler/Command';
+    protected string $commandHandlerPath = 'Application/Handler/Command';
 
-    /**
-     * @var string
-     */
     protected $type = 'CommandHandler';
 
-    /**
-     * @inheritDoc
-     */
     protected function getStub()
     {
         return __DIR__ . '/Stubs/custom-command-handler.stub';
     }
 
-    /**
-     * @param string $rootNamespace
-     *
-     * @return string
-     */
     protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
     }
 
-    /**
-     * @return bool|void|null
-     * @throws FileNotFoundException
-     */
+    protected function getArguments(): array
+    {
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
+        ];
+    }
+
     public function handle(): void
     {
         $name = $this->getNameInput();
@@ -76,17 +60,6 @@ class CreateCommandHandler extends GeneratorCommand
             'name'   => "{$name}Interface",
             'domain' => $this->domain
         ]);
-    }
-
-    /**
-     * @return array
-     */
-    public function getArguments(): array
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the class'],
-            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
-        ];
     }
 
     /**

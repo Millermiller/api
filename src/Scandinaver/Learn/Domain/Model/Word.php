@@ -6,8 +6,7 @@ namespace Scandinaver\Learn\Domain\Model;
 use DateTime;
 use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Shared\Contract\Collection;
+use Doctrine\Common\Collections\Collection;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -15,9 +14,9 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-class Word implements JsonSerializable, UrlRoutable
+class Word implements UrlRoutable
 {
-    private $id;
+    private int $id;
 
     private string $word;
 
@@ -27,15 +26,19 @@ class Word implements JsonSerializable, UrlRoutable
 
     private int $isPublic;
 
+    private ?string $morph;
+
+    private ?float $frequency;
+
     private DateTime $createdAt;
 
     private ?DateTime $updatedAt;
 
-    private $creator;
-
-    private Language $language;
+    private ?User $creator;
 
     private $cards;
+
+    private Collection $translates;
 
     public function getValue(): string
     {
@@ -48,7 +51,7 @@ class Word implements JsonSerializable, UrlRoutable
     }
 
     /**
-     * @return Card[]
+     * @return Collection | Card[]
      */
     public function getCards(): Collection
     {
@@ -64,12 +67,6 @@ class Word implements JsonSerializable, UrlRoutable
             'sentence' => $this->sentence,
             'is_public' => $this->isPublic,
             'creator' => $this->creator,
-            'language' => [
-                'name' => $this->language->getLabel(),
-                'label' => $this->language->getLabel(),
-                'flag' => config('app.SITE').$this->language->getFlag(),
-                'letter' => $this->language->getName(),
-            ]
         ];
     }
 
@@ -109,13 +106,39 @@ class Word implements JsonSerializable, UrlRoutable
         $this->creator = $creator;
     }
 
-    public function setLanguage(Language $language): void
-    {
-        $this->language = $language;
-    }
-
     public static function getRouteKeyName(): string
     {
         return 'id';
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @return Collection | Translate[]
+     */
+    public function getTranslates(): Collection
+    {
+        return $this->translates;
+    }
+
+    public function addTranslate(Translate $translate): void
+    {
+        if (!$this->translates->contains($translate)) {
+            $this->translates->add($translate);
+            $translate->setWord($this);
+        }
+    }
+
+    public function getSentence(): ?int
+    {
+        return $this->sentence;
+    }
+
+    public function getIsPublic(): int
+    {
+        return $this->isPublic;
     }
 }

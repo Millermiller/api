@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -14,14 +13,14 @@ use Scandinaver\Shared\Contract\Query;
  */
 class GetExamplesForCardQuery implements Query
 {
-    private Card $card;
+    private int $card;
 
-    public function __construct(Card $card)
+    public function __construct(int $card)
     {
         $this->card = $card;
     }
 
-    public function getCard(): Card
+    public function getCard(): int
     {
         return $this->card;
     }

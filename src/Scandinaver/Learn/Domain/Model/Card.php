@@ -3,9 +3,12 @@
 
 namespace Scandinaver\Learn\Domain\Model;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Events\TranslateUpdated;
+use Scandinaver\Learn\Domain\Events\WordUpdated;
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\User\Domain\Model\User;
 
@@ -24,9 +27,9 @@ class Card extends AggregateRoot
 
     private ?User $creator;
 
-    private \DateTime $createdAt;
+    private DateTime $createdAt;
 
-    private \DateTime $updatedAt;
+    private DateTime $updatedAt;
 
     private Collection $assets;
 
@@ -60,6 +63,25 @@ class Card extends AggregateRoot
         $this->translate = $translate;
     }
 
+    public function setWordValue(string $value): void
+    {
+        if ($this->word->getValue() !== $value) {
+            $this->pushEvent(new WordUpdated($this->word, $value));
+        }
+
+        $this->word->setValue($value);
+    }
+
+
+    public function setTranslateValue($value)
+    {
+        if ($this->translate->getValue() !== $value) {
+            $this->pushEvent(new TranslateUpdated($this->translate, $value));
+        }
+
+        $this->translate->setValue($value);
+    }
+
     public function setCreator(User $creator): void
     {
         $this->creator = $creator;
@@ -79,7 +101,7 @@ class Card extends AggregateRoot
     {
         return new CardDTO($this);
     }
-    
+
     public function isFavourite(): bool
     {
         return $this->favourite;
@@ -135,5 +157,20 @@ class Card extends AggregateRoot
     public function clearExamples()
     {
         $this->examples->clear();
+    }
+
+    public function setType(int $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
     }
 }

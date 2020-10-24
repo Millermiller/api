@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Repositories\Language;
+namespace Tests\Unit\Repositories\Language;
 
 use Doctrine\ORM\EntityManager;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
@@ -25,7 +25,7 @@ class LanguageRepositoryTest extends TestCase
      */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +38,7 @@ class LanguageRepositoryTest extends TestCase
    public function testGetByName()
    {
        /** @var Language $language */
-       $language = entity(Language::class)->create();
+       $language = entity(Language::class)->create(['name' => 'is']);
 
        $this->assertInstanceOf( Language::class, $this->repository->getByName($language->getName()));
    }

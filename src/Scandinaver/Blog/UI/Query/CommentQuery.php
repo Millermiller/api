@@ -19,4 +19,9 @@ class CommentQuery implements Query
     {
         $this->id = $id;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

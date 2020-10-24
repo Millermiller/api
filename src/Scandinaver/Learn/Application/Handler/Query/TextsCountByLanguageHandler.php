@@ -16,7 +16,6 @@ class TextsCountByLanguageHandler implements TextsCountByLanguageHandlerInterfac
 {
     public function __construct()
     {
-
     }
 
     /**

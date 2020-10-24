@@ -15,7 +15,6 @@ class PlansHandler implements PlansHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

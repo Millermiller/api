@@ -13,8 +13,16 @@ use Scandinaver\Shared\Contract\Query;
  */
 class AssetsCountQuery implements Query
 {
-    public function __construct()
-    {
 
+    private string $language;
+
+    public function __construct(string $language)
+    {
+        $this->language = $language;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
     }
 }

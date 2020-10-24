@@ -15,13 +15,11 @@ class UpdateDescriptionHandler implements UpdateDescriptionHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $command UpdateDescriptionCommand
+     * @param  UpdateDescriptionCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

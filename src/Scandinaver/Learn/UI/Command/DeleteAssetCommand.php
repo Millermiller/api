@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -14,14 +13,15 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeleteAssetCommand implements Command
 {
-    private Asset $asset;
 
-    public function __construct(Asset $asset)
+    private int $asset;
+
+    public function __construct(int $asset)
     {
         $this->asset = $asset;
     }
 
-    public function getAsset(): Asset
+    public function getAsset(): int
     {
         return $this->asset;
     }

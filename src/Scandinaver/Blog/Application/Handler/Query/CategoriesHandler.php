@@ -19,14 +19,13 @@ class CategoriesHandler implements CategoriesHandlerInterface
 
     public function __construct(CategoryService $service)
     {
-
         $this->service = $service;
     }
 
     /**
      * @param  CategoriesQuery
      *
-     * @inheritDoc
+     * @return array
      */
     public function handle($query)
     {

@@ -15,6 +15,5 @@ class AudioCountQuery implements Query
 {
     public function __construct()
     {
-
     }
 }

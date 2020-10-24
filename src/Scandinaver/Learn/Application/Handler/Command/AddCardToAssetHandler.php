@@ -28,9 +28,11 @@ class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
     public function handle($command): void
     {
         $card = $this->cardService->addCardToAsset(
-            $command->getUser(), $command->getLanguage(), $command->getCard(), $command->getAsset()
+            $command->getUser(),
+            $command->getLanguage(),
+            $command->getCard(),
+            $command->getAsset()
         );
-
-        event(new CardAdded($command->getUser(), $card));
+        // event(new CardAdded($command->getUser(), $card));
     }
 }

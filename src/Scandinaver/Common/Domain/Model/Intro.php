@@ -4,26 +4,26 @@
 namespace Scandinaver\Common\Domain\Model;
 
 use DateTime;
-use JsonSerializable;
+use Scandinaver\Shared\AggregateRoot;
 
 /**
  * Class Intro
  *
  * @package Scandinaver\Common\Domain\Model
  */
-class Intro implements JsonSerializable
+class Intro extends AggregateRoot
 {
     private int $id;
 
     private string $page;
 
-    private string $element = 'undefined';
+    private string $target = 'undefined';
 
-    private ?string $intro = null;
+    private ?string $content = null;
 
     private string $position;
 
-    private string $tooltipclass;
+    private string $tooltipClass;
 
     private int $sort;
 
@@ -53,26 +53,6 @@ class Intro implements JsonSerializable
         $this->page = $page;
     }
 
-    public function getElement(): ?string
-    {
-        return $this->element;
-    }
-
-    public function setElement(string $element): void
-    {
-        $this->element = $element;
-    }
-
-    public function getIntro(): ?string
-    {
-        return $this->intro;
-    }
-
-    public function setIntro(string $intro): void
-    {
-        $this->intro = $intro;
-    }
-
     public function getPosition(): ?string
     {
         return $this->position;
@@ -85,12 +65,12 @@ class Intro implements JsonSerializable
 
     public function getTooltipclass(): ?string
     {
-        return $this->tooltipclass;
+        return $this->tooltipClass;
     }
 
-    public function setTooltipclass(string $tooltipclass): void
+    public function setTooltipclass(string $tooltipClass): void
     {
-        $this->tooltipclass = $tooltipclass;
+        $this->tooltipClass = $tooltipClass;
     }
 
     public function getSort(): ?int
@@ -103,19 +83,33 @@ class Intro implements JsonSerializable
         $this->sort = $sort;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize()
+    public function toDTO(): IntroDTO
     {
-        return [
-            'id' => $this->id,
-            'page' => $this->page,
-            'element' => $this->element,
-            'intro' => $this->intro,
-            'position' => $this->position,
-            'tooltipClass' => '',
-            'sort' => $this->sort,
-        ];
+        return new IntroDTO($this);
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): void
+    {
+        $this->content = $content;
+    }
+
+    public function getTarget(): string
+    {
+        return $this->target;
+    }
+
+    public function setTarget(string $target): void
+    {
+        $this->target = $target;
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
     }
 }

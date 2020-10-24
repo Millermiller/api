@@ -10,12 +10,14 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see \Scandinaver\Translate\Application\Handler\Command\UpdateDescriptionHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\UpdateDescriptionHandler
  */
 class UpdateDescriptionCommand implements Command
 {
-    public function __construct()
-    {
+    private int $text;
 
+    public function __construct(int $text)
+    {
+        $this->text = $text;
     }
 }

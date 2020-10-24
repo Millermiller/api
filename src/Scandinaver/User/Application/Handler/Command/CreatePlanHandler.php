@@ -15,11 +15,10 @@ class CreatePlanHandler implements CreatePlanHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param  CreatePlanCommand $command
+     * @param  CreatePlanCommand  $command
      *
      * @inheritDoc
      */

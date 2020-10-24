@@ -19,4 +19,6 @@ interface CardRepositoryInterface extends BaseRepositoryInterface
     public function getByLanguage(Language $language): array;
 
     public function getSentences(Language $language): array;
+
+    public function search(Language $language, string $word, bool $sentence);
 }

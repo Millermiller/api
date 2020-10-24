@@ -16,7 +16,7 @@ interface SentenceAssetRepositoryInterface
 {
     public function getFirstAsset(Language $language, int $type): Asset;
 
-    public function getNextAsset(Asset $asset, Language $language): Asset;
+    public function getNextAsset(Asset $asset): Asset;
 
-    public function getLastAsset(Language $language, int $type): Asset;
+    public function getLastAsset(Language $language, int $type): ?Asset;
 }

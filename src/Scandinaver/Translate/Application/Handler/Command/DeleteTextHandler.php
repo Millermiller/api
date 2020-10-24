@@ -15,13 +15,11 @@ class DeleteTextHandler implements DeleteTextHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $command DeleteTextCommand
+     * @param  DeleteTextCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

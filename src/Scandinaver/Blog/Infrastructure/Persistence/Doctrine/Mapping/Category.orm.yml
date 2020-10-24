@@ -1,52 +1,43 @@
 Scandinaver\Blog\Domain\Model\Category:
-    type: entity
-    table: category
-    indexes:
-        name:
-            columns:
-                - name
+  type: entity
+  table: category
+  indexes:
+    name:
+      columns:
+        - name
+  id:
     id:
-        id:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
-        name:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: false
-            precision: 0
-        createdAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: created_at
-        updatedAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: updated_at
-    oneToMany:
-        posts:
-            targetEntity: Scandinaver\Blog\Domain\Model\Post
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: category
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
-    lifecycleCallbacks: {  }
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    name:
+      type: string
+      scale: 0
+      length: 255
+      unique: false
+      nullable: false
+      precision: 0
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: created_at
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+  lifecycleCallbacks: {  }

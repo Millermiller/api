@@ -1,52 +1,52 @@
 Scandinaver\User\Domain\Model\OauthAuthCode:
-    type: entity
-    table: oauth_auth_codes
+  type: entity
+  table: oauth_auth_codes
+  id:
     id:
-        id:
-            type: string
-            scale: 0
-            length: 100
-            unique: false
-            nullable: false
-            precision: 0
-            id: true
-    fields:
-        userId:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            column: user_id
-        clientId:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-            column: client_id
-        scopes:
-            type: text
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-        revoked:
-            type: boolean
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
-        expiresAt:
-            type: datetime
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-            column: expires_at
-    lifecycleCallbacks: {  }
+      type: string
+      scale: 0
+      length: 100
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+  fields:
+    userId:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      column: user_id
+    clientId:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      column: client_id
+    scopes:
+      type: text
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+    revoked:
+      type: boolean
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+    expiresAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: expires_at
+  lifecycleCallbacks: {  }

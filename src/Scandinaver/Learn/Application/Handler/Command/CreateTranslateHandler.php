@@ -24,7 +24,6 @@ class CreateTranslateHandler implements CreateTranslateHandlerInterface
     /**
      * @param  CreateTranslateCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

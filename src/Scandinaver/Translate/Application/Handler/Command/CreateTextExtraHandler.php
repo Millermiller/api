@@ -15,13 +15,11 @@ class CreateTextExtraHandler implements CreateTextExtraHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**
-     * @param $command CreateTextExtraCommand
+     * @param  CreateTextExtraCommand  $command
      *
-     * @inheritDoc
      */
     public function handle($command): void
     {

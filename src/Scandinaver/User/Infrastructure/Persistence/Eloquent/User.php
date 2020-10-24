@@ -33,11 +33,12 @@ use Scandinaver\Translate\Infrastructure\Persistence\Eloquent\TextResult;
 class User extends Authenticatable
 {
 
-    use Notifiable, HasApiTokens;
+    use HasApiTokens;
+    use Notifiable;
 
-    const ROLE_ADMIN = 1;
+    public const ROLE_ADMIN = 1;
 
-    const ROLE_USER = 0;
+    public const ROLE_USER = 0;
 
     protected $table = 'users';
 

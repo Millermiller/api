@@ -28,7 +28,11 @@ class AddWordAndTranslateHandler implements AddWordAndTranslateHandlerInterface
      */
     public function handle($command): void
     {
-        $this->wordService->create(config('app.lang'), $command->getWord(), $command->getIssentence(),
-            $command->getTranslate());
+        $this->wordService->create(
+            config('app.lang'),
+            $command->getWord(),
+            $command->getIssentence(),
+            $command->getTranslate()
+        );
     }
 } 

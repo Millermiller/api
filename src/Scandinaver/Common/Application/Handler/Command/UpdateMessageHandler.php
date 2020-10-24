@@ -15,7 +15,6 @@ class UpdateMessageHandler implements UpdateMessageHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

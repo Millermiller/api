@@ -10,12 +10,11 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see \Scandinaver\Translate\Application\Handler\Command\CreateTextExtraHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\CreateTextExtraHandler
  */
 class CreateTextExtraCommand implements Command
 {
     public function __construct()
     {
-
     }
 }

@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\CreatePostHandlerInterface;
+use Scandinaver\Blog\Domain\Model\PostDTO;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Command\CreatePostCommand;
 
@@ -22,12 +23,12 @@ class CreatePostHandler implements CreatePostHandlerInterface
     }
 
     /**
-     * @param  CreatePostCommand
+     * @param  CreatePostCommand  $command
      *
-     * @inheritDoc
+     * @return PostDTO
      */
-    public function handle($command): void
+    public function handle($command): PostDTO
     {
-        $this->blogService->create($command->getData());
+        return $this->blogService->create($command->getUser(), $command->getData());
     }
 } 

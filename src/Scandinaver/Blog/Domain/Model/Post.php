@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
@@ -18,7 +19,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class Post extends AggregateRoot
 {
-    private int $id;
+    private ?int $id;
 
     private string $title;
 
@@ -43,6 +44,11 @@ class Post extends AggregateRoot
     private Category $category;
 
     private Language $language;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @return Collection|Comment[]
@@ -125,5 +131,43 @@ class Post extends AggregateRoot
     public function getCommentStatus(): int
     {
         return $this->commentStatus;
+    }
+
+    public function addComment(Comment $comment)
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+           // $this->pullEvents(new CommentAdded($this, $comment));
+        }
+    }
+
+    public function setStatus(int $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function setCommentStatus(int $commentStatus): void
+    {
+        $this->commentStatus = $commentStatus;
+    }
+
+    public function setViews(int $views): void
+    {
+        $this->views = $views;
+    }
+
+    public function delete()
+    {
+        //  $this->pushEvent(PostDeleted());
+    }
+
+    public function getAnonse(): ?string
+    {
+        return $this->anonse;
+    }
+
+    public function setAnonse(?string $anonse): void
+    {
+        $this->anonse = $anonse;
     }
 }

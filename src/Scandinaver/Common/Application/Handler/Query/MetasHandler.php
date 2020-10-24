@@ -15,7 +15,6 @@ class MetasHandler implements MetasHandlerInterface
 {
     public function __construct()
     {
-
     }
 
     /**

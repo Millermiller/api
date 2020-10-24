@@ -21,8 +21,7 @@ class LanguageService
     public function __construct(
         LanguageRepositoryInterface $languageRepository,
         AssetRepositoryInterface $assetRepository
-    )
-    {
+    ) {
         $this->languageRepository = $languageRepository;
         $this->assetRepository = $assetRepository;
     }

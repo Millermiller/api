@@ -14,19 +14,19 @@ use Scandinaver\Shared\Contract\Query;
  */
 class GetAssetsByTypeQuery implements Query
 {
-    private Language $language;
+    private string $languageId;
 
     private int $type;
 
-    public function __construct(Language $language, int $type)
+    public function __construct(string $languageId, int $type)
     {
-        $this->language = $language;
+        $this->languageId = $languageId;
         $this->type = $type;
     }
 
-    public function getLanguage(): Language
+    public function getLanguage(): string
     {
-        return $this->language;
+        return $this->languageId;
     }
 
     public function getType(): int
