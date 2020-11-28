@@ -1,11 +1,16 @@
 <?php
 
 
-namespace Scandinaver\Common\Infrastructure;
+namespace Scandinaver\Common\Infrastructure\Service;
 
 use Illuminate\Support\Facades\Redis;
 use Scandinaver\Common\Domain\Contract\RedisInterface;
 
+/**
+ * Class LaravelRedis
+ *
+ * @package Scandinaver\Common\Infrastructure\Service
+ */
 class LaravelRedis implements RedisInterface
 {
 

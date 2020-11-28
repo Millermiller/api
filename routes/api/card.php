@@ -5,3 +5,4 @@ Route::post('/{language}/card/{card}/{asset}', 'App\Http\Controllers\Learn\CardC
 Route::delete('/{language}/card/{card}/{asset}', 'App\Http\Controllers\Learn\CardController@destroy')->name('delete-card-from-asset');
 Route::get('/{language}/translate', 'App\Http\Controllers\Learn\CardController@search');
 Route::put('/card/{card}', 'App\Http\Controllers\Learn\CardController@update');
+Route::post('/{language}/wordfile', 'App\Http\Controllers\Learn\CardController@uploadSentences');

@@ -9,12 +9,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class Role
  *
- * @package Scandinaver\User\Domain\Model
+ * @package Scandinaver\RBAC\Domain\Model
  */
 class Role extends AggregateRoot
 {
@@ -24,7 +23,7 @@ class Role extends AggregateRoot
 
     private string $slug;
 
-    private string $description;
+    private ?string $description;
 
     private DateTime $createdAt;
 
@@ -61,12 +60,12 @@ class Role extends AggregateRoot
     }
 
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -86,7 +85,7 @@ class Role extends AggregateRoot
             throw new Exception('Permission not assigned');
         }
 
-        $this->permissions->remove($permission);
+        $this->permissions->removeElement($permission);
     }
 
     public function hasPermission(Permission $permission): bool

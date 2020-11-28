@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Scandinaver\Common\Infrastructure;
+namespace Scandinaver\Common\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class CommonServiceProvider
  *
- * @package Scandinaver\Common\Infrastructure
+ * @package Scandinaver\Common\Application\Providers
  */
 class CommonServiceProvider extends ServiceProvider
 {

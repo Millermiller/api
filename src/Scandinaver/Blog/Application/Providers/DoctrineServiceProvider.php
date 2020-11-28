@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Blog\Infrastructure;
+namespace Scandinaver\Blog\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -15,7 +15,11 @@ use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\CategoryRepository;
 use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\CommentRepository;
 use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
 
-
+/**
+ * Class DoctrineServiceProvider
+ *
+ * @package Scandinaver\Blog\Application\Providers
+ */
 class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()

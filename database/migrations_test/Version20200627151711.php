@@ -196,6 +196,44 @@ class Version20200627151711 extends AbstractMigration
                     created_at VARCHAR(255),
                     updated_at VARCHAR(255)
                     )');
+
+        $this->addSql(
+            'CREATE TABLE role (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    name VARCHAR(255), 
+                    slug VARCHAR(255),
+                    description VARCHAR(255),
+                    created_at VARCHAR(255),
+                    updated_at VARCHAR(255)
+                    )');
+
+        $this->addSql(
+            'CREATE TABLE permission (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    name VARCHAR(255), 
+                    slug VARCHAR(255),
+                    description VARCHAR(255),
+                    created_at VARCHAR(255),
+                    updated_at VARCHAR(255)
+                    )');
+
+        $this->addSql(
+            'CREATE TABLE role_permission (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    role_id VARCHAR(255), 
+                    permission_id VARCHAR(255))');
+
+        $this->addSql(
+            'CREATE TABLE user_permission (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    user_id VARCHAR(255), 
+                    permission_id VARCHAR(255))');
+
+        $this->addSql(
+            'CREATE TABLE user_role (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    user_id VARCHAR(255), 
+                    role_id VARCHAR(255))');
     }
 
     /**

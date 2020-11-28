@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Translate\Infrastructure;
+namespace Scandinaver\Translate\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
@@ -11,6 +11,11 @@ use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\ResultRepository;
 use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\TextRepository;
 
+/**
+ * Class DoctrineServiceProvider
+ *
+ * @package Scandinaver\Translate\Application\Providers
+ */
 class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()

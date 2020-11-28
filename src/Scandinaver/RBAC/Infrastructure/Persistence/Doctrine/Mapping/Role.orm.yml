@@ -1,4 +1,4 @@
-Scandinaver\User\Domain\Model\Role:
+Scandinaver\RBAC\Domain\Model\Role:
   type: entity
   table: role
   id:
@@ -51,7 +51,7 @@ Scandinaver\User\Domain\Model\Role:
           on: create
   manyToMany:
     permissions:
-      targetEntity: Scandinaver\User\Domain\Model\Permission
+      targetEntity: Scandinaver\RBAC\Domain\Model\Permission
       joinTable:
         name: role_permission
         joinColumns:
@@ -62,6 +62,6 @@ Scandinaver\User\Domain\Model\Role:
             referencedColumnName: id
       cascade: { }
       fetch: EAGER
-      orphanRemoval: true
+      orphanRemoval: false
       orderBy: null
   lifecycleCallbacks: {  }

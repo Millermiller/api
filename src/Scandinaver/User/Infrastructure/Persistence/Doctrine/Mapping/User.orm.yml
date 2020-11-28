@@ -176,6 +176,32 @@ Scandinaver\User\Domain\Model\User:
             referencedColumnName: id
             onDelete: CASCADE
       orderBy: null
+    roles:
+      targetEntity:  Scandinaver\RBAC\Domain\Model\Role
+      cascade: { }
+      fetch: EAGER
+      joinTable:
+        name: user_role
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          role_id:
+            referencedColumnName: id
+      orderBy: null
+    permissions:
+      targetEntity: Scandinaver\RBAC\Domain\Model\Permission
+      cascade: { }
+      fetch: EAGER
+      joinTable:
+        name: user_permission
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          permission_id:
+            referencedColumnName: id
+      orderBy: null
     #texts:
     #    targetEntity: Scandinaver\Translate\Domain\Model\Text
     #    cascade: {  }
@@ -210,7 +236,7 @@ Scandinaver\User\Domain\Model\User:
       cascade:
         - persist
       fetch: LAZY
-      mappedBy: user
+      mappedBy: owner
       inversedBy: null
       joinColumns:
         id:

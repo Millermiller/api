@@ -4,9 +4,9 @@
 namespace Scandinaver\RBAC\Domain\Exceptions;
 
 
-class RoleNotFoundException extends \Exception
+class PermissionNotFoundException extends \Exception
 {
     protected $code = '404';
 
-    protected $message = 'Role not found';
+    protected $message = 'Permission not found';
 }

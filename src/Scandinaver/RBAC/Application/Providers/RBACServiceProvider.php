@@ -18,6 +18,11 @@ class RBACServiceProvider extends ServiceProvider
     {
         /** COMMAND **/
         $this->app->bind(
+            'AttachPermissionToRoleHandlerInterface',
+            'Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleHandler'
+        );
+
+        $this->app->bind(
             'CreatePermissionHandlerInterface',
             'Scandinaver\RBAC\Application\Handler\Command\CreatePermissionHandler'
         );
@@ -35,6 +40,11 @@ class RBACServiceProvider extends ServiceProvider
         $this->app->bind(
             'DeleteRoleHandlerInterface',
             'Scandinaver\RBAC\Application\Handler\Command\DeleteRoleHandler'
+        );
+
+        $this->app->bind(
+            'DetachPermissionFromRoleHandlerInterface',
+            'Scandinaver\RBAC\Application\Handler\Command\DetachPermissionFromRoleHandler'
         );
 
         $this->app->bind(

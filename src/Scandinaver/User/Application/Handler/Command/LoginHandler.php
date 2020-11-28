@@ -7,7 +7,7 @@ use Scandinaver\User\Domain\Contract\Command\LoginHandlerInterface;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\Domain\Model\User;
-use Scandinaver\User\UI\Query\LoginCommand;
+use Scandinaver\User\UI\Command\LoginCommand;
 
 /**
  * Class LoginHandler

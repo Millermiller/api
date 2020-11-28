@@ -1,13 +1,17 @@
 <?php
 
 
-namespace Scandinaver\User\Infrastructure;
+namespace Scandinaver\User\Application\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Scandinaver\User\Domain\Model\User;
 
-
+/**
+ * Class AuthServiceProvider
+ *
+ * @package Scandinaver\User\Application\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     public function boot()

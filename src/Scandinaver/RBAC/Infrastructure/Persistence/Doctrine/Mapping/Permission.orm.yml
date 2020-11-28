@@ -1,4 +1,4 @@
-Scandinaver\User\Domain\Model\Permission:
+Scandinaver\RBAC\Domain\Model\Permission:
   type: entity
   table: permission
   id:

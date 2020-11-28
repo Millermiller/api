@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Reader\Infrastructure;
+namespace Scandinaver\Reader\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -10,7 +10,7 @@ use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
 /**
  * Class CustomServiceProvider
  *
- * @package Scandinaver\Reader\Infrastructure
+ * @package Scandinaver\Reader\Application\Providers
  */
 class CustomServiceProvider extends ServiceProvider
 {

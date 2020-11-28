@@ -17,6 +17,7 @@ use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
 use Scandinaver\Learn\UI\Command\CreateCardCommand;
 use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
 use Scandinaver\Learn\UI\Command\UpdateCardCommand;
+use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
 use Scandinaver\Shared\CommandBus;
 use Scandinaver\Shared\QueryBus;
 
@@ -92,5 +93,12 @@ class CardController extends Controller
         $words = $this->wordService->translate($language, $request);
 
         return response()->json($words);
+    }
+
+    public function uploadSentences(string $languageId, Request $request)
+    {
+        $file = $request->file('file');
+
+        return $this->execute(new UploadCsvSentencesCommand($languageId, $file), JsonResponse::HTTP_CREATED);
     }
 }

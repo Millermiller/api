@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Common\Infrastructure;
+namespace Scandinaver\Common\Infrastructure\Service;
 
 use App\Helpers\Auth;
 use Exception;
@@ -10,6 +10,11 @@ use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Log;
 use Scandinaver\User\Domain\Model\User;
 
+/**
+ * Class Logger
+ *
+ * @package Scandinaver\Common\Infrastructure\Service
+ */
 class Logger implements LoggerInterface
 {
     use LoggerTrait;

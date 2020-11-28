@@ -21,7 +21,7 @@ class RebuildEventsProvider extends GeneratorCommand
 
     private ?string $domain;
 
-    protected string $serviceProviderPath = 'Infrastructure';
+    protected string $serviceProviderPath = 'Application/Providers';
 
     protected $type = 'Event service provider';
 
@@ -79,7 +79,7 @@ class RebuildEventsProvider extends GeneratorCommand
     {
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        return "{$path}src/Scandinaver/{$this->domain}/Infrastructure/{$name}.php";
+        return "{$path}src/Scandinaver/{$this->domain}/Application/Providers/{$name}.php";
     }
 
     protected function getNamespace($name): string
@@ -97,7 +97,7 @@ class RebuildEventsProvider extends GeneratorCommand
             'DummyNamespace',
         ], [
             $class,
-            "{$this->getDefaultNamespace($name)}\\$this->domain\\Infrastructure",
+            "{$this->getDefaultNamespace($name)}\\$this->domain\\Application\\Providers",
         ], $stub);
     }
 }

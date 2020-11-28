@@ -11,23 +11,23 @@ use Scandinaver\Shared\DTO;
  *
  * @package Scandinaver\RBAC\Domain\Model
  */
-class RoleDTO extends DTO
+class PermissionDTO extends DTO
 {
 
-    private Role $role;
+    private Permission $permission;
 
-    public function __construct(Role $role)
+    public function __construct(Permission $permission)
     {
-        $this->role = $role;
+        $this->permission = $permission;
     }
 
     public function jsonSerialize()
     {
         return [
-            'id' => $this->role->getId(),
-            'title' => $this->role->getName(),
-            'slug' => $this->role->getSlug(),
-            'description' => $this->role->getDescription(),
+            'id' => $this->permission->getId(),
+            'title' => $this->permission->getName(),
+            'slug' => $this->permission->getSlug(),
+            'description' => $this->permission->getDescription(),
         ];
     }
 }

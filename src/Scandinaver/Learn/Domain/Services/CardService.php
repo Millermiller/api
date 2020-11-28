@@ -5,6 +5,8 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Learn\Domain\Model\{Card, Example, Translate, Word};
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
@@ -15,6 +17,7 @@ use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
 use Scandinaver\User\Domain\Model\User;
+use Storage;
 
 /**
  * Class CardService
@@ -237,5 +240,62 @@ class CardService
 
             $this->cardRepository->save($card);
         }
+    }
+    
+    public function uploadCsvSentences(string $language, UploadedFile $file)
+    {
+        $language = $this->getLanguage($language);
+
+        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+        Storage::disk('sentences')->put($filename, file_get_contents($file));
+
+        $path = Storage::disk('sentences')->path($filename);
+
+        if (!file_exists($path)) {
+            throw new \Exception('File not exist', 500);
+        }
+
+        $handle = fopen($path, "r");
+        if (!$handle) {
+            throw new \Exception('Cant open file', 500);
+        }
+
+
+        while(!feof($handle))
+        {
+            $data = fgetcsv($handle, 0, ';');
+            $orig = $data[0];
+            $translateValue = $data[1];
+
+            $isWordExist = $this->wordRepository->findOneBy([
+                'word' => $orig
+            ]);
+
+            if ($isWordExist) {
+                continue;
+            }
+
+            $word = new Word();
+            $word->setSentence(1);
+            $word->setValue($orig);
+            $word->setIsPublic(1);
+
+            $translate = new Translate();
+            $translate->setValue($translateValue);
+            $translate->setSentence(1);
+            $translate->setLanguage($language);
+            $translate->setWord($word);
+
+            $card = new Card();
+            $card->setLanguage($language);
+            $card->setWord($word);
+            $card->setTranslate($translate);
+            $card->setType(1);
+
+            $this->cardRepository->save($card);
+        }
+
+        fclose($handle);
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Scandinaver\Common\Infrastructure;
+namespace Scandinaver\Common\Infrastructure\Service;
 
 use Psr\Container\ContainerInterface;
 
 /**
  * Class Container
  *
- * @package Scandinaver\Common\Infrastructure
+ * @package Scandinaver\Common\Infrastructure\Service
  */
 class Container implements ContainerInterface
 {

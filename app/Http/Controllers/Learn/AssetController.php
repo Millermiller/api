@@ -160,11 +160,6 @@ class AssetController extends Controller
         return $this->execute(new AddWordAndTranslateCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
-    public function uploadSentences()
-    {
-        // TODO: импорт предложений Excel
-    }
-
     public function changeAsset(int $assetId, Request $request): JsonResponse
     {
         return $this->execute(new UpdateAssetCommand(Auth::user(), $assetId, $request->toArray()));

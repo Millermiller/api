@@ -6,8 +6,12 @@ namespace Scandinaver\RBAC\Domain\Services;
 
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
+use Scandinaver\RBAC\Domain\Exceptions\PermissionDublicateException;
+use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
+use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
+use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
-use Scandinaver\RBAC\Domain\Model\{Permission, Role, RoleDTO};
+use Scandinaver\RBAC\Domain\Model\{Permission, PermissionDTO, Role, RoleDTO};
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -35,58 +39,118 @@ class RBACService
         $this->roleRepository = $roleRepository;
     }
 
+
+    public function getAllRoles(): array
+    {
+        $result = [];
+        $roles = $this->roleRepository->all();
+
+        /** @var Role $role */
+        foreach ($roles as $role) {
+            $result[] = $role->toDTO();
+        }
+
+        return $result;
+    }
+
+    public function getAllPermissions(): array
+    {
+        $result = [];
+        $permissions = $this->permissionRepository->all();
+
+        /** @var Permission $permission */
+        foreach ($permissions as $permission) {
+            $result[] = $permission->toDTO();
+        }
+
+        return $result;
+    }
+
     public function createRole(array $data): RoleDTO
     {
-        $role = new Role();
-        $role->setName($data['name']);
-        $role->setSlug($data['slug']);
-        $role->setDescription($data['description']);
+        $role = RoleFactory::build($data);
+
+        $isDublicate = $this->roleRepository->findOneBy(
+            [
+                'slug' => $data['slug'],
+            ]
+        );
+
+        if ($isDublicate !== null) {
+            throw new RoleDublicateException();
+        }
 
         $this->roleRepository->save($role);
 
         return $role->toDTO();
     }
 
-    public function updateRole(Role $role, array $data)
+    public function updateRole(int $id, array $data)
     {
+        $role = $this->getRole($id);
+
         $this->roleRepository->update($role, $data);
     }
 
-    public function deleteRole(Role $role): void
+    public function deleteRole(int $id): void
     {
+        $role = $this->getRole($id);
+
         $role->delete();
 
         $this->roleRepository->delete($role);
     }
 
-    public function createPermission(array $data)
+    public function createPermission(array $data): PermissionDTO
     {
-        $permission = new Permission();
+        $permission = PermissionFactory::build($data);
+
+        $isDublicate = $this->permissionRepository->findOneBy(
+            [
+                'slug' => $data['slug'],
+            ]
+        );
+
+        if ($isDublicate !== null) {
+            throw new PermissionDublicateException();
+        }
 
         $this->permissionRepository->save($permission);
+
+        return $permission->toDTO();
     }
 
-    public function updatePermission(Permission $permission, array $data)
+    public function updatePermission(int $id, array $data)
     {
+        $permission = $this->getPermission($id);
+
         $this->permissionRepository->update($permission, $data);
     }
 
-    public function deletePermission(Permission $permission): void
+    public function deletePermission(int $id): void
     {
+        $permission = $this->getPermission($id);
+
         $permission->delete();
 
         $this->permissionRepository->delete($permission);
     }
 
-    public function attachPermissionToRole(Role $role, Permission $permission)
+    public function attachPermissionToRole(int $roleId, int $permissionId)
     {
+        $role = $this->getRole($roleId);
+        $permission = $this->getPermission($permissionId);
+
         $role->attachPermission($permission);
 
         $this->roleRepository->save($role);
     }
 
-    public function detachPermissionFromRole(Role $role, Permission $permission)
+    public function detachPermissionFromRole(int $roleId, int $permissionId)
     {
+        $role = $this->getRole($roleId);
+        $permission = $this->getPermission($permissionId);
+
         $role->detachPermission($permission);
 
         $this->roleRepository->save($role);
@@ -118,5 +182,27 @@ class RBACService
         $user->detachRole($role);
 
         $this->userRepository->save($user);
+    }
+
+    private function getRole(int $id): Role {
+
+        /** @var Role $role */
+        $role = $this->roleRepository->find($id);
+        if ($role === null) {
+            throw new RoleNotFoundException();
+        }
+
+        return $role;
+    }
+
+    private function getPermission(int $id): Permission {
+
+        /** @var Permission $permission */
+        $permission = $this->permissionRepository->find($id);
+        if ($permission === null) {
+            throw new PermissionNotFoundException();
+        }
+
+        return $permission;
     }
 }

@@ -6,12 +6,11 @@ namespace Scandinaver\RBAC\Domain\Model;
 
 use DateTime;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class Permission
  *
- * @package Scandinaver\User\Domain\Model
+ * @package Scandinaver\RBAC\Domain\Model
  */
 class Permission extends AggregateRoot
 {
@@ -21,7 +20,7 @@ class Permission extends AggregateRoot
 
     private string $slug;
 
-    private string $description;
+    private ?string $description;
 
     private DateTime $createdAt;
 
@@ -32,13 +31,43 @@ class Permission extends AggregateRoot
         return $this->id;
     }
 
-    public function toDTO(): DTO
+    public function toDTO(): PermissionDTO
     {
-        // TODO: Implement toDTO() method.
+        return new PermissionDTO($this);
     }
 
     public function delete()
     {
         // TODO: Implement delete() method.
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 }

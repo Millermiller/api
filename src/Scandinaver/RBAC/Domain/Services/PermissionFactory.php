@@ -4,17 +4,22 @@
 namespace Scandinaver\RBAC\Domain\Services;
 
 
-use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\RBAC\Domain\Model\Permission;
 
-class RoleFactory
+/**
+ * Class PermissionFactory
+ *
+ * @package Scandinaver\RBAC\Domain\Services
+ */
+class PermissionFactory
 {
-    public static function build(array $data): Role
+    public static function build(array $data): Permission
     {
-        $role = new Role();
-        $role->setName($data['title']);
-        $role->setSlug($data['slug']);
-        $role->setDescription($data['description']);
+        $permission = new Permission();
+        $permission->setName($data['title']);
+        $permission->setSlug($data['slug']);
+        $permission->setDescription($data['description']);
 
-        return $role;
+        return $permission;
     }
 }

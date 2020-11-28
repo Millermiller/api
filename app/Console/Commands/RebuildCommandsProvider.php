@@ -23,7 +23,7 @@ class RebuildCommandsProvider extends GeneratorCommand
 
     private ?string $domain;
 
-    protected string $serviceProviderPath = 'Infrastructure';
+    protected string $serviceProviderPath = 'Application/Providers';
 
     protected $type = 'Service provider';
 
@@ -87,9 +87,6 @@ class RebuildCommandsProvider extends GeneratorCommand
         $serviceprovider = Str::replaceFirst('commands', implode(PHP_EOL.PHP_EOL."        ", $commandBindings), $serviceprovider);
         $serviceprovider = Str::replaceFirst('queryes', implode(PHP_EOL.PHP_EOL."        ", $queryBindings), $serviceprovider);
 
-        //$this->files->put("$rootPath/src/Scandinaver/$this->domain/Infrastructure/qwe.php", $serviceprovider);
-        //$this->files->chmod("$rootPath/src/Scandinaver/$this->domain/Infrastructure/qwe.php", 0777);
-
         $this->files->replace($path, $serviceprovider);
 
         $this->files->chmod($path, 0777);
@@ -101,7 +98,7 @@ class RebuildCommandsProvider extends GeneratorCommand
     {
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        return "{$path}src/Scandinaver/{$this->domain}/Infrastructure/{$name}.php";
+        return "{$path}src/Scandinaver/{$this->domain}/Application/Providers/{$name}.php";
     }
 
     protected function getNamespace($name): string
@@ -119,7 +116,7 @@ class RebuildCommandsProvider extends GeneratorCommand
             'DummyNamespace',
         ], [
             $class,
-            "{$this->getDefaultNamespace($name)}\\$this->domain\\Infrastructure",
+            "{$this->getDefaultNamespace($name)}\\$this->domain\\Application\\Providers",
         ], $stub);
     }
 }

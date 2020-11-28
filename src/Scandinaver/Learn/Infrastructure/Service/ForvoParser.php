@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Learn\Infrastructure;
+namespace Scandinaver\Learn\Infrastructure\Service;
 
 use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
 use Scandinaver\Learn\Domain\Exceptions\AudioFileCantParsedException;
@@ -10,7 +10,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 /**
  * Class ForvoParser
  *
- * @package Scandinaver\Learn\Infrastructure
+ * @package Scandinaver\Learn\Infrastructure\Service
  */
 class ForvoParser implements AudioParserInterface
 {

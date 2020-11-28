@@ -3,8 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
 use Scandinaver\Learn\Domain\Contract\Command\UploadCsvSentencesHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UploadCsvSentencesHandler
@@ -13,16 +15,19 @@ use Scandinaver\Learn\Domain\Contract\Command\UploadCsvSentencesHandlerInterface
  */
 class UploadCsvSentencesHandler implements UploadCsvSentencesHandlerInterface
 {
-    public function __construct()
-    {
 
+    private CardService $service;
+
+    public function __construct(CardService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param UploadCsvSentencesCommand $command
+     * @param UploadCsvSentencesCommand|Command $command
      */
-    public function handle($command): void
+    public function handle($command)
     {
-        // TODO: Implement handle() method.
+        $this->service->uploadCsvSentences($command->getLanguage(), $command->getFile());
     }
 } 

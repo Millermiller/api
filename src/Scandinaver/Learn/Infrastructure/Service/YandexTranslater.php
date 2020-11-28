@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Learn\Infrastructure;
+namespace Scandinaver\Learn\Infrastructure\Service;
 
 
 use GuzzleHttp\Client;
@@ -11,6 +11,11 @@ use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
 use Scandinaver\Learn\Domain\Model\Word;
 
+/**
+ * Class YandexTranslater
+ *
+ * @package Scandinaver\Learn\Infrastructure\Service
+ */
 class YandexTranslater implements TranslaterInterface
 {
     private Client $client;

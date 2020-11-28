@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Common\Infrastructure;
+namespace Scandinaver\Common\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -11,7 +11,7 @@ use Scandinaver\Common\Domain\Contract\RedisInterface;
 /**
  * Class CustomServiceProvider
  *
- * @package Scandinaver\Common\Infrastructure
+ * @package Scandinaver\Common\Application\Providers
  */
 class CustomServiceProvider extends ServiceProvider
 {

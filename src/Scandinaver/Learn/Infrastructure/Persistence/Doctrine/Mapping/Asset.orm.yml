@@ -129,6 +129,16 @@ Scandinaver\Learn\Domain\Model\Asset:
         language_id:
           referencedColumnName: id
       orphanRemoval: false
+    owner:
+      targetEntity: Scandinaver\User\Domain\Model\User
+      fetch: LAZY
+      inversedBy: assets
+      joinColumns:
+        owner_id:
+          referencedColumnName: id
+      orphanRemoval: false
+      orderBy: null
+      nullable: true
   oneToMany:
     results:
       targetEntity: Scandinaver\Learn\Domain\Model\Result
@@ -139,14 +149,4 @@ Scandinaver\Learn\Domain\Model\Asset:
       inversedBy: null
       orphanRemoval: false
       orderBy: null
-  oneToOne:
-    owner:
-      targetEntity: Scandinaver\User\Domain\Model\User
-      fetch: LAZY
-      joinColumns:
-        owner_id:
-          referencedColumnName: id
-      orphanRemoval: false
-      orderBy: null
-      nullable: true
   lifecycleCallbacks: {  }

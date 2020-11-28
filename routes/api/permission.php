@@ -4,32 +4,32 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(
     [
-        'as' => 'role:',
+        'as' => 'permission:',
         'namespace' => 'App\Http\Controllers\RBAC',
         'middleware' => [],
     ],
     function () {
         Route::get(
-            '/role',
+            '/permission',
             [
                 'as' => 'all',
-                'uses' => 'RoleController@index',
+                'uses' => 'PermissionController@index',
             ]
         );
 
         Route::get(
-            '/role/{id}',
+            '/permission/{id}',
             [
                 'as' => 'show',
-                'uses' => 'RoleController@show',
+                'uses' => 'PermissionController@show',
             ]
         );
 
         Route::get(
-            '/role/search',
+            '/permission/search',
             [
                 'as' => 'search',
-                'uses' => 'RoleController@search',
+                'uses' => 'PermissionController@search',
             ]
         );
     }
@@ -37,33 +37,33 @@ Route::group(
 
 Route::group(
     [
-        'as' => 'role:',
+        'as' => 'permission:',
         'namespace' => 'App\Http\Controllers\RBAC',
         'middleware' => ['auth:api'],
     ],
     function () {
 
         Route::delete(
-            '/role/{id}',
+            '/permission/{id}',
             [
                 'as' => 'delete',
-                'uses' => 'RoleController@destroy',
+                'uses' => 'PermissionController@destroy',
             ]
         );
 
         Route::post(
-            '/role',
+            '/permission',
             [
                 'as' => 'create',
-                'uses' => 'RoleController@store',
+                'uses' => 'PermissionController@store',
             ]
         );
 
         Route::put(
-            '/role/{id}',
+            '/permission/{id}',
             [
                 'as' => 'update',
-                'uses' => 'RoleController@update',
+                'uses' => 'PermissionController@update',
             ]
         );
     }

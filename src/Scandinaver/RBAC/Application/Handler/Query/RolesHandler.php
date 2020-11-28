@@ -3,8 +3,10 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\RolesQuery;
 use Scandinaver\RBAC\Domain\Contract\Query\RolesHandlerInterface;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class RolesHandler
@@ -13,16 +15,20 @@ use Scandinaver\RBAC\Domain\Contract\Query\RolesHandlerInterface;
  */
 class RolesHandler implements RolesHandlerInterface
 {
-    public function __construct()
-    {
+    private RBACService $service;
 
+    public function __construct(RBACService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param RolesQuery $query
+     * @param  RolesQuery|Query  $query
+     *
+     * @return array
      */
-    public function handle($query)
+    public function handle(Query $query): array
     {
-        // TODO: Implement handle() method.
+        return $this->service->getAllRoles();
     }
 } 

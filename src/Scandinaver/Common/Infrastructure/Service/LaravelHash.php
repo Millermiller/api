@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Common\Infrastructure;
+namespace Scandinaver\Common\Infrastructure\Service;
 
 use Hash;
 use Scandinaver\Common\Domain\Contract\HashInterface;
@@ -9,7 +9,7 @@ use Scandinaver\Common\Domain\Contract\HashInterface;
 /**
  * Class LaravelHash
  *
- * @package Scandinaver\Common\Infrastructure
+ * @package Scandinaver\Common\Infrastructure\Service
  */
 class LaravelHash implements HashInterface
 {

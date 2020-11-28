@@ -1,6 +1,7 @@
 <?php
 
 
+
 Route::group(
     [
         'as' => 'post:',

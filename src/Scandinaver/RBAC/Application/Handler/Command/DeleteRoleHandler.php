@@ -3,8 +3,10 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\DeleteRoleCommand;
 use Scandinaver\RBAC\Domain\Contract\Command\DeleteRoleHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteRoleHandler
@@ -13,16 +15,19 @@ use Scandinaver\RBAC\Domain\Contract\Command\DeleteRoleHandlerInterface;
  */
 class DeleteRoleHandler implements DeleteRoleHandlerInterface
 {
-    public function __construct()
-    {
 
+    private RBACService $service;
+
+    public function __construct(RBACService  $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param DeleteRoleCommand $command
+     * @param DeleteRoleCommand|Command $command
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->deleteRole($command->getId());
     }
 } 

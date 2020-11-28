@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Reader\Infrastructure;
+namespace Scandinaver\Reader\Infrastructure\Service;
 
 use Aws\Credentials\Credentials;
 use Aws\Polly\PollyClient;
@@ -17,7 +17,7 @@ use Storage;
 /**
  * Class AmazonReader
  *
- * @package Scandinaver\Reader\Infrastructure
+ * @package Scandinaver\Reader\Infrastructure\Service
  */
 class AmazonReader implements ReaderInterface
 {

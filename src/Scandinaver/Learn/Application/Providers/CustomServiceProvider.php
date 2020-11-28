@@ -1,16 +1,17 @@
 <?php
 
 
-namespace Scandinaver\Learn\Infrastructure;
+namespace Scandinaver\Learn\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
+use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
 
 /**
  * Class CustomServiceProvider
  *
- * @package Scandinaver\Learn\Infrastructure
+ * @package Scandinaver\Learn\Application\Providers
  */
 class CustomServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,12 @@ class CustomServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             TranslaterInterface::class,
-            'Scandinaver\Learn\Infrastructure\YandexTranslater'
+            'Scandinaver\Learn\Infrastructure\Service\YandexTranslater'
+        );
+
+        $this->app->bind(
+            AudioParserInterface::class,
+            'Scandinaver\Learn\Infrastructure\Service\ForvoParser'
         );
     }
 }

@@ -3,8 +3,10 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\RBAC\Domain\Contract\Command\DeletePermissionHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeletePermissionHandler
@@ -13,16 +15,19 @@ use Scandinaver\RBAC\Domain\Contract\Command\DeletePermissionHandlerInterface;
  */
 class DeletePermissionHandler implements DeletePermissionHandlerInterface
 {
-    public function __construct()
-    {
 
+    private RBACService $service;
+
+    public function __construct(RBACService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param DeletePermissionCommand $command
+     * @param DeletePermissionCommand|Command $command
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->deletePermission($command->getId());
     }
 } 

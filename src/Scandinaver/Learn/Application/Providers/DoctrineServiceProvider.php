@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Learn\Infrastructure;
+namespace Scandinaver\Learn\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -39,7 +39,7 @@ use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\WordRepository;
 /**
  * Class DoctrineServiceProvider
  *
- * @package Scandinaver\Learn\Infrastructure
+ * @package Scandinaver\Learn\Application\Providers
  */
 class DoctrineServiceProvider extends ServiceProvider
 {

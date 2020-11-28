@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Translate\Infrastructure;
+namespace Scandinaver\Translate\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Class CustomServiceProvider
  *
- * @package Scandinaver\Translate\Infrastructure
+ * @package Scandinaver\Translate\Application\Providers
  */
 class CustomServiceProvider extends ServiceProvider
 {

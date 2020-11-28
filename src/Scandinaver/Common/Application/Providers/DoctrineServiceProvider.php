@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Common\Infrastructure;
+namespace Scandinaver\Common\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -9,8 +9,6 @@ use Laravel\Passport\Passport;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
-use Scandinaver\Common\Domain\Contract\HashInterface;
-use Scandinaver\Common\Domain\Contract\RedisInterface;
 use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
@@ -24,6 +22,11 @@ use Scandinaver\Common\Infrastructure\Persistence\Doctrine\LanguageRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\LogRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\MessageRepository;
 
+/**
+ * Class DoctrineServiceProvider
+ *
+ * @package Scandinaver\Common\Application\Providers
+ */
 class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()

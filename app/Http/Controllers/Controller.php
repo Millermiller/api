@@ -54,7 +54,7 @@ class Controller extends BaseController
         try {
             return response()->json($bus->execute($data), $code);
         } catch (\Exception $exception) {
-            return new JsonResponse($exception->getMessage(), $exception->getCode());
+            return new JsonResponse($exception->getMessage(), $exception->getCode() === 0 ? 500 : $exception->getCode());
         }
     }
 }

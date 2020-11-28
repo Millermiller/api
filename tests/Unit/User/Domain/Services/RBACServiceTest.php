@@ -1,15 +1,37 @@
 <?php
 
-namespace Tests\User\Domain\Services;
+namespace Tests\Unit\User\Domain\Services;
 
+use Scandinaver\User\Domain\Model\RoleDTO;
 use Scandinaver\User\Domain\Services\RBACService;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class RBACServiceTest extends TestCase
 {
 
+    /**
+     * @var RBACService
+     */
+    private $service;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->service = app()->make('Scandinaver\User\Domain\Services\RBACService');
+    }
+
     public function testCreateRole()
     {
+        $data = [
+            'name' => 'TEST NAME',
+            'slug' => 'TEST SLUG',
+            'description' => 'TEST DESCRIPTION'
+        ];
+
+        $role = $this->service->createRole($data);
+
+        static::assertInstanceOf(RoleDTO::class, $role);
     }
 
     public function testDeleteRole()

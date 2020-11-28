@@ -3,8 +3,11 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Exceptions\PermissionDublicateException;
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\Domain\Contract\Command\CreatePermissionHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreatePermissionHandler
@@ -13,16 +16,21 @@ use Scandinaver\RBAC\Domain\Contract\Command\CreatePermissionHandlerInterface;
  */
 class CreatePermissionHandler implements CreatePermissionHandlerInterface
 {
-    public function __construct()
-    {
 
+    private RBACService $service;
+
+    public function __construct(RBACService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param CreatePermissionCommand $command
+     * @param  CreatePermissionCommand|Command  $command
+     *
+     * @throws PermissionDublicateException
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->createPermission($command->getData());
     }
 } 

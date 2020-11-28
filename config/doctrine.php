@@ -33,6 +33,7 @@ return [
                 base_path('src/Scandinaver/Common/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Common\Domain\Model',
                 base_path('src/Scandinaver/Blog/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Blog\Domain\Model',
                 base_path('src/Scandinaver/Learn/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Learn\Domain\Model',
+                base_path('src/Scandinaver/RBAC/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\RBAC\Domain\Model',
             ],
             'repository'    => Doctrine\ORM\EntityRepository::class,
             'proxies'       => [

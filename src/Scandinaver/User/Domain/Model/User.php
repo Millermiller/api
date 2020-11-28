@@ -6,8 +6,6 @@ namespace Scandinaver\User\Domain\Model;
 use Avatar;
 use Carbon\Carbon;
 use DateTime;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -18,19 +16,20 @@ use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
-use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\RBAC\Domain\Model\Permission;
+use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\User\Domain\Contract\Permissions;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
-use Doctrine\ORM\Mapping\{JoinTable, ManyToMany};
+use Doctrine\Common\Collections\{Collection};
 
 /**
  * Class User
  *
  * @package Scandinaver\User\Domain\Model
  */
-class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable
+class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable, Permissions
 {
     use Authenticatable;
     use CanResetPassword;
@@ -41,7 +40,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     public const ROLE_ADMIN = 1;
     public const ROLE_USER = 0;
 
-    private $id;
+    private ?int $id;
 
     private string $login;
 
@@ -71,13 +70,23 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     private Plan $plan;
 
-    private $assets;
+    private Collection $assets;
 
-    private $puzzles;
+    private Collection $puzzles;
 
-    private $texts;
+    private Collection $texts;
 
-    private $posts;
+    private Collection $posts;
+
+    /**
+     * @var Collection | Role[]
+     */
+    private Collection $roles;
+
+    /**
+     * @var Collection | Permission[]
+     */
+    private Collection $permissions;
 
     public function getKey(): int
     {
@@ -290,11 +299,69 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         return false;
     }
 
-    /**
-     * @param  mixed  $id
-     */
-    public function setId($id): void
+    public function attachRole(Role $role): void
     {
-        $this->id = $id;
+        if ($this->roles->contains($role)) {
+            throw new Exception('Role already assigned');
+        }
+
+        $this->roles->add($role);
+    }
+
+    public function detachRole(Role $role): void
+    {
+        if (!$this->roles->contains($role)) {
+            throw new Exception('Role not found');
+        }
+
+        $this->roles->removeElement($role);
+    }
+
+    public function allow(Permission $permission): void
+    {
+        if ($this->permissions->contains($permission)) {
+            throw new Exception('Permission already assigned');
+        }
+
+        $this->permissions->add($permission);
+    }
+
+    public function deny(Permission $permission): void
+    {
+        if (!$this->permissions->contains($permission)) {
+            throw new Exception('Permission not assigned');
+        }
+
+        $this->permissions->removeElement($permission);
+    }
+
+    public function hasRole(string $role): bool
+    {
+        foreach ($this->roles as $role) {
+            if ($role->getSlug() === $role) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function can(string $permission): bool
+    {
+        foreach ($this->permissions as $permission) {
+            if ($permission->getSlug() === $permission) {
+                return true;
+            }
+        }
+
+        foreach ($this->roles as $role) {
+            foreach ($role->getPermissions() as $permission) {
+                if ($permission->getSlug() === $permission) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

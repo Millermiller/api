@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Scandinaver\Puzzle\Infrastructure;
+namespace Scandinaver\Puzzle\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
@@ -9,6 +9,11 @@ use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine\PuzzleRepository;
 
+/**
+ * Class DoctrineServiceProvider
+ *
+ * @package Scandinaver\Puzzle\Application\Providers
+ */
 class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()

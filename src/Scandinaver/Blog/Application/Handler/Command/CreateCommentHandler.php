@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\CreateCommentHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\CommentDTO;
 use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
@@ -24,7 +25,10 @@ class CreateCommentHandler implements CreateCommentHandlerInterface
     }
 
     /**
-     * @param  CreateCommentCommand $command
+     * @param  CreateCommentCommand  $command
+     *
+     * @return CommentDTO
+     * @throws PostNotFoundException
      */
     public function handle($command): CommentDTO
     {

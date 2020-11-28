@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use Scandinaver\Common\Infrastructure\Container;
+use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\WordNotFoundException;
 use Scandinaver\Learn\Domain\Model\Word;

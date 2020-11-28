@@ -9,7 +9,7 @@ use Scandinaver\Shared\DTO;
 /**
  * Class RoleDTO
  *
- * @package Scandinaver\User\Domain\Model
+ * @package Scandinaver\RBAC\Domain\Model
  */
 class RoleDTO extends DTO
 {
@@ -23,6 +23,14 @@ class RoleDTO extends DTO
 
     public function jsonSerialize()
     {
-        // TODO: Implement jsonSerialize() method.
+        return [
+            'id' => $this->role->getId(),
+            'title' => $this->role->getName(),
+            'slug' => $this->role->getSlug(),
+            'description' => $this->role->getDescription(),
+            'permissions' => $this->role->getPermissions()->map(
+                fn($permission) => $permission->toDTO()
+            )->toArray(),
+        ];
     }
 }

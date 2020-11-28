@@ -14,8 +14,23 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DetachPermissionFromRoleCommand implements Command
 {
-    public function __construct()
-    {
+    private int $roleId;
 
+    private int $permissionId;
+
+    public function __construct(int $roleId, int $permissionId)
+    {
+        $this->roleId = $roleId;
+        $this->permissionId = $permissionId;
+    }
+
+    public function getRoleId(): int
+    {
+        return $this->roleId;
+    }
+
+    public function getPermissionId(): int
+    {
+        return $this->permissionId;
     }
 }

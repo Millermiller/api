@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Scandinaver\Learn\Infrastructure;
+namespace Scandinaver\Learn\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class LearnServiceProvider
  *
- * @package Scandinaver\Learn\Infrastructure
+ * @package Scandinaver\Learn\Application\Providers
  */
 class LearnServiceProvider extends ServiceProvider
 {

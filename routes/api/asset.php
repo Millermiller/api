@@ -1,5 +1,7 @@
 <?php
 
+
+
 Route::get('/{language}/asset/{asset}', 'App\Http\Controllers\Learn\AssetController@show')->name('asset.show');
 Route::post('/{language}/asset',        'App\Http\Controllers\Learn\AssetController@store')->name('asset.store');
 Route::put('/{language}/asset/{asset}', 'App\Http\Controllers\Learn\AssetController@update')->name('asset.update');
@@ -18,7 +20,6 @@ Route::post('/audio', 'App\Http\Controllers\Learn\AssetController@uploadAudio');
 Route::get('/{language}/words', 'App\Http\Controllers\Learn\AssetController@getWords')->name('words');
 Route::get('/{language}/sentences', 'App\Http\Controllers\Learn\AssetController@getSentences')->name('sentences');
 Route::get('/{language}/personal',       'App\Http\Controllers\Learn\AssetController@getPersonal')->name('personal');
-Route::post('/wordfile', 'App\Http\Controllers\Learn\AssetController@uploadSentences');
 Route::post('/card', 'App\Http\Controllers\Learn\AssetController@addPair');
 Route::get('/{language}/assets-mobile', 'App\Http\Controllers\Learn\AssetController@assetsMobile')
     ->middleware(['auth:api'])

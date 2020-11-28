@@ -3,8 +3,10 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
 use Scandinaver\RBAC\Domain\Contract\Command\AttachPermissionToRoleHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class AttachPermissionToRoleHandler
@@ -13,16 +15,19 @@ use Scandinaver\RBAC\Domain\Contract\Command\AttachPermissionToRoleHandlerInterf
  */
 class AttachPermissionToRoleHandler implements AttachPermissionToRoleHandlerInterface
 {
-    public function __construct()
-    {
 
+    private RBACService $service;
+
+    public function __construct(RBACService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param AttachPermissionToRoleCommand $command
+     * @param AttachPermissionToRoleCommand|Command $command
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->attachPermissionToRole($command->getRoleId(), $command->getPermissionId());
     }
 } 
