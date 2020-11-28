@@ -1,0 +1,67 @@
+Scandinaver\User\Domain\Model\Role:
+  type: entity
+  table: role
+  id:
+    id:
+      type: integer
+      scale: 0
+      length: null
+      unique: false
+      nullable: false
+      precision: 0
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    name:
+      type: string
+      length: 50
+      unique: true
+      nullable: false
+    slug:
+      type: string
+      length: 50
+      unique: true
+      nullable: false
+    description:
+      type: text
+      unique: false
+      nullable: true
+    updatedAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+    createdAt:
+      type: datetime
+      scale: 0
+      length: null
+      unique: false
+      nullable: true
+      precision: 0
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+  manyToMany:
+    permissions:
+      targetEntity: Scandinaver\User\Domain\Model\Permission
+      joinTable:
+        name: role_permission
+        joinColumns:
+          role_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          permission_id:
+            referencedColumnName: id
+      cascade: { }
+      fetch: EAGER
+      orphanRemoval: true
+      orderBy: null
+  lifecycleCallbacks: {  }
