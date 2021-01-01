@@ -25,7 +25,7 @@ class MessageService
     {
         $result = [];
         /** @var Message[] $messages */
-        $messages = $this->messageRepository->all();
+        $messages = $this->messageRepository->findAll();
         foreach ($messages as $message) {
             $result[] = $message->toDTO();
         }

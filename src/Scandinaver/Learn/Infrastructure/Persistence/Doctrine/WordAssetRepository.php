@@ -65,22 +65,4 @@ class WordAssetRepository extends AssetRepository implements WordAssetRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    /**
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function getFirstAsset(Language $language, int $type): Asset
-    {
-        $q = $this->createQueryBuilder('asset');
-
-        return $q->select('a')
-            ->from($this->getEntityName(), 'a')
-            ->where('a.level = :level')
-            ->andWhere($q->expr()->eq('a.language', ':language'))
-            ->setParameter('level', 1)
-            ->setParameter('language', $language)
-            ->getQuery()
-            ->getSingleResult();
-    }
 }

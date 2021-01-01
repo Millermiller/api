@@ -31,20 +31,6 @@ class SentenceAssetRepository extends AssetRepository implements SentenceAssetRe
             ->getResult();
     }
 
-    public function getFirstAsset(Language $language, int $type): Asset
-    {
-        $q = $this->createQueryBuilder('asset');
-
-        return $q->select('a')
-            ->from($this->getEntityName(), 'a')
-            ->where('a.level = :level')
-            ->andWhere($q->expr()->eq('a.language', ':language'))
-            ->setParameter('level', 1)
-            ->setParameter('language', $language)
-            ->getQuery()
-            ->getSingleResult();
-    }
-
     public function getNextAsset(Asset $asset): Asset
     {
         $q = $this->_em->createQueryBuilder();

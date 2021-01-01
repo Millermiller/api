@@ -4,6 +4,7 @@
 namespace Scandinaver\User\Domain\Exceptions;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class UserNotFoundException
@@ -12,5 +13,7 @@ use Exception;
  */
 class UserNotFoundException extends Exception
 {
+    protected $code = JsonResponse::HTTP_UNPROCESSABLE_ENTITY;
 
+    protected $message = 'User not found';
 }

@@ -1,6 +1,6 @@
 Scandinaver\Translate\Domain\Model\Result:
   type: entity
-  table: text_user
+  table: result_text
   indexes:
     user_id:
       columns:

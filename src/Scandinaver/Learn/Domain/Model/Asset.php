@@ -64,7 +64,6 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
      *
      * @param  string    $title
      * @param  int       $basic
-     * @param  int       $type
      * @param  int|null  $favorite
      * @param  Language  $language
      */

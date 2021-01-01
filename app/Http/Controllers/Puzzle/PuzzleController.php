@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Puzzle;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use Exception;
 use Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Scandinaver\Puzzle\UI\Command\CreatePuzzleCommand;
@@ -27,6 +29,13 @@ use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
 class PuzzleController extends Controller
 {
 
+    /**
+     * @param  string  $language
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws Exception
+     */
     public function index(string $language): JsonResponse
     {
         Gate::authorize('view-puzzles');

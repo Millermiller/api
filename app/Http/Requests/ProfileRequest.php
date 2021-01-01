@@ -24,9 +24,9 @@ class ProfileRequest extends FormRequest
         $id = Auth::user()->getKey();
 
         return [
-            'login'    => "required|string|alpha_num|max:255|unique:App\Entities\User,login,$id",
-            'email'    => "required|string|email|max:255|unique:App\Entities\User,email,$id",
-            'password' => 'nullable|string|min:6|confirmed',
+            '_login'    => "required|string|alpha_num|max:255|unique:Scandinaver\User\Domain\Model\User,login",
+            '_email'    => "required|string|email|max:255|unique:Scandinaver\User\Domain\Model\User,email",
+            '_password' => 'nullable|string|min:6|confirmed',
         ];
     }
 

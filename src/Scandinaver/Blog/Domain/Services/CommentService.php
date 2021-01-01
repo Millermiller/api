@@ -50,7 +50,7 @@ class CommentService
         $result = [];
 
         /** @var Comment[] $comments */
-        $comments = $this->commentRepository->all();
+        $comments = $this->commentRepository->findAll();
 
         foreach ($comments as $comment) {
             $result[] = $comment->toDTO();

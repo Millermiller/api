@@ -14,10 +14,6 @@ interface BaseRepositoryInterface extends ObjectRepository
 {
     public function count(array $criteria);
 
-    public function all();
-
-    public function get($id);
-
     public function save(object $data);
 
     public function update(object $entity, array $data);

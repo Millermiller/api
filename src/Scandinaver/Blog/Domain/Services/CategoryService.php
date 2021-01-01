@@ -27,7 +27,7 @@ class CategoryService
     {
         $result = [];
         /** @var Category[] $categories */
-        $categories = $this->categoryRepo->all();
+        $categories = $this->categoryRepo->findAll();
         foreach ($categories as $category) {
             $result[] = $category->toDTO();
         }

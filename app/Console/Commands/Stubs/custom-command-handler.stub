@@ -3,6 +3,7 @@
 
 namespace DummyNamespace;
 
+use Scandinaver\Shared\Contract\Command;
 use DummyCommandNamespace;
 use DummyInterface;
 
@@ -19,7 +20,7 @@ class DummyClass implements DummyClassInterface
     }
 
     /**
-     * @param DummyCommandClass $command
+     * @param DummyCommandClass|Command $command
      */
     public function handle($command): void
     {

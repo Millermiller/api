@@ -34,7 +34,7 @@ class BlogService
         $result = [];
 
         /** @var Post[] $posts */
-        $posts = $this->postRepository->all();
+        $posts = $this->postRepository->findAll();
         foreach ($posts as $post) {
             $result[] = $post->toDTO();
         }

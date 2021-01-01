@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Scandinaver\Common\UI\Command\CreateMetaCommand;
@@ -19,26 +19,56 @@ use Scandinaver\Common\UI\Query\MetasQuery;
  */
 class MetaController extends Controller
 {
+
+    /**
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function index(): JsonResponse
     {
         return $this->execute(new MetasQuery());
     }
 
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function show($id): JsonResponse
     {
         return $this->execute(new MetaQuery($id));
     }
 
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function store(Request $request): JsonResponse
     {
         return $this->execute(new CreateMetaCommand($request->toArray()));
     }
 
+    /**
+     * @param  Request  $request
+     * @param  int      $meta
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function update(Request $request, int $meta): JsonResponse
     {
         return $this->execute(new UpdateMetaCommand($meta, $request->toArray()));
     }
 
+    /**
+     * @param  int  $meta
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function destroy(int $meta): JsonResponse
     {
         return $this->execute(new DeleteMetaCommand($meta));

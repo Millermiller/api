@@ -3,8 +3,11 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;
 use Scandinaver\RBAC\Domain\Contract\Command\UpdatePermissionHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UpdatePermissionHandler
@@ -13,16 +16,21 @@ use Scandinaver\RBAC\Domain\Contract\Command\UpdatePermissionHandlerInterface;
  */
 class UpdatePermissionHandler implements UpdatePermissionHandlerInterface
 {
-    public function __construct()
-    {
 
+    private RBACService $service;
+
+    public function __construct(RBACService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param UpdatePermissionCommand $command
+     * @param  UpdatePermissionCommand|Command  $command
+     *
+     * @throws PermissionNotFoundException
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->updatePermission($command->getId(), $command->getData());
     }
 } 

@@ -13,15 +13,15 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeleteUserCommand implements Command
 {
-    private int $user;
+    private int $id;
 
     public function __construct(int $user)
     {
-        $this->user = $user;
+        $this->id = $user;
     }
 
     public function getUser(): int
     {
-        return $this->user;
+        return $this->id;
     }
 }

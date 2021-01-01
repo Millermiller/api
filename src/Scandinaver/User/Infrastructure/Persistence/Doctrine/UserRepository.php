@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\Infrastructure\Persistence\Doctrine;
 
-use Doctrine\ORM\{NonUniqueResultException, NoResultException, OptimisticLockException, ORMException};
+use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Translate\Domain\Model\Text;
@@ -17,49 +17,6 @@ use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
  */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    public function all(): array
-    {
-        $q = $this->_em->createQueryBuilder();
-
-        return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function get($id)
-    {
-        $q = $this->_em->createQueryBuilder();
-
-        return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->where('u.id = :id')
-            ->setParameter('id', $id)
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getSingleResult();
-    }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function addAsset(User $user, Asset $asset): void
-    {
-        $user->getAssets()->add($asset);
-        //   $asset->getUsers()->add($user);
-
-
-        $this->_em->flush();
-    }
-
     /**
      * @throws ORMException
      * @throws OptimisticLockException

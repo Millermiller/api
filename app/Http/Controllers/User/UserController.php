@@ -4,10 +4,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequest;
+use Exception;
 use Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
 use Scandinaver\User\UI\Command\UpdateUserCommand;
 use Scandinaver\User\UI\Query\UserQuery;
@@ -20,6 +23,11 @@ use Scandinaver\User\UI\Query\UsersQuery;
  */
 class UserController extends Controller
 {
+
+    /**
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function index(): JsonResponse
     {
         Gate::authorize('view-users');
@@ -27,18 +35,42 @@ class UserController extends Controller
         return $this->execute(new UsersQuery());
     }
 
+    /**
+     * @param  int  $userId
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function show(int $userId): JsonResponse
     {
-        Gate::authorize('view-user', $userId);
+        Gate::authorize('show-user', $userId);
 
         return $this->execute(new UserQuery($userId));
     }
 
-    public function store(Request $request)
+    /**
+     * @param  ProfileRequest  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws Exception
+     */
+    public function store(ProfileRequest $request): JsonResponse
     {
         Gate::authorize('create-user');
+
+        $data = $request->toArray();
+
+        return $this->execute(new CreateUserCommand($data));
     }
 
+    /**
+     * @param  Request  $request
+     * @param  int      $userId
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function update(Request $request, int $userId): JsonResponse
     {
         Gate::authorize('update-user', $userId);
@@ -46,6 +78,12 @@ class UserController extends Controller
         return $this->execute(new UpdateUserCommand($userId, $request->toArray()));
     }
 
+    /**
+     * @param  int  $userId
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function destroy(int $userId): JsonResponse
     {
         Gate::authorize('delete-user', $userId);
@@ -53,6 +91,11 @@ class UserController extends Controller
         return $this->execute(new DeleteUserCommand($userId), JsonResponse::HTTP_NO_CONTENT);
     }
 
+    /**
+     * @param  int  $userId
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function active(int $userId)
     {
         Gate::authorize('update-user', $userId);
@@ -64,6 +107,10 @@ class UserController extends Controller
         // return response()->json();
     }
 
+    /**
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function search()
     {
         Gate::authorize('view-users');

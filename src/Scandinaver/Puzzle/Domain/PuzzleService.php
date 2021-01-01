@@ -4,6 +4,7 @@
 namespace Scandinaver\Puzzle\Domain;
 
 use Scandinaver\Common\Domain\Services\LanguageTrait;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Puzzle\Domain\Exception\PuzzleNotFoundException;
 use Scandinaver\Puzzle\Domain\Model\Puzzle;
@@ -37,6 +38,12 @@ class PuzzleService
         $this->puzzleRepository->save($puzzle);
     }
 
+    /**
+     * @param  string  $language
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function allByLanguage(string $language): array
     {
         $language = $this->getLanguage($language);

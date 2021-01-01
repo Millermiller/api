@@ -17,17 +17,22 @@ use Scandinaver\User\Domain\Model\User;
  */
 class TextRepository extends BaseRepository implements TextRepositoryInterface
 {
+
     /**
+     * @param  Language  $language
+     *
+     * @return Text
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getFirstText(Language $language): Text
     {
-        return $this->createQueryBuilder('asset')
-            ->select('a')
+        $q = $this->createQueryBuilder('asset');
+
+        return $q->select('a')
             ->from($this->getEntityName(), 'a')
             ->where('a.level = :level')
-            ->andWhere('a.languageId = :language')
+            ->andWhere($q->expr()->eq('a.language', ':language'))
             ->setParameter('level', 1)
             ->setParameter('language', $language->getId())
             ->getQuery()

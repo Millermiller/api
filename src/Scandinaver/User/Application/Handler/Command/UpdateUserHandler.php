@@ -3,7 +3,9 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\UpdateUserHandlerInterface;
+use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Command\UpdateUserCommand;
 
@@ -22,10 +24,12 @@ class UpdateUserHandler implements UpdateUserHandlerInterface
     }
 
     /**
-     * @param $query UpdateUserCommand
+     * @param $command UpdateUserCommand|Command
+     *
+     * @throws UserNotFoundException
      */
-    public function handle($query): void
+    public function handle($command): void
     {
-        $this->userService->updateUser($query->getUser(), $query->getData());
+        $this->userService->updateUser($command->getUser(), $command->getData());
     }
 } 

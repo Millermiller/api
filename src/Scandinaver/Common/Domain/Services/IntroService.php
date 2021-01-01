@@ -31,7 +31,7 @@ class IntroService
     {
         $result = [];
         /** @var Intro[] $intros */
-        $intros = $this->introRepository->all();
+        $intros = $this->introRepository->findAll();
         foreach ($intros as $intro) {
             $result[] = $intro->toDTO();
         }

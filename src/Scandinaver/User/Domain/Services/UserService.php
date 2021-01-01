@@ -3,28 +3,32 @@
 
 namespace Scandinaver\User\Domain\Services;
 
+use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\User\Domain\Model\Plan;
+use App\Events\{UserDeleted};
 use Auth;
+use Carbon\Carbon;
+use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
-use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
-use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
-use Scandinaver\User\Domain\Model\User;
-use App\Events\{UserDeleted, UserRegistered};
-use Carbon\Carbon;
-use Doctrine\Common\Collections\ArrayCollection;
-use Exception;
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Puzzle\Domain\PuzzleService;
+use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
+use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Translate\Domain\TextService;
+use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
+use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
+use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Model\UserDTO;
 
 /**
  * Class UserService
@@ -34,6 +38,7 @@ use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
  */
 class UserService
 {
+
     use LanguageTrait;
 
     protected AssetService $assetService;
@@ -58,18 +63,21 @@ class UserService
 
     private IntroService $introService;
 
+    private RoleRepositoryInterface $roleRepository;
+
     public function __construct(
-        AssetRepositoryInterface $assetRepository,
-        FavouriteAssetRepositoryInterface $favouriteAssetRepository,
-        PersonalAssetRepositoryInterface $personalAssetRepository,
-        AssetService $assetService,
-        UserRepositoryInterface $userRepository,
-        PlanRepositoryInterface $planRepository,
-        LanguageRepositoryInterface $languageRepository,
-        TextRepositoryInterface $textRepository,
-        TextService $textService,
-        PuzzleService $puzzleService,
-        IntroService $introService
+      AssetRepositoryInterface $assetRepository,
+      FavouriteAssetRepositoryInterface $favouriteAssetRepository,
+      PersonalAssetRepositoryInterface $personalAssetRepository,
+      AssetService $assetService,
+      UserRepositoryInterface $userRepository,
+      PlanRepositoryInterface $planRepository,
+      LanguageRepositoryInterface $languageRepository,
+      TextRepositoryInterface $textRepository,
+      RoleRepositoryInterface $roleRepository,
+      TextService $textService,
+      PuzzleService $puzzleService,
+      IntroService $introService
     ) {
         $this->userRepository = $userRepository;
         $this->planRepository = $planRepository;
@@ -82,11 +90,21 @@ class UserService
         $this->favouriteAssetRepository = $favouriteAssetRepository;
         $this->personalAssetRepository = $personalAssetRepository;
         $this->introService = $introService;
+        $this->roleRepository = $roleRepository;
     }
 
     public function getAll(): array
     {
-        return $this->userRepository->all();
+        $result = [];
+
+        /** @var User[] $users */
+        $users = $this->userRepository->findAll();
+
+        foreach ($users as $user) {
+            $result[] = $user->toDTO();
+        }
+
+        return $result;
     }
 
     public function find($string): array
@@ -95,8 +113,10 @@ class UserService
     }
 
     /**
+     * @param  array  $credentials
+     *
+     * @return User|null
      * @throws UserNotFoundException
-     * @throws Exception
      */
     public function login(array $credentials): ?User
     {
@@ -107,107 +127,127 @@ class UserService
         return \App\Helpers\Auth::user();
     }
 
+    /**
+     * @param  array  $data
+     *
+     * @return User
+     * @throws Exception
+     */
     public function registration(array $data): User
     {
-        $plan = $this->planRepository->get(1);
+        /** @var Plan $plan */
+        $plan = $this->planRepository->find(1);
 
         /** @var Language[] $languages */
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->findAll();
 
         $user = new User();
-        $user->setAssets(new ArrayCollection());
-        $user->setTexts(new ArrayCollection());
-        $user->setLogin($data['login']);
-        $user->setEmail($data['email']);
-        $user->setPassword(bcrypt($data['password']));
+        $user->setLogin($data['_login']);
+        $user->setEmail($data['_email']);
+        $user->setPassword(bcrypt($data['_password']));
         $user->setPlan($plan);
-        $user->setCreatedAt(Carbon::now()->format("Y-m-d H:i:s"));
-        $user = $this->userRepository->save($user);
+        $user->setCreatedAt(Carbon::now());
+        $user->setActive(true);
+        $user->setActiveTo(Carbon::now());
+
+        if (array_key_exists('_roles', $data)) {
+            $roles = $data['_roles'];
+            foreach ($roles as $item) {
+                /** @var Role $role */
+                $role = $this->roleRepository->find($item['_id']);
+                $user->attachRole($role);
+            }
+        }
 
         foreach ($languages as $language) {
             //даем пользователю избранное
-            $favourite = new FavouriteAsset(
-                'Избранное',
-                false,
-                Asset::TYPE_FAVORITES,
-                1,
-                $language
-            );
+            $favourite = new FavouriteAsset($language);
             $favourite = $this->assetRepository->save($favourite);
-            $this->userRepository->addAsset($user, $favourite);
+            $user->addAsset($favourite);
 
             //даем пользователю первый словарь слов
             $firstWordAsset = $this->assetRepository->getFirstAsset(
-                $language,
-                Asset::TYPE_WORDS
+              $language,
+              Asset::TYPE_WORDS
             );
-            $this->userRepository->addAsset($user, $firstWordAsset);
+            $user->addAsset($firstWordAsset);
 
             //даем пользователю первый словарь предложений
             $firstSentencesAsset = $this->assetRepository->getFirstAsset(
-                $language,
-                Asset::TYPE_SENTENCES
+              $language,
+              Asset::TYPE_SENTENCES
             );
-            $this->userRepository->addAsset($user, $firstSentencesAsset);
+            $user->addAsset($firstSentencesAsset);
 
             //даем пользователю первый текст
             $firstText = $this->textRepository->getFirstText($language);
-            $this->userRepository->addText($user, $firstText);
+            $user->addText($firstText);
         }
 
-        event(new UserRegistered($user, $data));
+        $this->userRepository->save($user);
+
+       // event(new UserRegistered($user, $data));
 
         return $user;
     }
 
     public function getState(User $user, string $language): array
     {
-       $language = $this->getLanguage($language);
+        $language = $this->getLanguage($language);
 
         return [
-            'site' => config('app.MAIN_SITE'),
-            'words' => $this->assetService->getAssetsByType(
-                $language->getName(),
-                $user,
-                Asset::TYPE_WORDS
-            ),
-            'sentences' => $this->assetService->getAssetsByType(
-                $language->getName(),
-                $user,
-                Asset::TYPE_SENTENCES
-            ),
-            'favourites' => $this->favouriteAssetRepository->getFavouriteAsset(
-                $language,
-                $user
-            ),
-            'personal' => $this->personalAssetRepository->getCreatedAssets(
-                $language,
-                $user
-            ),
-            'texts' => $this->textService->getTextsForUser(
-                $language->getName(),
-                $user
-            ),
-            'puzzles' => $this->puzzleService->getForUser($language->getName(), $user),
-            'intro' => $this->introService->all(),
-            'sites' => $this->languageRepository->all(),
-            'currentsite' => $this->languageRepository->findOneBy(
-                ['name' => config('app.lang')]
-            ),
-            'domain' => config('app.lang'),
+          'site' => config('app.MAIN_SITE'),
+          'words' => $this->assetService->getAssetsByType(
+            $language->getName(),
+            $user,
+            Asset::TYPE_WORDS
+          ),
+          'sentences' => $this->assetService->getAssetsByType(
+            $language->getName(),
+            $user,
+            Asset::TYPE_SENTENCES
+          ),
+          'favourites' => $this->favouriteAssetRepository->getFavouriteAsset(
+            $language,
+            $user
+          ),
+          'personal' => $this->personalAssetRepository->getCreatedAssets(
+            $language,
+            $user
+          ),
+          'texts' => $this->textService->getTextsForUser(
+            $language->getName(),
+            $user
+          ),
+          'puzzles' => $this->puzzleService->getForUser(
+            $language->getName(),
+            $user
+          ),
+          'intro' => $this->introService->all(),
+          'sites' => $this->languageRepository->findAll(),
+          'currentsite' => $this->languageRepository->findOneBy(
+            ['name' => config('app.lang')]
+          ),
+          'domain' => config('app.lang'),
         ];
     }
 
     public function getInfo(): array
     {
         return [
-            'id' => Auth::user()->getKey(),
-            'login' => Auth::user()->getLogin(),
-            'avatar' => Auth::user()->getAvatar(),
-            'email' => Auth::user()->getEmail(),
-            'active' => Auth::user()->getActive(),
-            'plan' => Auth::user()->getPlan(),
-            'active_to' => Auth::user()->getActiveTo(),
+          'id' => Auth::user()->getKey(),
+          'login' => Auth::user()->getLogin(),
+          'avatar' => Auth::user()->getAvatar(),
+          'email' => Auth::user()->getEmail(),
+          'active' => Auth::user()->getActive(),
+          'plan' => Auth::user()->getPlan(),
+          'active_to' => Auth::user()->getActiveTo(),
+          'roles' => Auth::user()->getRoles()->map(
+            fn($role) => $role->toDTO()
+          )->toArray(),
+          'permissions' => Auth::user()->getAllPermissions()->map(
+            fn($permission) => $permission->toDTO()
+          )->toArray(),
         ];
     }
 
@@ -226,28 +266,87 @@ class UserService
         //Requester::updateForumUser($request, $user->getEmail());
 
         $request['password'] = isset($request['password']) ? bcrypt(
-            $request['password']
+          $request['password']
         ) : $user->getPassword();
 
         $this->userRepository->update($user, $request);
     }
 
-    public function updateUser(User $user, array $data): User
+    /**
+     * @param  int  $id
+     * @param  array  $data
+     *
+     * @return User
+     * @throws UserNotFoundException
+     */
+    public function updateUser(int $id, array $data): User
     {
-        $data['plan'] = $this->planRepository->get($data['plan']['id']);
+        $user = $this->getUser($id);
+
+        $roles = $data['roles'];
+
+        $roleCollection = new ArrayCollection();
+
+        foreach ($roles as $roleData) {
+            $role = $this->roleRepository->find($roleData['id']);
+            $roleCollection->add($role);
+        }
+
+        $user->setRoles($roleCollection);
+
+        $data['plan'] = $this->planRepository->find($data['plan']['id']);
 
         return $this->userRepository->update($user, $data);
     }
 
-    public function delete(User $user): void
+    /**
+     * @param  int  $id
+     *
+     * @return User
+     * @throws UserNotFoundException
+     */
+    private function getUser(int $id): User
     {
+        /** @var User $user */
+        $user = $this->userRepository->find($id);
+        if ($user === null) {
+            throw new UserNotFoundException();
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param  int  $id
+     *
+     * @throws UserNotFoundException
+     */
+    public function delete(int $id): void
+    {
+        /** @var User $user */
+        $user = $this->userRepository->find($id);
+        if ($user === null) {
+            throw new UserNotFoundException();
+        }
+
+        $user->delete();
+
         $this->userRepository->delete($user);
 
-        event(new UserDeleted($user));
+        // event(new UserDeleted($user));
     }
 
-    public function getOne(int $id): User
+    /**
+     * @param  int  $id
+     *
+     * @return UserDTO
+     * @throws UserNotFoundException
+     */
+    public function getOne(int $id): UserDTO
     {
-        return $this->userRepository->get($id);
+        $user = $this->getUser($id);
+
+        return $user->toDTO();
     }
+
 }

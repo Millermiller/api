@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Exception\CategoryDublicateException;
 use Scandinaver\Blog\Domain\Model\CategoryDTO;
 use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateCategoryHandler
@@ -25,7 +26,7 @@ class CreateCategoryHandler implements CreateCategoryHandlerInterface
     }
 
     /**
-     * @param  CreateCategoryCommand  $command
+     * @param  CreateCategoryCommand|Command  $command
      *
      * @return CategoryDTO
      * @throws CategoryDublicateException

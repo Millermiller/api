@@ -21,21 +21,14 @@ use Scandinaver\Shared\Contract\EventBusInterface;
 class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 {
 
-    public function all(): array
-    {
-        return $this->findAll();
-    }
-
-    public function get($id)
-    {
-        return $this->find($id);
-    }
-
     /**
+     * @param  object  $object
+     *
+     * @return object
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save(object $object)
+    public function save(object $object): object
     {
         $this->_em->persist($object);
         $this->_em->flush($object);
@@ -45,10 +38,14 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     }
 
     /**
+     * @param         $entity
+     * @param  array  $data
+     *
+     * @return object
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function update($entity, array $data)
+    public function update($entity, array $data): object
     {
         foreach ($data as $key => $value) {
             $key = Inflector::camelize($key);

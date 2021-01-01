@@ -6,6 +6,7 @@ namespace Scandinaver\User\Domain\Model;
 use Avatar;
 use Carbon\Carbon;
 use DateTime;
+use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Exception;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -19,17 +20,17 @@ use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Contract\Permissions;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
-use Doctrine\Common\Collections\{Collection};
 
 /**
  * Class User
  *
  * @package Scandinaver\User\Domain\Model
  */
-class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable, Permissions
+class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable, Permissions
 {
     use Authenticatable;
     use CanResetPassword;
@@ -38,6 +39,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     use UsesPasswordGrant;
 
     public const ROLE_ADMIN = 1;
+
     public const ROLE_USER = 0;
 
     private ?int $id;
@@ -54,9 +56,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     private ?string $restoreLink;
 
-    private int $active;
-
-    private int $role;
+    private bool $active;
 
     private int $assetsOpened = 0;
 
@@ -71,6 +71,8 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     private Plan $plan;
 
     private Collection $assets;
+
+    private Collection $createdAssets;
 
     private Collection $puzzles;
 
@@ -87,6 +89,14 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
      * @var Collection | Permission[]
      */
     private Collection $permissions;
+
+    public function __construct()
+    {
+        $this->assets = new ArrayCollection();
+        $this->texts = new ArrayCollection();
+        $this->roles = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
+    }
 
     public function getKey(): int
     {
@@ -201,21 +211,21 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'login' => $this->login,
-            'email' => $this->email,
-            'active_to' => $this->getActiveTo() ? $this->getActiveTo()
-                ->format(
-                    "Y-m-d H:i:s"
-                ) : null,
-            'plan' => $this->plan,
-            'plan_id' => $this->plan->getId(),
-            'name' => $this->name,
-            'photo' => $this->photo,
-            'assets_opened' => $this->assetsOpened,
-            'assets_created' => $this->assetsCreated,
-            'premium' => $this->isPremium(),
-            'avatar' => $this->getAvatar(),
+          'id' => $this->id,
+          'login' => $this->login,
+          'email' => $this->email,
+          'active_to' => $this->getActiveTo() ? $this->getActiveTo()
+            ->format(
+              "Y-m-d H:i:s"
+            ) : null,
+          'plan' => $this->plan,
+          'plan_id' => $this->plan->getId(),
+          'name' => $this->name,
+          'photo' => $this->photo,
+          'assets_opened' => $this->assetsOpened,
+          'assets_created' => $this->assetsCreated,
+          'premium' => $this->isPremium(),
+          'avatar' => $this->getAvatar(),
         ];
     }
 
@@ -245,15 +255,15 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
             } else {
                 try {
                     $avatar = Image::make(
-                        public_path('/uploads/u/').$this->photo
+                      public_path('/uploads/u/').$this->photo
                     );
                     $avatar->resize(
-                        300,
-                        null,
-                        function ($constraint) {
-                            /** @var Constraint $constraint */
-                            $constraint->aspectRatio();
-                        }
+                      300,
+                      null,
+                      function ($constraint) {
+                          /** @var Constraint $constraint */
+                          $constraint->aspectRatio();
+                      }
                     );
                     $avatar->save(public_path('/uploads/u/a/'.$this->photo));
 
@@ -269,7 +279,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
 
     public function getActive(): bool
     {
-        return (bool)$this->active;
+        return (bool) $this->active;
     }
 
     public function incrementAssetCounter(): void
@@ -299,6 +309,11 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         return false;
     }
 
+    /**
+     * @param  Role  $role
+     *
+     * @throws Exception
+     */
     public function attachRole(Role $role): void
     {
         if ($this->roles->contains($role)) {
@@ -308,6 +323,11 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         $this->roles->add($role);
     }
 
+    /**
+     * @param  Role  $role
+     *
+     * @throws Exception
+     */
     public function detachRole(Role $role): void
     {
         if (!$this->roles->contains($role)) {
@@ -317,6 +337,11 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         $this->roles->removeElement($role);
     }
 
+    /**
+     * @param  Permission  $permission
+     *
+     * @throws Exception
+     */
     public function allow(Permission $permission): void
     {
         if ($this->permissions->contains($permission)) {
@@ -326,6 +351,11 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         $this->permissions->add($permission);
     }
 
+    /**
+     * @param  Permission  $permission
+     *
+     * @throws Exception
+     */
     public function deny(Permission $permission): void
     {
         if (!$this->permissions->contains($permission)) {
@@ -363,5 +393,84 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswo
         }
 
         return false;
+    }
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function getAllPermissions(): Collection
+    {
+        $permissions = $this->permissions;
+
+        foreach ($this->roles as $role) {
+            foreach ($role->getPermissions() as $permission) {
+                if (!$permissions->contains($permission)) {
+                    $permissions->add($permission);
+                }
+            }
+        }
+
+        return $permissions;
+    }
+
+    public function toDTO(): UserDTO
+    {
+        return new UserDTO($this);
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
+    }
+
+    /**
+     * @param  Collection|Role[]  $roles
+     */
+    public function setRoles($roles): void
+    {
+        $this->roles = $roles;
+    }
+
+    /**
+     * @param  bool  $active
+     */
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @param Asset $asset
+     */
+    public function addAsset(Asset $asset): void
+    {
+        if (!$this->assets->contains($asset)) {
+            $this->assets->add($asset);
+        }
+        // $this->pushEvent(AssetAdded);
+    }
+
+    /**
+     * @param  Text  $text
+     */
+    public function addText(Text $text): void
+    {
+        if (!$this->texts->contains($text)) {
+            $this->texts->add($text);
+        }
+        // $this->pushEvent(TextAdded);
     }
 }

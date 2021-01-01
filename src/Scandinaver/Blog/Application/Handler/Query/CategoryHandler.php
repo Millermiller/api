@@ -4,8 +4,10 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\CategoryHandlerInterface;
+use Scandinaver\Blog\Domain\Model\CategoryDTO;
 use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoryQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class CategoryHandler
@@ -23,8 +25,9 @@ class CategoryHandler implements CategoryHandlerInterface
     }
 
     /**
-     * @param CategoryQuery $query
+     * @param  CategoryQuery|Query  $query
      *
+     * @return CategoryDTO
      */
     public function handle($query)
     {

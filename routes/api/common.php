@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/{language}/state', 'App\Http\Controllers\Sub\Frontend\IndexController@state')->name('state');
-Route::get('/user', 'App\Http\Controllers\Sub\Frontend\IndexController@getUser')->name('user-info');
+Route::get('/me', 'App\Http\Controllers\Sub\Frontend\IndexController@getUser')->name('user-info');
 Route::get('/info', 'App\Http\Controllers\Sub\Frontend\IndexController@getInfo')->name('site-info');
 
 Route::post('/feedback',

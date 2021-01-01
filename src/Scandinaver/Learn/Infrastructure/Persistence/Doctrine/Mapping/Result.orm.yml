@@ -1,10 +1,7 @@
 Scandinaver\Learn\Domain\Model\Result:
   type: entity
-  table: asset_user
+  table: result_asset
   indexes:
-    language_id:
-      columns:
-        - language_id
     user_id:
       columns:
         - user_id
@@ -71,16 +68,6 @@ Scandinaver\Learn\Domain\Model\Result:
       inversedBy: null
       joinColumns:
         user_id:
-          referencedColumnName: id
-      orphanRemoval: false
-    language:
-      targetEntity: Scandinaver\Common\Domain\Model\Language
-      cascade: {  }
-      fetch: LAZY
-      mappedBy: null
-      inversedBy: null
-      joinColumns:
-        language_id:
           referencedColumnName: id
       orphanRemoval: false
   lifecycleCallbacks: {  }

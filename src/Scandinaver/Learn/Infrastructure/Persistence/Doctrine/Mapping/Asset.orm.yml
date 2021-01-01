@@ -132,7 +132,7 @@ Scandinaver\Learn\Domain\Model\Asset:
     owner:
       targetEntity: Scandinaver\User\Domain\Model\User
       fetch: LAZY
-      inversedBy: assets
+      inversedBy: createdAssets
       joinColumns:
         owner_id:
           referencedColumnName: id

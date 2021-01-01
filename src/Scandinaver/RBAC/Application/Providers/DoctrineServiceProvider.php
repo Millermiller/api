@@ -5,9 +5,11 @@ namespace Scandinaver\RBAC\Application\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
+use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
-use Scandinaver\RBAC\Domain\Model\{Role, Permission};
+use Scandinaver\RBAC\Domain\Model\{PermissionGroup, Role, Permission};
+use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\PermissionGroupRepository;
 use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\PermissionRepository;
 use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\RoleRepository;
 
@@ -38,6 +40,16 @@ class DoctrineServiceProvider extends ServiceProvider
                     $this->app['em']->getClassMetadata(Permission::class)
                 );
             }
+        );
+
+        $this->app->bind(
+          PermissionGroupRepositoryInterface::class,
+          function () {
+              return new PermissionGroupRepository(
+                $this->app['em'],
+                $this->app['em']->getClassMetadata(PermissionGroup::class)
+              );
+          }
         );
     }
 }

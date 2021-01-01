@@ -25,7 +25,7 @@ class RoleDTO extends DTO
     {
         return [
             'id' => $this->role->getId(),
-            'title' => $this->role->getName(),
+            'name' => $this->role->getName(),
             'slug' => $this->role->getSlug(),
             'description' => $this->role->getDescription(),
             'permissions' => $this->role->getPermissions()->map(

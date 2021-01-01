@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
@@ -37,6 +38,13 @@ class Controller extends BaseController
         $this->queryBus = $queryBus;
     }
 
+    /**
+     * @param  object  $data
+     * @param  int     $code
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     protected function execute(object $data, int $code = 200): JsonResponse
     {
         if ($data instanceof Query) {

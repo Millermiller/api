@@ -24,7 +24,7 @@ class LogsHandler implements LogsHandlerInterface
     public function handle($query)
     {
         /** @var Log[] $logs */
-        $logs = $this->logRepository->all();
+        $logs = $this->logRepository->findAll();
 
         $response = [];
 

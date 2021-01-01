@@ -55,5 +55,25 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-permission', function (User $user, int $userId) {
             return true;
         });
+
+        Gate::define('view-permission-groups', function (User $user) {
+            return true;
+        });
+
+        Gate::define('show-permission-group', function (User $user, int $userId) {
+            return true;
+        });
+
+        Gate::define('create-permission-group', function (User $user) {
+            return true;
+        });
+
+        Gate::define('update-permission-group', function (User $user, int $userId) {
+            return true;
+        });
+
+        Gate::define('delete-permission-group', function (User $user, int $userId) {
+            return true;
+        });
     }
 }

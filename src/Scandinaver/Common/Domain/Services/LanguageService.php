@@ -28,7 +28,7 @@ class LanguageService
 
     public function getLanguagesList(): array
     {
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->findAll();
         $assets = [];
         $response = [];
 

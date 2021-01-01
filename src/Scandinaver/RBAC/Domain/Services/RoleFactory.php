@@ -11,7 +11,7 @@ class RoleFactory
     public static function build(array $data): Role
     {
         $role = new Role();
-        $role->setName($data['title']);
+        $role->setName($data['name']);
         $role->setSlug($data['slug']);
         $role->setDescription($data['description']);
 

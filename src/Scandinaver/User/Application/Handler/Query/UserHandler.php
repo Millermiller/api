@@ -3,9 +3,11 @@
 
 namespace Scandinaver\User\Application\Handler\Query;
 
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Contract\Query\UserHandlerInterface;
+use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
+use Scandinaver\User\Domain\Model\UserDTO;
 use Scandinaver\User\Domain\Services\UserService;
-use Scandinaver\User\Domain\Model\User;
 use Scandinaver\User\UI\Query\UserQuery;
 
 /**
@@ -23,11 +25,12 @@ class UserHandler implements UserHandlerInterface
     }
 
     /**
-     * @param  UserQuery
+     * @param  UserQuery|Query  $query
      *
-     * @return User
+     * @return UserDTO
+     * @throws UserNotFoundException
      */
-    public function handle($query): User
+    public function handle($query): UserDTO
     {
         return $this->userService->getOne($query->getKey());
     }

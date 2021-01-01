@@ -13,7 +13,22 @@ use Scandinaver\Shared\Contract\Command;
  */
 class CreateUserCommand implements Command
 {
-    public function __construct()
+
+    private array $data;
+
+    /**
+     * CreateUserCommand constructor.
+     *
+     * @param  array  $data
+     */
+    public function __construct(array $data)
     {
+        $this->data = $data;
     }
+
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
 }

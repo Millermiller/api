@@ -15,8 +15,6 @@ use Scandinaver\User\Domain\Model\{Plan, User};
  */
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {
-    public function addAsset(User $user, Asset $asset): void;
-
     public function addText(User $user, Text $text): void;
 
     public function setPlan(User $user, Plan $plan): void;

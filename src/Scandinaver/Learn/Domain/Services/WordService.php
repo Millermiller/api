@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
@@ -54,7 +55,8 @@ class WordService
 
     public function countByLanguage(string $language): int
     {
-        $language = $this->languageRepository->get($language);
+        /** @var Language $language */
+        $language = $this->languageRepository->find($language);
 
         return $this->wordsRepository->getCountByLanguage($language);
     }
@@ -74,7 +76,7 @@ class WordService
         int $isSentence,
         string $translate
     ): Word {
-        $language = $this->languageRepository->get($language);
+        $language = $this->languageRepository->find($language);
 
         $word = new Word();
         $word->setLanguage($language);

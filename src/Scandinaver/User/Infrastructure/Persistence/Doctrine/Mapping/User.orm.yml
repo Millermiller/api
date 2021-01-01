@@ -80,13 +80,6 @@ Scandinaver\User\Domain\Model\User:
       precision: 0
       options:
         default: '1'
-    role:
-      type: integer
-      scale: 0
-      length: null
-      unique: false
-      nullable: true
-      precision: 0
     assetsOpened:
       type: integer
       scale: 0
@@ -202,26 +195,44 @@ Scandinaver\User\Domain\Model\User:
           permission_id:
             referencedColumnName: id
       orderBy: null
-    #texts:
-    #    targetEntity: Scandinaver\Translate\Domain\Model\Text
-    #    cascade: {  }
-    #    fetch: LAZY
-    #    mappedBy: null
-    #    inversedBy: users
-    #    joinTable:
-    #        name: text_user
-    #        schema: null
-    #        joinColumns:
-    #            -
-    #                name: user_id
-    #                referencedColumnName: id
-    #                onDelete: CASCADE
-    #        inverseJoinColumns:
-    #            -
-    #                name: text_id
-    #                referencedColumnName: id
-    #                onDelete: CASCADE
-    #    orderBy: null
+    texts:
+      targetEntity: Scandinaver\Translate\Domain\Model\Text
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinTable:
+          name: text_user
+          schema: null
+          joinColumns:
+              -
+                  name: user_id
+                  referencedColumnName: id
+                  onDelete: CASCADE
+          inverseJoinColumns:
+              -
+                  name: text_id
+                  referencedColumnName: id
+                  onDelete: CASCADE
+      orderBy: null
+    assets:
+      targetEntity: Scandinaver\Learn\Domain\Model\Asset
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinTable:
+        name: asset_user
+        schema: null
+        joinColumns:
+          - name: user_id
+            referencedColumnName: id
+            onDelete: CASCADE
+        inverseJoinColumns:
+          - name: asset_id
+            referencedColumnName: id
+            onDelete: CASCADE
+      orderBy: null
   oneToMany:
     posts:
       targetEntity: Scandinaver\Blog\Domain\Model\Post
@@ -231,7 +242,7 @@ Scandinaver\User\Domain\Model\User:
       inversedBy: null
       orphanRemoval: false
       orderBy: null
-    assets:
+    createdAssets:
       targetEntity: Scandinaver\Learn\Domain\Model\Asset
       cascade:
         - persist

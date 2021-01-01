@@ -10,5 +10,5 @@ namespace Scandinaver\Shared\Contract;
  */
 interface QueryHandler
 {
-    public function handle(Query $command);
+    public function handle(Query $query);
 }

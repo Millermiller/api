@@ -3,8 +3,11 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Exception;
 use Scandinaver\User\Domain\Contract\Command\CreateUserHandlerInterface;
+use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Command\CreateUserCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateUserHandler
@@ -13,17 +16,26 @@ use Scandinaver\User\UI\Command\CreateUserCommand;
  */
 class CreateUserHandler implements CreateUserHandlerInterface
 {
-    public function __construct()
+
+    private UserService $service;
+
+    /**
+     * CreateUserHandler constructor.
+     *
+     * @param  UserService  $service
+     */
+    public function __construct(UserService $service)
     {
+        $this->service = $service;
     }
 
     /**
-     * @param  CreateUserCommand
+     * @param  CreateUserCommand|Command  $command
      *
-     * @inheritDoc
+     * @throws Exception
      */
     public function handle($command): void
     {
-        // TODO: Implement handle() method.
+        $this->service->registration($command->getData());
     }
 } 

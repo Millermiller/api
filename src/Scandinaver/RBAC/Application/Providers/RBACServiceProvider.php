@@ -28,6 +28,11 @@ class RBACServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'CreatePermissionGroupHandlerInterface',
+            'Scandinaver\RBAC\Application\Handler\Command\CreatePermissionGroupHandler'
+        );
+
+        $this->app->bind(
             'CreateRoleHandlerInterface',
             'Scandinaver\RBAC\Application\Handler\Command\CreateRoleHandler'
         );
@@ -35,6 +40,11 @@ class RBACServiceProvider extends ServiceProvider
         $this->app->bind(
             'DeletePermissionHandlerInterface',
             'Scandinaver\RBAC\Application\Handler\Command\DeletePermissionHandler'
+        );
+
+        $this->app->bind(
+            'DeletePermissionGroupHandlerInterface',
+            'Scandinaver\RBAC\Application\Handler\Command\DeletePermissionGroupHandler'
         );
 
         $this->app->bind(
@@ -53,11 +63,26 @@ class RBACServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'UpdatePermissionGroupHandlerInterface',
+            'Scandinaver\RBAC\Application\Handler\Command\UpdatePermissionGroupHandler'
+        );
+
+        $this->app->bind(
             'UpdateRoleHandlerInterface',
             'Scandinaver\RBAC\Application\Handler\Command\UpdateRoleHandler'
         );
 
         /** QUERY **/
+        $this->app->bind(
+            'PermissionGroupHandlerInterface',
+            'Scandinaver\RBAC\Application\Handler\Query\PermissionGroupHandler'
+        );
+
+        $this->app->bind(
+            'PermissionGroupsHandlerInterface',
+            'Scandinaver\RBAC\Application\Handler\Query\PermissionGroupsHandler'
+        );
+
         $this->app->bind(
             'PermissionHandlerInterface',
             'Scandinaver\RBAC\Application\Handler\Query\PermissionHandler'

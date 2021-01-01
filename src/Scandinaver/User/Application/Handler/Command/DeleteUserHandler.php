@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\DeleteUserHandlerInterface;
 use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
@@ -22,9 +23,7 @@ class DeleteUserHandler implements DeleteUserHandlerInterface
     }
 
     /**
-     * @param $command DeleteUserCommand
-     *
-     * @inheritDoc
+     * @param $command DeleteUserCommand | Command
      */
     public function handle($command): void
     {

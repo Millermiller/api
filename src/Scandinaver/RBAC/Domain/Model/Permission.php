@@ -22,6 +22,8 @@ class Permission extends AggregateRoot
 
     private ?string $description;
 
+    private ?PermissionGroup $group;
+
     private DateTime $createdAt;
 
     private DateTime $updatedAt;
@@ -70,4 +72,15 @@ class Permission extends AggregateRoot
     {
         $this->description = $description;
     }
+
+    public function getGroup(): ?PermissionGroup
+    {
+        return $this->group;
+    }
+
+    public function setGroup(?PermissionGroup $group): void
+    {
+        $this->group = $group;
+    }
+
 }
