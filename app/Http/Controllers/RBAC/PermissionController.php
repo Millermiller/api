@@ -45,7 +45,7 @@ class PermissionController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        Gate::authorize('show-permission');
+        Gate::authorize('show-permission', $id);
 
         return $this->execute(new PermissionQuery($id));
     }
@@ -61,7 +61,7 @@ class PermissionController extends Controller
     {
         Gate::authorize('delete-permission', $id);
 
-        return $this->execute(new DeletePermissionCommand($id));
+        return $this->execute(new DeletePermissionCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**
@@ -75,7 +75,7 @@ class PermissionController extends Controller
     {
         Gate::authorize('create-permission');
 
-        return $this->execute(new CreatePermissionCommand($request->toArray()));
+        return $this->execute(new CreatePermissionCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**

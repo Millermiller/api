@@ -7,6 +7,7 @@ use Exception;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\Domain\Contract\Query\AssetsHandlerInterface;
 use Scandinaver\Learn\UI\Query\AssetsQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class AssetsHandler
@@ -23,8 +24,9 @@ class AssetsHandler implements AssetsHandlerInterface
     }
 
     /**
-     * @param  AssetsQuery  $query
+     * @param  AssetsQuery|Query  $query
      *
+     * @return array
      * @throws Exception
      */
     public function handle($query): array

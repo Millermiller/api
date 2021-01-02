@@ -3,8 +3,12 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
+use Scandinaver\RBAC\Domain\Model\PermissionDTO;
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
 use Scandinaver\RBAC\Domain\Contract\Query\PermissionHandlerInterface;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class PermissionHandler
@@ -13,16 +17,23 @@ use Scandinaver\RBAC\Domain\Contract\Query\PermissionHandlerInterface;
  */
 class PermissionHandler implements PermissionHandlerInterface
 {
-    public function __construct()
+
+    private RBACService $service;
+
+    public function __construct(RBACService $service)
     {
 
+        $this->service = $service;
     }
 
     /**
-     * @param PermissionQuery $query
+     * @param  PermissionQuery|Query  $query
+     *
+     * @return PermissionDTO
+     * @throws PermissionNotFoundException
      */
-    public function handle($query)
+    public function handle($query): PermissionDTO
     {
-        // TODO: Implement handle() method.
+        return $this->service->getPermission($query->getId())->toDTO();
     }
 } 

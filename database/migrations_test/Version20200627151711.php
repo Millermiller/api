@@ -212,6 +212,7 @@ class Version20200627151711 extends AbstractMigration
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     name VARCHAR(255), 
                     slug VARCHAR(255),
+                    permission_group_id VARCHAR(255),
                     description VARCHAR(255),
                     created_at VARCHAR(255),
                     updated_at VARCHAR(255)
@@ -224,6 +225,16 @@ class Version20200627151711 extends AbstractMigration
                     permission_id VARCHAR(255))');
 
         $this->addSql(
+          'CREATE TABLE permission_group (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                     name VARCHAR(255), 
+                    slug VARCHAR(255),
+                    description VARCHAR(255),
+                    created_at VARCHAR(255),
+                    updated_at VARCHAR(255)
+                    )');
+
+        $this->addSql(
             'CREATE TABLE user_permission (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     user_id VARCHAR(255), 
@@ -234,6 +245,15 @@ class Version20200627151711 extends AbstractMigration
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     user_id VARCHAR(255), 
                     role_id VARCHAR(255))');
+
+        $this->addSql(
+          'CREATE TABLE result_asset (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    user_id VARCHAR(255), 
+                    created_at VARCHAR(255), 
+                    updated_at VARCHAR(255), 
+                    result VARCHAR(255), 
+                    asset_id VARCHAR(255))');
     }
 
     /**

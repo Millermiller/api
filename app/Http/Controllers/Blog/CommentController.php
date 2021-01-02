@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Blog;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use Exception;
 use Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
@@ -21,6 +23,12 @@ use Scandinaver\Blog\UI\Query\CommentsQuery;
  */
 class CommentController extends Controller
 {
+
+    /**
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws Exception
+     */
     public function index(): JsonResponse
     {
         Gate::authorize('view-comments');
@@ -71,4 +79,5 @@ class CommentController extends Controller
         ]);
         */
     }
+
 }

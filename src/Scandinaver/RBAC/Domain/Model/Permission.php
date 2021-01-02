@@ -22,11 +22,16 @@ class Permission extends AggregateRoot
 
     private ?string $description;
 
-    private ?PermissionGroup $group;
+    private ?PermissionGroup $group = null;
 
     private DateTime $createdAt;
 
     private DateTime $updatedAt;
+
+    public function __construct()
+    {
+        $this->group = new PermissionGroup();
+    }
 
     public function getId(): int
     {

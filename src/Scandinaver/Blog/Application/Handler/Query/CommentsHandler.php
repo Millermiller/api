@@ -6,6 +6,7 @@ namespace Scandinaver\Blog\Application\Handler\Query;
 use Scandinaver\Blog\Domain\Contract\Query\CommentsHandlerInterface;
 use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Query\CommentsQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class CommentsHandler
@@ -23,7 +24,7 @@ class CommentsHandler implements CommentsHandlerInterface
     }
 
     /**
-     * @param CommentsQuery $query
+     * @param CommentsQuery|Query $query
      *
      * @return array
      */

@@ -4,6 +4,7 @@
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
 use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
+use Scandinaver\RBAC\Domain\Model\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionGroupCommand;
@@ -27,10 +28,11 @@ class UpdatePermissionGroupHandler implements UpdatePermissionGroupHandlerInterf
     /**
      * @param  UpdatePermissionGroupCommand|Command  $command
      *
+     * @return PermissionGroupDTO
      * @throws PermissionGroupNotFoundException
      */
-    public function handle($command): void
+    public function handle($command): PermissionGroupDTO
     {
-        $this->service->updatePermissionGroup($command->getId(), $command->getData());
+        return $this->service->updatePermissionGroup($command->getId(), $command->getData());
     }
 } 

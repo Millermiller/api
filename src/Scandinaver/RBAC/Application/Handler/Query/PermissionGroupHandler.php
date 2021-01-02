@@ -3,6 +3,8 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
+use Scandinaver\RBAC\Domain\Model\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\Shared\Contract\Query;
 use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
@@ -23,10 +25,13 @@ class PermissionGroupHandler implements PermissionGroupHandlerInterface
     }
 
     /**
-     * @param PermissionGroupQuery|Query $query
+     * @param  PermissionGroupQuery|Query  $query
+     *
+     * @return PermissionGroupDTO
+     * @throws PermissionGroupNotFoundException
      */
-    public function handle($query)
+    public function handle($query): PermissionGroupDTO
     {
-        // TODO: Implement handle() method.
+        return $this->service->getPermissionGroup($query->getId())->toDTO();
     }
 } 

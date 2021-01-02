@@ -28,6 +28,7 @@ use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
 use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
 use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;
 use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AssetController
@@ -165,6 +166,12 @@ class AssetController extends Controller
         return $this->execute(new UpdateAssetCommand(Auth::user(), $assetId, $request->toArray()));
     }
 
+    /**
+     * @param  string  $languageId
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function assetsMobile(string $languageId): JsonResponse
     {
         // $validator = Validator::make(
@@ -181,6 +188,8 @@ class AssetController extends Controller
         //     return response()->json([$validator->errors()], 400);
         // }
 
-        return $this->execute(new AssetsQuery(auth('api')->user(), $languageId));
+        /** @var User $user */
+        $user = auth('api')->user();
+        return $this->execute(new AssetsQuery($user, $languageId));
     }
 }

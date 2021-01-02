@@ -45,7 +45,7 @@ class PermissionGroupController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        Gate::authorize('show-permission-group');
+        Gate::authorize('show-permission-group', $id);
 
         return $this->execute(new PermissionGroupQuery($id));
     }
@@ -61,7 +61,10 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize('delete-permission-group', $id);
 
-        return $this->execute(new DeletePermissionGroupCommand($id));
+        return $this->execute(
+          new DeletePermissionGroupCommand($id),
+          JsonResponse::HTTP_NO_CONTENT
+        );
     }
 
     /**
@@ -75,12 +78,15 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize('create-permission-group');
 
-        return $this->execute(new CreatePermissionGroupCommand($request->toArray()));
+        return $this->execute(
+          new CreatePermissionGroupCommand($request->toArray()),
+          JsonResponse::HTTP_CREATED
+        );
     }
 
     /**
      * @param  Request  $request
-     * @param  int      $id
+     * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
@@ -90,7 +96,9 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize('update-permission-group', $id);
 
-        return $this->execute(new UpdatePermissionGroupCommand($id, $request->toArray()));
+        return $this->execute(
+          new UpdatePermissionGroupCommand($id, $request->toArray())
+        );
     }
 
 

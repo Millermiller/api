@@ -5,6 +5,7 @@ namespace Scandinaver\RBAC\Application\Handler\Command;
 
 use Scandinaver\RBAC\Domain\Contract\Command\CreatePermissionGroupHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupDublicateException;
+use Scandinaver\RBAC\Domain\Model\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
 use Scandinaver\Shared\Contract\Command;
@@ -27,11 +28,12 @@ class CreatePermissionGroupHandler implements CreatePermissionGroupHandlerInterf
     /**
      * @param  CreatePermissionGroupCommand|Command  $command
      *
+     * @return PermissionGroupDTO
      * @throws PermissionGroupDublicateException
      */
-    public function handle($command): void
+    public function handle($command): PermissionGroupDTO
     {
-        $this->service->createPermissionGroup($command->getData());
+        return $this->service->createPermissionGroup($command->getData());
     }
 
 }

@@ -3,8 +3,13 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
+use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\RBAC\Domain\Model\RoleDTO;
+use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\RoleQuery;
 use Scandinaver\RBAC\Domain\Contract\Query\RoleHandlerInterface;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class RoleHandler
@@ -13,16 +18,22 @@ use Scandinaver\RBAC\Domain\Contract\Query\RoleHandlerInterface;
  */
 class RoleHandler implements RoleHandlerInterface
 {
-    public function __construct()
-    {
 
+    private RBACService $service;
+
+    public function __construct(RBACService $service)
+    {
+        $this->service = $service;
     }
 
     /**
-     * @param RoleQuery $query
+     * @param  RoleQuery|Query  $query
+     *
+     * @return RoleDTO
+     * @throws RoleNotFoundException
      */
-    public function handle($query)
+    public function handle($query): RoleDTO
     {
-        // TODO: Implement handle() method.
+        return $this->service->getRole($query->getId())->toDTO();
     }
 } 

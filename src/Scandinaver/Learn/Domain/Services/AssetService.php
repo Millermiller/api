@@ -236,13 +236,13 @@ class AssetService
         $assets = [];
 
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
-        $personaldata = $this->personalAssetRepository->getCreatedAssets(
+        $personalData = $this->personalAssetRepository->getCreatedAssets(
             $language,
             $user
         );
-        $publicdata = $this->assetRepository->getPublicAssets($language);
+        $publicData = $this->assetRepository->getPublicAssets($language);
 
-        $data = $publicdata + $personaldata;
+        $data = $publicData + $personalData;
 
         $counter = [
             Asset::TYPE_WORDS => 0,

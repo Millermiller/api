@@ -24,6 +24,6 @@ class CheckAdminAuth
      */
     public function handle($request, Closure $next)
     {
-        return (Auth::check() && Auth::user()->isAdmin()) ? $next($request) : redirect('/admin/login');
+        return false;
     }
 }

@@ -112,16 +112,19 @@ class RBACService
     }
 
     /**
-     * @param  int    $id
+     * @param  int  $id
      * @param  array  $data
      *
+     * @return RoleDTO
      * @throws RoleNotFoundException
      */
-    public function updateRole(int $id, array $data)
+    public function updateRole(int $id, array $data): RoleDTO
     {
         $role = $this->getRole($id);
 
         $this->roleRepository->update($role, $data);
+
+        return $role->toDTO();
     }
 
     /**
@@ -169,12 +172,13 @@ class RBACService
     }
 
     /**
-     * @param  int    $id
+     * @param  int  $id
      * @param  array  $data
      *
+     * @return PermissionDTO
      * @throws PermissionNotFoundException|PermissionGroupNotFoundException
      */
-    public function updatePermission(int $id, array $data)
+    public function updatePermission(int $id, array $data): PermissionDTO
     {
         $permission = $this->getPermission($id);
 
@@ -189,6 +193,8 @@ class RBACService
         $permission->setDescription($data['description']);
 
         $this->permissionRepository->save($permission);
+
+        return $permission->toDTO();
     }
 
     /**
@@ -232,16 +238,19 @@ class RBACService
     }
 
     /**
-     * @param  int    $id
+     * @param  int  $id
      * @param  array  $data
      *
+     * @return PermissionGroupDTO
      * @throws PermissionGroupNotFoundException
      */
-    public function updatePermissionGroup(int $id, array $data)
+    public function updatePermissionGroup(int $id, array $data): PermissionGroupDTO
     {
         $permissionGroup = $this->getPermissionGroup($id);
 
         $this->permissionGroupRepository->update($permissionGroup, $data);
+
+        return $permissionGroup->toDTO();
     }
 
     /**
@@ -352,7 +361,7 @@ class RBACService
      * @return Role
      * @throws RoleNotFoundException
      */
-    private function getRole(int $id): Role
+    public function getRole(int $id): Role
     {
         /** @var Role $role */
         $role = $this->roleRepository->find($id);
@@ -369,7 +378,7 @@ class RBACService
      * @return Permission
      * @throws PermissionNotFoundException
      */
-    private function getPermission(int $id): Permission
+    public function getPermission(int $id): Permission
     {
         /** @var Permission $permission */
         $permission = $this->permissionRepository->find($id);
@@ -386,7 +395,7 @@ class RBACService
      * @return PermissionGroup
      * @throws PermissionGroupNotFoundException
      */
-    private function getPermissionGroup(int $id): PermissionGroup
+    public function getPermissionGroup(int $id): PermissionGroup
     {
         /** @var PermissionGroup $permissionGroup */
         $permissionGroup = $this->permissionGroupRepository->find($id);

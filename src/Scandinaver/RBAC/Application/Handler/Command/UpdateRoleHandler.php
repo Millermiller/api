@@ -4,6 +4,7 @@
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
 use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
+use Scandinaver\RBAC\Domain\Model\RoleDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\UpdateRoleCommand;
 use Scandinaver\RBAC\Domain\Contract\Command\UpdateRoleHandlerInterface;
@@ -27,10 +28,11 @@ class UpdateRoleHandler implements UpdateRoleHandlerInterface
     /**
      * @param  UpdateRoleCommand|Command  $command
      *
+     * @return RoleDTO
      * @throws RoleNotFoundException
      */
-    public function handle($command): void
+    public function handle($command): RoleDTO
     {
-        $this->service->updateRole($command->getId(), $command->getData());
+        return $this->service->updateRole($command->getId(), $command->getData());
     }
 } 

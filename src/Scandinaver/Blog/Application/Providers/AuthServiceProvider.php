@@ -26,15 +26,15 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('create-post', function (User $user) {
-            return $user->isAdmin();
+            return true;
         });
 
         Gate::define('update-post', function (User $user, int $postId) {
-            return $user->isAdmin();
+            return true;
         });
 
         Gate::define('delete-post', function (User $user, int $postId) {
-            return $user->isAdmin();
+            return true;
         });
 
         Gate::define('upload-post', function (User $user, int $postId) {
@@ -51,15 +51,15 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('create-category', function (User $user) {
-            return $user->isAdmin();
+            return true;
         });
 
         Gate::define('update-category', function (User $user, int $id) {
-            return $user->isAdmin();
+            return true;
         });
 
         Gate::define('delete-category', function (User $user, int $id) {
-            return $user->isAdmin();
+            return true;
         });
 
         /* COMMENT */
@@ -72,15 +72,15 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('create-comment', function (User $user) {
-            return $user->isAdmin();
+            return true;
         });
 
         Gate::define('update-comment', function (User $user, int $id) {
-            return $user->isAdmin();
+            return true;
         });
 
         Gate::define('delete-comment', function (User $user, int $id) {
-            return $user->isAdmin();
+            return true;
         });
     }
 }

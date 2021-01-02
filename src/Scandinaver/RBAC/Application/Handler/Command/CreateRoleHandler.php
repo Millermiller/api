@@ -4,6 +4,7 @@
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
 use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
+use Scandinaver\RBAC\Domain\Model\RoleDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\CreateRoleCommand;
 use Scandinaver\RBAC\Domain\Contract\Command\CreateRoleHandlerInterface;
@@ -27,10 +28,11 @@ class CreateRoleHandler implements CreateRoleHandlerInterface
     /**
      * @param  CreateRoleCommand|Command  $command
      *
+     * @return RoleDTO
      * @throws RoleDublicateException
      */
-    public function handle($command): void
+    public function handle($command): RoleDTO
     {
-        $this->service->createRole($command->getData());
+        return $this->service->createRole($command->getData());
     }
 } 
