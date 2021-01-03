@@ -34,6 +34,8 @@ RUN apt-get update \
 # Clear out the local repository of retrieved package files
 RUN apt-get clean
 
+RUN echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
+
 # Install needed extensions
 # Here you can install any other extension that you need during the test and deployment process
 
