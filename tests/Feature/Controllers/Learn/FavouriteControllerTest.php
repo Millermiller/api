@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Controllers\Learn;
 
+use Exception;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use App\Http\Controllers\Learn\FavouriteController;
 use Tests\TestCase;
 use Scandinaver\Common\Domain\Model\Language;
@@ -34,15 +36,23 @@ class FavouriteControllerTest extends TestCase
         $this->wordasset      = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $language]);
         $this->favouriteAsset = entity(FavouriteAsset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
 
-        entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->wordasset]);
-        entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
+        $result = entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->wordasset]);
+        $this->user->addTest($result);
+        $result = entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
+        $this->user->addTest($result);
 
         $this->card = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset ]);
         $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testDestroy()
     {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::DELETE_FAVOURITE);
+        $this->user->allow($permission);
+
         $this->actingAs($this->user, 'api');
 
         $response = $this->delete(route('delete-favorite', [
@@ -54,6 +64,9 @@ class FavouriteControllerTest extends TestCase
 
     public function testStore()
     {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::CREATE_FAVOURITE);
+        $this->user->allow($permission);
+
         $this->actingAs($this->user, 'api');
 
         $response = $this->post(

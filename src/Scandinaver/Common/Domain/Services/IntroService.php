@@ -7,13 +7,14 @@ use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Model\Intro;
 use Scandinaver\Common\Domain\Model\IntroDTO;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**
  * Class IntroService
  *
  * @package Scandinaver\Common\Domain\Services
  */
-class IntroService
+class IntroService implements BaseServiceInterface
 {
     private IntroRepositoryInterface $introRepository;
 
@@ -39,6 +40,12 @@ class IntroService
         return $result;
     }
 
+    /**
+     * @param  int  $id
+     *
+     * @return IntroDTO
+     * @throws IntroNotFoundException
+     */
     public function one(int $id): IntroDTO
     {
         $intro = $this->getIntro($id);
@@ -46,6 +53,9 @@ class IntroService
         return $intro->toDTO();
     }
 
+    /**
+     * @return array
+     */
     public function groupped(): array
     {
         $result = [];
@@ -58,6 +68,11 @@ class IntroService
         return $result;
     }
 
+    /**
+     * @param  array  $data
+     *
+     * @return IntroDTO
+     */
     public function create(array $data): IntroDTO
     {
         $intro = IntroFactory::build($data);
@@ -67,6 +82,13 @@ class IntroService
         return $intro->toDTO();
     }
 
+    /**
+     * @param  int    $id
+     * @param  array  $data
+     *
+     * @return IntroDTO
+     * @throws IntroNotFoundException
+     */
     public function update(int $id, array $data): IntroDTO
     {
         $intro = $this->getIntro($id);
@@ -76,6 +98,11 @@ class IntroService
         return $intro->toDTO();
     }
 
+    /**
+     * @param  int  $id
+     *
+     * @throws IntroNotFoundException
+     */
     public function delete(int $id)
     {
         $intro = $this->getIntro($id);
@@ -85,6 +112,12 @@ class IntroService
         $this->introRepository->delete($intro);
     }
 
+    /**
+     * @param  int  $id
+     *
+     * @return Intro
+     * @throws IntroNotFoundException
+     */
     private function getIntro(int $id): Intro
     {
         /** @var  Intro $intro */

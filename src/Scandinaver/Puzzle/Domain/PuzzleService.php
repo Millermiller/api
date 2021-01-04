@@ -11,6 +11,7 @@ use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Puzzle\Domain\Model\PuzzleDTO;
 use Scandinaver\Puzzle\Domain\Model\PuzzleText;
 use Scandinaver\Puzzle\Domain\Model\PuzzleTranslate;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -18,7 +19,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Puzzle\Domain
  */
-class PuzzleService
+class PuzzleService implements BaseServiceInterface
 {
     use LanguageTrait;
 
@@ -27,6 +28,14 @@ class PuzzleService
     public function __construct(PuzzleRepositoryInterface $puzzleRepository)
     {
         $this->puzzleRepository = $puzzleRepository;
+    }
+
+    public function one(int $puzzleId): PuzzleDTO
+    {
+        /** @var Puzzle $puzzle */
+        $puzzle = $this->puzzleRepository->find($puzzleId);
+
+        return $puzzle->toDTO();
     }
 
     public function create(string $language, array $data)
@@ -58,14 +67,6 @@ class PuzzleService
         }
 
         return $response;
-    }
-
-    public function one(int $puzzleId): PuzzleDTO
-    {
-        /** @var Puzzle $puzzle */
-        $puzzle = $this->puzzleRepository->find($puzzleId);
-
-        return $puzzle->toDTO();
     }
 
     public function delete(int $puzzleId)
@@ -111,4 +112,10 @@ class PuzzleService
 
         return $puzzle;
     }
+
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
+
 }

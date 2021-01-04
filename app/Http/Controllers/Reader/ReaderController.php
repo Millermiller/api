@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
 use Scandinaver\Reader\UI\Query\ReadQuery;
+use Scandinaver\Reader\Domain\Permissions\Reader;
+use Illuminate\Auth\Access\AuthorizationException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -17,9 +19,17 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class ReaderController extends Controller
 {
+
+    /**
+     * @param  string   $language
+     * @param  Request  $request
+     *
+     * @return BinaryFileResponse
+     * @throws AuthorizationException
+     */
     public function index(string $language, Request $request): BinaryFileResponse
     {
-        Gate::authorize('read');
+        Gate::authorize(Reader::READ);
 
         $text = $request->get('text');
 

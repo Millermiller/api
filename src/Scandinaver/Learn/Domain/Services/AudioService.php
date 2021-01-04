@@ -11,13 +11,15 @@ use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\AudioFileCantParsedException;
 use Scandinaver\Learn\Domain\Exceptions\WordNotFoundException;
 use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class AudioService
  *
  * @package Scandinaver\Learn\Domain\Services
  */
-class AudioService
+class AudioService implements BaseServiceInterface
 {
     use WordTrait;
     use LanguageTrait;
@@ -102,4 +104,15 @@ class AudioService
 
         return $word;
     }
+
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
+
+    public function one(int $id): DTO
+    {
+        // TODO: Implement one() method.
+    }
+
 }

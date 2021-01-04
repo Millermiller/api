@@ -11,6 +11,8 @@ use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Shared\DTO;
 use App\Http\Requests\{SearchRequest};
 use Auth;
 use Doctrine\DBAL\DBALException;
@@ -24,7 +26,7 @@ use Scandinaver\Learn\Domain\Model\Word;
  *
  * @package Scandinaver\Learn\Domain\Services
  */
-class WordService
+class WordService implements BaseServiceInterface
 {
     use LanguageTrait;
 
@@ -187,4 +189,15 @@ class WordService
 
         return $result;
     }
+
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
+
+    public function one(int $id): DTO
+    {
+        // TODO: Implement one() method.
+    }
+
 }

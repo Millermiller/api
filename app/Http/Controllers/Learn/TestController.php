@@ -18,6 +18,12 @@ use Scandinaver\Learn\UI\Command\SaveTestResultCommand;
  */
 class TestController extends Controller
 {
+
+    /**
+     * @param  int  $asset
+     *
+     * @return JsonResponse
+     */
     public function complete(int $asset): JsonResponse
     {
         $this->commandBus->execute(new GiveNextLevelCommand(Auth::user(), $asset));

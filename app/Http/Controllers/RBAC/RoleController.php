@@ -4,19 +4,18 @@
 namespace App\Http\Controllers\RBAC;
 
 
-use App\Http\Controllers\Controller;
-use Exception;
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\{Request, JsonResponse};
+use Scandinaver\RBAC\Domain\Permissions\Role;
+use Scandinaver\Shared\EventBusNotFoundException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
 use Scandinaver\RBAC\UI\Command\CreateRoleCommand;
 use Scandinaver\RBAC\UI\Command\DeleteRoleCommand;
-use Scandinaver\RBAC\UI\Command\DetachPermissionFromRoleCommand;
 use Scandinaver\RBAC\UI\Command\UpdateRoleCommand;
-use Scandinaver\RBAC\UI\Query\RoleQuery;
-use Scandinaver\RBAC\UI\Query\RolesQuery;
+use Scandinaver\RBAC\UI\Query\{RoleQuery, RolesQuery};
+use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
+use Scandinaver\RBAC\UI\Command\DetachPermissionFromRoleCommand;
 
 /**
  * Class RoleController
@@ -29,11 +28,11 @@ class RoleController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
-        Gate::authorize('view-roles');
+        Gate::authorize(Role::VIEW);
 
         return $this->execute(new RolesQuery());
     }
@@ -43,11 +42,11 @@ class RoleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function show(int $id): JsonResponse
     {
-        Gate::authorize('show-role', $id);
+        Gate::authorize(Role::SHOW, $id);
 
         return $this->execute(new RoleQuery($id));
     }
@@ -57,11 +56,11 @@ class RoleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function destroy(int $id): JsonResponse
     {
-        Gate::authorize('delete-role', $id);
+        Gate::authorize(Role::DELETE, $id);
 
         return $this->execute(
           new DeleteRoleCommand($id),
@@ -74,11 +73,11 @@ class RoleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function store(Request $request): JsonResponse
     {
-        Gate::authorize('create-role');
+        Gate::authorize(Role::CREATE);
 
         return $this->execute(
           new CreateRoleCommand($request->toArray()),
@@ -88,15 +87,15 @@ class RoleController extends Controller
 
     /**
      * @param  Request  $request
-     * @param  int  $id
+     * @param  int      $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        Gate::authorize('update-role', $id);
+        Gate::authorize(Role::UPDATE, $id);
 
         return $this->execute(new UpdateRoleCommand($id, $request->toArray()));
     }
@@ -106,7 +105,7 @@ class RoleController extends Controller
      * @param  int  $permissionId
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function attachPermission(int $roleId, int $permissionId): JsonResponse
     {
@@ -120,7 +119,7 @@ class RoleController extends Controller
      * @param  int  $permissionId
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function detachPermission(int $roleId, int $permissionId): JsonResponse
     {
@@ -131,7 +130,6 @@ class RoleController extends Controller
 
     public function search()
     {
-
     }
 
 }

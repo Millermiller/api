@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Blog\Domain\Model\Comment;
 use Scandinaver\Shared\Contract\Command;
 
 /**

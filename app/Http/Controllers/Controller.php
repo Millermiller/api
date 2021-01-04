@@ -3,13 +3,17 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Scandinaver\Shared\{CommandBus, Contract\Command, Contract\Query, QueryBus};
+use Scandinaver\Shared\{QueryBus,
+  CommandBus,
+  Contract\Query,
+  Contract\Command,
+  EventBusNotFoundException
+};
 
 /**
  * Class Controller
@@ -18,6 +22,7 @@ use Scandinaver\Shared\{CommandBus, Contract\Command, Contract\Query, QueryBus};
  */
 class Controller extends BaseController
 {
+
     use AuthorizesRequests;
     use DispatchesJobs;
     use ValidatesRequests;
@@ -43,7 +48,7 @@ class Controller extends BaseController
      * @param  int     $code
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     protected function execute(object $data, int $code = 200): JsonResponse
     {
@@ -56,13 +61,18 @@ class Controller extends BaseController
         }
 
         if (!isset($bus)) {
-            throw new \Exception('Bus not Found');
+            throw new EventBusNotFoundException();
         }
 
         try {
             return response()->json($bus->execute($data), $code);
         } catch (\Exception $exception) {
-            return new JsonResponse($exception->getMessage(), $exception->getCode() === 0 ? 500 : $exception->getCode());
+            return new JsonResponse(
+              $exception->getMessage(),
+              $exception->getCode(
+              ) === 0 ? JsonResponse::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode()
+            );
         }
     }
+
 }

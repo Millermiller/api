@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Controllers\Learn;
 
+use Exception;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use App\Http\Controllers\Learn\CardController;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Card;
@@ -84,8 +86,14 @@ class CardControllerTest extends TestCase
         self::assertEquals(true, true);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testDestroy()
     {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Card::DELETE);
+        $this->user->allow($permission);
+
         $this->actingAs($this->user, 'api');
 
         $response = $this->delete(
@@ -102,12 +110,18 @@ class CardControllerTest extends TestCase
         static::assertEquals(204, $response->getStatusCode());
     }
 
+    /**
+     * @throws Exception
+     */
     public function testStore()
     {
-        $this->actingAs($this->user, 'api');
-
         /** @var Card $card */
-        $card = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
+        $card = entity(Card::class)->create(['language' => $this->language]);
+
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Card::CREATE);
+        $this->user->allow($permission);
+
+        $this->actingAs($this->user, 'api');
 
         $response = $this->post(
             route(

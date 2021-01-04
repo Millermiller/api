@@ -47,8 +47,6 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     protected ?DateTime $updatedAt;
 
-    protected $users;
-
     protected Language $language;
 
     protected $cards;
@@ -77,7 +75,6 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         $this->basic = $basic;
         $this->favorite = $favorite;
         $this->language = $language;
-        $this->users = new ArrayCollection();
         $this->results = new ArrayCollection();
         $this->cards = new ArrayCollection();
 
@@ -87,14 +84,6 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     public static function getRouteKeyName(): string
     {
         return 'id';
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers()
-    {
-        return $this->users;
     }
 
     public function getId(): int
@@ -235,5 +224,10 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     public function getLanguage(): Language
     {
         return $this->language;
+    }
+
+    public function isFavorite(): bool
+    {
+        return $this->favorite === 1;
     }
 }

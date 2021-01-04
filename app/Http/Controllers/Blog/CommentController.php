@@ -3,18 +3,18 @@
 
 namespace App\Http\Controllers\Blog;
 
-use App\Helpers\Auth;
-use App\Http\Controllers\Controller;
-use Exception;
 use Gate;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\JsonResponse;
+use App\Helpers\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Scandinaver\Blog\Domain\Permissions\Comment;
+use Scandinaver\Shared\EventBusNotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
-use Scandinaver\Blog\UI\Query\CommentQuery;
-use Scandinaver\Blog\UI\Query\CommentsQuery;
+use Scandinaver\Blog\UI\Query\{CommentQuery, CommentsQuery};
 
 /**
  * Class CommentController
@@ -27,57 +27,81 @@ class CommentController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
-        Gate::authorize('view-comments');
+        Gate::authorize(Comment::VIEW);
 
         return $this->execute(new CommentsQuery());
     }
 
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
+     */
     public function show($id): JsonResponse
     {
-        Gate::authorize('show-comment', $id);
+        Gate::authorize(Comment::SHOW, $id);
 
         return $this->execute(new CommentQuery($id));
     }
 
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
+     */
     public function store(Request $request): JsonResponse
     {
-        Gate::authorize('create-comment');
+        Gate::authorize(Comment::CREATE);
 
-        return $this->execute(new CreateCommentCommand(Auth::user(), $request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(
+          new CreateCommentCommand(Auth::user(), $request->toArray()),
+          JsonResponse::HTTP_CREATED
+        );
     }
 
+    /**
+     * @param  Request  $request
+     * @param  int      $commentId
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
+     */
     public function update(Request $request, int $commentId): JsonResponse
     {
-        Gate::authorize('update-comment', $commentId);
+        Gate::authorize(Comment::UPDATE, $commentId);
 
         return $this->execute(new UpdateCommentCommand($commentId, $request->toArray()));
     }
 
+    /**
+     * @param  int  $commentId
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
+     */
     public function destroy(int $commentId): JsonResponse
     {
-        Gate::authorize('delete-comment', $commentId);
+        Gate::authorize(Comment::DELETE, $commentId);
 
         return $this->execute(new DeleteCommentCommand($commentId), JsonResponse::HTTP_NO_CONTENT);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function search()
     {
-        Gate::authorize('search-comment');
-
-        /*
-        $search = Input::get('q');
-
-        return response()->json([
-            'success' => true,
-            'comments' => Comment::with(['author', 'post'])->where(function ($query) use ($search) {
-                $query->where('text', 'LIKE', "%{$search}%");
-            })->get()
-        ]);
-        */
+        Gate::authorize(Comment::SEARCH);
     }
 
 }

@@ -5,6 +5,9 @@ namespace Scandinaver\Blog\Application\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Scandinaver\Blog\Domain\Permissions\Category;
+use Scandinaver\Blog\Domain\Permissions\Comment;
+use Scandinaver\Blog\Domain\Permissions\Post;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -17,23 +20,23 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         /* POST */
-        Gate::define('view-posts', function (?User $user) {
+        Gate::define(Post::VIEW, function (?User $user) {
             return true;
         });
 
-        Gate::define('show-post', function (?User $user, int $postId) {
+        Gate::define(Post::SHOW, function (?User $user, int $postId) {
             return true;
         });
 
-        Gate::define('create-post', function (User $user) {
+        Gate::define(Post::CREATE, function (User $user) {
+            return $user->can(Post::CREATE);
+        });
+
+        Gate::define(Post::UPDATE, function (User $user, int $postId) {
             return true;
         });
 
-        Gate::define('update-post', function (User $user, int $postId) {
-            return true;
-        });
-
-        Gate::define('delete-post', function (User $user, int $postId) {
+        Gate::define(Post::DELETE, function (User $user, int $postId) {
             return true;
         });
 
@@ -42,44 +45,44 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         /* CATEGORY */
-        Gate::define('view-categories', function (?User $user) {
+        Gate::define(Category::VIEW, function (?User $user) {
             return true;
         });
 
-        Gate::define('show-category', function (?User $user, int $id) {
+        Gate::define(Category::SHOW, function (?User $user, int $id) {
             return true;
         });
 
-        Gate::define('create-category', function (User $user) {
+        Gate::define(Category::CREATE, function (User $user) {
             return true;
         });
 
-        Gate::define('update-category', function (User $user, int $id) {
+        Gate::define(Category::UPDATE, function (User $user, int $id) {
             return true;
         });
 
-        Gate::define('delete-category', function (User $user, int $id) {
+        Gate::define(Category::DELETE, function (User $user, int $id) {
             return true;
         });
 
         /* COMMENT */
-        Gate::define('view-comments', function (?User $user) {
+        Gate::define(Comment::VIEW, function (?User $user) {
             return true;
         });
 
-        Gate::define('show-comment', function (?User $user, int $id) {
+        Gate::define(Comment::SHOW, function (?User $user, int $id) {
             return true;
         });
 
-        Gate::define('create-comment', function (User $user) {
+        Gate::define(Comment::CREATE, function (User $user) {
             return true;
         });
 
-        Gate::define('update-comment', function (User $user, int $id) {
+        Gate::define(Comment::UPDATE, function (User $user, int $id) {
             return true;
         });
 
-        Gate::define('delete-comment', function (User $user, int $id) {
+        Gate::define(Comment::DELETE, function (User $user, int $id) {
             return true;
         });
     }

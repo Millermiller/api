@@ -13,7 +13,6 @@ $factory->define(\Scandinaver\Learn\Domain\Model\Result::class, function (Faker 
        // 'id' => random_int(1, 999),
         'result' => $faker->unique()->numberBetween(0, 100),
         'user' => $attributes['user'],
-        'language' => $attributes['language'],
         'asset' => $attributes['asset'],
     ];
 });

@@ -5,6 +5,9 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 
 use App\Events\FavouriteDeleted;
 use Doctrine\ORM\{OptimisticLockException, ORMException};
+use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Contract\Command\DeleteFavouriteHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
 use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
@@ -28,8 +31,10 @@ class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
     }
 
     /**
-     * @param  DeleteFavouriteCommand  $command
+     * @param  DeleteFavouriteCommand|Command  $command
      *
+     * @throws CardNotFoundException
+     * @throws LanguageNotFoundException
      */
     public function handle($command): void
     {

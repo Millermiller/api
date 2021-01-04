@@ -215,24 +215,6 @@ Scandinaver\User\Domain\Model\User:
                   referencedColumnName: id
                   onDelete: CASCADE
       orderBy: null
-    assets:
-      targetEntity: Scandinaver\Learn\Domain\Model\Asset
-      cascade: {  }
-      fetch: LAZY
-      mappedBy: null
-      inversedBy: null
-      joinTable:
-        name: asset_user
-        schema: null
-        joinColumns:
-          - name: user_id
-            referencedColumnName: id
-            onDelete: CASCADE
-        inverseJoinColumns:
-          - name: asset_id
-            referencedColumnName: id
-            onDelete: CASCADE
-      orderBy: null
   oneToMany:
     posts:
       targetEntity: Scandinaver\Blog\Domain\Model\Post
@@ -252,5 +234,27 @@ Scandinaver\User\Domain\Model\User:
       joinColumns:
         id:
           referencedColumnName: owner_id
+      orderBy: null
+    tests:
+      targetEntity: Scandinaver\Learn\Domain\Model\Result
+      cascade:
+        - persist
+      fetch: LAZY
+      mappedBy: user
+      inversedBy: null
+      joinColumns:
+        id:
+          referencedColumnName: user_id
+      orderBy: null
+    translates:
+      targetEntity: Scandinaver\Translate\Domain\Model\Result
+      cascade:
+        - persist
+      fetch: LAZY
+      mappedBy: user
+      inversedBy: null
+      joinColumns:
+        id:
+          referencedColumnName: user_id
       orderBy: null
   lifecycleCallbacks: {  }

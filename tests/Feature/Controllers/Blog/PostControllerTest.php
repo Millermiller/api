@@ -2,12 +2,14 @@
 
 namespace Tests\Feature\Controllers\Blog;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
+use Scandinaver\RBAC\Domain\Model\Permission;
 
 class PostControllerTest extends TestCase
 {
@@ -66,8 +68,14 @@ class PostControllerTest extends TestCase
         );
     }
 
+    /**
+     * @throws Exception
+     */
     public function testStore()
     {
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permissions\Post::CREATE);
+        $this->user->allow($permission);
+
         $this->actingAs($this->user, 'api');
 
         $testPostContent = 'TESTCONTENT';

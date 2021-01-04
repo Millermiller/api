@@ -28,6 +28,6 @@ class UsersHandler implements UsersHandlerInterface
      */
     public function handle($query): array
     {
-        return $this->userService->getAll();
+        return $this->userService->all();
     }
 } 

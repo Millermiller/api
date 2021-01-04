@@ -28,6 +28,6 @@ class PostsHandler implements PostsHandlerInterface
      */
     public function handle($query): array
     {
-        return $this->blogService->getAll();
+        return $this->blogService->all();
     }
 } 

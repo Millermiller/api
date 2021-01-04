@@ -3,10 +3,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Scandinaver\User\Domain\Model\Plan;
+use Scandinaver\Shared\EventBusNotFoundException;
 use Scandinaver\User\UI\Command\CreatePlanCommand;
 use Scandinaver\User\UI\Command\DeletePlanCommand;
 use Scandinaver\User\UI\Command\UpdatePlanCommand;
@@ -20,34 +20,58 @@ use Scandinaver\User\UI\Query\PlansQuery;
  */
 class PlanController extends Controller
 {
+
+    /**
+     * @return JsonResponse
+     * @throws EventBusNotFoundException
+     */
     public function index(): JsonResponse
     {
-        return response()->json($this->queryBus->execute(new PlansQuery()));
+        return $this->execute(new PlansQuery());
     }
 
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     * @throws EventBusNotFoundException
+     */
     public function show($id): JsonResponse
     {
-        return response()->json($this->queryBus->execute(new PlanQuery($id)));
+        return $this->execute(new PlanQuery($id));
     }
 
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     * @throws EventBusNotFoundException
+     */
     public function store(Request $request): JsonResponse
     {
-        $this->commandBus->execute(new CreatePlanCommand($request->toArray()));
-
-        return response()->json(NULL, 201);
+        return $this->execute(new CreatePlanCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
+    /**
+     * @param  Request  $request
+     * @param  Plan     $plan
+     *
+     * @return JsonResponse
+     * @throws EventBusNotFoundException
+     */
     public function update(Request $request, Plan $plan): JsonResponse
     {
-        $this->commandBus->execute(new UpdatePlanCommand($plan, $request->toArray()));
-
-        return response()->json(NULL, 201);
+        return $this->execute(new UpdatePlanCommand($plan, $request->toArray()));
     }
 
+    /**
+     * @param  Plan  $plan
+     *
+     * @return JsonResponse
+     * @throws EventBusNotFoundException
+     */
     public function destroy(Plan $plan): JsonResponse
     {
-        $this->commandBus->execute(new DeletePlanCommand($plan));
-
-        return response()->json(NULL, 204);
+        return $this->execute(new DeletePlanCommand($plan), JsonResponse::HTTP_NO_CONTENT);
     }
 }

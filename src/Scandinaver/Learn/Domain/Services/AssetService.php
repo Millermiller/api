@@ -9,6 +9,9 @@ use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -16,7 +19,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Domain\Services
  */
-class AssetService
+class AssetService implements BaseServiceInterface
 {
     use AssetTrait;
     use LanguageTrait;
@@ -117,6 +120,14 @@ class AssetService
         return $result;
     }
 
+    /**
+     * @param  string  $language
+     * @param  User  $user
+     * @param  int  $type
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getAssetsByType(string $language, User $user, int $type): array
     {
         $language = $this->getLanguage($language);
@@ -229,6 +240,13 @@ class AssetService
         return $asset->toDTO();
     }
 
+    /**
+     * @param  string  $language
+     * @param  User    $user
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getAssetsForApp(string $language, User $user): array
     {
         $language = $this->getLanguage($language);
@@ -236,10 +254,7 @@ class AssetService
         $assets = [];
 
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
-        $personalData = $this->personalAssetRepository->getCreatedAssets(
-            $language,
-            $user
-        );
+        $personalData = $user->getCreatedAssets($language);
         $publicData = $this->assetRepository->getPublicAssets($language);
 
         $data = $publicData + $personalData;
@@ -313,4 +328,15 @@ class AssetService
 
         return $assets;
     }
+
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
+
+    public function one(int $id): DTO
+    {
+        // TODO: Implement one() method.
+    }
+
 }

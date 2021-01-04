@@ -15,9 +15,8 @@ class PermissionFactory
 {
     public static function build(array $data): Permission
     {
-        $permission = new Permission();
+        $permission = new Permission($data['slug']);
         $permission->setName($data['name']);
-        $permission->setSlug($data['slug']);
         $permission->setGroup($data['group']);
         $permission->setDescription($data['description']);
 

@@ -4,41 +4,46 @@
 namespace Scandinaver\Common\Domain\Services;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Common\Domain\Model\LanguageDTO;
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class LanguageService
  *
  * @package Scandinaver\Common\Domain\Services
  */
-class LanguageService
+class LanguageService implements BaseServiceInterface
 {
+
     private LanguageRepositoryInterface $languageRepository;
 
     private AssetRepositoryInterface $assetRepository;
 
     public function __construct(
-        LanguageRepositoryInterface $languageRepository,
-        AssetRepositoryInterface $assetRepository
+      LanguageRepositoryInterface $languageRepository,
+      AssetRepositoryInterface $assetRepository
     ) {
         $this->languageRepository = $languageRepository;
         $this->assetRepository = $assetRepository;
     }
 
-    public function getLanguagesList(): array
+    public function all(): array
     {
+        $result = [];
+        /** @var Language[] $intros */
         $languages = $this->languageRepository->findAll();
-        $assets = [];
-        $response = [];
-
         foreach ($languages as $language) {
-            // $assets[] = $this->assetRepository->getByLanguage($language);
-
-            $dto = new LanguageDTO($language, 0, 0);
-            $response[] = $dto;
+            $result[] = $language->toDTO();
         }
 
-        return $response;
+        return $result;
     }
+
+    public function one(int $id): DTO
+    {
+        // TODO: Implement one() method.
+    }
+
 }

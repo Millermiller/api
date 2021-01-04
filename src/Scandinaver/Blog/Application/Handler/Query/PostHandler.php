@@ -4,9 +4,11 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\PostHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\PostDTO;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Query\PostQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class PostHandler
@@ -23,12 +25,13 @@ class PostHandler implements PostHandlerInterface
     }
 
     /**
-     * @param  PostQuery  $query
+     * @param  PostQuery|Query  $query
      *
      * @return PostDTO
+     * @throws PostNotFoundException
      */
     public function handle($query): PostDTO
     {
-        return $this->blogService->getOne($query->getId());
+        return $this->blogService->one($query->getId());
     }
 } 

@@ -4,17 +4,18 @@
 namespace App\Http\Controllers\RBAC;
 
 
-use App\Http\Controllers\Controller;
-use Exception;
 use Gate;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Scandinaver\RBAC\UI\Query\PermissionQuery;
+use Scandinaver\RBAC\UI\Query\PermissionsQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Scandinaver\RBAC\Domain\Permissions\Permission;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;
-use Scandinaver\RBAC\UI\Query\PermissionQuery;
-use Scandinaver\RBAC\UI\Query\PermissionsQuery;
 
 /**
  * Class RoleController
@@ -27,11 +28,11 @@ class PermissionController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
-        Gate::authorize('view-permissions');
+        Gate::authorize(Permission::VIEW);
 
         return $this->execute(new PermissionsQuery());
     }
@@ -41,11 +42,11 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function show(int $id): JsonResponse
     {
-        Gate::authorize('show-permission', $id);
+        Gate::authorize(Permission::SHOW, $id);
 
         return $this->execute(new PermissionQuery($id));
     }
@@ -55,11 +56,11 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function destroy(int $id): JsonResponse
     {
-        Gate::authorize('delete-permission', $id);
+        Gate::authorize(Permission::DELETE, $id);
 
         return $this->execute(new DeletePermissionCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
@@ -69,13 +70,16 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function store(Request $request): JsonResponse
     {
-        Gate::authorize('create-permission');
+        Gate::authorize(Permission::CREATE);
 
-        return $this->execute(new CreatePermissionCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(
+          new CreatePermissionCommand($request->toArray()),
+          JsonResponse::HTTP_CREATED
+        );
     }
 
     /**
@@ -84,20 +88,23 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        Gate::authorize('update-permission', $id);
+        Gate::authorize(Permission::UPDATE, $id);
 
-        return $this->execute(new UpdatePermissionCommand($id,
-          $request->toArray()));
+        return $this->execute(
+          new UpdatePermissionCommand(
+            $id,
+            $request->toArray()
+          )
+        );
     }
 
 
     public function search()
     {
-
     }
 
 }

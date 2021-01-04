@@ -89,21 +89,6 @@ Scandinaver\Learn\Domain\Model\Asset:
         timestampable:
           on: update
   manyToMany:
-    #users:
-    #    targetEntity: Scandinaver\User\Domain\Model\User
-    #    cascade: {  }
-    #    fetch: LAZY
-    #    mappedBy: assets
-    #    inversedBy: null
-    #    joinTable:
-    #        name: asset_user
-    #        joinColumns:
-    #            asset_id:
-    #                referencedColumnName: id
-    #        inverseJoinColumns:
-    #            user_id:
-    #                referencedColumnName: id
-    #    orderBy: null
     cards:
       targetEntity: Scandinaver\Learn\Domain\Model\Card
       joinTable:

@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use Scandinaver\Blog\Domain\Contract\Query\CategoryHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Model\CategoryDTO;
 use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoryQuery;
@@ -28,8 +29,9 @@ class CategoryHandler implements CategoryHandlerInterface
      * @param  CategoryQuery|Query  $query
      *
      * @return CategoryDTO
+     * @throws CategoryNotFoundException
      */
-    public function handle($query)
+    public function handle($query): CategoryDTO
     {
         return $this->service->one($query->getId());
     }

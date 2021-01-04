@@ -30,6 +30,6 @@ class CommentsHandler implements CommentsHandlerInterface
      */
     public function handle($query): array
     {
-        return $this->service->getAll();
+        return $this->service->all();
     }
 } 

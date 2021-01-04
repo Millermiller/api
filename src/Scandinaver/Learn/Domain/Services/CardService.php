@@ -8,6 +8,8 @@ use Scandinaver\Learn\Domain\Model\{Card, Example, Translate, Word};
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
@@ -16,6 +18,8 @@ use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 use Storage;
 
@@ -24,7 +28,7 @@ use Storage;
  *
  * @package Scandinaver\Learn\Domain\Services
  */
-class CardService
+class CardService implements BaseServiceInterface
 {
     use LanguageTrait;
     use AssetTrait;
@@ -141,15 +145,21 @@ class CardService
         $this->assetRepository->save($asset);
     }
 
+    /**
+     * @param  string  $language
+     * @param  User    $user
+     * @param  int     $asset
+     *
+     * @return array
+     * @throws AssetNotFoundException
+     * @throws LanguageNotFoundException
+     */
     public function getCards(string $language, User $user, int $asset): array
     {
         $language = $this->getLanguage($language);
         $asset = $this->getAsset($asset);
 
-        $favouriteAsset = $this->favouriteAssetRepository->getFavouriteAsset(
-            $language,
-            $user
-        );
+        $favouriteAsset = $user->getFavouriteAsset($language);
 
         $result = $this->resultRepository->getResult($user, $asset);
 
@@ -298,4 +308,15 @@ class CardService
 
         fclose($handle);
     }
+
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
+
+    public function one(int $id): DTO
+    {
+        // TODO: Implement one() method.
+    }
+
 }

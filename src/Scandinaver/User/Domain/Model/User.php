@@ -17,13 +17,19 @@ use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\FavouriteAsset;
+use Scandinaver\Learn\Domain\Model\PersonalAsset;
+use Scandinaver\Learn\Domain\Model\Result;
 use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Contract\Permissions;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
+use Scandinaver\Learn\Domain\Model\Result as AssetResult;
+use Scandinaver\Translate\Domain\Model\Result as TranslateResult;
 
 /**
  * Class User
@@ -71,7 +77,9 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     private Plan $plan;
 
-    private Collection $assets;
+    private Collection $tests;
+
+    private Collection $translates;
 
     private Collection $createdAssets;
 
@@ -93,8 +101,9 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     public function __construct()
     {
-        $this->assets = new ArrayCollection();
+        $this->tests = new ArrayCollection();
         $this->texts = new ArrayCollection();
+        $this->translates = new ArrayCollection();
         $this->roles = new ArrayCollection();
         $this->permissions = new ArrayCollection();
     }
@@ -299,17 +308,6 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
         $this->assetsCreated++;
     }
 
-    public function hasAsset(Asset $asset): bool
-    {
-        foreach ($this->assets as $a) {
-            if ($a->getId() === $asset->getId()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public function hasText(Text $text): bool
     {
         foreach ($this->texts as $t) {
@@ -456,15 +454,18 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
         // TODO: Implement delete() method.
     }
 
-    /**
-     * @param  Asset  $asset
-     */
-    public function addAsset(Asset $asset): void
+    public function addTest(AssetResult $result)
     {
-        if (!$this->assets->contains($asset)) {
-            $this->assets->add($asset);
+        if (!$this->tests->contains($result)) {
+            $this->tests->add($result);
         }
-        // $this->pushEvent(AssetAdded);
+    }
+
+    public function addTranslate(TranslateResult $result)
+    {
+        if (!$this->translates->contains($result)) {
+            $this->translates->add($result);
+        }
     }
 
     /**
@@ -476,6 +477,38 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
             $this->texts->add($text);
         }
         // $this->pushEvent(TextAdded);
+    }
+
+    public function getFavouriteAsset(Language $language): ?Asset
+    {
+        foreach ($this->tests as $result) {
+            /** @var Result $result */
+            $asset = $result->getAsset();
+            if ($asset->isFavorite() && $asset->getLanguage()->isEqualTo($language)) {
+                return $asset;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param  Language  $language
+     *
+     * @return array
+     */
+    public function getCreatedAssets(Language $language): array
+    {
+        $data = [];
+
+        foreach ($this->createdAssets as $createdAsset) {
+            /** @var PersonalAsset $createdAsset */
+            if ($createdAsset->getLanguage()->isEqualTo($language)) {
+                $data[] = $createdAsset->toDTO();
+            }
+        }
+
+        return $data;
     }
 
 }

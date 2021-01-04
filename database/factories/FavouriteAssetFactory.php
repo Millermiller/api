@@ -24,7 +24,6 @@ $factory->define(FavouriteAsset::class, function (Faker $faker, array $attribute
         'level' => $level++,
         'favorite' =>  $attributes['favorite'] ?? 0,
         'language' => $attributes['language'],
-        'users' => [$attributes['user']],
         'cards' => new \Doctrine\Common\Collections\ArrayCollection($cards)
     ];
 });

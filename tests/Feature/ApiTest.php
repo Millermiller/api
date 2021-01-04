@@ -54,7 +54,7 @@ class ApiTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get("/is/assets-mobile");
+        $response = $this->get(route('asset-mobile', ['language' => 'is']));
         $response->assertJsonStructure([
                 [
                     'id',

@@ -3,9 +3,7 @@
 
 namespace Scandinaver\Blog\Infrastructure\Persistence\Doctrine;
 
-use Doctrine\ORM\{NonUniqueResultException, NoResultException};
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
-use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Shared\BaseRepository;
 
 /**

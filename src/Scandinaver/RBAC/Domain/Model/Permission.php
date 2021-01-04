@@ -28,8 +28,9 @@ class Permission extends AggregateRoot
 
     private DateTime $updatedAt;
 
-    public function __construct()
+    public function __construct(string $slug)
     {
+        $this->slug = $slug;
         $this->group = new PermissionGroup();
     }
 

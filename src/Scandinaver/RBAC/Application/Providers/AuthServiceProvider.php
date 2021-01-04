@@ -5,6 +5,9 @@ namespace Scandinaver\RBAC\Application\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Scandinaver\RBAC\Domain\Permissions\Permission;
+use Scandinaver\RBAC\Domain\Permissions\PermissionGroup;
+use Scandinaver\RBAC\Domain\Permissions\Role;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -16,63 +19,63 @@ class AuthServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Gate::define('view-roles', function (User $user) {
+        Gate::define(Role::VIEW, function (User $user) {
             return true;
         });
 
-        Gate::define('show-role', function (User $user, int $userId) {
+        Gate::define(Role::SHOW, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('create-role', function (User $user) {
+        Gate::define(Role::CREATE, function (User $user) {
             return true;
         });
 
-        Gate::define('update-role', function (User $user, int $userId) {
+        Gate::define(Role::UPDATE, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('delete-role', function (User $user, int $userId) {
+        Gate::define(Role::DELETE, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('view-permissions', function (User $user) {
+        Gate::define(Permission::VIEW, function (User $user) {
             return true;
         });
 
-        Gate::define('show-permission', function (User $user, int $userId) {
+        Gate::define(Permission::SHOW, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('create-permission', function (User $user) {
+        Gate::define(Permission::CREATE, function (User $user) {
             return true;
         });
 
-        Gate::define('update-permission', function (User $user, int $userId) {
+        Gate::define(Permission::UPDATE, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('delete-permission', function (User $user, int $userId) {
+        Gate::define(Permission::DELETE, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('view-permission-groups', function (User $user) {
+        Gate::define(PermissionGroup::VIEW, function (User $user) {
             return true;
         });
 
-        Gate::define('show-permission-group', function (User $user, int $userId) {
+        Gate::define(PermissionGroup::SHOW, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('create-permission-group', function (User $user) {
+        Gate::define(PermissionGroup::CREATE, function (User $user) {
             return true;
         });
 
-        Gate::define('update-permission-group', function (User $user, int $userId) {
+        Gate::define(PermissionGroup::UPDATE, function (User $user, int $userId) {
             return true;
         });
 
-        Gate::define('delete-permission-group', function (User $user, int $userId) {
+        Gate::define(PermissionGroup::DELETE, function (User $user, int $userId) {
             return true;
         });
     }

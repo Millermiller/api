@@ -36,6 +36,9 @@ Scandinaver\Translate\Domain\Model\Result:
       nullable: false
       precision: 0
       column: created_at
+      gedmo:
+        timestampable:
+          on: create
     updatedAt:
       type: datetime
       scale: 0
@@ -44,6 +47,9 @@ Scandinaver\Translate\Domain\Model\Result:
       nullable: true
       precision: 0
       column: updated_at
+      gedmo:
+        timestampable:
+          on: update
   manyToOne:
     language:
       targetEntity: Scandinaver\Common\Domain\Model\Language
@@ -60,7 +66,7 @@ Scandinaver\Translate\Domain\Model\Result:
       cascade: {  }
       fetch: LAZY
       mappedBy: null
-      inversedBy: null
+      inversedBy: translates
       joinColumns:
         user_id:
           referencedColumnName: id

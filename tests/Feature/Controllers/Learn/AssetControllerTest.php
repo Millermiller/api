@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Controllers\Learn;
 
-use App\Http\Controllers\Learn\AssetController;
+use Exception;
+use Throwable;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Learn\Domain\Model\Result;
 use Scandinaver\Learn\Domain\Model\WordAsset;
@@ -38,14 +40,67 @@ class AssetControllerTest extends TestCase
         );
         $this->card = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
 
-        entity(Result::class)->create(['user' => $this->user, 'language' => $this->language, 'asset' => $this->asset]);
-        entity(Result::class)->create(
-            ['user' => $this->user, 'language' => $this->language, 'asset' => $this->favouriteAsset]
+        $result = entity(Result::class)->create(['user' => $this->user, 'asset' => $this->asset]);
+        $this->user->addTest($result);
+        $result = entity(Result::class)->create(['user' => $this->user, 'asset' => $this->favouriteAsset]);
+        $this->user->addTest($result);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testShow()
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::SHOW);
+        $this->user->allow($permission);
+
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->get(
+          route('asset.show', ['language' => $this->language->getName(), 'asset' => $this->asset->getId()])
+        );
+
+        $response->assertJsonStructure(
+          [
+            'type',
+            'cards' => [
+              [
+                'id',
+                'favourite',
+                'word' => [
+                  'id',
+                  'value',
+                  'audio',
+                  'sentence',
+                  'is_public',
+                  'creator',
+                ],
+                'translate' => [
+                  'id',
+                  'value',
+                  'word' => [
+                    'id',
+                    'value',
+                    'audio',
+                    'sentence',
+                    'is_public',
+                    'creator',
+                  ],
+                ],
+              ],
+            ],
+            'title',
+          ]
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testUpdate()
     {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::UPDATE);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->put(
@@ -65,8 +120,14 @@ class AssetControllerTest extends TestCase
         static::assertEquals('TEST UPDATE ASSET', $data['title']);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testIndex()
     {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::VIEW);
+        $this->user->allow($permission);
+
         $this->actingAs($this->user, 'api');
 
         $response = $this->get('/is/assets');
@@ -177,8 +238,13 @@ class AssetControllerTest extends TestCase
         self::assertEquals(true, true);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testStore()
     {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::CREATE);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->post(route('asset.store', ['language' => 'is']), ['title' => 'TEST CREATE ASSET']);
@@ -200,48 +266,6 @@ class AssetControllerTest extends TestCase
         static::assertEquals('TEST CREATE ASSET', $data['title']);
     }
 
-    public function testShow()
-    {
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->get(
-            route('asset.show', ['language' => $this->language->getName(), 'asset' => $this->asset->getId()])
-        );
-
-        $response->assertJsonStructure(
-            [
-                'type',
-                'cards' => [
-                    [
-                        'id',
-                        'favourite',
-                        'word' => [
-                            'id',
-                            'value',
-                            'audio',
-                            'sentence',
-                            'is_public',
-                            'creator',
-                        ],
-                        'translate' => [
-                            'id',
-                            'value',
-                            'word' => [
-                                'id',
-                                'value',
-                                'audio',
-                                'sentence',
-                                'is_public',
-                                'creator',
-                            ],
-                        ],
-                    ],
-                ],
-                'title',
-            ]
-        );
-    }
-
     /**
      * TODO: implement
      */
@@ -250,8 +274,14 @@ class AssetControllerTest extends TestCase
         self::assertEquals(true, true);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testDestroy()
     {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::DELETE);
+        $this->user->allow($permission);
+
         $this->actingAs($this->user, 'api');
 
         $response = $this->delete(route('asset.destroy', ['language' => 'is', 'asset' => $this->asset->getId()]));

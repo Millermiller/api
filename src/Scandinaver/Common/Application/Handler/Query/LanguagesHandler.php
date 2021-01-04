@@ -6,6 +6,7 @@ namespace Scandinaver\Common\Application\Handler\Query;
 use Scandinaver\Common\Domain\Contract\Query\LanguagesHandlerInterface;
 use Scandinaver\Common\Domain\Services\LanguageService;
 use Scandinaver\Common\UI\Query\LanguagesQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class LanguagesHandler
@@ -27,12 +28,12 @@ class LanguagesHandler implements LanguagesHandlerInterface
     }
 
     /**
-     * @param  LanguagesQuery  $command
+     * @param  LanguagesQuery|Query  $query
      *
      * @return array
      */
-    public function handle($command): array
+    public function handle($query): array
     {
-        return $this->languageService->getLanguagesList();
+        return $this->languageService->all();
     }
 }

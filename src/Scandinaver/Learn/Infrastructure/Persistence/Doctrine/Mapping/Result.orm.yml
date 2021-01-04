@@ -52,7 +52,8 @@ Scandinaver\Learn\Domain\Model\Result:
   manyToOne:
     asset:
       targetEntity: Scandinaver\Learn\Domain\Model\Asset
-      cascade: {  }
+      cascade:
+        - persist
       fetch: LAZY
       mappedBy: null
       inversedBy: results
@@ -65,7 +66,7 @@ Scandinaver\Learn\Domain\Model\Result:
       cascade: {  }
       fetch: LAZY
       mappedBy: null
-      inversedBy: null
+      inversedBy: tests
       joinColumns:
         user_id:
           referencedColumnName: id

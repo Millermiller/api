@@ -6,10 +6,8 @@ namespace Scandinaver\Blog\Domain\Model;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**

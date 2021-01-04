@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Scandinaver\Common\Domain\Permissions\{Intro, Log, Message};
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -17,23 +18,23 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         /* INTRO */
-        Gate::define('view-intros', function (User $user) {
+        Gate::define(Intro::VIEW, function (User $user) {
             return true;
         });
 
-        Gate::define('show-intro', function (User $user, $id) {
+        Gate::define(Intro::SHOW, function (User $user, $id) {
             return true;
         });
 
-        Gate::define('create-intro', function (User $user) {
+        Gate::define(Intro::CREATE, function (User $user) {
             return true;
         });
 
-        Gate::define('update-intro', function (User $user, $id) {
+        Gate::define(Intro::UPDATE, function (User $user, $id) {
             return true;
         });
 
-        Gate::define('delete-intro', function (User $user, $id) {
+        Gate::define(Intro::DELETE, function (User $user, $id) {
             return true;
         });
 
@@ -43,28 +44,28 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         /* LOG */
-        Gate::define('view-logs', function (User $user) {
+        Gate::define(Log::VIEW, function (User $user) {
             return true;
         });
 
-        Gate::define('show-log', function (User $user, int $id) {
+        Gate::define(Log::SHOW, function (User $user, int $id) {
             return true;
         });
 
-        Gate::define('delete-log', function (User $user, int $id) {
+        Gate::define(Log::DELETE, function (User $user, int $id) {
             return true;
         });
 
         /* MESSAGE */
-        Gate::define('view-messages', function (User $user) {
+        Gate::define(Message::VIEW, function (User $user) {
             return true;
         });
 
-        Gate::define('show-message', function (User $user, int $id) {
+        Gate::define(Message::SHOW, function (User $user, int $id) {
             return true;
         });
 
-        Gate::define('delete-message', function (User $user, int $id) {
+        Gate::define(Message::DELETE, function (User $user, int $id) {
             return true;
         });
     }

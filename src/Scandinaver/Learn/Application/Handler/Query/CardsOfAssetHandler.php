@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\Learn\Domain\Contract\Query\CardsOfAssetHandlerInterface;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
@@ -22,11 +23,11 @@ class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
     }
 
     /**
-     * @param  CardsOfAssetQuery  $query
+     * @param CardsOfAssetQuery|Query $query
      *
      * @return array
      */
-    public function handle($query)
+    public function handle($query): array
     {
         return $this->cardService->getCards($query->getLanguage(), $query->getUser(), $query->getAsset());
     }

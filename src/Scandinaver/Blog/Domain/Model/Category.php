@@ -7,7 +7,6 @@ use DateTime;
 use Scandinaver\Blog\Domain\Events\CategoryDeleted;
 use Scandinaver\Blog\Domain\Events\CategoryNameUpdated;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class Category

@@ -4,6 +4,7 @@
 namespace Scandinaver\User\Application\Handler\Query;
 
 use Exception;
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Contract\Query\GetStateHandlerInterface;
 use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Query\GetStateQuery;
@@ -23,7 +24,7 @@ class GetStateHandler implements GetStateHandlerInterface
     }
 
     /**
-     * @param  GetStateQuery  $query
+     * @param GetStateQuery|Query $query
      *
      * @return array
      * @throws Exception

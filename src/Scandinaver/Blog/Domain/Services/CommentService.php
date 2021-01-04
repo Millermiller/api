@@ -10,6 +10,7 @@ use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\Comment;
 use Scandinaver\Blog\Domain\Model\CommentDTO;
 use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -17,9 +18,8 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Blog\Domain\Services
  */
-class CommentService
+class CommentService implements BaseServiceInterface
 {
-
     private CommentRepositoryInterface $commentRepository;
 
     private PostRepositoryInterface $postRepository;
@@ -33,19 +33,7 @@ class CommentService
         $this->postRepository = $postRepository;
     }
 
-    public function one(int $commentId): CommentDTO
-    {
-        /** @var Comment $comment */
-        $comment = $this->commentRepository->find($commentId);
-
-        if ($comment === null) {
-            throw new CommentNotFoundException();
-        }
-
-        return $comment->toDTO();
-    }
-
-    public function getAll(): array
+    public function all(): array
     {
         $result = [];
 
@@ -59,6 +47,31 @@ class CommentService
         return $result;
     }
 
+    /**
+     * @param  int  $id
+     *
+     * @return CommentDTO
+     * @throws CommentNotFoundException
+     */
+    public function one(int $id): CommentDTO
+    {
+        /** @var Comment $comment */
+        $comment = $this->commentRepository->find($id);
+
+        if ($comment === null) {
+            throw new CommentNotFoundException();
+        }
+
+        return $comment->toDTO();
+    }
+
+    /**
+     * @param  User   $user
+     * @param  array  $data
+     *
+     * @return CommentDTO
+     * @throws PostNotFoundException
+     */
     public function create(User $user, array $data): CommentDTO
     {
         /** @var Post $post */
@@ -78,6 +91,13 @@ class CommentService
         return $comment->toDTO();
     }
 
+    /**
+     * @param  int    $commentId
+     * @param  array  $data
+     *
+     * @return CommentDTO
+     * @throws CommentNotFoundException
+     */
     public function update(int $commentId, array $data): CommentDTO
     {
         /** @var Comment $comment */
@@ -92,6 +112,11 @@ class CommentService
         return $comment->toDTO();
     }
 
+    /**
+     * @param  int  $commentId
+     *
+     * @throws CommentNotFoundException
+     */
     public function delete(int $commentId)
     {
         /** @var Comment $comment */

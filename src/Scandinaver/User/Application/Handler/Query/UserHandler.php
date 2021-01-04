@@ -32,6 +32,6 @@ class UserHandler implements UserHandlerInterface
      */
     public function handle($query): UserDTO
     {
-        return $this->userService->getOne($query->getKey());
+        return $this->userService->one($query->getKey());
     }
 } 

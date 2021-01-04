@@ -5,7 +5,6 @@ namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**

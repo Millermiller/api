@@ -3,9 +3,6 @@
 
 namespace Scandinaver\User\Domain\Services;
 
-use Scandinaver\RBAC\Domain\Model\Role;
-use Scandinaver\User\Domain\Model\Plan;
-use App\Events\{UserDeleted};
 use Auth;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,20 +10,27 @@ use Exception;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\IntroService;
+use Scandinaver\Common\Domain\Services\LanguageService;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
+use Scandinaver\Learn\Domain\Model\Result as AssetResult;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Puzzle\Domain\PuzzleService;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
+use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
+use Scandinaver\Translate\Domain\Model\Result as TranslateResult;
 use Scandinaver\Translate\Domain\TextService;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
+use Scandinaver\User\Domain\Model\Plan;
 use Scandinaver\User\Domain\Model\User;
 use Scandinaver\User\Domain\Model\UserDTO;
 
@@ -36,7 +40,7 @@ use Scandinaver\User\Domain\Model\UserDTO;
  *
  * @package Scandinaver\User\Domain\Services
  */
-class UserService
+class UserService implements BaseServiceInterface
 {
 
     use LanguageTrait;
@@ -63,6 +67,8 @@ class UserService
 
     private IntroService $introService;
 
+    private LanguageService $languageService;
+
     private RoleRepositoryInterface $roleRepository;
 
     public function __construct(
@@ -77,6 +83,7 @@ class UserService
       RoleRepositoryInterface $roleRepository,
       TextService $textService,
       PuzzleService $puzzleService,
+      LanguageService $languageService,
       IntroService $introService
     ) {
         $this->userRepository = $userRepository;
@@ -90,10 +97,24 @@ class UserService
         $this->favouriteAssetRepository = $favouriteAssetRepository;
         $this->personalAssetRepository = $personalAssetRepository;
         $this->introService = $introService;
+        $this->languageService = $languageService;
         $this->roleRepository = $roleRepository;
     }
 
-    public function getAll(): array
+    /**
+     * @param  int  $id
+     *
+     * @return UserDTO
+     * @throws UserNotFoundException
+     */
+    public function one(int $id): UserDTO
+    {
+        $user = $this->getUser($id);
+
+        return $user->toDTO();
+    }
+
+    public function all(): array
     {
         $result = [];
 
@@ -105,11 +126,6 @@ class UserService
         }
 
         return $result;
-    }
-
-    public function find($string): array
-    {
-        return $this->userRepository->findByNameOrEmail($string);
     }
 
     /**
@@ -162,35 +178,45 @@ class UserService
         foreach ($languages as $language) {
             //даем пользователю избранное
             $favourite = new FavouriteAsset($language);
-            $favourite = $this->assetRepository->save($favourite);
-            $user->addAsset($favourite);
+            $result = new AssetResult($favourite, $user, $language);
+            $user->addTest($result);
 
             //даем пользователю первый словарь слов
             $firstWordAsset = $this->assetRepository->getFirstAsset(
               $language,
               Asset::TYPE_WORDS
             );
-            $user->addAsset($firstWordAsset);
+            $result = new AssetResult($firstWordAsset, $user, $language);
+            $user->addTest($result);
 
             //даем пользователю первый словарь предложений
             $firstSentencesAsset = $this->assetRepository->getFirstAsset(
               $language,
               Asset::TYPE_SENTENCES
             );
-            $user->addAsset($firstSentencesAsset);
+            $result = new AssetResult($firstSentencesAsset, $user, $language);
+            $user->addTest($result);
 
             //даем пользователю первый текст
             $firstText = $this->textRepository->getFirstText($language);
-            $user->addText($firstText);
+            $result = new TranslateResult($firstText, $user, $language);
+            $user->addTranslate($result);
         }
 
         $this->userRepository->save($user);
 
-       // event(new UserRegistered($user, $data));
+        // event(new UserRegistered($user, $data));
 
         return $user;
     }
 
+    /**
+     * @param  User  $user
+     * @param  string  $language
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getState(User $user, string $language): array
     {
         $language = $this->getLanguage($language);
@@ -207,14 +233,8 @@ class UserService
             $user,
             Asset::TYPE_SENTENCES
           ),
-          'favourites' => $this->favouriteAssetRepository->getFavouriteAsset(
-            $language,
-            $user
-          ),
-          'personal' => $this->personalAssetRepository->getCreatedAssets(
-            $language,
-            $user
-          ),
+          'favourites' => $user->getFavouriteAsset($language)->toDTO(),
+          'personal' => $user->getCreatedAssets($language),
           'texts' => $this->textService->getTextsForUser(
             $language->getName(),
             $user
@@ -224,8 +244,8 @@ class UserService
             $user
           ),
           'intro' => $this->introService->all(),
-          'sites' => $this->languageRepository->findAll(),
-          'currentsite' => $this->languageRepository->findOneBy(
+          'sites' => $this->languageService->all(),
+          'currentSite' => $this->languageRepository->findOneBy(
             ['name' => config('app.lang')]
           ),
           'domain' => config('app.lang'),
@@ -334,19 +354,6 @@ class UserService
         $this->userRepository->delete($user);
 
         // event(new UserDeleted($user));
-    }
-
-    /**
-     * @param  int  $id
-     *
-     * @return UserDTO
-     * @throws UserNotFoundException
-     */
-    public function getOne(int $id): UserDTO
-    {
-        $user = $this->getUser($id);
-
-        return $user->toDTO();
     }
 
 }

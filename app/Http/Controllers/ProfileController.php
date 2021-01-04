@@ -3,20 +3,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\JsonResponse;
-use Meta;
 use Scandinaver\Common\Domain\Services\FileService;
 use Scandinaver\User\Domain\Services\UserService;
-use Session;
-use App\Http\Controllers\Controller;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use App\Http\Requests\{ProfileRequest, UploadAvatarRequest};
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Spatie\Activitylog\Models\Activity;
 
 /**
  * Class ProfileController
@@ -44,26 +35,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * @return array|Factory|View|mixed
-     */
-    public function index()
-    {
-        Meta::set('title', 'Профиль');
-
-        return view('main.frontend.profile.info', ['user' => Auth::user()]);
-    }
-
-    /**
-     * @return array|Factory|View|mixed
-     */
-    public function settings()
-    {
-        Meta::set('title', 'Профиль');
-
-        return view('main.frontend.profile.settings', ['user' => Auth::user()]);
-    }
-
-    /**
      * @param UploadAvatarRequest $request
      *
      * @return JsonResponse
@@ -78,33 +49,21 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param ProfileRequest $request
+     * TODO: implement
      *
-     * @return RedirectResponse
+     * @param  ProfileRequest  $request
      */
     public function edit(ProfileRequest $request)
     {
         $this->userService->updateUserInfo($request->toArray());
-
-        Session::flash('message', 'Пользовательские данные обновлены');
-        Session::flash('alert-class', 'success');
-
-        return redirect()->route('frontend::profile');
     }
 
     /**
-     * @return Factory|View
+     *  TODO: implement
+     *  return user activity
      */
     public function log()
     {
-        Meta::set('title', 'Профиль');
 
-        $logs = Activity::where([
-            'causer_id' => Auth::user()->getKey(),
-            'log_name'  => 'public'
-        ])->orderBy('id', 'DESC')
-                        ->paginate(5);
-
-        return view('main.frontend.profile.logs', ['logs' => $logs, 'user' => Auth::user()]);
     }
 }

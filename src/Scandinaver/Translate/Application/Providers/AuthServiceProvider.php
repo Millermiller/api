@@ -5,6 +5,7 @@ namespace Scandinaver\Translate\Application\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Scandinaver\Translate\Domain\Permissions\Text;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -16,11 +17,11 @@ class AuthServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Gate::define('view-texts', function (User $user) {
+        Gate::define(Text::VIEW, function (User $user) {
             return true;
         });
 
-        Gate::define('show-text', function (User $user, int $textId) {
+        Gate::define(Text::SHOW, function (User $user, int $textId) {
             return true;
         });
 
@@ -28,15 +29,15 @@ class AuthServiceProvider extends ServiceProvider
             return true;
         });
 
-        Gate::define('create-text', function (User $user) {
+        Gate::define(Text::CREATE, function (User $user) {
             return true;
         });
 
-        Gate::define('update-text', function (User $user, int $textId) {
+        Gate::define(Text::UPDATE, function (User $user, int $textId) {
             return true;
         });
 
-        Gate::define('delete-text', function (User $user, int $textId) {
+        Gate::define(Text::DELETE, function (User $user, int $textId) {
             return true;
         });
     }

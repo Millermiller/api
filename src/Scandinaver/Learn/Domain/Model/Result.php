@@ -17,25 +17,24 @@ class Result implements JsonSerializable
 {
     private $id;
 
-    private int $result;
+    private Asset $asset;
 
-    private int $assetId;
+    private User $user;
+
+    private int $result;
 
     private DateTime $createdAt;
 
     private ?DateTime $updatedAt;
 
-    private Asset $asset;
-
-    private User $user;
-
     private Language $language;
 
-    public function __construct(Asset $asset, User $user, Language $language)
+    public function __construct(Asset $asset, User $user, Language $language, int $result = 0)
     {
         $this->asset = $asset;
         $this->user = $user;
         $this->language = $language;
+        $this->result = $result;
     }
 
     public function getValue(): int
@@ -55,4 +54,13 @@ class Result implements JsonSerializable
             'value' => $this->result,
         ];
     }
+
+    /**
+     * @return Asset
+     */
+    public function getAsset(): Asset
+    {
+        return $this->asset;
+    }
+
 }

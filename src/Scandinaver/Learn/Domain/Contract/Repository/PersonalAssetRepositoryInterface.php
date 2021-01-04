@@ -14,5 +14,5 @@ use Scandinaver\User\Domain\Model\User;
  */
 interface PersonalAssetRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getCreatedAssets(Language $language, User $user): array;
+
 }

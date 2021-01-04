@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Blog\Domain\Model\PostDTO;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -15,21 +16,22 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Blog\Domain\Services
  */
-class BlogService
+class BlogService implements BaseServiceInterface
 {
+
     private PostRepositoryInterface $postRepository;
 
     private CategoryRepositoryInterface $categoryRepository;
 
     public function __construct(
-        PostRepositoryInterface $postRepository,
-        CategoryRepositoryInterface $categoryRepository
+      PostRepositoryInterface $postRepository,
+      CategoryRepositoryInterface $categoryRepository
     ) {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function getAll(): array
+    public function all(): array
     {
         $result = [];
 
@@ -42,11 +44,34 @@ class BlogService
         return $result;
     }
 
-    public function getOne($id): PostDTO
+    /**
+     * @param  int  $id
+     *
+     * @return PostDTO
+     * @throws PostNotFoundException
+     */
+    public function one(int $id): PostDTO
     {
         $post = $this->getPost($id);
 
         return $post->toDTO();
+    }
+
+    /**
+     * @param  int  $id
+     *
+     * @return Post
+     * @throws PostNotFoundException
+     */
+    private function getPost(int $id): Post
+    {
+        /** @var  Post $post */
+        $post = $this->postRepository->find($id);
+        if ($post === null) {
+            throw new PostNotFoundException();
+        }
+
+        return $post;
     }
 
     public function create(User $user, array $data): PostDTO
@@ -64,6 +89,13 @@ class BlogService
         return $post->toDTO();
     }
 
+    /**
+     * @param  int    $post
+     * @param  array  $data
+     *
+     * @return PostDTO
+     * @throws PostNotFoundException
+     */
     public function updatePost(int $post, array $data): PostDTO
     {
         $post = $this->getPost($post);
@@ -73,6 +105,11 @@ class BlogService
         return $post->toDTO();
     }
 
+    /**
+     * @param  int  $post
+     *
+     * @throws PostNotFoundException
+     */
     public function deletePost(int $post)
     {
         $post = $this->getPost($post);
@@ -80,14 +117,4 @@ class BlogService
         $this->postRepository->delete($post);
     }
 
-    private function getPost(int $id): Post
-    {
-        /** @var  Post $post */
-        $post = $this->postRepository->find($id);
-        if ($post === null) {
-            throw new PostNotFoundException();
-        }
-
-        return $post;
-    }
 }

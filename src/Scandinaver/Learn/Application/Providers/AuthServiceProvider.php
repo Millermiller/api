@@ -4,7 +4,9 @@
 namespace Scandinaver\Learn\Application\Providers;
 
 use Gate;
+use Scandinaver\Learn\Domain\Permissions\Card;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Scandinaver\Learn\Domain\Permissions\Asset;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -17,29 +19,50 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         /* ASSET */
-        Gate::define('view-assets', function (User $user) {
-            return true;
+        Gate::define(Asset::VIEW, function (User $user) {
+            return $user->can(Asset::VIEW);
         });
 
-        Gate::define('create-asset', function (User $user) {
-            return true;
+        Gate::define(Asset::SHOW, function (User $user, $id) {
+            return $user->can(Asset::SHOW);
         });
 
-        Gate::define('update-asset', function (User $user, $id) {
-            return true;
+        Gate::define(Asset::CREATE, function (User $user) {
+            return $user->can(Asset::CREATE);
         });
 
-        Gate::define('delete-asset', function (User $user, $id) {
-            return true;
+        Gate::define(Asset::UPDATE, function (User $user, $id) {
+            return $user->can(Asset::UPDATE);
+        });
+
+        Gate::define(Asset::DELETE, function (User $user, $id) {
+            return $user->can(Asset::DELETE);
         });
 
         /* FAVOURITE */
-        Gate::define('create-favourite', function (User $user, $id) {
-            return true;
+        Gate::define(Asset::CREATE_FAVOURITE, function (User $user, $id) {
+            return $user->can(Asset::CREATE_FAVOURITE);
         });
 
-        Gate::define('delete-favourite', function (User $user, $id) {
-            return true;
+        Gate::define(Asset::DELETE_FAVOURITE, function (User $user, $id) {
+            return $user->can(Asset::DELETE_FAVOURITE);
+        });
+
+        /* CARD */
+        Gate::define(Card::VIEW, function (User $user) {
+            return $user->can(Card::VIEW);
+        });
+
+        Gate::define(Card::CREATE, function (User $user) {
+            return $user->can(Card::CREATE);
+        });
+
+        Gate::define(Card::UPDATE, function (User $user, $id) {
+            return $user->can(Card::UPDATE);
+        });
+
+        Gate::define(Card::DELETE, function (User $user, $id) {
+            return $user->can(Card::DELETE);
         });
     }
 }

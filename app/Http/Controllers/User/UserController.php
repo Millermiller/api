@@ -3,18 +3,17 @@
 
 namespace App\Http\Controllers\User;
 
+use Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
-use Exception;
-use Gate;
+use Illuminate\Http\{Request, JsonResponse};
+use Scandinaver\User\Domain\Permissions\User;
+use Scandinaver\Shared\EventBusNotFoundException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
 use Scandinaver\User\UI\Command\UpdateUserCommand;
-use Scandinaver\User\UI\Query\UserQuery;
-use Scandinaver\User\UI\Query\UsersQuery;
+use Scandinaver\User\UI\Query\{UserQuery, UsersQuery};
 
 /**
  * Class UserController
@@ -26,11 +25,12 @@ class UserController extends Controller
 
     /**
      * @return JsonResponse
-     * @throws Exception
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
-        Gate::authorize('view-users');
+        Gate::authorize(User::VIEW);
 
         return $this->execute(new UsersQuery());
     }
@@ -39,11 +39,12 @@ class UserController extends Controller
      * @param  int  $userId
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
      */
     public function show(int $userId): JsonResponse
     {
-        Gate::authorize('show-user', $userId);
+        Gate::authorize(User::SHOW, $userId);
 
         return $this->execute(new UserQuery($userId));
     }
@@ -53,11 +54,11 @@ class UserController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
     public function store(ProfileRequest $request): JsonResponse
     {
-        Gate::authorize('create-user');
+        Gate::authorize(User::CREATE);
 
         $data = $request->toArray();
 
@@ -69,11 +70,12 @@ class UserController extends Controller
      * @param  int      $userId
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
      */
     public function update(Request $request, int $userId): JsonResponse
     {
-        Gate::authorize('update-user', $userId);
+        Gate::authorize(User::UPDATE, $userId);
 
         return $this->execute(new UpdateUserCommand($userId, $request->toArray()));
     }
@@ -82,11 +84,12 @@ class UserController extends Controller
      * @param  int  $userId
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
      */
     public function destroy(int $userId): JsonResponse
     {
-        Gate::authorize('delete-user', $userId);
+        Gate::authorize(User::DELETE, $userId);
 
         return $this->execute(new DeleteUserCommand($userId), JsonResponse::HTTP_NO_CONTENT);
     }
@@ -94,11 +97,11 @@ class UserController extends Controller
     /**
      * @param  int  $userId
      *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function active(int $userId)
     {
-        Gate::authorize('update-user', $userId);
+        Gate::authorize(User::UPDATE, $userId);
 
         // User::where('id', Input::get('id'))->update(['active_to' => Carbon::parse(Input::get('data'))]);
 
@@ -108,12 +111,12 @@ class UserController extends Controller
     }
 
     /**
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function search()
     {
         Gate::authorize('view-users');
         // return $this->userService->find(Input::get('q'));
     }
+
 }

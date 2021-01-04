@@ -16,24 +16,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 class PersonalAssetRepository extends BaseRepository implements PersonalAssetRepositoryInterface
 {
-    public function getCreatedAssets(Language $language, User $user): array
-    {
-        $q = $this->createQueryBuilder('asset');
-
-        return $q->select('a')
-            ->from($this->getEntityName(), 'a')
-            ->join('a.results', 'r', 'WITH')
-            //   ->join('a.cards', 'c', 'WITH')
-            ->where($q->expr()->eq('a.language', ':language'))
-            ->andWhere($q->expr()->eq('r.user', ':user'))
-            ->andWhere('a.basic = :basic')
-            ->setParameter('language', $language)
-            ->setParameter('user', $user)
-            ->setParameter('basic', 0)
-            ->getQuery()
-            ->getResult();
-    }
-
     public function getAvailableAssets(Language $language, User $user): array
     {
         $q = $this->createQueryBuilder('asset');

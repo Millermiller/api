@@ -15,5 +15,5 @@ use Scandinaver\User\Domain\Model\User;
  */
 interface FavouriteAssetRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getFavouriteAsset(Language $language, User $user): FavouriteAsset;
+
 }

@@ -23,4 +23,4 @@ Route::get('/{language}/personal',       'App\Http\Controllers\Learn\AssetContro
 Route::post('/card', 'App\Http\Controllers\Learn\AssetController@addPair');
 Route::get('/{language}/assets-mobile', 'App\Http\Controllers\Learn\AssetController@assetsMobile')
     ->middleware(['auth:api'])
-    ->name('assets');
+    ->name('asset-mobile');
