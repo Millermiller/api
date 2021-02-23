@@ -4,8 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\GetAssetsByTypeHandlerInterface;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class GetAssetsByTypeHandler
@@ -22,9 +24,10 @@ class GetAssetsByTypeHandler implements GetAssetsByTypeHandlerInterface
     }
 
     /**
-     * @param  GetAssetsByTypeQuery  $query
+     * @param  GetAssetsByTypeQuery|Query  $query
      *
      * @return array
+     * @throws LanguageNotFoundException
      */
     public function handle($query)
     {

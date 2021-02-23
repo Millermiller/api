@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class DeleteCategoryCommand
  *
- * @see     \Scandinaver\Blog\Application\Handler\Command\DeleteCategoryHandler
  * @package Scandinaver\Blog\UI\Command
+ *
+ * @see     \Scandinaver\Blog\Application\Handler\Command\DeleteCategoryHandler
  */
 class DeleteCategoryCommand implements Command
 {

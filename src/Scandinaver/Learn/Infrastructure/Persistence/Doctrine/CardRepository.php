@@ -19,9 +19,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 class CardRepository extends BaseRepository implements CardRepositoryInterface
 {
-    /**
-     * @inheritDoc
-     */
     public function getForUser(User $user): array
     {
         // TODO: Implement getForUser() method.
@@ -37,28 +34,36 @@ class CardRepository extends BaseRepository implements CardRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('t')
-            ->from(Text::class, 't')
-            ->where('t.published = :published')
-            ->andWhere($q->expr()->eq('t.language', ':language'))
-            ->setParameter('published', 1)
-            ->setParameter('language', $language)
-            ->orderBy('t.level', 'asc')
-            ->getQuery()
-            ->getResult();
+                 ->from(Text::class, 't')
+                 ->where('t.published = :published')
+                 ->andWhere($q->expr()->eq('t.language', ':language'))
+                 ->setParameter('published', 1)
+                 ->setParameter('language', $language)
+                 ->orderBy('t.level', 'asc')
+                 ->getQuery()
+                 ->getResult();
     }
 
     public function getSentences(Language $language): array
     {
     }
 
+    /**
+     * @param  Language  $language
+     * @param  string    $word
+     * @param  bool      $sentence
+     *
+     * @return int|mixed|string
+     */
     public function search(Language $language, string $word, bool $sentence)
     {
         $q = $this->_em->createQueryBuilder();
+
         return $q->select('card')->from(Card::class, 'card')
-            ->leftJoin(Word::class, 'word', Join::WITH, 'card.word = word.id')
-            ->where('word.word LIKE :word')
-            ->setParameter('word', "%$word%")
-            ->getQuery()
-            ->getResult();
+                 ->leftJoin(Word::class, 'word', Join::WITH, 'card.word = word.id')
+                 ->where('word.word LIKE :word')
+                 ->setParameter('word', "%$word%")
+                 ->getQuery()
+                 ->getResult();
     }
 }

@@ -14,13 +14,13 @@ class UploadAvatarRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return TRUE;
     }
 
     public function rules(): array
     {
         return [
-            'photo' => 'mimes:jpeg,jpg,png|required|max:2000'
+            'photo' => 'mimes:jpeg,jpg,png|required|max:2000',
         ];
     }
 

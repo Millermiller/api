@@ -15,6 +15,12 @@ use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
  */
 trait LanguageTrait
 {
+    /**
+     * @param  string  $name
+     *
+     * @return Language
+     * @throws LanguageNotFoundException
+     */
     private function getLanguage(string $name): Language
     {
         /** @var  LanguageRepositoryInterface $repository */
@@ -27,7 +33,7 @@ trait LanguageTrait
             ]
         );
 
-        if ($language === null) {
+        if ($language === NULL) {
             throw new LanguageNotFoundException();
         }
 

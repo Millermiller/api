@@ -99,8 +99,8 @@ class User extends Authenticatable
     public function findForPassport(string $username): User
     {
         return $this->where('email', $username)
-            ->orWhere('login', $username)
-            ->first();
+                    ->orWhere('login', $username)
+                    ->first();
     }
 
     /**
@@ -179,11 +179,12 @@ class User extends Authenticatable
         if ($this->photo) {
             if (file_exists(public_path('/uploads/u/a/').$this->photo)) {
                 return url('/uploads/u/a/'.$this->photo);
-            } else {
+            }
+            else {
                 $avatar = Image::make(public_path('/uploads/u/').$this->photo);
                 $avatar->resize(
                     300,
-                    null,
+                    NULL,
                     function ($constraint) {
                         /** @var Constraint $constraint */
                         $constraint->aspectRatio();
@@ -193,7 +194,8 @@ class User extends Authenticatable
 
                 return url('/uploads/u/a/'.$this->photo);
             }
-        } else {
+        }
+        else {
             return Avatar::create($this->login)->toBase64()->encoded;
         }
     }
@@ -206,7 +208,7 @@ class User extends Authenticatable
     public function hasAsset(int $asset_id): bool
     {
         return Result::where(['asset_id' => $asset_id, 'user_id' => $this->id])
-            ->exists();
+                     ->exists();
     }
 
     /**

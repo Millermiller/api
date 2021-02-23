@@ -3,12 +3,12 @@
 
 namespace App\Events;
 
-use Scandinaver\User\Domain\Model\User;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Queue\SerializesModels;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class PasswordReset
@@ -34,8 +34,8 @@ class PasswordReset
     /**
      * Create a new event instance.
      *
-     * @param User $user
-     * @param      $password
+     * @param  User  $user
+     * @param        $password
      */
     public function __construct(User $user, $password)
     {

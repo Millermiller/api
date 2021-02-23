@@ -3,10 +3,12 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
-use Scandinaver\Shared\Contract\Query;
 use Scandinaver\Learn\Domain\Contract\Query\CardsOfAssetHandlerInterface;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class CardsOfAssetHandler
@@ -23,9 +25,11 @@ class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
     }
 
     /**
-     * @param CardsOfAssetQuery|Query $query
+     * @param  CardsOfAssetQuery|Query  $query
      *
      * @return array
+     * @throws AssetNotFoundException
+     * @throws LanguageNotFoundException
      */
     public function handle($query): array
     {

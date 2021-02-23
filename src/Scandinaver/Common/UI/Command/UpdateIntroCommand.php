@@ -9,8 +9,7 @@ use Scandinaver\Shared\Contract\Command;
  * Class UpdateIntroCommand
  *
  * @package Scandinaver\Common\UI\Command
- *
- * @see \Scandinaver\Common\Application\Handler\Command\UpdateIntroHandler
+ * @see     \Scandinaver\Common\Application\Handler\Command\UpdateIntroHandler
  */
 class UpdateIntroCommand implements Command
 {
@@ -20,7 +19,7 @@ class UpdateIntroCommand implements Command
     public function __construct(int $introId, array $data)
     {
         $this->introId = $introId;
-        $this->data = $data;
+        $this->data    = $data;
     }
 
     public function getIntroId(): int

@@ -3,8 +3,14 @@
 
 namespace Scandinaver\Blog\Domain\Exception;
 
+use Exception;
 
-class CommentNotFoundException extends \Exception
+/**
+ * Class CommentNotFoundException
+ *
+ * @package Scandinaver\Blog\Domain\Exception
+ */
+class CommentNotFoundException extends Exception
 {
     protected $code = '404';
 

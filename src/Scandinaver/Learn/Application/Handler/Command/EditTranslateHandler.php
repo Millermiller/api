@@ -4,8 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use Scandinaver\Learn\Domain\Contract\Command\EditTranslateHandlerInterface;
+use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\EditTranslateCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class EditTranslateHandler
@@ -22,8 +24,9 @@ class EditTranslateHandler implements EditTranslateHandlerInterface
     }
 
     /**
-     * @param  EditTranslateCommand  $command
+     * @param  EditTranslateCommand|Command  $command
      *
+     * @throws CardNotFoundException
      */
     public function handle($command): void
     {

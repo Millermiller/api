@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see \Scandinaver\RBAC\Application\Handler\Command\DeletePermissionGroupHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\DeletePermissionGroupHandler
  */
 class DeletePermissionGroupCommand implements Command
 {

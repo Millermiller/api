@@ -16,6 +16,12 @@ class UpdateMetaCommand implements Command
 
     private array $data;
 
+    /**
+     * UpdateMetaCommand constructor.
+     *
+     * @param $meta
+     * @param $data
+     */
     public function __construct($meta, $data)
     {
         $this->meta = $meta;

@@ -5,7 +5,6 @@ namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Shared\BaseRepository;
 use Scandinaver\User\Domain\Model\User;
 
@@ -21,13 +20,13 @@ class PersonalAssetRepository extends BaseRepository implements PersonalAssetRep
         $q = $this->createQueryBuilder('asset');
 
         return $q->select('a')
-            ->from($this->getEntityName(), 'a')
-            ->join('a.results', 'r', 'WITH')
-            ->where($q->expr()->eq('a.language', ':language'))
-            ->andWhere($q->expr()->eq('r.user', ':user'))
-            ->setParameter('language', $language)
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+                 ->from($this->getEntityName(), 'a')
+                 ->join('a.results', 'r', 'WITH')
+                 ->where($q->expr()->eq('a.language', ':language'))
+                 ->andWhere($q->expr()->eq('r.user', ':user'))
+                 ->setParameter('language', $language)
+                 ->setParameter('user', $user)
+                 ->getQuery()
+                 ->getResult();
     }
 }

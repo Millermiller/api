@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Query;
 
 use Scandinaver\Common\Domain\Contract\Query\MetasHandlerInterface;
 use Scandinaver\Common\UI\Query\MetasQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class MetasHandler
@@ -18,9 +19,7 @@ class MetasHandler implements MetasHandlerInterface
     }
 
     /**
-     * @param  MetasQuery
-     *
-     * @inheritDoc
+     * @param  MetasQuery|Query  $query
      */
     public function handle($query)
     {

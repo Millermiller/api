@@ -27,10 +27,9 @@ class CommentService implements BaseServiceInterface
     public function __construct(
         CommentRepositoryInterface $commentRepository,
         PostRepositoryInterface $postRepository
-    )
-    {
+    ) {
         $this->commentRepository = $commentRepository;
-        $this->postRepository = $postRepository;
+        $this->postRepository    = $postRepository;
     }
 
     public function all(): array
@@ -58,7 +57,7 @@ class CommentService implements BaseServiceInterface
         /** @var Comment $comment */
         $comment = $this->commentRepository->find($id);
 
-        if ($comment === null) {
+        if ($comment === NULL) {
             throw new CommentNotFoundException();
         }
 
@@ -77,7 +76,7 @@ class CommentService implements BaseServiceInterface
         /** @var Post $post */
         $post = $this->postRepository->find($data['post_id']);
 
-        if ($post === null) {
+        if ($post === NULL) {
             throw new PostNotFoundException();
         }
 
@@ -103,7 +102,7 @@ class CommentService implements BaseServiceInterface
         /** @var Comment $comment */
         $comment = $this->commentRepository->find($commentId);
 
-        if ($comment === null) {
+        if ($comment === NULL) {
             throw new CommentNotFoundException();
         }
 
@@ -122,7 +121,7 @@ class CommentService implements BaseServiceInterface
         /** @var Comment $comment */
         $comment = $this->commentRepository->find($commentId);
 
-        if ($comment === null) {
+        if ($comment === NULL) {
             throw new CommentNotFoundException();
         }
 

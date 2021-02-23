@@ -4,9 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\GetTranslatesByWordHandlerInterface;
-use Scandinaver\Learn\Domain\Services\WordService;
 use Scandinaver\Learn\Domain\Model\Translate;
+use Scandinaver\Learn\Domain\Services\WordService;
 use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class GetTranslatesByWordHandler
@@ -23,7 +24,7 @@ class GetTranslatesByWordHandler implements GetTranslatesByWordHandlerInterface
     }
 
     /**
-     * @param  GetTranslatesByWordQuery
+     * @param  GetTranslatesByWordQuery|Query  $query
      *
      * @return Translate[]
      */

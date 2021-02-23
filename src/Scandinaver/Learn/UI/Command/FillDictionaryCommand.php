@@ -21,7 +21,7 @@ class FillDictionaryCommand implements Command
     public function __construct(string $language, int $word)
     {
         $this->language = $language;
-        $this->word = $word;
+        $this->word     = $word;
     }
 
     public function getLanguage(): string

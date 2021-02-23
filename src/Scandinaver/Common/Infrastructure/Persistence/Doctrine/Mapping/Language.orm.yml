@@ -41,4 +41,4 @@ Scandinaver\Common\Domain\Model\Language:
       unique: false
       nullable: false
       precision: 0
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

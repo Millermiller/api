@@ -12,6 +12,11 @@ use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class PermissionGroupControllerTest
+ *
+ * @package Tests\Feature\Controllers\RBAC
+ */
 class PermissionGroupControllerTest extends TestCase
 {
 

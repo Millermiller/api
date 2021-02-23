@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use App\Events\FavouriteCreated;
 use Scandinaver\Learn\Domain\Contract\Command\CreateFavouriteHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateFavouriteHandler
@@ -27,11 +27,10 @@ class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
     }
 
     /**
-     * @param  CreateFavouriteCommand  $command
+     * @param  CreateFavouriteCommand|Command  $command
      */
     public function handle($command): void
     {
         $this->favouriteService->create($command->getLanguage(), $command->getUser(), $command->getCard());
-        // event(new FavouriteCreated($command->getUser(), $command->getCard()));
     }
 }

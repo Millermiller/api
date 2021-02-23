@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Common\Domain\Services;
 
-use Exception;
 use Scandinaver\Common\Domain\Contract\Repository\MessageRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Message;
 

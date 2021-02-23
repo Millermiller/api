@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\WordsCountByLanguageHandlerInterface;
 use Scandinaver\Learn\UI\Query\WordsCountByLanguageQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class WordsCountByLanguageHandler
@@ -18,9 +19,7 @@ class WordsCountByLanguageHandler implements WordsCountByLanguageHandlerInterfac
     }
 
     /**
-     * @param  WordsCountByLanguageQuery
-     *
-     * @inheritDoc
+     * @param  WordsCountByLanguageQuery|Query  $query
      */
     public function handle($query)
     {

@@ -3,19 +3,18 @@
 
 namespace App\Http\Controllers\RBAC;
 
-
-use Gate;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\{Request, JsonResponse};
-use Scandinaver\RBAC\Domain\Permissions\Role;
-use Scandinaver\Shared\EventBusNotFoundException;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\{JsonResponse, Request};
+use Scandinaver\RBAC\Domain\Permissions\Role;
+use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
 use Scandinaver\RBAC\UI\Command\CreateRoleCommand;
 use Scandinaver\RBAC\UI\Command\DeleteRoleCommand;
+use Scandinaver\RBAC\UI\Command\DetachPermissionFromRoleCommand;
 use Scandinaver\RBAC\UI\Command\UpdateRoleCommand;
 use Scandinaver\RBAC\UI\Query\{RoleQuery, RolesQuery};
-use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
-use Scandinaver\RBAC\UI\Command\DetachPermissionFromRoleCommand;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class RoleController
@@ -62,10 +61,7 @@ class RoleController extends Controller
     {
         Gate::authorize(Role::DELETE, $id);
 
-        return $this->execute(
-          new DeleteRoleCommand($id),
-          JsonResponse::HTTP_NO_CONTENT
-        );
+        return $this->execute(new DeleteRoleCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**
@@ -79,10 +75,7 @@ class RoleController extends Controller
     {
         Gate::authorize(Role::CREATE);
 
-        return $this->execute(
-          new CreateRoleCommand($request->toArray()),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new CreateRoleCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -109,9 +102,7 @@ class RoleController extends Controller
      */
     public function attachPermission(int $roleId, int $permissionId): JsonResponse
     {
-        return $this->execute(
-          new AttachPermissionToRoleCommand($roleId, $permissionId)
-        );
+        return $this->execute(new AttachPermissionToRoleCommand($roleId, $permissionId));
     }
 
     /**
@@ -123,9 +114,7 @@ class RoleController extends Controller
      */
     public function detachPermission(int $roleId, int $permissionId): JsonResponse
     {
-        return $this->execute(
-          new DetachPermissionFromRoleCommand($roleId, $permissionId)
-        );
+        return $this->execute(new DetachPermissionFromRoleCommand($roleId, $permissionId));
     }
 
     public function search()

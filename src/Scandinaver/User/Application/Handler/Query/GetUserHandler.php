@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Query;
 
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Contract\Query\GetUserHandlerInterface;
 use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Query\GetUserQuery;
@@ -22,7 +23,7 @@ class GetUserHandler implements GetUserHandlerInterface
     }
 
     /**
-     * @param  GetUserQuery
+     * @param  GetUserQuery|Query  $query
      *
      * @return array
      */

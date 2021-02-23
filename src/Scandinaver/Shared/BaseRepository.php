@@ -3,15 +3,11 @@
 
 namespace Scandinaver\Shared;
 
-use Doctrine\Common\Inflector\Inflector;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping;
-use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Doctrine\ORM\UnitOfWork;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Inflector\Inflector;
+use Doctrine\ORM\OptimisticLockException;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
-use Scandinaver\Shared\Contract\EventBusInterface;
 
 /**
  * Class BaseRepository

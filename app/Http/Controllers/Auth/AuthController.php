@@ -23,22 +23,19 @@ class AuthController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      * @throws ValidationException
      */
     public function login(Request $request): JsonResponse
     {
-        $this->validate($request,
-            [
+        $this->validate($request, [
                 'login'    => 'required',
                 'password' => 'required',
-            ],
-            [
+            ], [
                 'required' => 'Поле :attribute должно быть заполнено.',
-            ]
-        );
+            ]);
         //TODO: повторяется
         $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'login';
 
@@ -49,12 +46,16 @@ class AuthController extends Controller
 
             $tokenResult = auth()->user()->createToken('Personal Access Token');
             $tokenResult->token->save();
-            return response()->json(['access_token' => $tokenResult->accessToken,]);
+
+            return response()->json(['access_token' => $tokenResult->accessToken]);
         } catch (UserNotFoundException $e) {
             return response()->json('Неверный логин или пароль', 403);
         }
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function logout(): JsonResponse
     {
         $this->commandBus->execute(new LogoutCommand(Auth::user()));

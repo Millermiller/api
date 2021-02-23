@@ -1,18 +1,27 @@
 <?php
 
-Route::get('/{language}/text/{text}', 'App\Http\Controllers\Translate\TextController@show');
-Route::get('/{language}/syns/{id}', 'App\Http\Controllers\Translate\TextController@getSyns');
-Route::post('/{language}/nextTLevel', 'App\Http\Controllers\Translate\TextController@nextLevel');
-Route::get('/{language}/texts', 'App\Http\Controllers\Translate\TextController@all');
-Route::post('/text/publish', 'App\Http\Controllers\Translate\TextController@publish');
-Route::post('/text/{id}', 'App\Http\Controllers\Translate\TextController@textedit');
-Route::post('/text', 'App\Http\Controllers\Translate\TextController@textcreate');
-Route::delete('/text/{id}', 'App\Http\Controllers\Translate\TextController@textdelete');
-Route::get('/text/{id}', 'App\Http\Controllers\Translate\TextController@getText');
-Route::post('/text/extra', 'App\Http\Controllers\Translate\TextController@addExtras');
-Route::post('/text/sentences', 'App\Http\Controllers\Translate\TextController@saveSentences');
-Route::get('/text/synonyms/{id}', 'App\Http\Controllers\Translate\TextController@getSynonyms');
-Route::post('/text/synonym', 'App\Http\Controllers\Translate\TextController@addSynonym');
-Route::delete('/text/synonym/{id}', 'App\Http\Controllers\Translate\TextController@deleteSynonym');
-Route::post('/text/image/{id}', 'App\Http\Controllers\Translate\TextController@uploadImage');
-Route::post('/text/description/{id}', 'App\Http\Controllers\Translate\TextController@updateDescription');
+use App\Http\Controllers\Translate\TextController;
+
+Route::group(
+  [
+    'as' => 'text',
+    'namespace' => 'App\Http\Controllers\RBAC',
+  ],
+  function () {
+      Route::get('/{language}/text/{text}',         [TextController::class, 'show'])->name('show');
+      Route::get('/{language}/texts', [TextController::class, 'all'])->name('all');
+      Route::post('/{language}/nextTLevel',  [TextController::class, 'nextLevel']);
+      Route::post('/text/publish', [TextController::class, 'publish'])->name('publish');
+      Route::post('/text/{id}', [TextController::class, 'update'])->name('update');
+      Route::post('/text', [TextController::class, 'store'])->name('create');
+      Route::delete('/text/{id}', [TextController::class, 'destroy'])->name('delete');
+      /********************** TODO:refactor **************************/
+      Route::post('/text/extra', [TextController::class, 'addExtras']);
+      Route::post('/text/sentences',  [TextController::class, 'saveSentences']);
+      Route::get('/text/synonyms/{id}', [TextController::class, 'getSynonyms']);
+      Route::post('/text/synonym', [TextController::class, 'addSynonym']);
+      Route::delete('/text/synonym/{id}', [TextController::class, 'deleteSynonym']);
+      Route::post('/text/image/{id}', [TextController::class, 'uploadImage']);
+      Route::post('/text/description/{id}', [TextController::class, 'updateDescription']);
+  }
+);

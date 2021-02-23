@@ -4,12 +4,17 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 
+/**
+ * Class PersonalAsset
+ *
+ * @package Scandinaver\Learn\Domain\Model
+ */
 class PersonalAsset extends Asset
 {
-    public function getType(): string
+    public function getType(): int
     {
         return Asset::TYPE_PERSONAL;
     }
 
-    protected int $category = 0;
+    protected int $category = Asset::TYPE_PERSONAL;
 }

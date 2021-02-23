@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\CommandHandler;
  *
  * @package Scandinaver\Learn\Domain\Contract\Command
  */
-interface SaveTestResultHandlerInterface extends CommandHandler
+interface CompleteTestHandlerInterface extends CommandHandler
 {
 
 }

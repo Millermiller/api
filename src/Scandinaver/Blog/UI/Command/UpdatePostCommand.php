@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class UpdatePostCommand
  *
- * @see     \Scandinaver\Blog\Application\Handler\Command\UpdatePostHandler
  * @package Scandinaver\Blog\UI\Command
+ *
+ * @see     \Scandinaver\Blog\Application\Handler\Command\UpdatePostHandler
  */
 class UpdatePostCommand implements Command
 {
@@ -20,7 +21,7 @@ class UpdatePostCommand implements Command
     public function __construct(int $postId, array $data)
     {
         $this->postId = $postId;
-        $this->data = $data;
+        $this->data   = $data;
     }
 
     public function getData(): array

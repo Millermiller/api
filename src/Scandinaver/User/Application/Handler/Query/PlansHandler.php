@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Query;
 
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Contract\Query\PlansHandlerInterface;
 use Scandinaver\User\UI\Query\PlansQuery;
 
@@ -18,9 +19,7 @@ class PlansHandler implements PlansHandlerInterface
     }
 
     /**
-     * @param  PlansQuery
-     *
-     * @inheritDoc
+     * @param  PlansQuery|Query  $query
      */
     public function handle($query)
     {

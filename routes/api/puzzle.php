@@ -1,8 +1,18 @@
 <?php
 
-Route::get('/{language}/puzzle/all', 'App\Http\Controllers\Puzzle\PuzzleController@index');
-Route::get('/{language}/puzzle/user', 'App\Http\Controllers\Puzzle\PuzzleController@byUser');
-Route::get('/{language}/puzzle/{puzzle}', 'App\Http\Controllers\Puzzle\PuzzleController@show');
-Route::put('/{language}/puzzle/{puzzle}/complete', 'App\Http\Controllers\Puzzle\PuzzleController@complete');
-Route::post('/{language}/puzzle', 'App\Http\Controllers\Puzzle\PuzzleController@store');
-Route::delete('/puzzle/{puzzle}', 'App\Http\Controllers\Puzzle\PuzzleController@destroy');
+use App\Http\Controllers\Puzzle\PuzzleController;
+
+Route::group(
+  [
+    'as' => 'puzzle',
+    'namespace' => 'App\Http\Controllers',
+  ],
+  function () {
+      Route::get('/{language}/puzzle/all',               [PuzzleController::class, 'index'])->name('all');
+      Route::post('/{language}/puzzle/user',             [PuzzleController::class, 'byUser'])->name('user');
+      Route::post('/{language}/puzzle/{puzzle}',         [PuzzleController::class, 'show'])->name('show');
+      Route::put('/{language}/puzzle/{puzzle}/complete', [PuzzleController::class, 'complete'])->name('complete');
+      Route::post('/{language}/puzzle',                  [PuzzleController::class, 'store'])->name('store');
+      Route::delete('/puzzle/{puzzle}',                  [PuzzleController::class, 'destroy'])->name('destroy');
+  }
+);

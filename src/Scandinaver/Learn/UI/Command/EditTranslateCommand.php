@@ -28,13 +28,13 @@ class EditTranslateCommand implements Command
     public function __construct(array $data)
     {
         $this->translateId = $data['id'];
-        $this->cardId = $data['card_id'];
-        $this->text = $data['text'];
+        $this->cardId      = $data['card_id'];
+        $this->text        = $data['text'];
 
         $this->translateRepository = app()->make(
             'TranslateRepositoryInterface'
         );
-        $this->cardRepository = app()->make('CardRepositoryInterface');
+        $this->cardRepository      = app()->make('CardRepositoryInterface');
     }
 
     public function getTranslate(): int

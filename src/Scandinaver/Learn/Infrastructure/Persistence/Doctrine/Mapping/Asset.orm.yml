@@ -107,7 +107,7 @@ Scandinaver\Learn\Domain\Model\Asset:
   manyToOne:
     language:
       targetEntity: Scandinaver\Common\Domain\Model\Language
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: language
       joinColumns:
@@ -134,4 +134,4 @@ Scandinaver\Learn\Domain\Model\Asset:
       inversedBy: null
       orphanRemoval: false
       orderBy: null
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

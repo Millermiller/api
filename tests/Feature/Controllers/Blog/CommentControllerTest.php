@@ -9,6 +9,11 @@ use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class CommentControllerTest
+ *
+ * @package Tests\Feature\Controllers\Blog
+ */
 class CommentControllerTest extends TestCase
 {
     private int $commentCount = 2;

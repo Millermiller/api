@@ -22,8 +22,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontReport = [
-        //
+    protected $dontReport = [//
     ];
 
     /**
@@ -40,7 +39,7 @@ class Handler extends ExceptionHandler
      * Report or log an exception.
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param Exception $exception
+     * @param  Exception  $exception
      *
      * @return void
      * @throws Exception
@@ -53,8 +52,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param Request $request
-     * @param Exception               $exception
+     * @param  Request    $request
+     * @param  Exception  $exception
      *
      * @return Response
      */
@@ -66,8 +65,9 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into a response.
      *
-     * @param  Request  $request
+     * @param  Request                  $request
      * @param  AuthenticationException  $exception
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)

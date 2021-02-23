@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use Scandinaver\Learn\Domain\Contract\Command\UploadAudioHandlerInterface;
 use Scandinaver\Learn\Domain\Services\AudioService;
 use Scandinaver\Learn\UI\Command\UploadAudioCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UploadAudioHandler
@@ -22,8 +23,7 @@ class UploadAudioHandler implements UploadAudioHandlerInterface
     }
 
     /**
-     * @param  UploadAudioCommand  $command
-     *
+     * @param  UploadAudioCommand|Command  $command
      */
     public function handle($command): void
     {

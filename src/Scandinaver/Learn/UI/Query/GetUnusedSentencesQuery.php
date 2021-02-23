@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class GetUnusedSentencesQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\GetUnusedSentencesHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\GetUnusedSentencesHandler
  */
 class GetUnusedSentencesQuery implements Query
 {

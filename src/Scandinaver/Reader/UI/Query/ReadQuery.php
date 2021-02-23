@@ -23,8 +23,8 @@ class ReadQuery implements Query
 
     public function __construct(User $user, string $language, string $text)
     {
-        $this->text = $text;
-        $this->user = $user;
+        $this->text     = $text;
+        $this->user     = $user;
         $this->language = $language;
     }
 

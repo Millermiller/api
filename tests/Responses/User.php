@@ -3,7 +3,11 @@
 
 namespace Tests\Responses;
 
-
+/**
+ * Class User
+ *
+ * @package Tests\Responses
+ */
 class User implements ResponseInterface
 {
 
@@ -12,16 +16,19 @@ class User implements ResponseInterface
         return [
             'id',
             'login',
-            'email',
-            'active_to',
-            'plan' => Plan::response(),
-            'plan_id',
-            'name',
-            'photo',
-            'assets_opened',
-            'assets_created',
-            'premium',
             'avatar',
+            'email',
+            'active',
+            'active_to',
+            // 'plan' => Plan::response(),
+            // 'plan_id',
+            // 'name',
+            // 'photo',
+            // 'assets_opened',
+            // 'assets_created',
+            'roles',
+            'permissions'
+
         ];
     }
 }

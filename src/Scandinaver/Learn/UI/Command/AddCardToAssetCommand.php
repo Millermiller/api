@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class AddCardToAssetCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\AddCardToAssetHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\AddCardToAssetHandler
  */
 class AddCardToAssetCommand implements Command
 {
@@ -28,10 +29,10 @@ class AddCardToAssetCommand implements Command
         int $card,
         int $asset
     ) {
-        $this->user = $user;
-        $this->asset = $asset;
+        $this->user     = $user;
+        $this->asset    = $asset;
         $this->language = $language;
-        $this->card = $card;
+        $this->card     = $card;
     }
 
     public function getUser(): User

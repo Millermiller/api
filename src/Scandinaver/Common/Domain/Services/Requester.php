@@ -27,9 +27,9 @@ class Requester
         $client = new Client(
             [
                 'base_uri' => config('app.FORUM'),
-                'curl' => [
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_SSL_VERIFYHOST => false,
+                'curl'     => [
+                    CURLOPT_SSL_VERIFYPEER => FALSE,
+                    CURLOPT_SSL_VERIFYHOST => FALSE,
                 ],
             ]
         );
@@ -40,7 +40,7 @@ class Requester
             [
                 'form_params' => [
                     'username' => $params['login'],
-                    'email' => $params['email'],
+                    'email'    => $params['email'],
                     'password' => $params['password'],
                 ],
             ]
@@ -50,7 +50,8 @@ class Requester
             activity('admin')->log(
                 'Пользователь '.$params['login'].' зарегистрирован на форуме'
             );
-        } else {
+        }
+        else {
             activity('admin')->log(
                 'Пользователь '.$params['login'].' - ошибка регистрации на форуме'
             );
@@ -72,9 +73,9 @@ class Requester
         $client = new Client(
             [
                 'base_uri' => config('app.FORUM'),
-                'curl' => [
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_SSL_VERIFYHOST => false,
+                'curl'     => [
+                    CURLOPT_SSL_VERIFYPEER => FALSE,
+                    CURLOPT_SSL_VERIFYHOST => FALSE,
                 ],
             ]
         );
@@ -84,10 +85,10 @@ class Requester
             '/api/updateuser.php',
             [
                 'form_params' => [
-                    'username' => (isset($data['login'])) ? $data['login'] : null,
-                    'email' => (isset($data['email'])) ? $data['email'] : null,
+                    'username' => (isset($data['login'])) ? $data['login'] : NULL,
+                    'email'    => (isset($data['email'])) ? $data['email'] : NULL,
                     'oldemail' => $oldemail,
-                    'password' => (isset($data['password'])) ? $data['password'] : null,
+                    'password' => (isset($data['password'])) ? $data['password'] : NULL,
                 ],
             ]
         );
@@ -96,11 +97,12 @@ class Requester
             activity('admin')->log(
                 'forum user updated email - '.$data['email']
             );
-        } else {
+        }
+        else {
             activity('admin')->log($response->getBody());
         }
 
-        return true;
+        return TRUE;
     }
 
     /**
@@ -116,9 +118,9 @@ class Requester
         $client = new Client(
             [
                 'base_uri' => config('app.FORUM'),
-                'curl' => [
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_SSL_VERIFYHOST => false,
+                'curl'     => [
+                    CURLOPT_SSL_VERIFYPEER => FALSE,
+                    CURLOPT_SSL_VERIFYHOST => FALSE,
                 ],
             ]
         );
@@ -140,7 +142,7 @@ class Requester
         //  activity('admin')->log($response->getBody());
 
 
-        return true;
+        return TRUE;
     }
 
     /**
@@ -154,9 +156,9 @@ class Requester
         $client = new Client(
             [
                 'base_uri' => config('app.FORUM'),
-                'curl' => [
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_SSL_VERIFYHOST => false,
+                'curl'     => [
+                    CURLOPT_SSL_VERIFYPEER => FALSE,
+                    CURLOPT_SSL_VERIFYHOST => FALSE,
                 ],
             ]
         );
@@ -167,7 +169,7 @@ class Requester
             [
                 'form_params' => [
                     '_xfToken' => '1518553156,7fbce47c7ede95773cee960ebcb2fa9d',
-                    'login' => $params['username'],
+                    'login'    => $params['username'],
                     'password' => $params['password'],
                 ],
             ]
@@ -186,6 +188,6 @@ class Requester
             );
         }
 
-        return true;
+        return TRUE;
     }
 }

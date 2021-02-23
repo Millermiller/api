@@ -1,6 +1,9 @@
 <?php
 
 
+use App\Http\Controllers\Blog\PostController;
+use App\Http\Controllers\Blog\CommentController;
+use App\Http\Controllers\Blog\CategoryController;
 
 Route::group(
     [
@@ -9,29 +12,9 @@ Route::group(
         'middleware' => [],
     ],
     function () {
-        Route::get(
-            '/post',
-            [
-                'as' => 'all',
-                'uses' => 'PostController@index',
-            ]
-        );
-
-        Route::get(
-            '/post/{postId}',
-            [
-                'as' => 'show',
-                'uses' => 'PostController@show',
-            ]
-        );
-
-        Route::get(
-            '/post/search',
-            [
-                'as' => 'search',
-                'uses' => 'PostController@search',
-            ]
-        );
+        Route::get('/post',          [PostController::class, 'index'])->name('all');
+        Route::get('/post/{postId}', [PostController::class, 'show'])->name('show');
+        Route::get('/post/search',   [PostController::class, 'search'])->name('search');
     }
 );
 
@@ -42,56 +25,54 @@ Route::group(
         'middleware' => ['auth:api'],
     ],
     function () {
-
-        Route::delete(
-            '/post/{postId}',
-            [
-                'as' => 'delete',
-                'uses' => 'PostController@destroy',
-            ]
-        );
-
-        Route::post(
-            '/post',
-            [
-                'as' => 'create',
-                'uses' => 'PostController@store',
-            ]
-        );
-
-        Route::put(
-            '/post/{postId}',
-            [
-                'as' => 'update',
-                'uses' => 'PostController@update',
-            ]
-        );
-
-        Route::post(
-            '/post/upload',
-            [
-                'as' => 'upload',
-                'uses' => 'PostController@upload',
-            ]
-        );
+        Route::delete('/post/{postId}', [PostController::class, 'destroy'])->name('delete');
+        Route::post('/post',            [PostController::class, 'store'])->name('create');
+        Route::put('/post/{postId}',    [PostController::class, 'update'])->name('update');
+        Route::post('/post/upload',     [PostController::class, 'upload'])->name('upload');
     }
 );
 
+Route::group(
+  [
+      'as' => 'category:',
+      'namespace' => 'App\Http\Controllers\Blog',
+      'middleware' => [],
+  ],
+  function () {
+    Route::get('/category',               [CategoryController::class, 'index'])->name('all');
+    Route::get('/category/{categoryId}',  [CategoryController::class, 'show'])->name('show');
+});
 
-Route::get('/category', 'App\Http\Controllers\Blog\CategoryController@index')->name('category:all');
-Route::get('/category/{categoryId}', 'App\Http\Controllers\Blog\CategoryController@show')->name('category:show');
-Route::delete('/category/{categoryId}', 'App\Http\Controllers\Blog\CategoryController@destroy')
-    ->name('category:delete')->middleware(['auth:api']);
-Route::post('/category', 'App\Http\Controllers\Blog\CategoryController@store')
-    ->name('category:create')->middleware(['auth:api']);
-Route::put('/category/{categoryId}', 'App\Http\Controllers\Blog\CategoryController@update')
-    ->name('category:update')->middleware(['auth:api']);
+Route::group(
+  [
+      'as' => 'category:',
+      'namespace' => 'App\Http\Controllers\Blog',
+      'middleware' => ['auth:api'],
+  ],
+  function () {
+    Route::delete('/category/{categoryId}', [CategoryController::class, 'destroy'])->name('delete');
+    Route::post('/category',                [CategoryController::class, 'store'])->name('create');
+    Route::put('/category/{categoryId}',    [CategoryController::class, 'update'])->name('update');
+});
 
-Route::get('/comment', 'App\Http\Controllers\Blog\CommentController@index')->name('comment:all');
-Route::get('/comment/{commentId}', 'App\Http\Controllers\Blog\CommentController@show')->name('comment:show');
-Route::delete('/comment/{commentId}', 'App\Http\Controllers\Blog\CommentController@destroy')
-    ->name('comment:delete')->middleware(['auth:api']);
-Route::post('/comment', 'App\Http\Controllers\Blog\CommentController@store')
-    ->name('comment:create')->middleware(['auth:api']);
-Route::put('/comment/{commentId}', 'App\Http\Controllers\Blog\CommentController@update')
-    ->name('comment:update')->middleware(['auth:api']);
+Route::group(
+  [
+      'as' => 'comment:',
+      'namespace' => 'App\Http\Controllers\Blog',
+  ],
+  function () {
+    Route::get('/comment',             [CommentController::class, 'index'])->name('all');
+    Route::get('/comment/{commentId}', [CommentController::class, 'show'])->name('show');
+});
+
+Route::group(
+  [
+      'as' => 'comment:',
+      'namespace' => 'App\Http\Controllers\Blog',
+      'middleware' => ['auth:api'],
+  ],
+  function () {
+    Route::delete('/comment/{commentId}', [CommentController::class, 'destroy'])->name('delete');
+    Route::post('/comment',               [CommentController::class, 'store'])->name('create');
+    Route::put('/comment/{commentId}',    [CommentController::class, 'update'])->name('update');
+});

@@ -6,6 +6,11 @@ namespace Scandinaver\RBAC\Domain\Services;
 
 use Scandinaver\RBAC\Domain\Model\Role;
 
+/**
+ * Class RoleFactory
+ *
+ * @package Scandinaver\RBAC\Domain\Services
+ */
 class RoleFactory
 {
     public static function build(array $data): Role

@@ -8,7 +8,6 @@ use Exception;
 use Psr\Log\{LoggerInterface, LoggerTrait};
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Log;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Logger
@@ -26,6 +25,11 @@ class Logger implements LoggerInterface
         $this->logRepository = $logRepository;
     }
 
+    /**
+     * @param  mixed   $level
+     * @param  string  $message
+     * @param  array   $context
+     */
     public function log($level, $message, array $context = [])
     {
         $log = new Log(Auth::user(), $level, $message, $context);
@@ -33,21 +37,21 @@ class Logger implements LoggerInterface
         try {
             $this->logRepository->save($log);
         } catch (Exception $e) {
-//
+            //
             //    \Illuminate\Support\Facades\Log::error($message, $context);
-//
+            //
             //    $manager = app('em');
-//
+            //
             //    if (!$manager->isOpen()) {
             //        $manager = $manager->create(
             //            $manager->getConnection(),
             //            $manager->getConfiguration()
             //        );
             //    }
-//
+            //
             //    /** @var User $user */
             //    $user = $manager->find('Scandinaver\User\Domain\Model\User', 1);
-//
+            //
             //    $trace = [];
             //    if (is_array($context)) {
             //        foreach ($context as $item) {
@@ -56,7 +60,7 @@ class Logger implements LoggerInterface
             //            }
             //        }
             //    }
-//
+            //
             //    $log = new Log($user, $level, $message, [], $trace);
             //    $manager->persist($log);
             //    $manager->flush($log);

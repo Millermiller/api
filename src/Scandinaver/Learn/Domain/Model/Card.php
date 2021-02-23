@@ -33,7 +33,7 @@ class Card extends AggregateRoot
 
     private Collection $assets;
 
-    private bool $favourite = false;
+    private bool $favourite = FALSE;
 
     private Language $language;
 
@@ -43,9 +43,9 @@ class Card extends AggregateRoot
 
     public function __construct()
     {
-        $this->word = new Word();
+        $this->word      = new Word();
         $this->translate = new Translate();
-        $this->examples = new ArrayCollection();
+        $this->examples  = new ArrayCollection();
     }
 
     public function getWord(): Word
@@ -73,6 +73,9 @@ class Card extends AggregateRoot
     }
 
 
+    /**
+     * @param $value
+     */
     public function setTranslateValue($value)
     {
         if ($this->translate->getValue() !== $value) {
@@ -139,6 +142,9 @@ class Card extends AggregateRoot
         }
     }
 
+    /**
+     * @param  Example  $example
+     */
     public function removeExample(Example $example)
     {
         if ($this->examples->contains($example)) {

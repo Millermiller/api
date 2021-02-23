@@ -3,20 +3,20 @@
 
 namespace App\Http\Controllers\Puzzle;
 
-use Gate;
 use App\Helpers\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Scandinaver\Puzzle\UI\Query\PuzzleQuery;
-use Scandinaver\Puzzle\UI\Query\PuzzlesQuery;
-use Scandinaver\Puzzle\Domain\Permissions\Puzzle;
-use Scandinaver\Shared\EventBusNotFoundException;
-use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Scandinaver\Puzzle\Domain\Permissions\Puzzle;
 use Scandinaver\Puzzle\UI\Command\CreatePuzzleCommand;
 use Scandinaver\Puzzle\UI\Command\DeletePuzzleCommand;
 use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;
+use Scandinaver\Puzzle\UI\Query\PuzzleQuery;
+use Scandinaver\Puzzle\UI\Query\PuzzlesQuery;
+use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Created by PhpStorm.
@@ -73,7 +73,7 @@ class PuzzleController extends Controller
     }
 
     /**
-     * @param  string  $language
+     * @param  string   $language
      * @param  Request  $request
      *
      * @return JsonResponse
@@ -84,10 +84,7 @@ class PuzzleController extends Controller
     {
         Gate::authorize(Puzzle::CREATE);
 
-        return $this->execute(
-          new CreatePuzzleCommand($language, $request->toArray()),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new CreatePuzzleCommand($language, $request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**

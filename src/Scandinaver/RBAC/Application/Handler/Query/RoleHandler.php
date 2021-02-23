@@ -3,12 +3,11 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Contract\Query\RoleHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
-use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\RBAC\Domain\Model\RoleDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\RoleQuery;
-use Scandinaver\RBAC\Domain\Contract\Query\RoleHandlerInterface;
 use Scandinaver\Shared\Contract\Query;
 
 /**

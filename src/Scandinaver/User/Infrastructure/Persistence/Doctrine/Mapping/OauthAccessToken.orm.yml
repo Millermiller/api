@@ -76,4 +76,4 @@ Scandinaver\User\Domain\Model\OauthAccessToken:
       nullable: true
       precision: 0
       column: expires_at
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

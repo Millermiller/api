@@ -6,6 +6,7 @@ namespace Scandinaver\Common\Application\Handler\Query;
 use Scandinaver\Common\Domain\Contract\Query\IntrosHandlerInterface;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Query\IntrosQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class MessagesHandler
@@ -22,7 +23,7 @@ class IntrosHandler implements IntrosHandlerInterface
     }
 
     /**
-     * @param  IntrosQuery  $query
+     * @param  IntrosQuery|Query  $query
      *
      * @return array
      */

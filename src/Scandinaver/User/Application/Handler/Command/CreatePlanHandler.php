@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\CreatePlanHandlerInterface;
 use Scandinaver\User\UI\Command\CreatePlanCommand;
 
@@ -18,9 +19,7 @@ class CreatePlanHandler implements CreatePlanHandlerInterface
     }
 
     /**
-     * @param  CreatePlanCommand  $command
-     *
-     * @inheritDoc
+     * @param  CreatePlanCommand|Command  $command
      */
     public function handle($command): void
     {

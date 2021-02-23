@@ -14,10 +14,16 @@ use Scandinaver\Learn\Domain\Model\Word;
  */
 class CardFactory
 {
+
+    /**
+     * @param $data
+     *
+     * @return Card
+     */
     public function build($data): Card
     {
-        $card = new Card();
-        $word = new Word();
+        $card      = new Card();
+        $word      = new Word();
         $translate = new Translate();
 
         $word->setWord($data['word']);

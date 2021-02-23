@@ -3,7 +3,6 @@
 
 namespace Scandinaver\User\Domain\Services;
 
-use Exception;
 use Illuminate\Contracts\Hashing\Hasher;
 use Scandinaver\User\Domain\Model\User;
 
@@ -21,6 +20,10 @@ class PasswordService
         $this->hasher = $hasher;
     }
 
+    /**
+     * @param  User  $user
+     * @param        $password
+     */
     public function changePassword(User $user, $password)
     {
         $user->setPassword($this->hasher->make($password));

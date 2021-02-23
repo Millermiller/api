@@ -11,6 +11,11 @@ use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 use Scandinaver\RBAC\Domain\Model\Permission;
 
+/**
+ * Class PostControllerTest
+ *
+ * @package Tests\Feature\Controllers\Blog
+ */
 class PostControllerTest extends TestCase
 {
 
@@ -26,7 +31,7 @@ class PostControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = entity(User::class, 1)->create();
+        $this->user = entity(User::class)->create();
 
         $this->category = entity(Category::class, 1)->create();
 
@@ -73,7 +78,7 @@ class PostControllerTest extends TestCase
      */
     public function testStore()
     {
-        $permission = new Permission(\Scandinaver\Blog\Domain\Permissions\Post::CREATE);
+        $permission = entity(Permission::class)->create(['slug' => \Scandinaver\Blog\Domain\Permissions\Post::CREATE]);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');

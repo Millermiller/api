@@ -3,10 +3,12 @@
 
 namespace Scandinaver\Common\Application\Handler\Command;
 
+use Scandinaver\Common\Domain\Contract\Command\UpdateIntroHandlerInterface;
+use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Model\IntroDTO;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Command\UpdateIntroCommand;
-use Scandinaver\Common\Domain\Contract\Command\UpdateIntroHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UpdateIntroHandler
@@ -24,9 +26,10 @@ class UpdateIntroHandler implements UpdateIntroHandlerInterface
     }
 
     /**
-     * @param  UpdateIntroCommand  $command
+     * @param  UpdateIntroCommand|Command  $command
      *
      * @return IntroDTO
+     * @throws IntroNotFoundException
      */
     public function handle($command): IntroDTO
     {

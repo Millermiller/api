@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 
 use Artisan;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -39,28 +40,10 @@ class CreateCommand extends GeneratorCommand
     protected $type = 'Command';
 
     /**
-     * Get the stub file for the generator.
-     *
-     * @return string
+     * @return bool|void|null
+     * @throws FileNotFoundException
      */
-    protected function getStub()
-    {
-        return __DIR__ . '/Stubs/custom-command.stub';
-    }
-
-    protected function getArguments(): array
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the class'],
-        ];
-    }
-
-    protected function getDefaultNamespace($rootNamespace): string
-    {
-        return "Scandinaver";
-    }
-
-    public function handle()
+    public function handle(): ?bool
     {
         $this->domain = $this->ask('domain');
 
@@ -75,19 +58,19 @@ class CreateCommand extends GeneratorCommand
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('createCommandHandler', [
-            'name'   => "{$name}Handler",
-            'domain' => $this->domain
-        ]);
+                'name'   => "{$name}Handler",
+                'domain' => $this->domain,
+            ]);
     }
 
     /**
      * Get the destination class path.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
-    protected function getPath($name)
+    protected function getPath($name): string
     {
         $name = Str::replaceFirst($this->getDefaultNamespace($name), '', $name);
         $name = str_replace('\\', '/', $name);
@@ -97,26 +80,64 @@ class CreateCommand extends GeneratorCommand
     }
 
     /**
-     * Get the full namespace for a given class, without the class name.
-     *
-     * @param string $name
+     * @param  string  $rootNamespace
      *
      * @return string
      */
-    protected function getNamespace($name)
+    protected function getDefaultNamespace($rootNamespace): string
     {
-        $commandNamespace = str_replace('/', '\\', $this->commandPath);
-        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace";
+        return "Scandinaver";
     }
 
-    protected function replaceClass($stub, $name)
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub(): string
+    {
+        return __DIR__ . '/Stubs/custom-command.stub';
+    }
+
+    protected function getArguments(): array
+    {
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+        ];
+    }
+
+    /**
+     * Replace the class name for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function replaceClass($stub, $name): string
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
         $handlerClass     = str_replace('Command', 'Handler', $class);
+
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"], $stub);
+        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"],
+            $stub);
+    }
+
+    /**
+     * Get the full namespace for a given class, without the class name.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function getNamespace($name): string
+    {
+        $commandNamespace = str_replace('/', '\\', $this->commandPath);
+
+        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace";
     }
 }

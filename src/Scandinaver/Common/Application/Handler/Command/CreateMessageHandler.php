@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\CreateMessageHandlerInterface;
 use Scandinaver\Common\UI\Command\CreateMessageCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateMessageHandler
@@ -18,7 +19,7 @@ class CreateMessageHandler implements CreateMessageHandlerInterface
     }
 
     /**
-     * @param  CreateMessageCommand  $command
+     * @param  CreateMessageCommand|Command  $command
      */
     public function handle($command): void
     {

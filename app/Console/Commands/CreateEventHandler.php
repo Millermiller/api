@@ -5,9 +5,15 @@ namespace App\Console\Commands;
 
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class CreateEventHandler
+ *
+ * @package App\Console\Commands
+ */
 class CreateEventHandler extends GeneratorCommand
 {
     protected $name = 'scandinaver:event:handler';
@@ -18,6 +24,11 @@ class CreateEventHandler extends GeneratorCommand
 
     protected string $eventPath = 'Domain/Events/Listeners';
 
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
     protected function getStub()
     {
         return __DIR__ . '/Stubs/custom-event-handler.stub';
@@ -31,12 +42,26 @@ class CreateEventHandler extends GeneratorCommand
         ];
     }
 
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     *
+     * @return string
+     */
     protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
     }
 
-    public function handle()
+    /**
+     * Execute the console command.
+     *
+     * @return bool|null
+     *
+     * @throws FileNotFoundException
+     */
+    public function handle(): ?bool
     {
         $name = $this->getNameInput();
 
@@ -51,11 +76,18 @@ class CreateEventHandler extends GeneratorCommand
         $this->info($this->type . ' created successfully.');
 
         $this->call('scandinaver:rebuild:events', [
-            'domain' => $this->domain
-        ]);
+                'domain' => $this->domain,
+            ]);
     }
 
-    protected function getPath($name)
+    /**
+     * Get the destination class path.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function getPath($name): string
     {
         $name = Str::replaceFirst($this->getDefaultNamespace($name), '', $name);
         $name = str_replace('\\', '/', $name);
@@ -64,23 +96,40 @@ class CreateEventHandler extends GeneratorCommand
         return "{$path}src/{$this->getDefaultNamespace($name)}/{$this->domain}/{$this->eventPath}/{$name}Listener.php";
     }
 
-    protected function getNamespace($name)
+    /**
+     * Get the full namespace for a given class, without the class name.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function getNamespace($name): string
     {
         $eventNamespace = str_replace('/', '\\', $this->eventPath);
+
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$eventNamespace";
     }
 
-    protected function replaceClass($stub, $name)
+    /**
+     * Replace the class name for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function replaceClass($stub, $name): string
     {
-        $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
+        $class = str_replace($this->getNamespace($name) . '\\', '', $name);
 
         return str_replace([
             'DummyClass',
             'DummyEventClass',
             'DummyEventNamespace',
-        ], ["{$class}Listener",
-            $class,
-            "\\{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Events\\{$class}",
-        ], $stub);
+        ], [
+                "{$class}Listener",
+                $class,
+                "\\{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Events\\{$class}",
+            ], $stub);
     }
 }

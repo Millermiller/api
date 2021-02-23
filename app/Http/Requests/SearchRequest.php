@@ -15,20 +15,20 @@ class SearchRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return true;
+        return TRUE;
     }
 
     public function rules(): array
     {
         return [
-            'query' => 'required|min:3|max:255'
+            'query' => 'required|min:3|max:255',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'min' => 'Минимум :min символа'
+            'min' => 'Минимум :min символа',
         ];
     }
 }

@@ -18,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         Gate::define(Reader::READ, function (User $user) {
-            return true;
+            return TRUE;
         });
     }
 }

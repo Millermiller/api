@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class CreateAssetCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UpdateAssetHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\UpdateAssetHandler
  */
 class UpdateAssetCommand implements Command
 {
@@ -22,8 +23,8 @@ class UpdateAssetCommand implements Command
 
     public function __construct(User $user, int $asset, array $data)
     {
-        $this->user = $user;
-        $this->data = $data;
+        $this->user  = $user;
+        $this->data  = $data;
         $this->asset = $asset;
     }
 
@@ -37,6 +38,9 @@ class UpdateAssetCommand implements Command
         return $this->data['title'];
     }
 
+    /**
+     * @return int|mixed
+     */
     public function getLevel()
     {
         return $this->data['level'] ? $this->data['level'] : 0;

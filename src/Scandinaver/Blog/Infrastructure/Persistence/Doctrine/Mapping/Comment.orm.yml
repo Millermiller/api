@@ -45,7 +45,7 @@ Scandinaver\Blog\Domain\Model\Comment:
   manyToOne:
     post:
       targetEntity: Scandinaver\Blog\Domain\Model\Post
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: comments
@@ -55,7 +55,7 @@ Scandinaver\Blog\Domain\Model\Comment:
       orphanRemoval: false
     user:
       targetEntity: Scandinaver\User\Domain\Model\User
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -63,4 +63,4 @@ Scandinaver\Blog\Domain\Model\Comment:
         user_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

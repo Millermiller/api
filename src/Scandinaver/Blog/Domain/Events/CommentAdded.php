@@ -22,7 +22,7 @@ class CommentAdded implements DomainEvent
 
     public function __construct(Post $post, Comment $comment)
     {
-        $this->post = $post;
+        $this->post    = $post;
         $this->comment = $comment;
     }
 

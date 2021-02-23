@@ -5,6 +5,7 @@ namespace Scandinaver\User\Application\Handler\Command;
 
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\DeleteUserHandlerInterface;
+use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
 use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
 
@@ -23,7 +24,9 @@ class DeleteUserHandler implements DeleteUserHandlerInterface
     }
 
     /**
-     * @param $command DeleteUserCommand | Command
+     * @param  DeleteUserCommand|Command  $command
+     *
+     * @throws UserNotFoundException
      */
     public function handle($command): void
     {

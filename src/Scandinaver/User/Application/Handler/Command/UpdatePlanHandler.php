@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\UpdatePlanHandlerInterface;
 use Scandinaver\User\UI\Command\UpdatePlanCommand;
 
@@ -18,7 +19,7 @@ class UpdatePlanHandler implements UpdatePlanHandlerInterface
     }
 
     /**
-     * @param  UpdatePlanCommand
+     * @param  UpdatePlanCommand|Command  $command
      *
      * @inheritDoc
      */

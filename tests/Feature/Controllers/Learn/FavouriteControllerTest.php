@@ -55,7 +55,7 @@ class FavouriteControllerTest extends TestCase
 
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('delete-favorite', [
+        $response = $this->delete(route('favourite:remove', [
             'language' => 'is', 'card' => $this->favouriteCard->getId()
         ]));
 
@@ -71,7 +71,7 @@ class FavouriteControllerTest extends TestCase
 
         $response = $this->post(
             route(
-                'add-favorite',
+                'favourite:add',
                 ['language' => 'is', 'card' => $this->card->getId()]
             )
         );

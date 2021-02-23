@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class AddBasicLevelCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\AddBasicLevelHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\AddBasicLevelHandler
  */
 class AddBasicLevelCommand implements Command
 {
@@ -19,7 +20,7 @@ class AddBasicLevelCommand implements Command
 
     public function __construct(string $language, array $data)
     {
-        $this->type = $data['asset_id'];
+        $this->type     = $data['asset_id'];
         $this->language = $language;
     }
 

@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Model\CommentDTO;
 use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Query\CommentQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class CommentHandler
@@ -25,7 +26,7 @@ class CommentHandler implements CommentHandlerInterface
     }
 
     /**
-     * @param  CommentQuery  $query
+     * @param  CommentQuery|Query  $query
      *
      * @return CommentDTO
      * @throws CommentNotFoundException

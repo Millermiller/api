@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 use Scandinaver\Learn\Domain\Contract\Query\WordsCountHandlerInterface;
 use Scandinaver\Learn\Domain\Services\WordService;
 use Scandinaver\Learn\UI\Query\WordsCountQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class WordsCountHandler
@@ -22,7 +23,7 @@ class WordsCountHandler implements WordsCountHandlerInterface
     }
 
     /**
-     * @param  WordsCountQuery  $query
+     * @param  WordsCountQuery|Query  $query
      *
      * @return int
      */

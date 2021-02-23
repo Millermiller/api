@@ -3,10 +3,11 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Scandinaver\Learn\Domain\Contract\Command\CreateCardHandlerInterface;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\CreateCardCommand;
-use Scandinaver\Learn\Domain\Contract\Command\CreateCardHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateCardHandler
@@ -23,7 +24,7 @@ class CreateCardHandler implements CreateCardHandlerInterface
     }
 
     /**
-     * @param  CreateCardCommand  $command
+     * @param  CreateCardCommand|Command  $command
      *
      * @return Card
      */

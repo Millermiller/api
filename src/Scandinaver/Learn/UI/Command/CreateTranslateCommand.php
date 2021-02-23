@@ -9,8 +9,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class CreateTranslateCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CreateTranslateHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\CreateTranslateHandler
  */
 class CreateTranslateCommand implements Command
 {
@@ -25,8 +26,8 @@ class CreateTranslateCommand implements Command
     public function __construct(int $card_id, array $data)
     {
         $this->card_id = $card_id;
-        $this->text = $data['text'];
-        $this->value = $data['value'];
+        $this->text    = $data['text'];
+        $this->value   = $data['value'];
 
         $this->cardRepository = app()->make('CardRepositoryInterface');
     }

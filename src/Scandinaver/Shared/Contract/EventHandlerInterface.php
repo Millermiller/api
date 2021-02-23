@@ -4,8 +4,11 @@
 namespace Scandinaver\Shared\Contract;
 
 
-use Scandinaver\Shared\DomainEvent;
-
+/**
+ * Interface EventHandlerInterface
+ *
+ * @package Scandinaver\Shared\Contract
+ */
 interface EventHandlerInterface
 {
     public function handle();

@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\DeleteMetaHandlerInterface;
 use Scandinaver\Common\UI\Command\DeleteMetaCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteMetaHandler
@@ -18,9 +19,7 @@ class DeleteMetaHandler implements DeleteMetaHandlerInterface
     }
 
     /**
-     * @param  DeleteMetaCommand
-     *
-     * @inheritDoc
+     * @param  DeleteMetaCommand|Command  $command
      */
     public function handle($command): void
     {

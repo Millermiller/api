@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class TextsCountByLanguageQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\TextsCountByLanguageHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\TextsCountByLanguageHandler
  */
 class TextsCountByLanguageQuery implements Query
 {

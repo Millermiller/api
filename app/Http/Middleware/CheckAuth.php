@@ -18,8 +18,8 @@ class CheckAuth
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      *
      * @return mixed
      * @throws AuthenticationException
@@ -29,8 +29,6 @@ class CheckAuth
         if (Auth::check()) {
             return $next($request);
         }
-        throw new AuthenticationException(
-            'Unauthenticated.'
-        );
+        throw new AuthenticationException('Unauthenticated.');
     }
 }

@@ -3,13 +3,8 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use EntityManager;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Learn\Domain\Model\PersonalAsset;
-use Scandinaver\Learn\Domain\Model\SentenceAsset;
-use Scandinaver\Learn\Domain\Model\WordAsset;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
 use Scandinaver\Shared\BaseRepository;
 
 /**
@@ -19,6 +14,12 @@ use Scandinaver\Shared\BaseRepository;
  */
 class AssetRepositoryFactory
 {
+    /**
+     * @param  int  $type
+     *
+     * @return BaseRepository
+     * @throws BindingResolutionException
+     */
     public static function getByType(int $type): BaseRepository
     {
         switch ($type) {

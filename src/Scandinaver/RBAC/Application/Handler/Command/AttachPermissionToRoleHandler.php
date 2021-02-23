@@ -3,11 +3,11 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Contract\Command\AttachPermissionToRoleHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
-use Scandinaver\RBAC\Domain\Contract\Command\AttachPermissionToRoleHandlerInterface;
 use Scandinaver\Shared\Contract\Command;
 
 /**

@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\TextsCountHandlerInterface;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\Translate\Domain\TextService;
 
 /**
@@ -22,7 +23,7 @@ class TextsCountHandler implements TextsCountHandlerInterface
     }
 
     /**
-     * @param  AssetsCountQuery  $query
+     * @param  AssetsCountQuery|Query  $query
      *
      * @return int
      */

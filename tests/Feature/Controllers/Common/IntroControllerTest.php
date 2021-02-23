@@ -150,7 +150,7 @@ class IntroControllerTest extends TestCase
 
         $testIntroId = 1;
 
-        $response = $this->delete(route('intro:destroy', ['introId' => $testIntroId]));
+        $response = $this->delete(route('intro:delete', ['introId' => $testIntroId]));
 
         self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
     }

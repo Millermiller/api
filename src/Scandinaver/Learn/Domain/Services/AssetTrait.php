@@ -3,10 +3,12 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+
 use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Model\Asset;
+
 
 /**
  * Trait AssetTrait
@@ -15,6 +17,12 @@ use Scandinaver\Learn\Domain\Model\Asset;
  */
 trait AssetTrait
 {
+    /**
+     * @param  int  $id
+     *
+     * @return Asset
+     * @throws AssetNotFoundException
+     */
     private function getAsset(int $id): Asset
     {
         /** @var  AssetRepositoryInterface $repository */
@@ -23,7 +31,7 @@ trait AssetTrait
         /** @var Asset $asset */
         $asset = $repository->find($id);
 
-        if ($asset === null) {
+        if ($asset === NULL) {
             throw new AssetNotFoundException();
         }
 

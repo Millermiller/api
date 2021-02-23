@@ -3,11 +3,10 @@
 
 namespace Scandinaver\Translate\Domain;
 
-use App\Events\NextTextLevel;
 use Doctrine\DBAL\DBALException;
 use PDO;
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Translate\Domain\Model\Result;
@@ -41,6 +40,12 @@ class TextService
         return $this->textRepository->count([]);
     }
 
+    /**
+     * @param  string  $language
+     *
+     * @return int
+     * @throws LanguageNotFoundException
+     */
     public function countByLanguage(string $language): int
     {
         $language = $this->getLanguage($language);
@@ -48,6 +53,12 @@ class TextService
         return $this->textRepository->getCountByLanguage($language);
     }
 
+    /**
+     * @param  string  $language
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getAllByLanguage(string $language): array
     {
         $language = $this->getLanguage($language);
@@ -64,6 +75,13 @@ class TextService
         return $result;
     }
 
+    /**
+     * @param  string  $language
+     * @param  User    $user
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getTextsForUser(string $language, User $user): array
     {
         $language = $this->getLanguage($language);
@@ -111,9 +129,9 @@ class TextService
      *
      * @return Text
      * @throws DBALException
-     * @throws Exception\TextNotFoundException
+     * @throws Exception\TextNotFoundException|\Doctrine\DBAL\Driver\Exception
      */
-    public function prepareText(int $textId)
+    public function prepareText(int $textId): Text
     {
         $text = $this->getText($textId);
 
@@ -147,6 +165,13 @@ class TextService
         return $text;
     }
 
+    /**
+     * @param  User  $user
+     * @param  int   $textId
+     *
+     * @return Text
+     * @throws Exception\TextNotFoundException
+     */
     public function giveNextLevel(User $user, int $textId): Text
     {
         $text = $this->getText($textId);
@@ -162,8 +187,6 @@ class TextService
         }
 
         $result = $this->resultRepository->save($result);
-
-        event(new NextTextLevel($user, $result));
 
         return $nextText;
     }

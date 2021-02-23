@@ -4,6 +4,11 @@
 namespace Scandinaver\Shared\Contract;
 
 
+/**
+ * Interface Factory
+ *
+ * @package Scandinaver\Shared\Contract
+ */
 interface Factory
 {
 

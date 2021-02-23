@@ -31,10 +31,10 @@ class Result implements JsonSerializable
 
     public function __construct(Asset $asset, User $user, Language $language, int $result = 0)
     {
-        $this->asset = $asset;
-        $this->user = $user;
+        $this->asset    = $asset;
+        $this->user     = $user;
         $this->language = $language;
-        $this->result = $result;
+        $this->result   = $result;
     }
 
     public function getValue(): int
@@ -47,10 +47,13 @@ class Result implements JsonSerializable
         $this->result = $value;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id'    => $this->id,
             'value' => $this->result,
         ];
     }

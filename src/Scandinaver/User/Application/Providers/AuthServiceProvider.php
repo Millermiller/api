@@ -17,23 +17,23 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         Gate::define(\Scandinaver\User\Domain\Permissions\User::VIEW, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(\Scandinaver\User\Domain\Permissions\User::SHOW, function (User $user, int $userId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(\Scandinaver\User\Domain\Permissions\User::CREATE, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(\Scandinaver\User\Domain\Permissions\User::UPDATE, function (User $user, int $userId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(\Scandinaver\User\Domain\Permissions\User::DELETE, function (User $user, int $userId) {
-            return true;
+            return TRUE;
         });
     }
 }

@@ -64,4 +64,4 @@ Scandinaver\RBAC\Domain\Model\Role:
       fetch: EAGER
       orphanRemoval: false
       orderBy: null
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

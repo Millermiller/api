@@ -3,13 +3,13 @@
 
 namespace App\Http\Controllers\User;
 
-use Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
-use Illuminate\Http\{Request, JsonResponse};
-use Scandinaver\User\Domain\Permissions\User;
-use Scandinaver\Shared\EventBusNotFoundException;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\{JsonResponse, Request};
+use Scandinaver\Shared\EventBusNotFoundException;
+use Scandinaver\User\Domain\Permissions\User;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
 use Scandinaver\User\UI\Command\UpdateUserCommand;

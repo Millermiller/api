@@ -3,28 +3,28 @@
 
 namespace App\Http\Controllers\Translate;
 
-use Gate;
-use Exception;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use Upload\{File, Storage\FileSystem};
-use Upload\Validation\{Size, Mimetype};
-use Illuminate\Http\{Request, JsonResponse};
-use Scandinaver\Translate\UI\Query\GetTextQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
-use Scandinaver\Translate\UI\Query\GetTextsQuery;
+use Exception;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\{JsonResponse, Request};
 use Intervention\Image\ImageManagerStatic as Image;
+use Scandinaver\Shared\EventBusNotFoundException;
 use Scandinaver\Translate\Domain\Permissions\Text;
-use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
-use Scandinaver\Translate\UI\Command\CreateTextCommand;
-use Scandinaver\Translate\UI\Command\DeleteTextCommand;
-use Scandinaver\Translate\UI\Command\PublishTextCommand;
 use Scandinaver\Translate\UI\Command\CompleteTextCommand;
 use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
-use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
+use Scandinaver\Translate\UI\Command\CreateTextCommand;
 use Scandinaver\Translate\UI\Command\CreateTextExtraCommand;
+use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
+use Scandinaver\Translate\UI\Command\DeleteTextCommand;
+use Scandinaver\Translate\UI\Command\PublishTextCommand;
 use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
+use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
+use Scandinaver\Translate\UI\Query\GetTextQuery;
+use Scandinaver\Translate\UI\Query\GetTextsQuery;
+use Upload\{File, Storage\FileSystem};
+use Upload\Validation\{Mimetype, Size};
 
 /**
  * Created by PhpStorm.
@@ -312,22 +312,20 @@ class TextController extends Controller
 
         $this->authorize('update', Text::class);
 
-        $storage = new FileSystem(public_path().'/uploads/photo/');
-        $file = new File('file', $storage);
+        $storage      = new FileSystem(public_path() . '/uploads/photo/');
+        $file         = new File('file', $storage);
         $new_filename = uniqid();
         $file->setName($new_filename);
-        $file->addValidations(
-          [
-            new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
-            new Size('5M'),
-          ]
-        );
+        $file->addValidations([
+                new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
+                new Size('5M'),
+            ]);
         try {
             $file->upload();
-            $url = '/uploads/photo/'.$file->getNameWithExtension();
+            $url = '/uploads/photo/' . $file->getNameWithExtension();
 
             // Image::configure(array('driver' => 'GD'));
-            $img = Image::make(public_path().$url);
+            $img = Image::make(public_path() . $url);
 
             if ($img->getWidth() > 1000) {
                 $img->widen(600);
@@ -337,27 +335,25 @@ class TextController extends Controller
                 $img->heighten(600);
             }
 
-            $img->save(null, 100);
+            $img->save(NULL, 100);
 
-            $thumb = Image::make(public_path().$url);
+            $thumb = Image::make(public_path() . $url);
             $thumb->widen(150);
-            $thumb->save(public_path().'/uploads/thumbs/'.$file->getNameWithExtension());
+            $thumb->save(public_path() . '/uploads/thumbs/' . $file->getNameWithExtension());
 
-            $text = Text::find($id);
-            $text->image = '/uploads/photo/'.$file->getNameWithExtension();
+            $text        = Text::find($id);
+            $text->image = '/uploads/photo/' . $file->getNameWithExtension();
 
             return response()->json(['success' => $text->save()]);
         } catch (Exception $e) {
-            $errors = $file->getErrors();
+            $errors  = $file->getErrors();
             $message = implode(', ', $errors);
 
-            return response()->json(
-              [
-                'msg' => $message,
-                'success' => false,
-                'mess' => $e->getMessage(),
-              ]
-            );
+            return response()->json([
+                    'msg'     => $message,
+                    'success' => FALSE,
+                    'mess'    => $e->getMessage(),
+                ]);
         }
     }
 

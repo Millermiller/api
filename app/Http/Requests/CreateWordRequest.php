@@ -14,7 +14,7 @@ class CreateWordRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return TRUE;
     }
 
     public function rules(): array

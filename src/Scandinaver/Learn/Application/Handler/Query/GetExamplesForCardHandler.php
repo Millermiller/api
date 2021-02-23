@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Contract\Query\GetExamplesForCardHandlerInterface;
 use Scandinaver\Learn\Domain\Model\Example;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class GetExamplesForCardHandler
@@ -24,7 +25,7 @@ class GetExamplesForCardHandler implements GetExamplesForCardHandlerInterface
     }
 
     /**
-     * @param  GetExamplesForCardQuery
+     * @param  GetExamplesForCardQuery|Query  $query
      *
      * @return Collection|Example[]|array
      */

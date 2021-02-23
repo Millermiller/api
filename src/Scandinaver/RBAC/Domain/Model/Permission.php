@@ -22,7 +22,7 @@ class Permission extends AggregateRoot
 
     private ?string $description;
 
-    private ?PermissionGroup $group = null;
+    private ?PermissionGroup $group = NULL;
 
     private DateTime $createdAt;
 
@@ -30,7 +30,7 @@ class Permission extends AggregateRoot
 
     public function __construct(string $slug)
     {
-        $this->slug = $slug;
+        $this->slug  = $slug;
         $this->group = new PermissionGroup();
     }
 

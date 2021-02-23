@@ -3,7 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\CompleteTextHandlerInterface;
+use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
 use Scandinaver\Translate\Domain\TextService;
 use Scandinaver\Translate\UI\Command\CompleteTextCommand;
 
@@ -22,8 +24,9 @@ class CompleteTextHandler implements CompleteTextHandlerInterface
     }
 
     /**
-     * @param  CompleteTextCommand  $command
+     * @param  CompleteTextCommand|Command  $command
      *
+     * @throws TextNotFoundException
      */
     public function handle($command): void
     {

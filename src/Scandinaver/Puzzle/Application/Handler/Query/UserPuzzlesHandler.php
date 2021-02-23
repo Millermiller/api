@@ -6,6 +6,7 @@ namespace Scandinaver\Puzzle\Application\Handler\Query;
 use Scandinaver\Puzzle\Domain\Contract\Query\UserPuzzlesHandlerInterface;
 use Scandinaver\Puzzle\Domain\PuzzleService;
 use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class UserPuzzlesHandler
@@ -22,7 +23,7 @@ class UserPuzzlesHandler implements UserPuzzlesHandlerInterface
     }
 
     /**
-     * @param  UserPuzzlesQuery  $query
+     * @param  UserPuzzlesQuery|Query  $query
      *
      * @return array
      */

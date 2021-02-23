@@ -6,6 +6,7 @@ namespace Scandinaver\Reader\Application\Handler\Query;
 use Scandinaver\Reader\Domain\Contract\Query\ReadHandlerInterface;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
 use Scandinaver\Reader\UI\Query\ReadQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class ReadHandler
@@ -22,8 +23,9 @@ class ReadHandler implements ReadHandlerInterface
     }
 
     /**
-     * @param  ReadQuery  $query
+     * @param  ReadQuery|Query  $query
      *
+     * @return mixed
      */
     public function handle($query)
     {

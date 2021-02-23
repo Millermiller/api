@@ -4,9 +4,11 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\UpdatePostHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\PostDTO;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Command\UpdatePostCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UpdatePostHandler
@@ -23,9 +25,10 @@ class UpdatePostHandler implements UpdatePostHandlerInterface
     }
 
     /**
-     * @param  UpdatePostCommand  $command
+     * @param  UpdatePostCommand|Command  $command
      *
      * @return PostDTO
+     * @throws PostNotFoundException
      */
     public function handle($command): PostDTO
     {

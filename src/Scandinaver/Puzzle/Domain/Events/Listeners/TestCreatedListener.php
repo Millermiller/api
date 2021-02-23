@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Puzzle\Domain\Events\Listeners;
 
-use \Scandinaver\Puzzle\Domain\Events\TestCreated;
+use Scandinaver\Puzzle\Domain\Events\TestCreated;
 
 /**
  * Class TestCreatedListener
@@ -17,6 +17,9 @@ class TestCreatedListener
     {
     }
 
+    /**
+     * @param  TestCreated  $event
+     */
     public function handle(TestCreated $event)
     {
     }

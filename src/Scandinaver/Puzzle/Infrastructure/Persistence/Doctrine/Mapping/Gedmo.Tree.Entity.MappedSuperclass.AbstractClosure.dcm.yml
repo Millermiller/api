@@ -1,5 +1,5 @@
 Gedmo\Tree\Entity\MappedSuperclass\AbstractClosure:
   type: mappedSuperclass
   table: abstract_closures
-  id: {  }
-  lifecycleCallbacks: {  }
+  id: { }
+  lifecycleCallbacks: { }

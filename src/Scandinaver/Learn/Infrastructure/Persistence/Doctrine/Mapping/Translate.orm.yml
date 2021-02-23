@@ -73,7 +73,7 @@ Scandinaver\Learn\Domain\Model\Translate:
       orphanRemoval: false
     language:
       targetEntity: Scandinaver\Common\Domain\Model\Language
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -81,4 +81,4 @@ Scandinaver\Learn\Domain\Model\Translate:
         language_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

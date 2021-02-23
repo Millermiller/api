@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Common\UI\Command
  *
- * @see \Scandinaver\Common\Application\Handler\Command\DeleteIntroHandler
+ * @see     \Scandinaver\Common\Application\Handler\Command\DeleteIntroHandler
  */
 class DeleteIntroCommand implements Command
 {

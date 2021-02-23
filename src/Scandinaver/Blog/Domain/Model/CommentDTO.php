@@ -6,6 +6,11 @@ namespace Scandinaver\Blog\Domain\Model;
 
 use Scandinaver\Shared\DTO;
 
+/**
+ * Class CommentDTO
+ *
+ * @package Scandinaver\Blog\Domain\Model
+ */
 class CommentDTO extends DTO
 {
     private Comment $comment;
@@ -15,12 +20,15 @@ class CommentDTO extends DTO
         $this->comment = $comment;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
-            'id' => $this->comment->getId(),
+            'id'   => $this->comment->getId(),
             'text' => $this->comment->getText(),
-            'user' => $this->comment->getUser(),
+            'user' => $this->comment->getUser()->toDTO(),
         ];
     }
 }

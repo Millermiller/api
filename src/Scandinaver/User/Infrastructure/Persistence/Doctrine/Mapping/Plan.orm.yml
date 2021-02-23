@@ -42,4 +42,4 @@ Scandinaver\User\Domain\Model\Plan:
       nullable: true
       precision: 0
       column: cost_per_month
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

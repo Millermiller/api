@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class GiveNextLevelCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\GiveNextLevelHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\GiveNextLevelHandler
  */
 class GiveNextLevelCommand implements Command
 {
@@ -20,7 +21,7 @@ class GiveNextLevelCommand implements Command
 
     public function __construct(User $user, int $asset)
     {
-        $this->user = $user;
+        $this->user  = $user;
         $this->asset = $asset;
     }
 

@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use App\Events\CardAdded;
 use Scandinaver\Learn\Domain\Contract\Command\AddCardToAssetHandlerInterface;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class AddCardToAssetHandler
@@ -23,7 +23,7 @@ class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
     }
 
     /**
-     * @param  AddCardToAssetCommand  $command
+     * @param  AddCardToAssetCommand|Command  $command
      */
     public function handle($command): void
     {
@@ -33,6 +33,5 @@ class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
             $command->getCard(),
             $command->getAsset()
         );
-        // event(new CardAdded($command->getUser(), $card));
     }
 }

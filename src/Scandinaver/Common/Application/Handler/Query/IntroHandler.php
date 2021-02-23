@@ -4,10 +4,11 @@
 namespace Scandinaver\Common\Application\Handler\Query;
 
 use Scandinaver\Common\Domain\Contract\Query\IntroHandlerInterface;
-use Scandinaver\Common\Domain\Model\Intro;
+use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Model\IntroDTO;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Query\IntroQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class MessagesHandler
@@ -29,9 +30,10 @@ class IntroHandler implements IntroHandlerInterface
     }
 
     /**
-     * @param  IntroQuery  $query
+     * @param  IntroQuery|Query  $query
      *
      * @return IntroDTO
+     * @throws IntroNotFoundException
      */
     public function handle($query): IntroDTO
     {

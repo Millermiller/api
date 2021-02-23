@@ -11,7 +11,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see \Scandinaver\Learn\Application\Handler\Command\UploadCsvSentencesHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\UploadCsvSentencesHandler
  */
 class UploadCsvSentencesCommand implements Command
 {
@@ -22,7 +22,7 @@ class UploadCsvSentencesCommand implements Command
     public function __construct(string $language, UploadedFile $file)
     {
         $this->language = $language;
-        $this->file = $file;
+        $this->file     = $file;
     }
 
     public function getLanguage(): string

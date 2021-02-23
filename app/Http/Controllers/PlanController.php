@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\User\Domain\Model\Plan;
 use Scandinaver\Shared\EventBusNotFoundException;
+use Scandinaver\User\Domain\Model\Plan;
 use Scandinaver\User\UI\Command\CreatePlanCommand;
 use Scandinaver\User\UI\Command\DeletePlanCommand;
 use Scandinaver\User\UI\Command\UpdatePlanCommand;

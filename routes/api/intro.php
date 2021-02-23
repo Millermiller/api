@@ -1,7 +1,17 @@
 <?php
 
-Route::get('/intro', 'App\Http\Controllers\Common\IntroController@index')->name('intro:all');
-Route::get('/intro/{introId}', 'App\Http\Controllers\Common\IntroController@show')->name('intro:show');
-Route::delete('/intro/{introId}', 'App\Http\Controllers\Common\IntroController@destroy')->name('intro:destroy');
-Route::post('/intro', 'App\Http\Controllers\Common\IntroController@store')->name('intro:create');
-Route::put('/intro/{introId}', 'App\Http\Controllers\Common\IntroController@update')->name('intro:update');
+
+use App\Http\Controllers\Common\IntroController;
+
+Route::group(
+  [
+      'as' => 'intro:',
+      'namespace' => 'App\Http\Controllers\Learn',
+  ],
+  function () {
+    Route::get('/intro',              [IntroController::class, 'index'])->name('all');
+    Route::get('/intro/{introId}',    [IntroController::class, 'show'])->name('show');
+    Route::delete('/intro/{introId}', [IntroController::class, 'destroy'])->name('delete');
+    Route::post('/intro',             [IntroController::class, 'store'])->name('create');
+    Route::put('/intro/{introId}',    [IntroController::class, 'update'])->name('update');
+});

@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use Scandinaver\Learn\Domain\Contract\Command\CreateTranslateHandlerInterface;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateTranslateHandler
@@ -22,8 +23,7 @@ class CreateTranslateHandler implements CreateTranslateHandlerInterface
     }
 
     /**
-     * @param  CreateTranslateCommand  $command
-     *
+     * @param  CreateTranslateCommand|Command  $command
      */
     public function handle($command): void
     {

@@ -7,6 +7,11 @@ namespace Scandinaver\Learn\Domain\Events;
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\DomainEvent;
 
+/**
+ * Class WordUpdated
+ *
+ * @package Scandinaver\Learn\Domain\Events
+ */
 class WordUpdated implements DomainEvent
 {
 
@@ -16,7 +21,7 @@ class WordUpdated implements DomainEvent
 
     public function __construct(Word $word, string $value)
     {
-        $this->word = $word;
+        $this->word  = $word;
         $this->value = $value;
     }
 

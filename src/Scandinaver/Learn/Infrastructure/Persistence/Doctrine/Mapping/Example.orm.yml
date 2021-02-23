@@ -56,7 +56,7 @@ Scandinaver\Learn\Domain\Model\Example:
   manyToOne:
     card:
       targetEntity: Scandinaver\Learn\Domain\Model\Card
-      cascade: ["persist", "merge"]
+      cascade: [ "persist", "merge" ]
       fetch: LAZY
       mappedBy: null
       inversedBy: examples
@@ -64,4 +64,4 @@ Scandinaver\Learn\Domain\Model\Example:
         card_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

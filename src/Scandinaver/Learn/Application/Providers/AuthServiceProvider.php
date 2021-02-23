@@ -4,9 +4,10 @@
 namespace Scandinaver\Learn\Application\Providers;
 
 use Gate;
-use Scandinaver\Learn\Domain\Permissions\Card;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Scandinaver\Learn\Domain\Permissions\Asset;
+use Scandinaver\Learn\Domain\Permissions\Card;
+use Scandinaver\Learn\Domain\Permissions\Test;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -39,6 +40,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->can(Asset::DELETE);
         });
 
+        Gate::define(Asset::ADD_CARD, function (User $user) {
+            return TRUE;
+        });
+
         /* FAVOURITE */
         Gate::define(Asset::CREATE_FAVOURITE, function (User $user, $id) {
             return $user->can(Asset::CREATE_FAVOURITE);
@@ -61,8 +66,18 @@ class AuthServiceProvider extends ServiceProvider
             return $user->can(Card::UPDATE);
         });
 
-        Gate::define(Card::DELETE, function (User $user, $id) {
+        Gate::define(Card::DELETE, function (User $user, int $assetId) {
             return $user->can(Card::DELETE);
+        });
+
+        Gate::define(Card::SEARCH, function (User $user) {
+            return $user->can(Card::SEARCH);
+        });
+
+        /* TEST */
+
+        Gate::define(Test::COMPLETE, function (User $user, $assetId) {
+            return TRUE;
         });
     }
 }

@@ -14,6 +14,10 @@ use Scandinaver\Common\Domain\Contract\RedisInterface;
 class LaravelRedis implements RedisInterface
 {
 
+    /**
+     * @param  string  $key
+     * @param  string  $data
+     */
     public function set(string $key, string $data)
     {
         Redis::connection()->set($key, $data);
@@ -24,6 +28,11 @@ class LaravelRedis implements RedisInterface
         return Redis::connection()->get($key);
     }
 
+    /**
+     * @param  string  $key
+     * @param  string  $field
+     * @param  string  $value
+     */
     public function hset(string $key, string $field, string $value)
     {
         Redis::connection()->hset($key, $field, $value);
@@ -34,12 +43,18 @@ class LaravelRedis implements RedisInterface
         return Redis::connection()->hget($key, $field);
     }
 
+    /**
+     * @return mixed
+     */
     public function keys()
     {
         return Redis::connection()->keys('*');
     }
 
-    public function all()
+    /**
+     * @return array
+     */
+    public function all(): array
     {
         $result = [];
 

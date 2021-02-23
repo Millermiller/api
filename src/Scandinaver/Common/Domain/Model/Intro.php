@@ -19,7 +19,7 @@ class Intro extends AggregateRoot
 
     private string $target = 'undefined';
 
-    private ?string $content = null;
+    private ?string $content = NULL;
 
     private string $position;
 

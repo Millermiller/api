@@ -6,6 +6,7 @@ namespace Scandinaver\Reader\Application\Handler\Query;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
 use Scandinaver\Reader\UI\Query\ReadCardQuery;
 use Scandinaver\Reader\Domain\Contract\Query\ReadCardHandlerInterface;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class ReadCardHandler
@@ -22,7 +23,7 @@ class ReadCardHandler implements ReadCardHandlerInterface
     }
 
     /**
-     * @param  ReadCardQuery  $query
+     * @param  ReadCardQuery|Query  $query
      */
     public function handle($query)
     {

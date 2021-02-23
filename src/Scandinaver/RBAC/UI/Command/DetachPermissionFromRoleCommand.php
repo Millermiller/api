@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see \Scandinaver\RBAC\Application\Handler\Command\DetachPermissionFromRoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\DetachPermissionFromRoleHandler
  */
 class DetachPermissionFromRoleCommand implements Command
 {
@@ -20,7 +20,7 @@ class DetachPermissionFromRoleCommand implements Command
 
     public function __construct(int $roleId, int $permissionId)
     {
-        $this->roleId = $roleId;
+        $this->roleId       = $roleId;
         $this->permissionId = $permissionId;
     }
 

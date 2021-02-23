@@ -14,8 +14,8 @@ use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
-use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\RBAC\Domain\Model\{Permission, PermissionDTO, PermissionGroup, PermissionGroupDTO, Role, RoleDTO};
+use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -35,22 +35,22 @@ class RBACService
     private PermissionGroupRepositoryInterface $permissionGroupRepository;
 
     public function __construct(
-      UserRepositoryInterface $userRepository,
-      PermissionRepositoryInterface $permissionRepository,
-      RoleRepositoryInterface $roleRepository,
-      PermissionGroupRepositoryInterface $permissionGroupRepository
+        UserRepositoryInterface $userRepository,
+        PermissionRepositoryInterface $permissionRepository,
+        RoleRepositoryInterface $roleRepository,
+        PermissionGroupRepositoryInterface $permissionGroupRepository
     ) {
-        $this->userRepository = $userRepository;
-        $this->permissionRepository = $permissionRepository;
+        $this->userRepository            = $userRepository;
+        $this->permissionRepository      = $permissionRepository;
         $this->permissionGroupRepository = $permissionGroupRepository;
-        $this->roleRepository = $roleRepository;
+        $this->roleRepository            = $roleRepository;
     }
 
 
     public function getAllRoles(): array
     {
         $result = [];
-        $roles = $this->roleRepository->findAll();
+        $roles  = $this->roleRepository->findAll();
 
         /** @var Role $role */
         foreach ($roles as $role) {
@@ -62,7 +62,7 @@ class RBACService
 
     public function getAllPermissions(): array
     {
-        $result = [];
+        $result      = [];
         $permissions = $this->permissionRepository->findAll();
 
         /** @var Permission $permission */
@@ -75,7 +75,7 @@ class RBACService
 
     public function getAllPermissionGroups(): array
     {
-        $result = [];
+        $result            = [];
         $permissionsGroups = $this->permissionGroupRepository->findAll();
 
         /** @var PermissionGroup $permissionsGroup */
@@ -97,12 +97,12 @@ class RBACService
         $role = RoleFactory::build($data);
 
         $isDublicate = $this->roleRepository->findOneBy(
-          [
-            'slug' => $data['slug'],
-          ]
+            [
+                'slug' => $data['slug'],
+            ]
         );
 
-        if ($isDublicate !== null) {
+        if ($isDublicate !== NULL) {
             throw new RoleDublicateException();
         }
 
@@ -112,7 +112,7 @@ class RBACService
     }
 
     /**
-     * @param  int  $id
+     * @param  int    $id
      * @param  array  $data
      *
      * @return RoleDTO
@@ -150,19 +150,19 @@ class RBACService
     public function createPermission(array $data): PermissionDTO
     {
         $groupId = $data['group'];
-        if($groupId) {
+        if ($groupId) {
             $data['group'] = $this->getPermissionGroup($groupId);
         }
 
         $permission = PermissionFactory::build($data);
 
         $isDublicate = $this->permissionRepository->findOneBy(
-          [
-            'slug' => $data['slug'],
-          ]
+            [
+                'slug' => $data['slug'],
+            ]
         );
 
-        if ($isDublicate !== null) {
+        if ($isDublicate !== NULL) {
             throw new PermissionDublicateException();
         }
 
@@ -172,7 +172,7 @@ class RBACService
     }
 
     /**
-     * @param  int  $id
+     * @param  int    $id
      * @param  array  $data
      *
      * @return PermissionDTO
@@ -183,7 +183,7 @@ class RBACService
         $permission = $this->getPermission($id);
 
         $groupId = $data['group'];
-        if($groupId) {
+        if ($groupId) {
             $permissionGroup = $this->getPermissionGroup($groupId);
             $permission->setGroup($permissionGroup);
         }
@@ -223,12 +223,12 @@ class RBACService
         $permissionGroup = PermissionGroupFactory::build($data);
 
         $isDublicate = $this->permissionGroupRepository->findOneBy(
-          [
-            'slug' => $data['slug'],
-          ]
+            [
+                'slug' => $data['slug'],
+            ]
         );
 
-        if ($isDublicate !== null) {
+        if ($isDublicate !== NULL) {
             throw new PermissionGroupDublicateException();
         }
 
@@ -238,7 +238,7 @@ class RBACService
     }
 
     /**
-     * @param  int  $id
+     * @param  int    $id
      * @param  array  $data
      *
      * @return PermissionGroupDTO
@@ -277,7 +277,7 @@ class RBACService
      */
     public function attachPermissionToRole(int $roleId, int $permissionId)
     {
-        $role = $this->getRole($roleId);
+        $role       = $this->getRole($roleId);
         $permission = $this->getPermission($permissionId);
 
         $role->attachPermission($permission);
@@ -295,7 +295,7 @@ class RBACService
      */
     public function detachPermissionFromRole(int $roleId, int $permissionId)
     {
-        $role = $this->getRole($roleId);
+        $role       = $this->getRole($roleId);
         $permission = $this->getPermission($permissionId);
 
         $role->detachPermission($permission);
@@ -365,7 +365,7 @@ class RBACService
     {
         /** @var Role $role */
         $role = $this->roleRepository->find($id);
-        if ($role === null) {
+        if ($role === NULL) {
             throw new RoleNotFoundException();
         }
 
@@ -382,7 +382,7 @@ class RBACService
     {
         /** @var Permission $permission */
         $permission = $this->permissionRepository->find($id);
-        if ($permission === null) {
+        if ($permission === NULL) {
             throw new PermissionNotFoundException();
         }
 
@@ -399,7 +399,7 @@ class RBACService
     {
         /** @var PermissionGroup $permissionGroup */
         $permissionGroup = $this->permissionGroupRepository->find($id);
-        if ($permissionGroup === null) {
+        if ($permissionGroup === NULL) {
             throw new PermissionGroupNotFoundException();
         }
 

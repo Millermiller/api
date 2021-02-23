@@ -63,7 +63,7 @@ Scandinaver\Learn\Domain\Model\Result:
       orphanRemoval: false
     user:
       targetEntity: Scandinaver\User\Domain\Model\User
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: tests
@@ -71,4 +71,4 @@ Scandinaver\Learn\Domain\Model\Result:
         user_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

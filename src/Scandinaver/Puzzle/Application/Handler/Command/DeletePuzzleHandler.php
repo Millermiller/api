@@ -3,9 +3,11 @@
 
 namespace Scandinaver\Puzzle\Application\Handler\Command;
 
+use Scandinaver\Puzzle\Domain\Contract\Command\DeletePuzzleHandlerInterface;
+use Scandinaver\Puzzle\Domain\Exception\PuzzleNotFoundException;
 use Scandinaver\Puzzle\Domain\PuzzleService;
 use Scandinaver\Puzzle\UI\Command\DeletePuzzleCommand;
-use Scandinaver\Puzzle\Domain\Contract\Command\DeletePuzzleHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeletePuzzleHandler
@@ -22,7 +24,9 @@ class DeletePuzzleHandler implements DeletePuzzleHandlerInterface
     }
 
     /**
-     * @param  DeletePuzzleCommand  $command
+     * @param  DeletePuzzleCommand|Command  $command
+     *
+     * @throws PuzzleNotFoundException
      */
     public function handle($command): void
     {

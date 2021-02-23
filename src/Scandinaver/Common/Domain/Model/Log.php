@@ -6,6 +6,11 @@ namespace Scandinaver\Common\Domain\Model;
 use DateTime;
 use Scandinaver\User\Domain\Model\User;
 
+/**
+ * Class Log
+ *
+ * @package Scandinaver\Common\Domain\Model
+ */
 class Log
 {
     private int $id;
@@ -31,11 +36,11 @@ class Log
         array $context = [],
         array $extra = []
     ) {
-        $this->owner = $owner;
+        $this->owner     = $owner;
         $this->levelName = $levelName;
-        $this->message = $message;
-        $this->context = $context;
-        $this->extra = $extra;
+        $this->message   = $message;
+        $this->context   = $context;
+        $this->extra     = $extra;
     }
 
     public function interpolate(): string

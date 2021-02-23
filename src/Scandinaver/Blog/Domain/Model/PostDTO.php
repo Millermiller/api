@@ -6,6 +6,11 @@ namespace Scandinaver\Blog\Domain\Model;
 
 use Scandinaver\Shared\DTO;
 
+/**
+ * Class PostDTO
+ *
+ * @package Scandinaver\Blog\Domain\Model
+ */
 class PostDTO extends DTO
 {
 
@@ -16,25 +21,26 @@ class PostDTO extends DTO
         $this->post = $post;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
-            'id' => $this->post->getId(),
-            'title' => $this->post->getTitle(),
-            'content' => $this->post->getContent(),
-            'user' => $this->post->getUser(),
-            'views' => $this->post->getViews(),
-            'category' => $this->post->getCategory()->toDTO(),
-            'comments' => $this->post->getComments()->map(
-                fn($comment) => [
-                    'id' => $comment->getId(),
-                    'text' => $comment->getText(),
-                    'user' => $comment->getUser(),
-                ]
-            )->toArray(),
-            'status' => $this->post->getStatus(),
+            'id'             => $this->post->getId(),
+            'title'          => $this->post->getTitle(),
+            'content'        => $this->post->getContent(),
+            'user'           => $this->post->getUser()->toDTO(),
+            'views'          => $this->post->getViews(),
+            'category'       => $this->post->getCategory()->toDTO(),
+            'comments'       => $this->post->getComments()->map(fn($comment) => [
+                'id'   => $comment->getId(),
+                'text' => $comment->getText(),
+                'user' => $comment->getUser()->toDTO(),
+            ])->toArray(),
+            'status'         => $this->post->getStatus(),
             'comment_status' => $this->post->getCommentStatus(),
-            'created_at' => $this->post->getCreatedAt()->format("Y-m-d H:i:s"),
+            'created_at'     => $this->post->getCreatedAt()->format("Y-m-d H:i:s"),
         ];
     }
 }

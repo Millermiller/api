@@ -85,4 +85,4 @@ Scandinaver\Common\Domain\Model\Intro:
       nullable: true
       precision: 0
       column: updated_at
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

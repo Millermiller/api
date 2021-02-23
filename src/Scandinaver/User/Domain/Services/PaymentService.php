@@ -19,8 +19,8 @@ class PaymentService
         $order = new Order();
         $order->setSum($request->post('amount'));
         $order->setStatus(1);
-        $order->plan_id = explode('|', $request->post('label'))[1];
-        $order->user_id = explode('|', $request->post('label'))[0];
+        $order->plan_id           = explode('|', $request->post('label'))[1];
+        $order->user_id           = explode('|', $request->post('label'))[0];
         $order->notification_type = $request->post('notification_type');
         $order->setDatetime($request->post('datetime'));
         $order->setCodepro($request->post('codepro'));
@@ -32,24 +32,27 @@ class PaymentService
         if ($order->getUser()->getActiveTo() < Carbon::now()) {
             if ($order->getPlan()->getName() == "Medium") {
                 $order->getUser()->active_to = Carbon::now()
-                    ->addMonth(1)
-                    ->format('D M d Y');
-            } else {
-                $order->getUser()->active_to = Carbon::now()
-                    ->addMonth(3)
-                    ->format('D M d Y');
+                                                     ->addMonth(1)
+                                                     ->format('D M d Y');
             }
-        } else {
+            else {
+                $order->getUser()->active_to = Carbon::now()
+                                                     ->addMonth(3)
+                                                     ->format('D M d Y');
+            }
+        }
+        else {
             if ($order->getPlan()->getName() == "Medium") {
                 $order->getUser()->active_to = $order->getUser()
-                    ->getActiveTo()
-                    ->addMonth(1)
-                    ->format('D M d Y');
-            } else {
+                                                     ->getActiveTo()
+                                                     ->addMonth(1)
+                                                     ->format('D M d Y');
+            }
+            else {
                 $order->getUser()->active_to = $order->getUser()
-                    ->getActiveTo()
-                    ->addMonth(3)
-                    ->format('D M d Y');
+                                                     ->getActiveTo()
+                                                     ->addMonth(3)
+                                                     ->format('D M d Y');
             }
         }
 

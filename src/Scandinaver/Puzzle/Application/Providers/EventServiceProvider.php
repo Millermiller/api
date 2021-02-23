@@ -18,7 +18,7 @@ class EventServiceProvider extends ServiceProvider
         'Scandinaver\Puzzle\Domain\Events\PuzzleCreated' => [
             'Scandinaver\Puzzle\Domain\Events\Listeners\PuzzleCreatedListener',
         ],
-        'Scandinaver\Puzzle\Domain\Events\TestCreated' => [
+        'Scandinaver\Puzzle\Domain\Events\TestCreated'   => [
             'Scandinaver\Puzzle\Domain\Events\Listeners\TestCreatedListener',
         ],
     ];

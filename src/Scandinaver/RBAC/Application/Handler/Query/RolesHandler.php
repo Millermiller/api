@@ -3,9 +3,9 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Contract\Query\RolesHandlerInterface;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\RolesQuery;
-use Scandinaver\RBAC\Domain\Contract\Query\RolesHandlerInterface;
 use Scandinaver\Shared\Contract\Query;
 
 /**

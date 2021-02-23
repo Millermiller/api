@@ -11,7 +11,7 @@ namespace App\Helpers;
 class EloquentHelper
 {
     /**
-     * @param object $entity
+     * @param  object  $entity
      *
      * @return mixed
      */

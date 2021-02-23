@@ -35,10 +35,10 @@ class Plan implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
+            'id'     => $this->id,
+            'name'   => $this->name,
             'period' => $this->period,
-            'cost' => $this->cost,
+            'cost'   => $this->cost,
         ];
     }
 

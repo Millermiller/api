@@ -5,8 +5,8 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\AssetsCountHandlerInterface;
 use Scandinaver\Learn\Domain\Services\AssetService;
-use Scandinaver\Learn\Domain\Services\AudioService;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class AssetsCountHandler
@@ -23,7 +23,7 @@ class AssetsCountHandler implements AssetsCountHandlerInterface
     }
 
     /**
-     * @param  AssetsCountQuery  $query
+     * @param  AssetsCountQuery|Query  $query
      *
      * @return int
      */

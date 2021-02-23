@@ -3,9 +3,10 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
+use Scandinaver\Common\Domain\Contract\Query\LogsHandlerInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Log;
-use Scandinaver\Common\Domain\Contract\Query\LogsHandlerInterface;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class LogsHandler
@@ -21,7 +22,12 @@ class LogsHandler implements LogsHandlerInterface
         $this->logRepository = $logRepository;
     }
 
-    public function handle($query)
+    /**
+     * @param  Query  $query
+     *
+     * @return array
+     */
+    public function handle($query): array
     {
         /** @var Log[] $logs */
         $logs = $this->logRepository->findAll();
@@ -30,11 +36,11 @@ class LogsHandler implements LogsHandlerInterface
 
         foreach ($logs as $log) {
             $response[] = [
-                'id' => $log->getId(),
-                'message' => $log->interpolate(),
-                'owner' => $log->getOwner(),
-                'level' => $log->getLevelName(),
-                'extra' => $log->getExtra(),
+                'id'         => $log->getId(),
+                'message'    => $log->interpolate(),
+                'owner'      => $log->getOwner(),
+                'level'      => $log->getLevelName(),
+                'extra'      => $log->getExtra(),
                 'created_at' => $log->getCreatedAt()->format('Y-m-d H:i:s'),
             ];
         }

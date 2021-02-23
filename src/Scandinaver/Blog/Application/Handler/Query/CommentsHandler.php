@@ -24,7 +24,7 @@ class CommentsHandler implements CommentsHandlerInterface
     }
 
     /**
-     * @param CommentsQuery|Query $query
+     * @param  CommentsQuery|Query  $query
      *
      * @return array
      */

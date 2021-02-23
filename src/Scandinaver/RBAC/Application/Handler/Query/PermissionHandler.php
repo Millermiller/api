@@ -3,11 +3,11 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Contract\Query\PermissionHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Model\PermissionDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
-use Scandinaver\RBAC\Domain\Contract\Query\PermissionHandlerInterface;
 use Scandinaver\Shared\Contract\Query;
 
 /**

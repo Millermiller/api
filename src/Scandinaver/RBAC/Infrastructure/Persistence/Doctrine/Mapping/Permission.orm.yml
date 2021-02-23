@@ -60,4 +60,4 @@ Scandinaver\RBAC\Domain\Model\Permission:
         permission_group_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

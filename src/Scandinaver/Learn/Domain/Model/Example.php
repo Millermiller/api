@@ -4,7 +4,6 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
-use JsonSerializable;
 
 /**
  * Class Example

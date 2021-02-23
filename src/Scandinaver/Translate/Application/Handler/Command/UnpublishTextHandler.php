@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
-use Scandinaver\Translate\UI\Command\UnpublishTextCommand;
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\UnpublishTextHandlerInterface;
+use Scandinaver\Translate\UI\Command\UnpublishTextCommand;
 
 /**
  * Class UnpublishTextHandler
@@ -18,8 +19,7 @@ class UnpublishTextHandler implements UnpublishTextHandlerInterface
     }
 
     /**
-     * @param  UnpublishTextCommand  $command
-     *
+     * @param  UnpublishTextCommand|Command  $command
      */
     public function handle($command): void
     {

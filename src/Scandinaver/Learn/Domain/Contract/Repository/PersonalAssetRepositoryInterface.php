@@ -3,9 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Contract\Repository;
 
-use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Interface PersonalAssetRepositoryInterface

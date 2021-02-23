@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
-use App\Events\NextLevel;
 use Scandinaver\Learn\Domain\Contract\Command\GiveNextLevelHandlerInterface;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\UI\Command\GiveNextLevelCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class GiveNextLevelHandler
@@ -23,11 +23,10 @@ class GiveNextLevelHandler implements GiveNextLevelHandlerInterface
     }
 
     /**
-     * @param  GiveNextLevelCommand  $command
+     * @param  GiveNextLevelCommand|Command  $command
      */
     public function handle($command): void
     {
-        $nextAsset = $this->assetService->giveNextLevel($command->getUser(), $command->getAsset());
-        //  event(new NextLevel($command->getUser(), $nextAsset));
+        $this->assetService->giveNextLevel($command->getUser(), $command->getAsset());
     }
 }

@@ -22,7 +22,7 @@ class CardAddedToAsset implements DomainEvent
     public function __construct(Asset $asset, Card $card)
     {
         $this->asset = $asset;
-        $this->card = $card;
+        $this->card  = $card;
     }
 
     public function getAsset(): Asset

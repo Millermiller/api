@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class AssetsCountQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsCountHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsCountHandler
  */
 class AssetsCountQuery implements Query
 {

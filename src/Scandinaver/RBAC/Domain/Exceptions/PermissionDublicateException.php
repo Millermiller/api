@@ -4,9 +4,15 @@
 namespace Scandinaver\RBAC\Domain\Exceptions;
 
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 
-class PermissionDublicateException extends \Exception
+/**
+ * Class PermissionDublicateException
+ *
+ * @package Scandinaver\RBAC\Domain\Exceptions
+ */
+class PermissionDublicateException extends Exception
 {
     protected $code = JsonResponse::HTTP_UNPROCESSABLE_ENTITY;
 

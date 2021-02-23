@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class CreateCommentCommand
  *
- * @see     \Scandinaver\Blog\Application\Handler\Command\CreateCommentHandler
  * @package Scandinaver\Blog\UI\Command
+ *
+ * @see     \Scandinaver\Blog\Application\Handler\Command\CreateCommentHandler
  */
 class CreateCommentCommand implements Command
 {

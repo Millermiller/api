@@ -3,16 +3,16 @@
 
 namespace App\Http\Controllers\Blog;
 
-use Gate;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\{Request, JsonResponse};
-use Scandinaver\Blog\Domain\Permissions\Category;
-use Scandinaver\Shared\EventBusNotFoundException;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\{JsonResponse, Request};
+use Scandinaver\Blog\Domain\Permissions\Category;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
 use Scandinaver\Blog\UI\Command\UpdateCategoryCommand;
-use Scandinaver\Blog\UI\Query\{CategoryQuery, CategoriesQuery};
+use Scandinaver\Blog\UI\Query\{CategoriesQuery, CategoryQuery};
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class CategoryController
@@ -59,10 +59,7 @@ class CategoryController extends Controller
     {
         Gate::authorize(Category::CREATE);
 
-        return $this->execute(
-          new CreateCategoryCommand($request->toArray()),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new CreateCategoryCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -91,10 +88,7 @@ class CategoryController extends Controller
     {
         Gate::authorize(Category::DELETE, $categoryId);
 
-        return $this->execute(
-          new DeleteCategoryCommand($categoryId),
-          JsonResponse::HTTP_NO_CONTENT
-        );
+        return $this->execute(new DeleteCategoryCommand($categoryId), JsonResponse::HTTP_NO_CONTENT);
     }
 
 }

@@ -3,16 +3,15 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class CardsOfAssetQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\CardsOfAssetHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\CardsOfAssetHandler
  */
 class CardsOfAssetQuery implements Query
 {
@@ -25,9 +24,9 @@ class CardsOfAssetQuery implements Query
 
     public function __construct(string $language, User $user, int $asset)
     {
-        $this->user = $user;
+        $this->user     = $user;
         $this->language = $language;
-        $this->asset = $asset;
+        $this->asset    = $asset;
     }
 
     public function getUser(): User

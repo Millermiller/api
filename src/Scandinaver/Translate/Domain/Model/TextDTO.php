@@ -6,6 +6,11 @@ namespace Scandinaver\Translate\Domain\Model;
 
 use Scandinaver\Shared\DTO;
 
+/**
+ * Class TextDTO
+ *
+ * @package Scandinaver\Translate\Domain\Model
+ */
 class TextDTO extends DTO
 {
 
@@ -16,6 +21,9 @@ class TextDTO extends DTO
         $this->text = $text;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [

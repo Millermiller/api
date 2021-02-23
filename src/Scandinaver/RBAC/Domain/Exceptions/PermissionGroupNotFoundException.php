@@ -4,7 +4,14 @@
 namespace Scandinaver\RBAC\Domain\Exceptions;
 
 
-class PermissionGroupNotFoundException extends \Exception
+use Exception;
+
+/**
+ * Class PermissionGroupNotFoundException
+ *
+ * @package Scandinaver\RBAC\Domain\Exceptions
+ */
+class PermissionGroupNotFoundException extends Exception
 {
     protected $code = '404';
 

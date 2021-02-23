@@ -3,9 +3,11 @@
 
 namespace Scandinaver\Translate\Application\Handler\Query;
 
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
+use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Translate\Domain\Contract\Query\GetTextsHandlerInterface;
 use Scandinaver\Translate\Domain\TextService;
 use Scandinaver\Translate\UI\Query\GetTextsQuery;
-use Scandinaver\Translate\Domain\Contract\Query\GetTextsHandlerInterface;
 
 /**
  * Class GetTextsHandler
@@ -22,11 +24,12 @@ class GetTextsHandler implements GetTextsHandlerInterface
     }
 
     /**
-     * @param  GetTextsQuery  $query
+     * @param  GetTextsQuery|Query  $query
      *
      * @return array
+     * @throws LanguageNotFoundException
      */
-    public function handle($query)
+    public function handle($query): array
     {
         return $this->textService->getAllByLanguage($query->getLanguage());
     }

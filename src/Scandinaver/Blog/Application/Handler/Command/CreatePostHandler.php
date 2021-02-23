@@ -7,6 +7,7 @@ use Scandinaver\Blog\Domain\Contract\Command\CreatePostHandlerInterface;
 use Scandinaver\Blog\Domain\Model\PostDTO;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Command\CreatePostCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreatePostHandler
@@ -23,7 +24,7 @@ class CreatePostHandler implements CreatePostHandlerInterface
     }
 
     /**
-     * @param  CreatePostCommand  $command
+     * @param  CreatePostCommand|Command  $command
      *
      * @return PostDTO
      */

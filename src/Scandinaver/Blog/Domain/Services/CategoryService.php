@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Domain\Services;
 
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
-use Scandinaver\Blog\Domain\Exception\CategoryDublicateException;
+use Scandinaver\Blog\Domain\Exception\CategoryDuplicateException;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Blog\Domain\Model\CategoryDTO;
@@ -53,20 +53,18 @@ class CategoryService implements BaseServiceInterface
      * @param  array  $data
      *
      * @return CategoryDTO
-     * @throws CategoryDublicateException
+     * @throws CategoryDuplicateException
      */
     public function create(array $data): CategoryDTO
     {
         $category = new Category($data['name']);
 
-        $isDublicate = $this->categoryRepo->findOneBy(
-            [
-                'name' => $data['name'],
-            ]
-        );
+        $isDublicate = $this->categoryRepo->findOneBy([
+                                                          'name' => $data['name'],
+                                                      ]);
 
-        if ($isDublicate !== null) {
-            throw new CategoryDublicateException();
+        if ($isDublicate !== NULL) {
+            throw new CategoryDuplicateException();
         }
 
         $this->categoryRepo->save($category);
@@ -113,7 +111,7 @@ class CategoryService implements BaseServiceInterface
         /** @var  Category $category */
         $category = $this->categoryRepo->find($id);
 
-        if ($category === null) {
+        if ($category === NULL) {
             throw new CategoryNotFoundException();
         }
 

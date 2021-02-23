@@ -24,10 +24,10 @@ class BlogService implements BaseServiceInterface
     private CategoryRepositoryInterface $categoryRepository;
 
     public function __construct(
-      PostRepositoryInterface $postRepository,
-      CategoryRepositoryInterface $categoryRepository
+        PostRepositoryInterface $postRepository,
+        CategoryRepositoryInterface $categoryRepository
     ) {
-        $this->postRepository = $postRepository;
+        $this->postRepository     = $postRepository;
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -67,7 +67,7 @@ class BlogService implements BaseServiceInterface
     {
         /** @var  Post $post */
         $post = $this->postRepository->find($id);
-        if ($post === null) {
+        if ($post === NULL) {
             throw new PostNotFoundException();
         }
 
@@ -78,9 +78,9 @@ class BlogService implements BaseServiceInterface
     {
         $categoryId = $data['category'];
 
-        $category = $this->categoryRepository->find($categoryId);
+        $category         = $this->categoryRepository->find($categoryId);
         $data['category'] = $category;
-        $data['status'] = $data['status'] ?? 0;
+        $data['status']   = $data['status'] ?? 0;
 
         $post = PostFactory::build($data);
 

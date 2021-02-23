@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
-use Scandinaver\Translate\UI\Command\CreateTextExtraCommand;
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\CreateTextExtraHandlerInterface;
+use Scandinaver\Translate\UI\Command\CreateTextExtraCommand;
 
 /**
  * Class CreateTextExtraHandler
@@ -18,8 +19,7 @@ class CreateTextExtraHandler implements CreateTextExtraHandlerInterface
     }
 
     /**
-     * @param  CreateTextExtraCommand  $command
-     *
+     * @param  CreateTextExtraCommand|Command  $command
      */
     public function handle($command): void
     {

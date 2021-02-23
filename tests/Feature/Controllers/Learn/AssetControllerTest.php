@@ -57,7 +57,7 @@ class AssetControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(
-          route('asset.show', ['language' => $this->language->getName(), 'asset' => $this->asset->getId()])
+          route('asset:show', ['language' => $this->language->getName(), 'asset' => $this->asset->getId()])
         );
 
         $response->assertJsonStructure(
@@ -105,7 +105,7 @@ class AssetControllerTest extends TestCase
 
         $response = $this->put(
             route(
-                'asset.update',
+                'asset:update',
                 [
                     'language' => 'is',
                     'title' => 'TEST UPDATE ASSET',
@@ -247,7 +247,7 @@ class AssetControllerTest extends TestCase
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->post(route('asset.store', ['language' => 'is']), ['title' => 'TEST CREATE ASSET']);
+        $response = $this->post(route('asset:store', ['language' => 'is']), ['title' => 'TEST CREATE ASSET']);
 
         $response->assertJsonStructure(
             [
@@ -284,7 +284,7 @@ class AssetControllerTest extends TestCase
 
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('asset.destroy', ['language' => 'is', 'asset' => $this->asset->getId()]));
+        $response = $this->delete(route('asset:destroy', ['language' => 'is', 'asset' => $this->asset->getId()]));
 
         static::assertEquals(204, $response->getStatusCode());
     }

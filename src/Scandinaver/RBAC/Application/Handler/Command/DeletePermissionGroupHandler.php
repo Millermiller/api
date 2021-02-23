@@ -3,11 +3,11 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Contract\Command\DeletePermissionGroupHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Services\RBACService;
-use Scandinaver\Shared\Contract\Command;
 use Scandinaver\RBAC\UI\Command\DeletePermissionGroupCommand;
-use Scandinaver\RBAC\Domain\Contract\Command\DeletePermissionGroupHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeletePermissionGroupHandler

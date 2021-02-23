@@ -4,8 +4,10 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\DeleteCategoryHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Services\CategoryService;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteCategoryHandler
@@ -23,7 +25,9 @@ class DeleteCategoryHandler implements DeleteCategoryHandlerInterface
     }
 
     /**
-     * @param  DeleteCategoryCommand  $command
+     * @param  DeleteCategoryCommand|Command  $command
+     *
+     * @throws CategoryNotFoundException
      */
     public function handle($command): void
     {

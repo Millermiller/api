@@ -20,14 +20,14 @@ class CategoryNameUpdatedListener
         $this->logger = $logger;
     }
 
+    /**
+     * @param  CategoryNameUpdated  $event
+     */
     public function handle(CategoryNameUpdated $event)
     {
-        $this->logger->info(
-            'Название категории id:{id} изменено на {name}',
-            [
-                'id' => $event->getCategory()->getId(),
-                'name' => $event->getCategory()->getName(),
-            ]
-        );
+        $this->logger->info('Название категории id:{id} изменено на {name}', [
+            'id'   => $event->getCategory()->getId(),
+            'name' => $event->getCategory()->getName(),
+        ]);
     }
 }

@@ -42,26 +42,29 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a successful password reset link.
      *
-     * @param Request $request
-     * @param string  $response
+     * @param  Request  $request
+     * @param  string   $response
      *
      * @return RedirectResponse|JsonResponse
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        return response()->json(['success' => true, 'message' => 'На указанную почту отправлено письмо с инструкциями']);
+        return response()->json([
+                'success' => TRUE,
+                'message' => 'На указанную почту отправлено письмо с инструкциями',
+            ]);
     }
 
     /**
      * Get the response for a failed password reset link.
      *
-     * @param Request $request
-     * @param string  $response
+     * @param  Request  $request
+     * @param  string   $response
      *
      * @return RedirectResponse|JsonResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
-        return response()->json(['success' => false, 'message' => 'Произошла ошибка! Обратитесь в службу поддержки.']);
+        return response()->json(['success' => FALSE, 'message' => 'Произошла ошибка! Обратитесь в службу поддержки.']);
     }
 }

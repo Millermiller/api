@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
-use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\CreateSynonymHandlerInterface;
+use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
 
 /**
  * Class CreateSynonymHandler
@@ -18,8 +19,7 @@ class CreateSynonymHandler implements CreateSynonymHandlerInterface
     }
 
     /**
-     * @param  CreateSynonymCommand  $command
-     *
+     * @param  CreateSynonymCommand|Command  $command
      */
     public function handle($command): void
     {

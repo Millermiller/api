@@ -9,6 +9,7 @@ use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\AudioFileCantParsedException;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\WordNotFoundException;
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
@@ -33,7 +34,7 @@ class AudioService implements BaseServiceInterface
         AudioParserInterface $parser
     ) {
         $this->wordsRepository = $wordsRepository;
-        $this->parser = $parser;
+        $this->parser          = $parser;
     }
 
     public function count(): int
@@ -41,6 +42,12 @@ class AudioService implements BaseServiceInterface
         return $this->wordsRepository->countAudio();
     }
 
+    /**
+     * @param  string  $language
+     *
+     * @return int
+     * @throws LanguageNotFoundException
+     */
     public function countByLanguage(string $language): int
     {
         $language = $this->getLanguage($language);
@@ -48,6 +55,13 @@ class AudioService implements BaseServiceInterface
         return $this->wordsRepository->getCountAudioByLanguage($language);
     }
 
+    /**
+     * @param  int           $word
+     * @param  UploadedFile  $file
+     *
+     * @return Word
+     * @throws WordNotFoundException
+     */
     public function upload(int $word, UploadedFile $file): Word
     {
         $word = $this->getWord($word);
@@ -82,7 +96,7 @@ class AudioService implements BaseServiceInterface
                 CURLOPT_URL,
                 'https://forvo.com/player-mp3Handler.php?path='.$link
             );
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
             //curl_setopt($curl, CURLOPT_COOKIEFILE, BASE_URL . '/temp/cookie.txt');
             $file = curl_exec($curl);
             curl_close($curl);
@@ -90,7 +104,7 @@ class AudioService implements BaseServiceInterface
             $filename = Str::random(32);
 
             touch(public_path().'/audio/'.$filename.'.mp3');
-            $fp = fopen(public_path().'/audio/'.$filename.'.mp3', 'w');
+            $fp       = fopen(public_path().'/audio/'.$filename.'.mp3', 'w');
             $filesize = fwrite($fp, $file);
             fclose($fp);
 

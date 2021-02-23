@@ -5,6 +5,11 @@ namespace Scandinaver\User\Domain\Model;
 
 use DateTime;
 
+/**
+ * Class OauthPersonalAccessClient
+ *
+ * @package Scandinaver\User\Domain\Model
+ */
 class OauthPersonalAccessClient
 {
     /**

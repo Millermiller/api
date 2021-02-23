@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class GetExamplesForCardQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\GetExamplesForCardHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\GetExamplesForCardHandler
  */
 class GetExamplesForCardQuery implements Query
 {

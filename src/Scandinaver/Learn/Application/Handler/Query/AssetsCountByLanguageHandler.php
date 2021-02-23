@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\AssetsCountByLanguageHandlerInterface;
 use Scandinaver\Learn\UI\Query\AssetsCountByLanguageQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class AssetsCountByLanguageHandler
@@ -18,9 +19,7 @@ class AssetsCountByLanguageHandler implements AssetsCountByLanguageHandlerInterf
     }
 
     /**
-     * @param  AssetsCountByLanguageQuery
-     *
-     * @inheritDoc
+     * @param  AssetsCountByLanguageQuery|Query  $query
      */
     public function handle($query)
     {

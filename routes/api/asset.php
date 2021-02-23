@@ -1,26 +1,51 @@
 <?php
 
+use App\Http\Controllers\Learn\AssetController;
 
+Route::group(
+  [
+    'as'         => 'asset:',
+    'namespace'  => 'App\Http\Controllers\Learn',
+  ],
+  function () {
+      Route::get('/{language}/asset/{asset}',    [AssetController::class, 'show'])->name('show');//TODO: refactor
 
-Route::get('/{language}/asset/{asset}', 'App\Http\Controllers\Learn\AssetController@show')->name('asset.show');
-Route::post('/{language}/asset',        'App\Http\Controllers\Learn\AssetController@store')->name('asset.store');
-Route::put('/{language}/asset/{asset}', 'App\Http\Controllers\Learn\AssetController@update')->name('asset.update');
-Route::delete('/{language}/asset/{asset}', 'App\Http\Controllers\Learn\AssetController@destroy')->name('asset.destroy');
-Route::post('/{language}/level', 'App\Http\Controllers\Learn\AssetController@addBasicAssetLevel');
-Route::get(' /{language}/assets', 'App\Http\Controllers\Learn\AssetController@index')->name('asset:all');
-Route::get(' /{language}/cards/sentence', 'App\Http\Controllers\Learn\AssetController@getAllSentences');
-Route::post('/forvo/{id}', 'App\Http\Controllers\Learn\AssetController@findAudio');
-Route::get('/asset/{asset}', 'App\Http\Controllers\Learn\AssetController@showAsset');
-Route::get('/{language}/values/{word}', 'App\Http\Controllers\Learn\AssetController@showValues');
-Route::get('/{language}/examples/{card}', 'App\Http\Controllers\Learn\AssetController@showExamples');
-Route::put('/asset/{asset}', 'App\Http\Controllers\Learn\AssetController@changeAsset');
-Route::post('/changeUsedTranslate', 'App\Http\Controllers\Learn\AssetController@changeUsedTranslate');
-Route::post('/translate', 'App\Http\Controllers\Learn\AssetController@editTranslate');
-Route::post('/audio', 'App\Http\Controllers\Learn\AssetController@uploadAudio');
-Route::get('/{language}/words', 'App\Http\Controllers\Learn\AssetController@getWords')->name('words');
-Route::get('/{language}/sentences', 'App\Http\Controllers\Learn\AssetController@getSentences')->name('sentences');
-Route::get('/{language}/personal',       'App\Http\Controllers\Learn\AssetController@getPersonal')->name('personal');
-Route::post('/card', 'App\Http\Controllers\Learn\AssetController@addPair');
-Route::get('/{language}/assets-mobile', 'App\Http\Controllers\Learn\AssetController@assetsMobile')
-    ->middleware(['auth:api'])
-    ->name('asset-mobile');
+      Route::post('/{language}/asset',           [AssetController::class, 'store'])->name('store');
+
+      Route::put('/{language}/asset/{asset}',    [AssetController::class, 'update'])->name('update');
+
+      Route::delete('/{language}/asset/{asset}', [AssetController::class, 'destroy'])->name('destroy');
+
+      Route::post('/{language}/level',           [AssetController::class, 'addBasicAssetLevel'])->name('add:basic');
+
+      Route::get(' /{language}/assets',          [AssetController::class, 'index'])->name('all');
+
+      Route::get(' /{language}/cards/sentence',  [AssetController::class, 'getAllSentences'])->name('sentence:all'); //TODO: remove
+
+      Route::post('/forvo/{id}',                 [AssetController::class, 'findAudio'])->name('forvo');//TODO: remove
+
+      Route::get('/asset/{asset}',               [AssetController::class, 'showAsset']);//TODO: refactor
+
+      Route::get('/{language}/values/{word}',    [AssetController::class, 'showValues'])->name('values:show');
+
+      Route::get('/{language}/examples/{card}',  [AssetController::class, 'showExamples'])->name('examples');
+
+      Route::put('/asset/{asset}',               [AssetController::class, 'changeAsset'])->name('change');
+
+      Route::post('/changeUsedTranslate',        [AssetController::class, 'changeUsedTranslate'])->name('change:translate');//TODO: remove
+
+      Route::post('/translate',                  [AssetController::class, 'editTranslate'])->name('translate:edit');
+
+      Route::post('/audio',                      [AssetController::class, 'uploadAudio'])->name('audio:upload');
+
+      Route::get('/{language}/words',            [AssetController::class, 'getWords'])->name('words');
+
+      Route::get('/{language}/sentences',        [AssetController::class, 'getSentences'])->name('sentences');
+
+      Route::get('/{language}/personal',         [AssetController::class, 'getPersonal'])->name('personal');
+
+      Route::post('/card',                       [AssetController::class, 'addPair'])->name('pair:create');//TODO: remove
+
+      Route::get('/{language}/assets-mobile',    [AssetController::class, 'assetsMobile'])->name('mobile');//TODO: refactor
+  }
+);

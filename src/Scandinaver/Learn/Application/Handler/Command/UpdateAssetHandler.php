@@ -3,11 +3,11 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Contract\Command\UpdateAssetHandlerInteface;
-use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Scandinaver\Learn\Domain\Model\AssetDTO;
+use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateAssetHandler
@@ -34,7 +34,7 @@ class UpdateAssetHandler implements UpdateAssetHandlerInteface
     }
 
     /**
-     * @param  UpdateAssetCommand  $command
+     * @param  UpdateAssetCommand|Command  $command
      *
      * @return AssetDTO
      */

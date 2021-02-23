@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
  */
 class UserNotFoundException extends Exception
 {
-    protected $code = JsonResponse::HTTP_UNPROCESSABLE_ENTITY;
+    protected $code = JsonResponse::HTTP_NOT_FOUND;
 
     protected $message = 'User not found';
 }

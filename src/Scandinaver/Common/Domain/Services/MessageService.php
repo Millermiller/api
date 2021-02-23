@@ -65,10 +65,11 @@ class MessageService implements BaseServiceInterface
      * @return Message
      * @throws MessageNotFoundException
      */
-    private function getMessage(int $id): Message {
+    private function getMessage(int $id): Message
+    {
         /** @var Message $message */
         $message = $this->messageRepository->find($id);
-        if ($message === null ) {
+        if ($message === NULL) {
             throw new MessageNotFoundException();
         }
 

@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\DeletePlanHandlerInterface;
 use Scandinaver\User\UI\Command\DeletePlanCommand;
 
@@ -18,9 +19,7 @@ class DeletePlanHandler implements DeletePlanHandlerInterface
     }
 
     /**
-     * @param  DeletePlanCommand
-     *
-     * @inheritDoc
+     * @param  DeletePlanCommand|Command  $command
      */
     public function handle($command): void
     {

@@ -11,6 +11,11 @@ use Scandinaver\Learn\UI\Command\FillDictionaryCommand;
 use Scandinaver\Shared\CommandBus;
 use Symfony\Component\Console\Helper\ProgressBar;
 
+/**
+ * Class FillDictionary
+ *
+ * @package App\Console\Commands
+ */
 class FillDictionary extends Command
 {
     /**
@@ -35,15 +40,18 @@ class FillDictionary extends Command
      */
     private LanguageRepositoryInterface $languageRepository;
 
-
-    public function __construct(
-        CommandBus $commandBus,
-        WordRepositoryInterface $wordRepository,
-        LanguageRepositoryInterface $languageRepository
-    ) {
+    /**
+     * FillDictionary constructor.
+     *
+     * @param  CommandBus                   $commandBus
+     * @param  WordRepositoryInterface      $wordRepository
+     * @param  LanguageRepositoryInterface  $languageRepository
+     */
+    public function __construct(CommandBus $commandBus, WordRepositoryInterface $wordRepository, LanguageRepositoryInterface $languageRepository)
+    {
         parent::__construct();
-        $this->commandBus = $commandBus;
-        $this->wordRepository = $wordRepository;
+        $this->commandBus         = $commandBus;
+        $this->wordRepository     = $wordRepository;
         $this->languageRepository = $languageRepository;
     }
 
@@ -54,18 +62,18 @@ class FillDictionary extends Command
         try {
             $language = $this->languageRepository->getByName($letter);
         } catch (NoResultException $exception) {
-            $this->error('Language: '.$letter.' not found');
+            $this->error('Language: ' . $letter . ' not found');
             exit;
         }
 
-        $this->info('Language: '.$language->getLabel());
+        $this->info('Language: ' . $language->getLabel());
 
         $this->comment('Get words..');
 
         /** @var Word[] $words */
         $words = $this->wordRepository->getUntranslated($language);
 
-        $this->info('Words to translate: '.count($words));
+        $this->info('Words to translate: ' . count($words));
 
         $bar = $this->output->createProgressBar(count($words));
         $bar->setRedrawFrequency(1);

@@ -1,5 +1,5 @@
 Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation:
   type: mappedSuperclass
   table: abstract_personal_translations
-  id: {  }
-  lifecycleCallbacks: {  }
+  id: { }
+  lifecycleCallbacks: { }

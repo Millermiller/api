@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see \Scandinaver\RBAC\Application\Handler\Command\CreateRoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\CreateRoleHandler
  */
 class CreateRoleCommand implements Command
 {

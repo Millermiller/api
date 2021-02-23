@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
-use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\DeleteSynonymHandlerInterface;
+use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
 
 /**
  * Class DeleteSynonymHandler
@@ -18,8 +19,7 @@ class DeleteSynonymHandler implements DeleteSynonymHandlerInterface
     }
 
     /**
-     * @param  DeleteSynonymCommand  $command
-     *
+     * @param  DeleteSynonymCommand|Command  $command
      */
     public function handle($command): void
     {

@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\TestCompleteRequest;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Facades\Request;
-use Scandinaver\Learn\UI\Command\GiveNextLevelCommand;
-use Scandinaver\Learn\UI\Command\SaveTestResultCommand;
+use Illuminate\Http\JsonResponse;
+use Scandinaver\Learn\Domain\Permissions\Test;
+use Scandinaver\Learn\UI\Command\CompleteTestCommand;
 
 /**
  * Class TestController
@@ -20,34 +21,19 @@ class TestController extends Controller
 {
 
     /**
-     * @param  int  $asset
-     *
-     * @return JsonResponse
-     */
-    public function complete(int $asset): JsonResponse
-    {
-        $this->commandBus->execute(new GiveNextLevelCommand(Auth::user(), $asset));
-
-        return response()->json(null, 200);
-    }
-
-    /**
-     * Сохранить результат
-     *
-     * @param  Request  $request
-     * @param  int      $asset
+     * @param  TestCompleteRequest  $request
+     * @param  string               $language
+     * @param  int                  $assetId
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function result(Request $request, int $asset): JsonResponse
+    public function complete(TestCompleteRequest $request, string $language, int $assetId): JsonResponse
     {
-        $this->authorize('updateResult', $asset);
+        Gate::authorize(Test::COMPLETE, $assetId);
 
-        $resultValue = $request->get('result');
+        $data = $request->toArray();
 
-        $this->commandBus->execute(new SaveTestResultCommand(Auth::user(), $asset, $resultValue));
-
-        return response()->json(null, 200);
+        $this->commandBus->execute(new CompleteTestCommand(Auth::user(), $assetId, $data));
     }
 }

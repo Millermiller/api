@@ -15,7 +15,7 @@ class Category extends Model
 
     use SoftDeletes;
 
-    public $timestamps = true;
+    public $timestamps = TRUE;
 
     protected $table = 'categories';
 
@@ -28,8 +28,6 @@ class Category extends Model
      */
     public function posts(): array
     {
-        return $this->hasMany(
-            'Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Post'
-        );
+        return $this->hasMany('Scandinaver\Blog\Infrastructure\Persistence\Eloquent\Post');
     }
 }

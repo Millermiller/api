@@ -15,6 +15,12 @@ use Scandinaver\User\Domain\Model\User;
  */
 interface PuzzleRepositoryInterface extends BaseRepositoryInterface
 {
+
+    /**
+     * @param  Language  $language
+     *
+     * @return mixed
+     */
     public function getByLanguage(Language $language);
 
     public function getForUser(Language $language, User $user): array;

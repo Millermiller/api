@@ -14,6 +14,11 @@ class DeleteMetaCommand implements Command
 {
     private $meta;
 
+    /**
+     * DeleteMetaCommand constructor.
+     *
+     * @param $meta
+     */
     public function __construct($meta)
     {
         $this->meta = $meta;

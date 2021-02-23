@@ -3,18 +3,18 @@
 
 namespace App\Http\Controllers\Blog;
 
-use Gate;
 use App\Helpers\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Scandinaver\Blog\Domain\Permissions\Comment;
-use Scandinaver\Shared\EventBusNotFoundException;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Scandinaver\Blog\Domain\Permissions\Comment;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
 use Scandinaver\Blog\UI\Query\{CommentQuery, CommentsQuery};
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class CommentController
@@ -61,10 +61,7 @@ class CommentController extends Controller
     {
         Gate::authorize(Comment::CREATE);
 
-        return $this->execute(
-          new CreateCommentCommand(Auth::user(), $request->toArray()),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new CreateCommentCommand(Auth::user(), $request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**

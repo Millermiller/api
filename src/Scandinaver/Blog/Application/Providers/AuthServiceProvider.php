@@ -21,11 +21,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         /* POST */
         Gate::define(Post::VIEW, function (?User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Post::SHOW, function (?User $user, int $postId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Post::CREATE, function (User $user) {
@@ -33,57 +33,57 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define(Post::UPDATE, function (User $user, int $postId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Post::DELETE, function (User $user, int $postId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define('upload-post', function (User $user, int $postId) {
-            return true;
+            return TRUE;
         });
 
         /* CATEGORY */
         Gate::define(Category::VIEW, function (?User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Category::SHOW, function (?User $user, int $id) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Category::CREATE, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Category::UPDATE, function (User $user, int $id) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Category::DELETE, function (User $user, int $id) {
-            return true;
+            return TRUE;
         });
 
         /* COMMENT */
         Gate::define(Comment::VIEW, function (?User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Comment::SHOW, function (?User $user, int $id) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Comment::CREATE, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Comment::UPDATE, function (User $user, int $id) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Comment::DELETE, function (User $user, int $id) {
-            return true;
+            return TRUE;
         });
     }
 }

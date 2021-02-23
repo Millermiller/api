@@ -4,9 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\AddUserName;
 use App\Http\Middleware\BinaryFileResponse;
-use App\Http\Middleware\CheckAdminAuth;
 use App\Http\Middleware\CheckAuth;
-use App\Http\Middleware\CheckDomain;
 use App\Http\Middleware\CheckPlan;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\EncryptCookies;
@@ -15,13 +13,10 @@ use App\Http\Middleware\TouchUser;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Auth\Middleware\Authenticate;
-use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
-use Illuminate\Auth\Middleware\Authorize;
+use Illuminate\Auth\Middleware\{Authenticate, AuthenticateWithBasicAuth, Authorize};
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
-use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
+use Illuminate\Foundation\Http\Middleware\{CheckForMaintenanceMode, ConvertEmptyStringsToNull};
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Session\Middleware\AuthenticateSession;
@@ -55,6 +50,28 @@ class Kernel extends HttpKernel
     ];
 
     /**
+     * The application's route middleware.
+     *
+     * These middleware may be assigned to groups or used individually.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        'auth'        => Authenticate::class,
+        'auth.basic'  => AuthenticateWithBasicAuth::class,
+        'bindings'    => SubstituteBindings::class,
+        'can'         => Authorize::class,
+        'guest'       => RedirectIfAuthenticated::class,
+        'throttle'    => ThrottleRequests::class,
+        'checkAuth'   => CheckAuth::class,
+        'touchUser'   => TouchUser::class,
+        'checkPlan'   => CheckPlan::class,
+        'addUserName' => AddUserName::class,
+        'cors'        => Cors::class,
+        'file'        => BinaryFileResponse::class,
+    ];
+
+    /**
      * The application's route middleware groups.
      *
      * @var array
@@ -76,30 +93,6 @@ class Kernel extends HttpKernel
             'bindings',
             'cors',
         ],
-    ];
-
-    /**
-     * The application's route middleware.
-     *
-     * These middleware may be assigned to groups or used individually.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-        'auth' => Authenticate::class,
-        'auth.basic' => AuthenticateWithBasicAuth::class,
-        'bindings' => SubstituteBindings::class,
-        'can' => Authorize::class,
-        'guest' => RedirectIfAuthenticated::class,
-        'throttle' => ThrottleRequests::class,
-        'checkAdmin' => CheckAdminAuth::class,
-        'checkAuth' => CheckAuth::class,
-        'touchUser' => TouchUser::class,
-        'checkDomain' => CheckDomain::class,
-        'checkPlan' => CheckPlan::class,
-        'addUserName' => AddUserName::class,
-        'cors' => Cors::class,
-        'file' => BinaryFileResponse::class,
     ];
 
     protected $commands = [

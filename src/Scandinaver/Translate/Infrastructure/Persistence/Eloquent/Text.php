@@ -114,6 +114,11 @@ class Text extends Model
         return ($id > 0) ? $id : false;
     }
 
+    /**
+     * @param  array  $attributes
+     *
+     * @return mixed
+     */
     public static function create(array $attributes = [])
     {
         $attributes['level'] = DB::selectOne(
@@ -123,6 +128,11 @@ class Text extends Model
         return parent::create($attributes);
     }
 
+    /**
+     * @param $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeDomain($query): Builder
     {
         return $query->where('lang', config('app.lang'));

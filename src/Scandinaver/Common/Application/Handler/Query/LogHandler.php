@@ -3,9 +3,10 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
+use Scandinaver\Common\Domain\Contract\Query\LogHandlerInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\UI\Query\LogQuery;
-use Scandinaver\Common\Domain\Contract\Query\LogHandlerInterface;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class LogHandler
@@ -23,20 +24,20 @@ class LogHandler implements LogHandlerInterface
     }
 
     /**
-     * @param  LogQuery  $query
+     * @param  LogQuery|Query  $query
      *
      * @return array
      */
-    public function handle($query)
+    public function handle($query): array
     {
         $log = $this->logRepository->find($query->getLogId());
 
         return [
-            'id' => $log->getId(),
-            'message' => $log->interpolate(),
-            'owner' => $log->getOwner(),
-            'level' => $log->getLevelName(),
-            'extra' => $log->getExtra(),
+            'id'         => $log->getId(),
+            'message'    => $log->interpolate(),
+            'owner'      => $log->getOwner(),
+            'level'      => $log->getLevelName(),
+            'extra'      => $log->getExtra(),
             'created_at' => $log->getCreatedAt()->format('Y-m-d H:i:s'),
         ];
     }

@@ -4,10 +4,10 @@
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Queue\SerializesModels;
 use Scandinaver\Common\Domain\Message;
 
 /**
@@ -26,7 +26,7 @@ class MessageEvent
     /**
      * Create a new event instance.
      *
-     * @param Message $message
+     * @param  Message  $message
      */
     public function __construct(Message $message)
     {

@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class DeleteCardCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\DeleteCardFromAssetHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\DeleteCardFromAssetHandler
  */
 class DeleteCardFromAssetCommand implements Command
 {
@@ -22,8 +23,8 @@ class DeleteCardFromAssetCommand implements Command
 
     public function __construct(User $user, int $card, int $asset)
     {
-        $this->user = $user;
-        $this->card = $card;
+        $this->user  = $user;
+        $this->card  = $card;
         $this->asset = $asset;
     }
 

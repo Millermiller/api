@@ -6,13 +6,18 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+/**
+ * Class Cors
+ *
+ * @package App\Http\Middleware
+ */
 class Cors
 {
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      *
      * @return mixed
      */
@@ -23,11 +28,11 @@ class Cors
         $headers = [
             'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
             'Access-Control-Allow-Headers'     => 'Content-Type, X-Auth-Token, Origin, x-xsrf-token, authorization',
-            'Access-Control-Allow-Credentials' => 'true'
+            'Access-Control-Allow-Credentials' => 'true',
         ];
 
         if ($request->cookie('authfrontend._token.local')) {
-            $request->headers->set('Authorization', 'Bearer '.$request->cookie('authfrontend._token.local'));
+            $request->headers->set('Authorization', 'Bearer ' . $request->cookie('authfrontend._token.local'));
         }
 
         if ($request->getMethod() == "OPTIONS") {

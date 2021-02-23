@@ -3,12 +3,12 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Contract\Command\UpdatePermissionGroupHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Model\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
-use Scandinaver\Shared\Contract\Command;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionGroupCommand;
-use Scandinaver\RBAC\Domain\Contract\Command\UpdatePermissionGroupHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UpdatePermissionGroupHandler

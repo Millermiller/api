@@ -8,6 +8,7 @@ use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\CommentDTO;
 use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateCommentHandler
@@ -25,7 +26,7 @@ class CreateCommentHandler implements CreateCommentHandlerInterface
     }
 
     /**
-     * @param  CreateCommentCommand  $command
+     * @param  CreateCommentCommand|Command  $command
      *
      * @return CommentDTO
      * @throws PostNotFoundException

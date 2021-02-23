@@ -3,9 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Scandinaver\Learn\Domain\Contract\Command\UploadCsvSentencesHandlerInterface;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
-use Scandinaver\Learn\Domain\Contract\Command\UploadCsvSentencesHandlerInterface;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -24,7 +25,9 @@ class UploadCsvSentencesHandler implements UploadCsvSentencesHandlerInterface
     }
 
     /**
-     * @param UploadCsvSentencesCommand|Command $command
+     * @param  UploadCsvSentencesCommand|Command  $command
+     *
+     * @throws LanguageNotFoundException
      */
     public function handle($command)
     {

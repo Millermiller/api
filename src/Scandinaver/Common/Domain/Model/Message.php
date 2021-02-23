@@ -4,10 +4,7 @@
 namespace Scandinaver\Common\Domain\Model;
 
 use DateTime;
-use Exception;
-use JsonSerializable;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class Message
@@ -36,8 +33,8 @@ class Message extends AggregateRoot
      */
     public function __construct(string $name, string $message)
     {
-        $this->name = $name;
-        $this->message = $message;
+        $this->name      = $name;
+        $this->message   = $message;
         $this->createdAt = new DateTime("now");
     }
 

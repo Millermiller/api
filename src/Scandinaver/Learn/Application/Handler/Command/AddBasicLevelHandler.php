@@ -7,6 +7,7 @@ use Exception;
 use Scandinaver\Learn\Domain\Contract\Command\AddBasicLevelHandlerInterface;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\UI\Command\AddBasicLevelCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class AddBasicLevelHandler
@@ -23,7 +24,7 @@ class AddBasicLevelHandler implements AddBasicLevelHandlerInterface
     }
 
     /**
-     * @param  AddBasicLevelCommand  $command
+     * @param  AddBasicLevelCommand|Command  $command
      *
      * @throws Exception
      */

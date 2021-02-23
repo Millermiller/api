@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Permissions\Intro;
-use Scandinaver\Shared\EventBusNotFoundException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Scandinaver\Common\Domain\Permissions\Intro;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
 use Scandinaver\Common\UI\Command\UpdateIntroCommand;
 use Scandinaver\Common\UI\Query\IntroQuery;
 use Scandinaver\Common\UI\Query\IntrosQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Created by PhpStorm.

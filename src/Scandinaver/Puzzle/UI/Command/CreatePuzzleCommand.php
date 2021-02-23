@@ -22,7 +22,7 @@ class CreatePuzzleCommand implements Command
     public function __construct(string $language, array $data)
     {
         $this->language = $language;
-        $this->data = $data;
+        $this->data     = $data;
     }
 
     public function getLanguage(): string

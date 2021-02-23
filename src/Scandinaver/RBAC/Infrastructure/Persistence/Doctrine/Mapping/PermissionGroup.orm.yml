@@ -49,4 +49,4 @@ Scandinaver\RBAC\Domain\Model\PermissionGroup:
       gedmo:
         timestampable:
           on: create
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

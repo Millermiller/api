@@ -4,7 +4,14 @@
 namespace Scandinaver\RBAC\Domain\Exceptions;
 
 
-class PermissionNotFoundException extends \Exception
+use Exception;
+
+/**
+ * Class PermissionNotFoundException
+ *
+ * @package Scandinaver\RBAC\Domain\Exceptions
+ */
+class PermissionNotFoundException extends Exception
 {
     protected $code = '404';
 

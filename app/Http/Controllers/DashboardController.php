@@ -34,23 +34,23 @@ class DashboardController extends Controller
         // $unread = Message::find(['readed' => 0]);
 
         return response()->json([
-            'users'  => $this->execute(new UsersQuery()),
-            'words'  => $this->execute(new WordsCountQuery()),
-            'assets' => $this->execute(new AssetsCountQuery($language)),
-            'audio'  => $this->execute(new AudioCountQuery()),
-            'texts'  => $this->execute(new TextsCountQuery()),
-            //  'log'      => Activity::with('causer', 'subject')->get(),
-            'messages' => $this->execute(new MessagesQuery()),
-        ]);
+                'users'    => $this->execute(new UsersQuery()),
+                'words'    => $this->execute(new WordsCountQuery()),
+                'assets'   => $this->execute(new AssetsCountQuery($language)),
+                'audio'    => $this->execute(new AudioCountQuery()),
+                'texts'    => $this->execute(new TextsCountQuery()),
+                //  'log'      => Activity::with('causer', 'subject')->get(),
+                'messages' => $this->execute(new MessagesQuery()),
+            ]);
     }
 
     public function one(string $language): JsonResponse
     {
         return response()->json([
-            'words'  => $this->execute(new WordsCountByLanguageQuery($language)),
-            'assets' => $this->execute(new AssetsCountByLanguageQuery($language)),
-            'audio'  => $this->execute(new AudioCountByLanguageQuery($language)),
-            'texts'  => $this->execute(new TextsCountByLanguageQuery($language)),
-        ]);
+                'words'  => $this->execute(new WordsCountByLanguageQuery($language)),
+                'assets' => $this->execute(new AssetsCountByLanguageQuery($language)),
+                'audio'  => $this->execute(new AudioCountByLanguageQuery($language)),
+                'texts'  => $this->execute(new TextsCountByLanguageQuery($language)),
+            ]);
     }
 }

@@ -4,9 +4,10 @@
 namespace Scandinaver\User\Application\Handler\Query;
 
 use Exception;
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Contract\Query\UserStateHandlerInterface;
-use Scandinaver\User\UI\Query\UserStateQuery;
 use Scandinaver\User\Domain\Services\UserService;
+use Scandinaver\User\UI\Query\UserStateQuery;
 
 /**
  * Class UserStateHandler
@@ -23,7 +24,7 @@ class UserStateHandler implements UserStateHandlerInterface
     }
 
     /**
-     * @param  UserStateQuery  $query
+     * @param  UserStateQuery|Query  $query
      *
      * @return array
      * @throws Exception

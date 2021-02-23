@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Class FileService
@@ -27,6 +28,11 @@ class FileService
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @param  Request  $request
+     *
+     * @return File
+     */
     public function uploadAvatar(Request $request)
     {
         $name = Str::random(40).'.'.$request->file('photo')->extension();

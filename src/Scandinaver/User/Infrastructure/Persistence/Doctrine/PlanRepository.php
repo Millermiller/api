@@ -22,11 +22,11 @@ class PlanRepository extends BaseRepository implements PlanRepositoryInterface
     public function findByName(string $name): Plan
     {
         return $this->createQueryBuilder('plan')
-            ->select('p')
-            ->from($this->getEntityName(), 'p')
-            ->where('p.name = :name')
-            ->setParameter('name', 'Basic')
-            ->getQuery()
-            ->getSingleResult();
+                    ->select('p')
+                    ->from($this->getEntityName(), 'p')
+                    ->where('p.name = :name')
+                    ->setParameter('name', 'Basic')
+                    ->getQuery()
+                    ->getSingleResult();
     }
 }

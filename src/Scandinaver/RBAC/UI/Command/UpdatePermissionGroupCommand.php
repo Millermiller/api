@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see \Scandinaver\RBAC\Application\Handler\Command\UpdatePermissionGroupHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\UpdatePermissionGroupHandler
  */
 class UpdatePermissionGroupCommand implements Command
 {
@@ -21,7 +21,7 @@ class UpdatePermissionGroupCommand implements Command
 
     public function __construct(int $id, array $data)
     {
-        $this->id = $id;
+        $this->id   = $id;
         $this->data = $data;
     }
 

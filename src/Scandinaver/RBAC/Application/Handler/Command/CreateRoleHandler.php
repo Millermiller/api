@@ -3,11 +3,11 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Contract\Command\CreateRoleHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
 use Scandinaver\RBAC\Domain\Model\RoleDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\CreateRoleCommand;
-use Scandinaver\RBAC\Domain\Contract\Command\CreateRoleHandlerInterface;
 use Scandinaver\Shared\Contract\Command;
 
 /**

@@ -41,4 +41,4 @@ Scandinaver\User\Domain\Model\OauthPersonalAccessClient:
       nullable: true
       precision: 0
       column: updated_at
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

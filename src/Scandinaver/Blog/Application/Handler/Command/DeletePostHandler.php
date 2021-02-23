@@ -4,8 +4,10 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\DeletePostHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Command\DeletePostCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeletePostHandler
@@ -22,7 +24,9 @@ class DeletePostHandler implements DeletePostHandlerInterface
     }
 
     /**
-     * @param  DeletePostCommand  $command
+     * @param  DeletePostCommand|Command  $command
+     *
+     * @throws PostNotFoundException
      */
     public function handle($command): void
     {

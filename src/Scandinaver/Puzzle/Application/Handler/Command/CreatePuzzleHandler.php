@@ -3,9 +3,11 @@
 
 namespace Scandinaver\Puzzle\Application\Handler\Command;
 
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
+use Scandinaver\Puzzle\Domain\Contract\Command\CreatePuzzleHandlerInterface;
 use Scandinaver\Puzzle\Domain\PuzzleService;
 use Scandinaver\Puzzle\UI\Command\CreatePuzzleCommand;
-use Scandinaver\Puzzle\Domain\Contract\Command\CreatePuzzleHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreatePuzzleHandler
@@ -23,7 +25,9 @@ class CreatePuzzleHandler implements CreatePuzzleHandlerInterface
     }
 
     /**
-     * @param  CreatePuzzleCommand  $command
+     * @param  CreatePuzzleCommand|Command  $command
+     *
+     * @throws LanguageNotFoundException
      */
     public function handle($command): void
     {

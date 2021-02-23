@@ -3,18 +3,18 @@
 
 namespace App\Http\Controllers\Blog;
 
-use Gate;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use Scandinaver\Blog\UI\Query\PostQuery;
-use Scandinaver\Blog\UI\Query\PostsQuery;
-use Illuminate\Http\{Request, JsonResponse};
+use Gate;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Blog\Domain\Permissions\Post;
-use Scandinaver\Shared\EventBusNotFoundException;
-use Scandinaver\Blog\UI\Command\UpdatePostCommand;
 use Scandinaver\Blog\UI\Command\CreatePostCommand;
 use Scandinaver\Blog\UI\Command\DeletePostCommand;
-use Illuminate\Auth\Access\AuthorizationException;
+use Scandinaver\Blog\UI\Command\UpdatePostCommand;
+use Scandinaver\Blog\UI\Query\PostQuery;
+use Scandinaver\Blog\UI\Query\PostsQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class PostController
@@ -105,12 +105,12 @@ class PostController extends Controller
     {
         Gate::authorize('upload-post');
 
-        $file = $request->file('img');
-        $destinationPath = public_path().'/uploads/articles/';
-        $filename = str_random(20).'.'.$file->getClientOriginalExtension() ?: 'png';
+        $file            = $request->file('img');
+        $destinationPath = public_path() . '/uploads/articles/';
+        $filename        = str_random(20) . '.' . $file->getClientOriginalExtension() ?: 'png';
 
         $file->move($destinationPath, $filename);
 
-        return response()->json(['data' => '/uploads/articles/'.$filename]);
+        return response()->json(['data' => '/uploads/articles/' . $filename]);
     }
 }

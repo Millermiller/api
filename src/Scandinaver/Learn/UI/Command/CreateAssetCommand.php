@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class CreateAssetCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CreateAssetHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\CreateAssetHandler
  */
 class CreateAssetCommand implements Command
 {
@@ -21,8 +22,8 @@ class CreateAssetCommand implements Command
 
     public function __construct(string $language, User $user, string $title)
     {
-        $this->user = $user;
-        $this->title = $title;
+        $this->user     = $user;
+        $this->title    = $title;
         $this->language = $language;
     }
 

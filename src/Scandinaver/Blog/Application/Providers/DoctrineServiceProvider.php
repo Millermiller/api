@@ -24,34 +24,16 @@ class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind(
-            PostRepositoryInterface::class,
-            function () {
-                return new PostRepository(
-                    $this->app['em'],
-                    $this->app['em']->getClassMetadata(Post::class)
-                );
-            }
-        );
+        $this->app->bind(PostRepositoryInterface::class, function () {
+            return new PostRepository($this->app['em'], $this->app['em']->getClassMetadata(Post::class));
+        });
 
-        $this->app->bind(
-            CategoryRepositoryInterface::class,
-            function () {
-                return new CategoryRepository(
-                    $this->app['em'],
-                    $this->app['em']->getClassMetadata(Category::class)
-                );
-            }
-        );
+        $this->app->bind(CategoryRepositoryInterface::class, function () {
+            return new CategoryRepository($this->app['em'], $this->app['em']->getClassMetadata(Category::class));
+        });
 
-        $this->app->bind(
-            CommentRepositoryInterface::class,
-            function () {
-                return new CommentRepository(
-                    $this->app['em'],
-                    $this->app['em']->getClassMetadata(Comment::class)
-                );
-            }
-        );
+        $this->app->bind(CommentRepositoryInterface::class, function () {
+            return new CommentRepository($this->app['em'], $this->app['em']->getClassMetadata(Comment::class));
+        });
     }
 }

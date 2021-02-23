@@ -3,27 +3,28 @@
 
 namespace App\Http\Controllers\Learn;
 
-use Gate;
 use App\Helpers\Auth;
-use Illuminate\Http\Request;
-use Scandinaver\Shared\QueryBus;
-use Doctrine\DBAL\DBALException;
-use Illuminate\Http\JsonResponse;
-use Scandinaver\Shared\CommandBus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SearchRequest;
 use App\Http\Requests\CreateCardRequest;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Permissions\Card;
-use Scandinaver\Shared\EventBusNotFoundException;
+use App\Http\Requests\SearchRequest;
+use Doctrine\DBAL\DBALException;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Scandinaver\Learn\Domain\Services\WordService;
-use Scandinaver\Learn\UI\Command\CreateCardCommand;
-use Scandinaver\Learn\UI\Command\UpdateCardCommand;
-use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
-use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
-use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Permissions\Asset;
+use Scandinaver\Learn\Domain\Permissions\Card;
+use Scandinaver\Learn\Domain\Services\WordService;
+use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
+use Scandinaver\Learn\UI\Command\CreateCardCommand;
+use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
+use Scandinaver\Learn\UI\Command\UpdateCardCommand;
+use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
+use Scandinaver\Shared\CommandBus;
+use Scandinaver\Shared\EventBusNotFoundException;
+use Scandinaver\Shared\QueryBus;
 
 /**
  * Class CardController
@@ -35,11 +36,8 @@ class CardController extends Controller
 
     private WordService $wordService;
 
-    public function __construct(
-      CommandBus $commandBus,
-      QueryBus $queryBus,
-      WordService $wordService
-    ) {
+    public function __construct(CommandBus $commandBus, QueryBus $queryBus, WordService $wordService)
+    {
         parent::__construct($commandBus, $queryBus);
         $this->wordService = $wordService;
     }
@@ -63,12 +61,10 @@ class CardController extends Controller
      */
     public function store(string $language, int $card, int $asset): JsonResponse
     {
-        Gate::authorize(Card::CREATE);
+        Gate::authorize(Asset::ADD_CARD);
 
-        return $this->execute(
-          new AddCardToAssetCommand(Auth::user(), $language, $card, $asset),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new AddCardToAssetCommand(Auth::user(), $language, $card, $asset),
+            JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -82,9 +78,7 @@ class CardController extends Controller
     {
         Gate::authorize(Card::UPDATE, $card);
 
-        return response()->json(
-          $this->commandBus->execute(new UpdateCardCommand($card, $request->toArray()))
-        );
+        return response()->json($this->commandBus->execute(new UpdateCardCommand($card, $request->toArray())));
     }
 
 
@@ -100,15 +94,8 @@ class CardController extends Controller
     {
         Gate::authorize(Card::CREATE);
 
-        return $this->execute(
-          new CreateCardCommand(
-            Auth::user(),
-            $language,
-            $request->get('word'),
-            $request->get('translate')
-          ),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new CreateCardCommand(Auth::user(), $language, $request->get('word'),
+            $request->get('translate')), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -125,7 +112,7 @@ class CardController extends Controller
 
         $this->commandBus->execute(new DeleteCardFromAssetCommand(Auth::user(), $card, $asset));
 
-        return response()->json(null, 204);
+        return response()->json(NULL, 204);
     }
 
     /**
@@ -134,7 +121,6 @@ class CardController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws DBALException
      * @throws LanguageNotFoundException
      */
     public function search(string $language, SearchRequest $request): JsonResponse
@@ -157,10 +143,7 @@ class CardController extends Controller
     {
         $file = $request->file('file');
 
-        return $this->execute(
-          new UploadCsvSentencesCommand($languageId, $file),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new UploadCsvSentencesCommand($languageId, $file), JsonResponse::HTTP_CREATED);
     }
 
 }

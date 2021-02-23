@@ -6,6 +6,7 @@ namespace Scandinaver\Blog\Application\Handler\Query;
 use Scandinaver\Blog\Domain\Contract\Query\PostsHandlerInterface;
 use Scandinaver\Blog\Domain\Services\BlogService;
 use Scandinaver\Blog\UI\Query\PostsQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class PostsHandler
@@ -22,7 +23,7 @@ class PostsHandler implements PostsHandlerInterface
     }
 
     /**
-     * @param  PostsQuery  $query
+     * @param  PostsQuery|Query  $query
      *
      * @return array
      */

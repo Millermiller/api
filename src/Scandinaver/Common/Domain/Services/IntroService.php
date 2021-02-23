@@ -123,7 +123,7 @@ class IntroService implements BaseServiceInterface
         /** @var  Intro $intro */
         $intro = $this->introRepository->find($id);
 
-        if ($intro === null) {
+        if ($intro === NULL) {
             throw new IntroNotFoundException();
         }
 

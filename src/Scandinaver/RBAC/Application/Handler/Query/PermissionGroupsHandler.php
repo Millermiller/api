@@ -3,10 +3,10 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
-use Scandinaver\RBAC\Domain\Services\RBACService;
-use Scandinaver\Shared\Contract\Query;
-use Scandinaver\RBAC\UI\Query\PermissionGroupsQuery;
 use Scandinaver\RBAC\Domain\Contract\Query\PermissionGroupsHandlerInterface;
+use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\UI\Query\PermissionGroupsQuery;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class PermissionGroupsHandler
@@ -28,7 +28,7 @@ class PermissionGroupsHandler implements PermissionGroupsHandlerInterface
      *
      * @return array
      */
-    public function handle($query)
+    public function handle($query): array
     {
         return $this->service->getAllPermissionGroups();
     }

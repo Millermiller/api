@@ -6,12 +6,17 @@ namespace App\Jobs;
 use App\Events\UserRegistered;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Scandinaver\Common\Domain\Services\Requester;
 
+/**
+ * Class CreateUserForum
+ *
+ * @package App\Jobs
+ */
 class CreateUserForum implements ShouldQueue
 {
     use Dispatchable;
@@ -19,12 +24,12 @@ class CreateUserForum implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    private $event;
+    private UserRegistered $event;
 
     /**
      * Create a new job instance.
      *
-     * @param UserRegistered $event
+     * @param  UserRegistered  $event
      */
     public function __construct(UserRegistered $event)
     {

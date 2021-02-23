@@ -43,7 +43,7 @@ class Translate extends Model
 
     public function getActiveAttribute(): bool
     {
-        return $this->attributes['active'] = false;
+        return $this->attributes['active'] = FALSE;
     }
 
 }

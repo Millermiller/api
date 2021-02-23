@@ -15,6 +15,12 @@ use Scandinaver\Learn\Domain\Model\Word;
  */
 trait WordTrait
 {
+    /**
+     * @param  int  $id
+     *
+     * @return Word
+     * @throws WordNotFoundException
+     */
     private function getWord(int $id): Word
     {
         /** @var  WordRepositoryInterface $repository */
@@ -23,7 +29,7 @@ trait WordTrait
         /** @var Word $word */
         $word = $repository->find($id);
 
-        if ($word === null) {
+        if ($word === NULL) {
             throw new WordNotFoundException();
         }
 

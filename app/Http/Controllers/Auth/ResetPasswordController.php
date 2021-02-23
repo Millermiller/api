@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\PasswordReset;
 use App\Http\Controllers\Controller;
 use Doctrine\ORM\OptimisticLockException;
 use EntityManager;
@@ -64,10 +63,7 @@ class ResetPasswordController extends Controller
         EntityManager::persist($user);
         EntityManager::flush();
 
-
-        event(new PasswordReset($user));
-
-        event(new \App\Events\PasswordReset($user, $password));
+        // event(new \App\Events\PasswordReset($user, $password));
 
         $this->guard()->login($user);
     }
@@ -76,15 +72,13 @@ class ResetPasswordController extends Controller
      * Display the password reset view for the given token.
      * If no token is present, display the link request form.
      *
-     * @param Request $request
-     * @param string|null              $token
+     * @param  Request      $request
+     * @param  string|null  $token
      *
      * @return Factory|View
      */
-    public function showResetForm(Request $request, $token = null)
+    public function showResetForm(Request $request, $token = NULL)
     {
-        return view('main.frontend.layouts.forms.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        return view('main.frontend.layouts.forms.reset')->with(['token' => $token, 'email' => $request->email]);
     }
 }

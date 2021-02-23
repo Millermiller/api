@@ -7,6 +7,11 @@ namespace Scandinaver\Learn\Domain\Events;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Shared\DomainEvent;
 
+/**
+ * Class TranslateUpdated
+ *
+ * @package Scandinaver\Learn\Domain\Events
+ */
 class TranslateUpdated implements DomainEvent
 {
 
@@ -17,7 +22,7 @@ class TranslateUpdated implements DomainEvent
     public function __construct(Translate $translate, string $value)
     {
         $this->translate = $translate;
-        $this->value = $value;
+        $this->value     = $value;
     }
 
     public function getValue(): string

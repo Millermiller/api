@@ -35,7 +35,7 @@ class YandexTranslater implements TranslaterInterface
         $this->client = $client;
 
         $this->folder = config('yandex.cloud_folder');
-        $this->key = config('yandex.translate_secret');
+        $this->key    = config('yandex.translate_secret');
         $this->logger = $logger;
     }
 
@@ -62,12 +62,12 @@ class YandexTranslater implements TranslaterInterface
                 'POST',
                 'https://translate.api.cloud.yandex.net/translate/v2/translate',
                 [
-                    'json' => [
+                    'json'    => [
                         'sourceLanguageCode' => $this->defaultLanguage,
                         'targetLanguageCode' => $this->resolveLanguage($language),
-                        'format' => $this->format,
-                        'folder_id' => $this->folder,
-                        'texts' => [
+                        'format'             => $this->format,
+                        'folder_id'          => $this->folder,
+                        'texts'              => [
                             $text,
                         ],
                     ],
@@ -79,7 +79,7 @@ class YandexTranslater implements TranslaterInterface
 
         $content = $response->getBody()->getContents();
 
-        return \GuzzleHttp\json_decode($content, true);
+        return \GuzzleHttp\json_decode($content, TRUE);
     }
 
     private function resolveLanguage(Language $language): string

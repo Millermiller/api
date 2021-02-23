@@ -7,6 +7,7 @@ use Scandinaver\Common\Domain\Contract\Command\CreateIntroHandlerInterface;
 use Scandinaver\Common\Domain\Model\IntroDTO;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateIntroHandler
@@ -23,7 +24,7 @@ class CreateIntroHandler implements CreateIntroHandlerInterface
     }
 
     /**
-     * @param  CreateIntroCommand  $command
+     * @param  CreateIntroCommand|Command  $command
      *
      * @return IntroDTO
      */

@@ -6,10 +6,11 @@ namespace App\Http\Controllers\Reader;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Http\Request;
-use Scandinaver\Reader\UI\Query\ReadQuery;
-use Scandinaver\Reader\Domain\Permissions\Reader;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\Request;
+use Scandinaver\Reader\Domain\Permissions\Reader;
+use Scandinaver\Reader\UI\Query\ReadQuery;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -25,7 +26,7 @@ class ReaderController extends Controller
      * @param  Request  $request
      *
      * @return BinaryFileResponse
-     * @throws AuthorizationException
+     * @throws AuthorizationException|BindingResolutionException
      */
     public function index(string $language, Request $request): BinaryFileResponse
     {

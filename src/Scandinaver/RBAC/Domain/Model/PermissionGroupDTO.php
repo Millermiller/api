@@ -6,6 +6,11 @@ namespace Scandinaver\RBAC\Domain\Model;
 
 use Scandinaver\Shared\DTO;
 
+/**
+ * Class PermissionGroupDTO
+ *
+ * @package Scandinaver\RBAC\Domain\Model
+ */
 class PermissionGroupDTO extends DTO
 {
 
@@ -16,13 +21,16 @@ class PermissionGroupDTO extends DTO
         $this->permissionGroup = $permissionGroup;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [
-          'id' => $this->permissionGroup->getId(),
-          'name' => $this->permissionGroup->getName(),
-          'slug' => $this->permissionGroup->getSlug(),
-          'description' => $this->permissionGroup->getDescription(),
+            'id'          => $this->permissionGroup->getId(),
+            'name'        => $this->permissionGroup->getName(),
+            'slug'        => $this->permissionGroup->getSlug(),
+            'description' => $this->permissionGroup->getDescription(),
         ];
     }
 

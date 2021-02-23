@@ -29,6 +29,13 @@ class CreateCommandHandlerInterface extends GeneratorCommand
         return __DIR__ . '/Stubs/custom-command-handler-interface.stub';
     }
 
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     *
+     * @return string
+     */
     protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
@@ -42,6 +49,9 @@ class CreateCommandHandlerInterface extends GeneratorCommand
         ];
     }
 
+    /**
+     * @throws FileNotFoundException
+     */
     public function handle(): void
     {
         $name = $this->getNameInput();
@@ -57,10 +67,17 @@ class CreateCommandHandlerInterface extends GeneratorCommand
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('scandinaver:rebuild:commands', [
-          'domain' => $this->domain
-        ]);
+                'domain' => $this->domain,
+            ]);
     }
 
+    /**
+     * Get the destination class path.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
     protected function getPath($name): string
     {
         $name = Str::replaceFirst($this->getDefaultNamespace($name), '', $name);
@@ -70,9 +87,17 @@ class CreateCommandHandlerInterface extends GeneratorCommand
         return "{$path}src/{$this->getDefaultNamespace($name)}/{$this->domain}/{$this->commandHandlerPath}/{$name}.php";
     }
 
+    /**
+     * Get the full namespace for a given class, without the class name.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
     protected function getNamespace($name): string
     {
         $commandNamespace = str_replace('/', '\\', $this->commandHandlerPath);
+
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace";
     }
 }

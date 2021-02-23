@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class GetTranslatesByWordQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\GetTranslatesByWordHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\GetTranslatesByWordHandler
  */
 class GetTranslatesByWordQuery implements Query
 {

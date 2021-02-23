@@ -1,7 +1,5 @@
 <?php
 
-use DateTime;
-use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 
 /**
@@ -40,8 +38,8 @@ class CardEntity implements JsonSerializable, UrlRoutable
      */
     public function __construct(Word $word, ?Asset $asset, Translate $translate)
     {
-        $this->word = $word;
-        $this->asset = $asset;
+        $this->word      = $word;
+        $this->asset     = $asset;
         $this->translate = $translate;
     }
 
@@ -96,15 +94,15 @@ class CardEntity implements JsonSerializable, UrlRoutable
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id'           => $this->id,
             // 'asset_id' => $this->asset->getId(),
-            'word_id' => $this->word->getId(),
+            'word_id'      => $this->word->getId(),
             'translate_id' => $this->translate->getId(),
-            'favourite' => $this->favourite,
-            'word' => $this->word,
-            'translate' => $this->translate,
-            'asset' => $this->asset,
-            'examples' => $this->examples,
+            'favourite'    => $this->favourite,
+            'word'         => $this->word,
+            'translate'    => $this->translate,
+            'asset'        => $this->asset,
+            'examples'     => $this->examples,
         ];
     }
 

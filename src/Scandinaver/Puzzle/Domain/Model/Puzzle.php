@@ -35,7 +35,7 @@ class Puzzle extends AggregateRoot
 
     public function __construct(PuzzleText $text, PuzzleTranslate $translate)
     {
-        $this->text = $text;
+        $this->text      = $text;
         $this->translate = $translate;
 
         $this->pushEvent(new PuzzleCreated($this));

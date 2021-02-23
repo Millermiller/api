@@ -19,6 +19,11 @@ class CommandBus
 
     private const HANDLER_PREFIX = 'Handler';
 
+    /**
+     * @param  Command  $command
+     *
+     * @return mixed
+     */
     public function execute(Command $command)
     {
         return $this->resolveHandler($command)->handle($command);

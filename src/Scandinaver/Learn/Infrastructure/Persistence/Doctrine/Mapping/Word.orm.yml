@@ -88,7 +88,7 @@ Scandinaver\Learn\Domain\Model\Word:
   manyToOne:
     creator:
       targetEntity: Scandinaver\User\Domain\Model\User
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -107,4 +107,4 @@ Scandinaver\Learn\Domain\Model\Word:
       inversedBy: null
       orphanRemoval: false
 
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

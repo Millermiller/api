@@ -3,9 +3,10 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
+use Scandinaver\RBAC\Domain\Contract\Command\DeletePermissionHandlerInterface;
+use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
-use Scandinaver\RBAC\Domain\Contract\Command\DeletePermissionHandlerInterface;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -24,7 +25,9 @@ class DeletePermissionHandler implements DeletePermissionHandlerInterface
     }
 
     /**
-     * @param DeletePermissionCommand|Command $command
+     * @param  DeletePermissionCommand|Command  $command
+     *
+     * @throws PermissionNotFoundException
      */
     public function handle($command): void
     {

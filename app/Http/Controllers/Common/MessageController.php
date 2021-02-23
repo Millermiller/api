@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Http\JsonResponse;
-use Scandinaver\Shared\EventBusNotFoundException;
-use Scandinaver\Common\Domain\Permissions\Message;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Scandinaver\Common\Domain\Permissions\Message;
 use Scandinaver\Common\UI\Command\DeleteMessageCommand;
 use Scandinaver\Common\UI\Query\MessageQuery;
 use Scandinaver\Common\UI\Query\MessagesQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class MessageController
@@ -65,6 +65,6 @@ class MessageController extends Controller
 
     public function read()
     {
-        
+
     }
 }

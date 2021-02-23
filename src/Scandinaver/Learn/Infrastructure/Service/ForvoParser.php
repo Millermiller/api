@@ -39,7 +39,7 @@ class ForvoParser implements AudioParserInterface
 
         $arr = explode("'", $onclick);
 
-        $link = (isset($arr[1])) ? $arr[1] : null;
+        $link = (isset($arr[1])) ? $arr[1] : NULL;
 
         if (!$link) {
             throw new AudioFileCantParsedException();

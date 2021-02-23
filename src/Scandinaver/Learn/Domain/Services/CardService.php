@@ -4,12 +4,13 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Doctrine\Common\Collections\Collection;
-use Scandinaver\Learn\Domain\Model\{Card, Example, Translate, Word};
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
-use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
@@ -18,6 +19,11 @@ use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
+use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
+use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Model\{Card, Example, Translate, Word};
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
@@ -63,21 +69,35 @@ class CardService implements BaseServiceInterface
         CardFactory $cardFactory,
         TranslaterInterface $translater
     ) {
-        $this->assetRepository = $assetRepository;
-        $this->cardRepository = $cardRepository;
-        $this->resultRepository = $resultRepository;
-        $this->exampleRepository = $exampleRepository;
-        $this->translateRepository = $translateRepository;
-        $this->cardFactory = $cardFactory;
+        $this->assetRepository          = $assetRepository;
+        $this->cardRepository           = $cardRepository;
+        $this->resultRepository         = $resultRepository;
+        $this->exampleRepository        = $exampleRepository;
+        $this->translateRepository      = $translateRepository;
+        $this->cardFactory              = $cardFactory;
         $this->favouriteAssetRepository = $favouriteAssetRepository;
-        $this->wordRepository = $wordRepository;
-        $this->translater = $translater;
+        $this->wordRepository           = $wordRepository;
+        $this->translater               = $translater;
     }
 
+    /**
+     * @param  User    $user
+     * @param  string  $language
+     * @param  int     $card
+     * @param  int     $asset
+     *
+     * @return Card
+     * @throws AssetNotFoundException
+     * @throws CardNotFoundException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws BindingResolutionException
+     * @throws CardAlreadyAddedException
+     */
     public function addCardToAsset(User $user, string $language, int $card, int $asset): Card
     {
         $asset = $this->getAsset($asset);
-        $card = $this->getCard($card);
+        $card  = $this->getCard($card);
 
         $repository = AssetRepositoryFactory::getByType($asset->getType());
 
@@ -88,13 +108,21 @@ class CardService implements BaseServiceInterface
         return $card;
     }
 
+    /**
+     * @param  User    $user
+     * @param  string  $language
+     * @param  string  $word
+     * @param  string  $translate
+     *
+     * @return Card
+     */
     public function createCard(User $user, string $language, string $word, string $translate): Card
     {
         $data = [
-            'word' => $word,
+            'word'      => $word,
             'translate' => $translate,
-            'creator' => $user,
-            'language' => $language,
+            'creator'   => $user,
+            'language'  => $language,
         ];
 
         $card = $this->cardFactory->build($data);
@@ -104,6 +132,13 @@ class CardService implements BaseServiceInterface
         return $card;
     }
 
+    /**
+     * @param  int    $card
+     * @param  array  $data
+     *
+     * @return Card
+     * @throws CardNotFoundException
+     */
     public function updateCard(int $card, array $data): Card
     {
         $card = $this->getCard($card);
@@ -118,13 +153,15 @@ class CardService implements BaseServiceInterface
             if (isset($exampleData['id'])) {
                 /** @var Example $example */
                 $example = $this->exampleRepository->find($exampleData['id']);
-                if ($example === null) {
+                if ($example === NULL) {
                     $example = new Example($exampleData['text'], $exampleData['value'], $card);
-                } else {
+                }
+                else {
                     $example->setText($exampleData['text']);
                     $example->setValue($exampleData['value']);
                 }
-            } else {
+            }
+            else {
                 $example = new Example($exampleData['text'], $exampleData['value'], $card);
             }
             $this->exampleRepository->save($example);
@@ -136,10 +173,17 @@ class CardService implements BaseServiceInterface
         return $card;
     }
 
+    /**
+     * @param  int  $card
+     * @param  int  $asset
+     *
+     * @throws AssetNotFoundException
+     * @throws CardNotFoundException
+     */
     public function removeCardFromAsset(int $card, int $asset): void
     {
         $asset = $this->getAsset($asset);
-        $card = $this->getCard($card);
+        $card  = $this->getCard($card);
 
         $asset->removeCard($card);
         $this->assetRepository->save($asset);
@@ -157,7 +201,7 @@ class CardService implements BaseServiceInterface
     public function getCards(string $language, User $user, int $asset): array
     {
         $language = $this->getLanguage($language);
-        $asset = $this->getAsset($asset);
+        $asset    = $this->getAsset($asset);
 
         $favouriteAsset = $user->getFavouriteAsset($language);
 
@@ -175,12 +219,12 @@ class CardService implements BaseServiceInterface
         }
 
         return [
-            'id' => $asset->getId(),
-            'type' => $asset->getType(),
-            'cards' => $cardsDTO,
-            'title' => $asset->getTitle(),
-            'result' => $result ? $result->getValue() : null,
-            'level' => $asset->getLevel(),
+            'id'     => $asset->getId(),
+            'type'   => $asset->getType(),
+            'cards'  => $cardsDTO,
+            'title'  => $asset->getTitle(),
+            'result' => $result ? $result->getValue() : NULL,
+            'level'  => $asset->getLevel(),
         ];
     }
 
@@ -194,6 +238,14 @@ class CardService implements BaseServiceInterface
         return $card->getExamples();
     }
 
+    /**
+     * @param  int     $card
+     * @param  string  $text
+     * @param  string  $value
+     *
+     * @return Example
+     * @throws CardNotFoundException
+     */
     public function addExample(int $card, string $text, string $value): Example
     {
         $card = $this->getCard($card);
@@ -205,6 +257,11 @@ class CardService implements BaseServiceInterface
         return $example;
     }
 
+    /**
+     * @param  int  $card
+     *
+     * @throws CardNotFoundException
+     */
     public function deleteExamplesOfCard(int $card)
     {
         $card = $this->getCard($card);
@@ -214,6 +271,12 @@ class CardService implements BaseServiceInterface
         }
     }
 
+    /**
+     * @param  int     $translate
+     * @param  string  $text
+     *
+     * @return Translate
+     */
     public function editTranslate(int $translate, string $text): Translate
     {
         /** @var Translate $translate */
@@ -225,6 +288,12 @@ class CardService implements BaseServiceInterface
         return $translate;
     }
 
+    /**
+     * @param  string  $language
+     * @param  int     $word
+     *
+     * @throws LanguageNotFoundException
+     */
     public function fillDictionary(string $language, int $word)
     {
         $language = $this->getLanguage($language);
@@ -251,36 +320,44 @@ class CardService implements BaseServiceInterface
             $this->cardRepository->save($card);
         }
     }
-    
+
+    /**
+     * @param  string        $language
+     * @param  UploadedFile  $file
+     *
+     * @throws LanguageNotFoundException
+     * @throws Exception
+     */
     public function uploadCsvSentences(string $language, UploadedFile $file)
     {
         $language = $this->getLanguage($language);
 
-        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+        $filename = Str::random(40).'.'.$file->getClientOriginalExtension();
 
         Storage::disk('sentences')->put($filename, file_get_contents($file));
 
         $path = Storage::disk('sentences')->path($filename);
 
         if (!file_exists($path)) {
-            throw new \Exception('File not exist', 500);
+            throw new Exception('File not exist', 500);
         }
 
         $handle = fopen($path, "r");
         if (!$handle) {
-            throw new \Exception('Cant open file', 500);
+            throw new Exception('Cant open file', 500);
         }
 
 
-        while(!feof($handle))
-        {
-            $data = fgetcsv($handle, 0, ';');
-            $orig = $data[0];
+        while (!feof($handle)) {
+            $data           = fgetcsv($handle, 0, ';');
+            $orig           = $data[0];
             $translateValue = $data[1];
 
-            $isWordExist = $this->wordRepository->findOneBy([
-                'word' => $orig
-            ]);
+            $isWordExist = $this->wordRepository->findOneBy(
+                [
+                    'word' => $orig,
+                ]
+            );
 
             if ($isWordExist) {
                 continue;

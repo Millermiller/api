@@ -35,8 +35,7 @@ class Welcome extends Mailable
      */
     public function build(): Welcome
     {
-        return $this->from('support@scandinaver.org', "Scandinaver")
-                    ->subject("Регистрация на сайте Scandinaver.org")
-                    ->markdown('emails.welcome');
+        return $this->from('support@scandinaver.org',
+            "Scandinaver")->subject("Регистрация на сайте Scandinaver.org")->markdown('emails.welcome');
     }
 }

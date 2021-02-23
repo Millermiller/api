@@ -3,13 +3,17 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Exception;
-use Scandinaver\Learn\Domain\Model\{Asset, AssetDTO, Result, SentenceAsset, WordAsset};
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Model\{Asset, AssetDTO, Result, SentenceAsset, WordAsset};
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
@@ -21,6 +25,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class AssetService implements BaseServiceInterface
 {
+
     use AssetTrait;
     use LanguageTrait;
 
@@ -35,11 +40,17 @@ class AssetService implements BaseServiceInterface
         AssetRepositoryInterface $assetRepository,
         PersonalAssetRepositoryInterface $personalAssetRepository
     ) {
-        $this->resultRepository = $resultRepository;
-        $this->assetRepository = $assetRepository;
+        $this->resultRepository        = $resultRepository;
+        $this->assetRepository         = $assetRepository;
         $this->personalAssetRepository = $personalAssetRepository;
     }
 
+    /**
+     * @param  string  $language
+     *
+     * @return int
+     * @throws LanguageNotFoundException
+     */
     public function count(string $language): int
     {
         $language = $this->getLanguage($language);
@@ -47,14 +58,25 @@ class AssetService implements BaseServiceInterface
         return $this->assetRepository->getCountByLanguage($language);
     }
 
-    public function create(string $language, User $user, string $title): AssetDTO
-    {
+    /**
+     * @param  string  $language
+     * @param  User    $user
+     * @param  string  $title
+     *
+     * @return AssetDTO
+     * @throws LanguageNotFoundException
+     */
+    public function create(
+        string $language,
+        User $user,
+        string $title
+    ): AssetDTO {
         $language = $this->getLanguage($language);
 
         $data = [
-            'title' => $title,
+            'title'    => $title,
             'language' => $language,
-            'user' => $user,
+            'user'     => $user,
         ];
 
         $asset = AssetFactory::build($data);
@@ -64,6 +86,14 @@ class AssetService implements BaseServiceInterface
         return $asset->toDTO();
     }
 
+    /**
+     * @param  string  $language
+     * @param  int     $type
+     *
+     * @return Asset
+     * @throws LanguageNotFoundException|BindingResolutionException
+     * @throws Exception
+     */
     public function addBasic(string $language, int $type): Asset
     {
         $language = $this->getLanguage($language);
@@ -83,7 +113,7 @@ class AssetService implements BaseServiceInterface
 
         /** @var Asset $lastAsset */
         $lastAsset = $repository->getLastAsset($language, $type);
-        if ($lastAsset === null) {
+        if ($lastAsset === NULL) {
             $level = 1;
         }
         else {
@@ -97,18 +127,33 @@ class AssetService implements BaseServiceInterface
         return $asset;
     }
 
+    /**
+     * @param  int  $asset
+     *
+     * @throws AssetNotFoundException
+     * @throws BindingResolutionException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function delete(int $asset): void
     {
-        $asset = $this->getAsset($asset);
+        $asset      = $this->getAsset($asset);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
         $asset->delete();
         $repository->delete($asset);
     }
 
+    /**
+     * @param  string  $language
+     * @param  int     $type
+     *
+     * @return array
+     * @throws LanguageNotFoundException|BindingResolutionException
+     */
     public function getAssets(string $language, int $type): array
     {
-        $result = [];
-        $language = $this->getLanguage($language);
+        $result     = [];
+        $language   = $this->getLanguage($language);
         $repository = AssetRepositoryFactory::getByType($type);
 
         /** @var Asset[] $assets */
@@ -122,14 +167,17 @@ class AssetService implements BaseServiceInterface
 
     /**
      * @param  string  $language
-     * @param  User  $user
-     * @param  int  $type
+     * @param  User    $user
+     * @param  int     $type
      *
      * @return array
-     * @throws LanguageNotFoundException
+     * @throws LanguageNotFoundException|BindingResolutionException
      */
-    public function getAssetsByType(string $language, User $user, int $type): array
-    {
+    public function getAssetsByType(
+        string $language,
+        User $user,
+        int $type
+    ): array {
         $language = $this->getLanguage($language);
 
         $activeArray = $this->resultRepository->getActiveIds($user, $language);
@@ -138,47 +186,49 @@ class AssetService implements BaseServiceInterface
 
         $assets = $repository->getByLanguage($language);
 
-        $canopen = true;
-        $testlink = false;
-        $counter = 0;
+        $canopen  = TRUE;
+        $testlink = FALSE;
+        $counter  = 0;
 
         /** @var Asset $asset */
         foreach ($assets as &$asset) {
             $counter++;
             if (in_array($asset->getId(), $activeArray)) {
                 $asset = [
-                    'count' => $asset->getCards()->count(),
-                    'title' => $asset->getTitle(),
-                    'id' => $asset->getId(),
-                    'level' => $asset->getLevel(),
-                    'active' => true,
-                    'testlink' => false,
-                    'canopen' => false,
-                    'result' => $this->resultRepository->getResult(
+                    'count'    => $asset->getCards()->count(),
+                    'title'    => $asset->getTitle(),
+                    'id'       => $asset->getId(),
+                    'level'    => $asset->getLevel(),
+                    'active'   => TRUE,
+                    'testlink' => FALSE,
+                    'canopen'  => FALSE,
+                    'result'   => $this->resultRepository->getResult(
                         $user,
                         $asset
                     )->getValue(),
-                    'type' => $asset->getType(),
+                    'type'     => $asset->getType(),
                 ];
-            } else {
-                $asset = [
-                    'count' => $asset->getCards()->count(),
-                    'title' => $asset->getTitle(),
-                    'id' => $asset->getId(),
-                    'level' => $asset->getLevel(),
-                    'active' => false,
-                    'canopen' => $canopen,
+            }
+            else {
+                $asset   = [
+                    'count'    => $asset->getCards()->count(),
+                    'title'    => $asset->getTitle(),
+                    'id'       => $asset->getId(),
+                    'level'    => $asset->getLevel(),
+                    'active'   => FALSE,
+                    'canopen'  => $canopen,
                     'testlink' => $testlink,
-                    'result' => 0,
-                    'type' => $asset->getType(),
+                    'result'   => 0,
+                    'type'     => $asset->getType(),
                 ];
-                $canopen = false;
+                $canopen = FALSE;
             }
 
             if ($counter < 10 || $user->isPremium()) {
-                $asset['available'] = true;
-            } else {
-                $asset['available'] = false;
+                $asset['available'] = TRUE;
+            }
+            else {
+                $asset['available'] = FALSE;
             }
 
             $testlink = $asset['id'];
@@ -187,13 +237,32 @@ class AssetService implements BaseServiceInterface
         return $assets;
     }
 
+    /**
+     * @param  string  $language
+     * @param  User    $user
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getPersonalAssets(string $language, User $user): array
     {
         $language = $this->getLanguage($language);
 
-        return $this->personalAssetRepository->getCreatedAssets($language, $user);
+        $createdAssets  = $user->getCreatedAssets($language);
+        $favouriteAsset = $user->getFavouriteAsset($language);
+
+        array_unshift($createdAssets, $favouriteAsset->toDTO());
+
+        return $createdAssets;
     }
 
+    /**
+     * @param  User  $user
+     * @param  int   $asset
+     *
+     * @return Asset
+     * @throws AssetNotFoundException
+     */
     public function giveNextLevel(User $user, int $asset): Asset
     {
         $asset = $this->getAsset($asset);
@@ -204,7 +273,7 @@ class AssetService implements BaseServiceInterface
             ['user' => $user, 'asset' => $asset]
         );
 
-        if ($result === null) {
+        if ($result === NULL) {
             $result = new Result($nextAsset, $user, $asset->getLanguage());
         }
 
@@ -213,26 +282,47 @@ class AssetService implements BaseServiceInterface
         return $nextAsset;
     }
 
-    public function saveTestResult(User $user, int $asset, int $resultValue): Result
-    {
+    /**
+     * @param  User   $user
+     * @param  int    $asset
+     * @param  array  $data
+     *
+     * @return Result
+     * @throws AssetNotFoundException
+     */
+    public function saveTestResult(
+        User $user,
+        int $asset,
+        array $data
+    ): Result {
         $asset = $this->getAsset($asset);
 
         $result = $this->resultRepository->findOneBy(
             ['user' => $user, 'asset' => $asset]
         );
 
-        if ($result === null) {
+        if ($result === NULL) {
             $result = new Result($asset, $user, $asset->getLanguage());
         }
 
-        $result->setValue($resultValue);
+        // $result->setValue($resultValue);
 
         return $this->resultRepository->save($result);
     }
 
+    /**
+     * @param  int    $asset
+     * @param  array  $data
+     *
+     * @return AssetDTO
+     * @throws AssetNotFoundException
+     * @throws BindingResolutionException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function updateAsset(int $asset, array $data): AssetDTO
     {
-        $asset = $this->getAsset($asset);
+        $asset      = $this->getAsset($asset);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
         /** @var  Asset $asset */
         $asset = $repository->update($asset, $data);
@@ -253,16 +343,16 @@ class AssetService implements BaseServiceInterface
 
         $assets = [];
 
-        $activeArray = $this->resultRepository->getActiveIds($user, $language);
+        $activeArray  = $this->resultRepository->getActiveIds($user, $language);
         $personalData = $user->getCreatedAssets($language);
-        $publicData = $this->assetRepository->getPublicAssets($language);
+        $publicData   = $this->assetRepository->getPublicAssets($language);
 
         $data = $publicData + $personalData;
 
         $counter = [
-            Asset::TYPE_WORDS => 0,
+            Asset::TYPE_WORDS     => 0,
             Asset::TYPE_SENTENCES => 0,
-            Asset::TYPE_PERSONAL => 0,
+            Asset::TYPE_PERSONAL  => 0,
             Asset::TYPE_FAVORITES => 0,
         ];
 
@@ -273,14 +363,14 @@ class AssetService implements BaseServiceInterface
             foreach ($item->getCards() as $card) {
                 $word = $card->getWord();
 
-                if ($word === null) {
+                if ($word === NULL) {
                     continue;
                 }
 
                 $cards[] = [
-                    'id' => $card->getId(),
-                    'word' => $word->getValue(),
-                    'trans' => preg_replace(
+                    'id'       => $card->getId(),
+                    'word'     => $word->getValue(),
+                    'trans'    => preg_replace(
                         '/^(\d\\)\s)/',
                         '',
                         $card->getTranslate()->getValue()
@@ -288,25 +378,25 @@ class AssetService implements BaseServiceInterface
                     'asset_id' => $item->getId(),
                     'examples' => $card->getExamples()->map(
                         fn($example) => [
-                            'id' => $example->getId(),
+                            'id'      => $example->getId(),
                             'card_id' => $example->getCard()->getId(),
-                            'text' => $example->getText(),
-                            'value' => $example->getValue(),
+                            'text'    => $example->getText(),
+                            'value'   => $example->getValue(),
                         ]
                     )->toArray(),
                 ];
             }
 
             $asset = [
-                'id' => $item->getId(),
+                'id'     => $item->getId(),
                 'active' => in_array($item->getId(), $activeArray),
-                'count' => $item->getCards()->count(),
+                'count'  => $item->getCards()->count(),
                 'result' => 0,
-                'level' => $item->getLevel(),
-                'title' => $item->getTitle(),
-                'type' => $item->getType(),
-                'basic' => $item->getBasic(),
-                'cards' => $cards,
+                'level'  => $item->getLevel(),
+                'title'  => $item->getTitle(),
+                'type'   => $item->getType(),
+                'basic'  => $item->getBasic(),
+                'cards'  => $cards,
             ];
 
             $counter[$item->getType()] = $counter[$item->getType()] + 1;
@@ -314,13 +404,18 @@ class AssetService implements BaseServiceInterface
             if ((in_array(
                         $item->getType(),
                         [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]
-                    ) && $counter[$item->getType()] < 10) || $user->isPremium() || in_array(
+                    )
+                    && $counter[$item->getType()] < 10)
+                || $user->isPremium()
+                || in_array(
                     $item->getType(),
                     [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]
-                )) {
-                $asset['available'] = true;
-            } else {
-                $asset['available'] = false;
+                )
+            ) {
+                $asset['available'] = TRUE;
+            }
+            else {
+                $asset['available'] = FALSE;
             }
 
             $assets[] = $asset;

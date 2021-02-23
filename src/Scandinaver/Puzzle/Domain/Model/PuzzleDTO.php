@@ -6,6 +6,11 @@ namespace Scandinaver\Puzzle\Domain\Model;
 
 use Scandinaver\Shared\DTO;
 
+/**
+ * Class PuzzleDTO
+ *
+ * @package Scandinaver\Puzzle\Domain\Model
+ */
 class PuzzleDTO extends DTO
 {
 
@@ -19,8 +24,8 @@ class PuzzleDTO extends DTO
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->puzzle->getId(),
-            'text' => $this->puzzle->getText()->toNative(),
+            'id'        => $this->puzzle->getId(),
+            'text'      => $this->puzzle->getText()->toNative(),
             'translate' => $this->puzzle->getTranslate()->toNative(),
         ];
     }

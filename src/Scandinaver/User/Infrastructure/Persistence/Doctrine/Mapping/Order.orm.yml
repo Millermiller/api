@@ -97,7 +97,7 @@ Scandinaver\User\Domain\Model\Order:
   manyToOne:
     plan:
       targetEntity: Scandinaver\User\Domain\Model\Plan
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -107,7 +107,7 @@ Scandinaver\User\Domain\Model\Order:
       orphanRemoval: false
     user:
       targetEntity: Scandinaver\User\Domain\Model\User
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -115,4 +115,4 @@ Scandinaver\User\Domain\Model\Order:
         user_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

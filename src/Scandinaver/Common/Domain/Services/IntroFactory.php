@@ -6,6 +6,11 @@ namespace Scandinaver\Common\Domain\Services;
 
 use Scandinaver\Common\Domain\Model\Intro;
 
+/**
+ * Class IntroFactory
+ *
+ * @package Scandinaver\Common\Domain\Services
+ */
 class IntroFactory
 {
     public static function build(array $data): Intro

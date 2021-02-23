@@ -42,8 +42,8 @@ class Puzzle extends Model
     public function getSuccessAttribute(): bool
     {
         return $this->users()
-            ->where('users.id', Auth::user()->getKey())
-            ->exists();
+                    ->where('users.id', Auth::user()->getKey())
+                    ->exists();
     }
 
     /**
@@ -52,7 +52,7 @@ class Puzzle extends Model
     public function users(): array
     {
         return $this->belongsToMany('App\User', 'puzzle_user')
-            ->withTimestamps();
+                    ->withTimestamps();
     }
 
 }

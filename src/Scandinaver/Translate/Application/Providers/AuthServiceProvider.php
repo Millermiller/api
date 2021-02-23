@@ -18,27 +18,27 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         Gate::define(Text::VIEW, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Text::SHOW, function (User $user, int $textId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define('complete-text', function (User $user, int $textId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Text::CREATE, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Text::UPDATE, function (User $user, int $textId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Text::DELETE, function (User $user, int $textId) {
-            return true;
+            return TRUE;
         });
     }
 }

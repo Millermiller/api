@@ -7,6 +7,7 @@ use Auth;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\IntroService;
@@ -16,8 +17,7 @@ use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
+use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset};
 use Scandinaver\Learn\Domain\Model\Result as AssetResult;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Puzzle\Domain\PuzzleService;
@@ -30,9 +30,7 @@ use Scandinaver\Translate\Domain\TextService;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\Domain\Model\Plan;
-use Scandinaver\User\Domain\Model\User;
-use Scandinaver\User\Domain\Model\UserDTO;
+use Scandinaver\User\Domain\Model\{Plan, User, UserDTO};
 
 /**
  * Class UserService
@@ -71,34 +69,33 @@ class UserService implements BaseServiceInterface
 
     private RoleRepositoryInterface $roleRepository;
 
-    public function __construct(
-      AssetRepositoryInterface $assetRepository,
-      FavouriteAssetRepositoryInterface $favouriteAssetRepository,
-      PersonalAssetRepositoryInterface $personalAssetRepository,
-      AssetService $assetService,
-      UserRepositoryInterface $userRepository,
-      PlanRepositoryInterface $planRepository,
-      LanguageRepositoryInterface $languageRepository,
-      TextRepositoryInterface $textRepository,
-      RoleRepositoryInterface $roleRepository,
-      TextService $textService,
-      PuzzleService $puzzleService,
-      LanguageService $languageService,
-      IntroService $introService
-    ) {
-        $this->userRepository = $userRepository;
-        $this->planRepository = $planRepository;
-        $this->languageRepository = $languageRepository;
-        $this->assetRepository = $assetRepository;
-        $this->textRepository = $textRepository;
-        $this->assetService = $assetService;
-        $this->textService = $textService;
-        $this->puzzleService = $puzzleService;
+    public function __construct(AssetRepositoryInterface $assetRepository,
+                                FavouriteAssetRepositoryInterface $favouriteAssetRepository,
+                                PersonalAssetRepositoryInterface $personalAssetRepository,
+                                AssetService $assetService,
+                                UserRepositoryInterface $userRepository,
+                                PlanRepositoryInterface $planRepository,
+                                LanguageRepositoryInterface $languageRepository,
+                                TextRepositoryInterface $textRepository,
+                                RoleRepositoryInterface $roleRepository,
+                                TextService $textService,
+                                PuzzleService $puzzleService,
+                                LanguageService $languageService,
+                                IntroService $introService)
+    {
+        $this->userRepository           = $userRepository;
+        $this->planRepository           = $planRepository;
+        $this->languageRepository       = $languageRepository;
+        $this->assetRepository          = $assetRepository;
+        $this->textRepository           = $textRepository;
+        $this->assetService             = $assetService;
+        $this->textService              = $textService;
+        $this->puzzleService            = $puzzleService;
         $this->favouriteAssetRepository = $favouriteAssetRepository;
-        $this->personalAssetRepository = $personalAssetRepository;
-        $this->introService = $introService;
-        $this->languageService = $languageService;
-        $this->roleRepository = $roleRepository;
+        $this->personalAssetRepository  = $personalAssetRepository;
+        $this->introService             = $introService;
+        $this->languageService          = $languageService;
+        $this->roleRepository           = $roleRepository;
     }
 
     /**
@@ -112,6 +109,23 @@ class UserService implements BaseServiceInterface
         $user = $this->getUser($id);
 
         return $user->toDTO();
+    }
+
+    /**
+     * @param  int  $id
+     *
+     * @return User
+     * @throws UserNotFoundException
+     */
+    private function getUser(int $id): User
+    {
+        /** @var User $user */
+        $user = $this->userRepository->find($id);
+        if ($user === NULL) {
+            throw new UserNotFoundException();
+        }
+
+        return $user;
     }
 
     public function all(): array
@@ -158,12 +172,12 @@ class UserService implements BaseServiceInterface
         $languages = $this->languageRepository->findAll();
 
         $user = new User();
-        $user->setLogin($data['_login']);
-        $user->setEmail($data['_email']);
-        $user->setPassword(bcrypt($data['_password']));
+        $user->setLogin($data['login']);
+        $user->setEmail($data['email']);
+        $user->setPassword(bcrypt($data['password']));
         $user->setPlan($plan);
         $user->setCreatedAt(Carbon::now());
-        $user->setActive(true);
+        $user->setActive(TRUE);
         $user->setActiveTo(Carbon::now());
 
         if (array_key_exists('_roles', $data)) {
@@ -174,100 +188,84 @@ class UserService implements BaseServiceInterface
                 $user->attachRole($role);
             }
         }
+        else {
+            /** @var Role $defaultRole */
+            $defaultRole = $this->roleRepository->findOneBy([
+                                                                'slug' => 'user',
+                                                            ]);
+
+            if ($defaultRole === NULL) {
+                throw new Exception('Default role not found');
+            }
+
+            $user->attachRole($defaultRole);
+        }
 
         foreach ($languages as $language) {
             //даем пользователю избранное
             $favourite = new FavouriteAsset($language);
-            $result = new AssetResult($favourite, $user, $language);
+            $result    = new AssetResult($favourite, $user, $language);
             $user->addTest($result);
 
             //даем пользователю первый словарь слов
-            $firstWordAsset = $this->assetRepository->getFirstAsset(
-              $language,
-              Asset::TYPE_WORDS
-            );
-            $result = new AssetResult($firstWordAsset, $user, $language);
+            $firstWordAsset = $this->assetRepository->getFirstAsset($language, Asset::TYPE_WORDS);
+            $result         = new AssetResult($firstWordAsset, $user, $language);
             $user->addTest($result);
 
             //даем пользователю первый словарь предложений
-            $firstSentencesAsset = $this->assetRepository->getFirstAsset(
-              $language,
-              Asset::TYPE_SENTENCES
-            );
-            $result = new AssetResult($firstSentencesAsset, $user, $language);
+            $firstSentencesAsset = $this->assetRepository->getFirstAsset($language, Asset::TYPE_SENTENCES);
+            $result              = new AssetResult($firstSentencesAsset, $user, $language);
             $user->addTest($result);
 
             //даем пользователю первый текст
             $firstText = $this->textRepository->getFirstText($language);
-            $result = new TranslateResult($firstText, $user, $language);
+            $result    = new TranslateResult($firstText, $user, $language);
             $user->addTranslate($result);
         }
 
         $this->userRepository->save($user);
 
-        // event(new UserRegistered($user, $data));
-
         return $user;
     }
 
     /**
-     * @param  User  $user
+     * @param  User    $user
      * @param  string  $language
      *
      * @return array
-     * @throws LanguageNotFoundException
+     * @throws LanguageNotFoundException|BindingResolutionException
      */
     public function getState(User $user, string $language): array
     {
         $language = $this->getLanguage($language);
 
         return [
-          'site' => config('app.MAIN_SITE'),
-          'words' => $this->assetService->getAssetsByType(
-            $language->getName(),
-            $user,
-            Asset::TYPE_WORDS
-          ),
-          'sentences' => $this->assetService->getAssetsByType(
-            $language->getName(),
-            $user,
-            Asset::TYPE_SENTENCES
-          ),
-          'favourites' => $user->getFavouriteAsset($language)->toDTO(),
-          'personal' => $user->getCreatedAssets($language),
-          'texts' => $this->textService->getTextsForUser(
-            $language->getName(),
-            $user
-          ),
-          'puzzles' => $this->puzzleService->getForUser(
-            $language->getName(),
-            $user
-          ),
-          'intro' => $this->introService->all(),
-          'sites' => $this->languageService->all(),
-          'currentSite' => $this->languageRepository->findOneBy(
-            ['name' => config('app.lang')]
-          ),
-          'domain' => config('app.lang'),
+            'site'        => config('app.MAIN_SITE'),
+            'words'       => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_WORDS),
+            'sentences'   => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_SENTENCES),
+            'favourites'  => $user->getFavouriteAsset($language)->toDTO(),
+            'personal'    => $user->getCreatedAssets($language),
+            'texts'       => $this->textService->getTextsForUser($language->getName(), $user),
+            'puzzles'     => $this->puzzleService->getForUser($language->getName(), $user),
+            'intro'       => $this->introService->all(),
+            'sites'       => $this->languageService->all(),
+            'currentSite' => $this->languageRepository->findOneBy(['name' => config('app.lang')]),
+            'domain'      => config('app.lang'),
         ];
     }
 
     public function getInfo(): array
     {
         return [
-          'id' => Auth::user()->getKey(),
-          'login' => Auth::user()->getLogin(),
-          'avatar' => Auth::user()->getAvatar(),
-          'email' => Auth::user()->getEmail(),
-          'active' => Auth::user()->getActive(),
-          'plan' => Auth::user()->getPlan(),
-          'active_to' => Auth::user()->getActiveTo(),
-          'roles' => Auth::user()->getRoles()->map(
-            fn($role) => $role->toDTO()
-          )->toArray(),
-          'permissions' => Auth::user()->getAllPermissions()->map(
-            fn($permission) => $permission->toDTO()
-          )->toArray(),
+            'id'          => Auth::user()->getKey(),
+            'login'       => Auth::user()->getLogin(),
+            'avatar'      => Auth::user()->getAvatar(),
+            'email'       => Auth::user()->getEmail(),
+            'active'      => Auth::user()->getActive(),
+            'plan'        => Auth::user()->getPlan(),
+            'active_to'   => Auth::user()->getActiveTo(),
+            'roles'       => Auth::user()->getRoles()->map(fn($role) => $role->toDTO())->toArray(),
+            'permissions' => Auth::user()->getAllPermissions()->map(fn($permission) => $permission->toDTO())->toArray(),
         ];
     }
 
@@ -285,21 +283,19 @@ class UserService implements BaseServiceInterface
 
         //Requester::updateForumUser($request, $user->getEmail());
 
-        $request['password'] = isset($request['password']) ? bcrypt(
-          $request['password']
-        ) : $user->getPassword();
+        $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->getPassword();
 
         $this->userRepository->update($user, $request);
     }
 
     /**
-     * @param  int  $id
+     * @param  int    $id
      * @param  array  $data
      *
-     * @return User
+     * @return UserDTO
      * @throws UserNotFoundException
      */
-    public function updateUser(int $id, array $data): User
+    public function updateUser(int $id, array $data): UserDTO
     {
         $user = $this->getUser($id);
 
@@ -314,26 +310,18 @@ class UserService implements BaseServiceInterface
 
         $user->setRoles($roleCollection);
 
-        $data['plan'] = $this->planRepository->find($data['plan']['id']);
-
-        return $this->userRepository->update($user, $data);
-    }
-
-    /**
-     * @param  int  $id
-     *
-     * @return User
-     * @throws UserNotFoundException
-     */
-    private function getUser(int $id): User
-    {
-        /** @var User $user */
-        $user = $this->userRepository->find($id);
-        if ($user === null) {
-            throw new UserNotFoundException();
+        if ($data['password'] === NULL) {
+            unset($data['password']);
         }
 
-        return $user;
+        if (array_key_exists('plan', $data)) {
+            $data['plan'] = $this->planRepository->find($data['plan']['id']);
+        }
+
+        /** @var User $user */
+        $user = $this->userRepository->update($user, $data);
+
+        return $user->toDTO();
     }
 
     /**
@@ -345,7 +333,7 @@ class UserService implements BaseServiceInterface
     {
         /** @var User $user */
         $user = $this->userRepository->find($id);
-        if ($user === null) {
+        if ($user === NULL) {
             throw new UserNotFoundException();
         }
 

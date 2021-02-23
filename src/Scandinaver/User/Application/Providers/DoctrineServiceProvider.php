@@ -9,7 +9,7 @@ use Scandinaver\User\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\RoleRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
-use Scandinaver\User\Domain\Model\{Plan, Role, User, Permission};
+use Scandinaver\User\Domain\Model\{Permission, Plan, Role, User};
 use Scandinaver\User\Infrastructure\Persistence\Doctrine\PermissionRepository;
 use Scandinaver\User\Infrastructure\Persistence\Doctrine\PlanRepository;
 use Scandinaver\User\Infrastructure\Persistence\Doctrine\RoleRepository;

@@ -36,9 +36,19 @@ class Comment extends AggregateRoot
         return $this->text;
     }
 
+    public function setText(?string $text): void
+    {
+        $this->text = $text;
+    }
+
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 
     public function toDTO(): CommentDTO
@@ -51,19 +61,9 @@ class Comment extends AggregateRoot
         // TODO: Implement delete() method.
     }
 
-    public function setText(?string $text): void
-    {
-        $this->text = $text;
-    }
-
     public function setPost(Post $post): void
     {
         $post->addComment($this);
         $this->post = $post;
-    }
-
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
     }
 }

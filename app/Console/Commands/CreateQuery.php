@@ -68,7 +68,7 @@ class CreateQuery extends GeneratorCommand
     }
 
     /**
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      *
      * @return string
      */
@@ -96,15 +96,15 @@ class CreateQuery extends GeneratorCommand
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('createQueryHandler', [
-            'name'   => "{$name}Handler",
-            'domain' => $this->domain
-        ]);
+                'name'   => "{$name}Handler",
+                'domain' => $this->domain,
+            ]);
     }
 
     /**
      * Get the destination class path.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -120,24 +120,35 @@ class CreateQuery extends GeneratorCommand
     /**
      * Get the full namespace for a given class, without the class name.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
     protected function getNamespace($name): string
     {
         $queryNamespace = str_replace('/', '\\', $this->queryPath);
+
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
     }
 
-    protected function replaceClass($stub, $name)
+    /**
+     * Replace the class name for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function replaceClass($stub, $name): string
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
         $handlerClass     = str_replace('Query', 'Handler', $class);
+
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass"], $stub);
+        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass"],
+            $stub);
     }
 }

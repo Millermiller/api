@@ -19,13 +19,16 @@ class ExampleDTO extends DTO
         $this->example = $example;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [
-            'id' => $this->example->getId(),
+            'id'      => $this->example->getId(),
             'card_id' => $this->example->getCard()->getId(),
-            'text' => $this->example->getText(),
-            'value' => $this->example->getValue(),
+            'text'    => $this->example->getText(),
+            'value'   => $this->example->getValue(),
         ];
     }
 }

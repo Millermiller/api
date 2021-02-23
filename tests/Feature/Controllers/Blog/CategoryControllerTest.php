@@ -7,6 +7,11 @@ use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class CategoryControllerTest
+ *
+ * @package Tests\Feature\Controllers\Blog
+ */
 class CategoryControllerTest extends TestCase
 {
     private int $categoryCount = 2;

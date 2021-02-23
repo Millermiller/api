@@ -3,18 +3,17 @@
 
 namespace App\Http\Controllers\RBAC;
 
-
-use Gate;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\{Request, JsonResponse};
-use Scandinaver\Shared\EventBusNotFoundException;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
-use Scandinaver\RBAC\UI\Query\PermissionGroupsQuery;
+use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\RBAC\Domain\Permissions\PermissionGroup;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionGroupCommand;
+use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
+use Scandinaver\RBAC\UI\Query\PermissionGroupsQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class RoleController
@@ -61,10 +60,7 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize(PermissionGroup::DELETE, $id);
 
-        return $this->execute(
-          new DeletePermissionGroupCommand($id),
-          JsonResponse::HTTP_NO_CONTENT
-        );
+        return $this->execute(new DeletePermissionGroupCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**
@@ -78,10 +74,7 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize(PermissionGroup::CREATE);
 
-        return $this->execute(
-          new CreatePermissionGroupCommand($request->toArray()),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new CreatePermissionGroupCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -96,9 +89,7 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize(PermissionGroup::UPDATE, $id);
 
-        return $this->execute(
-          new UpdatePermissionGroupCommand($id, $request->toArray())
-        );
+        return $this->execute(new UpdatePermissionGroupCommand($id, $request->toArray()));
     }
 
 

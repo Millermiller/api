@@ -3,19 +3,18 @@
 
 namespace App\Http\Controllers\RBAC;
 
-
-use Gate;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Scandinaver\RBAC\UI\Query\PermissionQuery;
-use Scandinaver\RBAC\UI\Query\PermissionsQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Scandinaver\RBAC\Domain\Permissions\Permission;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;
+use Scandinaver\RBAC\UI\Query\PermissionQuery;
+use Scandinaver\RBAC\UI\Query\PermissionsQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class RoleController
@@ -76,10 +75,7 @@ class PermissionController extends Controller
     {
         Gate::authorize(Permission::CREATE);
 
-        return $this->execute(
-          new CreatePermissionCommand($request->toArray()),
-          JsonResponse::HTTP_CREATED
-        );
+        return $this->execute(new CreatePermissionCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -94,12 +90,7 @@ class PermissionController extends Controller
     {
         Gate::authorize(Permission::UPDATE, $id);
 
-        return $this->execute(
-          new UpdatePermissionCommand(
-            $id,
-            $request->toArray()
-          )
-        );
+        return $this->execute(new UpdatePermissionCommand($id, $request->toArray()));
     }
 
 

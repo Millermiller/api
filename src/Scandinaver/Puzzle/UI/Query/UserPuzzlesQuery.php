@@ -20,7 +20,7 @@ class UserPuzzlesQuery implements Query
 
     public function __construct(string $language, User $user)
     {
-        $this->user = $user;
+        $this->user     = $user;
         $this->language = $language;
     }
 

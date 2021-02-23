@@ -39,6 +39,12 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
             ->getSingleResult();
     }
 
+    /**
+     * @param  User      $user
+     * @param  Language  $language
+     *
+     * @return array
+     */
     public function getActiveIds(User $user, Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
@@ -60,9 +66,6 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getForUser(User $user): array
     {
         // TODO: Implement getForUser() method.

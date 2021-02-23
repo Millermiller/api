@@ -20,13 +20,13 @@ class IntroRepository extends BaseRepository implements IntroRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         $items = $q->select('i')
-            ->from($this->getEntityName(), 'i')
-            ->where('i.active = :active')
-            ->setParameter('active', 1)
-            ->orderBy('i.sort', 'asc')
+                   ->from($this->getEntityName(), 'i')
+                   ->where('i.active = :active')
+                   ->setParameter('active', 1)
+                   ->orderBy('i.sort', 'asc')
             //->groupBy('i.page')
-            ->getQuery()
-            ->getResult();
+                   ->getQuery()
+                   ->getResult();
 
         foreach ($items as $item) {
             if (!isset($collection[$item->getPage()])) {

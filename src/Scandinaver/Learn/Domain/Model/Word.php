@@ -4,9 +4,8 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
-use JsonSerializable;
-use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Doctrine\Common\Collections\Collection;
+use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -58,15 +57,18 @@ class Word implements UrlRoutable
         return $this->cards;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
-            'value' => $this->word,
-            'audio' => $this->audio,
-            'sentence' => $this->sentence,
+            'id'        => $this->id,
+            'value'     => $this->word,
+            'audio'     => $this->audio,
+            'sentence'  => $this->sentence,
             'is_public' => $this->isPublic,
-            'creator' => $this->creator,
+            'creator'   => $this->creator,
         ];
     }
 

@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class CreateFavouriteCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CreateFavouriteHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\CreateFavouriteHandler
  */
 class CreateFavouriteCommand implements Command
 {
@@ -26,8 +27,8 @@ class CreateFavouriteCommand implements Command
         int $card
     ) {
         $this->language = $language;
-        $this->user = $user;
-        $this->card = $card;
+        $this->user     = $user;
+        $this->card     = $card;
     }
 
     public function getUser(): User

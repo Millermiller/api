@@ -4,11 +4,10 @@
 namespace Scandinaver\User\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\{OptimisticLockException, ORMException};
-use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Translate\Domain\Model\Text;
-use Scandinaver\User\Domain\Model\{Plan, User};
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
+use Scandinaver\User\Domain\Model\{Plan, User};
 
 /**
  * Class UserRepository
@@ -49,19 +48,24 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->_em->flush();
     }
 
+    /**
+     * @param $string
+     *
+     * @return array
+     */
     public function findByNameOrEmail($string): array
     {
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('u', 'p')
-            ->from($this::getEntityName(), 'u')
-            ->join('u.plan', 'p', 'WITH')
-            ->where('u.login = :login')
-            ->orWhere('u.email = :email')
-            ->orderBy('u.id', 'desc')
-            ->setParameter('login', $string)
-            ->setParameter('email', $string)
-            ->getQuery()
-            ->getResult();
+                 ->from($this::getEntityName(), 'u')
+                 ->join('u.plan', 'p', 'WITH')
+                 ->where('u.login = :login')
+                 ->orWhere('u.email = :email')
+                 ->orderBy('u.id', 'desc')
+                 ->setParameter('login', $string)
+                 ->setParameter('email', $string)
+                 ->getQuery()
+                 ->getResult();
     }
 }

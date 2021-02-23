@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Shared;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use ReflectionClass;
 use ReflectionException;
 use Scandinaver\Shared\Contract\Query;
@@ -19,11 +20,23 @@ class QueryBus
 
     private const HANDLER_PREFIX = 'Handler';
 
+    /**
+     * @param  Query  $command
+     *
+     * @return mixed
+     * @throws BindingResolutionException
+     */
     public function execute(Query $command)
     {
         return $this->resolveHandler($command)->handle($command);
     }
 
+    /**
+     * @param  Query  $query
+     *
+     * @return QueryHandler|null
+     * @throws BindingResolutionException
+     */
     public function resolveHandler(Query $query): ?QueryHandler
     {
         try {
@@ -34,7 +47,9 @@ class QueryBus
     }
 
     /**
-     * @throws ReflectionException
+     * @param  Query  $command
+     *
+     * @return string
      */
     public function getHandlerClass(Query $command): string
     {

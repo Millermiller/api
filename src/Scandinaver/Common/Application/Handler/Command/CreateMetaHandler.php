@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\CreateMetaHandlerInterface;
 use Scandinaver\Common\UI\Command\CreateMetaCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class CreateMetaHandler
@@ -18,9 +19,7 @@ class CreateMetaHandler implements CreateMetaHandlerInterface
     }
 
     /**
-     * @param  CreateMetaCommand
-     *
-     * @inheritDoc
+     * @param  CreateMetaCommand|Command  $command
      */
     public function handle($command): void
     {

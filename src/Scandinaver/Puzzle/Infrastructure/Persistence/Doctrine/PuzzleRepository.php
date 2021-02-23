@@ -22,11 +22,11 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
         $q = $this->createQueryBuilder('puzzle');
 
         return $q->select('puzzle')
-            ->from($this->getEntityName(), 'p')
-            ->where($q->expr()->eq('p.language', ':language'))
-            ->setParameter('language', $language)
-            ->getQuery()
-            ->getResult();
+                 ->from($this->getEntityName(), 'p')
+                 ->where($q->expr()->eq('p.language', ':language'))
+                 ->setParameter('language', $language)
+                 ->getQuery()
+                 ->getResult();
     }
 
     public function getForUser(Language $language, User $user): array
@@ -34,14 +34,14 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('p', 'u')
-            ->from($this::getEntityName(), 'p')
-            ->leftJoin('p.users', 'u', 'WITH', 'u.id = :uid')
-            ->where($q->expr()->eq('p.language', ':language'))
-            ->setParameter('uid', $user->getKey())
-            ->setParameter('language', $language)
-            ->orderBy('p.id', 'asc')
-            ->getQuery()
-            ->getResult();
+                 ->from($this::getEntityName(), 'p')
+                 ->leftJoin('p.users', 'u', 'WITH', 'u.id = :uid')
+                 ->where($q->expr()->eq('p.language', ':language'))
+                 ->setParameter('uid', $user->getKey())
+                 ->setParameter('language', $language)
+                 ->orderBy('p.id', 'asc')
+                 ->getQuery()
+                 ->getResult();
     }
 
     /**

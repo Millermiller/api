@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
-use Scandinaver\Translate\UI\Command\DeleteTextCommand;
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\DeleteTextHandlerInterface;
+use Scandinaver\Translate\UI\Command\DeleteTextCommand;
 
 /**
  * Class DeleteTextHandler
@@ -18,8 +19,7 @@ class DeleteTextHandler implements DeleteTextHandlerInterface
     }
 
     /**
-     * @param  DeleteTextCommand  $command
-     *
+     * @param  DeleteTextCommand|Command  $command
      */
     public function handle($command): void
     {

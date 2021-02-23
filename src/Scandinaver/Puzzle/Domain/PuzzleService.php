@@ -30,18 +30,24 @@ class PuzzleService implements BaseServiceInterface
         $this->puzzleRepository = $puzzleRepository;
     }
 
-    public function one(int $puzzleId): PuzzleDTO
+    public function one(int $id): PuzzleDTO
     {
         /** @var Puzzle $puzzle */
-        $puzzle = $this->puzzleRepository->find($puzzleId);
+        $puzzle = $this->puzzleRepository->find($id);
 
         return $puzzle->toDTO();
     }
 
+    /**
+     * @param  string  $language
+     * @param  array   $data
+     *
+     * @throws LanguageNotFoundException
+     */
     public function create(string $language, array $data)
     {
         $language = $this->getLanguage($language);
-        $puzzle = new Puzzle(new PuzzleText($data['text']), new PuzzleTranslate($data['translate']));
+        $puzzle   = new Puzzle(new PuzzleText($data['text']), new PuzzleTranslate($data['translate']));
         $puzzle->setLanguage($language);
 
         $this->puzzleRepository->save($puzzle);
@@ -69,23 +75,41 @@ class PuzzleService implements BaseServiceInterface
         return $response;
     }
 
-    public function delete(int $puzzleId)
+    /**
+     * @param  int  $id
+     *
+     * @throws PuzzleNotFoundException
+     */
+    public function delete(int $id)
     {
-        $puzzle = $this->getPuzzle($puzzleId);
+        $puzzle = $this->getPuzzle($id);
 
         $puzzle->delete();
 
         $this->puzzleRepository->delete($puzzle);
     }
 
-    public function completed(User $user, int $puzzleId): void
+    /**
+     * @param  User  $user
+     * @param  int   $id
+     *
+     * @throws PuzzleNotFoundException
+     */
+    public function completed(User $user, int $id): void
     {
-        $puzzle = $this->getPuzzle($puzzleId);
+        $puzzle = $this->getPuzzle($id);
 
         //todo: refactor
         $this->puzzleRepository->addForUser($user, $puzzle);
     }
 
+    /**
+     * @param  string  $language
+     * @param  User    $user
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getForUser(string $language, User $user): array
     {
         $language = $this->getLanguage($language);
@@ -101,12 +125,18 @@ class PuzzleService implements BaseServiceInterface
         return $response;
     }
 
+    /**
+     * @param  int  $puzzleId
+     *
+     * @return Puzzle
+     * @throws PuzzleNotFoundException
+     */
     private function getPuzzle(int $puzzleId): Puzzle
     {
         /** @var Puzzle $puzzle */
         $puzzle = $this->puzzleRepository->find($puzzleId);
 
-        if ($puzzle === null) {
+        if ($puzzle === NULL) {
             throw new PuzzleNotFoundException();
         }
 

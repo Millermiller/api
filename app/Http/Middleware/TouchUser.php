@@ -3,6 +3,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Response;
 use Request;
@@ -17,19 +18,20 @@ class TouchUser
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      *
      * @return Response
      */
     public function handle($request, Closure $next)
     {
-        if (\Auth::check()) {
+        if (Auth::check()) {
             // The user is logged in...
-            $user = \Auth::user();
+            $user = Auth::user();
             // $user->last_online = Carbon::now();
             // $user->save();
         }
+
         return $next($request);
     }
 }

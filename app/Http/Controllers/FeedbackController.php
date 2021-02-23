@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\SubdomainFeedbackRequest;
 
 /**
@@ -13,6 +12,10 @@ use App\Http\Requests\SubdomainFeedbackRequest;
  */
 class FeedbackController extends Controller
 {
+
+    /**
+     * @param  SubdomainFeedbackRequest  $request
+     */
     public function store(SubdomainFeedbackRequest $request)
     {
         //  $message = $this->feedbackService->saveFeedback($request->toArray());

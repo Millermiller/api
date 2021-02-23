@@ -3,10 +3,11 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Contract\Command\LoginHandlerInterface;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Command\LoginCommand;
 
 /**
@@ -24,7 +25,7 @@ class LoginHandler implements LoginHandlerInterface
     }
 
     /**
-     * @param  LoginCommand  $query
+     * @param  LoginCommand|Query  $query
      *
      * @return User
      * @throws UserNotFoundException

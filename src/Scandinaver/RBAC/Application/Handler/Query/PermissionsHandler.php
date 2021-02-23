@@ -3,9 +3,9 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Contract\Query\PermissionsHandlerInterface;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionsQuery;
-use Scandinaver\RBAC\Domain\Contract\Query\PermissionsHandlerInterface;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -30,6 +30,6 @@ class PermissionsHandler implements PermissionsHandlerInterface
      */
     public function handle($query): array
     {
-       return $this->service->getAllPermissions();
+        return $this->service->getAllPermissions();
     }
 } 

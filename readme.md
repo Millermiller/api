@@ -17,3 +17,12 @@ COMMIT;
 
 
 php artisan ide-helper:generate
+
+
+Update word, translate
+SET
+word.word = (SELECT translate.value FROM translate where word.id = translate.word_id LIMIT 1),
+translate.value = (SELECT word.word FROM word where word.id = translate.word_id LIMIT 1)
+
+WHERE translate.sentence = 1
+AND word.sentence = 1

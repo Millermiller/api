@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
-use Scandinaver\Translate\UI\Command\CreateTextCommand;
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\CreateTextHandlerInterface;
+use Scandinaver\Translate\UI\Command\CreateTextCommand;
 
 /**
  * Class CreateTextHandler
@@ -18,8 +19,7 @@ class CreateTextHandler implements CreateTextHandlerInterface
     }
 
     /**
-     * @param  CreateTextCommand  $command
-     *
+     * @param  CreateTextCommand|Command  $command
      */
     public function handle($command): void
     {

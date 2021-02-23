@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see \Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleHandler
  */
 class AttachPermissionToRoleCommand implements Command
 {
@@ -20,7 +20,7 @@ class AttachPermissionToRoleCommand implements Command
 
     public function __construct(int $roleId, int $permissionId)
     {
-        $this->roleId = $roleId;
+        $this->roleId       = $roleId;
         $this->permissionId = $permissionId;
     }
 

@@ -6,7 +6,6 @@ namespace Scandinaver\Common\Domain\Model;
 
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class Language

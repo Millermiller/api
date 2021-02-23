@@ -24,12 +24,12 @@ class TranslateRepository extends BaseRepository implements TranslateRepositoryI
         return $q->select(
             "t, field(t.id, ".implode(", ", $ids).") as HIDDEN field"
         )
-            ->from($this->getEntityName(), 't')
-            ->join('t.word', 'w')
-            ->where('t.id IN (:ids)')
-            ->setParameter('ids', $ids)
-            ->orderBy('field')
-            ->getQuery()
-            ->getResult();
+                 ->from($this->getEntityName(), 't')
+                 ->join('t.word', 'w')
+                 ->where('t.id IN (:ids)')
+                 ->setParameter('ids', $ids)
+                 ->orderBy('field')
+                 ->getQuery()
+                 ->getResult();
     }
 }

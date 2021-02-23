@@ -4,12 +4,12 @@
 namespace App\Http\Controllers\Common;
 
 
-use Gate;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Gate;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\UI\Query\LanguagesQuery;
 use Scandinaver\Shared\EventBusNotFoundException;
-use Illuminate\Auth\Access\AuthorizationException;
 
 /**
  * Class LanguageController

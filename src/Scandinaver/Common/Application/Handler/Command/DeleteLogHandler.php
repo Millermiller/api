@@ -3,9 +3,10 @@
 
 namespace Scandinaver\Common\Application\Handler\Command;
 
+use Scandinaver\Common\Domain\Contract\Command\DeleteLogHandlerInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
-use Scandinaver\Common\Domain\Contract\Command\DeleteLogHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteLogHandler
@@ -23,7 +24,7 @@ class DeleteLogHandler implements DeleteLogHandlerInterface
     }
 
     /**
-     * @param  DeleteLogCommand  $command
+     * @param  DeleteLogCommand|Command  $command
      */
     public function handle($command): void
     {

@@ -3,9 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Scandinaver\Learn\Domain\Contract\Command\UpdateCardHandlerInterface;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\UpdateCardCommand;
-use Scandinaver\Learn\Domain\Contract\Command\UpdateCardHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UpdateCardHandler
@@ -23,7 +24,7 @@ class UpdateCardHandler implements UpdateCardHandlerInterface
     }
 
     /**
-     * @param  UpdateCardCommand  $command
+     * @param  UpdateCardCommand|Command  $command
      */
     public function handle($command): void
     {

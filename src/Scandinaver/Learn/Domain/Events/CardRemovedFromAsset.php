@@ -8,6 +8,11 @@ use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Shared\DomainEvent;
 
+/**
+ * Class CardRemovedFromAsset
+ *
+ * @package Scandinaver\Learn\Domain\Events
+ */
 class CardRemovedFromAsset implements DomainEvent
 {
     private Asset $asset;
@@ -17,7 +22,7 @@ class CardRemovedFromAsset implements DomainEvent
     public function __construct(Asset $asset, Card $card)
     {
         $this->asset = $asset;
-        $this->card = $card;
+        $this->card  = $card;
     }
 
     public function getAsset(): Asset

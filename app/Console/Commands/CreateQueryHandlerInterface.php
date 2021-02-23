@@ -42,7 +42,7 @@ class CreateQueryHandlerInterface extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/Stubs/custom-query-handler-interface.stub';
+        return __DIR__ . '/Stubs/custom-query-handler-interface.stub';
     }
 
     /**
@@ -71,11 +71,11 @@ class CreateQueryHandlerInterface extends GeneratorCommand
 
         $this->files->chmod($path, 0777);
 
-        $this->info($this->type.' created successfully.');
+        $this->info($this->type . ' created successfully.');
 
         Artisan::call('scandinaver:rebuild:commands', [
-            'domain' => $this->domain
-        ]);
+                'domain' => $this->domain,
+            ]);
     }
 
     /**
@@ -84,8 +84,8 @@ class CreateQueryHandlerInterface extends GeneratorCommand
     public function getArguments(): array
     {
         return [
-          ['name', InputArgument::REQUIRED, 'The name of the class'],
-          ['domain', InputArgument::REQUIRED, 'The name of the domain'],
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
         ];
     }
 

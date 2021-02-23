@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
-use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
+use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\UpdateDescriptionHandlerInterface;
+use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
 
 /**
  * Class UpdateDescriptionHandler
@@ -18,8 +19,7 @@ class UpdateDescriptionHandler implements UpdateDescriptionHandlerInterface
     }
 
     /**
-     * @param  UpdateDescriptionCommand  $command
-     *
+     * @param  UpdateDescriptionCommand|Command  $command
      */
     public function handle($command): void
     {

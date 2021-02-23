@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class PostQuery
  *
- * @see     \Scandinaver\Blog\Application\Handler\Query\PostHandler
  * @package Scandinaver\Blog\UI\Query
+ *
+ * @see     \Scandinaver\Blog\Application\Handler\Query\PostHandler
  */
 class PostQuery implements Query
 {

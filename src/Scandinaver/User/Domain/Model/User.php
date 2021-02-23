@@ -19,17 +19,16 @@ use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Learn\Domain\Model\PersonalAsset;
 use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Result as AssetResult;
 use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Translate\Domain\Model\Result as TranslateResult;
 use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Contract\Permissions;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
-use Scandinaver\Learn\Domain\Model\Result as AssetResult;
-use Scandinaver\Translate\Domain\Model\Result as TranslateResult;
 
 /**
  * Class User
@@ -59,7 +58,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     private ?string $name;
 
-    private ?string $photo;
+    private ?string $photo = NULL;
 
     private ?string $restoreLink;
 
@@ -101,10 +100,10 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     public function __construct()
     {
-        $this->tests = new ArrayCollection();
-        $this->texts = new ArrayCollection();
-        $this->translates = new ArrayCollection();
-        $this->roles = new ArrayCollection();
+        $this->tests       = new ArrayCollection();
+        $this->texts       = new ArrayCollection();
+        $this->translates  = new ArrayCollection();
+        $this->roles       = new ArrayCollection();
         $this->permissions = new ArrayCollection();
     }
 
@@ -216,21 +215,21 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     public function jsonSerialize(): array
     {
         return [
-          'id' => $this->id,
-          'login' => $this->login,
-          'email' => $this->email,
-          'active_to' => $this->getActiveTo() ? $this->getActiveTo()
-            ->format(
-              "Y-m-d H:i:s"
-            ) : null,
-          'plan' => $this->plan,
-          'plan_id' => $this->plan->getId(),
-          'name' => $this->name,
-          'photo' => $this->photo,
-          'assets_opened' => $this->assetsOpened,
-          'assets_created' => $this->assetsCreated,
-          'premium' => $this->isPremium(),
-          'avatar' => $this->getAvatar(),
+            'id'             => $this->id,
+            'login'          => $this->login,
+            'email'          => $this->email,
+            'active_to'      => $this->getActiveTo() ? $this->getActiveTo()
+                                                            ->format(
+                                                                "Y-m-d H:i:s"
+                                                            ) : NULL,
+            'plan'           => $this->plan,
+            'plan_id'        => $this->plan->getId(),
+            'name'           => $this->name,
+            'photo'          => $this->photo,
+            'assets_opened'  => $this->assetsOpened,
+            'assets_created' => $this->assetsCreated,
+            'premium'        => $this->isPremium(),
+            'avatar'         => $this->getAvatar(),
         ];
     }
 
@@ -255,24 +254,25 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     public function getAvatar(): string
     {
         $isAvatarExists = file_exists(public_path('/uploads/u/a/').$this->photo);
-        $isOrigExists = file_exists(public_path('/uploads/u/').$this->photo);
+        $isOrigExists   = file_exists(public_path('/uploads/u/').$this->photo);
 
         if ($this->photo) {
             if ($isAvatarExists) {
                 return '/uploads/u/a/'.$this->photo;
-            } else {
+            }
+            else {
                 if ($isOrigExists) {
                     try {
                         $avatar = Image::make(
-                          public_path('/uploads/u/').$this->photo
+                            public_path('/uploads/u/').$this->photo
                         );
                         $avatar->resize(
-                          300,
-                          null,
-                          function ($constraint) {
-                              /** @var Constraint $constraint */
-                              $constraint->aspectRatio();
-                          }
+                            300,
+                            NULL,
+                            function ($constraint) {
+                                /** @var Constraint $constraint */
+                                $constraint->aspectRatio();
+                            }
                         );
                         $avatar->save(public_path('/uploads/u/a/'.$this->photo));
 
@@ -285,7 +285,8 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
                     return Avatar::create($this->login)->toBase64()->encoded;
                 }
             }
-        } else {
+        }
+        else {
             return Avatar::create($this->login)->toBase64()->encoded;
         }
     }
@@ -312,11 +313,11 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     {
         foreach ($this->texts as $t) {
             if ($t->getId() === $text->getId()) {
-                return true;
+                return TRUE;
             }
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
@@ -379,30 +380,30 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     {
         foreach ($this->roles as $role) {
             if ($role->getSlug() === $roleSlug) {
-                return true;
+                return TRUE;
             }
         }
 
-        return false;
+        return FALSE;
     }
 
     public function can(string $permissionSlug): bool
     {
         foreach ($this->permissions as $permission) {
             if ($permission->getSlug() === $permissionSlug) {
-                return true;
+                return TRUE;
             }
         }
 
         foreach ($this->roles as $role) {
             foreach ($role->getPermissions() as $permission) {
                 if ($permission->getSlug() === $permissionSlug) {
-                    return true;
+                    return TRUE;
                 }
             }
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
@@ -454,6 +455,9 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
         // TODO: Implement delete() method.
     }
 
+    /**
+     * @param  AssetResult  $result
+     */
     public function addTest(AssetResult $result)
     {
         if (!$this->tests->contains($result)) {
@@ -461,6 +465,9 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
         }
     }
 
+    /**
+     * @param  TranslateResult  $result
+     */
     public function addTranslate(TranslateResult $result)
     {
         if (!$this->translates->contains($result)) {
@@ -489,7 +496,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
             }
         }
 
-        return null;
+        return NULL;
     }
 
     /**

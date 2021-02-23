@@ -24,7 +24,7 @@ class GetStateHandler implements GetStateHandlerInterface
     }
 
     /**
-     * @param GetStateQuery|Query $query
+     * @param  GetStateQuery|Query  $query
      *
      * @return array
      * @throws Exception

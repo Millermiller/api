@@ -25,6 +25,11 @@ class ValueObject implements ValueObjectInterface
         return $this->toNative() === $object->toNative();
     }
 
+    /**
+     * @param $native
+     *
+     * @return mixed|void
+     */
     public function fromNative($native)
     {
         $this->value = $native;

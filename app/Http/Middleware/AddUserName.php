@@ -17,12 +17,12 @@ class AddUserName
     /**
      * Handle an incoming request.
      *
-     * @param Request  $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      *
      * @return Closure
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Closure
     {
         $request->request->add(['name' => Auth::user()->getLogin()]);
 

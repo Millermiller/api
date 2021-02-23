@@ -3,7 +3,6 @@
 
 namespace App\Console\Commands;
 
-use Artisan;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
@@ -30,6 +29,13 @@ class RebuildEventsProvider extends GeneratorCommand
         return __DIR__ . '/Stubs/custom-event-service-provider.stub';
     }
 
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     *
+     * @return string
+     */
     protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
@@ -38,15 +44,15 @@ class RebuildEventsProvider extends GeneratorCommand
     protected function getArguments(): array
     {
         return [
-            ['domain', InputArgument::REQUIRED, 'The name of the domain']
+            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
         ];
     }
 
     public function handle(): void
     {
         $this->domain = $this->argument('domain');
-        $name = "EventServiceProvider";
-        $path = $this->getPath($name);
+        $name         = "EventServiceProvider";
+        $path         = $this->getPath($name);
 
         $rootPath = Str::replaceFirst('app', '', $this->laravel['path']);
 
@@ -55,18 +61,15 @@ class RebuildEventsProvider extends GeneratorCommand
         $eventBindings = [];
 
         foreach ($events as $event) {
-            $class = Str::replaceFirst('.php', '', $event->getFilename());
+            $class        = Str::replaceFirst('.php', '', $event->getFilename());
             $classHandler = "{$class}Listener";
 
-            $eventBindings[] =
-                '\'Scandinaver\\'.$this->domain.'\Domain\Events\\'.$class.'\' => ['.PHP_EOL."            ".
-                '\'Scandinaver\\'.$this->domain.'\Domain\Events\Listeners\\'.$classHandler.'\','.PHP_EOL."        ".
-            '],';
+            $eventBindings[] = '\'Scandinaver\\' . $this->domain . '\Domain\Events\\' . $class . '\' => [' . PHP_EOL . "            " . '\'Scandinaver\\' . $this->domain . '\Domain\Events\Listeners\\' . $classHandler . '\',' . PHP_EOL . "        " . '],';
         }
 
         $serviceprovider = $this->buildClass($name);
 
-        $serviceprovider = Str::replaceFirst('events', implode(PHP_EOL."        ", $eventBindings), $serviceprovider);
+        $serviceprovider = Str::replaceFirst('events', implode(PHP_EOL . "        ", $eventBindings), $serviceprovider);
 
         $this->files->replace($path, $serviceprovider);
 
@@ -75,6 +78,13 @@ class RebuildEventsProvider extends GeneratorCommand
         $this->info($name . ' created successfully.');
     }
 
+    /**
+     * Get the destination class path.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
     protected function getPath($name): string
     {
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
@@ -82,13 +92,29 @@ class RebuildEventsProvider extends GeneratorCommand
         return "{$path}src/Scandinaver/{$this->domain}/Application/Providers/{$name}.php";
     }
 
+    /**
+     * Get the full namespace for a given class, without the class name.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
     protected function getNamespace($name): string
     {
         $serviceProviderNamespace = str_replace('/', '\\', $this->serviceProviderPath);
+
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$serviceProviderNamespace";
     }
 
-    protected function replaceClass($stub, $name)
+    /**
+     * Replace the class name for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function replaceClass($stub, $name): string
     {
         $class = str_replace($this->getNamespace($name) . '\\', '', $name);
 
@@ -96,8 +122,8 @@ class RebuildEventsProvider extends GeneratorCommand
             'DummyClass',
             'DummyNamespace',
         ], [
-            $class,
-            "{$this->getDefaultNamespace($name)}\\$this->domain\\Application\\Providers",
-        ], $stub);
+                $class,
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\Application\\Providers",
+            ], $stub);
     }
 }

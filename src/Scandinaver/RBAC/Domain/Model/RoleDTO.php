@@ -21,16 +21,17 @@ class RoleDTO extends DTO
         $this->role = $role;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [
-            'id' => $this->role->getId(),
-            'name' => $this->role->getName(),
-            'slug' => $this->role->getSlug(),
+            'id'          => $this->role->getId(),
+            'name'        => $this->role->getName(),
+            'slug'        => $this->role->getSlug(),
             'description' => $this->role->getDescription(),
-            'permissions' => $this->role->getPermissions()->map(
-                fn($permission) => $permission->toDTO()
-            )->toArray(),
+            'permissions' => $this->role->getPermissions()->map(fn($permission) => $permission->toDTO())->toArray(),
         ];
     }
 }

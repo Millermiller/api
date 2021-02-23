@@ -98,7 +98,7 @@ class CardControllerTest extends TestCase
 
         $response = $this->delete(
             route(
-                'delete-card-from-asset',
+                'card:remove',
                 [
                     'language' => 'is',
                     'card' => $this->card->getId(),
@@ -125,7 +125,7 @@ class CardControllerTest extends TestCase
 
         $response = $this->post(
             route(
-                'add-card-to-asset',
+                'card:add',
                 ['language' => 'is', 'card' => $card->getId(), 'asset' => 1]
             )
         );

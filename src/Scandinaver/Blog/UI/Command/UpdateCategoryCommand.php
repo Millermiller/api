@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class UpdateCategoryCommand
  *
- * @see     \Scandinaver\Blog\Application\Handler\Command\UpdateCategoryHandler
  * @package Scandinaver\Blog\UI\Command
+ *
+ * @see     \Scandinaver\Blog\Application\Handler\Command\UpdateCategoryHandler
  */
 class UpdateCategoryCommand implements Command
 {
@@ -20,7 +21,7 @@ class UpdateCategoryCommand implements Command
     public function __construct(int $categoryId, array $data)
     {
         $this->categoryId = $categoryId;
-        $this->data = $data;
+        $this->data       = $data;
     }
 
     public function getData(): array

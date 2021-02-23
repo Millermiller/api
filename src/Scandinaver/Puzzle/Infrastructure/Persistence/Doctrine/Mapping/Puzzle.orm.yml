@@ -45,16 +45,16 @@ Scandinaver\Puzzle\Domain\Model\Puzzle:
   manyToMany:
     users:
       targetEntity: Scandinaver\User\Domain\Model\User
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: puzzles
       inversedBy: null
-      joinTable: {  }
+      joinTable: { }
       orderBy: null
   manyToOne:
     language:
       targetEntity: Scandinaver\Common\Domain\Model\Language
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -62,4 +62,4 @@ Scandinaver\Puzzle\Domain\Model\Puzzle:
         language_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

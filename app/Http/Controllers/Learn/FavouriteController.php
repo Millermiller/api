@@ -3,12 +3,12 @@
 
 namespace App\Http\Controllers\Learn;
 
-use Gate;
 use App\Helpers\Auth;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Scandinaver\Learn\Domain\Permissions\Asset;
+use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
+use Scandinaver\Learn\Domain\Permissions\Asset;
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
 use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
 
@@ -33,7 +33,7 @@ class FavouriteController extends Controller
 
         $this->commandBus->execute(new CreateFavouriteCommand($language, Auth::user(), $card));
 
-        return response()->json(null, 201);
+        return response()->json(NULL, 201);
     }
 
     /**
@@ -49,7 +49,7 @@ class FavouriteController extends Controller
 
         $this->commandBus->execute(new DeleteFavouriteCommand($language, Auth::user(), $card));
 
-        return response()->json(null, 204);
+        return response()->json(NULL, 204);
     }
 
 }

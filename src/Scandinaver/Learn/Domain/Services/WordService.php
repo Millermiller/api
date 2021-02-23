@@ -3,6 +3,9 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use App\Http\Requests\{SearchRequest};
+use Auth;
+use Illuminate\Database\Eloquent\{Builder, Collection};
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
@@ -11,15 +14,10 @@ use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\Shared\DTO;
-use App\Http\Requests\{SearchRequest};
-use Auth;
-use Doctrine\DBAL\DBALException;
-use Illuminate\Database\Eloquent\{Builder, Collection};
-use PDO;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class WordService
@@ -45,9 +43,9 @@ class WordService implements BaseServiceInterface
         LanguageRepositoryInterface $languageRepository
     ) {
         $this->translateRepository = $translateRepository;
-        $this->wordsRepository = $wordsRepository;
-        $this->languageRepository = $languageRepository;
-        $this->cardRepository = $cardRepository;
+        $this->wordsRepository     = $wordsRepository;
+        $this->languageRepository  = $languageRepository;
+        $this->cardRepository      = $cardRepository;
     }
 
     public function count(): int
@@ -94,11 +92,10 @@ class WordService implements BaseServiceInterface
     }
 
     /**
-     * @param  string  $language
+     * @param  string         $language
      * @param  SearchRequest  $request
      *
      * @return Translate[]|Builder[]|Collection|\Illuminate\Support\Collection
-     * @throws DBALException
      * @throws LanguageNotFoundException
      */
     public function translate(string $language, SearchRequest $request)
@@ -136,9 +133,9 @@ class WordService implements BaseServiceInterface
             $language->getId(),
         ];
 
-       // $stmt = app('em')->getConnection()->prepare($sql);
-       // $stmt->execute($params);
-       // $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        // $stmt = app('em')->getConnection()->prepare($sql);
+        // $stmt->execute($params);
+        // $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
         $result = [];
 
@@ -161,6 +158,7 @@ class WordService implements BaseServiceInterface
         foreach ($cards as $card) {
             $result[] = $card->toDTO();
         }
+
         return $result;
     }
 
@@ -169,6 +167,12 @@ class WordService implements BaseServiceInterface
         return $this->translateRepository->searchByIds([$word]);
     }
 
+    /**
+     * @param  string  $language
+     *
+     * @return array
+     * @throws LanguageNotFoundException
+     */
     public function getSentences(string $language): array
     {
         $language = $this->getLanguage($language);
@@ -179,7 +183,7 @@ class WordService implements BaseServiceInterface
         $cards = $this->cardRepository->findBy(
             [
                 'language' => $language,
-                'type' => 1,
+                'type'     => 1,
             ]
         );
 

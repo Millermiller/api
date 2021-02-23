@@ -21,7 +21,7 @@ class Message extends Mailable
     /**
      * Message constructor.
      *
-     * @param \Scandinaver\Common\Domain\Message $message
+     * @param  \Scandinaver\Common\Domain\Message  $message
      */
     public function __construct(\Scandinaver\Common\Domain\Message $message)
     {
@@ -35,9 +35,7 @@ class Message extends Mailable
      */
     public function build(): Message
     {
-        return $this->from('support@scandinaver.org', "Scandinaver")
-                    ->to('john@scandinaver.org')
-                    ->subject("Получено сообщение")
-                    ->markdown('emails.message');
+        return $this->from('support@scandinaver.org',
+            "Scandinaver")->to('john@scandinaver.org')->subject("Получено сообщение")->markdown('emails.message');
     }
 }

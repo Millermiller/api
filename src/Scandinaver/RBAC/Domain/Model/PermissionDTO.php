@@ -20,18 +20,21 @@ class PermissionDTO extends DTO
 
     public function __construct(Permission $permission)
     {
-        $this->permission = $permission;
+        $this->permission      = $permission;
         $this->permissionGroup = $permission->getGroup();
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [
-            'id' => $this->permission->getId(),
-            'name' => $this->permission->getName(),
-            'slug' => $this->permission->getSlug(),
+            'id'          => $this->permission->getId(),
+            'name'        => $this->permission->getName(),
+            'slug'        => $this->permission->getSlug(),
             'description' => $this->permission->getDescription(),
-            'group' => $this->permissionGroup ? $this->permissionGroup->toDTO() : null,
+            'group'       => $this->permissionGroup ? $this->permissionGroup->toDTO() : NULL,
         ];
     }
 }

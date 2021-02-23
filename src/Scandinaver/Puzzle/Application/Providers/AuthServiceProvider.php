@@ -18,31 +18,31 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         Gate::define(Puzzle::VIEW, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define('view-puzzles-by-user', function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Puzzle::SHOW, function (User $user, int $puzzleId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Puzzle::CREATE, function (User $user) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Puzzle::UPDATE, function (User $user, int $puzzleId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Puzzle::COMPLETE, function (User $user, int $puzzleId) {
-            return true;
+            return TRUE;
         });
 
         Gate::define(Puzzle::DELETE, function (User $user, int $puzzleId) {
-            return true;
+            return TRUE;
         });
     }
 }

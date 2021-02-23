@@ -13,6 +13,6 @@ class IndexController extends Controller
 
     public function index()
     {
-        echo 'v. '. json_decode(file_get_contents(base_path('/composer.json')))->version;
+        echo 'v. ' . json_decode(file_get_contents(base_path('/composer.json')))->version;
     }
 }

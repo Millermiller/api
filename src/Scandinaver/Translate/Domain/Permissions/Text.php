@@ -4,6 +4,11 @@
 namespace Scandinaver\Translate\Domain\Permissions;
 
 
+/**
+ * Class Text
+ *
+ * @package Scandinaver\Translate\Domain\Permissions
+ */
 class Text
 {
 

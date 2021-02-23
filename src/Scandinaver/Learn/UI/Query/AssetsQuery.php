@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class AssetsQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsHandler
  */
 class AssetsQuery implements Query
 {
@@ -21,7 +22,7 @@ class AssetsQuery implements Query
 
     public function __construct(User $user, string $language)
     {
-        $this->user = $user;
+        $this->user     = $user;
         $this->language = $language;
     }
 

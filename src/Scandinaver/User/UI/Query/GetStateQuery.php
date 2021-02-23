@@ -20,7 +20,7 @@ class GetStateQuery implements Query
 
     public function __construct(User $user, string $language)
     {
-        $this->user = $user;
+        $this->user     = $user;
         $this->language = $language;
     }
 

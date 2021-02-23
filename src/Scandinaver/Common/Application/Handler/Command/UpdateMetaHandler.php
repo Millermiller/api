@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\UpdateMetaHandlerInterface;
 use Scandinaver\Common\UI\Command\UpdateMetaCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class UpdateMetaHandler
@@ -18,9 +19,7 @@ class UpdateMetaHandler implements UpdateMetaHandlerInterface
     }
 
     /**
-     * @param  UpdateMetaCommand
-     *
-     * @inheritDoc
+     * @param  UpdateMetaCommand|Command  $command
      */
     public function handle($command): void
     {

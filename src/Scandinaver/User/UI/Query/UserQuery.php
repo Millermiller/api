@@ -15,6 +15,11 @@ class UserQuery implements Query
 {
     private $key;
 
+    /**
+     * UserQuery constructor.
+     *
+     * @param $key
+     */
     public function __construct($key)
     {
         $this->key = $key;

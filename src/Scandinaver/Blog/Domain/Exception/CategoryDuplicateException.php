@@ -3,9 +3,15 @@
 
 namespace Scandinaver\Blog\Domain\Exception;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 
-class CategoryDublicateException extends \Exception
+/**
+ * Class CategoryDuplicateException
+ *
+ * @package Scandinaver\Blog\Domain\Exception
+ */
+class CategoryDuplicateException extends Exception
 {
     protected $code = JsonResponse::HTTP_UNPROCESSABLE_ENTITY;
 

@@ -3,18 +3,18 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use App\Events\TestResultSaved;
-use App\Helpers\Auth;
-use Scandinaver\Learn\Domain\Contract\Command\SaveTestResultHandlerInterface;
+use Scandinaver\Learn\Domain\Contract\Command\CompleteTestHandlerInterface;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Services\AssetService;
-use Scandinaver\Learn\UI\Command\SaveTestResultCommand;
+use Scandinaver\Learn\UI\Command\CompleteTestCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class SaveTestResultHandler
  *
  * @package Scandinaver\Learn\Application\Handler\Command
  */
-class SaveTestResultHandler implements SaveTestResultHandlerInterface
+class CompleteTestHandler implements CompleteTestHandlerInterface
 {
     private AssetService $assetService;
 
@@ -24,16 +24,16 @@ class SaveTestResultHandler implements SaveTestResultHandlerInterface
     }
 
     /**
-     * @param  SaveTestResultCommand  $command
+     * @param  CompleteTestCommand|Command  $command
+     *
+     * @throws AssetNotFoundException
      */
     public function handle($command): void
     {
-        $result = $this->assetService->saveTestResult(
+        $this->assetService->saveTestResult(
             $command->getUser(),
             $command->getAsset(),
-            $command->getResultValue()
+            $command->getData()
         );
-
-        event(new TestResultSaved(Auth::user(), $result));
     }
 }

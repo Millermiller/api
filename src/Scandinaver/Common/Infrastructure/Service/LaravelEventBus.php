@@ -16,11 +16,17 @@ use Scandinaver\Shared\DomainEventHandler;
 class LaravelEventBus implements EventBusInterface
 {
 
+    /**
+     * @param  DomainEventHandler  $handler
+     */
     public function registerHandler(DomainEventHandler $handler)
     {
         // TODO: Implement registerHandler() method.
     }
 
+    /**
+     * @param  DomainEvent  $event
+     */
     public function dispatch(DomainEvent $event)
     {
         event($event);

@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use Scandinaver\Learn\Domain\Contract\Command\AddWordAndTranslateHandlerInterface;
 use Scandinaver\Learn\Domain\Services\WordService;
 use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class AddWordAndTranslateHandler
@@ -22,9 +23,7 @@ class AddWordAndTranslateHandler implements AddWordAndTranslateHandlerInterface
     }
 
     /**
-     * @param  AddWordAndTranslateCommand  $command
-     *
-     * @inheritDoc   $translate = new Translate(['value' => $translate, 'sentence' => $issentence, 'word_id' => $word->id]);
+     * @param  AddWordAndTranslateCommand|Command  $command
      */
     public function handle($command): void
     {

@@ -17,6 +17,9 @@ class EventListener
         //
     }
 
+    /**
+     * @param  Event  $event
+     */
     public function handle(Event $event)
     {
         //

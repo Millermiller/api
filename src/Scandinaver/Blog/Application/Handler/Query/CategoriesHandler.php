@@ -24,7 +24,7 @@ class CategoriesHandler implements CategoriesHandlerInterface
     }
 
     /**
-     * @param  CategoriesQuery|Query $query
+     * @param  CategoriesQuery|Query  $query
      *
      * @return array
      */

@@ -27,9 +27,9 @@ class CreateCardCommand implements Command
 
     public function __construct(User $user, string $languageId, string $word, string $translate)
     {
-        $this->user = $user;
-        $this->language = $language;
-        $this->word = $word;
+        $this->user      = $user;
+        $this->language  = $language;
+        $this->word      = $word;
         $this->translate = $translate;
     }
 

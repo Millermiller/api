@@ -9,8 +9,9 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class DeleteFavouriteCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\DeleteFavouriteHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\DeleteFavouriteHandler
  */
 class DeleteFavouriteCommand implements Command
 {
@@ -23,8 +24,8 @@ class DeleteFavouriteCommand implements Command
     public function __construct(string $language, User $user, int $card)
     {
         $this->language = $language;
-        $this->user = $user;
-        $this->card = $card;
+        $this->user     = $user;
+        $this->card     = $card;
     }
 
     public function getUser(): User

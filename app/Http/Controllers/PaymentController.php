@@ -18,7 +18,7 @@ class PaymentController extends Controller
     /**
      * PaymentController constructor.
      *
-     * @param PaymentService $paymentService
+     * @param  PaymentService  $paymentService
      */
     public function __construct(PaymentService $paymentService)
     {
@@ -29,7 +29,7 @@ class PaymentController extends Controller
      * Start handle process from route
      * TODO: сделать нормально!
      *
-     * @param Request $request
+     * @param  Request  $request
      */
     public function handlePayment(Request $request)
     {

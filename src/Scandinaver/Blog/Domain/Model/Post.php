@@ -66,11 +66,17 @@ class Post extends AggregateRoot
         return $this->createdAt;
     }
 
+    /**
+     * @return User
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @param $user
+     */
     public function setUser($user): void
     {
         $this->user = $user;
@@ -131,11 +137,14 @@ class Post extends AggregateRoot
         return $this->commentStatus;
     }
 
+    /**
+     * @param  Comment  $comment
+     */
     public function addComment(Comment $comment)
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-           // $this->pullEvents(new CommentAdded($this, $comment));
+            // $this->pullEvents(new CommentAdded($this, $comment));
         }
     }
 

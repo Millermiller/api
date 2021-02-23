@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class WordsCountQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\WordsCountHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\WordsCountHandler
  */
 class WordsCountQuery implements Query
 {

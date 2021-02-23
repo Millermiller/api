@@ -3,19 +3,11 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use Doctrine\ORM\{OptimisticLockException, ORMException};
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
-use Scandinaver\Learn\Domain\{Exceptions\CardAlreadyAddedException,
-  Exceptions\CardNotFoundException,
-  Exceptions\LanguageNotFoundException,
-  Model\Translate,
-  Model\Word};
 use Scandinaver\Common\Domain\Services\LanguageTrait;
-use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\{Exceptions\CardAlreadyAddedException,
+    Exceptions\CardNotFoundException,
+    Exceptions\LanguageNotFoundException};
+use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -37,8 +29,8 @@ class FavouriteService
 
     /**
      * @param  string  $language
-     * @param  User  $user
-     * @param  int  $card
+     * @param  User    $user
+     * @param  int     $card
      *
      * @throws CardNotFoundException
      * @throws LanguageNotFoundException
@@ -47,7 +39,7 @@ class FavouriteService
     public function create(string $language, User $user, int $card): void
     {
         $language = $this->getLanguage($language);
-        $card = $this->getCard($card);
+        $card     = $this->getCard($card);
 
         $asset = $user->getFavouriteAsset($language);
 
@@ -58,8 +50,8 @@ class FavouriteService
 
     /**
      * @param  string  $language
-     * @param  User  $user
-     * @param  int  $card
+     * @param  User    $user
+     * @param  int     $card
      *
      * @throws CardNotFoundException
      * @throws LanguageNotFoundException
@@ -67,7 +59,7 @@ class FavouriteService
     public function delete(string $language, User $user, int $card): void
     {
         $language = $this->getLanguage($language);
-        $card = $this->getCard($card);
+        $card     = $this->getCard($card);
 
         $asset = $user->getFavouriteAsset($language);
 

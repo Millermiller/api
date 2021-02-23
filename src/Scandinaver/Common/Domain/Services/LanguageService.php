@@ -22,11 +22,11 @@ class LanguageService implements BaseServiceInterface
     private AssetRepositoryInterface $assetRepository;
 
     public function __construct(
-      LanguageRepositoryInterface $languageRepository,
-      AssetRepositoryInterface $assetRepository
+        LanguageRepositoryInterface $languageRepository,
+        AssetRepositoryInterface $assetRepository
     ) {
         $this->languageRepository = $languageRepository;
-        $this->assetRepository = $assetRepository;
+        $this->assetRepository    = $assetRepository;
     }
 
     public function all(): array

@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     protected $table = 'plans';
 
     protected $casts = [
-        'cost' => 'int',
+        'cost'           => 'int',
         'cost_per_month' => 'int',
     ];
 

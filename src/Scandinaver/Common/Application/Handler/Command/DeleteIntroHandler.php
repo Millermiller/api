@@ -3,9 +3,11 @@
 
 namespace Scandinaver\Common\Application\Handler\Command;
 
+use Scandinaver\Common\Domain\Contract\Command\DeleteIntroHandlerInterface;
+use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
-use Scandinaver\Common\Domain\Contract\Command\DeleteIntroHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteIntroHandler
@@ -23,7 +25,9 @@ class DeleteIntroHandler implements DeleteIntroHandlerInterface
     }
 
     /**
-     * @param DeleteIntroCommand $command
+     * @param  DeleteIntroCommand|Command  $command
+     *
+     * @throws IntroNotFoundException
      */
     public function handle($command): void
     {

@@ -3,11 +3,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\{ProfileRequest, UploadAvatarRequest};
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Services\FileService;
 use Scandinaver\User\Domain\Services\UserService;
-use App\Http\Requests\{ProfileRequest, UploadAvatarRequest};
-use Illuminate\Foundation\Validation\ValidatesRequests;
 
 /**
  * Class ProfileController
@@ -25,8 +25,8 @@ class ProfileController extends Controller
     /**
      * ProfileController constructor.
      *
-     * @param UserService $userService
-     * @param FileService $fileService
+     * @param  UserService  $userService
+     * @param  FileService  $fileService
      */
     public function __construct(UserService $userService, FileService $fileService)
     {
@@ -35,7 +35,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param UploadAvatarRequest $request
+     * @param  UploadAvatarRequest  $request
      *
      * @return JsonResponse
      */
@@ -45,7 +45,7 @@ class ProfileController extends Controller
 
         $this->fileService->uploadAvatar($request);
 
-        return response()->json(['success' => true, 'msg' => 'Фотография успешно загружена']);
+        return response()->json(['success' => TRUE, 'msg' => 'Фотография успешно загружена']);
     }
 
     /**

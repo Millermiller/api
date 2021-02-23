@@ -3,11 +3,12 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\Card;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
+use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\Contract\Command;
@@ -15,8 +16,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class SetTranslateForCardCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\SetTranslateForCardCommandHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\SetTranslateForCardCommandHandler
  */
 class SetTranslateForCardCommand implements Command
 {
@@ -32,14 +34,21 @@ class SetTranslateForCardCommand implements Command
 
     private TranslateRepositoryInterface $translateRepository;
 
+    /**
+     * SetTranslateForCardCommand constructor.
+     *
+     * @param  array  $data
+     *
+     * @throws BindingResolutionException
+     */
     public function __construct(array $data)
     {
-        $this->card_id = $data['card_id'];
-        $this->word_id = $data['word_id'];
+        $this->card_id      = $data['card_id'];
+        $this->word_id      = $data['word_id'];
         $this->translate_id = $data['translate_id'];
 
-        $this->cardRepository = app()->make('CardRepositoryInterface');
-        $this->wordRepository = app()->make('WordRepositoryInterface');
+        $this->cardRepository      = app()->make('CardRepositoryInterface');
+        $this->wordRepository      = app()->make('WordRepositoryInterface');
         $this->translateRepository = app()->make(
             'TranslateRepositoryInterface'
         );

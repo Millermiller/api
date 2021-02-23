@@ -20,7 +20,7 @@ class PuzzleCompleteCommand implements Command
 
     public function __construct(User $user, int $puzzle)
     {
-        $this->user = $user;
+        $this->user   = $user;
         $this->puzzle = $puzzle;
     }
 

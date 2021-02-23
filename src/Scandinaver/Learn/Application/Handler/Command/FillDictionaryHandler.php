@@ -3,9 +3,11 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Scandinaver\Learn\Domain\Contract\Command\FillDictionaryHandlerInterface;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\FillDictionaryCommand;
-use Scandinaver\Learn\Domain\Contract\Command\FillDictionaryHandlerInterface;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class FillDictionaryHandler
@@ -22,7 +24,9 @@ class FillDictionaryHandler implements FillDictionaryHandlerInterface
     }
 
     /**
-     * @param  FillDictionaryCommand  $command
+     * @param  FillDictionaryCommand|Command  $command
+     *
+     * @throws LanguageNotFoundException
      */
     public function handle($command): void
     {

@@ -14,7 +14,7 @@ class FeedbackRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return TRUE;
     }
 
     public function rules(): array
@@ -28,7 +28,7 @@ class FeedbackRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'required' => 'Поле обязательно для заполнения'
+            'required' => 'Поле обязательно для заполнения',
         ];
     }
 }

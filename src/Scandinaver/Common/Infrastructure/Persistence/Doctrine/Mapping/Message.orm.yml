@@ -50,4 +50,4 @@ Scandinaver\Common\Domain\Model\Message:
       nullable: true
       precision: 0
       column: updated_at
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

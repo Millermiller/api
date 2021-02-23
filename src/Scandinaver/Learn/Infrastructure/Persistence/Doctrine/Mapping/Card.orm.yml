@@ -50,7 +50,7 @@ Scandinaver\Learn\Domain\Model\Card:
   manyToOne:
     word:
       targetEntity: Scandinaver\Learn\Domain\Model\Word
-      cascade: ["persist", "merge"]
+      cascade: [ "persist", "merge" ]
       fetch: EAGER
       joinColumns:
         word_id:
@@ -58,7 +58,7 @@ Scandinaver\Learn\Domain\Model\Card:
       orphanRemoval: false
     translate:
       targetEntity: Scandinaver\Learn\Domain\Model\Translate
-      cascade: ["persist", "merge"]
+      cascade: [ "persist", "merge" ]
       fetch: EAGER
       mappedBy: null
       inversedBy: null
@@ -68,7 +68,7 @@ Scandinaver\Learn\Domain\Model\Card:
       orphanRemoval: false
     language:
       targetEntity: Scandinaver\Common\Domain\Model\Language
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -79,7 +79,7 @@ Scandinaver\Learn\Domain\Model\Card:
   oneToMany:
     examples:
       targetEntity: Scandinaver\Learn\Domain\Model\Example
-      cascade: ["persist", "merge"]
+      cascade: [ "persist", "merge" ]
       fetch: EAGER
       mappedBy: card
       inversedBy: null
@@ -102,4 +102,4 @@ Scandinaver\Learn\Domain\Model\Card:
   #
 
 
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

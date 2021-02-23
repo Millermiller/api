@@ -4,7 +4,6 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
 
@@ -39,15 +38,18 @@ class Translate implements JsonSerializable
         $this->value = $value;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
-            'value' => $this->value,
-            'word_id' => $this->word->getId(),
-            'word' => $this->word,
+            'id'       => $this->id,
+            'value'    => $this->value,
+            'word_id'  => $this->word->getId(),
+            'word'     => $this->word,
             'sentence' => $this->sentence,
-            'active' => $this->id,
+            'active'   => $this->id,
         ];
     }
 

@@ -4,8 +4,10 @@
 namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\DeleteMessageHandlerInterface;
+use Scandinaver\Common\Domain\Exception\MessageNotFoundException;
 use Scandinaver\Common\Domain\Services\MessageService;
 use Scandinaver\Common\UI\Command\DeleteMessageCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteMessageHandler
@@ -23,7 +25,9 @@ class DeleteMessageHandler implements DeleteMessageHandlerInterface
     }
 
     /**
-     * @param DeleteMessageCommand $command
+     * @param  DeleteMessageCommand|Command  $command
+     *
+     * @throws MessageNotFoundException
      */
     public function handle($command): void
     {

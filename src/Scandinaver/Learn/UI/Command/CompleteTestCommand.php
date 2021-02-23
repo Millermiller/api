@@ -9,22 +9,23 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class SaveTestResultCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\SaveTestResultHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\CompleteTestHandler
  */
-class SaveTestResultCommand implements Command
+class CompleteTestCommand implements Command
 {
     private User $user;
 
     private int $asset;
 
-    private int $resultValue;
+    private array $data;
 
-    public function __construct(User $user, int $asset, int $resultValue)
+    public function __construct(User $user, int $asset, array $data)
     {
-        $this->user = $user;
+        $this->user  = $user;
         $this->asset = $asset;
-        $this->resultValue = $resultValue;
+        $this->data  = $data;
     }
 
     public function getUser(): User
@@ -37,8 +38,8 @@ class SaveTestResultCommand implements Command
         return $this->asset;
     }
 
-    public function getResultValue(): int
+    public function getData(): array
     {
-        return $this->resultValue;
+        return $this->data;
     }
 }

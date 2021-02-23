@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class CategoriesQuery
  *
- * @see     \Scandinaver\Blog\Application\Handler\Query\CategoriesHandler
  * @package Scandinaver\Blog\UI\Query
+ *
+ * @see     \Scandinaver\Blog\Application\Handler\Query\CategoriesHandler
  */
 class CategoriesQuery implements Query
 {

@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Query;
 /**
  * Class AudioCountByLanguageQuery
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\AudioCountByLanguageHandler
  * @package Scandinaver\Learn\UI\Query
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Query\AudioCountByLanguageHandler
  */
 class AudioCountByLanguageQuery implements Query
 {

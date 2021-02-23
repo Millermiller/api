@@ -40,4 +40,4 @@ Scandinaver\Blog\Domain\Model\Category:
       nullable: true
       precision: 0
       column: updated_at
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Permissions\Log;
-use Scandinaver\Shared\EventBusNotFoundException;
-use Illuminate\Auth\Access\AuthorizationException;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
 use Scandinaver\Common\UI\Query\LogQuery;
 use Scandinaver\Common\UI\Query\LogsQuery;
+use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class LogController

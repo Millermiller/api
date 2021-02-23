@@ -97,7 +97,7 @@ Scandinaver\Blog\Domain\Model\Post:
   oneToMany:
     comments:
       targetEntity: Scandinaver\Blog\Domain\Model\Comment
-      cascade: {  }
+      cascade: { }
       fetch: EAGER
       mappedBy: post
       inversedBy: null
@@ -106,7 +106,7 @@ Scandinaver\Blog\Domain\Model\Post:
   manyToOne:
     user:
       targetEntity: Scandinaver\User\Domain\Model\User
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: posts
@@ -116,7 +116,7 @@ Scandinaver\Blog\Domain\Model\Post:
       orphanRemoval: false
     category:
       targetEntity: Scandinaver\Blog\Domain\Model\Category
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -126,7 +126,7 @@ Scandinaver\Blog\Domain\Model\Post:
       orphanRemoval: false
     language:
       targetEntity: Scandinaver\Common\Domain\Model\Language
-      cascade: {  }
+      cascade: { }
       fetch: LAZY
       mappedBy: null
       inversedBy: null
@@ -134,4 +134,4 @@ Scandinaver\Blog\Domain\Model\Post:
         language_id:
           referencedColumnName: id
       orphanRemoval: false
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

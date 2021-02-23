@@ -3,12 +3,12 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use Scandinaver\RBAC\Domain\Contract\Query\PermissionGroupHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Model\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
-use Scandinaver\Shared\Contract\Query;
 use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
-use Scandinaver\RBAC\Domain\Contract\Query\PermissionGroupHandlerInterface;
+use Scandinaver\Shared\Contract\Query;
 
 /**
  * Class PermissionGroupHandler

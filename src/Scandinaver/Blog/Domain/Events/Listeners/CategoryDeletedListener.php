@@ -22,13 +22,13 @@ class CategoryDeletedListener
         $this->logger = $logger;
     }
 
+    /**
+     * @param  CategoryDeleted  $event
+     */
     public function handle(CategoryDeleted $event)
     {
-        $this->logger->info(
-            'Категория {name} удалена',
-            [
-                'name' => $event->getCategory()->getName(),
-            ]
-        );
+        $this->logger->info('Категория {name} удалена', [
+            'name' => $event->getCategory()->getName(),
+        ]);
     }
 }

@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\RBAC\UI\Query
  *
- * @see \Scandinaver\RBAC\Application\Handler\Query\PermissionGroupsHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Query\PermissionGroupsHandler
  */
 class PermissionGroupsQuery implements Query
 {

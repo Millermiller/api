@@ -53,7 +53,7 @@ class Asset extends Model
     public static function deleteAsset(int $id): bool
     {
         if (!Auth::user()->hasAsset($id) && !Auth::user()->_admin) {
-            return false;
+            return FALSE;
         }
 
         DB::beginTransaction();
@@ -67,11 +67,11 @@ class Asset extends Model
 
             DB::commit();
 
-            return true;
+            return TRUE;
         } catch (Exception $e) {
             DB::rollback();
 
-            return false;
+            return FALSE;
         }
     }
 

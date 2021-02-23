@@ -63,7 +63,7 @@ Scandinaver\Common\Domain\Model\Log:
   manyToOne:
     owner:
       targetEntity: Scandinaver\User\Domain\Model\User
-      cascade: ["persist", "merge"]
+      cascade: [ "persist", "merge" ]
       fetch: LAZY
       joinColumns:
         occured_on:
@@ -71,4 +71,4 @@ Scandinaver\Common\Domain\Model\Log:
       orphanRemoval: false
       orderBy: null
       nullable: true
-  lifecycleCallbacks: {  }
+  lifecycleCallbacks: { }

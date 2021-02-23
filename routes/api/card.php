@@ -1,8 +1,15 @@
 <?php
 
-Route::post('/{language}/card/create/{word}/{translate}', 'App\Http\Controllers\Learn\CardController@create')->name('create-card');
-Route::post('/{language}/card/{card}/{asset}', 'App\Http\Controllers\Learn\CardController@store')->name('add-card-to-asset');
-Route::delete('/{language}/card/{card}/{asset}', 'App\Http\Controllers\Learn\CardController@destroy')->name('delete-card-from-asset');
-Route::get('/{language}/translate', 'App\Http\Controllers\Learn\CardController@search');
-Route::put('/card/{card}', 'App\Http\Controllers\Learn\CardController@update');
-Route::post('/{language}/wordfile', 'App\Http\Controllers\Learn\CardController@uploadSentences');
+use App\Http\Controllers\Learn\CardController;
+
+Route::group( [
+  'as' => 'card:',
+  'namespace' => 'App\Http\Controllers\Learn',
+],  function () {
+    Route::post('/{language}/card/create/{word}/{translate}', [CardController::class, 'create'])->name('create');
+    Route::post('/{language}/card/{card}/{asset}',            [CardController::class, 'store'])->name('add');
+    Route::delete('/{language}/card/{card}/{asset}',          [CardController::class, 'destroy'])->name('remove');
+    Route::get('/{language}/translate',                       [CardController::class, 'search'])->name('search');
+    Route::put('/card/{card}',                                [CardController::class, 'update'])->name('update');
+    Route::post('/{language}/wordfile',                       [CardController::class, 'uploadSentences'])->name('upload');
+});

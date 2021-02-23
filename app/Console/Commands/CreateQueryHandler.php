@@ -39,7 +39,7 @@ class CreateQueryHandler extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__.'/Stubs/custom-query-handler.stub';
+        return __DIR__ . '/Stubs/custom-query-handler.stub';
     }
 
     /**
@@ -68,15 +68,12 @@ class CreateQueryHandler extends GeneratorCommand
 
         $this->files->chmod($path, 0777);
 
-        $this->info($this->type.' created successfully.');
+        $this->info($this->type . ' created successfully.');
 
-        Artisan::call(
-          'createQueryHandlerInterface',
-          [
-            'name'   => "{$name}Interface",
-            'domain' => $this->domain,
-          ]
-        );
+        Artisan::call('createQueryHandlerInterface', [
+                'name'   => "{$name}Interface",
+                'domain' => $this->domain,
+            ]);
     }
 
     /**
@@ -85,8 +82,8 @@ class CreateQueryHandler extends GeneratorCommand
     public function getArguments(): array
     {
         return [
-          ['name', InputArgument::REQUIRED, 'The name of the class'],
-          ['domain', InputArgument::REQUIRED, 'The name of the domain'],
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+            ['domain', InputArgument::REQUIRED, 'The name of the domain'],
         ];
     }
 
@@ -120,38 +117,33 @@ class CreateQueryHandler extends GeneratorCommand
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
     }
 
+
     /**
+     * Replace the class name for the given stub.
+     *
      * @param  string  $stub
      * @param  string  $name
      *
-     * @return string|string[]
+     * @return string
      */
-    protected function replaceClass($stub, $name)
+    protected function replaceClass($stub, $name): string
     {
-        $class          = str_replace(
-          $this->getNamespace($name).'\\',
-          '',
-          $name
-        );
+        $class          = str_replace($this->getNamespace($name) . '\\', '', $name);
         $queryNamespace = str_replace('/', '\\', 'UI/Query');
         $queryClass     = str_replace('Handler', 'Query', $class);
-        $queryInterface = $class.'Interface';
+        $queryInterface = $class . 'Interface';
 
-        return str_replace(
-          [
+        return str_replace([
             'DummyClass',
             'DummyQueryClass',
             'DummyQueryNamespace',
             'DummyInterface',
-          ],
-          [
-            $class,
-            $queryClass,
-            "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass",
-            "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Query\\$queryInterface",
-          ],
-          $stub
-        );
+        ], [
+                $class,
+                $queryClass,
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass",
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Query\\$queryInterface",
+            ], $stub);
     }
 
 }

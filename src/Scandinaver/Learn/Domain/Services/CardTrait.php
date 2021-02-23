@@ -14,6 +14,12 @@ use Scandinaver\Learn\Domain\Model\Card;
  */
 trait CardTrait
 {
+    /**
+     * @param  int  $id
+     *
+     * @return Card
+     * @throws CardNotFoundException
+     */
     private function getCard(int $id): Card
     {
         /** @var  CardRepositoryInterface $repository */
@@ -22,7 +28,7 @@ trait CardTrait
         /** @var Card $card */
         $card = $repository->find($id);
 
-        if ($card === null) {
+        if ($card === NULL) {
             throw new CardNotFoundException();
         }
 

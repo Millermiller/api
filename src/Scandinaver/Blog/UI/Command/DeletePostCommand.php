@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class DeletePostCommand
  *
- * @see     \Scandinaver\Blog\Application\Handler\Command\DeletePostHandler
  * @package Scandinaver\Blog\UI\Command
+ *
+ * @see     \Scandinaver\Blog\Application\Handler\Command\DeletePostHandler
  */
 class DeletePostCommand implements Command
 {

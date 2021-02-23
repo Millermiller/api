@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use Scandinaver\Learn\Domain\Contract\Command\DeleteAssetHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteAssetHandler
@@ -26,8 +27,7 @@ class DeleteAssetHandler implements DeleteAssetHandlerInterface
     }
 
     /**
-     * @param  DeleteAssetCommand  $command
-     *
+     * @param  DeleteAssetCommand|Command $command
      */
     public function handle($command): void
     {

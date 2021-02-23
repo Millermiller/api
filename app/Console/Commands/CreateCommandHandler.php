@@ -24,16 +24,31 @@ class CreateCommandHandler extends GeneratorCommand
 
     protected $type = 'CommandHandler';
 
-    protected function getStub()
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub(): string
     {
         return __DIR__ . '/Stubs/custom-command-handler.stub';
     }
 
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     *
+     * @return string
+     */
     protected function getDefaultNamespace($rootNamespace): string
     {
         return "Scandinaver";
     }
 
+    /**
+     * @return array[]
+     */
     protected function getArguments(): array
     {
         return [
@@ -42,6 +57,9 @@ class CreateCommandHandler extends GeneratorCommand
         ];
     }
 
+    /**
+     * @throws FileNotFoundException
+     */
     public function handle(): void
     {
         $name = $this->getNameInput();
@@ -57,15 +75,15 @@ class CreateCommandHandler extends GeneratorCommand
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('createCommandHandlerInterface', [
-            'name'   => "{$name}Interface",
-            'domain' => $this->domain
-        ]);
+                'name'   => "{$name}Interface",
+                'domain' => $this->domain,
+            ]);
     }
 
     /**
      * Get the destination class path.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -81,19 +99,20 @@ class CreateCommandHandler extends GeneratorCommand
     /**
      * Get the full namespace for a given class, without the class name.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
     protected function getNamespace($name): string
     {
         $commandNamespace = str_replace('/', '\\', $this->commandHandlerPath);
+
         return "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace";
     }
 
     /**
-     * @param string $stub
-     * @param string $name
+     * @param  string  $stub
+     * @param  string  $name
      *
      * @return string|string[]
      */
@@ -102,18 +121,18 @@ class CreateCommandHandler extends GeneratorCommand
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $commandNamespace = str_replace('/', '\\', 'UI/Command');
         $commandClass     = str_replace('Handler', 'Command', $class);
-        $commandInterface = $class.'Interface';
+        $commandInterface = $class . 'Interface';
 
         return str_replace([
             'DummyClass',
             'DummyCommandClass',
             'DummyCommandNamespace',
-            'DummyInterface'
+            'DummyInterface',
         ], [
-          $class,
-          $commandClass,
-          "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace\\$commandClass",
-          "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Command\\$commandInterface"
-        ], $stub);
+                $class,
+                $commandClass,
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace\\$commandClass",
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Command\\$commandInterface",
+            ], $stub);
     }
 }

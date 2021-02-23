@@ -5,8 +5,6 @@ namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use JsonSerializable;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\AssetInterface;
@@ -25,13 +23,13 @@ use Scandinaver\User\Domain\Model\User;
  */
 abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterface
 {
-    public const TYPE_PERSONAL = 4;
-
     public const TYPE_WORDS = 1;
 
     public const TYPE_SENTENCES = 2;
 
-    public const TYPE_FAVORITES = 3;
+    public const TYPE_PERSONAL = 3;
+
+    public const TYPE_FAVORITES = 4;
 
     protected $id;
 
@@ -71,12 +69,12 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         ?int $favorite,
         Language $language
     ) {
-        $this->title = $title;
-        $this->basic = $basic;
+        $this->title    = $title;
+        $this->basic    = $basic;
         $this->favorite = $favorite;
         $this->language = $language;
-        $this->results = new ArrayCollection();
-        $this->cards = new ArrayCollection();
+        $this->results  = new ArrayCollection();
+        $this->cards    = new ArrayCollection();
 
         $this->pushEvent(new AssetCreated($this));
     }
@@ -229,5 +227,15 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     public function isFavorite(): bool
     {
         return $this->favorite === 1;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): void
+    {
+        $this->owner = $owner;
     }
 }

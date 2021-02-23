@@ -24,12 +24,6 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserRegistered'   => [
             'App\Listeners\UserRegisteredListener',
         ],
-        'App\Events\UserUpdated'      => [
-            'App\Listeners\UserUpdatedListener',
-        ],
-        'App\Events\UserDeleted'      => [
-            'App\Listeners\UserDeletedListener',
-        ],
         'App\Events\PasswordReset'    => [
             'App\Listeners\PasswordResetListener',
         ],
@@ -41,12 +35,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\MessageRecieved'  => [
             'App\Listeners\MessageRecievedListener',
-        ],
-        'App\Events\NextLevel'        => [
-            'App\Listeners\NextLevelListener',
-        ],
-        'App\Events\NextTextLevel'    => [
-            'App\Listeners\NextTextLevelListener',
         ],
     ];
 

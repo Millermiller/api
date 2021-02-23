@@ -1,70 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RBAC\PermissionController;
 
 Route::group(
     [
         'as' => 'permission:',
         'namespace' => 'App\Http\Controllers\RBAC',
-        'middleware' => [],
     ],
     function () {
-        Route::get(
-            '/permission',
-            [
-                'as' => 'all',
-                'uses' => 'PermissionController@index',
-            ]
-        );
-
-        Route::get(
-            '/permission/{id}',
-            [
-                'as' => 'show',
-                'uses' => 'PermissionController@show',
-            ]
-        );
-
-        Route::get(
-            '/permission/search',
-            [
-                'as' => 'search',
-                'uses' => 'PermissionController@search',
-            ]
-        );
-    }
-);
-
-Route::group(
-    [
-        'as' => 'permission:',
-        'namespace' => 'App\Http\Controllers\RBAC',
-        'middleware' => ['auth:api'],
-    ],
-    function () {
-
-        Route::delete(
-            '/permission/{id}',
-            [
-                'as' => 'delete',
-                'uses' => 'PermissionController@destroy',
-            ]
-        );
-
-        Route::post(
-            '/permission',
-            [
-                'as' => 'create',
-                'uses' => 'PermissionController@store',
-            ]
-        );
-
-        Route::put(
-            '/permission/{id}',
-            [
-                'as' => 'update',
-                'uses' => 'PermissionController@update',
-            ]
-        );
+        Route::get('/permission',         [PermissionController::class, 'index'])->name('all');
+        Route::get('/permission/{id}',    [PermissionController::class, 'show'])->name('show');
+        Route::get('/permission/search',  [PermissionController::class, 'search'])->name('search');
+        Route::delete('/permission/{id}', [PermissionController::class, 'destroy'])->name('delete');
+        Route::post('/permission',        [PermissionController::class, 'store'])->name('create');
+        Route::put('/permission/{id}',    [PermissionController::class, 'update'])->name('update');
     }
 );

@@ -12,11 +12,33 @@ use Doctrine\Common\Persistence\ObjectRepository;
  */
 interface BaseRepositoryInterface extends ObjectRepository
 {
+
+    /**
+     * @param  array  $criteria
+     *
+     * @return mixed
+     */
     public function count(array $criteria);
 
+    /**
+     * @param  object  $data
+     *
+     * @return mixed
+     */
     public function save(object $data);
 
+    /**
+     * @param  object  $entity
+     * @param  array   $data
+     *
+     * @return mixed
+     */
     public function update(object $entity, array $data);
 
+    /**
+     * @param $object
+     *
+     * @return mixed
+     */
     public function delete($object);
 }

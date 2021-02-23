@@ -26,8 +26,8 @@ class CheckPlan
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      *
      * @return Response
      */
@@ -36,6 +36,7 @@ class CheckPlan
         if (\Auth::check()) {
             $this->userService->updatePlan(Auth::user());
         }
+
         return $next($request);
     }
 }

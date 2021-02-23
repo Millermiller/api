@@ -15,6 +15,12 @@ use Scandinaver\Translate\Domain\Model\Text;
  */
 trait TextTrait
 {
+    /**
+     * @param  int  $id
+     *
+     * @return Text
+     * @throws TextNotFoundException
+     */
     private function getText(int $id): Text
     {
         /** @var  TextRepositoryInterface $repository */

@@ -32,8 +32,8 @@ class ResetPassword extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param User $user
-     * @param      $token
+     * @param  User  $user
+     * @param        $token
      */
     public function __construct(User $user, $token)
     {
@@ -49,8 +49,7 @@ class ResetPassword extends Mailable
      */
     public function build(): Message
     {
-        return $this->from('support@scandinaver.org', "Scandinaver")
-                    ->subject("Сброс пароля на сайте Scandinaver.org")
-                    ->markdown('emails.reset');
+        return $this->from('support@scandinaver.org',
+            "Scandinaver")->subject("Сброс пароля на сайте Scandinaver.org")->markdown('emails.reset');
     }
 }

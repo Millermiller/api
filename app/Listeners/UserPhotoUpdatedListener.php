@@ -19,6 +19,8 @@ class UserPhotoUpdatedListener
     }
 
     /**
+     * @param  UserPhotoUpdated  $event
+     *
      * @throws GuzzleException
      */
     public function handle(UserPhotoUpdated $event): void

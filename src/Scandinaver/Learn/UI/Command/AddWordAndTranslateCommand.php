@@ -8,8 +8,9 @@ use Scandinaver\Shared\Contract\Command;
 /**
  * Class AddWordAndTranslateCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\AddWordAndTranslateHandler
  * @package Scandinaver\Learn\UI\Command
+ *
+ * @see     \Scandinaver\Learn\Application\Handler\Command\AddWordAndTranslateHandler
  */
 class AddWordAndTranslateCommand implements Command
 {
@@ -21,8 +22,8 @@ class AddWordAndTranslateCommand implements Command
 
     public function __construct(array $data)
     {
-        $this->word = $data['word'];
-        $this->translate = $data['translate'];
+        $this->word       = $data['word'];
+        $this->translate  = $data['translate'];
         $this->issentence = $data['issentence'];
     }
 

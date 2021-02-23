@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Common\Infrastructure\Service;
 
+use Illuminate\Contracts\Foundation\Application;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -12,13 +13,16 @@ use Psr\Container\ContainerInterface;
  */
 class Container implements ContainerInterface
 {
-    protected static ?Container $instance = null;
+    protected static ?Container $instance = NULL;
 
     private function __construct()
     {
     }
 
-    public static function getInstance()
+    /**
+     * @return Container
+     */
+    public static function getInstance(): Container
     {
         if (is_null(static::$instance)) {
             static::$instance = new static();
@@ -27,11 +31,21 @@ class Container implements ContainerInterface
         return static::$instance;
     }
 
+    /**
+     * @param  string  $id
+     *
+     * @return Application|mixed|string
+     */
     public function get($id)
     {
         return app($id);
     }
 
+    /**
+     * @param  string  $id
+     *
+     * @return bool|void
+     */
     public function has($id)
     {
         // TODO: Implement has() method.

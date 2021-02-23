@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Translate\Application\Handler\Query;
 
-use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
+use Scandinaver\Shared\Contract\Query;
 use Scandinaver\Translate\Domain\Contract\Query\GetSynonymsHandlerInterface;
+use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
 
 /**
  * Class GetSynonymsHandler
@@ -18,8 +19,7 @@ class GetSynonymsHandler implements GetSynonymsHandlerInterface
     }
 
     /**
-     * @param  GetSynonymsQuery  $query
-     *
+     * @param  GetSynonymsQuery|Query  $query
      */
     public function handle($query)
     {

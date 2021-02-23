@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Exception;
-use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\Domain\Contract\Query\AssetsHandlerInterface;
+use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\UI\Query\AssetsQuery;
 use Scandinaver\Shared\Contract\Query;
 

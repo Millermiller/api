@@ -4,8 +4,10 @@
 namespace Scandinaver\Blog\Application\Handler\Command;
 
 use Scandinaver\Blog\Domain\Contract\Command\DeleteCommentHandlerInterface;
+use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Services\CommentService;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
+use Scandinaver\Shared\Contract\Command;
 
 /**
  * Class DeleteCommentHandler
@@ -23,7 +25,9 @@ class DeleteCommentHandler implements DeleteCommentHandlerInterface
     }
 
     /**
-     * @param DeleteCommentCommand $command
+     * @param  DeleteCommentCommand|Command  $command
+     *
+     * @throws CommentNotFoundException
      */
     public function handle($command): void
     {
