@@ -80,7 +80,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     private Collection $translates;
 
-    private Collection $createdAssets;
+    private Collection $personalAssets;
 
     private Collection $puzzles;
 
@@ -488,9 +488,8 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     public function getFavouriteAsset(Language $language): ?Asset
     {
-        foreach ($this->tests as $result) {
-            /** @var Result $result */
-            $asset = $result->getAsset();
+        foreach ($this->personalAssets as $asset) {
+            /** @var Asset $asset */
             if ($asset->isFavorite() && $asset->getLanguage()->isEqualTo($language)) {
                 return $asset;
             }
@@ -500,18 +499,32 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     }
 
     /**
+     * @param  Asset  $asset
+     *
+     * @throws Exception
+     */
+    public function addPersonalAsset(Asset $asset): void
+    {
+        if ($this->personalAssets->contains($asset)) {
+            throw new Exception("Personal asset already exists");
+        }
+
+        $this->personalAssets->add($asset);
+    }
+
+    /**
      * @param  Language  $language
      *
-     * @return array
+     * @return ArrayCollection
      */
-    public function getCreatedAssets(Language $language): array
+    public function getPersonalAssets(Language $language): Collection
     {
-        $data = [];
+        $data = new ArrayCollection();
 
-        foreach ($this->createdAssets as $createdAsset) {
-            /** @var PersonalAsset $createdAsset */
-            if ($createdAsset->getLanguage()->isEqualTo($language)) {
-                $data[] = $createdAsset->toDTO();
+        foreach ($this->personalAssets as $personalAsset) {
+            /** @var Asset $personalAsset */
+            if ($personalAsset->getLanguage()->isEqualTo($language)) {
+                $data->add($personalAsset);
             }
         }
 

@@ -222,7 +222,7 @@ Scandinaver\User\Domain\Model\User:
       inversedBy: null
       orphanRemoval: false
       orderBy: null
-    createdAssets:
+    personalAssets:
       targetEntity: Scandinaver\Learn\Domain\Model\Asset
       cascade:
         - persist
@@ -232,7 +232,8 @@ Scandinaver\User\Domain\Model\User:
       joinColumns:
         id:
           referencedColumnName: owner_id
-      orderBy: null
+      orderBy:
+        category: DESC
     tests:
       targetEntity: Scandinaver\Learn\Domain\Model\Result
       cascade:

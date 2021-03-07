@@ -26,9 +26,6 @@ class AssetFactory
         $user = $data['user'];
         $user->incrementAssetCounter();
 
-        $result = new Result($asset, $user, $data['language']);
-        $result->setValue(0);
-
         return $asset;
     }
 }

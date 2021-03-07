@@ -73,6 +73,11 @@ class LearnServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'DeletePassingHandlerInterface',
+            'Scandinaver\Learn\Application\Handler\Command\DeletePassingHandler'
+        );
+
+        $this->app->bind(
             'EditTranslateHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Command\EditTranslateHandler'
         );
@@ -100,6 +105,11 @@ class LearnServiceProvider extends ServiceProvider
         $this->app->bind(
             'UpdateCardHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Command\UpdateCardHandler'
+        );
+
+        $this->app->bind(
+            'UpdatePassingHandlerInterface',
+            'Scandinaver\Learn\Application\Handler\Command\UpdatePassingHandler'
         );
 
         $this->app->bind(
@@ -156,6 +166,11 @@ class LearnServiceProvider extends ServiceProvider
         $this->app->bind(
             'FindAudioHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Query\FindAudioHandler'
+        );
+
+        $this->app->bind(
+            'GetAllPassingsHandlerInterface',
+            'Scandinaver\Learn\Application\Handler\Query\GetAllPassingsHandler'
         );
 
         $this->app->bind(

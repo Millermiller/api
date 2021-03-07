@@ -223,7 +223,7 @@ class CardService implements BaseServiceInterface
             'type'   => $asset->getType(),
             'cards'  => $cardsDTO,
             'title'  => $asset->getTitle(),
-            'result' => $result ? $result->getValue() : NULL,
+            'result' => $result ? $result->getPercent() : NULL,
             'level'  => $asset->getLevel(),
         ];
     }
@@ -391,9 +391,15 @@ class CardService implements BaseServiceInterface
         // TODO: Implement all() method.
     }
 
+    /**
+     * @param  int  $id
+     *
+     * @return DTO
+     * @throws CardNotFoundException
+     */
     public function one(int $id): DTO
     {
-        // TODO: Implement one() method.
+        return $this->getCard($id)->toDTO();
     }
 
 }

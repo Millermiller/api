@@ -5,11 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class TestCompleteRequest
+ * Class UpdatePassingRequest
  *
  * @package App\Http\Requests
  */
-class TestCompleteRequest extends FormRequest
+class UpdatePassingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,9 +29,7 @@ class TestCompleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'      => 'required',
-            'time'    => 'required',
-            'percent' => 'required',
+            //
         ];
     }
 }

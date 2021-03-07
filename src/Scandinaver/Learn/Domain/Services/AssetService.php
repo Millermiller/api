@@ -173,68 +173,40 @@ class AssetService implements BaseServiceInterface
      * @return array
      * @throws LanguageNotFoundException|BindingResolutionException
      */
-    public function getAssetsByType(
-        string $language,
-        User $user,
-        int $type
-    ): array {
+    public function getAssetsByType(string $language, User $user, int $type): array
+    {
         $language = $this->getLanguage($language);
-
-        $activeArray = $this->resultRepository->getActiveIds($user, $language);
 
         $repository = AssetRepositoryFactory::getByType($type);
 
         $assets = $repository->getByLanguage($language);
 
-        $canopen  = TRUE;
-        $testlink = FALSE;
-        $counter  = 0;
+        $data = [];
+
+        $isNextAssetAvailable = FALSE;
 
         /** @var Asset $asset */
         foreach ($assets as &$asset) {
-            $counter++;
-            if (in_array($asset->getId(), $activeArray)) {
-                $asset = [
-                    'count'    => $asset->getCards()->count(),
-                    'title'    => $asset->getTitle(),
-                    'id'       => $asset->getId(),
-                    'level'    => $asset->getLevel(),
-                    'active'   => TRUE,
-                    'testlink' => FALSE,
-                    'canopen'  => FALSE,
-                    'result'   => $this->resultRepository->getResult(
-                        $user,
-                        $asset
-                    )->getValue(),
-                    'type'     => $asset->getType(),
-                ];
-            }
-            else {
-                $asset   = [
-                    'count'    => $asset->getCards()->count(),
-                    'title'    => $asset->getTitle(),
-                    'id'       => $asset->getId(),
-                    'level'    => $asset->getLevel(),
-                    'active'   => FALSE,
-                    'canopen'  => $canopen,
-                    'testlink' => $testlink,
-                    'result'   => 0,
-                    'type'     => $asset->getType(),
-                ];
-                $canopen = FALSE;
+
+            $dto = $asset->toDTO();
+
+            $result = $asset->getBestResultForUser($user);
+            $dto->setBestResult($result);
+
+            if ($asset->isFirstAsset() || $isNextAssetAvailable) {
+                $dto->setActive(TRUE);
             }
 
-            if ($counter < 10 || $user->isPremium()) {
-                $asset['available'] = TRUE;
-            }
-            else {
-                $asset['available'] = FALSE;
+            $isNextAssetAvailable = $asset->isCompletedByUser($user);
+
+            if ($asset->getLevel() <= 10 || $user->isPremium()) { // TODO: implement settings
+                $dto->setAvailable(TRUE);
             }
 
-            $testlink = $asset['id'];
+            $data[] = $dto;
         }
 
-        return $assets;
+        return $data;
     }
 
     /**
@@ -290,22 +262,22 @@ class AssetService implements BaseServiceInterface
      * @return Result
      * @throws AssetNotFoundException
      */
-    public function saveTestResult(
-        User $user,
-        int $asset,
-        array $data
-    ): Result {
+    public function saveTestResult(User $user, int $asset, array $data): Result
+    {
         $asset = $this->getAsset($asset);
 
-        $result = $this->resultRepository->findOneBy(
-            ['user' => $user, 'asset' => $asset]
-        );
+        $minPercent = 80; //TODO: implement settings
 
-        if ($result === NULL) {
-            $result = new Result($asset, $user, $asset->getLanguage());
-        }
+        $completed = $data['percent'] >= $minPercent;
 
-        // $result->setValue($resultValue);
+        $payload = [
+            'time'   => $data['time'],
+            'errors' => $data['errors'] ?? [],
+        ];
+
+        $data['payload'] = $payload;
+
+        $result = new Result($asset, $user, $completed, $data);
 
         return $this->resultRepository->save($result);
     }

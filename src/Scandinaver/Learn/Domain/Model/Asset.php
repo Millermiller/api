@@ -31,7 +31,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     public const TYPE_FAVORITES = 4;
 
-    protected $id;
+    protected ?int $id;
 
     protected string $title;
 
@@ -47,7 +47,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     protected Language $language;
 
-    protected $cards;
+    protected Collection $cards;
 
     protected Collection $results;
 
@@ -237,5 +237,42 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     public function setOwner(?User $owner): void
     {
         $this->owner = $owner;
+    }
+
+    public function isCompletedByUser(User $user): bool
+    {
+        /** @var Result $result */
+        foreach ($this->results as $result) {
+            if($result->getUser()->isEqualTo($user) && $result->isCompleted()) {
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function getBestResultForUser(User $user): ?Result
+    {
+        $bestResult = NULL;
+
+        /** @var Result $result */
+        foreach ($this->results as $result) {
+            if(!$result->getUser()->isEqualTo($user)) {
+                continue;
+            }
+            if (NULL === $bestResult) {
+                $bestResult = $result;
+            }
+            if ($bestResult->getPercent() < $result->getPercent()) {
+                $bestResult = $result;
+            }
+        }
+
+        return $bestResult;
+    }
+
+    public function isFirstAsset(): bool
+    {
+        return $this->level === 1;
     }
 }

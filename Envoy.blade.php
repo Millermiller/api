@@ -12,6 +12,7 @@
     clone_repository
     run_composer
     update_symlinks
+    migrate
 @endstory
 
 @task('clone_repository')
@@ -43,4 +44,8 @@
 
     echo "Remove releases except 3 last"
     ls /var/www/app/releases/ -t | tail -n +4 | xargs rm -f --
+@endtask
+
+@task('migrate')
+    php artisan doctrine:migrations:migrate
 @endtask

@@ -6,6 +6,8 @@ namespace Scandinaver\Learn\Domain\Model;
 use DateTime;
 use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -13,57 +15,88 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-class Result implements JsonSerializable
+class Result extends AggregateRoot
 {
-    private $id;
+    private ?int $id;
+
+    private Language $language;
 
     private Asset $asset;
 
     private User $user;
 
-    private int $result;
+    private bool $completed;
+
+    private int $percent;
+
+    private array $data;
 
     private DateTime $createdAt;
 
     private ?DateTime $updatedAt;
 
-    private Language $language;
-
-    public function __construct(Asset $asset, User $user, Language $language, int $result = 0)
+    public function __construct(Asset $asset, User $user, bool $completed, array $data)
     {
-        $this->asset    = $asset;
-        $this->user     = $user;
-        $this->language = $language;
-        $this->result   = $result;
+        $this->asset     = $asset;
+        $this->language  = $asset->getLanguage();
+        $this->user      = $user;
+        $this->completed = $completed;
+        $this->percent   = $data['percent'];
+        $this->data      = $data['payload'];
     }
 
-    public function getValue(): int
+    public function isCompleted(): bool
     {
-        return $this->result;
+        return $this->completed;
     }
 
-    public function setValue(int $value): void
+    public function getId(): int
     {
-        $this->result = $value;
+        return $this->id;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function toDTO(): DTO
     {
-        return [
-            'id'    => $this->id,
-            'value' => $this->result,
-        ];
+        return new ResultDTO($this);
     }
 
-    /**
-     * @return Asset
-     */
+    public function delete()
+    {
+        // TODO: Implement delete() method.
+    }
+
     public function getAsset(): Asset
     {
         return $this->asset;
     }
 
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function getPercent(): int
+    {
+        return $this->percent;
+    }
+
+    public function getTime(): int
+    {
+        return $this->data['time'];
+    }
+
+    public function getErrors(): array
+    {
+        return $this->data['errors'];
+    }
+
+    public function setPercent(int $percent): void
+    {
+        $this->percent = $percent;
+    }
+
+    public function setCompleted(bool $completed): void
+    {
+        $this->completed = $completed;
+    }
 }

@@ -15,7 +15,5 @@ use Scandinaver\User\Domain\Model\User;
  */
 interface ResultRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getActiveIds(User $user, Language $language): array;
-
     public function getResult(User $user, Asset $asset): ?Result;
 }

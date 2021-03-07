@@ -18,32 +18,6 @@ use Scandinaver\User\Domain\Model\User;
 class ResultRepository extends BaseRepository implements ResultRepositoryInterface
 {
     /**
-     * @param  User      $user
-     * @param  Language  $language
-     *
-     * @return array
-     */
-    public function getActiveIds(User $user, Language $language): array
-    {
-        $q = $this->_em->createQueryBuilder();
-
-        app('em')->getConfiguration()->addCustomHydrationMode(
-            'ColumnHydrator',
-            'Scandinaver\Common\Infrastructure\Persistence\Doctrine\ColumnHydrator'
-        );
-
-        return $q->select('a.id')
-                 ->from($this->getEntityName(), 'r')
-                 ->join('r.asset', 'a')
-                 ->where($q->expr()->eq('r.user', ':user'))
-                 ->andWhere($q->expr()->eq('a.language', ':language'))
-                 ->setParameter('user', $user)
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getResult('ColumnHydrator');
-    }
-
-    /**
      * @param  User   $user
      * @param  Asset  $asset
      *
@@ -58,6 +32,8 @@ class ResultRepository extends BaseRepository implements ResultRepositoryInterfa
                  ->from($this->getEntityName(), 'r')
                  ->where($q->expr()->eq('r.user', ':user'))
                  ->andWhere($q->expr()->eq('r.asset', ':asset'))
+                 ->orderBy('r.id', 'DESC')
+                 ->setMaxResults(1)
                  ->setParameter('user', $user)
                  ->setParameter('asset', $asset)
                  ->getQuery()
