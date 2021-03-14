@@ -18,25 +18,17 @@ class CardsOfAssetQuery implements Query
 
     private User $user;
 
-    private string $language;
-
     private int $asset;
 
-    public function __construct(string $language, User $user, int $asset)
+    public function __construct(User $user, int $asset)
     {
         $this->user     = $user;
-        $this->language = $language;
         $this->asset    = $asset;
     }
 
     public function getUser(): User
     {
         return $this->user;
-    }
-
-    public function getLanguage(): string
-    {
-        return $this->language;
     }
 
     public function getAsset(): int

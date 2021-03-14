@@ -61,10 +61,7 @@ class CardController extends Controller
      */
     public function store(string $language, int $card, int $asset): JsonResponse
     {
-        Gate::authorize(Asset::ADD_CARD);
 
-        return $this->execute(new AddCardToAssetCommand(Auth::user(), $language, $card, $asset),
-            JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -108,11 +105,7 @@ class CardController extends Controller
      */
     public function destroy(string $language, int $card, int $asset): JsonResponse
     {
-        Gate::authorize(Card::DELETE, [$card, $asset]);
 
-        $this->commandBus->execute(new DeleteCardFromAssetCommand(Auth::user(), $card, $asset));
-
-        return response()->json(NULL, 204);
     }
 
     /**

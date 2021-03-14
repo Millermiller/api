@@ -29,8 +29,9 @@ class TestCompleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'        => 'required',
-            'result'    => 'required',
+            'id'      => 'required',
+            'time'    => 'required',
+            'percent' => 'required',
         ];
     }
 }

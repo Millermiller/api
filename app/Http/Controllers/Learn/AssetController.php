@@ -5,17 +5,23 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateAssetRequest;
+use App\Http\Requests\PersonalRequest;
+use App\Http\Requests\UpdateAssetRequest;
 use Exception;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Permissions\Card;
 use Scandinaver\Learn\UI\Command\AddBasicLevelCommand;
+use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
 use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
 use Scandinaver\Learn\UI\Command\CreateAssetCommand;
 use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
 use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
+use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
 use Scandinaver\Learn\UI\Command\EditTranslateCommand;
 use Scandinaver\Learn\UI\Command\SetTranslateForCardCommand;
 use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
@@ -57,65 +63,62 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  string  $languageId
-     * @param  int     $assetId
+     * @param  int     $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function show(string $languageId, int $assetId): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::SHOW, $assetId);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::SHOW, $id);
 
-        return $this->execute(new CardsOfAssetQuery($languageId, Auth::user(), $assetId));
+        return $this->execute(new CardsOfAssetQuery(Auth::user(), $id));
     }
 
     /**
-     * @param  string   $languageId
-     * @param  Request  $request
+     * @param  CreateAssetRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function store(string $languageId, Request $request): JsonResponse
+    public function store(CreateAssetRequest $request): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::CREATE);
 
-        return $this->execute(new CreateAssetCommand($languageId, Auth::user(), $request->get('title')),
-            JsonResponse::HTTP_CREATED);
+        $data = $request->toArray();
+
+        return $this->execute(new CreateAssetCommand(Auth::user(), $data), JsonResponse::HTTP_CREATED);
     }
 
     /**
-     * @param  string   $languageId
-     * @param  int      $assetId
-     * @param  Request  $request
+     * @param  int      $id
+     * @param  UpdateAssetRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function update(string $languageId, int $assetId, Request $request): JsonResponse
+    public function update(int $id, UpdateAssetRequest $request): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::UPDATE, $assetId);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::UPDATE, $id);
 
-        return $this->execute(new UpdateAssetCommand(Auth::user(), $assetId, $request->toArray()));
+        return $this->execute(new UpdateAssetCommand(Auth::user(), $id, $request->toArray()));
     }
 
     /**
-     * @param  string  $languageId
-     * @param  int     $assetId
+     * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function destroy(string $languageId, int $assetId): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::DELETE, $assetId);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::DELETE, $id);
 
-        return $this->execute(new DeleteAssetCommand($assetId), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteAssetCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**
@@ -152,14 +155,16 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  string  $languageId
+     * @param  PersonalRequest  $request
      *
      * @return JsonResponse
      * @throws EventBusNotFoundException
      */
-    public function getPersonal(string $languageId): JsonResponse
+    public function getPersonal(PersonalRequest $request): JsonResponse
     {
-        return $this->execute(new PersonalAssetsQuery(Auth::user(), $languageId));
+        $language = $request->get('lang');
+
+        return $this->execute(new PersonalAssetsQuery(Auth::user(), $language));
     }
 
     /**
@@ -286,6 +291,35 @@ class AssetController extends Controller
     public function changeAsset(int $assetId, Request $request): JsonResponse
     {
         return $this->execute(new UpdateAssetCommand(Auth::user(), $assetId, $request->toArray()));
+    }
+
+    /**
+     * @param  int  $asset
+     * @param  int  $card
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws EventBusNotFoundException
+     */
+    public function addCard(int $asset, int $card): JsonResponse
+    {
+        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::ADD_CARD);
+
+        return $this->execute(new AddCardToAssetCommand(Auth::user(), $asset, $card), JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * @param  int  $asset
+     * @param  int  $card
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException|EventBusNotFoundException
+     */
+    public function removeCard(int $asset, int $card): JsonResponse
+    {
+        Gate::authorize(Card::DELETE, [$card, $asset]);
+
+        return $this->execute(new DeleteCardFromAssetCommand(Auth::user(), $asset, $card), JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**

@@ -3,7 +3,11 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Learn\Domain\Contract\Command\UpdateAssetHandlerInteface;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Model\AssetDTO;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
@@ -37,13 +41,14 @@ class UpdateAssetHandler implements UpdateAssetHandlerInteface
      * @param  UpdateAssetCommand|Command  $command
      *
      * @return AssetDTO
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws BindingResolutionException
+     * @throws AssetNotFoundException
      */
     public function handle($command): AssetDTO
     {
-        $asset = $this->assetService->updateAsset($command->getAsset(), $command->getData());
+        return $this->assetService->updateAsset($command->getAsset(), $command->getData());
 
-        // event(new AssetUpdated($command->getUser(), $asset));
-
-        return $asset;
     }
 }

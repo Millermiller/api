@@ -17,16 +17,10 @@ class CreateFavouriteCommand implements Command
 {
     private User $user;
 
-    private string $language;
-
     private int $card;
 
-    public function __construct(
-        string $language,
-        User $user,
-        int $card
-    ) {
-        $this->language = $language;
+    public function __construct(User $user, int $card)
+    {
         $this->user     = $user;
         $this->card     = $card;
     }
@@ -34,11 +28,6 @@ class CreateFavouriteCommand implements Command
     public function getUser(): User
     {
         return $this->user;
-    }
-
-    public function getLanguage(): string
-    {
-        return $this->language;
     }
 
     public function getCard(): int

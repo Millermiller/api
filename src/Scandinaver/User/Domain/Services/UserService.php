@@ -18,14 +18,12 @@ use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterfa
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset};
-use Scandinaver\Learn\Domain\Model\Result as AssetResult;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Puzzle\Domain\PuzzleService;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
 use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
-use Scandinaver\Translate\Domain\Model\Result as TranslateResult;
 use Scandinaver\Translate\Domain\TextService;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
@@ -191,8 +189,8 @@ class UserService implements BaseServiceInterface
         else {
             /** @var Role $defaultRole */
             $defaultRole = $this->roleRepository->findOneBy([
-                                                                'slug' => 'user',
-                                                            ]);
+                'slug' => 'user',
+            ]);
 
             if ($defaultRole === NULL) {
                 throw new Exception('Default role not found');
@@ -202,25 +200,9 @@ class UserService implements BaseServiceInterface
         }
 
         foreach ($languages as $language) {
-            //даем пользователю избранное
             $favourite = new FavouriteAsset($language);
-            $result    = new AssetResult($favourite, $user, $language);
-            $user->addTest($result);
-
-            //даем пользователю первый словарь слов
-            $firstWordAsset = $this->assetRepository->getFirstAsset($language, Asset::TYPE_WORDS);
-            $result         = new AssetResult($firstWordAsset, $user, $language);
-            $user->addTest($result);
-
-            //даем пользователю первый словарь предложений
-            $firstSentencesAsset = $this->assetRepository->getFirstAsset($language, Asset::TYPE_SENTENCES);
-            $result              = new AssetResult($firstSentencesAsset, $user, $language);
-            $user->addTest($result);
-
-            //даем пользователю первый текст
-            $firstText = $this->textRepository->getFirstText($language);
-            $result    = new TranslateResult($firstText, $user, $language);
-            $user->addTranslate($result);
+            $favourite->setOwner($user);
+            $user->addPersonalAsset($favourite);
         }
 
         $this->userRepository->save($user);
@@ -239,12 +221,33 @@ class UserService implements BaseServiceInterface
     {
         $language = $this->getLanguage($language);
 
+        /** @var Asset[] $personalAssets TODO: move to AssetService::getAssetsByType()*/
+        $personalAssets = $user->getPersonalAssets($language);
+        $personalData = [];
+        foreach ($personalAssets as $personalAsset) {
+            $dto = $personalAsset->toDTO();
+
+            if ($user->isPremium()) {
+                $dto->setActive(TRUE);
+                $dto->setAvailable(TRUE);
+            }
+
+            if ($personalAsset->isFavorite()) {
+                $dto->setActive(TRUE);
+                $dto->setAvailable(TRUE);
+            }
+
+            $result = $personalAsset->getBestResultForUser($user);
+            $dto->setBestResult($result);
+
+            $personalData[] = $dto;
+        }
+
         return [
             'site'        => config('app.MAIN_SITE'),
             'words'       => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_WORDS),
             'sentences'   => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_SENTENCES),
-            'favourites'  => $user->getFavouriteAsset($language)->toDTO(),
-            'personal'    => $user->getCreatedAssets($language),
+            'personal'    => $personalData,
             'texts'       => $this->textService->getTextsForUser($language->getName(), $user),
             'puzzles'     => $this->puzzleService->getForUser($language->getName(), $user),
             'intro'       => $this->introService->all(),
