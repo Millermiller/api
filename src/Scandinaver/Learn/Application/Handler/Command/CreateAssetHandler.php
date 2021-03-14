@@ -35,6 +35,6 @@ class CreateAssetHandler implements CreateAssetHandlerInterface
      */
     public function handle($command): AssetDTO
     {
-        return $this->assetService->create($command->getLanguage(), $command->getUser(), $command->getTitle());
+        return $this->assetService->create($command->getUser(), $command->getData());
     }
 }

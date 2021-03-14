@@ -21,33 +21,31 @@ class FavouriteController extends Controller
 {
 
     /**
-     * @param  string  $language
      * @param  int     $card
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function store(string $language, int $card): JsonResponse
+    public function store(int $card): JsonResponse
     {
         Gate::authorize(Asset::CREATE_FAVOURITE, $card);
 
-        $this->commandBus->execute(new CreateFavouriteCommand($language, Auth::user(), $card));
+        $this->commandBus->execute(new CreateFavouriteCommand(Auth::user(), $card));
 
         return response()->json(NULL, 201);
     }
 
     /**
-     * @param  string  $language
      * @param  int     $card
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function destroy(string $language, int $card): JsonResponse
+    public function destroy(int $card): JsonResponse
     {
         Gate::authorize(Asset::DELETE_FAVOURITE, $card);
 
-        $this->commandBus->execute(new DeleteFavouriteCommand($language, Auth::user(), $card));
+        $this->commandBus->execute(new DeleteFavouriteCommand(Auth::user(), $card));
 
         return response()->json(NULL, 204);
     }

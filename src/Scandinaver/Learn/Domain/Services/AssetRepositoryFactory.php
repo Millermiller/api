@@ -5,7 +5,7 @@ namespace Scandinaver\Learn\Domain\Services;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
 
 /**
  * Class AssetRepositoryFactory
@@ -17,10 +17,10 @@ class AssetRepositoryFactory
     /**
      * @param  int  $type
      *
-     * @return BaseRepository
+     * @return AssetRepository
      * @throws BindingResolutionException
      */
-    public static function getByType(int $type): BaseRepository
+    public static function getByType(int $type): AssetRepository
     {
         switch ($type) {
             case Asset::TYPE_PERSONAL:

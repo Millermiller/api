@@ -2,10 +2,9 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Model\Asset;
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\Learn\Domain\Model\Result::class, function (Faker $faker, array $attributes) {
+$factory->define(\Scandinaver\Learn\Domain\Model\Passing::class, function (Faker $faker, array $attributes) {
 
     static $level = 1;
 

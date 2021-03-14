@@ -5,6 +5,8 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 
 use Scandinaver\Learn\Domain\Contract\Command\CreateFavouriteHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
+use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
+use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
 use Scandinaver\Shared\Contract\Command;
 
@@ -28,9 +30,12 @@ class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
 
     /**
      * @param  CreateFavouriteCommand|Command  $command
+     *
+     * @throws CardAlreadyAddedException
+     * @throws CardNotFoundException
      */
     public function handle($command): void
     {
-        $this->favouriteService->create($command->getLanguage(), $command->getUser(), $command->getCard());
+        $this->favouriteService->create($command->getUser(), $command->getCard());
     }
 }

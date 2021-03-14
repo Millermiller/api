@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Puzzle;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PuzzlesRequest;
+use App\Http\Requests\UserPuzzlesRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
@@ -31,45 +33,49 @@ class PuzzleController extends Controller
 {
 
     /**
-     * @param  string  $language
+     * @param  PuzzlesRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function index(string $language): JsonResponse
+    public function index(PuzzlesRequest $request): JsonResponse
     {
         Gate::authorize(Puzzle::VIEW);
+
+        $language = $request->get('lang');
 
         return $this->execute(new PuzzlesQuery($language));
     }
 
     /**
-     * @param  string  $language
+     * @param  UserPuzzlesRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function byUser(string $language): JsonResponse
+    public function byUser(UserPuzzlesRequest $request): JsonResponse
     {
         Gate::authorize('view-puzzles-by-user');
+
+        $language = $request->get('lang');
 
         return $this->execute(new UserPuzzlesQuery($language, Auth::user()));
     }
 
     /**
-     * @param  int  $puzzleId
+     * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function show(int $puzzleId): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        Gate::authorize(Puzzle::SHOW, $puzzleId);
+        Gate::authorize(Puzzle::SHOW, $id);
 
-        return $this->execute(new PuzzleQuery($puzzleId));
+        return $this->execute(new PuzzleQuery($id));
     }
 
     /**
@@ -89,44 +95,43 @@ class PuzzleController extends Controller
 
     /**
      * @param  Request  $request
-     * @param  int      $puzzleId
+     * @param  int      $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, int $puzzleId): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
-        Gate::authorize(Puzzle::UPDATE, $puzzleId);
+        Gate::authorize(Puzzle::UPDATE, $id);
         // return response()->json($puzzle, 200);
     }
 
     /**
-     * @param  string  $language
-     * @param  int     $puzzleId
+     * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function complete(string $language, int $puzzleId): JsonResponse
+    public function complete(int $id): JsonResponse
     {
-        Gate::authorize(Puzzle::COMPLETE, $puzzleId);
+        Gate::authorize(Puzzle::COMPLETE, $id);
 
-        return $this->execute(new PuzzleCompleteCommand(Auth::user(), $puzzleId));
+        return $this->execute(new PuzzleCompleteCommand(Auth::user(), $id));
     }
 
     /**
-     * @param  int  $puzzleId
+     * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function destroy(int $puzzleId): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        Gate::authorize(Puzzle::DELETE, $puzzleId);
+        Gate::authorize(Puzzle::DELETE, $id);
 
-        return $this->execute(new DeletePuzzleCommand($puzzleId), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeletePuzzleCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
 
 }

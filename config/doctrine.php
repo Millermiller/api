@@ -114,7 +114,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_types'               => [
-        'json' => LaravelDoctrine\ORM\Types\Json::class
+        'json' => Scandinaver\Common\Infrastructure\Persistence\Doctrine\UnicodeJsonType::class
     ],
     /*
     |--------------------------------------------------------------------------

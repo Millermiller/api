@@ -5,7 +5,6 @@ namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
-use Scandinaver\Shared\BaseRepository;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -13,7 +12,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
  */
-class PersonalAssetRepository extends BaseRepository implements PersonalAssetRepositoryInterface
+class PersonalAssetRepository extends AssetRepository implements PersonalAssetRepositoryInterface
 {
     public function getAvailableAssets(Language $language, User $user): array
     {
@@ -21,7 +20,7 @@ class PersonalAssetRepository extends BaseRepository implements PersonalAssetRep
 
         return $q->select('a')
                  ->from($this->getEntityName(), 'a')
-                 ->join('a.results', 'r', 'WITH')
+                 ->join('a.passings', 'r', 'WITH')
                  ->where($q->expr()->eq('a.language', ':language'))
                  ->andWhere($q->expr()->eq('r.user', ':user'))
                  ->setParameter('language', $language)

@@ -16,27 +16,47 @@ class AssetDTO extends DTO
 
     private Asset $asset;
 
+    private bool $active = FALSE;
+
+    private bool $available = FALSE;
+
+    private ?Passing $bestResult = NULL;
+
     public function __construct(Asset $asset)
     {
         $this->asset = $asset;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    public function setAvailable(bool $available): void
+    {
+        $this->available = $available;
+    }
+
+    public function setBestResult(?Passing $bestResult): void
+    {
+        $this->bestResult = $bestResult;
+    }
+
+    public function jsonSerialize(): array
     {
         return [
-            'id'       => $this->asset->getId(),
-            'title'    => $this->asset->getTitle(),
-            'level'    => $this->asset->getLevel(),
-            //  'result' => $this->asset->->count() ? $this->results->toArray()[0]->getValue() : 0,
-            'basic'    => $this->asset->getBasic(),
-            'language' => $this->asset->getLanguage()->toDTO(),
-            'count'    => $this->asset->getCards() ? $this->asset->getCards()->count() : 0,
-            'cards'    => [],
-            'result'   => 0, // TODO: implement
-            'type'     => $this->asset->getType()
+            'id'         => $this->asset->getId(),
+            'title'      => $this->asset->getTitle(),
+            'level'      => $this->asset->getLevel(),
+            'basic'      => $this->asset->getBasic(),
+            'bestResult' => $this->bestResult ? $this->bestResult->getPercent() : 0,
+            'language'   => $this->asset->getLanguage()->toDTO(),
+            'count'      => $this->asset->getCards() ? $this->asset->getCards()->count() : 0,
+            'cards'      => [],
+            'result'     => 0, // TODO: implement
+            'type'       => $this->asset->getType(),
+            'active'     => $this->active,
+            'available'  => $this->available,
         ];
     }
 }

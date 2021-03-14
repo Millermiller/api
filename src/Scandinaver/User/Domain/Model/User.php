@@ -19,9 +19,7 @@ use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\PersonalAsset;
-use Scandinaver\Learn\Domain\Model\Result;
-use Scandinaver\Learn\Domain\Model\Result as AssetResult;
+use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\Shared\AggregateRoot;
@@ -76,11 +74,11 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     private Plan $plan;
 
-    private Collection $tests;
+    private Collection $passings;
 
     private Collection $translates;
 
-    private Collection $createdAssets;
+    private Collection $personalAssets;
 
     private Collection $puzzles;
 
@@ -100,7 +98,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     public function __construct()
     {
-        $this->tests       = new ArrayCollection();
+        $this->passings    = new ArrayCollection();
         $this->texts       = new ArrayCollection();
         $this->translates  = new ArrayCollection();
         $this->roles       = new ArrayCollection();
@@ -456,12 +454,12 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     }
 
     /**
-     * @param  AssetResult  $result
+     * @param  Passing  $passing
      */
-    public function addTest(AssetResult $result)
+    public function addPassing(Passing $passing)
     {
-        if (!$this->tests->contains($result)) {
-            $this->tests->add($result);
+        if (!$this->passings->contains($passing)) {
+            $this->passings->add($passing);
         }
     }
 
@@ -488,9 +486,8 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     public function getFavouriteAsset(Language $language): ?Asset
     {
-        foreach ($this->tests as $result) {
-            /** @var Result $result */
-            $asset = $result->getAsset();
+        foreach ($this->personalAssets as $asset) {
+            /** @var Asset $asset */
             if ($asset->isFavorite() && $asset->getLanguage()->isEqualTo($language)) {
                 return $asset;
             }
@@ -500,18 +497,32 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     }
 
     /**
+     * @param  Asset  $asset
+     *
+     * @throws Exception
+     */
+    public function addPersonalAsset(Asset $asset): void
+    {
+        if ($this->personalAssets->contains($asset)) {
+            throw new Exception("Personal asset already exists");
+        }
+
+        $this->personalAssets->add($asset);
+    }
+
+    /**
      * @param  Language  $language
      *
-     * @return array
+     * @return ArrayCollection
      */
-    public function getCreatedAssets(Language $language): array
+    public function getPersonalAssets(Language $language): Collection
     {
-        $data = [];
+        $data = new ArrayCollection();
 
-        foreach ($this->createdAssets as $createdAsset) {
-            /** @var PersonalAsset $createdAsset */
-            if ($createdAsset->getLanguage()->isEqualTo($language)) {
-                $data[] = $createdAsset->toDTO();
+        foreach ($this->personalAssets as $personalAsset) {
+            /** @var Asset $personalAsset */
+            if ($personalAsset->getLanguage()->isEqualTo($language)) {
+                $data->add($personalAsset);
             }
         }
 

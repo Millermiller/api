@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StateRequest;
 use Exception;
 use Illuminate\Http\{JsonResponse};
+use Scandinaver\Shared\EventBusNotFoundException;
 use Scandinaver\User\UI\Query\GetStateQuery;
 use Scandinaver\User\UI\Query\GetUserQuery;
 
@@ -36,13 +38,15 @@ class IndexController extends Controller
     }
 
     /**
-     * @param  string  $language
+     * @param  StateRequest  $request
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws EventBusNotFoundException
      */
-    public function state(string $language): JsonResponse
+    public function state(StateRequest $request): JsonResponse
     {
+        $language = $request->get('lang');
+
         return $this->execute(new GetStateQuery(Auth::user(), $language));
     }
 }

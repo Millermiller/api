@@ -9,7 +9,7 @@ use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
@@ -40,10 +40,10 @@ class AssetControllerTest extends TestCase
         );
         $this->card = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
 
-        $result = entity(Result::class)->create(['user' => $this->user, 'asset' => $this->asset]);
-        $this->user->addTest($result);
-        $result = entity(Result::class)->create(['user' => $this->user, 'asset' => $this->favouriteAsset]);
-        $this->user->addTest($result);
+        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->asset]);
+        $this->user->addPassing($passing);
+        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->favouriteAsset]);
+        $this->user->addPassing($passing);
     }
 
     /**

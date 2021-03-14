@@ -17,14 +17,12 @@ class CreateAssetCommand implements Command
 {
     private User $user;
 
-    private string $title;
-    private string $language;
+    private array $data;
 
-    public function __construct(string $language, User $user, string $title)
+    public function __construct(User $user, array $data)
     {
-        $this->user     = $user;
-        $this->title    = $title;
-        $this->language = $language;
+        $this->user = $user;
+        $this->data = $data;
     }
 
     public function getUser(): User
@@ -32,13 +30,8 @@ class CreateAssetCommand implements Command
         return $this->user;
     }
 
-    public function getTitle(): string
+    public function getData(): array
     {
-        return $this->title;
-    }
-
-    public function getLanguage(): string
-    {
-        return $this->language;
+        return $this->data;
     }
 }

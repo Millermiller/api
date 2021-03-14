@@ -43,7 +43,7 @@ class CreateCommand extends GeneratorCommand
      * @return bool|void|null
      * @throws FileNotFoundException
      */
-    public function handle(): ?bool
+    public function handle(): void
     {
         $this->domain = $this->ask('domain');
 

@@ -79,5 +79,17 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define(Test::COMPLETE, function (User $user, $assetId) {
             return TRUE;
         });
+
+        Gate::define(Test::GET_ALL_PASSINGS, function (User $user) {
+            return TRUE;
+        });
+
+        Gate::define(Test::DELETE_PASSING, function (User $user, $passingId) {
+            return TRUE;
+        });
+
+        Gate::define(Test::UPDATE_PASSING, function (User $user, $passingId) {
+            return TRUE;
+        });
     }
 }

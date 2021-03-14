@@ -29,10 +29,9 @@ class CardsOfAssetHandler implements CardsOfAssetHandlerInterface
      *
      * @return array
      * @throws AssetNotFoundException
-     * @throws LanguageNotFoundException
      */
     public function handle($query): array
     {
-        return $this->cardService->getCards($query->getLanguage(), $query->getUser(), $query->getAsset());
+        return $this->cardService->getCards($query->getUser(), $query->getAsset());
     }
 }

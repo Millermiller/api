@@ -28,19 +28,16 @@ class FavouriteService
     }
 
     /**
-     * @param  string  $language
      * @param  User    $user
      * @param  int     $card
      *
      * @throws CardNotFoundException
-     * @throws LanguageNotFoundException
      * @throws CardAlreadyAddedException
      */
-    public function create(string $language, User $user, int $card): void
+    public function create(User $user, int $card): void
     {
-        $language = $this->getLanguage($language);
         $card     = $this->getCard($card);
-
+        $language = $card->getLanguage();
         $asset = $user->getFavouriteAsset($language);
 
         $asset->addCard($card);
@@ -49,18 +46,15 @@ class FavouriteService
     }
 
     /**
-     * @param  string  $language
      * @param  User    $user
      * @param  int     $card
      *
      * @throws CardNotFoundException
-     * @throws LanguageNotFoundException
      */
-    public function delete(string $language, User $user, int $card): void
+    public function delete(User $user, int $card): void
     {
-        $language = $this->getLanguage($language);
         $card     = $this->getCard($card);
-
+        $language = $card->getLanguage();
         $asset = $user->getFavouriteAsset($language);
 
         $asset->removeCard($card);

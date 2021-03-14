@@ -1,6 +1,6 @@
-Scandinaver\Learn\Domain\Model\Result:
+Scandinaver\Learn\Domain\Model\Passing:
   type: entity
-  table: result_asset
+  table: test_result
   indexes:
     user_id:
       columns:
@@ -20,13 +20,21 @@ Scandinaver\Learn\Domain\Model\Result:
       generator:
         strategy: IDENTITY
   fields:
-    result:
+    completed:
+      type: boolean
+      length: null
+      unique: false
+      nullable: false
+    percent:
       type: integer
       scale: 0
       length: null
       unique: false
       nullable: false
       precision: 0
+    data:
+      type: json
+      nullable: false
     createdAt:
       type: datetime
       scale: 0
@@ -56,9 +64,18 @@ Scandinaver\Learn\Domain\Model\Result:
         - persist
       fetch: LAZY
       mappedBy: null
-      inversedBy: results
+      inversedBy: passings
       joinColumns:
         asset_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    language:
+      targetEntity: Scandinaver\Common\Domain\Model\Language
+      cascade: { }
+      fetch: LAZY
+      mappedBy: language
+      joinColumns:
+        language_id:
           referencedColumnName: id
       orphanRemoval: false
     user:

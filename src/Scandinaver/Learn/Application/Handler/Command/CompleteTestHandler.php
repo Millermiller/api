@@ -5,7 +5,7 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 
 use Scandinaver\Learn\Domain\Contract\Command\CompleteTestHandlerInterface;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
-use Scandinaver\Learn\Domain\Services\AssetService;
+use Scandinaver\Learn\Domain\Services\TestService;
 use Scandinaver\Learn\UI\Command\CompleteTestCommand;
 use Scandinaver\Shared\Contract\Command;
 
@@ -16,11 +16,11 @@ use Scandinaver\Shared\Contract\Command;
  */
 class CompleteTestHandler implements CompleteTestHandlerInterface
 {
-    private AssetService $assetService;
+    private TestService $testService;
 
-    public function __construct(AssetService $assetService)
+    public function __construct(TestService $testService)
     {
-        $this->assetService = $assetService;
+        $this->testService = $testService;
     }
 
     /**
@@ -30,7 +30,7 @@ class CompleteTestHandler implements CompleteTestHandlerInterface
      */
     public function handle($command): void
     {
-        $this->assetService->saveTestResult(
+        $this->testService->savePassing(
             $command->getUser(),
             $command->getAsset(),
             $command->getData()

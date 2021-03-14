@@ -31,7 +31,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     public const TYPE_FAVORITES = 4;
 
-    protected $id;
+    protected ?int $id;
 
     protected string $title;
 
@@ -47,9 +47,9 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     protected Language $language;
 
-    protected $cards;
+    protected Collection $cards;
 
-    protected Collection $results;
+    protected Collection $passings;
 
     protected int $category;
 
@@ -73,7 +73,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         $this->basic    = $basic;
         $this->favorite = $favorite;
         $this->language = $language;
-        $this->results  = new ArrayCollection();
+        $this->passings  = new ArrayCollection();
         $this->cards    = new ArrayCollection();
 
         $this->pushEvent(new AssetCreated($this));
@@ -202,10 +202,10 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     }
 
 
-    public function addResult(Result $result): void
+    public function addPassing(Passing $result): void
     {
-        if (!$this->results->contains($result)) {
-            $this->results->add($result);
+        if (!$this->passings->contains($result)) {
+            $this->passings->add($result);
         }
     }
 
@@ -237,5 +237,42 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     public function setOwner(?User $owner): void
     {
         $this->owner = $owner;
+    }
+
+    public function isCompletedByUser(User $user): bool
+    {
+        /** @var Passing $passing */
+        foreach ($this->passings as $passing) {
+            if($passing->getUser()->isEqualTo($user) && $passing->isCompleted()) {
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function getBestResultForUser(User $user): ?Passing
+    {
+        $bestResult = NULL;
+
+        /** @var Passing $passing */
+        foreach ($this->passings as $passing) {
+            if(!$passing->getUser()->isEqualTo($user)) {
+                continue;
+            }
+            if (NULL === $bestResult) {
+                $bestResult = $passing;
+            }
+            if ($bestResult->getPercent() < $passing->getPercent()) {
+                $bestResult = $passing;
+            }
+        }
+
+        return $bestResult;
+    }
+
+    public function isFirstAsset(): bool
+    {
+        return $this->level === 1;
     }
 }
