@@ -27,7 +27,12 @@ class DeleteAssetHandler implements DeleteAssetHandlerInterface
     }
 
     /**
-     * @param  DeleteAssetCommand|Command $command
+     * @param  DeleteAssetCommand|Command  $command
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException
      */
     public function handle($command): void
     {

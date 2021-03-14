@@ -88,11 +88,6 @@ class LearnServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'GiveNextLevelHandlerInterface',
-            'Scandinaver\Learn\Application\Handler\Command\GiveNextLevelHandler'
-        );
-
-        $this->app->bind(
             'SetTranslateForCardHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Command\SetTranslateForCardHandler'
         );

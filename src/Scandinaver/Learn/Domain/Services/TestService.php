@@ -4,12 +4,14 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Scandinaver\Common\Domain\Services\LanguageTrait;
-use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\PassingNotFoundException;
-use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class TestService
@@ -20,12 +22,13 @@ class TestService implements BaseServiceInterface
 {
     use LanguageTrait;
     use PassingTrait;
+    use AssetTrait;
 
-    private ResultRepositoryInterface $resultRepository;
+    private PassingRepositoryInterface $passingRepository;
 
-    public function __construct(ResultRepositoryInterface $resultRepository)
+    public function __construct(PassingRepositoryInterface $passingRepository)
     {
-        $this->resultRepository = $resultRepository;
+        $this->passingRepository = $passingRepository;
     }
 
     public function all(): array
@@ -56,8 +59,8 @@ class TestService implements BaseServiceInterface
 
         $language = $this->getLanguage($language);
 
-        /** @var Result[] $passings */
-        $passings = $this->resultRepository->findBy([
+        /** @var Passing[] $passings */
+        $passings = $this->passingRepository->findBy([
             'language' => $language
         ]);
 
@@ -66,6 +69,34 @@ class TestService implements BaseServiceInterface
         }
 
         return $data;
+    }
+
+    /**
+     * @param  User   $user
+     * @param  int    $asset
+     * @param  array  $data
+     *
+     * @return Passing
+     * @throws AssetNotFoundException
+     */
+    public function savePassing(User $user, int $asset, array $data): Passing
+    {
+        $asset = $this->getAsset($asset);
+
+        $minPercent = 80; //TODO: implement settings
+
+        $completed = $data['percent'] >= $minPercent;
+
+        $payload = [
+            'time'   => $data['time'],
+            'errors' => $data['errors'] ?? [],
+        ];
+
+        $data['payload'] = $payload;
+
+        $result = new Passing($asset, $user, $completed, $data);
+
+        return $this->passingRepository->save($result);
     }
 
     /**
@@ -81,7 +112,7 @@ class TestService implements BaseServiceInterface
         $passing->setPercent($data['percent']);
         $passing->setCompleted($data['completed']);
 
-        $this->resultRepository->save($passing);
+        $this->passingRepository->save($passing);
     }
 
     /**
@@ -95,6 +126,6 @@ class TestService implements BaseServiceInterface
 
         $passing->delete();
 
-        $this->resultRepository->delete($passing);
+        $this->passingRepository->delete($passing);
     }
 }

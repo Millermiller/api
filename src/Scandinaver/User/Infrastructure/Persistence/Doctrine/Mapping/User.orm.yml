@@ -234,8 +234,8 @@ Scandinaver\User\Domain\Model\User:
           referencedColumnName: owner_id
       orderBy:
         category: DESC
-    tests:
-      targetEntity: Scandinaver\Learn\Domain\Model\Result
+    passings:
+      targetEntity: Scandinaver\Learn\Domain\Model\Passing
       cascade:
         - persist
       fetch: LAZY

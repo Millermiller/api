@@ -17,15 +17,15 @@ class DeleteCardFromAssetCommand implements Command
 {
     private User $user;
 
-    private int $card;
-
     private int $asset;
 
-    public function __construct(User $user, int $card, int $asset)
+    private int $card;
+
+    public function __construct(User $user, int $asset, int $card)
     {
         $this->user  = $user;
-        $this->card  = $card;
         $this->asset = $asset;
+        $this->card  = $card;
     }
 
     public function getUser(): User

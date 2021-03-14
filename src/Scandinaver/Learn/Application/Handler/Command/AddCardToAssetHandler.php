@@ -3,8 +3,15 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Learn\Domain\Contract\Command\AddCardToAssetHandlerInterface;
-use Scandinaver\Learn\Domain\Services\CardService;
+use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
+use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
+use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
+use Scandinaver\Learn\Domain\Model\AssetDTO;
+use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
 use Scandinaver\Shared\Contract\Command;
 
@@ -15,23 +22,29 @@ use Scandinaver\Shared\Contract\Command;
  */
 class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
 {
-    protected CardService $cardService;
+    protected AssetService $service;
 
-    public function __construct(CardService $cardService)
+    public function __construct(AssetService $assetService)
     {
-        $this->cardService = $cardService;
+        $this->service = $assetService;
     }
 
     /**
      * @param  AddCardToAssetCommand|Command  $command
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws BindingResolutionException
+     * @throws AssetNotFoundException
+     * @throws CardAlreadyAddedException
+     * @throws CardNotFoundException
      */
     public function handle($command): void
     {
-        $card = $this->cardService->addCardToAsset(
+        $this->service->addCard(
             $command->getUser(),
-            $command->getLanguage(),
-            $command->getCard(),
-            $command->getAsset()
+            $command->getAsset(),
+            $command->getCard()
         );
     }
 }

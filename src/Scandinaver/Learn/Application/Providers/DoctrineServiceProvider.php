@@ -10,7 +10,7 @@ use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\SentenceAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordAssetRepositoryInterface;
@@ -20,7 +20,7 @@ use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Example;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Learn\Domain\Model\PersonalAsset;
-use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Learn\Domain\Model\SentenceAsset;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
@@ -30,7 +30,7 @@ use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\CardRepository;
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\ExampleRepository;
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\FavouriteAssetRepository;
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\PersonalAssetRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\ResultRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\PassingRepository;
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\SentenceAssetRepository;
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\TranslateRepository;
 use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\WordAssetRepository;
@@ -126,11 +126,11 @@ class DoctrineServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            ResultRepositoryInterface::class,
+            PassingRepositoryInterface::class,
             function () {
-                return new ResultRepository(
+                return new PassingRepository(
                     $this->app['em'],
-                    $this->app['em']->getClassMetadata(Result::class)
+                    $this->app['em']->getClassMetadata(Passing::class)
                 );
             }
         );

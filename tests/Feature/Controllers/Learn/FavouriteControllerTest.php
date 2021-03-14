@@ -9,7 +9,7 @@ use Tests\TestCase;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\User;
 
@@ -36,10 +36,10 @@ class FavouriteControllerTest extends TestCase
         $this->wordasset      = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $language]);
         $this->favouriteAsset = entity(FavouriteAsset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
 
-        $result = entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->wordasset]);
-        $this->user->addTest($result);
-        $result = entity(Result::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
-        $this->user->addTest($result);
+        $passing = entity(Passing::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->wordasset]);
+        $this->user->addPassing($passing);
+        $passing = entity(Passing::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
+        $this->user->addPassing($passing);
 
         $this->card = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset ]);
         $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset ]);

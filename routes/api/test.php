@@ -9,7 +9,7 @@ Route::group(
     'middleware' => ['auth:api'],
   ],
   function () {
-      Route::post('/{language}/complete/{id}', [TestController::class, 'complete'])->name('complete');
+      Route::post('/complete/{id}', [TestController::class, 'complete'])->name('complete');
       Route::get('/{language}/test', [TestController::class, 'getAllPassing'])->name('all');
       Route::delete('/test/{id}', [TestController::class, 'destroyPassing'])->name('delete');
       Route::put('/test/{id}', [TestController::class, 'updatePassing'])->name('update');

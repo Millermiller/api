@@ -6,11 +6,11 @@ namespace Scandinaver\Learn\Domain\Contract\Command;
 use Scandinaver\Shared\Contract\CommandHandler;
 
 /**
- * Interface GiveNextLevelHandlerInterface
+ * Class DeletePassingHandlerInterface
  *
  * @package Scandinaver\Learn\Domain\Contract\Command
  */
-interface GiveNextLevelHandlerInterface extends CommandHandler
+interface DeletePassingHandlerInterface extends CommandHandler
 {
 
 }

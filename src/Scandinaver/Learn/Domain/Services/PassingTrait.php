@@ -5,9 +5,9 @@ namespace Scandinaver\Learn\Domain\Services;
 
 
 use Scandinaver\Common\Infrastructure\Service\Container;
-use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\PassingNotFoundException;
-use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Passing;
 
 /**
  * Trait PassingTrait
@@ -19,15 +19,15 @@ trait PassingTrait
     /**
      * @param  int  $id
      *
-     * @return Result
+     * @return Passing
      * @throws PassingNotFoundException
      */
-    private function getPassing(int $id): Result
+    private function getPassing(int $id): Passing
     {
-        /** @var  ResultRepositoryInterface $repository */
-        $repository = Container::getInstance()->get(ResultRepositoryInterface::class);
+        /** @var  PassingRepositoryInterface $repository */
+        $repository = Container::getInstance()->get(PassingRepositoryInterface::class);
 
-        /** @var Result $passing */
+        /** @var Passing $passing */
         $passing = $repository->find($id);
 
         if ($passing === NULL) {

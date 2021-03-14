@@ -5,7 +5,6 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 
 use Scandinaver\Learn\Domain\Contract\Command\DeleteFavouriteHandlerInterface;
 use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
 use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
 use Scandinaver\Shared\Contract\Command;
@@ -32,10 +31,9 @@ class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
      * @param  DeleteFavouriteCommand|Command  $command
      *
      * @throws CardNotFoundException
-     * @throws LanguageNotFoundException
      */
     public function handle($command): void
     {
-        $this->favouriteService->delete($command->getLanguage(), $command->getUser(), $command->getCard());
+        $this->favouriteService->delete($command->getUser(), $command->getCard());
     }
 }

@@ -1,4 +1,4 @@
-Scandinaver\Learn\Domain\Model\Result:
+Scandinaver\Learn\Domain\Model\Passing:
   type: entity
   table: test_result
   indexes:
@@ -64,7 +64,7 @@ Scandinaver\Learn\Domain\Model\Result:
         - persist
       fetch: LAZY
       mappedBy: null
-      inversedBy: results
+      inversedBy: passings
       joinColumns:
         asset_id:
           referencedColumnName: id

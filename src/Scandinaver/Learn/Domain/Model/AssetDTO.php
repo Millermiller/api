@@ -20,7 +20,7 @@ class AssetDTO extends DTO
 
     private bool $available = FALSE;
 
-    private ?Result $bestResult = NULL;
+    private ?Passing $bestResult = NULL;
 
     public function __construct(Asset $asset)
     {
@@ -37,7 +37,7 @@ class AssetDTO extends DTO
         $this->available = $available;
     }
 
-    public function setBestResult(?Result $bestResult): void
+    public function setBestResult(?Passing $bestResult): void
     {
         $this->bestResult = $bestResult;
     }

@@ -27,14 +27,13 @@ class TestController extends Controller
 
     /**
      * @param  TestCompleteRequest  $request
-     * @param  string               $language
      * @param  int                  $assetId
      *
      * @return JsonResponse
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function complete(TestCompleteRequest $request, string $language, int $assetId): JsonResponse
+    public function complete(TestCompleteRequest $request, int $assetId): JsonResponse
     {
         Gate::authorize(Test::COMPLETE, $assetId);
 

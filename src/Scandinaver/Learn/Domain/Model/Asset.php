@@ -49,7 +49,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     protected Collection $cards;
 
-    protected Collection $results;
+    protected Collection $passings;
 
     protected int $category;
 
@@ -73,7 +73,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         $this->basic    = $basic;
         $this->favorite = $favorite;
         $this->language = $language;
-        $this->results  = new ArrayCollection();
+        $this->passings  = new ArrayCollection();
         $this->cards    = new ArrayCollection();
 
         $this->pushEvent(new AssetCreated($this));
@@ -202,10 +202,10 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     }
 
 
-    public function addResult(Result $result): void
+    public function addPassing(Passing $result): void
     {
-        if (!$this->results->contains($result)) {
-            $this->results->add($result);
+        if (!$this->passings->contains($result)) {
+            $this->passings->add($result);
         }
     }
 
@@ -241,9 +241,9 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     public function isCompletedByUser(User $user): bool
     {
-        /** @var Result $result */
-        foreach ($this->results as $result) {
-            if($result->getUser()->isEqualTo($user) && $result->isCompleted()) {
+        /** @var Passing $passing */
+        foreach ($this->passings as $passing) {
+            if($passing->getUser()->isEqualTo($user) && $passing->isCompleted()) {
                 return TRUE;
             }
         }
@@ -251,20 +251,20 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         return FALSE;
     }
 
-    public function getBestResultForUser(User $user): ?Result
+    public function getBestResultForUser(User $user): ?Passing
     {
         $bestResult = NULL;
 
-        /** @var Result $result */
-        foreach ($this->results as $result) {
-            if(!$result->getUser()->isEqualTo($user)) {
+        /** @var Passing $passing */
+        foreach ($this->passings as $passing) {
+            if(!$passing->getUser()->isEqualTo($user)) {
                 continue;
             }
             if (NULL === $bestResult) {
-                $bestResult = $result;
+                $bestResult = $passing;
             }
-            if ($bestResult->getPercent() < $result->getPercent()) {
-                $bestResult = $result;
+            if ($bestResult->getPercent() < $passing->getPercent()) {
+                $bestResult = $passing;
             }
         }
 

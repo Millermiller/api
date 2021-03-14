@@ -8,13 +8,17 @@ Route::group(
     'namespace'  => 'App\Http\Controllers\Learn',
   ],
   function () {
-      Route::get('/{language}/asset/{asset}',    [AssetController::class, 'show'])->name('show');//TODO: refactor
+      Route::get('/asset/{id}',                  [AssetController::class, 'show'])->name('show');//TODO: refactor
 
-      Route::post('/{language}/asset',           [AssetController::class, 'store'])->name('store');
+      Route::post('/asset',                      [AssetController::class, 'store'])->name('store');
 
-      Route::put('/{language}/asset/{asset}',    [AssetController::class, 'update'])->name('update');
+      Route::put('/asset/{id}',                  [AssetController::class, 'update'])->name('update');
 
-      Route::delete('/{language}/asset/{asset}', [AssetController::class, 'destroy'])->name('destroy');
+      Route::post('/asset/{asset}/{card}',       [AssetController::class, 'addCard'])->name('card:add');
+
+      Route::delete('/asset/{asset}/{card}',     [AssetController::class, 'removeCard'])->name('card:remove');
+
+      Route::delete('/asset/{id}',               [AssetController::class, 'destroy'])->name('destroy');
 
       Route::post('/{language}/level',           [AssetController::class, 'addBasicAssetLevel'])->name('add:basic');
 
@@ -30,8 +34,6 @@ Route::group(
 
       Route::get('/{language}/examples/{card}',  [AssetController::class, 'showExamples'])->name('examples');
 
-      Route::put('/asset/{asset}',               [AssetController::class, 'changeAsset'])->name('change');
-
       Route::post('/changeUsedTranslate',        [AssetController::class, 'changeUsedTranslate'])->name('change:translate');//TODO: remove
 
       Route::post('/translate',                  [AssetController::class, 'editTranslate'])->name('translate:edit');
@@ -42,7 +44,7 @@ Route::group(
 
       Route::get('/{language}/sentences',        [AssetController::class, 'getSentences'])->name('sentences');
 
-      Route::get('/{language}/personal',         [AssetController::class, 'getPersonal'])->name('personal');
+      Route::get('/personal',                    [AssetController::class, 'getPersonal'])->name('personal');
 
       Route::post('/card',                       [AssetController::class, 'addPair'])->name('pair:create');//TODO: remove
 

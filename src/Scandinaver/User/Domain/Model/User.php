@@ -19,9 +19,7 @@ use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\PersonalAsset;
-use Scandinaver\Learn\Domain\Model\Result;
-use Scandinaver\Learn\Domain\Model\Result as AssetResult;
+use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\Shared\AggregateRoot;
@@ -76,7 +74,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     private Plan $plan;
 
-    private Collection $tests;
+    private Collection $passings;
 
     private Collection $translates;
 
@@ -100,7 +98,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     public function __construct()
     {
-        $this->tests       = new ArrayCollection();
+        $this->passings    = new ArrayCollection();
         $this->texts       = new ArrayCollection();
         $this->translates  = new ArrayCollection();
         $this->roles       = new ArrayCollection();
@@ -456,12 +454,12 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     }
 
     /**
-     * @param  AssetResult  $result
+     * @param  Passing  $passing
      */
-    public function addTest(AssetResult $result)
+    public function addPassing(Passing $passing)
     {
-        if (!$this->tests->contains($result)) {
-            $this->tests->add($result);
+        if (!$this->passings->contains($passing)) {
+            $this->passings->add($passing);
         }
     }
 

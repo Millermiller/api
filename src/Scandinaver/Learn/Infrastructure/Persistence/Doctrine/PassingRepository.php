@@ -5,8 +5,8 @@ namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Contract\Repository\ResultRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\{Asset, Result};
+use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
+use Scandinaver\Learn\Domain\Model\{Asset, Passing};
 use Scandinaver\Shared\BaseRepository;
 use Scandinaver\User\Domain\Model\User;
 
@@ -15,16 +15,16 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Infrastructure\Persistence\Doctrine
  */
-class ResultRepository extends BaseRepository implements ResultRepositoryInterface
+class PassingRepository extends BaseRepository implements PassingRepositoryInterface
 {
     /**
      * @param  User   $user
      * @param  Asset  $asset
      *
-     * @return Result
+     * @return Passing
      * @throws NonUniqueResultException
      */
-    public function getResult(User $user, Asset $asset): ?Result
+    public function getPassing(User $user, Asset $asset): ?Passing
     {
         $q = $this->_em->createQueryBuilder();
 

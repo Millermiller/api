@@ -8,7 +8,7 @@ use App\Http\Controllers\Learn\CardController;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Learn\Domain\Model\Result;
+use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
@@ -38,8 +38,8 @@ class CardControllerTest extends TestCase
             ['user' => $this->user, 'language' => $this->language, 'favorite' => 1]
         );
 
-        entity(Result::class)->create(['user' => $this->user, 'language' => $this->language, 'asset' => $this->asset]);
-        entity(Result::class)->create(
+        entity(Passing::class)->create(['user' => $this->user, 'language' => $this->language, 'asset' => $this->asset]);
+        entity(Passing::class)->create(
             ['user' => $this->user, 'language' => $this->language, 'asset' => $this->favouriteAsset]
         );
 

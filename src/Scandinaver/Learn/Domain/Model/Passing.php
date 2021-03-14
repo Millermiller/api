@@ -4,18 +4,17 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
-use JsonSerializable;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**
- * Class Result
+ * Class Passing
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-class Result extends AggregateRoot
+class Passing extends AggregateRoot
 {
     private ?int $id;
 
@@ -57,7 +56,7 @@ class Result extends AggregateRoot
 
     public function toDTO(): DTO
     {
-        return new ResultDTO($this);
+        return new PassingDTO($this);
     }
 
     public function delete()
@@ -98,5 +97,10 @@ class Result extends AggregateRoot
     public function setCompleted(bool $completed): void
     {
         $this->completed = $completed;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
     }
 }

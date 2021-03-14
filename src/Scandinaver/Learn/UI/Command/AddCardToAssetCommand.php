@@ -19,20 +19,13 @@ class AddCardToAssetCommand implements Command
 
     private int $asset;
 
-    private string $language;
-
     private int $card;
 
-    public function __construct(
-        User $user,
-        string $language,
-        int $card,
-        int $asset
-    ) {
-        $this->user     = $user;
-        $this->asset    = $asset;
-        $this->language = $language;
-        $this->card     = $card;
+    public function __construct(User $user, int $asset, int $card)
+    {
+        $this->user  = $user;
+        $this->asset = $asset;
+        $this->card  = $card;
     }
 
     public function getUser(): User
@@ -48,10 +41,5 @@ class AddCardToAssetCommand implements Command
     public function getCard(): int
     {
         return $this->card;
-    }
-
-    public function getLanguage(): string
-    {
-        return $this->language;
     }
 }
