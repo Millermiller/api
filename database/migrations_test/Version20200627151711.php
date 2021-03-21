@@ -254,6 +254,19 @@ class Version20200627151711 extends AbstractMigration
                     updated_at VARCHAR(255), 
                     result VARCHAR(255), 
                     asset_id VARCHAR(255))');
+
+        $this->addSql(
+            'CREATE TABLE test_result (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    completed VARCHAR(255), 
+                    percent VARCHAR(255), 
+                    data VARCHAR(255), 
+                    created_at VARCHAR(255), 
+                    updated_at VARCHAR(255),
+                    asset_id VARCHAR(255),
+                    language_id VARCHAR(255),
+                    user_id VARCHAR(255)
+                    )');
     }
 
     /**
