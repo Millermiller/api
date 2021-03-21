@@ -317,7 +317,7 @@ class AssetController extends Controller
      */
     public function removeCard(int $asset, int $card): JsonResponse
     {
-        Gate::authorize(Card::DELETE, [$card, $asset]);
+        Gate::authorize(Card::DELETE, [$card, $asset]); //todo: change permission
 
         return $this->execute(new DeleteCardFromAssetCommand(Auth::user(), $asset, $card), JsonResponse::HTTP_NO_CONTENT);
     }

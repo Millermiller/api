@@ -93,7 +93,7 @@ class IndexControllerTest extends TestCase
 
         $response = $this->get(route('asset:words', ['language' => 'is']));
 
-        $response->assertJsonStructure([['count', 'id', 'title', 'level', 'active', 'testlink', 'canopen', 'result', 'type', 'available']]);
+        $response->assertJsonStructure([['count', 'id', 'title', 'level', 'active', 'result', 'type', 'available']]);
     }
 
     //public function testSentences()
