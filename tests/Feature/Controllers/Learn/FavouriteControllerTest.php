@@ -25,6 +25,9 @@ class FavouriteControllerTest extends TestCase
 
     private Card $favouriteCard;
 
+    /**
+     * @throws Exception
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -43,6 +46,9 @@ class FavouriteControllerTest extends TestCase
 
         $this->card = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset ]);
         $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset ]);
+
+        $this->favouriteAsset->setOwner($this->user);
+        $this->user->addPersonalAsset($this->favouriteAsset);
     }
 
     /**
@@ -56,9 +62,9 @@ class FavouriteControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response = $this->delete(route('favourite:remove', [
-            'language' => 'is', 'card' => $this->favouriteCard->getId()
+            'card' => $this->favouriteCard->getId()
         ]));
-
+        $response = $response;
         static::assertEquals(204, $response->getStatusCode());
     }
 
@@ -72,7 +78,7 @@ class FavouriteControllerTest extends TestCase
         $response = $this->post(
             route(
                 'favourite:add',
-                ['language' => 'is', 'card' => $this->card->getId()]
+                ['card' => $this->card->getId()]
             )
         );
 

@@ -2,9 +2,6 @@
 
 namespace Tests\Feature\Controllers\Learn;
 
-use Exception;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use App\Http\Controllers\Learn\CardController;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
@@ -13,6 +10,11 @@ use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class CardControllerTest
+ *
+ * @package Tests\Feature\Controllers\Learn
+ */
 class CardControllerTest extends TestCase
 {
 
@@ -84,72 +86,5 @@ class CardControllerTest extends TestCase
     public function testIndex()
     {
         self::assertEquals(true, true);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testDestroy()
-    {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Card::DELETE);
-        $this->user->allow($permission);
-
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->delete(
-            route(
-                'card:remove',
-                [
-                    'language' => 'is',
-                    'card' => $this->card->getId(),
-                    'asset' => $this->asset->getId(),
-                ]
-            )
-        );
-
-        static::assertEquals(204, $response->getStatusCode());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testStore()
-    {
-        /** @var Card $card */
-        $card = entity(Card::class)->create(['language' => $this->language]);
-
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Card::CREATE);
-        $this->user->allow($permission);
-
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->post(
-            route(
-                'card:add',
-                ['language' => 'is', 'card' => $card->getId(), 'asset' => 1]
-            )
-        );
-
-        static::assertEquals(201, $response->getStatusCode());
-
-        // $response->assertJsonStructure(
-        //     [
-        //         'id',
-        //         'asset_id',
-        //         'word_id',
-        //         'translate_id',
-        //         'id',
-        //         'favourite',
-        //         'word' => [],
-        //         'translate' => [],
-        //         'asset' => [],
-        //     ]
-        // );
-
-        // $data = $response->decodeResponseJson();
-
-        // $this->assertEquals(1, $data['word']['id']);
-        // $this->assertEquals(1, $data['translate']['id']);
-        // $this->assertEquals(1, $data['asset']['id']);
     }
 }

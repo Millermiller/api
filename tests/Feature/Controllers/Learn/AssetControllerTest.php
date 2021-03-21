@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
+use Scandinaver\Learn\Domain\Model\Asset;
 use Throwable;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Model\Language;
@@ -14,6 +15,11 @@ use Scandinaver\Learn\Domain\Model\WordAsset;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class AssetControllerTest
+ *
+ * @package Tests\Feature\Controllers\Learn
+ */
 class AssetControllerTest extends TestCase
 {
 
@@ -27,6 +33,9 @@ class AssetControllerTest extends TestCase
 
     private Language $language;
 
+    /**
+     * @throws Exception
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,10 +49,13 @@ class AssetControllerTest extends TestCase
         );
         $this->card = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
 
-        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->asset]);
+        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->asset, 'language' => $this->language]);
         $this->user->addPassing($passing);
-        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->favouriteAsset]);
+        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->favouriteAsset, 'language' => $this->language]);
         $this->user->addPassing($passing);
+
+        $this->favouriteAsset->setOwner($this->user);
+        $this->user->addPersonalAsset($this->favouriteAsset);
     }
 
     /**
@@ -57,7 +69,7 @@ class AssetControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(
-          route('asset:show', ['language' => $this->language->getName(), 'asset' => $this->asset->getId()])
+          route('asset:show', ['id' => $this->asset->getId()])
         );
 
         $response->assertJsonStructure(
@@ -107,11 +119,12 @@ class AssetControllerTest extends TestCase
             route(
                 'asset:update',
                 [
-                    'language' => 'is',
-                    'title' => 'TEST UPDATE ASSET',
-                    'asset' => $this->asset->getId(),
+                    'id' => $this->asset->getId(),
                 ]
-            )
+            ),
+            [
+                'title' => 'TEST UPDATE ASSET',
+            ]
         );
 
         $response->assertJsonStructure(['id', 'title', 'basic', 'level', 'language']);
@@ -140,6 +153,46 @@ class AssetControllerTest extends TestCase
                 'sentences',
             ]
         );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testAddCard()
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::ADD_CARD);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->post(route(
+                                    'asset:card:add',
+                                    [
+                                        'asset' => $this->asset->getId(),
+                                        'card' => $this->card->getId(),
+                                    ]
+                                ));
+
+        self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRemoveCard()
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Card::DELETE);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->delete(route(
+                                    'asset:card:remove',
+                                    [
+                                        'asset' => $this->asset->getId(),
+                                        'card' => $this->card->getId(),
+                                    ]
+                                ));
+
+        self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
     }
 
     /**
@@ -247,7 +300,13 @@ class AssetControllerTest extends TestCase
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->post(route('asset:store', ['language' => 'is']), ['title' => 'TEST CREATE ASSET']);
+        $response = $this->post(route('asset:store'), [
+            'language' => 'is',
+            'title' => 'TEST CREATE ASSET',
+            'level' => 2,
+            'type' => Asset::TYPE_WORDS,
+            'basic' => true
+        ]);
 
         $response->assertJsonStructure(
             [
@@ -284,7 +343,7 @@ class AssetControllerTest extends TestCase
 
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('asset:destroy', ['language' => 'is', 'asset' => $this->asset->getId()]));
+        $response = $this->delete(route('asset:destroy', ['id' => $this->asset->getId()]));
 
         static::assertEquals(204, $response->getStatusCode());
     }
