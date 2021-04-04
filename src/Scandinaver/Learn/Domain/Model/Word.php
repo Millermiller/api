@@ -5,7 +5,6 @@ namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\Collection;
-use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -13,7 +12,7 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\Learn\Domain\Model
  */
-class Word implements UrlRoutable
+class Word
 {
     private int $id;
 
@@ -35,8 +34,6 @@ class Word implements UrlRoutable
 
     private ?User $creator;
 
-    private $cards;
-
     private Collection $translates;
 
     public function getValue(): string
@@ -50,17 +47,9 @@ class Word implements UrlRoutable
     }
 
     /**
-     * @return Collection | Card[]
-     */
-    public function getCards(): Collection
-    {
-        return $this->cards;
-    }
-
-    /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id'        => $this->id,
@@ -142,5 +131,24 @@ class Word implements UrlRoutable
     public function getIsPublic(): int
     {
         return $this->isPublic;
+    }
+
+    /**
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'word' => $this->word,
+            'is_sentence' => $this->sentence ?? 0
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function searchableAs(): string
+    {
+        return 'words_index';
     }
 }

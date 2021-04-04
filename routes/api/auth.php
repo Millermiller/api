@@ -2,18 +2,19 @@
 
 //use Illuminate\Support\Facades\Route;
 
-Route::post('/login', 'App\Http\Controllers\Auth\AuthController@login')
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\RegistrationController;
+
+Route::post('/login', [AuthController::class, 'login'])
      ->name('auth::login');
 
-Route::post('/logout', 'App\Http\Controllers\Auth\AuthController@logout')
+Route::post('/logout', [AuthController::class, 'logout'])
      ->name('auth::logout')
      ->middleware('auth:api');
 
-Route::get('/me', function (Request $request) {
-    return auth()->user();
-})->middleware(['auth:api'])->name('auth::me');
 
-Route::post('/signup', 'App\Http\Controllers\Auth\RegistrationController@handle')
+
+Route::post('/signup', [RegistrationController::class, 'handle'])
      ->name('auth::registration');
 
 Route::post('/password/email', 'App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')

@@ -50,6 +50,24 @@ class CategoryService implements BaseServiceInterface
     }
 
     /**
+     * @param  int  $id
+     *
+     * @return Category
+     * @throws CategoryNotFoundException
+     */
+    private function getCategory(int $id): Category
+    {
+        /** @var  Category $category */
+        $category = $this->categoryRepo->find($id);
+
+        if ($category === NULL) {
+            throw new CategoryNotFoundException();
+        }
+
+        return $category;
+    }
+
+    /**
      * @param  array  $data
      *
      * @return CategoryDTO
@@ -59,11 +77,11 @@ class CategoryService implements BaseServiceInterface
     {
         $category = new Category($data['name']);
 
-        $isDublicate = $this->categoryRepo->findOneBy([
-                                                          'name' => $data['name'],
-                                                      ]);
+        $isDuplicate = $this->categoryRepo->findOneBy([
+            'name' => $data['name'],
+        ]);
 
-        if ($isDublicate !== NULL) {
+        if ($isDuplicate !== NULL) {
             throw new CategoryDuplicateException();
         }
 
@@ -98,24 +116,6 @@ class CategoryService implements BaseServiceInterface
         $category = $this->getCategory($category);
         $category->delete();
         $this->categoryRepo->delete($category);
-    }
-
-    /**
-     * @param  int  $id
-     *
-     * @return Category
-     * @throws CategoryNotFoundException
-     */
-    private function getCategory(int $id): Category
-    {
-        /** @var  Category $category */
-        $category = $this->categoryRepo->find($id);
-
-        if ($category === NULL) {
-            throw new CategoryNotFoundException();
-        }
-
-        return $category;
     }
 
 }

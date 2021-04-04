@@ -280,7 +280,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
                     }
                 }
                 else {
-                    return Avatar::create($this->login)->toBase64()->encoded;
+                    return Avatar::create($this->login)->toBase64();
                 }
             }
         }
@@ -521,6 +521,10 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
         foreach ($this->personalAssets as $personalAsset) {
             /** @var Asset $personalAsset */
+            if ($personalAsset->isFavorite()) {
+                continue;
+            }
+
             if ($personalAsset->getLanguage()->isEqualTo($language)) {
                 $data->add($personalAsset);
             }

@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\GetUnusedSentencesHandlerInterface;
+use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\WordService;
 use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;
 use Scandinaver\Shared\Contract\Query;
@@ -26,6 +27,7 @@ class GetUnusedSentencesHandler implements GetUnusedSentencesHandlerInterface
      * @param  GetUnusedSentencesQuery|Query  $query
      *
      * @return array
+     * @throws LanguageNotFoundException
      */
     public function handle($query): array
     {

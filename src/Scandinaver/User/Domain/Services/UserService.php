@@ -148,7 +148,7 @@ class UserService implements BaseServiceInterface
      */
     public function login(array $credentials): ?User
     {
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($credentials, true)) {
             throw new UserNotFoundException();
         }
 
@@ -243,11 +243,21 @@ class UserService implements BaseServiceInterface
             $personalData[] = $dto;
         }
 
+        $favouriteAsset = $user->getFavouriteAsset($language);
+        $result = $favouriteAsset->getBestResultForUser($user);
+
+        $favouriteAssetDTO = $favouriteAsset->toDTO();
+        $favouriteAssetDTO->setActive(TRUE);
+        $favouriteAssetDTO->setAvailable(TRUE);
+
+        $favouriteAssetDTO->setBestResult($result);
+
         return [
             'site'        => config('app.MAIN_SITE'),
             'words'       => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_WORDS),
             'sentences'   => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_SENTENCES),
             'personal'    => $personalData,
+            'favourite'   => $favouriteAssetDTO,
             'texts'       => $this->textService->getTextsForUser($language->getName(), $user),
             'puzzles'     => $this->puzzleService->getForUser($language->getName(), $user),
             'intro'       => $this->introService->all(),

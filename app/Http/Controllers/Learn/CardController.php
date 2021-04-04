@@ -22,6 +22,7 @@ use Scandinaver\Learn\UI\Command\CreateCardCommand;
 use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
 use Scandinaver\Learn\UI\Command\UpdateCardCommand;
 use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
+use Scandinaver\Learn\UI\Query\SearchCardQuery;
 use Scandinaver\Shared\CommandBus;
 use Scandinaver\Shared\EventBusNotFoundException;
 use Scandinaver\Shared\QueryBus;
@@ -33,14 +34,6 @@ use Scandinaver\Shared\QueryBus;
  */
 class CardController extends Controller
 {
-
-    private WordService $wordService;
-
-    public function __construct(CommandBus $commandBus, QueryBus $queryBus, WordService $wordService)
-    {
-        parent::__construct($commandBus, $queryBus);
-        $this->wordService = $wordService;
-    }
 
     public function index()
     {
@@ -109,20 +102,19 @@ class CardController extends Controller
     }
 
     /**
-     * @param  string         $language
      * @param  SearchRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws LanguageNotFoundException
+     * @throws EventBusNotFoundException
      */
-    public function search(string $language, SearchRequest $request): JsonResponse
+    public function search(SearchRequest $request): JsonResponse
     {
         Gate::authorize(Card::SEARCH);
 
-        $words = $this->wordService->translate($language, $request);
+        $data = $request->toArray();
 
-        return response()->json($words);
+        return $this->execute(new SearchCardQuery($data));
     }
 
     /**

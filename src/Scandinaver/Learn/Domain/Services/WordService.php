@@ -3,9 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-use App\Http\Requests\{SearchRequest};
-use Auth;
-use Illuminate\Database\Eloquent\{Builder, Collection};
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
@@ -89,77 +86,6 @@ class WordService implements BaseServiceInterface
 
         $this->wordsRepository->save($word);
         $this->translateRepository->save($translate);
-    }
-
-    /**
-     * @param  string         $language
-     * @param  SearchRequest  $request
-     *
-     * @return Translate[]|Builder[]|Collection|\Illuminate\Support\Collection
-     * @throws LanguageNotFoundException
-     */
-    public function translate(string $language, SearchRequest $request)
-    {
-        $language = $this->getLanguage($language);
-
-        $word = $request->get('query');
-
-        $sentence = intval($request->get('sentence'));
-
-        $cards = $this->cardRepository->search($language, $word, (bool)$sentence);
-
-        $sql = 'select t.id,
-                            MATCH (t.value) AGAINST (? IN NATURAL LANGUAGE MODE) as score
-                              from translate as t
-                                left join word as w
-                                  on t.word_id = w.id
-                            where (MATCH(t.value) AGAINST(? IN BOOLEAN MODE)
-                                or t.value like ?
-                                or t.value = ?
-                                )
-                            and t.sentence = ?
-                           -- and w.deleted_at is null 
-                            and (w.is_public = 1 or (w.is_public = 0 and w.creator_id = ?))
-                            and w.language_id = ?
-                            order by score desc';
-
-        $params = [
-            $word,
-            $word,
-            $word."%",
-            $word,
-            $sentence,
-            Auth::user()->getKey(),
-            $language->getId(),
-        ];
-
-        // $stmt = app('em')->getConnection()->prepare($sql);
-        // $stmt->execute($params);
-        // $ids = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-
-        $result = [];
-
-        //if ($ids) {
-        //    $translates = $ids ? $this->translateRepository->searchByIds($ids) : [];
-        //    /** @var Translate $translate */
-        //    foreach ($translates as $translate) {
-        //        /** @var Card $card */
-        //        $card = $this->cardRepository->findOneBy(
-        //            [
-        //                'translate' => $translate,
-        //            ]
-        //        );
-        //        if ($card !== null) {
-        //            $result[] = $card->toDTO();
-        //        }
-        //    }
-        //}
-
-        foreach ($cards as $card) {
-            $result[] = $card->toDTO();
-        }
-
-        return $result;
     }
 
     public function getTranslates(int $word): array
