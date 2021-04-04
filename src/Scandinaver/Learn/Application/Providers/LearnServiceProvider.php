@@ -194,6 +194,11 @@ class LearnServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'SearchCardHandlerInterface',
+            'Scandinaver\Learn\Application\Handler\Query\SearchCardHandler'
+        );
+
+        $this->app->bind(
             'TextsCountByLanguageHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Query\TextsCountByLanguageHandler'
         );

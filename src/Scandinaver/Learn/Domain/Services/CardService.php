@@ -15,6 +15,7 @@ use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterfa
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Service\SearchInterface;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
@@ -54,6 +55,8 @@ class CardService implements BaseServiceInterface
 
     private TranslaterInterface $translater;
 
+    private SearchInterface $searchService;
+
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         CardRepositoryInterface $cardRepository,
@@ -63,7 +66,8 @@ class CardService implements BaseServiceInterface
         FavouriteAssetRepositoryInterface $favouriteAssetRepository,
         WordRepositoryInterface $wordRepository,
         CardFactory $cardFactory,
-        TranslaterInterface $translater
+        TranslaterInterface $translater,
+        SearchInterface $searchService
     ) {
         $this->assetRepository          = $assetRepository;
         $this->cardRepository           = $cardRepository;
@@ -74,6 +78,7 @@ class CardService implements BaseServiceInterface
         $this->favouriteAssetRepository = $favouriteAssetRepository;
         $this->wordRepository           = $wordRepository;
         $this->translater               = $translater;
+        $this->searchService = $searchService;
     }
 
     /**
@@ -350,6 +355,23 @@ class CardService implements BaseServiceInterface
     public function one(int $id): DTO
     {
         return $this->getCard($id)->toDTO();
+    }
+
+    /**
+     * @param  string  $language
+     * @param  string  $query
+     * @param  bool    $isSentence
+     *
+     * @return array|Card[]
+     * @throws LanguageNotFoundException
+     */
+    public function search(string $language, string $query, bool $isSentence): array
+    {
+        $language = $this->getLanguage($language);
+
+        $cards = $this->searchService->search($language, $query, $isSentence);
+
+        return array_map(fn($card) => $card->toDTO(), $cards);
     }
 
 }

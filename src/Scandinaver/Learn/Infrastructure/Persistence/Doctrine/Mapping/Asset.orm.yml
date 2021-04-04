@@ -99,8 +99,7 @@ Scandinaver\Learn\Domain\Model\Asset:
         inverseJoinColumns:
           card_id:
             referencedColumnName: id
-      cascade:
-        - all
+            onDelete: NO ACTION
       fetch: EAGER
       orphanRemoval: false
       orderBy: null
