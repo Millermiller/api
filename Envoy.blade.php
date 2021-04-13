@@ -49,5 +49,5 @@
 @task('migrate')
     echo "Run migrations"
     cd {{ $new_release_dir }}
-    php artisan doctrine:migrations:migrate --y
+    php artisan doctrine:migrations:migrate -n
 @endtask
