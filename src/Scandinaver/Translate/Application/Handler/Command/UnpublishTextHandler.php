@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\UnpublishTextHandlerInterface;
 use Scandinaver\Translate\UI\Command\UnpublishTextCommand;
@@ -12,10 +13,11 @@ use Scandinaver\Translate\UI\Command\UnpublishTextCommand;
  *
  * @package Scandinaver\Translate\Application\Handler\Command
  */
-class UnpublishTextHandler implements UnpublishTextHandlerInterface
+class UnpublishTextHandler extends AbstractHandler implements UnpublishTextHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

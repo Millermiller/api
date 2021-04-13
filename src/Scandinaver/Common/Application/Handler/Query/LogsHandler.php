@@ -3,9 +3,12 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
+use League\Fractal\Resource\Collection;
 use Scandinaver\Common\Domain\Contract\Query\LogsHandlerInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Log;
+use Scandinaver\Common\UI\Resources\LogTransformer;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -13,38 +16,25 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Common\Application\Handler\Query
  */
-class LogsHandler implements LogsHandlerInterface
+class LogsHandler extends AbstractHandler implements LogsHandlerInterface
 {
     private LogRepositoryInterface $logRepository;
 
     public function __construct(LogRepositoryInterface $logRepository)
     {
+        parent::__construct();
+
         $this->logRepository = $logRepository;
     }
 
     /**
      * @param  Query  $query
-     *
-     * @return array
      */
-    public function handle($query): array
+    public function handle($query): void
     {
         /** @var Log[] $logs */
         $logs = $this->logRepository->findAll();
 
-        $response = [];
-
-        foreach ($logs as $log) {
-            $response[] = [
-                'id'         => $log->getId(),
-                'message'    => $log->interpolate(),
-                'owner'      => $log->getOwner(),
-                'level'      => $log->getLevelName(),
-                'extra'      => $log->getExtra(),
-                'created_at' => $log->getCreatedAt()->format('Y-m-d H:i:s'),
-            ];
-        }
-
-        return $response;
+        $this->resource = new Collection($logs, new LogTransformer());
     }
 } 

@@ -47,5 +47,5 @@
 @endtask
 
 @task('migrate')
-    php artisan doctrine:migrations:migrate
+    php artisan doctrine:migrations:migrate -y
 @endtask

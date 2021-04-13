@@ -3,10 +3,12 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Contract\Command\DeleteFavouriteHandlerInterface;
 use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
-use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
+use Scandinaver\Learn\Domain\Services\{FavouriteService};
 use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -14,17 +16,15 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\Application\Handler\Command
  */
-class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
+class DeleteFavouriteHandler extends AbstractHandler implements DeleteFavouriteHandlerInterface
 {
     protected FavouriteService $favouriteService;
 
-    protected AssetService $assetService;
-
-    public function __construct(AssetService $assetService, FavouriteService $favouriteService)
+    public function __construct(FavouriteService $favouriteService)
     {
-        $this->favouriteService = $favouriteService;
+        parent::__construct();
 
-        $this->assetService = $assetService;
+        $this->favouriteService = $favouriteService;
     }
 
     /**
@@ -35,5 +35,7 @@ class DeleteFavouriteHandler implements DeleteFavouriteHandlerInterface
     public function handle($command): void
     {
         $this->favouriteService->delete($command->getUser(), $command->getCard());
+
+        $this->resource = new NullResource();
     }
 }

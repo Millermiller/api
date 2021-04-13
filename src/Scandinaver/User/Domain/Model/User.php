@@ -3,16 +3,12 @@
 
 namespace Scandinaver\User\Domain\Model;
 
-use Avatar;
 use Carbon\Carbon;
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Exception;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Contracts\Routing\UrlGenerator;
-use Image;
-use Intervention\Image\Constraint;
 use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
@@ -35,7 +31,6 @@ use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
  */
 class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable, Permissions
 {
-
     use Authenticatable;
     use CanResetPassword;
     use HasApiTokens;
@@ -227,7 +222,6 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
             'assets_opened'  => $this->assetsOpened,
             'assets_created' => $this->assetsCreated,
             'premium'        => $this->isPremium(),
-            'avatar'         => $this->getAvatar(),
         ];
     }
 
@@ -246,50 +240,12 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
         return ($this->activeTo > new DateTime());
     }
 
-    /**
-     * @return UrlGenerator|string
-     */
     public function getAvatar(): string
     {
-        $isAvatarExists = file_exists(public_path('/uploads/u/a/').$this->photo);
-        $isOrigExists   = file_exists(public_path('/uploads/u/').$this->photo);
-
-        if ($this->photo) {
-            if ($isAvatarExists) {
-                return '/uploads/u/a/'.$this->photo;
-            }
-            else {
-                if ($isOrigExists) {
-                    try {
-                        $avatar = Image::make(
-                            public_path('/uploads/u/').$this->photo
-                        );
-                        $avatar->resize(
-                            300,
-                            NULL,
-                            function ($constraint) {
-                                /** @var Constraint $constraint */
-                                $constraint->aspectRatio();
-                            }
-                        );
-                        $avatar->save(public_path('/uploads/u/a/'.$this->photo));
-
-                        return '/uploads/u/a/'.$this->photo;
-                    } catch (Exception $exception) {
-                        return Avatar::create($this->login)->toBase64()->encoded;
-                    }
-                }
-                else {
-                    return Avatar::create($this->login)->toBase64();
-                }
-            }
-        }
-        else {
-            return Avatar::create($this->login)->toBase64()->encoded;
-        }
+        return asset('/uploads/u/a/' . $this->photo);
     }
 
-    public function getActive(): bool
+    public function isActive(): bool
     {
         return (bool)$this->active;
     }

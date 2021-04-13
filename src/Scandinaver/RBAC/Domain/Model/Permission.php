@@ -3,7 +3,6 @@
 
 namespace Scandinaver\RBAC\Domain\Model;
 
-
 use DateTime;
 use Scandinaver\Shared\AggregateRoot;
 
@@ -37,11 +36,6 @@ class Permission extends AggregateRoot
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function toDTO(): PermissionDTO
-    {
-        return new PermissionDTO($this);
     }
 
     public function delete()
@@ -88,5 +82,4 @@ class Permission extends AggregateRoot
     {
         $this->group = $group;
     }
-
 }

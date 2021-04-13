@@ -12,7 +12,7 @@ interface CommandHandler
 {
 
     /**
-     * @param  \Scandinaver\Shared\Contract\Command  $command
+     * @param Command  $command
      *
      * @return mixed
      */

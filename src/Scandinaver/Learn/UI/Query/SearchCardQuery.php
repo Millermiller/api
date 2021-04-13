@@ -16,7 +16,7 @@ class SearchCardQuery implements Query
 {
     private string $language;
 
-    private string $query;
+    private ?string $query;
 
     private int $isSentence;
 
@@ -27,7 +27,7 @@ class SearchCardQuery implements Query
         $this->isSentence = (bool)$data['sentence'];
     }
 
-    public function getQuery(): string
+    public function getQuery(): ?string
     {
         return $this->query;
     }

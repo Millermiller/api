@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Shared\Contract;
 
-
 use Scandinaver\Shared\ValueObject;
 
 /**

@@ -13,7 +13,6 @@ use Scandinaver\Shared\Contract\Command;
  */
 class CreateUserCommand implements Command
 {
-
     private array $data;
 
     /**

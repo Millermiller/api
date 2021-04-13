@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\Application\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\Contract\Repository\CommentRepositoryInterface;
@@ -24,16 +23,16 @@ class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind(PostRepositoryInterface::class, function () {
-            return new PostRepository($this->app['em'], $this->app['em']->getClassMetadata(Post::class));
-        });
+        $this->app->bind(PostRepositoryInterface::class,
+            fn() => new PostRepository($this->app['em'], $this->app['em']->getClassMetadata(Post::class))
+        );
 
-        $this->app->bind(CategoryRepositoryInterface::class, function () {
-            return new CategoryRepository($this->app['em'], $this->app['em']->getClassMetadata(Category::class));
-        });
+        $this->app->bind(CategoryRepositoryInterface::class,
+            fn() => new CategoryRepository($this->app['em'], $this->app['em']->getClassMetadata(Category::class))
+        );
 
-        $this->app->bind(CommentRepositoryInterface::class, function () {
-            return new CommentRepository($this->app['em'], $this->app['em']->getClassMetadata(Comment::class));
-        });
+        $this->app->bind(CommentRepositoryInterface::class,
+            fn() => new CommentRepository($this->app['em'], $this->app['em']->getClassMetadata(Comment::class))
+        );
     }
 }

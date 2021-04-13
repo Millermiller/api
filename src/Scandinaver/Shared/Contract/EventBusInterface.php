@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Shared\Contract;
 
-
 use Scandinaver\Shared\DomainEvent;
 use Scandinaver\Shared\DomainEventHandler;
 
@@ -14,16 +13,15 @@ use Scandinaver\Shared\DomainEventHandler;
  */
 interface EventBusInterface
 {
-
     /**
-     * @param  \Scandinaver\Shared\DomainEventHandler  $handler
+     * @param  DomainEventHandler  $handler
      *
      * @return mixed
      */
     public function registerHandler(DomainEventHandler $handler);
 
     /**
-     * @param  \Scandinaver\Shared\DomainEvent  $event
+     * @param  DomainEvent  $event
      *
      * @return mixed
      */

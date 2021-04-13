@@ -60,6 +60,11 @@ return [
             'root' => storage_path('app/voices'),
         ],
 
+        'photo' => [
+            'driver' => 'local',
+            'root' => storage_path('app/photo'),
+        ],
+
         'sentences' => [
             'driver' => 'local',
             'root' => storage_path('app/sentences'),

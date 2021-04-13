@@ -14,7 +14,6 @@ use Scandinaver\Shared\Contract\Query;
  */
 class GetTextsQuery implements Query
 {
-
     private string $language;
 
     public function __construct(string $language)

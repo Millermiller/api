@@ -51,11 +51,6 @@ class Comment extends AggregateRoot
         $this->user = $user;
     }
 
-    public function toDTO(): CommentDTO
-    {
-        return new CommentDTO($this);
-    }
-
     public function delete()
     {
         // TODO: Implement delete() method.

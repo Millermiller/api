@@ -3,7 +3,6 @@
 
 namespace Scandinaver\RBAC\Domain\Services;
 
-
 use Exception;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
@@ -14,7 +13,7 @@ use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
-use Scandinaver\RBAC\Domain\Model\{Permission, PermissionDTO, PermissionGroup, PermissionGroupDTO, Role, RoleDTO};
+use Scandinaver\RBAC\Domain\Model\{Permission, PermissionGroup, Role};
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Model\User;
 
@@ -25,7 +24,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 class RBACService
 {
-
     private UserRepositoryInterface $userRepository;
 
     private PermissionRepositoryInterface $permissionRepository;
@@ -49,50 +47,26 @@ class RBACService
 
     public function getAllRoles(): array
     {
-        $result = [];
-        $roles  = $this->roleRepository->findAll();
-
-        /** @var Role $role */
-        foreach ($roles as $role) {
-            $result[] = $role->toDTO();
-        }
-
-        return $result;
+        return $this->roleRepository->findAll();
     }
 
     public function getAllPermissions(): array
     {
-        $result      = [];
-        $permissions = $this->permissionRepository->findAll();
-
-        /** @var Permission $permission */
-        foreach ($permissions as $permission) {
-            $result[] = $permission->toDTO();
-        }
-
-        return $result;
+        return $this->permissionRepository->findAll();
     }
 
     public function getAllPermissionGroups(): array
     {
-        $result            = [];
-        $permissionsGroups = $this->permissionGroupRepository->findAll();
-
-        /** @var PermissionGroup $permissionsGroup */
-        foreach ($permissionsGroups as $permissionsGroup) {
-            $result[] = $permissionsGroup->toDTO();
-        }
-
-        return $result;
+        return $this->permissionGroupRepository->findAll();
     }
 
     /**
      * @param  array  $data
      *
-     * @return RoleDTO
+     * @return Role
      * @throws RoleDublicateException
      */
-    public function createRole(array $data): RoleDTO
+    public function createRole(array $data): Role
     {
         $role = RoleFactory::build($data);
 
@@ -108,23 +82,23 @@ class RBACService
 
         $this->roleRepository->save($role);
 
-        return $role->toDTO();
+        return $role;
     }
 
     /**
      * @param  int    $id
      * @param  array  $data
      *
-     * @return RoleDTO
+     * @return Role
      * @throws RoleNotFoundException
      */
-    public function updateRole(int $id, array $data): RoleDTO
+    public function updateRole(int $id, array $data): Role
     {
         $role = $this->getRole($id);
 
         $this->roleRepository->update($role, $data);
 
-        return $role->toDTO();
+        return $role;
     }
 
     /**
@@ -144,10 +118,10 @@ class RBACService
     /**
      * @param  array  $data
      *
-     * @return PermissionDTO
+     * @return Permission
      * @throws PermissionDublicateException|PermissionGroupNotFoundException
      */
-    public function createPermission(array $data): PermissionDTO
+    public function createPermission(array $data): Permission
     {
         $groupId = $data['group'];
         if ($groupId) {
@@ -168,17 +142,17 @@ class RBACService
 
         $this->permissionRepository->save($permission);
 
-        return $permission->toDTO();
+        return $permission;
     }
 
     /**
      * @param  int    $id
      * @param  array  $data
      *
-     * @return PermissionDTO
+     * @return Permission
      * @throws PermissionNotFoundException|PermissionGroupNotFoundException
      */
-    public function updatePermission(int $id, array $data): PermissionDTO
+    public function updatePermission(int $id, array $data): Permission
     {
         $permission = $this->getPermission($id);
 
@@ -194,7 +168,7 @@ class RBACService
 
         $this->permissionRepository->save($permission);
 
-        return $permission->toDTO();
+        return $permission;
     }
 
     /**
@@ -215,42 +189,42 @@ class RBACService
     /**
      * @param  array  $data
      *
-     * @return PermissionGroupDTO
+     * @return PermissionGroup
      * @throws PermissionGroupDublicateException
      */
-    public function createPermissionGroup(array $data): PermissionGroupDTO
+    public function createPermissionGroup(array $data): PermissionGroup
     {
         $permissionGroup = PermissionGroupFactory::build($data);
 
-        $isDublicate = $this->permissionGroupRepository->findOneBy(
+        $isDuplicate = $this->permissionGroupRepository->findOneBy(
             [
                 'slug' => $data['slug'],
             ]
         );
 
-        if ($isDublicate !== NULL) {
+        if ($isDuplicate !== NULL) {
             throw new PermissionGroupDublicateException();
         }
 
         $this->permissionGroupRepository->save($permissionGroup);
 
-        return $permissionGroup->toDTO();
+        return $permissionGroup;
     }
 
     /**
      * @param  int    $id
      * @param  array  $data
      *
-     * @return PermissionGroupDTO
+     * @return PermissionGroup
      * @throws PermissionGroupNotFoundException
      */
-    public function updatePermissionGroup(int $id, array $data): PermissionGroupDTO
+    public function updatePermissionGroup(int $id, array $data): PermissionGroup
     {
         $permissionGroup = $this->getPermissionGroup($id);
 
         $this->permissionGroupRepository->update($permissionGroup, $data);
 
-        return $permissionGroup->toDTO();
+        return $permissionGroup;
     }
 
     /**
@@ -275,7 +249,7 @@ class RBACService
      * @throws RoleNotFoundException
      * @throws Exception
      */
-    public function attachPermissionToRole(int $roleId, int $permissionId)
+    public function attachPermissionToRole(int $roleId, int $permissionId): void
     {
         $role       = $this->getRole($roleId);
         $permission = $this->getPermission($permissionId);

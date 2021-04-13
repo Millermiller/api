@@ -10,7 +10,6 @@ use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\PassingNotFoundException;
 use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -39,12 +38,12 @@ class TestService implements BaseServiceInterface
     /**
      * @param  int  $id
      *
-     * @return DTO
+     * @return Passing
      * @throws PassingNotFoundException
      */
-    public function one(int $id): DTO
+    public function one(int $id): Passing
     {
-       return $this->getPassing($id)->toDTO();
+        return $this->getPassing($id);
     }
 
     /**
@@ -55,20 +54,14 @@ class TestService implements BaseServiceInterface
      */
     public function allByLanguage(string $language): array
     {
-        $data = [];
-
         $language = $this->getLanguage($language);
 
         /** @var Passing[] $passings */
         $passings = $this->passingRepository->findBy([
-            'language' => $language
+            'language' => $language,
         ]);
 
-        foreach ($passings as $passing) {
-            $data[] = $passing->toDTO();
-        }
-
-        return $data;
+        return $passings;
     }
 
     /**
@@ -105,7 +98,7 @@ class TestService implements BaseServiceInterface
      *
      * @throws PassingNotFoundException
      */
-    public function updatePassing(int $id, array $data)
+    public function updatePassing(int $id, array $data): void
     {
         $passing = $this->getPassing($id);
 

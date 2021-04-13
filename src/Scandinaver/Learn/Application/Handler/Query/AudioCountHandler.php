@@ -3,9 +3,11 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
+use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\Domain\Contract\Query\AudioCountHandlerInterface;
 use Scandinaver\Learn\Domain\Services\AudioService;
 use Scandinaver\Learn\UI\Query\AudioCountQuery;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -13,12 +15,14 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Learn\Application\Handler\Query
  */
-class AudioCountHandler implements AudioCountHandlerInterface
+class AudioCountHandler extends AbstractHandler implements AudioCountHandlerInterface
 {
     private AudioService $audioService;
 
     public function __construct(AudioService $audioService)
     {
+        parent::__construct();
+
         $this->audioService = $audioService;
     }
 
@@ -27,8 +31,10 @@ class AudioCountHandler implements AudioCountHandlerInterface
      *
      * @return int
      */
-    public function handle($query): int
+    public function handle($query): void
     {
-        return $this->audioService->count();
+        $count = $this->audioService->count();
+
+        $this->resource = new Primitive($count);
     }
 }

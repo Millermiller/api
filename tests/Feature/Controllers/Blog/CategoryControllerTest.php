@@ -35,7 +35,7 @@ class CategoryControllerTest extends TestCase
             [
                 [
                     'id',
-                    'name',
+                    'title',
                 ],
             ]
         );
@@ -48,7 +48,7 @@ class CategoryControllerTest extends TestCase
         $response->assertJsonStructure(
             [
                 'id',
-                'name',
+                'title',
             ]
         );
         $response->assertJsonFragment(
@@ -65,19 +65,19 @@ class CategoryControllerTest extends TestCase
 
         $testCategoryName = 'TESTCATEGORY';
 
-        $response = $this->post(route('category:create', ['name' => $testCategoryName]));
+        $response = $this->post(route('category:create', ['title' => $testCategoryName]));
 
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
 
         $response->assertJsonStructure(
             [
                 'id',
-                'name',
+                'title',
             ]
         );
         $response->assertJsonFragment(
             [
-                'name' => $testCategoryName,
+                'title' => $testCategoryName,
             ]
         );
     }
@@ -88,11 +88,11 @@ class CategoryControllerTest extends TestCase
 
         $testCategoryName = 'TESTCATEGORY';
 
-        $response = $this->post(route('category:create', ['name' => $testCategoryName]));
+        $response = $this->post(route('category:create', ['title' => $testCategoryName]));
 
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
 
-        $response = $this->post(route('category:create', ['name' => $testCategoryName]));
+        $response = $this->post(route('category:create', ['title' => $testCategoryName]));
 
         self::assertEquals(JsonResponse::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
@@ -104,19 +104,19 @@ class CategoryControllerTest extends TestCase
         $testCategoryName = 'TESTCATEGORY';
         $testCategoryId = 1;
 
-        $response = $this->put(route('category:update', ['categoryId' => $testCategoryId]), ['name' => $testCategoryName]);
+        $response = $this->put(route('category:update', ['categoryId' => $testCategoryId]), ['title' => $testCategoryName]);
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure(
             [
                 'id',
-                'name',
+                'title',
             ]
         );
         $response->assertJsonFragment(
             [
-                'name' => $testCategoryName,
+                'title' => $testCategoryName,
             ]
         );
     }

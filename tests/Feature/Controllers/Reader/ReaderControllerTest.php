@@ -35,7 +35,7 @@ class ReaderControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(route('read', [
-            'language' => $this->language->getName(),
+            'language' => $this->language->getTitle(),
             'text' => 'hallo'
         ]));
 

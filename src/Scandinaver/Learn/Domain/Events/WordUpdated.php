@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Events;
 
-
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\DomainEvent;
 

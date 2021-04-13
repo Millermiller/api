@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\DeleteSynonymHandlerInterface;
 use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
@@ -12,10 +13,11 @@ use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
  *
  * @package Scandinaver\Translate\Application\Handler\Command
  */
-class DeleteSynonymHandler implements DeleteSynonymHandlerInterface
+class DeleteSynonymHandler extends AbstractHandler implements DeleteSynonymHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

@@ -4,6 +4,7 @@
 namespace DummyNamespace;
 
 use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\AbstractHandler;
 use DummyCommandNamespace;
 use DummyInterface;
 
@@ -12,11 +13,11 @@ use DummyInterface;
  *
  * @package DummyNamespace
  */
-class DummyClass implements DummyClassInterface
+class DummyClass extends AbstractHandler implements DummyClassInterface
 {
     public function __construct()
     {
-
+        parent::__construct();
     }
 
     /**

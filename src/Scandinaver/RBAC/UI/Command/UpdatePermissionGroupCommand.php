@@ -14,7 +14,6 @@ use Scandinaver\Shared\Contract\Command;
  */
 class UpdatePermissionGroupCommand implements Command
 {
-
     private int $id;
 
     private array $data;
@@ -34,5 +33,4 @@ class UpdatePermissionGroupCommand implements Command
     {
         return $this->data;
     }
-
 }

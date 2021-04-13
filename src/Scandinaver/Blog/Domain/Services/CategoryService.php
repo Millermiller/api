@@ -7,7 +7,6 @@ use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\Exception\CategoryDuplicateException;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Model\Category;
-use Scandinaver\Blog\Domain\Model\CategoryDTO;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**
@@ -26,27 +25,21 @@ class CategoryService implements BaseServiceInterface
 
     public function all(): array
     {
-        $result = [];
         /** @var Category[] $categories */
         $categories = $this->categoryRepo->findAll();
-        foreach ($categories as $category) {
-            $result[] = $category->toDTO();
-        }
 
-        return $result;
+        return $categories;
     }
 
     /**
      * @param  int  $id
      *
-     * @return CategoryDTO
+     * @return Category
      * @throws CategoryNotFoundException
      */
-    public function one(int $id): CategoryDTO
+    public function one(int $id): Category
     {
-        $category = $this->getCategory($id);
-
-        return $category->toDTO();
+        return $this->getCategory($id);
     }
 
     /**
@@ -70,15 +63,15 @@ class CategoryService implements BaseServiceInterface
     /**
      * @param  array  $data
      *
-     * @return CategoryDTO
+     * @return Category
      * @throws CategoryDuplicateException
      */
-    public function create(array $data): CategoryDTO
+    public function create(array $data): Category
     {
-        $category = new Category($data['name']);
+        $category = new Category($data['title']);
 
         $isDuplicate = $this->categoryRepo->findOneBy([
-            'name' => $data['name'],
+            'title' => $data['title'],
         ]);
 
         if ($isDuplicate !== NULL) {
@@ -87,23 +80,23 @@ class CategoryService implements BaseServiceInterface
 
         $this->categoryRepo->save($category);
 
-        return $category->toDTO();
+        return $category;
     }
 
     /**
      * @param  int    $categoryId
      * @param  array  $data
      *
-     * @return CategoryDTO
+     * @return Category
      * @throws CategoryNotFoundException
      */
-    public function update(int $categoryId, array $data): CategoryDTO
+    public function update(int $categoryId, array $data): Category
     {
         $category = $this->getCategory($categoryId);
 
         $this->categoryRepo->update($category, $data);
 
-        return $category->toDTO();
+        return $category;
     }
 
     /**
@@ -111,11 +104,10 @@ class CategoryService implements BaseServiceInterface
      *
      * @throws CategoryNotFoundException
      */
-    public function delete(int $category)
+    public function delete(int $category): void
     {
         $category = $this->getCategory($category);
         $category->delete();
         $this->categoryRepo->delete($category);
     }
-
 }

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Common\Domain\Model;
 
-
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Shared\AggregateRoot;
 
@@ -32,12 +31,12 @@ class Language extends AggregateRoot implements UrlRoutable
         return $this->id;
     }
 
-    public function getName(): string
+    public function getTitle(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setTitle(string $name): void
     {
         $this->name = $name;
     }
@@ -60,11 +59,6 @@ class Language extends AggregateRoot implements UrlRoutable
     public function setFlag(string $flag): void
     {
         $this->flag = $flag;
-    }
-
-    public function toDTO(): LanguageDTO
-    {
-        return new LanguageDTO($this, 0, 0);
     }
 
     public function delete()

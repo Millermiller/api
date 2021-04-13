@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\DeletePlanHandlerInterface;
 use Scandinaver\User\UI\Command\DeletePlanCommand;
@@ -12,10 +13,11 @@ use Scandinaver\User\UI\Command\DeletePlanCommand;
  *
  * @package Scandinaver\User\Application\Handler\Command
  */
-class DeletePlanHandler implements DeletePlanHandlerInterface
+class DeletePlanHandler extends AbstractHandler implements DeletePlanHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

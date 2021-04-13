@@ -3,10 +3,12 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Contract\Command\FillDictionaryHandlerInterface;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\CardService;
 use Scandinaver\Learn\UI\Command\FillDictionaryCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -14,13 +16,15 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\Application\Handler\Command
  */
-class FillDictionaryHandler implements FillDictionaryHandlerInterface
+class FillDictionaryHandler extends AbstractHandler implements FillDictionaryHandlerInterface
 {
-    private CardService $cardCervice;
+    private CardService $cardService;
 
-    public function __construct(CardService $cardCervice)
+    public function __construct(CardService $cardService)
     {
-        $this->cardCervice = $cardCervice;
+        parent::__construct();
+
+        $this->cardService = $cardService;
     }
 
     /**
@@ -30,6 +34,8 @@ class FillDictionaryHandler implements FillDictionaryHandlerInterface
      */
     public function handle($command): void
     {
-        $this->cardCervice->fillDictionary($command->getLanguage(), $command->getWord());
+        $this->cardService->fillDictionary($command->getLanguage(), $command->getWord());
+
+        $this->resource = new NullResource();
     }
 } 

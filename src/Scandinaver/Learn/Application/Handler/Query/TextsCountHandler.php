@@ -3,8 +3,10 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
+use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\Domain\Contract\Query\TextsCountHandlerInterface;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 use Scandinaver\Translate\Domain\TextService;
 
@@ -13,12 +15,14 @@ use Scandinaver\Translate\Domain\TextService;
  *
  * @package Scandinaver\Learn\Application\Handler\Query
  */
-class TextsCountHandler implements TextsCountHandlerInterface
+class TextsCountHandler extends AbstractHandler implements TextsCountHandlerInterface
 {
     private TextService $textService;
 
     public function __construct(TextService $textService)
     {
+        parent::__construct();
+
         $this->textService = $textService;
     }
 
@@ -27,8 +31,10 @@ class TextsCountHandler implements TextsCountHandlerInterface
      *
      * @return int
      */
-    public function handle($query): int
+    public function handle($query): void
     {
-        return $this->textService->count();
+        $count = $this->textService->count();
+
+        $this->resource = new Primitive($count);
     }
 }

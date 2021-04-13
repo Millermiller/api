@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Common\Application\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;

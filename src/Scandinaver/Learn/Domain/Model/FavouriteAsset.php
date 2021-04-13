@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Model;
 
-
 use Scandinaver\Common\Domain\Model\Language;
 
 /**
@@ -13,7 +12,6 @@ use Scandinaver\Common\Domain\Model\Language;
  */
 class FavouriteAsset extends Asset
 {
-
     protected int $category = Asset::TYPE_FAVORITES;
 
     public function __construct(Language $language)

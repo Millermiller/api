@@ -3,7 +3,11 @@
 
 namespace Tests\Responses;
 
-
+/**
+ * Class Category
+ *
+ * @package Tests\Responses
+ */
 class Category implements ResponseInterface
 {
 
@@ -11,7 +15,7 @@ class Category implements ResponseInterface
     {
         return [
             'id',
-            'name',
+            'title',
         ];
     }
 }

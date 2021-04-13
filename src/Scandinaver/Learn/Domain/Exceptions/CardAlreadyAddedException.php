@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Exceptions;
 
-
 use Exception;
 
 /**
@@ -13,5 +12,5 @@ use Exception;
  */
 class CardAlreadyAddedException extends Exception
 {
-
+    protected $code = 400;
 }

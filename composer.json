@@ -1,6 +1,6 @@
 {
     "name": "laravel/laravel",
-    "version": "0.9.0",
+    "version": "0.10.0",
     "description": "The Laravel Framework.",
     "keywords": [
         "framework",
@@ -32,6 +32,7 @@
         "laravel/tinker": "^2.4",
         "laravel/ui": "^3.2",
         "laravolt/avatar": "^4.0",
+        "league/fractal": "^0.19.2",
         "predis/predis": "^1.1",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "sunra/php-simple-html-dom-parser": "1.5.2",

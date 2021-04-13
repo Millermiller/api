@@ -8,6 +8,7 @@ use Scandinaver\Common\Domain\Exception\MessageNotFoundException;
 use Scandinaver\Common\Domain\Model\MessageDTO;
 use Scandinaver\Common\Domain\Services\MessageService;
 use Scandinaver\Common\UI\Query\MessageQuery;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -15,13 +16,15 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Common\Application\Handler\Query
  */
-class MessageHandler implements MessageHandlerInterface
+class MessageHandler extends AbstractHandler implements MessageHandlerInterface
 {
 
     private MessageService $messageService;
 
     public function __construct(MessageService $messageService)
     {
+        parent::__construct();
+
         $this->messageService = $messageService;
     }
 
@@ -31,8 +34,9 @@ class MessageHandler implements MessageHandlerInterface
      * @return MessageDTO
      * @throws MessageNotFoundException
      */
-    public function handle($query): MessageDTO
+    public function handle($query): void
     {
-        return $this->messageService->one($query->getId());
+        // TODO: implement messages
+        // return $this->messageService->one($query->getId());
     }
 } 

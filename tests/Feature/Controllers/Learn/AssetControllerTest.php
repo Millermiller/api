@@ -74,7 +74,13 @@ class AssetControllerTest extends TestCase
 
         $response->assertJsonStructure(
           [
+            'id',
             'type',
+            'title',
+            'level',
+            'count',
+            'basic',
+            'language',
             'cards' => [
               [
                 'id',
@@ -82,26 +88,13 @@ class AssetControllerTest extends TestCase
                 'word' => [
                   'id',
                   'value',
-                  'audio',
-                  'sentence',
-                  'is_public',
-                  'creator',
                 ],
                 'translate' => [
                   'id',
                   'value',
-                  'word' => [
-                    'id',
-                    'value',
-                    'audio',
-                    'sentence',
-                    'is_public',
-                    'creator',
-                  ],
                 ],
               ],
             ],
-            'title',
           ]
         );
     }
@@ -120,6 +113,8 @@ class AssetControllerTest extends TestCase
                 'asset:update',
                 [
                     'id' => $this->asset->getId(),
+                    'type' => Asset::TYPE_WORDS,
+                    'level' => 2
                 ]
             ),
             [

@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\DeleteMetaHandlerInterface;
 use Scandinaver\Common\UI\Command\DeleteMetaCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -12,10 +13,11 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Common\Application\Handler\Command
  */
-class DeleteMetaHandler implements DeleteMetaHandlerInterface
+class DeleteMetaHandler extends AbstractHandler implements DeleteMetaHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

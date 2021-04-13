@@ -76,7 +76,7 @@ class AmazonReader implements ReaderInterface
 
         $filename = $this->hashFilename($text);
 
-        $cashed = $this->redisClient->hget($filename, $language->getName());
+        $cashed = $this->redisClient->hget($filename, $language->getTitle());
 
         if ($cashed !== null) {
             if (Storage::disk('voices')->exists($filename)) {
@@ -93,7 +93,7 @@ class AmazonReader implements ReaderInterface
 
         Storage::disk('voices')->put($filename, $file);
 
-        $this->redisClient->hset($filename, $language->getName(), $filename);
+        $this->redisClient->hset($filename, $language->getTitle(), $filename);
 
         return Storage::disk('voices')->path($filename);
     }
@@ -105,7 +105,7 @@ class AmazonReader implements ReaderInterface
 
     private function resolveLanguage(Language $language): string
     {
-        switch ($language->getName()) {
+        switch ($language->getTitle()) {
             case 'is':
                 return 'is-IS';
                 break;
@@ -117,7 +117,7 @@ class AmazonReader implements ReaderInterface
 
     private function resolveVoice(Language $language): string
     {
-        switch ($language->getName()) {
+        switch ($language->getTitle()) {
             case 'is':
                 return 'Dora';
                 break;

@@ -12,7 +12,6 @@ use Scandinaver\Parser\Domain\Contract\Service\ParserInterface;
  */
 class YandexParser implements ParserInterface
 {
-
     public function parse()
     {
         // TODO: Implement parse() method.

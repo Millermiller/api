@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see \Scandinaver\Learn\Application\Handler\Command\DeletePassingHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\DeletePassingHandler
  */
 class DeletePassingCommand implements Command
 {

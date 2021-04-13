@@ -3,10 +3,12 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Contract\Command\CompleteTestHandlerInterface;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Services\TestService;
 use Scandinaver\Learn\UI\Command\CompleteTestCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -14,12 +16,14 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\Application\Handler\Command
  */
-class CompleteTestHandler implements CompleteTestHandlerInterface
+class CompleteTestHandler extends AbstractHandler implements CompleteTestHandlerInterface
 {
     private TestService $testService;
 
     public function __construct(TestService $testService)
     {
+        parent::__construct();
+
         $this->testService = $testService;
     }
 
@@ -35,5 +39,7 @@ class CompleteTestHandler implements CompleteTestHandlerInterface
             $command->getAsset(),
             $command->getData()
         );
+
+        $this->resource = new NullResource();
     }
 }

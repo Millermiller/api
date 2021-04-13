@@ -6,10 +6,12 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Contract\Command\DeleteAssetHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, CardService};
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -17,17 +19,15 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\Application\Handler\Command
  */
-class DeleteAssetHandler implements DeleteAssetHandlerInterface
+class DeleteAssetHandler extends AbstractHandler implements DeleteAssetHandlerInterface
 {
-    protected CardService $cardService;
-
     protected AssetService $assetService;
 
-    public function __construct(AssetService $assetService, CardService $cardService)
+    public function __construct(AssetService $assetService)
     {
-        $this->assetService = $assetService;
+        parent::__construct();
 
-        $this->cardService = $cardService;
+        $this->assetService = $assetService;
     }
 
     /**
@@ -41,5 +41,7 @@ class DeleteAssetHandler implements DeleteAssetHandlerInterface
     public function handle($command): void
     {
         $this->assetService->delete($command->getAsset());
+
+        $this->resource = new NullResource();
     }
 }

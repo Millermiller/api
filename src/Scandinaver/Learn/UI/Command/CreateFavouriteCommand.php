@@ -21,8 +21,8 @@ class CreateFavouriteCommand implements Command
 
     public function __construct(User $user, int $card)
     {
-        $this->user     = $user;
-        $this->card     = $card;
+        $this->user = $user;
+        $this->card = $card;
     }
 
     public function getUser(): User

@@ -10,7 +10,9 @@ use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Services\IntroFactory;
 use Scandinaver\Common\Domain\Services\IntroService;
+use Scandinaver\Common\Domain\Services\LanguageFactory;
 use Scandinaver\Common\Domain\Services\LanguageService;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
@@ -18,17 +20,21 @@ use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterfa
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset};
+use Scandinaver\Learn\Domain\Services\AssetFactory;
 use Scandinaver\Learn\Domain\Services\AssetService;
-use Scandinaver\Puzzle\Domain\PuzzleService;
+use Scandinaver\Puzzle\Domain\Services\PuzzleFactory;
+use Scandinaver\Puzzle\Domain\Services\PuzzleService;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
 use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
-use Scandinaver\Translate\Domain\TextService;
+use Scandinaver\Translate\Domain\Services\TextService;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
+use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
+use Scandinaver\User\Domain\DTO\StateDTO;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\Domain\Model\{Plan, User, UserDTO};
+use Scandinaver\User\Domain\Model\{Plan, User};
 
 /**
  * Class UserService
@@ -67,6 +73,8 @@ class UserService implements BaseServiceInterface
 
     private RoleRepositoryInterface $roleRepository;
 
+    private AvatarServiceInterface $avatarService;
+
     public function __construct(AssetRepositoryInterface $assetRepository,
                                 FavouriteAssetRepositoryInterface $favouriteAssetRepository,
                                 PersonalAssetRepositoryInterface $personalAssetRepository,
@@ -79,6 +87,7 @@ class UserService implements BaseServiceInterface
                                 TextService $textService,
                                 PuzzleService $puzzleService,
                                 LanguageService $languageService,
+                                AvatarServiceInterface $avatarService,
                                 IntroService $introService)
     {
         $this->userRepository           = $userRepository;
@@ -93,20 +102,19 @@ class UserService implements BaseServiceInterface
         $this->personalAssetRepository  = $personalAssetRepository;
         $this->introService             = $introService;
         $this->languageService          = $languageService;
+        $this->avatarService            = $avatarService;
         $this->roleRepository           = $roleRepository;
     }
 
     /**
      * @param  int  $id
      *
-     * @return UserDTO
+     * @return User
      * @throws UserNotFoundException
      */
-    public function one(int $id): UserDTO
+    public function one(int $id): User
     {
-        $user = $this->getUser($id);
-
-        return $user->toDTO();
+        return $this->getUser($id);
     }
 
     /**
@@ -128,16 +136,8 @@ class UserService implements BaseServiceInterface
 
     public function all(): array
     {
-        $result = [];
-
         /** @var User[] $users */
-        $users = $this->userRepository->findAll();
-
-        foreach ($users as $user) {
-            $result[] = $user->toDTO();
-        }
-
-        return $result;
+        return $this->userRepository->findAll();
     }
 
     /**
@@ -148,7 +148,7 @@ class UserService implements BaseServiceInterface
      */
     public function login(array $credentials): ?User
     {
-        if (!Auth::attempt($credentials, true)) {
+        if (!Auth::attempt($credentials, TRUE)) {
             throw new UserNotFoundException();
         }
 
@@ -214,18 +214,18 @@ class UserService implements BaseServiceInterface
      * @param  User    $user
      * @param  string  $language
      *
-     * @return array
+     * @return StateDTO
      * @throws LanguageNotFoundException|BindingResolutionException
      */
-    public function getState(User $user, string $language): array
+    public function getState(User $user, string $language): StateDTO
     {
         $language = $this->getLanguage($language);
 
-        /** @var Asset[] $personalAssets TODO: move to AssetService::getAssetsByType()*/
+        /** @var Asset[] $personalAssets TODO: move to AssetService::getAssetsByType() */
         $personalAssets = $user->getPersonalAssets($language);
-        $personalData = [];
+        $personalData   = [];
         foreach ($personalAssets as $personalAsset) {
-            $dto = $personalAsset->toDTO();
+            $dto = AssetFactory::toDTO($personalAsset);
 
             if ($user->isPremium()) {
                 $dto->setActive(TRUE);
@@ -244,42 +244,57 @@ class UserService implements BaseServiceInterface
         }
 
         $favouriteAsset = $user->getFavouriteAsset($language);
-        $result = $favouriteAsset->getBestResultForUser($user);
+        $result         = $favouriteAsset->getBestResultForUser($user);
 
-        $favouriteAssetDTO = $favouriteAsset->toDTO();
+        $favouriteAssetDTO = AssetFactory::toDTO($favouriteAsset);
         $favouriteAssetDTO->setActive(TRUE);
         $favouriteAssetDTO->setAvailable(TRUE);
 
         $favouriteAssetDTO->setBestResult($result);
 
-        return [
-            'site'        => config('app.MAIN_SITE'),
-            'words'       => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_WORDS),
-            'sentences'   => $this->assetService->getAssetsByType($language->getName(), $user, Asset::TYPE_SENTENCES),
-            'personal'    => $personalData,
-            'favourite'   => $favouriteAssetDTO,
-            'texts'       => $this->textService->getTextsForUser($language->getName(), $user),
-            'puzzles'     => $this->puzzleService->getForUser($language->getName(), $user),
-            'intro'       => $this->introService->all(),
-            'sites'       => $this->languageService->all(),
-            'currentSite' => $this->languageRepository->findOneBy(['name' => config('app.lang')]),
-            'domain'      => config('app.lang'),
-        ];
+        $stateDTO = new StateDTO();
+
+        $stateDTO->setSite(config('app.MAIN_SITE'));
+
+        $wordAssetsDTO = $this->assetService->getAssetsByType($language->getTitle(), $user, Asset::TYPE_WORDS);
+        $stateDTO->setWordsDTO($wordAssetsDTO);
+
+        $sentencesAssetsDTO = $this->assetService->getAssetsByType($language->getTitle(), $user, Asset::TYPE_SENTENCES);
+        $stateDTO->setSentencesDTO($sentencesAssetsDTO);
+
+        $stateDTO->setPersonalDTO($personalData);
+        $stateDTO->setFavouriteAssetDTO($favouriteAssetDTO);
+
+        $textsDTO = $this->textService->getTextsForUser($language->getTitle(), $user);
+        $stateDTO->setTextsDTO($textsDTO);
+
+        $puzzles    = $this->puzzleService->getForUser($language->getTitle(), $user);
+        $puzzlesDTO = [];
+        foreach ($puzzles as $puzzle) {
+            $puzzlesDTO[] = PuzzleFactory::toDTO($puzzle);
+        }
+        $stateDTO->setPuzzlesDTO($puzzlesDTO);
+
+        $intros    = $this->introService->all();
+        $introsDTO = [];
+        foreach ($intros as $intro) {
+            $introsDTO[] = IntroFactory::toDTO($intro);
+        }
+        $stateDTO->setIntroDTO($introsDTO);
+
+        $languages    = $this->languageService->all();
+        $languagesDTO = [];
+        foreach ($languages as $language) {
+            $languagesDTO[] = LanguageFactory::toDTO($language);
+        }
+        $stateDTO->setLanguagesDTO($languagesDTO);
+
+        return $stateDTO;
     }
 
-    public function getInfo(): array
+    public function getInfo(): User
     {
-        return [
-            'id'          => Auth::user()->getKey(),
-            'login'       => Auth::user()->getLogin(),
-            'avatar'      => Auth::user()->getAvatar(),
-            'email'       => Auth::user()->getEmail(),
-            'active'      => Auth::user()->getActive(),
-            'plan'        => Auth::user()->getPlan(),
-            'active_to'   => Auth::user()->getActiveTo(),
-            'roles'       => Auth::user()->getRoles()->map(fn($role) => $role->toDTO())->toArray(),
-            'permissions' => Auth::user()->getAllPermissions()->map(fn($permission) => $permission->toDTO())->toArray(),
-        ];
+        return Auth::user();
     }
 
     public function updatePlan(User $user): void
@@ -290,25 +305,21 @@ class UserService implements BaseServiceInterface
         }
     }
 
-    public function updateUserInfo(array $request): void
+    public function updateUserInfo(User $user, array $data): void
     {
-        $user = Auth::user();
+        $data['password'] = isset($data['password']) ? bcrypt($data['password']) : $user->getPassword();
 
-        //Requester::updateForumUser($request, $user->getEmail());
-
-        $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->getPassword();
-
-        $this->userRepository->update($user, $request);
+        $this->userRepository->update($user, $data);
     }
 
     /**
      * @param  int    $id
      * @param  array  $data
      *
-     * @return UserDTO
+     * @return User
      * @throws UserNotFoundException
      */
-    public function updateUser(int $id, array $data): UserDTO
+    public function updateUser(int $id, array $data): User
     {
         $user = $this->getUser($id);
 
@@ -334,7 +345,7 @@ class UserService implements BaseServiceInterface
         /** @var User $user */
         $user = $this->userRepository->update($user, $data);
 
-        return $user->toDTO();
+        return $user;
     }
 
     /**

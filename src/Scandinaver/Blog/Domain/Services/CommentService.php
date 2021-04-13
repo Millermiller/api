@@ -8,7 +8,6 @@ use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\Comment;
-use Scandinaver\Blog\Domain\Model\CommentDTO;
 use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Model\User;
@@ -34,25 +33,19 @@ class CommentService implements BaseServiceInterface
 
     public function all(): array
     {
-        $result = [];
-
         /** @var Comment[] $comments */
         $comments = $this->commentRepository->findAll();
 
-        foreach ($comments as $comment) {
-            $result[] = $comment->toDTO();
-        }
-
-        return $result;
+        return $comments;
     }
 
     /**
      * @param  int  $id
      *
-     * @return CommentDTO
+     * @return Comment
      * @throws CommentNotFoundException
      */
-    public function one(int $id): CommentDTO
+    public function one(int $id): Comment
     {
         /** @var Comment $comment */
         $comment = $this->commentRepository->find($id);
@@ -61,17 +54,17 @@ class CommentService implements BaseServiceInterface
             throw new CommentNotFoundException();
         }
 
-        return $comment->toDTO();
+        return $comment;
     }
 
     /**
      * @param  User   $user
      * @param  array  $data
      *
-     * @return CommentDTO
+     * @return Comment
      * @throws PostNotFoundException
      */
-    public function create(User $user, array $data): CommentDTO
+    public function create(User $user, array $data): Comment
     {
         /** @var Post $post */
         $post = $this->postRepository->find($data['post_id']);
@@ -87,17 +80,17 @@ class CommentService implements BaseServiceInterface
 
         $this->commentRepository->save($comment);
 
-        return $comment->toDTO();
+        return $comment;
     }
 
     /**
      * @param  int    $commentId
      * @param  array  $data
      *
-     * @return CommentDTO
+     * @return Comment
      * @throws CommentNotFoundException
      */
-    public function update(int $commentId, array $data): CommentDTO
+    public function update(int $commentId, array $data): Comment
     {
         /** @var Comment $comment */
         $comment = $this->commentRepository->find($commentId);
@@ -108,7 +101,7 @@ class CommentService implements BaseServiceInterface
 
         $this->commentRepository->update($comment, $data);
 
-        return $comment->toDTO();
+        return $comment;
     }
 
     /**
@@ -116,7 +109,7 @@ class CommentService implements BaseServiceInterface
      *
      * @throws CommentNotFoundException
      */
-    public function delete(int $commentId)
+    public function delete(int $commentId): void
     {
         /** @var Comment $comment */
         $comment = $this->commentRepository->find($commentId);

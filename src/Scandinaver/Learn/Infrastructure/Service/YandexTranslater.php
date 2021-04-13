@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Infrastructure\Service;
 
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
@@ -84,7 +83,7 @@ class YandexTranslater implements TranslaterInterface
 
     private function resolveLanguage(Language $language): string
     {
-        switch ($language->getName()) {
+        switch ($language->getTitle()) {
             case 'is':
                 return 'is';
                 break;

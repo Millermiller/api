@@ -1,4 +1,6 @@
 <?php
 
 
-Route::get('/languages', 'App\Http\Controllers\Common\LanguageController@languages')->name('languages:all');
+use App\Http\Controllers\Common\LanguageController;
+
+Route::get('/languages', [LanguageController::class, 'index'])->name('languages:all');

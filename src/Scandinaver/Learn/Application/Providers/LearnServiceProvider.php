@@ -18,11 +18,6 @@ class LearnServiceProvider extends ServiceProvider
     {
         /** COMMAND **/
         $this->app->bind(
-            'AddBasicLevelHandlerInterface',
-            'Scandinaver\Learn\Application\Handler\Command\AddBasicLevelHandler'
-        );
-
-        $this->app->bind(
             'AddCardToAssetHandlerInterface',
             'Scandinaver\Learn\Application\Handler\Command\AddCardToAssetHandler'
         );

@@ -3,11 +3,13 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
+use League\Fractal\Resource\Item;
 use Scandinaver\Common\Domain\Contract\Query\IntroHandlerInterface;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
-use Scandinaver\Common\Domain\Model\IntroDTO;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Query\IntroQuery;
+use Scandinaver\Common\UI\Resources\IntroTransformer;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -15,7 +17,7 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Common\Application\Handler\Query
  */
-class IntroHandler implements IntroHandlerInterface
+class IntroHandler extends AbstractHandler implements IntroHandlerInterface
 {
     private IntroService $introService;
 
@@ -26,17 +28,20 @@ class IntroHandler implements IntroHandlerInterface
      */
     public function __construct(IntroService $introService)
     {
+        parent::__construct();
+
         $this->introService = $introService;
     }
 
     /**
      * @param  IntroQuery|Query  $query
      *
-     * @return IntroDTO
      * @throws IntroNotFoundException
      */
-    public function handle($query): IntroDTO
+    public function handle($query): void
     {
-        return $this->introService->one($query->getId());
+        $intro = $this->introService->one($query->getId());
+
+        $this->resource = new Item($intro, new IntroTransformer());
     }
 }

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\Domain\Events\Listeners;
 
-
 use Psr\Log\LoggerInterface;
 use Scandinaver\Blog\Domain\Events\CategoryDeleted;
 
@@ -14,7 +13,6 @@ use Scandinaver\Blog\Domain\Events\CategoryDeleted;
  */
 class CategoryDeletedListener
 {
-
     private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
@@ -27,8 +25,9 @@ class CategoryDeletedListener
      */
     public function handle(CategoryDeleted $event)
     {
-        $this->logger->info('Категория {name} удалена', [
-            'name' => $event->getCategory()->getName(),
-        ]);
+        $this->logger->info('Категория {name} удалена',
+            [
+                'name' => $event->getCategory()->getTitle(),
+            ]);
     }
 }

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\Domain\Events;
 
-
 use Scandinaver\Blog\Domain\Model\Comment;
 use Scandinaver\Blog\Domain\Model\Post;
 use Scandinaver\Shared\DomainEvent;
@@ -15,7 +14,6 @@ use Scandinaver\Shared\DomainEvent;
  */
 class CommentAdded implements DomainEvent
 {
-
     private Post $post;
 
     private Comment $comment;

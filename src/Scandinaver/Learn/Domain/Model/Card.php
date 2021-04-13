@@ -19,13 +19,16 @@ use Scandinaver\User\Domain\Model\User;
  */
 class Card extends AggregateRoot
 {
+    const TYPE_WORD = 0;
+    const TYPE_SENTENCE = 1;
+
     private int $id;
 
     private Word $word;
 
     private Translate $translate;
 
-    private ?User $creator;
+    private ?User $creator = NULL;
 
     private DateTime $createdAt;
 
@@ -72,11 +75,7 @@ class Card extends AggregateRoot
         $this->word->setValue($value);
     }
 
-
-    /**
-     * @param $value
-     */
-    public function setTranslateValue($value)
+    public function setTranslateValue(string $value): void
     {
         if ($this->translate->getValue() !== $value) {
             $this->pushEvent(new TranslateUpdated($this->translate, $value));
@@ -100,16 +99,10 @@ class Card extends AggregateRoot
         $this->favourite = $favourite;
     }
 
-    public function toDTO(): CardDTO
-    {
-        return new CardDTO($this);
-    }
-
     public function isFavourite(): bool
     {
         return $this->favourite;
     }
-
 
     public function getTranslate(): Translate
     {
@@ -126,9 +119,6 @@ class Card extends AggregateRoot
         return $this->creator;
     }
 
-    /**
-     * @param  ArrayCollection|Collection  $examples
-     */
     public function setExamples(Collection $examples): void
     {
         $this->examples = $examples;
@@ -142,10 +132,7 @@ class Card extends AggregateRoot
         }
     }
 
-    /**
-     * @param  Example  $example
-     */
-    public function removeExample(Example $example)
+    public function removeExample(Example $example): void
     {
         if ($this->examples->contains($example)) {
             $this->examples->removeElement($example);
@@ -178,5 +165,10 @@ class Card extends AggregateRoot
     public function delete()
     {
         // TODO: Implement delete() method.
+    }
+
+    public function getType(): int
+    {
+        return $this->type;
     }
 }

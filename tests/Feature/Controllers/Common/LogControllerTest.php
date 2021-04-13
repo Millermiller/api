@@ -7,6 +7,11 @@ use Scandinaver\Common\Domain\Model\Log;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class LogControllerTest
+ *
+ * @package Tests\Feature\Controllers\Common
+ */
 class LogControllerTest extends TestCase
 {
     private User $user;

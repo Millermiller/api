@@ -73,7 +73,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         $this->basic    = $basic;
         $this->favorite = $favorite;
         $this->language = $language;
-        $this->passings  = new ArrayCollection();
+        $this->passings = new ArrayCollection();
         $this->cards    = new ArrayCollection();
 
         $this->pushEvent(new AssetCreated($this));
@@ -105,9 +105,6 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         return $this->basic;
     }
 
-    /**
-     * @param  int  $basic
-     */
     public function setBasic(int $basic): void
     {
         $this->basic = $basic;
@@ -209,11 +206,6 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         }
     }
 
-    public function toDTO(): AssetDTO
-    {
-        return new AssetDTO($this);
-    }
-
     public function delete()
     {
         $this->pushEvent(new AssetDeleted($this));
@@ -243,7 +235,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     {
         /** @var Passing $passing */
         foreach ($this->passings as $passing) {
-            if($passing->getUser()->isEqualTo($user) && $passing->isCompleted()) {
+            if ($passing->getUser()->isEqualTo($user) && $passing->isCompleted()) {
                 return TRUE;
             }
         }
@@ -257,7 +249,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
         /** @var Passing $passing */
         foreach ($this->passings as $passing) {
-            if(!$passing->getUser()->isEqualTo($user)) {
+            if (!$passing->getUser()->isEqualTo($user)) {
                 continue;
             }
             if (NULL === $bestResult) {
@@ -274,5 +266,15 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     public function isFirstAsset(): bool
     {
         return $this->level === 1;
+    }
+
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
+    }
+
+    public function getCount(): int
+    {
+        return $this->cards->count();
     }
 }

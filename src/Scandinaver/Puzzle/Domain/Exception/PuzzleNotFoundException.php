@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Puzzle\Domain\Exception;
 
-
 use Exception;
 
 /**

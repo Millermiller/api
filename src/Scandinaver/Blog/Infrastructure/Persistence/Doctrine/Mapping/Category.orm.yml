@@ -4,7 +4,7 @@ Scandinaver\Blog\Domain\Model\Category:
   indexes:
     name:
       columns:
-        - name
+        - title
   id:
     id:
       type: integer
@@ -17,7 +17,7 @@ Scandinaver\Blog\Domain\Model\Category:
       generator:
         strategy: IDENTITY
   fields:
-    name:
+    title:
       type: string
       scale: 0
       length: 255

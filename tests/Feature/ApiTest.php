@@ -36,15 +36,13 @@ class ApiTest extends TestCase
 
     public function testLanguages()
     {
-        $response = $this->get('/languages');
+        $response = $this->get(route('languages:all'));
         $response
             ->assertJsonStructure([
                 [
-                    'name',
+                    'title',
                     'letter',
                     'flag',
-                    'cardsAvailable',
-                    'cardsAll',
                 ]
             ]);
     }
@@ -89,19 +87,19 @@ class ApiTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testExample()
-    {
-        $handlerMock = $this->getMockBuilder(LanguagesHandlerInterface::class)
-            ->setMethods(['handle'])
-            ->getMock();
-        $handlerMock->method('handle')->willReturn('foo');
+  // public function testExample()
+  // {
+  //     $handlerMock = $this->getMockBuilder(LanguagesHandlerInterface::class)
+  //         ->setMethods(['handle'])
+  //         ->getMock();
+  //     $handlerMock->method('handle')->willReturn('foo');
 
-        $this->app->bind(LanguagesHandler::class, function() use ($handlerMock){
-            return $handlerMock;
-        });
+  //     $this->app->bind(LanguagesHandler::class, function() use ($handlerMock){
+  //         return $handlerMock;
+  //     });
 
-        $response = $this->get('/languages');
-        $data = $response->decodeResponseJson();
-        $data->assertExact(['foo']);
-    }
+  //     $response = $this->get('/languages');
+  //     $data = $response->decodeResponseJson();
+  //     $data->assertExact(['foo']);
+  // }
 }

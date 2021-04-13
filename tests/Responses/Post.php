@@ -3,7 +3,11 @@
 
 namespace Tests\Responses;
 
-
+/**
+ * Class Post
+ *
+ * @package Tests\Responses
+ */
 class Post implements ResponseInterface
 {
 

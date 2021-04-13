@@ -5,6 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\Domain\Contract\Command\UpdateMessageHandlerInterface;
 use Scandinaver\Common\UI\Command\UpdateMessageCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -12,10 +13,11 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Common\Application\Handler\Command
  */
-class UpdateMessageHandler implements UpdateMessageHandlerInterface
+class UpdateMessageHandler extends AbstractHandler implements UpdateMessageHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

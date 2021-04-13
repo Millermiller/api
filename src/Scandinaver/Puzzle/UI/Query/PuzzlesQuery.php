@@ -14,7 +14,6 @@ use Scandinaver\Shared\Contract\Query;
  */
 class PuzzlesQuery implements Query
 {
-
     private string $language;
 
     public function __construct(string $language)
