@@ -8,27 +8,18 @@ Route::group(
     'namespace'  => 'App\Http\Controllers\Learn',
   ],
   function () {
-      Route::get('/asset/{id}',                  [AssetController::class, 'show'])->name('show');//TODO: refactor
+      // sub backend route
+      Route::get('/{language}/assets',           [AssetController::class, 'index'])->name('all');
 
+      Route::get('/asset/{id}',                  [AssetController::class, 'show'])->name('show');
       Route::post('/asset',                      [AssetController::class, 'store'])->name('store');
-
       Route::put('/asset/{id}',                  [AssetController::class, 'update'])->name('update');
-
-      Route::post('/asset/{asset}/{card}',       [AssetController::class, 'addCard'])->name('card:add');
-
-      Route::delete('/asset/{asset}/{card}',     [AssetController::class, 'removeCard'])->name('card:remove');
-
       Route::delete('/asset/{id}',               [AssetController::class, 'destroy'])->name('destroy');
 
-      Route::post('/{language}/level',           [AssetController::class, 'addBasicAssetLevel'])->name('add:basic');
-
-      Route::get(' /{language}/assets',          [AssetController::class, 'index'])->name('all');
-
-      Route::get(' /{language}/cards/sentence',  [AssetController::class, 'getAllSentences'])->name('sentence:all'); //TODO: remove
+      Route::post('/asset/{asset}/{card}',       [AssetController::class, 'addCard'])->name('card:add');
+      Route::delete('/asset/{asset}/{card}',     [AssetController::class, 'removeCard'])->name('card:remove');
 
       Route::post('/forvo/{id}',                 [AssetController::class, 'findAudio'])->name('forvo');//TODO: remove
-
-      Route::get('/asset/{asset}',               [AssetController::class, 'showAsset']);//TODO: refactor
 
       Route::get('/{language}/values/{word}',    [AssetController::class, 'showValues'])->name('values:show');
 

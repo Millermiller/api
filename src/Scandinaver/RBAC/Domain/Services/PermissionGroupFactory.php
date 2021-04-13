@@ -4,14 +4,13 @@
 namespace Scandinaver\RBAC\Domain\Services;
 
 use Scandinaver\RBAC\Domain\Model\PermissionGroup;
-use Scandinaver\Shared\Contract\Factory;
 
 /**
  * Class PermissionFactory
  *
  * @package Scandinaver\RBAC\Domain\Services
  */
-class PermissionGroupFactory implements Factory
+class PermissionGroupFactory
 {
     public static function build(array $data): PermissionGroup
     {

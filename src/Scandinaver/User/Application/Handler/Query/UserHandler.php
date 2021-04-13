@@ -3,35 +3,40 @@
 
 namespace Scandinaver\User\Application\Handler\Query;
 
+use League\Fractal\Resource\Item;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 use Scandinaver\User\Domain\Contract\Query\UserHandlerInterface;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\Domain\Model\UserDTO;
 use Scandinaver\User\Domain\Services\UserService;
 use Scandinaver\User\UI\Query\UserQuery;
+use Scandinaver\User\UI\Resources\UserTransformer;
 
 /**
  * Class UserHandler
  *
  * @package Scandinaver\User\Application\Handler\Query
  */
-class UserHandler implements UserHandlerInterface
+class UserHandler extends AbstractHandler implements UserHandlerInterface
 {
     private UserService $userService;
 
     public function __construct(UserService $userService)
     {
+        parent::__construct();
+
         $this->userService = $userService;
     }
 
     /**
      * @param  UserQuery|Query  $query
      *
-     * @return UserDTO
      * @throws UserNotFoundException
      */
-    public function handle($query): UserDTO
+    public function handle($query): void
     {
-        return $this->userService->one($query->getKey());
+        $user = $this->userService->one($query->getKey());
+
+        $this->resource = new Item($user, new UserTransformer());
     }
 } 

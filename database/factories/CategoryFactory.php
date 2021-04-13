@@ -9,7 +9,7 @@ use Scandinaver\Learn\Domain\Model\WordAsset;
 $factory->define(Category::class, function (Faker $faker, array $attributes) {
 
     return [
-        'name' => $faker->unique()->text(50),
+        'title' => $faker->unique()->text(50),
         'createdAt' => $faker->dateTime(),
         'updatedAt' => $faker->dateTime()
     ];

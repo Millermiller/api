@@ -66,18 +66,12 @@ class Post extends AggregateRoot
         return $this->createdAt;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param $user
-     */
-    public function setUser($user): void
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }
@@ -112,11 +106,6 @@ class Post extends AggregateRoot
         return $this->id;
     }
 
-    public function toDTO(): PostDTO
-    {
-        return new PostDTO($this);
-    }
-
     public function getContent(): ?string
     {
         return $this->content;
@@ -137,10 +126,7 @@ class Post extends AggregateRoot
         return $this->commentStatus;
     }
 
-    /**
-     * @param  Comment  $comment
-     */
-    public function addComment(Comment $comment)
+    public function addComment(Comment $comment): void
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);

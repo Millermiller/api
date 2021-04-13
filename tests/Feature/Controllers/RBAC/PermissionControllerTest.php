@@ -8,6 +8,11 @@ use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class PermissionControllerTest
+ *
+ * @package Tests\Feature\Controllers\RBAC
+ */
 class PermissionControllerTest extends TestCase
 {
     private User $user;

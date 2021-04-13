@@ -3,11 +3,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Auth;
 use App\Http\Requests\{ProfileRequest, UploadAvatarRequest};
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Services\FileService;
-use Scandinaver\User\Domain\Services\UserService;
+use Scandinaver\Shared\EventBusNotFoundException;
+use Scandinaver\User\UI\Command\UpdateUserSettingsCommand;
+use Scandinaver\User\UI\Command\UploadAvatarCommand;
 
 /**
  * Class ProfileController
@@ -16,46 +17,28 @@ use Scandinaver\User\Domain\Services\UserService;
  */
 class ProfileController extends Controller
 {
-    use ValidatesRequests;
-
-    protected UserService $userService;
-
-    protected FileService $fileService;
-
-    /**
-     * ProfileController constructor.
-     *
-     * @param  UserService  $userService
-     * @param  FileService  $fileService
-     */
-    public function __construct(UserService $userService, FileService $fileService)
-    {
-        $this->userService = $userService;
-        $this->fileService = $fileService;
-    }
-
     /**
      * @param  UploadAvatarRequest  $request
      *
      * @return JsonResponse
+     * @throws EventBusNotFoundException
      */
     public function uploadImage(UploadAvatarRequest $request): JsonResponse
     {
-        $request->validated();
-
-        $this->fileService->uploadAvatar($request);
-
-        return response()->json(['success' => TRUE, 'msg' => 'Фотография успешно загружена']);
+        return $this->execute(new UploadAvatarCommand(Auth::user(), $request->file('file')));
     }
 
     /**
-     * TODO: implement
-     *
      * @param  ProfileRequest  $request
+     *
+     * @return JsonResponse
+     * @throws EventBusNotFoundException
      */
-    public function edit(ProfileRequest $request)
+    public function edit(ProfileRequest $request): JsonResponse
     {
-        $this->userService->updateUserInfo($request->toArray());
+        // Gate::authorize(Category::SHOW, $categoryId);
+
+        return $this->execute(new UpdateUserSettingsCommand(Auth::user(), $request->toArray()));
     }
 
     /**

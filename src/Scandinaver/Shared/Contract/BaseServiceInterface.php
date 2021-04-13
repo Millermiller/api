@@ -3,9 +3,6 @@
 
 namespace Scandinaver\Shared\Contract;
 
-
-use Scandinaver\Shared\DTO;
-
 /**
  * Interface BaseServiceInterface
  *
@@ -16,5 +13,10 @@ interface BaseServiceInterface
 
     public function all(): array;
 
-    public function one(int $id): DTO;
+    /**
+     * @param  int  $id
+     *
+     * @return mixed
+     */
+    public function one(int $id);
 }

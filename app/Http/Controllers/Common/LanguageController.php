@@ -24,7 +24,7 @@ class LanguageController extends Controller
      * @throws AuthorizationException
      * @throws EventBusNotFoundException
      */
-    public function languages(): JsonResponse
+    public function index(): JsonResponse
     {
         Gate::authorize('view-languages');
 

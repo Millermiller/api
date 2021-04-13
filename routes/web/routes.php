@@ -11,4 +11,6 @@
 |
 */
 
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
+
+Route::get('logs', [LogViewerController::class, 'index']);

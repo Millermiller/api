@@ -3,7 +3,6 @@
 
 namespace Scandinaver\RBAC\Domain\Model;
 
-
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -109,11 +108,6 @@ class Role extends AggregateRoot
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function toDTO(): RoleDTO
-    {
-        return new RoleDTO($this);
     }
 
     public function delete()

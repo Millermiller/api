@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see \Scandinaver\Learn\Application\Handler\Query\GetAllPassingsHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\GetAllPassingsHandler
  */
 class GetAllPassingsQuery implements Query
 {

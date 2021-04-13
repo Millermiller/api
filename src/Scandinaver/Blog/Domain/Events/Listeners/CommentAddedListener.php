@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\Domain\Events\Listeners;
 
-
 use Scandinaver\Blog\Domain\Events\CommentAdded;
 
 /**
@@ -13,7 +12,6 @@ use Scandinaver\Blog\Domain\Events\CommentAdded;
  */
 class CommentAddedListener
 {
-
     /**
      * @param  CommentAdded  $event
      */

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\RBAC\Domain\Services;
 
-
 use Scandinaver\RBAC\Domain\Model\Role;
 
 /**

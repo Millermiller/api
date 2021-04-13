@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Reader\Application\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
 

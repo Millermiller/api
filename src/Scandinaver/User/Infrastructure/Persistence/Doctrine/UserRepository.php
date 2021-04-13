@@ -3,11 +3,8 @@
 
 namespace Scandinaver\User\Infrastructure\Persistence\Doctrine;
 
-use Doctrine\ORM\{OptimisticLockException, ORMException};
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Translate\Domain\Model\Text;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
-use Scandinaver\User\Domain\Model\{Plan, User};
 
 /**
  * Class UserRepository
@@ -16,38 +13,6 @@ use Scandinaver\User\Domain\Model\{Plan, User};
  */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function addText(User $user, Text $text): void
-    {
-        $user->getTexts()->add($text);
-        $text->getUsers()->add($user);
-
-        $this->_em->flush();
-    }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function setPlan(User $user, Plan $plan): void
-    {
-        $user->setPlan($plan);
-        $this->_em->flush();
-    }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function setAvatar(User $user, string $file)
-    {
-        $user->setPhoto($file);
-        $this->_em->flush();
-    }
-
     /**
      * @param $string
      *

@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\CreateTextHandlerInterface;
 use Scandinaver\Translate\UI\Command\CreateTextCommand;
@@ -12,10 +13,11 @@ use Scandinaver\Translate\UI\Command\CreateTextCommand;
  *
  * @package Scandinaver\Translate\Application\Handler\Command
  */
-class CreateTextHandler implements CreateTextHandlerInterface
+class CreateTextHandler extends AbstractHandler implements CreateTextHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Translate\Domain\Exception;
 
-
 use Exception;
 
 /**

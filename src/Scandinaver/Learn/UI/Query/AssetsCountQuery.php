@@ -14,7 +14,6 @@ use Scandinaver\Shared\Contract\Query;
  */
 class AssetsCountQuery implements Query
 {
-
     private string $language;
 
     public function __construct(string $language)

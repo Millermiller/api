@@ -4,17 +4,17 @@ namespace Tests\Unit\User\Domain\Services;
 
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Scandinaver\RBAC\Domain\DTO\PermissionDTO;
+use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
+use Scandinaver\RBAC\Domain\DTO\RoleDTO;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionDublicateException;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
 use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\PermissionDTO;
 use Scandinaver\RBAC\Domain\Model\PermissionGroup;
-use Scandinaver\RBAC\Domain\Model\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\Model\Role;
-use Scandinaver\RBAC\Domain\Model\RoleDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
@@ -67,7 +67,7 @@ class RBACServiceTest extends TestCase
 
         $role = $this->service->createRole($data);
 
-        static::assertInstanceOf(RoleDTO::class, $role);
+        static::assertInstanceOf(Role::class, $role);
     }
 
 
@@ -112,15 +112,15 @@ class RBACServiceTest extends TestCase
           'group' => $permissionGroup->getId()
         ];
 
-        /** @var PermissionDTO $result */
+        /** @var Permission $result */
         $result = $this->service->updatePermission($permission->getId(), $data);
-        self::assertInstanceOf(PermissionDTO::class, $result);
+        self::assertInstanceOf(Permission::class, $result);
 
-        $decoded = $result->jsonSerialize();
-        self::assertEquals($newName, $decoded['name']);
-        self::assertEquals($newSlug, $decoded['slug']);
-        self::assertEquals($newDescription, $decoded['description']);
-        self::assertInstanceOf(PermissionGroupDTO::class, $decoded['group']);
+        self::assertEquals($newName, $result->getName());
+        self::assertEquals($newSlug, $result->getSlug());
+        self::assertEquals($newDescription, $result->getDescription());
+
+        self::assertInstanceOf(PermissionGroup::class, $result->getGroup());
     }
 
     /**
@@ -208,13 +208,11 @@ class RBACServiceTest extends TestCase
         ];
 
         $result = $this->service->updateRole($role->getId(), $data);
-        self::assertInstanceOf(RoleDTO::class, $result);
+        self::assertInstanceOf(Role::class, $result);
 
-        $decoded = $result->jsonSerialize();
-
-        self::assertEquals($testRoleName, $decoded['name']);
-        self::assertEquals($testRoleSlug, $decoded['slug']);
-        self::assertEquals('', $decoded['description']);
+        self::assertEquals($testRoleName, $result->getName());
+        self::assertEquals($testRoleSlug, $result->getSlug());
+        self::assertEquals('', $result->getDescription());
     }
 
     /**
@@ -238,14 +236,12 @@ class RBACServiceTest extends TestCase
         ];
 
         $result = $this->service->createPermission($data);
-        self::assertInstanceOf(PermissionDTO::class, $result);
+        self::assertInstanceOf(Permission::class, $result);
 
-        $decoded = $result->jsonSerialize();
-
-        self::assertEquals($testPermissionName, $decoded['name']);
-        self::assertEquals($testPermissionSlug, $decoded['slug']);
-        self::assertEquals($testPermissionDescription, $decoded['description']);
-        self::assertInstanceOf(PermissionGroupDTO::class, $decoded['group']);
+        self::assertEquals($testPermissionName, $result->getName());
+        self::assertEquals($testPermissionSlug, $result->getSlug());
+        self::assertEquals($testPermissionDescription, $result->getDescription());
+        self::assertInstanceOf(PermissionGroup::class, $result->getGroup());
     }
 
     /**

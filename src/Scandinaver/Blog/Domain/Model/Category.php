@@ -17,7 +17,7 @@ class Category extends AggregateRoot
 {
     private int $id;
 
-    private string $name;
+    private string $title;
 
     private ?DateTime $createdAt;
 
@@ -25,7 +25,7 @@ class Category extends AggregateRoot
 
     public function __construct(string $name)
     {
-        $this->name = $name;
+        $this->title = $name;
     }
 
     public function getId(): int
@@ -33,19 +33,14 @@ class Category extends AggregateRoot
         return $this->id;
     }
 
-    public function toDTO(): CategoryDTO
+    public function getTitle(): string
     {
-        return new CategoryDTO($this);
+        return $this->title;
     }
 
-    public function getName(): string
+    public function setTitle(string $name): void
     {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
+        $this->title = $name;
         $this->pushEvent(new CategoryNameUpdated($this));
     }
 

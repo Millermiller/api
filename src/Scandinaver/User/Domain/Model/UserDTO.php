@@ -3,7 +3,6 @@
 
 namespace Scandinaver\User\Domain\Model;
 
-
 use Scandinaver\Shared\DTO;
 
 /**
@@ -13,7 +12,6 @@ use Scandinaver\Shared\DTO;
  */
 class UserDTO extends DTO
 {
-
     private User $user;
 
     public function __construct(User $user)
@@ -24,14 +22,14 @@ class UserDTO extends DTO
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id'          => $this->user->getKey(),
             'login'       => $this->user->getLogin(),
-            'avatar'      => $this->user->getAvatar(),
+            'avatar'      => '', //TODO: implement
             'email'       => $this->user->getEmail(),
-            'active'      => $this->user->getActive(),
+            'active'      => $this->user->isActive(),
             'plan'        => $this->user->getPlan(),
             'active_to'   => $this->user->getActiveTo()->format('Y-m-d H:i:s'),
             'roles'       => $this->user->getRoles()->map(

@@ -5,16 +5,18 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\Domain\Contract\Query\AudioCountByLanguageHandlerInterface;
 use Scandinaver\Learn\UI\Query\AudioCountByLanguageQuery;
+use Scandinaver\Shared\AbstractHandler;
 
 /**
  * Class AudioCountByLanguageHandler
  *
  * @package Scandinaver\Learn\Application\Handler\Query
  */
-class AudioCountByLanguageHandler implements AudioCountByLanguageHandlerInterface
+class AudioCountByLanguageHandler extends AbstractHandler implements AudioCountByLanguageHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**
@@ -22,7 +24,7 @@ class AudioCountByLanguageHandler implements AudioCountByLanguageHandlerInterfac
      *
      * @inheritDoc
      */
-    public function handle($query)
+    public function handle($query): void
     {
         // TODO: Implement handle() method.
     }

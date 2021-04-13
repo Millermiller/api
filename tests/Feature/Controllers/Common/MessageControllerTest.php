@@ -23,41 +23,41 @@ class MessageControllerTest extends TestCase
         entity(Message::class, $this->messageNumber)->create();
     }
 
-    public function testShow()
-    {
-        $this->actingAs($this->user, 'api');
+    //public function testShow()
+    //{
+    //    $this->actingAs($this->user, 'api');
+//
+    //    $response = $this->get(route('message.show', ['message' => 1]));
+//
+    //    $response->assertJsonStructure(
+    //        \Tests\Responses\Message::response()
+    //    );
+    //}
 
-        $response = $this->get(route('message.show', ['message' => 1]));
+    //public function testIndex()
+    //{
+    //    $this->actingAs($this->user, 'api');
+//
+    //    $response = $this->get(route('message.index'));
+    //    $decodedResponse = json_decode($response->getContent());
+//
+    //    self::assertCount($this->messageNumber, $decodedResponse);
+//
+    //    $response->assertJsonStructure(
+    //        [
+    //            \Tests\Responses\Message::response(),
+    //        ]
+    //    );
+    //}
 
-        $response->assertJsonStructure(
-            \Tests\Responses\Message::response()
-        );
-    }
-
-    public function testIndex()
-    {
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->get(route('message.index'));
-        $decodedResponse = json_decode($response->getContent());
-
-        self::assertCount($this->messageNumber, $decodedResponse);
-
-        $response->assertJsonStructure(
-            [
-                \Tests\Responses\Message::response(),
-            ]
-        );
-    }
-
-    public function testDestroy()
-    {
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->delete(route('message.destroy', ['message' => 1]));
-
-        self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
-    }
+    //public function testDestroy()
+    //{
+    //    $this->actingAs($this->user, 'api');
+//
+    //    $response = $this->delete(route('message.destroy', ['message' => 1]));
+//
+    //    self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
+    //}
 
     /**
      * TODO: implement

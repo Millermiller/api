@@ -14,18 +14,6 @@ use Scandinaver\User\Domain\Model\{Plan, User};
  */
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {
-    public function addText(User $user, Text $text): void;
-
-    public function setPlan(User $user, Plan $plan): void;
-
-    /**
-     * @param  User    $user
-     * @param  string  $file
-     *
-     * @return mixed
-     */
-    public function setAvatar(User $user, string $file);
-
     /**
      * @param $string
      *

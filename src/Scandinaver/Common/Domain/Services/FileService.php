@@ -5,8 +5,11 @@ namespace Scandinaver\Common\Domain\Services;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
+use Scandinaver\User\Domain\Model\User;
+use Storage;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
@@ -29,21 +32,21 @@ class FileService
     }
 
     /**
-     * @param  Request  $request
+     * @param  User          $user
+     * @param  UploadedFile  $photo
      *
-     * @return File
+     * @return string
      */
-    public function uploadAvatar(Request $request)
+    public function uploadAvatar(User $user, UploadedFile $photo): string
     {
-        $name = Str::random(40).'.'.$request->file('photo')->extension();
+        $filename = Str::random(40).'.'.$photo->extension();
 
-        $path = $request->file('photo')->move(
-            public_path('/uploads/u/'),
-            $name
-        );
+        $photo->move(public_path('/uploads/u/'), $filename);
 
-        $this->userRepository->setAvatar(Auth::user(), $name);
+        $user->setPhoto($filename);
 
-        return $path;
+        $this->userRepository->save($user);
+
+        return public_path('/uploads/u/') . $filename;
     }
 }

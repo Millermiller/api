@@ -3,8 +3,11 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
+use League\Fractal\Resource\Collection;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Services\TestService;
+use Scandinaver\Learn\UI\Resources\PassingTransformer;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 use Scandinaver\Learn\UI\Query\GetAllPassingsQuery;
 use Scandinaver\Learn\Domain\Contract\Query\GetAllPassingsHandlerInterface;
@@ -14,12 +17,14 @@ use Scandinaver\Learn\Domain\Contract\Query\GetAllPassingsHandlerInterface;
  *
  * @package Scandinaver\Learn\Application\Handler\Query
  */
-class GetAllPassingsHandler implements GetAllPassingsHandlerInterface
+class GetAllPassingsHandler extends AbstractHandler extends AbstractHandler implements GetAllPassingsHandlerInterface
 {
     private TestService $service;
 
     public function __construct(TestService $service)
     {
+        parent::__construct();
+
         $this->service = $service;
     }
 
@@ -31,6 +36,10 @@ class GetAllPassingsHandler implements GetAllPassingsHandlerInterface
      */
     public function handle($query): array
     {
-        return $this->service->allByLanguage($query->getLanguage());
+        $passings = $this->service->allByLanguage($query->getLanguage());
+
+        $this->resource = new Collection($passings, new PassingTransformer());
+
+        return $this->processData();
     }
 } 

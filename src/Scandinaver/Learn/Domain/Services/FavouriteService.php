@@ -4,9 +4,7 @@
 namespace Scandinaver\Learn\Domain\Services;
 
 use Scandinaver\Common\Domain\Services\LanguageTrait;
-use Scandinaver\Learn\Domain\{Exceptions\CardAlreadyAddedException,
-    Exceptions\CardNotFoundException,
-    Exceptions\LanguageNotFoundException};
+use Scandinaver\Learn\Domain\{Exceptions\CardAlreadyAddedException, Exceptions\CardNotFoundException};
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\User\Domain\Model\User;
 
@@ -28,8 +26,8 @@ class FavouriteService
     }
 
     /**
-     * @param  User    $user
-     * @param  int     $card
+     * @param  User  $user
+     * @param  int   $card
      *
      * @throws CardNotFoundException
      * @throws CardAlreadyAddedException
@@ -38,7 +36,7 @@ class FavouriteService
     {
         $card     = $this->getCard($card);
         $language = $card->getLanguage();
-        $asset = $user->getFavouriteAsset($language);
+        $asset    = $user->getFavouriteAsset($language);
 
         $asset->addCard($card);
 
@@ -46,8 +44,8 @@ class FavouriteService
     }
 
     /**
-     * @param  User    $user
-     * @param  int     $card
+     * @param  User  $user
+     * @param  int   $card
      *
      * @throws CardNotFoundException
      */
@@ -55,7 +53,7 @@ class FavouriteService
     {
         $card     = $this->getCard($card);
         $language = $card->getLanguage();
-        $asset = $user->getFavouriteAsset($language);
+        $asset    = $user->getFavouriteAsset($language);
 
         $asset->removeCard($card);
 

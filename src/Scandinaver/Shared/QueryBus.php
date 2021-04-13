@@ -24,25 +24,25 @@ class QueryBus
      * @param  Query  $command
      *
      * @return mixed
-     * @throws BindingResolutionException
      */
     public function execute(Query $command)
     {
-        return $this->resolveHandler($command)->handle($command);
+        $handler = $this->resolveHandler($command);
+        $handler->handle($command);
+        return $handler->processData();
     }
 
     /**
      * @param  Query  $query
      *
      * @return QueryHandler|null
-     * @throws BindingResolutionException
      */
-    public function resolveHandler(Query $query): ?QueryHandler
+    public function resolveHandler(Query $query): ?AbstractHandler
     {
         try {
             return app()->make($this->getHandlerClass($query));
-        } catch (ReflectionException $e) {
-            return $e->getMessage();
+        } catch (ReflectionException | BindingResolutionException $e) {
+            return NULL;
         }
     }
 
@@ -59,5 +59,4 @@ class QueryBus
                 (new ReflectionClass($command))->getShortName()
             ).'Interface';
     }
-
 }

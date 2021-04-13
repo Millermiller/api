@@ -20,5 +20,5 @@ interface ReaderInterface
      *
      * @return mixed
      */
-    public function read(User $user, string $language, string $text);
+    public function read(User $user, string $language, string $text): string;
 }

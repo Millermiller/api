@@ -2,7 +2,6 @@
 
 namespace Scandinaver\Learn\Domain\Events\Listeners;
 
-
 use Psr\Log\LoggerInterface;
 use Scandinaver\Learn\Domain\Events\AssetDeleted;
 

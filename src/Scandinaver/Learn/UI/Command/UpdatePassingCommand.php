@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see \Scandinaver\Learn\Application\Handler\Command\UpdatePassingHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\UpdatePassingHandler
  */
 class UpdatePassingCommand implements Command
 {
@@ -20,7 +20,7 @@ class UpdatePassingCommand implements Command
 
     public function __construct(int $id, array $data)
     {
-        $this->id = $id;
+        $this->id   = $id;
         $this->data = $data;
     }
 

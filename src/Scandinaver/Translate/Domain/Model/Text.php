@@ -95,11 +95,6 @@ class Text extends AggregateRoot
         return $this->level;
     }
 
-    public function toDTO(): TextDTO
-    {
-        return new TextDTO($this);
-    }
-
     public function getLanguage(): Language
     {
         return $this->language;
@@ -144,5 +139,10 @@ class Text extends AggregateRoot
     public function delete()
     {
         // TODO: Implement delete() method.
+    }
+
+    public function setText(string $text): void
+    {
+        $this->text = $text;
     }
 }

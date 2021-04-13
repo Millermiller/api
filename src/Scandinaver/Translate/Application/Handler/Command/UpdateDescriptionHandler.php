@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\Translate\Domain\Contract\Command\UpdateDescriptionHandlerInterface;
 use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
@@ -12,10 +13,11 @@ use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
  *
  * @package Scandinaver\Translate\Application\Handler\Command
  */
-class UpdateDescriptionHandler implements UpdateDescriptionHandlerInterface
+class UpdateDescriptionHandler extends AbstractHandler implements UpdateDescriptionHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

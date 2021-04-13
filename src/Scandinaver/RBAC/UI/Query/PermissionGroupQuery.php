@@ -14,7 +14,6 @@ use Scandinaver\Shared\Contract\Query;
  */
 class PermissionGroupQuery implements Query
 {
-
     private int $id;
 
     public function __construct(int $id)
@@ -26,5 +25,4 @@ class PermissionGroupQuery implements Query
     {
         return $this->id;
     }
-
 }

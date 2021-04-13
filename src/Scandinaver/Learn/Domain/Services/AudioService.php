@@ -94,7 +94,7 @@ class AudioService implements BaseServiceInterface
             curl_setopt(
                 $curl,
                 CURLOPT_URL,
-                'https://forvo.com/player-mp3Handler.php?path='.$link
+                'https://forvo.com/player-mp3Handler.php?path=' . $link
             );
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
             //curl_setopt($curl, CURLOPT_COOKIEFILE, BASE_URL . '/temp/cookie.txt');
@@ -103,13 +103,13 @@ class AudioService implements BaseServiceInterface
 
             $filename = Str::random(32);
 
-            touch(public_path().'/audio/'.$filename.'.mp3');
-            $fp       = fopen(public_path().'/audio/'.$filename.'.mp3', 'w');
+            touch(public_path() . '/audio/' . $filename . '.mp3');
+            $fp       = fopen(public_path() . '/audio/' . $filename . '.mp3', 'w');
             $filesize = fwrite($fp, $file);
             fclose($fp);
 
             if ($filesize > 0) {
-                $word->setAudio('/audio/'.$filename.'.mp3');
+                $word->setAudio('/audio/' . $filename . '.mp3');
                 $this->wordsRepository->save($word);
             }
         } catch (AudioFileCantParsedException $e) {

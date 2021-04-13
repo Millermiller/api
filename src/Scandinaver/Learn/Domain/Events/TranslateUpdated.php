@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Events;
 
-
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Shared\DomainEvent;
 

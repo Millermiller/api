@@ -14,7 +14,7 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Learn\Application\Handler\Query
  */
-class FindAudioHandler implements FindAudioHandlerInterface
+class FindAudioHandler extends AbstractHandler implements FindAudioHandlerInterface
 {
     private AudioService $audioService;
 
@@ -29,7 +29,7 @@ class FindAudioHandler implements FindAudioHandlerInterface
      * @return string
      * @throws WordNotFoundException
      */
-    public function handle($query)
+    public function handle($query): string
     {
         return $this->audioService->parse($query->getWord());
     }

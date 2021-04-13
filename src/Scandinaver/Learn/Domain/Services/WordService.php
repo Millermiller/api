@@ -14,7 +14,6 @@ use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class WordService
@@ -93,41 +92,14 @@ class WordService implements BaseServiceInterface
         return $this->translateRepository->searchByIds([$word]);
     }
 
-    /**
-     * @param  string  $language
-     *
-     * @return array
-     * @throws LanguageNotFoundException
-     */
-    public function getSentences(string $language): array
-    {
-        $language = $this->getLanguage($language);
-
-        $result = [];
-
-        /** @var Card[] $cards */
-        $cards = $this->cardRepository->findBy(
-            [
-                'language' => $language,
-                'type'     => 1,
-            ]
-        );
-
-        foreach ($cards as $card) {
-            $result[] = $card->toDTO();
-        }
-
-        return $result;
-    }
-
     public function all(): array
     {
         // TODO: Implement all() method.
     }
 
-    public function one(int $id): DTO
+    public function one(int $id): Word
     {
-        // TODO: Implement one() method.
+        return new Word();
     }
 
 }

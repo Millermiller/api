@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Events;
 
-
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Shared\DomainEvent;

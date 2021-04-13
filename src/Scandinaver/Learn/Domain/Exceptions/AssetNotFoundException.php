@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Exceptions;
 
-
 use Exception;
 
 /**

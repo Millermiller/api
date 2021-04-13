@@ -3,11 +3,13 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use League\Fractal\Resource\Item;
 use Scandinaver\RBAC\Domain\Contract\Query\PermissionHandlerInterface;
 use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
-use Scandinaver\RBAC\Domain\Model\PermissionDTO;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
+use Scandinaver\RBAC\UI\Resources\PermissionTransformer;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -15,13 +17,14 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\RBAC\Application\Handler\Query
  */
-class PermissionHandler implements PermissionHandlerInterface
+class PermissionHandler extends AbstractHandler implements PermissionHandlerInterface
 {
 
     private RBACService $service;
 
     public function __construct(RBACService $service)
     {
+        parent::__construct();
 
         $this->service = $service;
     }
@@ -29,11 +32,14 @@ class PermissionHandler implements PermissionHandlerInterface
     /**
      * @param  PermissionQuery|Query  $query
      *
-     * @return PermissionDTO
      * @throws PermissionNotFoundException
      */
-    public function handle($query): PermissionDTO
+    public function handle($query): void
     {
-        return $this->service->getPermission($query->getId())->toDTO();
+        $permission = $this->service->getPermission($query->getId());
+
+        $this->fractal->parseIncludes('group');
+
+        $this->resource = new Item($permission, new PermissionTransformer());
     }
 } 

@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Common\Application\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Common\Domain\Contract\HashInterface;
 use Scandinaver\Common\Domain\Contract\RedisInterface;

@@ -71,10 +71,6 @@ class Puzzle extends AggregateRoot
         $this->text = $text;
     }
 
-    public function toDTO(): PuzzleDTO
-    {
-        return new PuzzleDTO($this);
-    }
 
     public function getTranslate(): PuzzleTranslate
     {

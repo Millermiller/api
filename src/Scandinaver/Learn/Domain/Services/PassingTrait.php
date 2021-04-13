@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
-
 use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\PassingNotFoundException;

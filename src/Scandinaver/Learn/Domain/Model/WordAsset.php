@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Model;
 
-
 use Scandinaver\Learn\Domain\Contract\AssetInterface;
 
 /**

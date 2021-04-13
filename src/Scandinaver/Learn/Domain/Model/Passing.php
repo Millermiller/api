@@ -6,7 +6,6 @@ namespace Scandinaver\Learn\Domain\Model;
 use DateTime;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -52,11 +51,6 @@ class Passing extends AggregateRoot
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function toDTO(): DTO
-    {
-        return new PassingDTO($this);
     }
 
     public function delete()

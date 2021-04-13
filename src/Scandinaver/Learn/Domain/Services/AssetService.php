@@ -9,13 +9,14 @@ use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
+use Scandinaver\Learn\Domain\DTO\AssetDTO;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
 use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\{Asset, AssetDTO, SentenceAsset, WordAsset};
+use Scandinaver\Learn\Domain\Model\{Asset};
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\User;
@@ -43,7 +44,7 @@ class AssetService implements BaseServiceInterface
         AssetRepositoryInterface $assetRepository,
         PersonalAssetRepositoryInterface $personalAssetRepository
     ) {
-        $this->passingRepository        = $passingRepository;
+        $this->passingRepository       = $passingRepository;
         $this->assetRepository         = $assetRepository;
         $this->personalAssetRepository = $personalAssetRepository;
     }
@@ -65,65 +66,26 @@ class AssetService implements BaseServiceInterface
      * @param  User   $user
      * @param  array  $data
      *
-     * @return AssetDTO
+     * @return Asset
      * @throws LanguageNotFoundException
      * @throws Exception
      */
-    public function create(User $user, array $data): AssetDTO
+    public function create(User $user, array $data): Asset
     {
         $language = $this->getLanguage($data['language']);
 
-        $data = [
-            'title'    => $data['title'],
-            'language' => $language,
-            'user'     => $user,
-            'basic'    => $data['basic'],
-            'level'    => $data['level'],
-            'type'     => $data['type']
-        ];
+        $assetDTO = new AssetDTO();
 
-        $asset = AssetFactory::build($data);
-
-        $this->assetRepository->save($asset);
-
-        return $asset->toDTO();
-    }
-
-    /**
-     * @param  string  $language
-     * @param  int     $type
-     *
-     * @return Asset
-     * @throws LanguageNotFoundException|BindingResolutionException
-     * @throws Exception
-     */
-    public function addBasic(string $language, int $type): Asset
-    {
-        $language = $this->getLanguage($language);
-
-        switch ($type) {
-            case Asset::TYPE_WORDS:
-                $asset = new WordAsset('New asset', 1, 0, $language);
-                break;
-            case Asset::TYPE_SENTENCES:
-                $asset = new SentenceAsset('New asset', 1, 0, $language);
-                break;
-            default:
-                throw new Exception('undefined type');
+        $assetDTO->setTitle($data['title']);
+        $assetDTO->setLanguage($language);
+        $assetDTO->setBasic((bool)$data['basic']);
+        $assetDTO->setType($data['type']);
+        $assetDTO->setLevel($data['level']);
+        if ((bool)$data['basic'] === FALSE) {
+            $assetDTO->setUser($user);
         }
 
-        $repository = AssetRepositoryFactory::getByType($type);
-
-        /** @var Asset $lastAsset */
-        $lastAsset = $repository->getLastAsset($language, $type);
-        if ($lastAsset === NULL) {
-            $level = 1;
-        }
-        else {
-            $level = $lastAsset->getLevel() + 1;
-        }
-
-        $asset->setLevel($level);
+        $asset = AssetFactory::fromDTO($assetDTO);
 
         $this->assetRepository->save($asset);
 
@@ -155,17 +117,13 @@ class AssetService implements BaseServiceInterface
      */
     public function getAssets(string $language, int $type): array
     {
-        $result     = [];
         $language   = $this->getLanguage($language);
         $repository = AssetRepositoryFactory::getByType($type);
 
         /** @var Asset[] $assets */
         $assets = $repository->getByLanguage($language);
-        foreach ($assets as $asset) {
-            $result[] = $asset->toDTO();
-        }
 
-        return $result;
+        return $assets;
     }
 
     /**
@@ -173,7 +131,7 @@ class AssetService implements BaseServiceInterface
      * @param  User    $user
      * @param  int     $type
      *
-     * @return array
+     * @return array|AssetDTO[]
      * @throws LanguageNotFoundException|BindingResolutionException
      */
     public function getAssetsByType(string $language, User $user, int $type): array
@@ -189,24 +147,25 @@ class AssetService implements BaseServiceInterface
         $isNextAssetAvailable = FALSE;
 
         /** @var Asset $asset */
-        foreach ($assets as &$asset) {
+        foreach ($assets as $asset) {
 
-            $dto = $asset->toDTO();
+            $assetDTO = AssetFactory::toDTO($asset);
 
             $result = $asset->getBestResultForUser($user);
-            $dto->setBestResult($result);
+            $assetDTO->setBestResult($result);
 
             if ($asset->isFirstAsset() || $isNextAssetAvailable) {
-                $dto->setActive(TRUE);
+                $assetDTO->setActive(TRUE);
             }
 
+            $assetDTO->setCompleted($asset->isCompletedByUser($user));
             $isNextAssetAvailable = $asset->isCompletedByUser($user);
 
-            if ($asset->getLevel() <= 10 || $user->isPremium()) { // TODO: implement settings
-                $dto->setAvailable(TRUE);
+            if ($asset->getLevel() <= 5 || $user->isPremium()) { // TODO: implement settings
+                $assetDTO->setAvailable(TRUE);
             }
 
-            $data[] = $dto;
+            $data[] = $assetDTO;
         }
 
         return $data;
@@ -216,7 +175,7 @@ class AssetService implements BaseServiceInterface
      * @param  string  $language
      * @param  User    $user
      *
-     * @return array
+     * @return array|AssetDTO[]
      * @throws LanguageNotFoundException
      */
     public function getPersonalAssets(string $language, User $user): array
@@ -224,30 +183,32 @@ class AssetService implements BaseServiceInterface
         $language = $this->getLanguage($language);
 
         $personalAssets = $user->getPersonalAssets($language);
-        $personalData = [];
+        $personalData   = [];
         foreach ($personalAssets as $personalAsset) {
-            $dto = $personalAsset->toDTO();
+
+            $assetDTO = AssetFactory::toDTO($personalAsset);
 
             if ($user->isPremium()) {
-                $dto->setActive(TRUE);
-                $dto->setAvailable(TRUE);
+                $assetDTO->setActive(TRUE);
+                $assetDTO->setAvailable(TRUE);
             }
 
             if ($personalAsset->isFavorite()) {
-                $dto->setActive(TRUE);
-                $dto->setAvailable(TRUE);
+                $assetDTO->setActive(TRUE);
+                $assetDTO->setAvailable(TRUE);
             }
 
             $result = $personalAsset->getBestResultForUser($user);
-            $dto->setBestResult($result);
+            $assetDTO->setBestResult($result);
 
-            $personalData[] = $dto;
+            $personalData[] = $assetDTO;
         }
 
         return $personalData;
     }
 
     /**
+     * @param  User   $user
      * @param  int    $asset
      * @param  array  $data
      *
@@ -257,14 +218,24 @@ class AssetService implements BaseServiceInterface
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function updateAsset(int $asset, array $data): AssetDTO
+    public function updateAsset(User $user, int $asset, array $data): AssetDTO
     {
         $asset      = $this->getAsset($asset);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
-        /** @var  Asset $asset */
-        $asset = $repository->update($asset, $data);
 
-        return $asset->toDTO();
+        $payloadData = [ //TODO: implement language
+            'title' => $data['title'],
+            'type'  => $data['type'],
+            'level' => $data['level'],
+        ];
+
+        /** @var  Asset $asset */
+        $asset = $repository->update($asset, $payloadData);
+
+        $assetDTO = AssetFactory::toDTO($asset);
+        $assetDTO->setBestResult($asset->getBestResultForUser($user));
+
+        return $assetDTO;
     }
 
     /**
@@ -376,7 +347,6 @@ class AssetService implements BaseServiceInterface
      * @param  int   $asset
      * @param  int   $card
      *
-     * @return mixed
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws BindingResolutionException
@@ -384,7 +354,7 @@ class AssetService implements BaseServiceInterface
      * @throws CardNotFoundException
      * @throws CardAlreadyAddedException
      */
-    public function addCard(User $user, int $asset, int $card)
+    public function addCard(User $user, int $asset, int $card): void
     {
         $asset = $this->getAsset($asset);
         $card  = $this->getCard($card);
@@ -394,8 +364,6 @@ class AssetService implements BaseServiceInterface
         $asset->addCard($card);
 
         $repository->save($asset);
-
-        return $asset->toDTO();
     }
 
     /**
@@ -405,7 +373,7 @@ class AssetService implements BaseServiceInterface
      * @throws AssetNotFoundException
      * @throws CardNotFoundException
      */
-    public function removeCard(int $asset, int $card)
+    public function removeCard(int $asset, int $card): void
     {
         $asset = $this->getAsset($asset);
         $card  = $this->getCard($card);

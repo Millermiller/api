@@ -16,7 +16,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 class CreateCardCommand implements Command
 {
-
     private User $user;
 
     private string $languageId;

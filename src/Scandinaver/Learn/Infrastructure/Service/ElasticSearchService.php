@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Infrastructure\Service;
 
-
 use Elasticsearch\Client;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
@@ -27,8 +26,14 @@ class ElasticSearchService implements SearchInterface
         $this->cardRepository = $cardRepository;
     }
 
-    public function search(Language $language, string $query, bool $isSentence): array
+    public function search(Language $language, ?string $query, bool $isSentence): array
     {
+        if ($query === NULL) {
+            return $this->cardRepository->findBy([
+                'type' => (int)$isSentence
+            ]);
+        }
+
         $cards  = [];
         $model  = new Word();
         $result = $this->elasticsearch->search([

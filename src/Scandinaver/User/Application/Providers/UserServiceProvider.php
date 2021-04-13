@@ -57,6 +57,16 @@ class UserServiceProvider extends ServiceProvider
             'Scandinaver\User\Application\Handler\Command\UpdateUserHandler'
         );
 
+        $this->app->bind(
+            'UpdateUserSettingsHandlerInterface',
+            'Scandinaver\User\Application\Handler\Command\UpdateUserSettingsHandler'
+        );
+
+        $this->app->bind(
+            'UploadAvatarHandlerInterface',
+            'Scandinaver\User\Application\Handler\Command\UploadAvatarHandler'
+        );
+
         /** QUERY **/
         $this->app->bind(
             'GetStateHandlerInterface',

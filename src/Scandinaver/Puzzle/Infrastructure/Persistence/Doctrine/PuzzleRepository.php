@@ -50,7 +50,7 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
      */
     public function addForUser(User $user, Puzzle $puzzle): void
     {
-        $user->addPuzzle($puzzle);
-        $this->_em->flush();
+        //$user->addPuzzle($puzzle);
+       // $this->_em->flush();
     }
 }

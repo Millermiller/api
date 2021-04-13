@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Common\Domain\Model;
 
-
 use Scandinaver\Shared\DTO;
 
 /**

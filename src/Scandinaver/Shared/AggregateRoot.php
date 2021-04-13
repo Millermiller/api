@@ -16,8 +16,6 @@ abstract class AggregateRoot implements EqualInterface
 
     abstract public function getId(): int;
 
-    abstract public function toDTO(): DTO;
-
     public function isEqualTo(EqualInterface $to): bool
     {
         return (string)$to->getId() === (string)$this->getId();

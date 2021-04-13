@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Contract\Command\AddCardToAssetHandlerInterface;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
@@ -13,6 +14,7 @@ use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
 use Scandinaver\Learn\Domain\Model\AssetDTO;
 use Scandinaver\Learn\Domain\Services\AssetService;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -20,12 +22,14 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\Application\Handler\Command
  */
-class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
+class AddCardToAssetHandler extends AbstractHandler implements AddCardToAssetHandlerInterface
 {
     protected AssetService $service;
 
     public function __construct(AssetService $assetService)
     {
+        parent::__construct();
+
         $this->service = $assetService;
     }
 
@@ -46,5 +50,7 @@ class AddCardToAssetHandler implements AddCardToAssetHandlerInterface
             $command->getAsset(),
             $command->getCard()
         );
+
+        $this->resource = new NullResource();
     }
 }

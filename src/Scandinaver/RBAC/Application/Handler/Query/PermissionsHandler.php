@@ -3,9 +3,12 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use League\Fractal\Resource\Collection;
 use Scandinaver\RBAC\Domain\Contract\Query\PermissionsHandlerInterface;
 use Scandinaver\RBAC\Domain\Services\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionsQuery;
+use Scandinaver\RBAC\UI\Resources\PermissionTransformer;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -13,23 +16,27 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\RBAC\Application\Handler\Query
  */
-class PermissionsHandler implements PermissionsHandlerInterface
+class PermissionsHandler extends AbstractHandler implements PermissionsHandlerInterface
 {
 
     private RBACService $service;
 
     public function __construct(RBACService $service)
     {
+        parent::__construct();
+
         $this->service = $service;
     }
 
     /**
      * @param  PermissionsQuery|Query  $query
-     *
-     * @return array
      */
-    public function handle($query): array
+    public function handle($query): void
     {
-        return $this->service->getAllPermissions();
+        $permissions = $this->service->getAllPermissions();
+
+        $this->fractal->parseIncludes('group');
+
+        $this->resource = new Collection($permissions, new PermissionTransformer());
     }
 } 

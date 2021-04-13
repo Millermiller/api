@@ -83,11 +83,6 @@ class Intro extends AggregateRoot
         $this->sort = $sort;
     }
 
-    public function toDTO(): IntroDTO
-    {
-        return new IntroDTO($this);
-    }
-
     public function getContent(): ?string
     {
         return $this->content;

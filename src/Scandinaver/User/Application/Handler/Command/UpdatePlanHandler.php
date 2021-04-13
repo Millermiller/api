@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 use Scandinaver\User\Domain\Contract\Command\UpdatePlanHandlerInterface;
 use Scandinaver\User\UI\Command\UpdatePlanCommand;
@@ -12,10 +13,11 @@ use Scandinaver\User\UI\Command\UpdatePlanCommand;
  *
  * @package Scandinaver\User\Application\Handler\Command
  */
-class UpdatePlanHandler implements UpdatePlanHandlerInterface
+class UpdatePlanHandler extends AbstractHandler implements UpdatePlanHandlerInterface
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**

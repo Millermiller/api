@@ -4,9 +4,9 @@
 namespace Scandinaver\Common\Domain\Services;
 
 use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
+use Scandinaver\Common\Domain\DTO\IntroDTO;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Model\Intro;
-use Scandinaver\Common\Domain\Model\IntroDTO;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**
@@ -30,27 +30,18 @@ class IntroService implements BaseServiceInterface
 
     public function all(): array
     {
-        $result = [];
-        /** @var Intro[] $intros */
-        $intros = $this->introRepository->findAll();
-        foreach ($intros as $intro) {
-            $result[] = $intro->toDTO();
-        }
-
-        return $result;
+        return $this->introRepository->findAll();
     }
 
     /**
      * @param  int  $id
      *
-     * @return IntroDTO
+     * @return Intro
      * @throws IntroNotFoundException
      */
-    public function one(int $id): IntroDTO
+    public function one(int $id): Intro
     {
-        $intro = $this->getIntro($id);
-
-        return $intro->toDTO();
+        return $this->getIntro($id);
     }
 
     /**
@@ -58,44 +49,45 @@ class IntroService implements BaseServiceInterface
      */
     public function groupped(): array
     {
-        $result = [];
-        /** @var Intro[] $intros */
-        $intros = $this->introRepository->getGrouppedIntro();
-        foreach ($intros as $intro) {
-            $result[] = $intro->toDTO();
-        }
-
-        return $result;
+        return $this->introRepository->getGrouppedIntro();
     }
 
     /**
      * @param  array  $data
      *
-     * @return IntroDTO
+     * @return Intro
      */
-    public function create(array $data): IntroDTO
+    public function create(array $data): Intro
     {
-        $intro = IntroFactory::build($data);
+        $introDTO = new IntroDTO();
+        $introDTO->setPage($data['page']);
+        $introDTO->setTarget($data['target']);
+        $introDTO->setContent($data['content']);
+        $introDTO->setTooltipClass($data['tooltipClass']);
+        $introDTO->setSort($data['sort']);
+        $introDTO->setPosition($data['position']);
+
+        $intro = IntroFactory::fromDTO($introDTO);
 
         $this->introRepository->save($intro);
 
-        return $intro->toDTO();
+        return $intro;
     }
 
     /**
      * @param  int    $id
      * @param  array  $data
      *
-     * @return IntroDTO
+     * @return Intro
      * @throws IntroNotFoundException
      */
-    public function update(int $id, array $data): IntroDTO
+    public function update(int $id, array $data): Intro
     {
         $intro = $this->getIntro($id);
 
         $this->introRepository->update($intro, $data);
 
-        return $intro->toDTO();
+        return $intro;
     }
 
     /**

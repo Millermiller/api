@@ -15,7 +15,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Permissions\Card;
-use Scandinaver\Learn\UI\Command\AddBasicLevelCommand;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
 use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
 use Scandinaver\Learn\UI\Command\CreateAssetCommand;
@@ -45,25 +44,24 @@ use Scandinaver\User\Domain\Model\User;
  */
 class AssetController extends Controller
 {
-
     /**
      * @param  string  $languageId
      *
      * @return JsonResponse
-     * @throws AuthorizationException|BindingResolutionException
+     * @throws AuthorizationException
      */
     public function index(string $languageId): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::VIEW);
 
         return response()->json([
-                                    'words'     => $this->queryBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_WORDS)),
-                                    'sentences' => $this->queryBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_SENTENCES)),
-                                ]);
+            'words'     => $this->queryBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_WORDS)),
+            'sentences' => $this->queryBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_SENTENCES)),
+        ]);
     }
 
     /**
-     * @param  int     $id
+     * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
@@ -93,7 +91,7 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  int      $id
+     * @param  int                 $id
      * @param  UpdateAssetRequest  $request
      *
      * @return JsonResponse
@@ -144,17 +142,6 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  string  $languageId
-     *
-     * @return JsonResponse
-     * @throws EventBusNotFoundException
-     */
-    public function getAllSentences(string $languageId): JsonResponse
-    {
-        return $this->execute(new GetUnusedSentencesQuery($languageId));
-    }
-
-    /**
      * @param  PersonalRequest  $request
      *
      * @return JsonResponse
@@ -176,19 +163,6 @@ class AssetController extends Controller
     public function findAudio(int $wordId): JsonResponse
     {
         return $this->execute(new FindAudioQuery($wordId));
-    }
-
-    /**
-     * @param  int  $assetId
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function showAsset(int $assetId): JsonResponse
-    {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::SHOW, $assetId);
-
-        return response()->json($assetId);
     }
 
     /**
@@ -259,18 +233,6 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  string   $languageId
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     * @throws EventBusNotFoundException
-     */
-    public function addBasicAssetLevel(string $languageId, Request $request): JsonResponse
-    {
-        return $this->execute(new AddBasicLevelCommand($languageId, $request->toArray()), JsonResponse::HTTP_CREATED);
-    }
-
-    /**
      * @param  Request  $request
      *
      * @return JsonResponse
@@ -319,7 +281,8 @@ class AssetController extends Controller
     {
         Gate::authorize(Card::DELETE, [$card, $asset]); //todo: change permission
 
-        return $this->execute(new DeleteCardFromAssetCommand(Auth::user(), $asset, $card), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteCardFromAssetCommand(Auth::user(), $asset, $card),
+            JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**

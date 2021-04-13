@@ -14,7 +14,6 @@ use Scandinaver\Shared\Contract\Command;
  */
 class CreatePermissionGroupCommand implements Command
 {
-
     private array $data;
 
     public function __construct(array $data)

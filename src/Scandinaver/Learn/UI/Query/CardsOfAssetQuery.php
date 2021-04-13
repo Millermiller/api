@@ -15,15 +15,14 @@ use Scandinaver\User\Domain\Model\User;
  */
 class CardsOfAssetQuery implements Query
 {
-
     private User $user;
 
     private int $asset;
 
     public function __construct(User $user, int $asset)
     {
-        $this->user     = $user;
-        $this->asset    = $asset;
+        $this->user  = $user;
+        $this->asset = $asset;
     }
 
     public function getUser(): User

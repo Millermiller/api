@@ -70,7 +70,7 @@ class User extends Authenticatable
             function ($user) {
                 /** @var User $user */
                 activity('admin')->causedBy($user)->log(
-                    'Удален пользователь id:'.$user->id.' login: '.$user->login
+                    'Удален пользователь id:' . $user->id . ' login: ' . $user->login
                 );
 
                 Result::where('user_id', $user->id)->delete();
@@ -177,11 +177,11 @@ class User extends Authenticatable
     public function getAvatarAttribute(): string
     {
         if ($this->photo) {
-            if (file_exists(public_path('/uploads/u/a/').$this->photo)) {
-                return url('/uploads/u/a/'.$this->photo);
+            if (file_exists(public_path('/uploads/u/a/') . $this->photo)) {
+                return url('/uploads/u/a/' . $this->photo);
             }
             else {
-                $avatar = Image::make(public_path('/uploads/u/').$this->photo);
+                $avatar = Image::make(public_path('/uploads/u/') . $this->photo);
                 $avatar->resize(
                     300,
                     NULL,
@@ -190,9 +190,9 @@ class User extends Authenticatable
                         $constraint->aspectRatio();
                     }
                 );
-                $avatar->save(public_path('/uploads/u/a/'.$this->photo));
+                $avatar->save(public_path('/uploads/u/a/' . $this->photo));
 
-                return url('/uploads/u/a/'.$this->photo);
+                return url('/uploads/u/a/' . $this->photo);
             }
         }
         else {

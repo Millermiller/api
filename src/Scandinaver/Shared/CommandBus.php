@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Shared;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use ReflectionClass;
 use ReflectionException;
 use Scandinaver\Shared\Contract\Command;
-use Scandinaver\Shared\Contract\CommandHandler;
 
 /**
  * Class CommandBus
@@ -26,20 +26,24 @@ class CommandBus
      */
     public function execute(Command $command)
     {
-        return $this->resolveHandler($command)->handle($command);
+        $handler = $this->resolveHandler($command);
+        $handler->handle($command);
+        return $handler->processData();
     }
 
-    public function resolveHandler(Command $command): ?CommandHandler
+    public function resolveHandler(Command $command): ?AbstractHandler
     {
         try {
             return app()->make($this->getHandlerClass($command));
-        } catch (ReflectionException $e) {
-            return null;
+        } catch (ReflectionException | BindingResolutionException $e) {
+            return NULL;
         }
     }
 
     /**
-     * @throws ReflectionException
+     * @param  Command  $command
+     *
+     * @return string
      */
     public function getHandlerClass(Command $command): string
     {

@@ -1,15 +1,17 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Reader\ReaderController;
+use App\Http\Controllers\Sub\Frontend\IndexController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/state', 'App\Http\Controllers\Sub\Frontend\IndexController@state')->name('state');
-Route::get('/me', 'App\Http\Controllers\Sub\Frontend\IndexController@getUser')->name('user-info');
-Route::get('/info', 'App\Http\Controllers\Sub\Frontend\IndexController@getInfo')->name('site-info');
+Route::get('/state',  [IndexController::class, 'state'])->name('state');
+Route::get('/me',     [IndexController::class, 'getUser'])->name('user-info');
+Route::get('/info',   [IndexController::class, 'getInfo'])->name('site-info');
 
-Route::post('/feedback',
-    'App\Http\Controllers\Sub\Frontend\IndexController@feedback')->name('subdomain-feedback')->middleware(['addUserName']);
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('subdomain-feedback')->middleware(['addUserName']);
 
-Route::get('/{language}/read', 'App\Http\Controllers\Reader\ReaderController@index')
-    ->name('read')->middleware('file');
+Route::get('/{language}/read', [ReaderController::class, 'index'])->name('read')->middleware('file');
 
-Route::get('/{language}/dashboard', 'App\Http\Controllers\DashboardController@all');
+Route::get('/{language}/dashboard', [DashboardController::class, 'all']);

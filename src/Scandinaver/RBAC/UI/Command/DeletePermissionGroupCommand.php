@@ -14,7 +14,6 @@ use Scandinaver\Shared\Contract\Command;
  */
 class DeletePermissionGroupCommand implements Command
 {
-
     private int $id;
 
     public function __construct(int $id)

@@ -46,26 +46,10 @@ class Word
         return $this->id;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            'id'        => $this->id,
-            'value'     => $this->word,
-            'audio'     => $this->audio,
-            'sentence'  => $this->sentence,
-            'is_public' => $this->isPublic,
-            'creator'   => $this->creator,
-        ];
-    }
-
     public function getWord(): string
     {
         return $this->word;
     }
-
 
     public function setValue(string $word): void
     {
@@ -139,8 +123,8 @@ class Word
     public function toSearchableArray(): array
     {
         return [
-            'word' => $this->word,
-            'is_sentence' => $this->sentence ?? 0
+            'word'        => $this->word,
+            'is_sentence' => $this->sentence ?? 0,
         ];
     }
 

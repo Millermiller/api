@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\Domain\Events;
 
-
 use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Shared\DomainEvent;
 
@@ -14,7 +13,6 @@ use Scandinaver\Shared\DomainEvent;
  */
 class CategoryDeleted implements DomainEvent
 {
-
     private Category $category;
 
     public function __construct(Category $category)

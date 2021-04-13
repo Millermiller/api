@@ -89,7 +89,7 @@ class Text extends Model
             }
 
 
-            if ($counter < 3 || Auth::user()->getActive()) {
+            if ($counter < 3 || Auth::user()->isActive()) {
                 $r['available'] = true;
             } else {
                 $r['available'] = false;

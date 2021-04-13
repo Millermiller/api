@@ -3,10 +3,13 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
+use League\Fractal\Resource\Collection;
 use Scandinaver\Learn\Domain\Contract\Query\GetTranslatesByWordHandlerInterface;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Services\WordService;
 use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
+use Scandinaver\Learn\UI\Resources\TranslateTransformer;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Query;
 
 /**
@@ -14,12 +17,14 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @package Scandinaver\Learn\Application\Handler\Query
  */
-class GetTranslatesByWordHandler implements GetTranslatesByWordHandlerInterface
+class GetTranslatesByWordHandler extends AbstractHandler extends AbstractHandler implements GetTranslatesByWordHandlerInterface
 {
     private WordService $wordService;
 
     public function __construct(WordService $wordService)
     {
+        parent::__construct();
+
         $this->wordService = $wordService;
     }
 
@@ -30,6 +35,10 @@ class GetTranslatesByWordHandler implements GetTranslatesByWordHandlerInterface
      */
     public function handle($query): array
     {
-        return $this->wordService->getTranslates($query->getWord());
+        $translates = $this->wordService->getTranslates($query->getWord());
+
+        $this->resource = new Collection($translates, new TranslateTransformer());
+
+        return $this->processData();
     }
 } 

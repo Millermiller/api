@@ -12,7 +12,7 @@ interface QueryHandler
 {
 
     /**
-     * @param  \Scandinaver\Shared\Contract\Query  $query
+     * @param  Query  $query
      *
      * @return mixed
      */

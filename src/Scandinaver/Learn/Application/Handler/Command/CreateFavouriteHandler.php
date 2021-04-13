@@ -3,11 +3,13 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
+use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Contract\Command\CreateFavouriteHandlerInterface;
 use Scandinaver\Learn\Domain\Services\{AssetService, FavouriteService};
 use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
 use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -15,17 +17,15 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Learn\Application\Handler\Command
  */
-class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
+class CreateFavouriteHandler extends AbstractHandler implements CreateFavouriteHandlerInterface
 {
     protected FavouriteService $favouriteService;
 
-    protected AssetService $assetService;
-
-    public function __construct(AssetService $assetService, FavouriteService $favouriteService)
+    public function __construct(FavouriteService $favouriteService)
     {
-        $this->favouriteService = $favouriteService;
+        parent::__construct();
 
-        $this->assetService = $assetService;
+        $this->favouriteService = $favouriteService;
     }
 
     /**
@@ -37,5 +37,7 @@ class CreateFavouriteHandler implements CreateFavouriteHandlerInterface
     public function handle($command): void
     {
         $this->favouriteService->create($command->getUser(), $command->getCard());
+
+        $this->resource = new NullResource();
     }
 }

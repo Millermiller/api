@@ -5,9 +5,10 @@ namespace Scandinaver\Blog\Domain\Services;
 
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
+use Scandinaver\Blog\Domain\DTO\PostDTO;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
+use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Blog\Domain\Model\Post;
-use Scandinaver\Blog\Domain\Model\PostDTO;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Model\User;
 
@@ -33,28 +34,18 @@ class BlogService implements BaseServiceInterface
 
     public function all(): array
     {
-        $result = [];
-
-        /** @var Post[] $posts */
-        $posts = $this->postRepository->findAll();
-        foreach ($posts as $post) {
-            $result[] = $post->toDTO();
-        }
-
-        return $result;
+        return $this->postRepository->findAll();
     }
 
     /**
      * @param  int  $id
      *
-     * @return PostDTO
+     * @return Post
      * @throws PostNotFoundException
      */
-    public function one(int $id): PostDTO
+    public function one(int $id): Post
     {
-        $post = $this->getPost($id);
-
-        return $post->toDTO();
+        return $this->getPost($id);
     }
 
     /**
@@ -74,35 +65,41 @@ class BlogService implements BaseServiceInterface
         return $post;
     }
 
-    public function create(User $user, array $data): PostDTO
+    public function create(User $user, array $data): Post
     {
         $categoryId = $data['category'];
+        /** @var Category $category */
+        $category = $this->categoryRepository->find($categoryId);
 
-        $category         = $this->categoryRepository->find($categoryId);
-        $data['category'] = $category;
-        $data['status']   = $data['status'] ?? 0;
+        $postDTO = new PostDTO();
+        $postDTO->setTitle($data['title']);
+        $postDTO->setCategory($category);
+        $postDTO->setStatus($data['status'] ?? 0);
+        $postDTO->setContent($data['content']);
+        $postDTO->setAnonce($data['anonce'] ?? '');
+        $postDTO->setUser($user);
 
-        $post = PostFactory::build($data);
+        $post = PostFactory::fromDTO($postDTO);
 
         $this->postRepository->save($post);
 
-        return $post->toDTO();
+        return $post;
     }
 
     /**
      * @param  int    $post
      * @param  array  $data
      *
-     * @return PostDTO
+     * @return Post
      * @throws PostNotFoundException
      */
-    public function updatePost(int $post, array $data): PostDTO
+    public function updatePost(int $post, array $data): Post
     {
         $post = $this->getPost($post);
 
         $this->postRepository->update($post, $data);
 
-        return $post->toDTO();
+        return $post;
     }
 
     /**

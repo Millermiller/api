@@ -15,7 +15,6 @@ use Scandinaver\User\Domain\Model\User;
  */
 class AssetsQuery implements Query
 {
-
     private User $user;
 
     private string $language;

@@ -3,10 +3,12 @@
 
 namespace Scandinaver\Common\Application\Handler\Command;
 
+use League\Fractal\Resource\NullResource;
 use Scandinaver\Common\Domain\Contract\Command\DeleteIntroHandlerInterface;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Services\IntroService;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
+use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\Command;
 
 /**
@@ -14,13 +16,15 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @package Scandinaver\Common\Application\Handler\Command
  */
-class DeleteIntroHandler implements DeleteIntroHandlerInterface
+class DeleteIntroHandler extends AbstractHandler implements DeleteIntroHandlerInterface
 {
 
     private IntroService $service;
 
     public function __construct(IntroService $service)
     {
+        parent::__construct();
+
         $this->service = $service;
     }
 
@@ -32,5 +36,7 @@ class DeleteIntroHandler implements DeleteIntroHandlerInterface
     public function handle($command): void
     {
         $this->service->delete($command->getId());
+
+        $this->resource = new NullResource();
     }
 } 

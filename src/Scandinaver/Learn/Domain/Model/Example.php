@@ -75,9 +75,4 @@ class Example
     {
         $this->card = $card;
     }
-
-    public function toDTO(): ExampleDTO
-    {
-        return new ExampleDTO($this);
-    }
 }
