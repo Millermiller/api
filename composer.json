@@ -1,6 +1,6 @@
 {
     "name": "laravel/laravel",
-    "version": "0.10.4",
+    "version": "0.10.5",
     "description": "The Laravel Framework.",
     "keywords": [
         "framework",
@@ -44,6 +44,7 @@
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
+        "nunomaduro/collision": "^5.4",
         "phpunit/phpunit": "^9.0",
         "symfony/thanks": "^1.0"
     },
