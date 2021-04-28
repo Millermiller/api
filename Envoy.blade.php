@@ -26,7 +26,7 @@
 @task('run_composer')
     echo "Starting deployment ({{ $release }})"
     cd {{ $new_release_dir }}
-    composer install --prefer-dist --no-scripts -q -o
+    composer install --prefer-dist --no-scripts -o
 @endtask
 
 @task('update_symlinks')
