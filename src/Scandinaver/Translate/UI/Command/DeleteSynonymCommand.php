@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeleteSynonymCommand
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see     \Scandinaver\Translate\Application\Handler\Command\DeleteSynonymHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\DeleteSynonymCommandHandler
  */
-class DeleteSynonymCommand implements Command
+class DeleteSynonymCommand implements CommandInterface
 {
     private int $synonym;
 

@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class PermissionQuery
  *
  * @package Scandinaver\RBAC\UI\Query
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Query\PermissionHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Query\PermissionQueryHandler
  */
-class PermissionQuery implements Query
+class PermissionQuery implements CommandInterface
 {
     private int $id;
 

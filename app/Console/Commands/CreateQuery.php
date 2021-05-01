@@ -96,7 +96,7 @@ class CreateQuery extends GeneratorCommand
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('createQueryHandler', [
-                'name'   => "{$name}Handler",
+                'name'   => "{$name}QueryHandler",
                 'domain' => $this->domain,
             ]);
     }
@@ -118,20 +118,6 @@ class CreateQuery extends GeneratorCommand
     }
 
     /**
-     * Get the full namespace for a given class, without the class name.
-     *
-     * @param  string  $name
-     *
-     * @return string
-     */
-    protected function getNamespace($name): string
-    {
-        $queryNamespace = str_replace('/', '\\', $this->queryPath);
-
-        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
-    }
-
-    /**
      * Replace the class name for the given stub.
      *
      * @param  string  $stub
@@ -143,12 +129,29 @@ class CreateQuery extends GeneratorCommand
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
-        $handlerClass     = str_replace('Query', 'Handler', $class);
+        $handlerClass     = $class."Handler";
 
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass"],
+        ], [
+            $class,
+            "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass"
+        ],
             $stub);
+    }
+
+    /**
+     * Get the full namespace for a given class, without the class name.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function getNamespace($name): string
+    {
+        $queryNamespace = str_replace('/', '\\', $this->queryPath);
+
+        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
     }
 }

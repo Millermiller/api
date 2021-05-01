@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateCategoryCommand
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Blog\Application\Handler\Command\UpdateCategoryHandler
  */
-class UpdateCategoryCommand implements Command
+class UpdateCategoryCommand implements CommandInterface
 {
     private int $categoryId;
 

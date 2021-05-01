@@ -4,11 +4,11 @@
 namespace Scandinaver\Translate\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Translate\Domain\Model\{Result, Text};
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Translate\Domain\Model\{Result, Text};
 
 /**
  * Class TextRepository
@@ -30,22 +30,22 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         $q = $this->createQueryBuilder('asset');
 
         return $q->select('a')
-            ->from($this->getEntityName(), 'a')
-            ->where('a.level = :level')
-            ->andWhere($q->expr()->eq('a.language', ':language'))
-            ->setParameter('level', 1)
-            ->setParameter('language', $language->getId())
-            ->getQuery()
-            ->getSingleResult();
+                 ->from($this->getEntityName(), 'a')
+                 ->where('a.level = :level')
+                 ->andWhere($q->expr()->eq('a.language', ':language'))
+                 ->setParameter('level', 1)
+                 ->setParameter('language', $language->getId())
+                 ->getQuery()
+                 ->getSingleResult();
     }
 
     /**
-     * @param  User      $user
-     * @param  Language  $language
+     * @param  UserInterface  $user
+     * @param  Language       $language
      *
      * @return array
      */
-    public function getActiveIds(User $user, Language $language): array
+    public function getActiveIds(UserInterface $user, Language $language): array
     {
         $q = $this->_em->createQueryBuilder();
 
@@ -55,18 +55,18 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         );
 
         return $q->select('r.textId')
-            ->from(Result::class, 'r')
-            ->join('r.text', 't')
-            ->where($q->expr()->eq('r.user', ':user'))
-            ->andWhere($q->expr()->eq('t.language', ':language'))
-            ->setParameter('user', $user)
-            ->setParameter('language', $language)
-            ->getQuery()
-            ->getResult('ColumnHydrator');
+                 ->from(Result::class, 'r')
+                 ->join('r.text', 't')
+                 ->where($q->expr()->eq('r.user', ':user'))
+                 ->andWhere($q->expr()->eq('t.language', ':language'))
+                 ->setParameter('user', $user)
+                 ->setParameter('language', $language)
+                 ->getQuery()
+                 ->getResult('ColumnHydrator');
     }
 
 
-    public function getForUser(User $user): array
+    public function getForUser(UserInterface $user): array
     {
         // TODO: Implement getForUser() method.
     }
@@ -81,14 +81,14 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('t')
-            ->from(Text::class, 't')
-            ->where('t.published = :published')
-            ->andWhere($q->expr()->eq('t.language', ':language'))
-            ->setParameter('published', 1)
-            ->setParameter('language', $language)
-            ->orderBy('t.level', 'asc')
-            ->getQuery()
-            ->getResult();
+                 ->from(Text::class, 't')
+                 ->where('t.published = :published')
+                 ->andWhere($q->expr()->eq('t.language', ':language'))
+                 ->setParameter('published', 1)
+                 ->setParameter('language', $language)
+                 ->orderBy('t.level', 'asc')
+                 ->getQuery()
+                 ->getResult();
     }
 
 
@@ -101,13 +101,13 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('t')
-            ->from($this->getEntityName(), 't')
-            ->where('a.level = :level')
-            ->andWhere('a.language = :language')
-            ->setParameter('level', $text->getLevel() + 1)
-            ->setParameter('language', $text->getLanguage())
-            ->getQuery()
-            ->getSingleResult();
+                 ->from($this->getEntityName(), 't')
+                 ->where('a.level = :level')
+                 ->andWhere('a.language = :language')
+                 ->setParameter('level', $text->getLevel() + 1)
+                 ->setParameter('language', $text->getLanguage())
+                 ->getQuery()
+                 ->getSingleResult();
     }
 
     /**TODO: повторяется
@@ -123,10 +123,10 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
         $q = $this->_em->createQueryBuilder();
 
         return $q->select('count(t.id)')
-            ->from($this->getEntityName(), 't')
-            ->where($q->expr()->eq('t.language', ':language'))
-            ->setParameter('language', $language)
-            ->getQuery()
-            ->getSingleScalarResult();
+                 ->from($this->getEntityName(), 't')
+                 ->where($q->expr()->eq('t.language', ':language'))
+                 ->setParameter('language', $language)
+                 ->getQuery()
+                 ->getSingleScalarResult();
     }
 }

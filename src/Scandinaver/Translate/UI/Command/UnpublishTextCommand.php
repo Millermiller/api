@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UnpublishTextCommand
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see     \Scandinaver\Translate\Application\Handler\Command\UnpublishTextHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\UnpublishTextCommandHandler
  */
-class UnpublishTextCommand implements Command
+class UnpublishTextCommand implements CommandInterface
 {
     public function __construct()
     {

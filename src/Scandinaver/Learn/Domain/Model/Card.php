@@ -6,11 +6,11 @@ namespace Scandinaver\Learn\Domain\Model;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Events\TranslateUpdated;
 use Scandinaver\Learn\Domain\Events\WordUpdated;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Card
@@ -28,7 +28,7 @@ class Card extends AggregateRoot
 
     private Translate $translate;
 
-    private ?User $creator = NULL;
+    private ?UserInterface $creator = NULL;
 
     private DateTime $createdAt;
 
@@ -84,7 +84,7 @@ class Card extends AggregateRoot
         $this->translate->setValue($value);
     }
 
-    public function setCreator(User $creator): void
+    public function setCreator(UserInterface $creator): void
     {
         $this->creator = $creator;
     }
@@ -114,7 +114,7 @@ class Card extends AggregateRoot
         return $this->language;
     }
 
-    public function getCreator(): ?User
+    public function getCreator(): ?UserInterface
     {
         return $this->creator;
     }

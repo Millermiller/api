@@ -8,11 +8,11 @@ use Aws\Polly\PollyClient;
 use GuzzleHttp\Psr7\Stream;
 use Scandinaver\Common\Domain\Contract\HashInterface;
 use Scandinaver\Common\Domain\Contract\RedisInterface;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
-use Scandinaver\User\Domain\Model\User;
 use Storage;
 
 /**
@@ -53,14 +53,14 @@ class AmazonReader implements ReaderInterface
     }
 
     /**
-     * @param  User    $user
+     * @param  UserInterface    $user
      * @param  string  $language
      * @param  string  $text
      *
      * @return mixed|string
      * @throws LanguageNotFoundException
      */
-    public function read(User $user, string $language, string $text): string
+    public function read(UserInterface $user, string $language, string $text): string
     {
         $language = $this->getLanguage($language);
         $ssmltext = $this->generateSsmlString($text);

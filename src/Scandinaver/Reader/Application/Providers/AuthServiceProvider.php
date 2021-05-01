@@ -5,8 +5,8 @@ namespace Scandinaver\Reader\Application\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Reader\Domain\Permissions\Reader;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AuthServiceProvider
@@ -17,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Gate::define(Reader::READ, function (User $user) {
+        Gate::define(Reader::READ, function (UserInterface $user) {
             return TRUE;
         });
     }

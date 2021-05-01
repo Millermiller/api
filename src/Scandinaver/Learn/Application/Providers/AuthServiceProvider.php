@@ -5,10 +5,10 @@ namespace Scandinaver\Learn\Application\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Learn\Domain\Permissions\Asset;
 use Scandinaver\Learn\Domain\Permissions\Card;
 use Scandinaver\Learn\Domain\Permissions\Test;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AuthServiceProvider
@@ -20,75 +20,75 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         /* ASSET */
-        Gate::define(Asset::VIEW, function (User $user) {
+        Gate::define(Asset::VIEW, function (UserInterface $user) {
             return $user->can(Asset::VIEW);
         });
 
-        Gate::define(Asset::SHOW, function (User $user, $id) {
+        Gate::define(Asset::SHOW, function (UserInterface $user, $id) {
             return $user->can(Asset::SHOW);
         });
 
-        Gate::define(Asset::CREATE, function (User $user) {
+        Gate::define(Asset::CREATE, function (UserInterface $user) {
             return $user->can(Asset::CREATE);
         });
 
-        Gate::define(Asset::UPDATE, function (User $user, $id) {
+        Gate::define(Asset::UPDATE, function (UserInterface $user, $id) {
             return $user->can(Asset::UPDATE);
         });
 
-        Gate::define(Asset::DELETE, function (User $user, $id) {
+        Gate::define(Asset::DELETE, function (UserInterface $user, $id) {
             return $user->can(Asset::DELETE);
         });
 
-        Gate::define(Asset::ADD_CARD, function (User $user) {
+        Gate::define(Asset::ADD_CARD, function (UserInterface $user) {
             return TRUE;
         });
 
         /* FAVOURITE */
-        Gate::define(Asset::CREATE_FAVOURITE, function (User $user, $id) {
+        Gate::define(Asset::CREATE_FAVOURITE, function (UserInterface $user, $id) {
             return $user->can(Asset::CREATE_FAVOURITE);
         });
 
-        Gate::define(Asset::DELETE_FAVOURITE, function (User $user, $id) {
+        Gate::define(Asset::DELETE_FAVOURITE, function (UserInterface $user, $id) {
             return $user->can(Asset::DELETE_FAVOURITE);
         });
 
         /* CARD */
-        Gate::define(Card::VIEW, function (User $user) {
+        Gate::define(Card::VIEW, function (UserInterface $user) {
             return $user->can(Card::VIEW);
         });
 
-        Gate::define(Card::CREATE, function (User $user) {
+        Gate::define(Card::CREATE, function (UserInterface $user) {
             return $user->can(Card::CREATE);
         });
 
-        Gate::define(Card::UPDATE, function (User $user, $id) {
+        Gate::define(Card::UPDATE, function (UserInterface $user, $id) {
             return $user->can(Card::UPDATE);
         });
 
-        Gate::define(Card::DELETE, function (User $user, int $assetId) {
+        Gate::define(Card::DELETE, function (UserInterface $user, int $assetId) {
             return $user->can(Card::DELETE);
         });
 
-        Gate::define(Card::SEARCH, function (User $user) {
+        Gate::define(Card::SEARCH, function (UserInterface $user) {
             return $user->can(Card::SEARCH);
         });
 
         /* TEST */
 
-        Gate::define(Test::COMPLETE, function (User $user, $assetId) {
+        Gate::define(Test::COMPLETE, function (UserInterface $user, $assetId) {
             return TRUE;
         });
 
-        Gate::define(Test::GET_ALL_PASSINGS, function (User $user) {
+        Gate::define(Test::GET_ALL_PASSINGS, function (UserInterface $user) {
             return TRUE;
         });
 
-        Gate::define(Test::DELETE_PASSING, function (User $user, $passingId) {
+        Gate::define(Test::DELETE_PASSING, function (UserInterface $user, $passingId) {
             return TRUE;
         });
 
-        Gate::define(Test::UPDATE_PASSING, function (User $user, $passingId) {
+        Gate::define(Test::UPDATE_PASSING, function (UserInterface $user, $passingId) {
             return TRUE;
         });
     }

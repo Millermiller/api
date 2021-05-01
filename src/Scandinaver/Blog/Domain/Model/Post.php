@@ -6,9 +6,9 @@ namespace Scandinaver\Blog\Domain\Model;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Post
@@ -37,7 +37,7 @@ class Post extends AggregateRoot
 
     private Collection $comments;
 
-    private User $user;
+    private UserInterface $user;
 
     private Category $category;
 
@@ -66,12 +66,12 @@ class Post extends AggregateRoot
         return $this->createdAt;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(UserInterface $user): void
     {
         $this->user = $user;
     }

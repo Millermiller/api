@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateMetaCommand
  *
  * @package Scandinaver\Common\UI\Command
  */
-class UpdateMetaCommand implements Command
+class UpdateMetaCommand implements CommandInterface
 {
     private $meta;
 

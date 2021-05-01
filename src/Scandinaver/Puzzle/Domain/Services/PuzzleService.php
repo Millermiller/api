@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Puzzle\Domain\Services;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
@@ -11,7 +12,6 @@ use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Puzzle\Domain\Model\PuzzleText;
 use Scandinaver\Puzzle\Domain\Model\PuzzleTranslate;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class PuzzleService
@@ -83,35 +83,6 @@ class PuzzleService implements BaseServiceInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  int   $id
-     *
-     * @throws PuzzleNotFoundException
-     */
-    public function completed(User $user, int $id): void
-    {
-        $puzzle = $this->getPuzzle($id);
-
-        //todo: refactor
-        $this->puzzleRepository->addForUser($user, $puzzle);
-    }
-
-    /**
-     * @param  string  $language
-     * @param  User    $user
-     *
-     * @return array|Puzzle[]
-     * @throws LanguageNotFoundException
-     */
-    public function getForUser(string $language, User $user): array
-    {
-        $language = $this->getLanguage($language);
-
-        /** @var Puzzle[] $puzzles */
-        return $this->puzzleRepository->getForUser($language, $user);
-    }
-
-    /**
      * @param  int  $puzzleId
      *
      * @return Puzzle
@@ -127,6 +98,35 @@ class PuzzleService implements BaseServiceInterface
         }
 
         return $puzzle;
+    }
+
+    /**
+     * @param  UserInterface  $user
+     * @param  int            $id
+     *
+     * @throws PuzzleNotFoundException
+     */
+    public function completed(UserInterface $user, int $id): void
+    {
+        $puzzle = $this->getPuzzle($id);
+
+        //todo: refactor
+        $this->puzzleRepository->addForUser($user, $puzzle);
+    }
+
+    /**
+     * @param  string         $language
+     * @param  UserInterface  $user
+     *
+     * @return array|Puzzle[]
+     * @throws LanguageNotFoundException
+     */
+    public function getForUser(string $language, UserInterface $user): array
+    {
+        $language = $this->getLanguage($language);
+
+        /** @var Puzzle[] $puzzles */
+        return $this->puzzleRepository->getForUser($language, $user);
     }
 
     public function all(): array

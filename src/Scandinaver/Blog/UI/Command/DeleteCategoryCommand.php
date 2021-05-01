@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeleteCategoryCommand
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Blog\Application\Handler\Command\DeleteCategoryHandler
  */
-class DeleteCategoryCommand implements Command
+class DeleteCategoryCommand implements CommandInterface
 {
     private int $categoryId;
 

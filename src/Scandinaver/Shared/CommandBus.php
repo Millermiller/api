@@ -6,7 +6,7 @@ namespace Scandinaver\Shared;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use ReflectionClass;
 use ReflectionException;
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CommandBus
@@ -15,23 +15,19 @@ use Scandinaver\Shared\Contract\Command;
  */
 class CommandBus
 {
-    private const COMMAND_PREFIX = 'Command';
-
-    private const HANDLER_PREFIX = 'Handler';
-
     /**
-     * @param  Command  $command
+     * @param  CommandInterface  $command
      *
      * @return mixed
      */
-    public function execute(Command $command)
+    public function execute(CommandInterface $command)
     {
         $handler = $this->resolveHandler($command);
         $handler->handle($command);
         return $handler->processData();
     }
 
-    public function resolveHandler(Command $command): ?AbstractHandler
+    public function resolveHandler(CommandInterface $command): ?AbstractHandler
     {
         try {
             return app()->make($this->getHandlerClass($command));
@@ -41,17 +37,22 @@ class CommandBus
     }
 
     /**
-     * @param  Command  $command
+     * @param  CommandInterface  $command
      *
      * @return string
      */
-    public function getHandlerClass(Command $command): string
+    public function getHandlerClass(CommandInterface $command): string
     {
-        return str_replace(
-                self::COMMAND_PREFIX,
-                self::HANDLER_PREFIX,
-                (new ReflectionClass($command))->getShortName()
-            ).'Interface';
+        $fullName = (new ReflectionClass($command))->getName();
+        $parts = explode('\\', $fullName);
+
+        $domain = $parts[1];
+        $type = $parts[3];
+        $commandClassName = end($parts);
+
+        $handlerClassName = "{$commandClassName}Handler";
+
+        return "Scandinaver\\$domain\Application\Handler\\$type\\$handlerClassName";
     }
 
 }

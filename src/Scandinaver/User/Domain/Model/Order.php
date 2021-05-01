@@ -4,6 +4,7 @@
 namespace Scandinaver\User\Domain\Model;
 
 use DateTime;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 
 /**
  * Class Order
@@ -36,7 +37,7 @@ class Order
 
     private Plan $plan;
 
-    private User $user;
+    private UserInterface $user;
 
     public function setUpdatedAt(?DateTime $updatedAt): void
     {
@@ -143,12 +144,12 @@ class Order
         $this->plan = $plan;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(UserInterface $user): void
     {
         $this->user = $user;
     }

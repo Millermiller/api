@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Puzzle\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeletePuzzleCommand
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Puzzle\Application\Handler\Command\DeletePuzzleHandler
  */
-class DeletePuzzleCommand implements Command
+class DeletePuzzleCommand implements CommandInterface
 {
     private int $puzzle;
 

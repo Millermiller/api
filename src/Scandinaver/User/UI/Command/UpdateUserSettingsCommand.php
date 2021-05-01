@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -11,9 +11,9 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @package Scandinaver\User\UI\Command
  *
- * @see     \Scandinaver\User\Application\Handler\Command\UpdateUserSettingsHandler
+ * @see     \Scandinaver\User\Application\Handler\Command\UpdateUserSettingsCommandHandler
  */
-class UpdateUserSettingsCommand implements Command
+class UpdateUserSettingsCommand implements CommandInterface
 {
     private User $user;
 

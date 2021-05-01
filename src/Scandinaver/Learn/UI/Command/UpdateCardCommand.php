@@ -3,18 +3,17 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateCardCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UpdateCardHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\UpdateCardCommandHandler
  */
-class UpdateCardCommand implements Command
+class UpdateCardCommand implements CommandInterface
 {
-
     private int $card;
 
     private array $data;

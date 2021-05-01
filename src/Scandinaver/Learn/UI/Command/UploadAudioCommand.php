@@ -4,16 +4,16 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UploadAudioCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UploadAudioHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\UploadAudioCommandHandler
  */
-class UploadAudioCommand implements Command
+class UploadAudioCommand implements CommandInterface
 {
     private int $word;
 

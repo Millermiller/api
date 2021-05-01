@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeleteAssetCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\DeleteAssetHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\DeleteAssetCommandHandler
  */
-class DeleteAssetCommand implements Command
+class DeleteAssetCommand implements CommandInterface
 {
 
     private int $asset;

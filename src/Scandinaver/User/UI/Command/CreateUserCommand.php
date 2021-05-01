@@ -3,15 +3,15 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateUserCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\CreateUserHandler
+ * @see     \Scandinaver\User\Application\Handler\Command\CreateUserCommandHandler
  * @package Scandinaver\User\UI\Command
  */
-class CreateUserCommand implements Command
+class CreateUserCommand implements CommandInterface
 {
     private array $data;
 

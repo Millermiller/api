@@ -12,9 +12,9 @@ interface QueryHandler
 {
 
     /**
-     * @param  Query  $query
+     * @param  CommandInterface  $query
      *
      * @return mixed
      */
-    public function handle(Query $query);
+    public function handle(CommandInterface $query);
 }

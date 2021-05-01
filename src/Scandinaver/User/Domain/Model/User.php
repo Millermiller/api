@@ -8,20 +8,15 @@ use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Exception;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use JsonSerializable;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
-use LaravelDoctrine\ORM\Notifications\Notifiable;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\Passing;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset, Passing};
+use Scandinaver\RBAC\Domain\Model\{Permission, Role};
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Translate\Domain\Model\Result as TranslateResult;
 use Scandinaver\Translate\Domain\Model\Text;
-use Scandinaver\User\Domain\Contract\Permissions;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
 
 /**
@@ -29,17 +24,13 @@ use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
  *
  * @package Scandinaver\User\Domain\Model
  */
-class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authenticatable, CanResetPasswordContract, JsonSerializable, Permissions
+class User extends AggregateRoot implements UserInterface,
+    \Illuminate\Contracts\Auth\Authenticatable
 {
     use Authenticatable;
     use CanResetPassword;
     use HasApiTokens;
-    use Notifiable;
     use UsesPasswordGrant;
-
-    public const ROLE_ADMIN = 1;
-
-    public const ROLE_USER = 0;
 
     private ?int $id;
 
@@ -81,9 +72,6 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
 
     private Collection $posts;
 
-    /**
-     * @var Collection | Role[]
-     */
     private Collection $roles;
 
     /**
@@ -199,30 +187,6 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     public function setPhoto(?string $photo): void
     {
         $this->photo = $photo;
-    }
-
-    /**
-     * @inheritDoc
-     * @throws Exception
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            'id'             => $this->id,
-            'login'          => $this->login,
-            'email'          => $this->email,
-            'active_to'      => $this->getActiveTo() ? $this->getActiveTo()
-                                                            ->format(
-                                                                "Y-m-d H:i:s"
-                                                            ) : NULL,
-            'plan'           => $this->plan,
-            'plan_id'        => $this->plan->getId(),
-            'name'           => $this->name,
-            'photo'          => $this->photo,
-            'assets_opened'  => $this->assetsOpened,
-            'assets_created' => $this->assetsCreated,
-            'premium'        => $this->isPremium(),
-        ];
     }
 
     public function getActiveTo(): ?DateTime
@@ -399,11 +363,6 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
         return $permissions;
     }
 
-    public function toDTO(): UserDTO
-    {
-        return new UserDTO($this);
-    }
-
     public function delete()
     {
         // TODO: Implement delete() method.
@@ -440,7 +399,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
         // $this->pushEvent(TextAdded);
     }
 
-    public function getFavouriteAsset(Language $language): ?Asset
+    public function getFavouriteAsset(Language $language): ?FavouriteAsset
     {
         foreach ($this->personalAssets as $asset) {
             /** @var Asset $asset */
@@ -469,9 +428,9 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
     /**
      * @param  Language  $language
      *
-     * @return ArrayCollection
+     * @return Asset[]
      */
-    public function getPersonalAssets(Language $language): Collection
+    public function getPersonalAssets(Language $language): array
     {
         $data = new ArrayCollection();
 
@@ -486,7 +445,7 @@ class User extends AggregateRoot implements \Illuminate\Contracts\Auth\Authentic
             }
         }
 
-        return $data;
+        return $data->toArray();
     }
 
 }

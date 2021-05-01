@@ -11,7 +11,7 @@ use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class SetTranslateForCardCommand
@@ -20,7 +20,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Learn\Application\Handler\Command\SetTranslateForCardCommandHandler
  */
-class SetTranslateForCardCommand implements Command
+class SetTranslateForCardCommand implements CommandInterface
 {
     private int $card_id;
 

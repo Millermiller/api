@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class AttachPermissionToRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleCommandHandler
  */
-class AttachPermissionToRoleCommand implements Command
+class AttachPermissionToRoleCommand implements CommandInterface
 {
     private int $roleId;
 

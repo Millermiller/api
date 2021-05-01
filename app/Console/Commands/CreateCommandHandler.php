@@ -3,7 +3,6 @@
 
 namespace App\Console\Commands;
 
-use Artisan;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
@@ -73,11 +72,6 @@ class CreateCommandHandler extends GeneratorCommand
         $this->files->chmod($path, 0777);
 
         $this->info($this->type . ' created successfully.');
-
-        Artisan::call('createCommandHandlerInterface', [
-                'name'   => "{$name}Interface",
-                'domain' => $this->domain,
-            ]);
     }
 
     /**
@@ -120,19 +114,16 @@ class CreateCommandHandler extends GeneratorCommand
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $commandNamespace = str_replace('/', '\\', 'UI/Command');
-        $commandClass     = str_replace('Handler', 'Command', $class);
-        $commandInterface = $class . 'Interface';
+        $commandClass     = $class;
 
         return str_replace([
             'DummyClass',
             'DummyCommandClass',
             'DummyCommandNamespace',
-            'DummyInterface',
         ], [
                 $class,
                 $commandClass,
                 "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace\\$commandClass",
-                "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Command\\$commandInterface",
             ], $stub);
     }
 }

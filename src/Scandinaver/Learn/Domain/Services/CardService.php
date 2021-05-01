@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
@@ -24,13 +25,11 @@ use Scandinaver\Learn\Domain\DTO\WordDTO;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Example;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\User\Domain\Model\User;
 use Storage;
 
 /**
@@ -85,15 +84,15 @@ class CardService implements BaseServiceInterface
     }
 
     /**
-     * @param  User    $user
-     * @param  string  $language
-     * @param  string  $word
-     * @param  string  $translate
+     * @param  UserInterface  $user
+     * @param  string         $language
+     * @param  string         $word
+     * @param  string         $translate
      *
      * @return Card
      * @throws LanguageNotFoundException
      */
-    public function createCard(User $user, string $language, string $word, string $translate): Card
+    public function createCard(UserInterface $user, string $language, string $word, string $translate): Card
     {
         $language = $this->getLanguage($language);
 
@@ -158,13 +157,13 @@ class CardService implements BaseServiceInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  int   $asset
+     * @param  UserInterface  $user
+     * @param  int            $asset
      *
      * @return AssetDTO
      * @throws AssetNotFoundException
      */
-    public function getCards(User $user, int $asset): AssetDTO
+    public function getCards(UserInterface $user, int $asset): AssetDTO
     {
         $asset    = $this->getAsset($asset);
         $assetDTO = AssetFactory::toDTO($asset);

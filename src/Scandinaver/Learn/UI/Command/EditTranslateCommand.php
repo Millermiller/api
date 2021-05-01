@@ -5,15 +5,15 @@ namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class EditTranslateCommand
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\EditTranslateHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\EditTranslateCommandHandler
  * @package Scandinaver\Learn\UI\Command
  */
-class EditTranslateCommand implements Command
+class EditTranslateCommand implements CommandInterface
 {
     private int $translateId;
 

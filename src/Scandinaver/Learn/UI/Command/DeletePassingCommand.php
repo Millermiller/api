@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeletePassingCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\DeletePassingHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\DeletePassingCommandHandler
  */
-class DeletePassingCommand implements Command
+class DeletePassingCommand implements CommandInterface
 {
     private int $id;
 

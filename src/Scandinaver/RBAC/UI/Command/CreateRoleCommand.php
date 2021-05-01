@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\CreateRoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\CreateRoleCommandHandler
  */
-class CreateRoleCommand implements Command
+class CreateRoleCommand implements CommandInterface
 {
     private array $data;
 

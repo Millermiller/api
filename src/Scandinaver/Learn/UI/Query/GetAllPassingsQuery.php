@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class GetAllPassingsQuery
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\GetAllPassingsHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\GetAllPassingsQueryHandler
  */
-class GetAllPassingsQuery implements Query
+class GetAllPassingsQuery implements CommandInterface
 {
     private string $language;
 

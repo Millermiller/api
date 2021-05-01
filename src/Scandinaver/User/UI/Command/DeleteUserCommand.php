@@ -3,15 +3,15 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeleteUserCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\DeleteUserHandler
+ * @see     \Scandinaver\User\Application\Handler\Command\DeleteUserCommandHandler
  * @package Scandinaver\User\UI\Command
  */
-class DeleteUserCommand implements Command
+class DeleteUserCommand implements CommandInterface
 {
     private int $id;
 

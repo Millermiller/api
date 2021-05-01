@@ -5,7 +5,7 @@ namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\Collection;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 
 /**
  * Class Word
@@ -32,7 +32,7 @@ class Word
 
     private ?DateTime $updatedAt;
 
-    private ?User $creator;
+    private ?UserInterface $creator;
 
     private Collection $translates;
 
@@ -76,7 +76,7 @@ class Word
         $this->isPublic = $isPublic;
     }
 
-    public function setCreator(User $creator): void
+    public function setCreator(UserInterface $creator): void
     {
         $this->creator = $creator;
     }
@@ -86,7 +86,7 @@ class Word
         return 'id';
     }
 
-    public function getCreator(): ?User
+    public function getCreator(): ?UserInterface
     {
         return $this->creator;
     }

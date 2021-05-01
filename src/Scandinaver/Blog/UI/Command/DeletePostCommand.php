@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeletePostCommand
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Blog\Application\Handler\Command\DeletePostHandler
  */
-class DeletePostCommand implements Command
+class DeletePostCommand implements CommandInterface
 {
 
     private int $postId;

@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreatePermissionGroupCommand
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\CreatePermissionGroupHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\CreatePermissionGroupCommandHandler
  */
-class CreatePermissionGroupCommand implements Command
+class CreatePermissionGroupCommand implements CommandInterface
 {
     private array $data;
 

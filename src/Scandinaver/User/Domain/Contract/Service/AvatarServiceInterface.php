@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\Domain\Contract\Service;
 
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 
 /**
  * Interface AvatarServiceInterface
@@ -13,9 +13,9 @@ use Scandinaver\User\Domain\Model\User;
 interface AvatarServiceInterface
 {
     /**
-     * @param  User  $user
+     * @param  UserInterface  $user
      *
      * @return mixed
      */
-    public function getAvatar(User $user): string;
+    public function getAvatar(UserInterface $user): string;
 }

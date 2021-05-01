@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Domain\Model;
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\AssetInterface;
 use Scandinaver\Learn\Domain\Events\AssetCreated;
@@ -14,7 +15,6 @@ use Scandinaver\Learn\Domain\Events\CardAddedToAsset;
 use Scandinaver\Learn\Domain\Events\CardRemovedFromAsset;
 use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Asset
@@ -53,7 +53,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     protected int $category;
 
-    protected ?User $owner;
+    protected ?UserInterface $owner;
 
     /**
      * Asset constructor.
@@ -221,17 +221,17 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         return $this->favorite === 1;
     }
 
-    public function getOwner(): ?User
+    public function getOwner(): ?UserInterface
     {
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): void
+    public function setOwner(?UserInterface $owner): void
     {
         $this->owner = $owner;
     }
 
-    public function isCompletedByUser(User $user): bool
+    public function isCompletedByUser(UserInterface $user): bool
     {
         /** @var Passing $passing */
         foreach ($this->passings as $passing) {
@@ -243,7 +243,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         return FALSE;
     }
 
-    public function getBestResultForUser(User $user): ?Passing
+    public function getBestResultForUser(UserInterface $user): ?Passing
     {
         $bestResult = NULL;
 

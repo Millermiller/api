@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Model\Plan;
 
 
 /*
@@ -18,7 +18,7 @@ use Scandinaver\User\Domain\Model\User;
 
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\User\Domain\Model\Plan::class, function (Faker $faker) {
+$factory->define(Plan::class, function (Faker $faker) {
     return [
         'name' => 'Basic',
         'period' => 10,

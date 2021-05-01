@@ -25,7 +25,6 @@ class CategoryController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {

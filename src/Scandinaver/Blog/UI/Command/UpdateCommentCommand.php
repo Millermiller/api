@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateCommentCommand
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Blog\Application\Handler\Command\UpdateCommentHandler
  */
-class UpdateCommentCommand implements Command
+class UpdateCommentCommand implements CommandInterface
 {
     private array $data;
 

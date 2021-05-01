@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class SearchCardQuery
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\SearchCardHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\SearchCardQueryHandler
  */
-class SearchCardQuery implements Query
+class SearchCardQuery implements CommandInterface
 {
     private string $language;
 

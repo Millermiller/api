@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learn\Domain\DTO;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Example;
 use Scandinaver\Shared\DTO;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class CardDTO
@@ -17,7 +17,7 @@ class CardDTO extends DTO
 {
     private ?int $id;
 
-    private ?User $creator;
+    private ?UserInterface $creator;
 
     private Language $language;
 
@@ -40,12 +40,12 @@ class CardDTO extends DTO
         $this->id = $id;
     }
 
-    public function getCreator(): ?User
+    public function getCreator(): ?UserInterface
     {
         return $this->creator;
     }
 
-    public function setCreator(?User $creator): void
+    public function setCreator(?UserInterface $creator): void
     {
         $this->creator = $creator;
     }

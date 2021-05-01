@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Puzzle\Domain\Contract\Repository;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Interface PuzzleRepositoryInterface
@@ -23,7 +23,7 @@ interface PuzzleRepositoryInterface extends BaseRepositoryInterface
      */
     public function getByLanguage(Language $language);
 
-    public function getForUser(Language $language, User $user): array;
+    public function getForUser(Language $language, UserInterface $user): array;
 
-    public function addForUser(User $user, Puzzle $puzzle): void;
+    public function addForUser(UserInterface $user, Puzzle $puzzle): void;
 }

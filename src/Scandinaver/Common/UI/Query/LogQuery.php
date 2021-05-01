@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class LogQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @see     \Scandinaver\Common\Application\Handler\Query\LogHandler
  */
-class LogQuery implements Query
+class LogQuery implements CommandInterface
 {
     private int $logId;
 

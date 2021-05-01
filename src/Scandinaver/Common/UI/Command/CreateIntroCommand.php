@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateIntroCommand
  *
- * @see     \Scandinaver\Common\Application\Handler\Command\CreateIntroHandler
+ * @see     \Scandinaver\Common\Application\Handler\Command\CreateIntroCommandHandler
  *
  * @package Scandinaver\Common\UI\Command
  */
-class CreateIntroCommand implements Command
+class CreateIntroCommand implements CommandInterface
 {
     private array $data;
 

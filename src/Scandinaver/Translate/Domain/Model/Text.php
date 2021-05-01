@@ -4,11 +4,10 @@
 namespace Scandinaver\Translate\Domain\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Text
@@ -78,7 +77,7 @@ class Text extends AggregateRoot
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|UserInterface[]
      */
     public function getUsers(): Collection
     {

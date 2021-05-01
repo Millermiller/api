@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class IntroQuery
  *
  * @package Scandinaver\Common\UI\Query
  */
-class IntroQuery implements Query
+class IntroQuery implements CommandInterface
 {
     private int $id;
 

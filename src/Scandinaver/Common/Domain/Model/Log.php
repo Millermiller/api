@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\Domain\Model;
 
 use DateTime;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 
 /**
  * Class Log
@@ -27,10 +27,10 @@ class Log
 
     private DateTime $createdAt;
 
-    private ?User $owner;
+    private ?UserInterface $owner;
 
     public function __construct(
-        ?User $owner,
+        ?UserInterface $owner,
         string $levelName,
         string $message,
         array $context = [],
@@ -63,7 +63,7 @@ class Log
         return $this->createdAt;
     }
 
-    public function getOwner(): User
+    public function getOwner(): UserInterface
     {
         return $this->owner;
     }

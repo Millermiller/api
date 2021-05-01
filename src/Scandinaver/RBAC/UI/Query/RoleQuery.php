@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class RoleQuery
  *
  * @package Scandinaver\RBAC\UI\Query
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Query\RoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Query\RoleQueryHandler
  */
-class RoleQuery implements Query
+class RoleQuery implements CommandInterface
 {
     private int $id;
 

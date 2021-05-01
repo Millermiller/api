@@ -32,7 +32,7 @@ class ReaderController extends Controller
 
         $text = $request->get('text');
 
-        $data = $this->queryBus->execute(new ReadQuery(Auth::user(), $language, $text));
+        $data = $this->commandBus->execute(new ReadQuery(Auth::user(), $language, $text));
 
         return response()->file($data['path']);
     }

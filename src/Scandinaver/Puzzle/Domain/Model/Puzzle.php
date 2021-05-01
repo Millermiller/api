@@ -4,11 +4,11 @@
 namespace Scandinaver\Puzzle\Domain\Model;
 
 use DateTime;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Puzzle\Domain\Events\PuzzleCreated;
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Shared\EventTrait;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Puzzle
@@ -42,14 +42,14 @@ class Puzzle extends AggregateRoot
     }
 
     /**
-     * @return User[]
+     * @return UserInterface[]
      */
     public function getUsers(): array
     {
         return $this->users;
     }
 
-    public function addUser(User $user): Puzzle
+    public function addUser(UserInterface $user): Puzzle
     {
         $this->users[] = $user;
 

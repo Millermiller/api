@@ -3,20 +3,20 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Shared\Contract\Command;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateCardCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CreateCardHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\CreateCardCommandHandler
  */
-class CreateCardCommand implements Command
+class CreateCardCommand implements CommandInterface
 {
-    private User $user;
+    private UserInterface $user;
 
     private string $languageId;
 
@@ -24,10 +24,9 @@ class CreateCardCommand implements Command
 
     private string $translate;
 
-    public function __construct(User $user, string $languageId, string $word, string $translate)
+    public function __construct(UserInterface $user, string $languageId, string $word, string $translate)
     {
         $this->user      = $user;
-        $this->language  = $language;
         $this->word      = $word;
         $this->translate = $translate;
     }
@@ -37,7 +36,7 @@ class CreateCardCommand implements Command
         return $this->language;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

@@ -4,8 +4,8 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Comment
@@ -20,7 +20,7 @@ class Comment extends AggregateRoot
 
     private Post $post;
 
-    private User $user;
+    private UserInterface $user;
 
     private DateTime $createdAt;
 
@@ -41,12 +41,12 @@ class Comment extends AggregateRoot
         $this->text = $text;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(UserInterface $user): void
     {
         $this->user = $user;
     }

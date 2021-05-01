@@ -58,7 +58,7 @@ class CreateCommand extends GeneratorCommand
         $this->info($this->type . ' created successfully.');
 
         Artisan::call('createCommandHandler', [
-                'name'   => "{$name}Handler",
+                'name'   => "{$name}CommandHandler",
                 'domain' => $this->domain,
             ]);
     }
@@ -118,12 +118,15 @@ class CreateCommand extends GeneratorCommand
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
-        $handlerClass     = str_replace('Command', 'Handler', $class);
+        $handlerClass     = $class."Handler";
 
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"],
+        ], [
+            $class,
+            "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"
+        ],
             $stub);
     }
 

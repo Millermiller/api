@@ -8,8 +8,8 @@ use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Validation\ValidationException;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
-use Scandinaver\User\Domain\Model\User;
 use Scandinaver\User\UI\Command\LoginCommand;
 use Scandinaver\User\UI\Query\UserStateQuery;
 
@@ -41,9 +41,9 @@ class LoginSubController extends Controller
         $request->merge([$login_type => $request->input('login')]);
 
         try {
-            /** @var User $user */
-            $user  = $this->queryBus->execute(new LoginCommand($request->only($login_type, 'password')));
-            $state = $this->queryBus->execute(new UserStateQuery($user));
+            /** @var UserInterface $user */
+            $user  = $this->commandBus->execute(new LoginCommand($request->only($login_type, 'password')));
+            $state = $this->commandBus->execute(new UserStateQuery($user));
 
             return response()->json(['token' => '', 'state' => $state], 200);
         } catch (UserNotFoundException $e) {

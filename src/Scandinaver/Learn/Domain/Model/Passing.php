@@ -4,9 +4,9 @@
 namespace Scandinaver\Learn\Domain\Model;
 
 use DateTime;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Passing
@@ -21,7 +21,7 @@ class Passing extends AggregateRoot
 
     private Asset $asset;
 
-    private User $user;
+    private UserInterface $user;
 
     private bool $completed;
 
@@ -33,7 +33,7 @@ class Passing extends AggregateRoot
 
     private ?DateTime $updatedAt;
 
-    public function __construct(Asset $asset, User $user, bool $completed, array $data)
+    public function __construct(Asset $asset, UserInterface $user, bool $completed, array $data)
     {
         $this->asset     = $asset;
         $this->language  = $asset->getLanguage();
@@ -63,7 +63,7 @@ class Passing extends AggregateRoot
         return $this->asset;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

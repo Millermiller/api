@@ -9,8 +9,8 @@ use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\Comment;
 use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class CategoryService
@@ -58,13 +58,13 @@ class CommentService implements BaseServiceInterface
     }
 
     /**
-     * @param  User   $user
+     * @param  UserInterface   $user
      * @param  array  $data
      *
      * @return Comment
      * @throws PostNotFoundException
      */
-    public function create(User $user, array $data): Comment
+    public function create(UserInterface $user, array $data): Comment
     {
         /** @var Post $post */
         $post = $this->postRepository->find($data['post_id']);

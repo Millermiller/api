@@ -8,7 +8,7 @@ use App\Http\Requests\SignupRequest;
 use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 
 /**
@@ -41,13 +41,13 @@ class RegistrationController extends Controller
      */
     public function handle(SignupRequest $request): JsonResponse
     {
-        /** @var User $user */
+        /** @var UserInterface $user */
         $user = $this->commandBus->execute(new CreateUserCommand($request->toArray()));
 
         $this->guard()->login($user);
         $tokenResult = auth()->user()->createToken('Personal Access Token');
         $tokenResult->token->save();
 
-        return response()->json(['user' => $user->toDTO(), 'access_token' => $tokenResult->accessToken]);
+        return response()->json(['user' => $user, 'access_token' => $tokenResult->accessToken]);
     }
 }

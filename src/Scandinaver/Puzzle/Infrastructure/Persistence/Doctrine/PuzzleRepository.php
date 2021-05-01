@@ -4,11 +4,11 @@
 namespace Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\{OptimisticLockException, ORMException};
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class PuzzleRepository
@@ -29,7 +29,7 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
                  ->getResult();
     }
 
-    public function getForUser(Language $language, User $user): array
+    public function getForUser(Language $language, UserInterface $user): array
     {
         $q = $this->_em->createQueryBuilder();
 
@@ -48,7 +48,7 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function addForUser(User $user, Puzzle $puzzle): void
+    public function addForUser(UserInterface $user, Puzzle $puzzle): void
     {
         //$user->addPuzzle($puzzle);
        // $this->_em->flush();

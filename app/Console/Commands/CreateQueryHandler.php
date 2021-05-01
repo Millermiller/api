@@ -69,11 +69,6 @@ class CreateQueryHandler extends GeneratorCommand
         $this->files->chmod($path, 0777);
 
         $this->info($this->type . ' created successfully.');
-
-        Artisan::call('createQueryHandlerInterface', [
-                'name'   => "{$name}Interface",
-                'domain' => $this->domain,
-            ]);
     }
 
     /**
@@ -130,19 +125,16 @@ class CreateQueryHandler extends GeneratorCommand
     {
         $class          = str_replace($this->getNamespace($name) . '\\', '', $name);
         $queryNamespace = str_replace('/', '\\', 'UI/Query');
-        $queryClass     = str_replace('Handler', 'Query', $class);
-        $queryInterface = $class . 'Interface';
+        $queryClass     = $class;
 
         return str_replace([
             'DummyClass',
             'DummyQueryClass',
-            'DummyQueryNamespace',
-            'DummyInterface',
+            'DummyQueryNamespace'
         ], [
                 $class,
                 $queryClass,
-                "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass",
-                "{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Contract\\Query\\$queryInterface",
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass"
             ], $stub);
     }
 

@@ -13,6 +13,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\{JsonResponse, Request};
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Permissions\Card;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
@@ -32,10 +33,8 @@ use Scandinaver\Learn\UI\Query\FindAudioQuery;
 use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
 use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
-use Scandinaver\Learn\UI\Query\GetUnusedSentencesQuery;
 use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
 use Scandinaver\Shared\EventBusNotFoundException;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AssetController
@@ -55,8 +54,8 @@ class AssetController extends Controller
         Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::VIEW);
 
         return response()->json([
-            'words'     => $this->queryBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_WORDS)),
-            'sentences' => $this->queryBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_SENTENCES)),
+            'words'     => $this->commandBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_WORDS)),
+            'sentences' => $this->commandBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_SENTENCES)),
         ]);
     }
 
@@ -65,7 +64,6 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $id): JsonResponse
     {
@@ -79,7 +77,6 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function store(CreateAssetRequest $request): JsonResponse
     {
@@ -96,7 +93,6 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function update(int $id, UpdateAssetRequest $request): JsonResponse
     {
@@ -110,7 +106,6 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $id): JsonResponse
     {
@@ -123,7 +118,6 @@ class AssetController extends Controller
      * @param  string  $languageId
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function getWords(string $languageId): JsonResponse
     {
@@ -134,7 +128,6 @@ class AssetController extends Controller
      * @param  string  $languageId
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function getSentences(string $languageId): JsonResponse
     {
@@ -145,7 +138,6 @@ class AssetController extends Controller
      * @param  PersonalRequest  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function getPersonal(PersonalRequest $request): JsonResponse
     {
@@ -158,7 +150,6 @@ class AssetController extends Controller
      * @param  int  $wordId
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function findAudio(int $wordId): JsonResponse
     {
@@ -170,7 +161,6 @@ class AssetController extends Controller
      * @param  int     $wordId
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function showValues(string $languageId, int $wordId): JsonResponse
     {
@@ -182,7 +172,6 @@ class AssetController extends Controller
      * @param  int     $cardId
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function showExamples(string $languageId, int $cardId): JsonResponse
     {
@@ -193,7 +182,6 @@ class AssetController extends Controller
      * @param  Request  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      * @throws BindingResolutionException
      */
     public function changeUsedTranslate(Request $request): JsonResponse
@@ -205,7 +193,6 @@ class AssetController extends Controller
      * @param  Request  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function editTranslate(Request $request): JsonResponse
     {
@@ -225,7 +212,6 @@ class AssetController extends Controller
      * @param  int      $wordId
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function uploadAudio(Request $request, int $wordId): JsonResponse
     {
@@ -236,7 +222,6 @@ class AssetController extends Controller
      * @param  Request  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function addPair(Request $request): JsonResponse
     {
@@ -248,7 +233,6 @@ class AssetController extends Controller
      * @param  Request  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function changeAsset(int $assetId, Request $request): JsonResponse
     {
@@ -261,7 +245,6 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function addCard(int $asset, int $card): JsonResponse
     {
@@ -275,7 +258,7 @@ class AssetController extends Controller
      * @param  int  $card
      *
      * @return JsonResponse
-     * @throws AuthorizationException|EventBusNotFoundException
+     * @throws AuthorizationException
      */
     public function removeCard(int $asset, int $card): JsonResponse
     {
@@ -307,7 +290,7 @@ class AssetController extends Controller
         //     return response()->json([$validator->errors()], 400);
         // }
 
-        /** @var User $user */
+        /** @var UserInterface $user */
         $user = auth('api')->user();
 
         return $this->execute(new AssetsQuery($user, $languageId));

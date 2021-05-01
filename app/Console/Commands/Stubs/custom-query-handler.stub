@@ -3,17 +3,15 @@
 
 namespace DummyNamespace;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
-use DummyQueryNamespace;
-use DummyInterface;
 
 /**
  * Class DummyClass
  *
  * @package DummyNamespace
  */
-class DummyClass extends AbstractHandler implements DummyClassInterface
+class DummyClass extends AbstractHandler
 {
     public function __construct()
     {
@@ -21,7 +19,7 @@ class DummyClass extends AbstractHandler implements DummyClassInterface
     }
 
     /**
-     * @param DummyQueryClass|Query $query
+     * @param DummyQueryClass|CommandInterface $query
      */
     public function handle($query): void
     {

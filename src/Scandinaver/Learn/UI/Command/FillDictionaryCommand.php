@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class FillDictionaryCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\FillDictionaryHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\FillDictionaryCommandHandler
  */
-class FillDictionaryCommand implements Command
+class FillDictionaryCommand implements CommandInterface
 {
     private string $language;
 

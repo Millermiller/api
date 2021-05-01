@@ -4,13 +4,13 @@
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Translate\Domain\Model\Text;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class CardRepository
@@ -19,7 +19,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class CardRepository extends BaseRepository implements CardRepositoryInterface
 {
-    public function getForUser(User $user): array
+    public function getForUser(UserInterface $user): array
     {
         // TODO: Implement getForUser() method.
     }

@@ -3,16 +3,16 @@
 
 namespace Scandinaver\User\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class GetStateQuery
  *
- * @see     \Scandinaver\User\Application\Handler\Query\GetStateHandler
+ * @see     \Scandinaver\User\Application\Handler\Query\GetStateQueryHandler
  * @package Scandinaver\User\UI\Query
  */
-class GetStateQuery implements Query
+class GetStateQuery implements CommandInterface
 {
     private User $user;
 

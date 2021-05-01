@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Puzzle\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreatePuzzleCommand
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Puzzle\Application\Handler\Command\CreatePuzzleHandler
  */
-class CreatePuzzleCommand implements Command
+class CreatePuzzleCommand implements CommandInterface
 {
 
     private string $language;

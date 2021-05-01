@@ -4,8 +4,8 @@
 namespace Scandinaver\Blog\Domain\DTO;
 
 use Scandinaver\Blog\Domain\Model\Category;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\DTO;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class PostDTO
@@ -26,7 +26,7 @@ class PostDTO extends DTO
 
     private string $anonce;
 
-    private User $user;
+    private UserInterface $user;
 
     public function getId(): ?int
     {
@@ -89,12 +89,12 @@ class PostDTO extends DTO
         $this->anonce = $anonce;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(UserInterface $user): void
     {
         $this->user = $user;
     }

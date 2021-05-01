@@ -3,28 +3,28 @@
 
 namespace Scandinaver\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CompleteTextCommand
  *
- * @see     \Scandinaver\Translate\Application\Handler\Command\CompleteTextHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\CompleteTextCommandHandler
  * @package Scandinaver\Translate\UI\Command
  */
-class CompleteTextCommand implements Command
+class CompleteTextCommand implements CommandInterface
 {
-    private User $user;
+    private UserInterface $user;
 
     private int $text;
 
-    public function __construct(User $user, int $text)
+    public function __construct(UserInterface $user, int $text)
     {
         $this->user = $user;
         $this->text = $text;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

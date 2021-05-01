@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class TextsCountQuery
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\TextsCountHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\TextsCountQueryHandler
  */
-class TextsCountQuery implements Query
+class TextsCountQuery implements CommandInterface
 {
     public function __construct()
     {

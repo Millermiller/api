@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateIntroCommand
  *
  * @package Scandinaver\Common\UI\Command
- * @see     \Scandinaver\Common\Application\Handler\Command\UpdateIntroHandler
+ * @see     \Scandinaver\Common\Application\Handler\Command\UpdateIntroCommandHandler
  */
-class UpdateIntroCommand implements Command
+class UpdateIntroCommand implements CommandInterface
 {
     private int $introId;
     private array $data;

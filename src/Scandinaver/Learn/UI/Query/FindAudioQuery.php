@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class FindAudioQuery
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\FindAudioHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\FindAudioQueryHandler
  */
-class FindAudioQuery implements Query
+class FindAudioQuery implements CommandInterface
 {
     private int $word;
 

@@ -3,15 +3,15 @@
 
 namespace Scandinaver\Translate\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class GetTextQuery
  *
- * @see     \Scandinaver\Translate\Application\Handler\Query\GetTextHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Query\GetTextQueryHandler
  * @package Scandinaver\Translate\UI\Query
  */
-class GetTextQuery implements Query
+class GetTextQuery implements CommandInterface
 {
     private int $text;
 

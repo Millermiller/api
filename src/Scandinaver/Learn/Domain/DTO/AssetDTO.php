@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learn\Domain\DTO;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Shared\DTO;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AssetDTO
@@ -33,7 +33,7 @@ class AssetDTO extends DTO
 
     private Language $language;
     
-    private ?User $user = NULL;
+    private ?UserInterface $user = NULL;
     
     private ?int $level;
 
@@ -80,7 +80,7 @@ class AssetDTO extends DTO
         $this->bestResult = $bestResult;
     }
 
-    public function getOwner(): ?User
+    public function getOwner(): ?UserInterface
     {
         return $this->user;
     }
@@ -105,7 +105,7 @@ class AssetDTO extends DTO
         $this->basic = $basic;
     }
 
-    public function setUser(?User $user): void
+    public function setUser(?UserInterface $user): void
     {
         $this->user = $user;
     }

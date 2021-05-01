@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Reader\Domain\Contract\Service;
 
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 
 /**
  * Interface ReaderInterface
@@ -14,11 +14,11 @@ interface ReaderInterface
 {
 
     /**
-     * @param  User    $user
-     * @param  string  $language
-     * @param  string  $text
+     * @param  UserInterface  $user
+     * @param  string         $language
+     * @param  string         $text
      *
      * @return mixed
      */
-    public function read(User $user, string $language, string $text): string;
+    public function read(UserInterface $user, string $language, string $text): string;
 }

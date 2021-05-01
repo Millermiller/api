@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Services;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
@@ -10,7 +11,6 @@ use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\PassingNotFoundException;
 use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class TestService
@@ -65,14 +65,14 @@ class TestService implements BaseServiceInterface
     }
 
     /**
-     * @param  User   $user
+     * @param  UserInterface   $user
      * @param  int    $asset
      * @param  array  $data
      *
      * @return Passing
      * @throws AssetNotFoundException
      */
-    public function savePassing(User $user, int $asset, array $data): Passing
+    public function savePassing(UserInterface $user, int $asset, array $data): Passing
     {
         $asset = $this->getAsset($asset);
 

@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DetachPermissionFromRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\DetachPermissionFromRoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\DetachPermissionFromRoleCommandHandler
  */
-class DetachPermissionFromRoleCommand implements Command
+class DetachPermissionFromRoleCommand implements CommandInterface
 {
     private int $roleId;
 

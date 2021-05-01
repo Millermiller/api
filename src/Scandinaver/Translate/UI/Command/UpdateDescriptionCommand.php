@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateDescriptionCommand
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see     \Scandinaver\Translate\Application\Handler\Command\UpdateDescriptionHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\UpdateDescriptionCommandHandler
  */
-class UpdateDescriptionCommand implements Command
+class UpdateDescriptionCommand implements CommandInterface
 {
     private int $text;
 

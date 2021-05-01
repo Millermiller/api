@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\UpdateRoleHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\UpdateRoleCommandHandler
  */
-class UpdateRoleCommand implements Command
+class UpdateRoleCommand implements CommandInterface
 {
     private int $id;
 

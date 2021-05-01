@@ -9,8 +9,8 @@ use Scandinaver\Blog\Domain\DTO\PostDTO;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class BlogService
@@ -65,7 +65,7 @@ class BlogService implements BaseServiceInterface
         return $post;
     }
 
-    public function create(User $user, array $data): Post
+    public function create(UserInterface $user, array $data): Post
     {
         $categoryId = $data['category'];
         /** @var Category $category */

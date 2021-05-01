@@ -3,15 +3,15 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class LoginCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\LoginHandler
+ * @see     \Scandinaver\User\Application\Handler\Command\LoginCommandHandler
  * @package Scandinaver\User\UI\Command
  */
-class LoginCommand implements Command
+class LoginCommand implements CommandInterface
 {
     private string $login;
 

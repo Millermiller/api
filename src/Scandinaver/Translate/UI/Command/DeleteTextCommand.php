@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeleteTextCommand
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see     \Scandinaver\Translate\Application\Handler\Command\DeleteTextHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\DeleteTextCommandHandler
  */
-class DeleteTextCommand implements Command
+class DeleteTextCommand implements CommandInterface
 {
     private int $text;
 

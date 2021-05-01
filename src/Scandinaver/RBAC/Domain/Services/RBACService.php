@@ -4,6 +4,7 @@
 namespace Scandinaver\RBAC\Domain\Services;
 
 use Exception;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
@@ -15,7 +16,6 @@ use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
 use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
 use Scandinaver\RBAC\Domain\Model\{Permission, PermissionGroup, Role};
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class RBACService
@@ -278,12 +278,12 @@ class RBACService
     }
 
     /**
-     * @param  User        $user
+     * @param  UserInterface        $user
      * @param  Permission  $permission
      *
      * @throws Exception
      */
-    public function attachPermissionToUser(User $user, Permission $permission)
+    public function attachPermissionToUser(UserInterface $user, Permission $permission)
     {
         $user->allow($permission);
 
@@ -291,12 +291,12 @@ class RBACService
     }
 
     /**
-     * @param  User        $user
+     * @param  UserInterface        $user
      * @param  Permission  $permission
      *
      * @throws Exception
      */
-    public function detachPermissionFromUser(User $user, Permission $permission)
+    public function detachPermissionFromUser(UserInterface $user, Permission $permission)
     {
         $user->deny($permission);
 
@@ -304,12 +304,12 @@ class RBACService
     }
 
     /**
-     * @param  User  $user
+     * @param  UserInterface  $user
      * @param  Role  $role
      *
      * @throws Exception
      */
-    public function attachRoleToUser(User $user, Role $role)
+    public function attachRoleToUser(UserInterface $user, Role $role)
     {
         $user->attachRole($role);
 
@@ -317,12 +317,12 @@ class RBACService
     }
 
     /**
-     * @param  User  $user
+     * @param  UserInterface  $user
      * @param  Role  $role
      *
      * @throws Exception
      */
-    public function detachRoleFromUser(User $user, Role $role)
+    public function detachRoleFromUser(UserInterface $user, Role $role)
     {
         $user->detachRole($role);
 

@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateMetaCommand
  *
  * @package Scandinaver\Common\UI\Command
  */
-class CreateMetaCommand implements Command
+class CreateMetaCommand implements CommandInterface
 {
     public array $data;
 

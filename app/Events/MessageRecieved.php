@@ -8,7 +8,8 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Scandinaver\Common\Domain\Message;
+use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Model\Message;
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -22,15 +23,9 @@ class MessageRecieved extends Event
     use InteractsWithSockets;
     use SerializesModels;
 
-    /**
-     * @var User
-     */
-    public $user;
+    public UserInterface $user;
 
-    /**
-     * @var Message
-     */
-    public $message;
+    public Message $message;
 
     /**
      * Create a new event instance.

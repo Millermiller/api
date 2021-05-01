@@ -7,6 +7,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
@@ -19,7 +20,6 @@ use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Model\{Asset};
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AssetService
@@ -63,14 +63,14 @@ class AssetService implements BaseServiceInterface
     }
 
     /**
-     * @param  User   $user
-     * @param  array  $data
+     * @param  UserInterface  $user
+     * @param  array          $data
      *
      * @return Asset
      * @throws LanguageNotFoundException
      * @throws Exception
      */
-    public function create(User $user, array $data): Asset
+    public function create(UserInterface $user, array $data): Asset
     {
         $language = $this->getLanguage($data['language']);
 
@@ -127,14 +127,14 @@ class AssetService implements BaseServiceInterface
     }
 
     /**
-     * @param  string  $language
-     * @param  User    $user
-     * @param  int     $type
+     * @param  string         $language
+     * @param  UserInterface  $user
+     * @param  int            $type
      *
      * @return array|AssetDTO[]
      * @throws LanguageNotFoundException|BindingResolutionException
      */
-    public function getAssetsByType(string $language, User $user, int $type): array
+    public function getAssetsByType(string $language, UserInterface $user, int $type): array
     {
         $language = $this->getLanguage($language);
 
@@ -172,13 +172,13 @@ class AssetService implements BaseServiceInterface
     }
 
     /**
-     * @param  string  $language
-     * @param  User    $user
+     * @param  string         $language
+     * @param  UserInterface  $user
      *
      * @return array|AssetDTO[]
      * @throws LanguageNotFoundException
      */
-    public function getPersonalAssets(string $language, User $user): array
+    public function getPersonalAssets(string $language, UserInterface $user): array
     {
         $language = $this->getLanguage($language);
 
@@ -208,9 +208,9 @@ class AssetService implements BaseServiceInterface
     }
 
     /**
-     * @param  User   $user
-     * @param  int    $asset
-     * @param  array  $data
+     * @param  UserInterface  $user
+     * @param  int            $asset
+     * @param  array          $data
      *
      * @return AssetDTO
      * @throws AssetNotFoundException
@@ -218,7 +218,7 @@ class AssetService implements BaseServiceInterface
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function updateAsset(User $user, int $asset, array $data): AssetDTO
+    public function updateAsset(UserInterface $user, int $asset, array $data): AssetDTO
     {
         $asset      = $this->getAsset($asset);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
@@ -239,13 +239,13 @@ class AssetService implements BaseServiceInterface
     }
 
     /**
-     * @param  string  $language
-     * @param  User    $user
+     * @param  string         $language
+     * @param  UserInterface  $user
      *
      * @return array
      * @throws LanguageNotFoundException
      */
-    public function getAssetsForApp(string $language, User $user): array
+    public function getAssetsForApp(string $language, UserInterface $user): array
     {
         $language = $this->getLanguage($language);
 
@@ -343,9 +343,9 @@ class AssetService implements BaseServiceInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  int   $asset
-     * @param  int   $card
+     * @param  UserInterface  $user
+     * @param  int            $asset
+     * @param  int            $card
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -354,7 +354,7 @@ class AssetService implements BaseServiceInterface
      * @throws CardNotFoundException
      * @throws CardAlreadyAddedException
      */
-    public function addCard(User $user, int $asset, int $card): void
+    public function addCard(UserInterface $user, int $asset, int $card): void
     {
         $asset = $this->getAsset($asset);
         $card  = $this->getCard($card);

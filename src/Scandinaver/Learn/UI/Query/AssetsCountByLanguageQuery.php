@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class AssetsCountByLanguageQuery
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsCountByLanguageHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsCountByLanguageQueryHandler
  */
-class AssetsCountByLanguageQuery implements Query
+class AssetsCountByLanguageQuery implements CommandInterface
 {
     private string $language;
 

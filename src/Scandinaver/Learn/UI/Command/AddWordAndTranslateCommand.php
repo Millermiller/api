@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class AddWordAndTranslateCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\AddWordAndTranslateHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\AddWordAndTranslateCommandHandler
  */
-class AddWordAndTranslateCommand implements Command
+class AddWordAndTranslateCommand implements CommandInterface
 {
     private string $word;
 

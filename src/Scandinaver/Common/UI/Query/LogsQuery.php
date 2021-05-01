@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class LogsQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Query;
  *
  * @see     \Scandinaver\Common\Application\Handler\Query\LogsHandler
  */
-class LogsQuery implements Query
+class LogsQuery implements CommandInterface
 {
     public function __construct()
     {

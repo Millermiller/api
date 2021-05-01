@@ -4,16 +4,16 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateTranslateCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CreateTranslateHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\CreateTranslateCommandHandler
  */
-class CreateTranslateCommand implements Command
+class CreateTranslateCommand implements CommandInterface
 {
     private int $card_id;
 

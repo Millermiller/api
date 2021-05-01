@@ -3,15 +3,15 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UpdateUserCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\UpdateUserHandler
+ * @see     \Scandinaver\User\Application\Handler\Command\UpdateUserCommandHandler
  * @package Scandinaver\User\UI\Command
  */
-class UpdateUserCommand implements Command
+class UpdateUserCommand implements CommandInterface
 {
     private int $user;
 

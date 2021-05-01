@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class GetAssetsByTypeQuery
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\GetAssetsByTypeHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\GetAssetsByTypeQueryHandler
  */
-class GetAssetsByTypeQuery implements Query
+class GetAssetsByTypeQuery implements CommandInterface
 {
     private string $languageId;
 

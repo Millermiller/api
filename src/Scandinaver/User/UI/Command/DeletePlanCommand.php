@@ -3,16 +3,16 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\User\Domain\Model\Plan;
 
 /**
  * Class DeletePlanCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\DeletePlanHandler
+ * @see     \Scandinaver\User\Application\Handler\Command\DeletePlanCommandHandler
  * @package Scandinaver\User\UI\Command
  */
-class DeletePlanCommand implements Command
+class DeletePlanCommand implements CommandInterface
 {
     private Plan $plan;
 

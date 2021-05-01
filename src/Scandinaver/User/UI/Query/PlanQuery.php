@@ -3,15 +3,15 @@
 
 namespace Scandinaver\User\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class PlanQuery
  *
- * @see     \Scandinaver\User\Application\Handler\Query\PlanHandler
+ * @see     \Scandinaver\User\Application\Handler\Query\PlanQueryHandler
  * @package Scandinaver\User\UI\Query
  */
-class PlanQuery implements Query
+class PlanQuery implements CommandInterface
 {
     private int $id;
 

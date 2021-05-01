@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Domain\Contract\Repository;
 
 use Scandinaver\Learn\Domain\Model\{Asset, Passing};
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Interface PassingRepositoryInterface
@@ -14,5 +14,5 @@ use Scandinaver\User\Domain\Model\User;
  */
 interface PassingRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getPassing(User $user, Asset $asset): ?Passing;
+    public function getPassing(UserInterface $user, Asset $asset): ?Passing;
 }

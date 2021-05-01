@@ -6,6 +6,7 @@ namespace Scandinaver\Shared;
 use League\Fractal\Manager;
 use League\Fractal\Resource\ResourceAbstract;
 use Scandinaver\Common\Infrastructure\Service\Container;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class AbstractHandler
@@ -29,7 +30,7 @@ abstract class AbstractHandler
     /**
      * @param $command
      */
-    public abstract function handle($command): void;
+    public abstract function handle(CommandInterface $command): void;
 
     public function processData(): array
     {

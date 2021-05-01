@@ -3,25 +3,25 @@
 
 namespace Scandinaver\User\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UserStateQuery
  *
- * @see     \Scandinaver\User\Application\Handler\Query\UserStateHandler
+ * @see     \Scandinaver\User\Application\Handler\Query\UserStateQueryHandler
  * @package Scandinaver\User\UI\Query
  */
-class UserStateQuery implements Query
+class UserStateQuery implements CommandInterface
 {
-    private User $user;
+    private UserInterface $user;
 
-    public function __construct(User $user)
+    public function __construct(UserInterface $user)
     {
         $this->user = $user;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

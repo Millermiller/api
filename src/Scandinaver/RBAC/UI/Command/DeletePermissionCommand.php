@@ -3,16 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeletePermissionCommand
  *
  * @package Scandinaver\RBAC\UI\Command
  *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\DeletePermissionHandler
+ * @see     \Scandinaver\RBAC\Application\Handler\Command\DeletePermissionCommandHandler
  */
-class DeletePermissionCommand implements Command
+class DeletePermissionCommand implements CommandInterface
 {
     private int $id;
 

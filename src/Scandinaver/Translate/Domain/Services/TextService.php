@@ -5,6 +5,7 @@ namespace Scandinaver\Translate\Domain\Services;
 
 use Exception;
 use PDO;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Services\LanguageTrait;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
@@ -13,7 +14,6 @@ use Scandinaver\Translate\Domain\DTO\TextDTO;
 use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
 use Scandinaver\Translate\Domain\Model\Result;
 use Scandinaver\Translate\Domain\Model\Text;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class TextService
@@ -33,7 +33,7 @@ class TextService
         TextRepositoryInterface $textRepository,
         ResultRepositoryInterface $resultRepository
     ) {
-        $this->textRepository = $textRepository;
+        $this->textRepository   = $textRepository;
         $this->resultRepository = $resultRepository;
     }
 
@@ -70,13 +70,13 @@ class TextService
     }
 
     /**
-     * @param  string  $language
-     * @param  User    $user
+     * @param  string         $language
+     * @param  UserInterface  $user
      *
      * @return array|TextDTO[]
      * @throws LanguageNotFoundException
      */
-    public function getTextsForUser(string $language, User $user): array
+    public function getTextsForUser(string $language, UserInterface $user): array
     {
         $language = $this->getLanguage($language);
 
@@ -146,13 +146,13 @@ class TextService
     }
 
     /**
-     * @param  User  $user
-     * @param  int   $textId
+     * @param  UserInterface  $user
+     * @param  int            $textId
      *
      * @return Text
      * @throws TextNotFoundException
      */
-    public function giveNextLevel(User $user, int $textId): Text
+    public function giveNextLevel(UserInterface $user, int $textId): Text
     {
         $text = $this->getText($textId);
 
@@ -162,7 +162,7 @@ class TextService
             ['user' => $user, 'text' => $text]
         );
 
-        if ($result === null) {
+        if ($result === NULL) {
             $result = new Result($nextText, $user, $text->getLanguage());
         }
 

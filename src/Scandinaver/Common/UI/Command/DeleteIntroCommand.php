@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeleteIntroCommand
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\Command;
  *
  * @see     \Scandinaver\Common\Application\Handler\Command\DeleteIntroHandler
  */
-class DeleteIntroCommand implements Command
+class DeleteIntroCommand implements CommandInterface
 {
     private int $id;
 

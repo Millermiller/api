@@ -3,29 +3,29 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\Query;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class AssetsQuery
  *
  * @package Scandinaver\Learn\UI\Query
  *
- * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Query\AssetsQueryHandler
  */
-class AssetsQuery implements Query
+class AssetsQuery implements CommandInterface
 {
-    private User $user;
+    private UserInterface $user;
 
     private string $language;
 
-    public function __construct(User $user, string $language)
+    public function __construct(UserInterface $user, string $language)
     {
         $this->user     = $user;
         $this->language = $language;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

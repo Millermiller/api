@@ -3,16 +3,16 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class DeleteLogCommand
  *
  * @package Scandinaver\Common\UI\Command
  *
- * @see     \Scandinaver\Common\Application\Handler\Command\DeleteLogHandler
+ * @see     \Scandinaver\Common\Application\Handler\Command\DeleteLogCommandHandler
  */
-class DeleteLogCommand implements Command
+class DeleteLogCommand implements CommandInterface
 {
     private int $logId;
 

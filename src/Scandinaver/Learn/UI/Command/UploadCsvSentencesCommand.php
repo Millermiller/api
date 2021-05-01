@@ -4,16 +4,16 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Shared\Contract\Command;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class UploadCsvSentencesCommand
  *
  * @package Scandinaver\Learn\UI\Command
  *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UploadCsvSentencesHandler
+ * @see     \Scandinaver\Learn\Application\Handler\Command\UploadCsvSentencesCommandHandler
  */
-class UploadCsvSentencesCommand implements Command
+class UploadCsvSentencesCommand implements CommandInterface
 {
     private string $language;
 

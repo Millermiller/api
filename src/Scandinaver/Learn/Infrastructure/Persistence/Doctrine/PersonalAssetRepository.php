@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class PersonalAssetRepository
@@ -14,7 +14,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class PersonalAssetRepository extends AssetRepository implements PersonalAssetRepositoryInterface
 {
-    public function getAvailableAssets(Language $language, User $user): array
+    public function getAvailableAssets(Language $language, UserInterface $user): array
     {
         $q = $this->createQueryBuilder('asset');
 

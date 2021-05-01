@@ -6,7 +6,6 @@ namespace Scandinaver\Common\Domain\Services;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\SetCookie;
 use GuzzleHttp\Exception\GuzzleException;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Requester

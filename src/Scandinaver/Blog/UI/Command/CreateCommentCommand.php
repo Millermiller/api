@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Shared\Contract\Command;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateCommentCommand
@@ -13,13 +13,13 @@ use Scandinaver\User\Domain\Model\User;
  *
  * @see     \Scandinaver\Blog\Application\Handler\Command\CreateCommentHandler
  */
-class CreateCommentCommand implements Command
+class CreateCommentCommand implements CommandInterface
 {
     private array $data;
 
-    private User $user;
+    private UserInterface $user;
 
-    public function __construct(User $user, array $data)
+    public function __construct(UserInterface $user, array $data)
     {
         $this->data = $data;
         $this->user = $user;
@@ -30,7 +30,7 @@ class CreateCommentCommand implements Command
         return $this->data;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

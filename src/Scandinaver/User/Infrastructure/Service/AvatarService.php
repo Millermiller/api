@@ -7,8 +7,8 @@ use Exception;
 use Image;
 use Intervention\Image\Constraint;
 use Laravolt\Avatar\Avatar;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AvatarService
@@ -26,11 +26,11 @@ class AvatarService implements AvatarServiceInterface
     }
 
     /**
-     * @param  User  $user
+     * @param  UserInterface  $user
      *
      * @return mixed|void
      */
-    public function getAvatar(User $user): string
+    public function getAvatar(UserInterface $user): string
     {
         $photo = $user->getPhoto();
         $login = $user->getLogin();
