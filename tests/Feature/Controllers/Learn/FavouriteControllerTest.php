@@ -56,7 +56,7 @@ class FavouriteControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::DELETE_FAVOURITE);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::DELETE_FAVOURITE);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');
@@ -70,7 +70,7 @@ class FavouriteControllerTest extends TestCase
 
     public function testStore()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::CREATE_FAVOURITE);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::CREATE_FAVOURITE);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');

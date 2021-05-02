@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
-use Scandinaver\Learn\Domain\Services\TestService;
+use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
+use Scandinaver\Learn\Domain\Service\TestService;
 use Scandinaver\Learn\UI\Command\CompleteTestCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

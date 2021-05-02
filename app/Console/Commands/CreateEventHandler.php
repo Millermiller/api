@@ -22,7 +22,7 @@ class CreateEventHandler extends GeneratorCommand
 
     protected $type = 'EventHandler';
 
-    protected string $eventPath = 'Domain/Events/Listeners';
+    protected string $eventPath = 'Domain/Event/Listener';
 
     /**
      * Get the stub file for the generator.
@@ -129,7 +129,7 @@ class CreateEventHandler extends GeneratorCommand
         ], [
                 "{$class}Listener",
                 $class,
-                "\\{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Events\\{$class}",
+                "\\{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Event\\{$class}",
             ], $stub);
     }
 }

@@ -4,8 +4,8 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
-use Scandinaver\Blog\Domain\Events\CategoryDeleted;
-use Scandinaver\Blog\Domain\Events\CategoryNameUpdated;
+use Scandinaver\Blog\Domain\Event\CategoryDeleted;
+use Scandinaver\Blog\Domain\Event\CategoryNameUpdated;
 use Scandinaver\Shared\AggregateRoot;
 
 /**

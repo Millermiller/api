@@ -4,10 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\Learn\Domain\Exceptions\WordNotFoundException;
-use Scandinaver\Learn\Domain\Services\AudioService;
+use Scandinaver\Learn\Domain\Exception\WordNotFoundException;
+use Scandinaver\Learn\Domain\Service\AudioService;
 use Scandinaver\Learn\UI\Command\UploadAudioCommand;
-use Scandinaver\Learn\UI\Resources\WordTransformer;
+use Scandinaver\Learn\UI\Resource\WordTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
-use Scandinaver\Common\Domain\Services\MessageService;
+use Scandinaver\Common\Domain\Service\MessageService;
 use Scandinaver\Common\UI\Query\MessagesQuery;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

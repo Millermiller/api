@@ -5,7 +5,7 @@ namespace Scandinaver\Settings\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
-use Scandinaver\Settings\Domain\Services\SettingsService;
+use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Command\BulkSetSettingCommand;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;

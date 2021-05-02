@@ -4,9 +4,9 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Learn\Domain\Services\{FavouriteService};
-use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
-use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
+use Scandinaver\Learn\Domain\Service\{FavouriteService};
+use Scandinaver\Learn\Domain\Exception\CardAlreadyAddedException;
+use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

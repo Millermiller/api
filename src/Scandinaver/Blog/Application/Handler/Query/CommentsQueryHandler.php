@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Blog\Domain\Services\CommentService;
+use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Query\CommentsQuery;
 use Scandinaver\Blog\UI\Resources\CommentTransformer;
 use Scandinaver\Shared\AbstractHandler;

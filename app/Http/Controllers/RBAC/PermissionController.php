@@ -8,7 +8,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\RBAC\Domain\Permissions\Permission;
+use Scandinaver\RBAC\Domain\Permission\Permission;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;

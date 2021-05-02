@@ -9,7 +9,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Settings\Domain\Permissions\Settings;
+use Scandinaver\Settings\Domain\Permission\Settings;
 use Scandinaver\Settings\UI\Command\BulkSetSettingCommand;
 use Scandinaver\Settings\UI\Command\CreateSettingCommand;
 use Scandinaver\Settings\UI\Command\DeleteSettingCommand;

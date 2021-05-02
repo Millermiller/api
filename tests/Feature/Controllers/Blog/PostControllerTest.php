@@ -78,7 +78,7 @@ class PostControllerTest extends TestCase
      */
     public function testStore()
     {
-        $permission = entity(Permission::class)->create(['slug' => \Scandinaver\Blog\Domain\Permissions\Post::CREATE]);
+        $permission = entity(Permission::class)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Post::CREATE]);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');

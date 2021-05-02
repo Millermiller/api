@@ -5,9 +5,9 @@ namespace Scandinaver\Settings\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
-use Scandinaver\Settings\Domain\Services\SettingsService;
+use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Command\SetSettingCommand;
-use Scandinaver\Settings\UI\Resources\SettingTransformer;
+use Scandinaver\Settings\UI\Resource\SettingTransformer;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
 

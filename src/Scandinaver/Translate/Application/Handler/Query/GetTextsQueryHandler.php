@@ -4,12 +4,12 @@
 namespace Scandinaver\Translate\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Translate\Domain\Services\TextService;
+use Scandinaver\Translate\Domain\Service\TextService;
 use Scandinaver\Translate\UI\Query\GetTextsQuery;
-use Scandinaver\Translate\UI\Resources\TextTransformer;
+use Scandinaver\Translate\UI\Resource\TextTransformer;
 
 /**
  * Class GetTextsQueryHandler

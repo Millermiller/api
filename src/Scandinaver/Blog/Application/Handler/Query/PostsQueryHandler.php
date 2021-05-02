@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Blog\Domain\Services\BlogService;
+use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Query\PostsQuery;
 use Scandinaver\Blog\UI\Resources\PostTransformer;
 use Scandinaver\Shared\AbstractHandler;

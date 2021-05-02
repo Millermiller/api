@@ -8,7 +8,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Common\Domain\Permissions\Intro;
+use Scandinaver\Common\Domain\Permission\Intro;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
 use Scandinaver\Common\UI\Command\UpdateIntroCommand;

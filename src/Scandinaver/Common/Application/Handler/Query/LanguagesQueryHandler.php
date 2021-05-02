@@ -4,9 +4,9 @@
 namespace Scandinaver\Common\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Common\Domain\Services\LanguageService;
+use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\UI\Query\LanguagesQuery;
-use Scandinaver\Common\UI\Resources\LanguageTransformer;
+use Scandinaver\Common\UI\Resource\LanguageTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

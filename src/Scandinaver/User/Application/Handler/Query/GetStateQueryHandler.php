@@ -7,9 +7,9 @@ use Exception;
 use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\User\Domain\Services\UserService;
+use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Query\GetStateQuery;
-use Scandinaver\User\UI\Resources\StateTransformer;
+use Scandinaver\User\UI\Resource\StateTransformer;
 
 /**
  * Class GetStateQueryHandler

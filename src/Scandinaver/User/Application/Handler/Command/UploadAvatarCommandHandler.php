@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Application\Handler\Command;
 
 use League\Fractal\Resource\Primitive;
-use Scandinaver\Common\Domain\Services\FileService;
+use Scandinaver\Common\Domain\Service\FileService;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\User\UI\Command\UploadAvatarCommand;

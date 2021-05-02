@@ -4,8 +4,8 @@
 namespace Scandinaver\Puzzle\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Puzzle\Domain\Services\PuzzleService;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Puzzle\UI\Command\CreatePuzzleCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

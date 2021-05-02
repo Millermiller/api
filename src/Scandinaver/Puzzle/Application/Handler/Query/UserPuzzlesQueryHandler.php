@@ -4,10 +4,10 @@
 namespace Scandinaver\Puzzle\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Puzzle\Domain\Services\PuzzleService;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
-use Scandinaver\Puzzle\UI\Resources\PuzzleTransformer;
+use Scandinaver\Puzzle\UI\Resource\PuzzleTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

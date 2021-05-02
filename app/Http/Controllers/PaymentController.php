@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Scandinaver\User\Domain\Services\PaymentService;
+use Scandinaver\User\Domain\Service\PaymentService;
 
 /**
  * Class PaymentController

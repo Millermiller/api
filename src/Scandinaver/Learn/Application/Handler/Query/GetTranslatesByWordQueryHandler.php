@@ -5,9 +5,9 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
 use Scandinaver\Learn\Domain\Model\Translate;
-use Scandinaver\Learn\Domain\Services\WordService;
+use Scandinaver\Learn\Domain\Service\WordService;
 use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
-use Scandinaver\Learn\UI\Resources\TranslateTransformer;
+use Scandinaver\Learn\UI\Resource\TranslateTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

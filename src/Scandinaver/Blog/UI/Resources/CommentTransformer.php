@@ -6,12 +6,12 @@ namespace Scandinaver\Blog\UI\Resources;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Blog\Domain\Model\Comment;
-use Scandinaver\User\UI\Resources\UserTransformer;
+use Scandinaver\User\UI\Resource\UserTransformer;
 
 /**
  * Class CommentTransformer
  *
- * @package Scandinaver\Blog\UI\Resources
+ * @package Scandinaver\Blog\UI\Resource
  */
 class CommentTransformer extends TransformerAbstract
 {

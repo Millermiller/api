@@ -9,7 +9,7 @@ use App\Helpers\EloquentHelper;
 /**
  * Class MessageRecievedListener
  *
- * @package App\Listeners
+ * @package App\Listener
  */
 class MessageRecievedListener
 {

@@ -48,7 +48,7 @@ return [
             |--------------------------------------------------------------------------
             |
             | The listener array expects the key to be a Doctrine event
-            | e.g. Doctrine\ORM\Events::onFlush
+            | e.g. Doctrine\ORM\Event::onFlush
             |
             */
             'events'        => [

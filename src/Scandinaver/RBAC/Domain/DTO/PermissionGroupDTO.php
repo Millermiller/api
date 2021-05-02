@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\Domain\DTO;
 
-use Scandinaver\RBAC\Domain\Permissions\PermissionGroup;
+use Scandinaver\RBAC\Domain\Permission\PermissionGroup;
 use Scandinaver\Shared\DTO;
 
 /**

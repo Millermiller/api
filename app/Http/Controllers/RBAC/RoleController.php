@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\RBAC\Domain\Permissions\Role;
+use Scandinaver\RBAC\Domain\Permission\Role;
 use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
 use Scandinaver\RBAC\UI\Command\CreateRoleCommand;
 use Scandinaver\RBAC\UI\Command\DeleteRoleCommand;

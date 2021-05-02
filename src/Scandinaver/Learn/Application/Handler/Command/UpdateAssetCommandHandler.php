@@ -7,10 +7,10 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use League\Fractal\Resource\Item;
-use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
-use Scandinaver\Learn\Domain\Services\AssetService;
+use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
+use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
-use Scandinaver\Learn\UI\Resources\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

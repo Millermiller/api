@@ -63,7 +63,7 @@ class ResetPasswordController extends Controller
         EntityManager::persist($user);
         EntityManager::flush();
 
-        // event(new \App\Events\PasswordReset($user, $password));
+        // event(new \App\Event\PasswordReset($user, $password));
 
         $this->guard()->login($user);
     }

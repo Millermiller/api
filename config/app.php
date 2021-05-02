@@ -123,7 +123,7 @@ return [
     'write_eloquent_model_mixins' => true,
     /*
     |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
+    | Autoloaded Service Provider
     |--------------------------------------------------------------------------
     |
     | The service providers listed here will be automatically loaded on the
@@ -135,7 +135,7 @@ return [
     'providers' => [
 
         /*
-         * Laravel Framework Service Providers...
+         * Laravel Framework Service Provider...
          */
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -166,59 +166,59 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
         /*
-         * Package Service Providers...
+         * Package Service Provider...
          */
 
         /*
-         * Application Service Providers...
+         * Application Service Provider...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        // App\Provider\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        // App\Providers\TelescopeServiceProvider::class,
+        // App\Provider\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
 
         /*
-         * Scandinaver Service Providers...
+         * Scandinaver Service Provider...
          */
-        Scandinaver\Blog\Application\Providers\BlogServiceProvider::class,
-        Scandinaver\Blog\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\Blog\Application\Providers\EventServiceProvider::class,
-        Scandinaver\Blog\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\Puzzle\Application\Providers\PuzzleServiceProvider::class,
-        Scandinaver\Puzzle\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\Puzzle\Application\Providers\EventServiceProvider::class,
-        Scandinaver\Puzzle\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\Translate\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\Translate\Application\Providers\TranslateServiceProvider::class,
-        Scandinaver\Translate\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\Translate\Application\Providers\EventServiceProvider::class,
-        Scandinaver\Learn\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\Learn\Application\Providers\LearnServiceProvider::class,
-        Scandinaver\Learn\Application\Providers\EventServiceProvider::class,
-        Scandinaver\Learn\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\Common\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\Common\Application\Providers\CommonServiceProvider::class,
-        Scandinaver\Common\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\Common\Application\Providers\EventServiceProvider::class,
-        Scandinaver\User\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\User\Application\Providers\UserServiceProvider::class,
-        Scandinaver\User\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\User\Application\Providers\EventServiceProvider::class,
-        Scandinaver\Reader\Application\Providers\ReaderServiceProvider::class,
-        Scandinaver\Reader\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\RBAC\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\RBAC\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\RBAC\Application\Providers\EventServiceProvider::class,
-        Scandinaver\RBAC\Application\Providers\RBACServiceProvider::class,
-        Scandinaver\Settings\Application\Providers\AuthServiceProvider::class,
-        Scandinaver\Settings\Application\Providers\DoctrineServiceProvider::class,
-        Scandinaver\Settings\Application\Providers\EventServiceProvider::class,
-        Scandinaver\Settings\Application\Providers\SettingsServiceProvider::class,
+        Scandinaver\Blog\Application\Provider\BlogServiceProvider::class,
+        Scandinaver\Blog\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Blog\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Blog\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\Puzzle\Application\Provider\PuzzleServiceProvider::class,
+        Scandinaver\Puzzle\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Puzzle\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Puzzle\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\Translate\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Translate\Application\Provider\TranslateServiceProvider::class,
+        Scandinaver\Translate\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\Translate\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Learn\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Learn\Application\Provider\LearnServiceProvider::class,
+        Scandinaver\Learn\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Learn\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\Common\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Common\Application\Provider\CommonServiceProvider::class,
+        Scandinaver\Common\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\Common\Application\Provider\EventServiceProvider::class,
+        Scandinaver\User\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\User\Application\Provider\UserServiceProvider::class,
+        Scandinaver\User\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\User\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Reader\Application\Provider\ReaderServiceProvider::class,
+        Scandinaver\Reader\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\RBAC\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\RBAC\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\RBAC\Application\Provider\EventServiceProvider::class,
+        Scandinaver\RBAC\Application\Provider\RBACServiceProvider::class,
+        Scandinaver\Settings\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\Settings\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Settings\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Settings\Application\Provider\SettingsServiceProvider::class,
     ],
 
     /*

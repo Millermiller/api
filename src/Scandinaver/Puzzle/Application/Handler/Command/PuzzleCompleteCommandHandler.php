@@ -5,7 +5,7 @@ namespace Scandinaver\Puzzle\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Puzzle\Domain\Exception\PuzzleNotFoundException;
-use Scandinaver\Puzzle\Domain\Services\PuzzleService;
+use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

@@ -4,9 +4,9 @@
 namespace Scandinaver\Settings\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Settings\Domain\Services\SettingsService;
+use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Query\SettingsQuery;
-use Scandinaver\Settings\UI\Resources\SettingTransformer;
+use Scandinaver\Settings\UI\Resource\SettingTransformer;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
 

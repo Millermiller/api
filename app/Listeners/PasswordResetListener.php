@@ -8,7 +8,7 @@ use app\Events\PasswordReset;
 /**
  * Class PasswordResetListener
  *
- * @package App\Listeners
+ * @package App\Listener
  */
 class PasswordResetListener
 {

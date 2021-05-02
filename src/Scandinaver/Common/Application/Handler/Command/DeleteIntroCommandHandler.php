@@ -5,7 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
-use Scandinaver\Common\Domain\Services\IntroService;
+use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

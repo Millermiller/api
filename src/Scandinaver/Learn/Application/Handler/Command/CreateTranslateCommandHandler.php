@@ -4,10 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\Learn\Domain\Exceptions\CardNotFoundException;
-use Scandinaver\Learn\Domain\Services\CardService;
+use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
+use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
-use Scandinaver\Learn\UI\Resources\ExampleTransformer;
+use Scandinaver\Learn\UI\Resource\ExampleTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Class RouteServiceProvider
  *
- * @package App\Providers
+ * @package App\Provider
  */
 class RouteServiceProvider extends ServiceProvider
 {

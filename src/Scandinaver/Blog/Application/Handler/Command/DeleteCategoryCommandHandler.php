@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
-use Scandinaver\Blog\Domain\Services\CategoryService;
+use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

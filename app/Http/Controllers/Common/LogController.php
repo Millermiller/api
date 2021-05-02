@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Permissions\Log;
+use Scandinaver\Common\Domain\Permission\Log;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
 use Scandinaver\Common\UI\Query\LogQuery;
 use Scandinaver\Common\UI\Query\LogsQuery;
