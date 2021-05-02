@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Handler\Command;
 
-use Scandinaver\Learn\Domain\Services\CardService;
+use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\SetTranslateForCardCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

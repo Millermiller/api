@@ -8,8 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Events\TranslateUpdated;
-use Scandinaver\Learn\Domain\Events\WordUpdated;
+use Scandinaver\Learn\Domain\Event\TranslateUpdated;
+use Scandinaver\Learn\Domain\Event\WordUpdated;
 use Scandinaver\Shared\AggregateRoot;
 
 /**

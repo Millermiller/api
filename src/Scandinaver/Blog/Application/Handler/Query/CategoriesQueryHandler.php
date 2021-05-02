@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Blog\Domain\Services\CategoryService;
+use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoriesQuery;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
 use Scandinaver\Shared\AbstractHandler;

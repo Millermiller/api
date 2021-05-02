@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Infrastructure\Service;
 
 use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
-use Scandinaver\Learn\Domain\Exceptions\AudioFileCantParsedException;
+use Scandinaver\Learn\Domain\Exception\AudioFileCantParsedException;
 use Sunra\PhpSimple\HtmlDomParser;
 
 /**

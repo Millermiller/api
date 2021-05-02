@@ -4,10 +4,10 @@
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
-use Scandinaver\RBAC\UI\Resources\PermissionGroupTransformer;
+use Scandinaver\RBAC\UI\Resource\PermissionGroupTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

@@ -38,6 +38,17 @@ class LaravelRedis implements RedisInterface
         Redis::connection()->hset($key, $field, $value);
     }
 
+    /**
+     * @param  string  $key
+     * @param  string  $field
+     *
+     * @return mixed|void
+     */
+    public function hdel(string $key, string $field)
+    {
+        Redis::connection()->hdel($key, $field);
+    }
+
     public function hget(string $key, string $field): ?string
     {
         return Redis::connection()->hget($key, $field);

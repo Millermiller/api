@@ -7,7 +7,7 @@ use App\Helpers\Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Scandinaver\User\Domain\Services\UserService;
+use Scandinaver\User\Domain\Service\UserService;
 
 /**
  * Class CheckPlan

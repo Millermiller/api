@@ -9,7 +9,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Shared\EventBusNotFoundException;
-use Scandinaver\User\Domain\Permissions\User;
+use Scandinaver\User\Domain\Permission\User;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
 use Scandinaver\User\UI\Command\UpdateUserCommand;

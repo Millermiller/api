@@ -4,8 +4,8 @@
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Exception\PermissionNotFoundException;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

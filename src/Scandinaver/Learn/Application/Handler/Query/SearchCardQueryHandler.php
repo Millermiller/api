@@ -4,9 +4,9 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Services\CardService;
-use Scandinaver\Learn\UI\Resources\CardTransformer;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Service\CardService;
+use Scandinaver\Learn\UI\Resource\CardTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Learn\UI\Query\SearchCardQuery;

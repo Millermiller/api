@@ -9,7 +9,7 @@ use App\Jobs\SendRegistrationEmail;
 /**
  * Class UserRegisteredListener
  *
- * @package App\Listeners
+ * @package App\Listener
  */
 class UserRegisteredListener
 {

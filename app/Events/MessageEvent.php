@@ -13,7 +13,7 @@ use Scandinaver\Common\Domain\Message;
 /**
  * Class MessageEvent
  *
- * @package App\Events
+ * @package App\Event
  */
 class MessageEvent
 {

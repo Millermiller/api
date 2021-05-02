@@ -63,7 +63,7 @@ class AssetControllerTest extends TestCase
      */
     public function testShow()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::SHOW);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::SHOW);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');
@@ -104,7 +104,7 @@ class AssetControllerTest extends TestCase
      */
     public function testUpdate()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::UPDATE);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::UPDATE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -133,7 +133,7 @@ class AssetControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::VIEW);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');
@@ -155,7 +155,7 @@ class AssetControllerTest extends TestCase
      */
     public function testAddCard()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::ADD_CARD);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::ADD_CARD);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -175,7 +175,7 @@ class AssetControllerTest extends TestCase
      */
     public function testRemoveCard()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Card::DELETE);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Card::DELETE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -291,7 +291,7 @@ class AssetControllerTest extends TestCase
      */
     public function testStore()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::CREATE);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::CREATE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -333,7 +333,7 @@ class AssetControllerTest extends TestCase
      */
     public function testDestroy()
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permissions\Asset::DELETE);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::DELETE);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');

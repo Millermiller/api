@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePassingRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Learn\Domain\Permissions\Test;
+use Scandinaver\Learn\Domain\Permission\Test;
 use Scandinaver\Learn\UI\Command\CompleteTestCommand;
 use Scandinaver\Learn\UI\Command\DeletePassingCommand;
 use Scandinaver\Learn\UI\Command\UpdatePassingCommand;

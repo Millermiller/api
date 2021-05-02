@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use Scandinaver\Reader\Domain\Permissions\Reader;
+use Scandinaver\Reader\Domain\Permission\Reader;
 use Scandinaver\Reader\UI\Query\ReadQuery;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 

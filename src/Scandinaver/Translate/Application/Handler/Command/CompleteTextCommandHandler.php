@@ -7,7 +7,7 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
-use Scandinaver\Translate\Domain\Services\TextService;
+use Scandinaver\Translate\Domain\Service\TextService;
 use Scandinaver\Translate\UI\Command\CompleteTextCommand;
 
 /**

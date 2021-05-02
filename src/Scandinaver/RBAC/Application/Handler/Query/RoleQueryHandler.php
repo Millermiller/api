@@ -4,10 +4,10 @@
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Exception\RoleNotFoundException;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\RoleQuery;
-use Scandinaver\RBAC\UI\Resources\RoleTransformer;
+use Scandinaver\RBAC\UI\Resource\RoleTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

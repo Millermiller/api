@@ -7,15 +7,15 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\RBAC\Domain\DTO\PermissionDTO;
 use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\DTO\RoleDTO;
-use Scandinaver\RBAC\Domain\Exceptions\PermissionDublicateException;
-use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupNotFoundException;
-use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
-use Scandinaver\RBAC\Domain\Exceptions\RoleDublicateException;
-use Scandinaver\RBAC\Domain\Exceptions\RoleNotFoundException;
+use Scandinaver\RBAC\Domain\Exception\PermissionDublicateException;
+use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
+use Scandinaver\RBAC\Domain\Exception\PermissionNotFoundException;
+use Scandinaver\RBAC\Domain\Exception\RoleDublicateException;
+use Scandinaver\RBAC\Domain\Exception\RoleNotFoundException;
 use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\PermissionGroup;
 use Scandinaver\RBAC\Domain\Model\Role;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
@@ -43,7 +43,7 @@ class RBACServiceTest extends TestCase
 
         $this->user = entity(User::class, 1)->create();
 
-        $this->service = app()->make('Scandinaver\RBAC\Domain\Services\RBACService');
+        $this->service = app()->make('Scandinaver\RBAC\Domain\Service\RBACService');
         entity(Role::class, 1)->create();
     }
 

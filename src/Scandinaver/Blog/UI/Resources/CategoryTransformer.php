@@ -9,7 +9,7 @@ use Scandinaver\Blog\Domain\Model\Category;
 /**
  * Class CategoryTransformer
  *
- * @package Scandinaver\Blog\UI\Resources
+ * @package Scandinaver\Blog\UI\Resource
  */
 class CategoryTransformer extends TransformerAbstract
 {

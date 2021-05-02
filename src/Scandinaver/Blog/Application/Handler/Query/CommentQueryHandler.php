@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
-use Scandinaver\Blog\Domain\Services\CommentService;
+use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Query\CommentQuery;
 use Scandinaver\Blog\UI\Resources\CommentTransformer;
 use Scandinaver\Shared\AbstractHandler;

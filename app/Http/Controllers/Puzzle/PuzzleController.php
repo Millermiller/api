@@ -11,7 +11,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Puzzle\Domain\Permissions\Puzzle;
+use Scandinaver\Puzzle\Domain\Permission\Puzzle;
 use Scandinaver\Puzzle\UI\Command\CreatePuzzleCommand;
 use Scandinaver\Puzzle\UI\Command\DeletePuzzleCommand;
 use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;

@@ -8,7 +8,7 @@ use App\Events\Event;
 /**
  * Class EventListener
  *
- * @package App\Listeners
+ * @package App\Listener
  */
 class EventListener
 {

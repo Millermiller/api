@@ -4,12 +4,12 @@ namespace App\Listeners;
 
 use App\Events\UserPhotoUpdated;
 use GuzzleHttp\Exception\GuzzleException;
-use Scandinaver\Common\Domain\Services\Requester;
+use Scandinaver\Common\Domain\Service\Requester;
 
 /**
  * Class UserPhotoUpdatedListener
  *
- * @package App\Listeners
+ * @package App\Listener
  */
 class UserPhotoUpdatedListener
 {

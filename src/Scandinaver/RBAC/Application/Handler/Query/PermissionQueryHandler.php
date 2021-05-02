@@ -4,10 +4,10 @@
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\RBAC\Domain\Exceptions\PermissionNotFoundException;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Exception\PermissionNotFoundException;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
-use Scandinaver\RBAC\UI\Resources\PermissionTransformer;
+use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

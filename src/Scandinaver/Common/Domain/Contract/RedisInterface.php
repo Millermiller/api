@@ -30,6 +30,14 @@ interface RedisInterface
 
     /**
      * @param  string  $key
+     * @param  string  $field
+     *
+     * @return mixed
+     */
+    public function hdel(string $key, string $field);
+
+    /**
+     * @param  string  $key
      *
      * @return mixed
      */

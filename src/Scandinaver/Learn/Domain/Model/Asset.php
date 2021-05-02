@@ -9,11 +9,11 @@ use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\AssetInterface;
-use Scandinaver\Learn\Domain\Events\AssetCreated;
-use Scandinaver\Learn\Domain\Events\AssetDeleted;
-use Scandinaver\Learn\Domain\Events\CardAddedToAsset;
-use Scandinaver\Learn\Domain\Events\CardRemovedFromAsset;
-use Scandinaver\Learn\Domain\Exceptions\CardAlreadyAddedException;
+use Scandinaver\Learn\Domain\Event\AssetCreated;
+use Scandinaver\Learn\Domain\Event\AssetDeleted;
+use Scandinaver\Learn\Domain\Event\CardAddedToAsset;
+use Scandinaver\Learn\Domain\Event\CardRemovedFromAsset;
+use Scandinaver\Learn\Domain\Exception\CardAlreadyAddedException;
 use Scandinaver\Shared\AggregateRoot;
 
 /**

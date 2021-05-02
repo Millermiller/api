@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Class Event
  *
- * @package App\Events
+ * @package App\Event
  */
 abstract class Event
 {

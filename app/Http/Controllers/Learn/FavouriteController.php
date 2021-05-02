@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Learn\Domain\Permissions\Asset;
+use Scandinaver\Learn\Domain\Permission\Asset;
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
 use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
 

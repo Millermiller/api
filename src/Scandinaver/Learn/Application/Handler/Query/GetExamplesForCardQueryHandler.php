@@ -5,9 +5,9 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
 use Scandinaver\Learn\Domain\Model\Example;
-use Scandinaver\Learn\Domain\Services\CardService;
+use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
-use Scandinaver\Learn\UI\Resources\ExampleTransformer;
+use Scandinaver\Learn\UI\Resource\ExampleTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 
