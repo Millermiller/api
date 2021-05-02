@@ -267,6 +267,16 @@ class Version20200627151711 extends AbstractMigration
                     language_id VARCHAR(255),
                     user_id VARCHAR(255)
                     )');
+
+        $this->addSql(
+            'CREATE TABLE settings (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    title VARCHAR(255), 
+                    slug VARCHAR(255),
+                    data VARCHAR(255),
+                    created_at VARCHAR(255),
+                    updated_at VARCHAR(255)
+                    )');
     }
 
     /**
