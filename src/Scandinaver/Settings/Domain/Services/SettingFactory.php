@@ -1,0 +1,35 @@
+<?php
+
+
+namespace Scandinaver\Settings\Domain\Services;
+
+use Scandinaver\Settings\Domain\DTO\SettingDTO;
+use Scandinaver\Settings\Domain\Model\Setting;
+
+/**
+ * Class SettingFactory
+ *
+ * @package Scandinaver\Settings\Domain\Services
+ */
+class SettingFactory
+{
+    public static function fromDTO(SettingDTO $settingDTO): Setting
+    {
+        $setting = new Setting();
+
+        $setting->setTitle($settingDTO->getTitle());
+        $setting->setSlug($settingDTO->getSlug());
+        $setting->setType($settingDTO->getType());
+
+        return $setting;
+    }
+
+    public static function toDTO(Setting $setting): SettingDTO
+    {
+        return new SettingDTO(
+            $setting->getTitle(),
+            $setting->getSlug(),
+            $setting->getType(),
+        );
+    }
+}

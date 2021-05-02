@@ -71,6 +71,8 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::middleware(['auth:api'])->group(base_path('routes/api/permission-group.php'));
 
+        Route::middleware(['auth:api'])->group(base_path('routes/api/settings.php'));
+
         Route::middleware(['auth:api', 'touchUser',])->group(base_path('routes/api/user.php'));
 
         Route::middleware(['auth:api', 'touchUser', 'checkPlan'])->group(base_path('routes/api/tariff.php'));

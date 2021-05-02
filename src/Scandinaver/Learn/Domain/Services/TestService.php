@@ -10,6 +10,8 @@ use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Exceptions\PassingNotFoundException;
 use Scandinaver\Learn\Domain\Model\Passing;
+use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
+use Scandinaver\Settings\Domain\Services\SettingsService;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**
@@ -25,9 +27,15 @@ class TestService implements BaseServiceInterface
 
     private PassingRepositoryInterface $passingRepository;
 
-    public function __construct(PassingRepositoryInterface $passingRepository)
+    private SettingsService $settingsService;
+
+    public function __construct(
+        PassingRepositoryInterface $passingRepository,
+        SettingsService $settingsService
+    )
     {
         $this->passingRepository = $passingRepository;
+        $this->settingsService = $settingsService;
     }
 
     public function all(): array
@@ -70,13 +78,13 @@ class TestService implements BaseServiceInterface
      * @param  array  $data
      *
      * @return Passing
-     * @throws AssetNotFoundException
+     * @throws AssetNotFoundException|SettingNotFoundException
      */
     public function savePassing(UserInterface $user, int $asset, array $data): Passing
     {
         $asset = $this->getAsset($asset);
 
-        $minPercent = 80; //TODO: implement settings
+        $minPercent = $this->settingsService->getSettingValue('test_threshold');
 
         $completed = $data['percent'] >= $minPercent;
 

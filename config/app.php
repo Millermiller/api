@@ -215,6 +215,10 @@ return [
         Scandinaver\RBAC\Application\Providers\DoctrineServiceProvider::class,
         Scandinaver\RBAC\Application\Providers\EventServiceProvider::class,
         Scandinaver\RBAC\Application\Providers\RBACServiceProvider::class,
+        Scandinaver\Settings\Application\Providers\AuthServiceProvider::class,
+        Scandinaver\Settings\Application\Providers\DoctrineServiceProvider::class,
+        Scandinaver\Settings\Application\Providers\EventServiceProvider::class,
+        Scandinaver\Settings\Application\Providers\SettingsServiceProvider::class,
     ],
 
     /*

@@ -1,0 +1,45 @@
+<?php
+
+
+namespace Scandinaver\Settings\UI\Command;
+
+use Scandinaver\Shared\Contract\CommandInterface;
+
+/**
+ * Class SetSettingCommand
+ *
+ * @package Scandinaver\Settings\UI\Command
+ *
+ * @see \Scandinaver\Settings\Application\Handler\Command\SetSettingCommandHandler
+ */
+class SetSettingCommand implements CommandInterface
+{
+    private int $id;
+
+    private $value;
+
+    /**
+     * SetSettingCommand constructor.
+     *
+     * @param  int  $id
+     * @param  mixed  $value
+     */
+    public function __construct(int $id, $value)
+    {
+        $this->id = $id;
+        $this->value = $value;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+}
