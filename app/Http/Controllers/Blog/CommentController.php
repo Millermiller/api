@@ -9,7 +9,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Blog\Domain\Permissions\Comment;
+use Scandinaver\Blog\Domain\Permission\Comment;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 use Scandinaver\Blog\UI\Command\UpdateCommentCommand;

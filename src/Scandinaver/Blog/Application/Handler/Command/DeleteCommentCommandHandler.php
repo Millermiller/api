@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
-use Scandinaver\Blog\Domain\Services\CommentService;
+use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

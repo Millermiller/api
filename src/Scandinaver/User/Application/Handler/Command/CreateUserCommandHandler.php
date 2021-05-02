@@ -7,9 +7,9 @@ use Exception;
 use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\User\Domain\Services\UserService;
+use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Command\CreateUserCommand;
-use Scandinaver\User\UI\Resources\UserTransformer;
+use Scandinaver\User\UI\Resource\UserTransformer;
 
 /**
  * Class CreateUserCommandHandler

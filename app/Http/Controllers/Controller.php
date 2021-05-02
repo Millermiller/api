@@ -9,9 +9,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Scandinaver\Shared\{CommandBus,
-    Contract\CommandInterface,
-    EventBusNotFoundException};
+use Scandinaver\Shared\{CommandBus, Contract\CommandInterface};
 
 /**
  * Class Controller

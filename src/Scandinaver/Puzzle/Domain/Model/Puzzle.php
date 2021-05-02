@@ -6,7 +6,7 @@ namespace Scandinaver\Puzzle\Domain\Model;
 use DateTime;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Puzzle\Domain\Events\PuzzleCreated;
+use Scandinaver\Puzzle\Domain\Event\PuzzleCreated;
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Shared\EventTrait;
 

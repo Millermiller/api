@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Services\CardService;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

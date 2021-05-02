@@ -15,7 +15,7 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class MessageRecieved
  *
- * @package App\Events
+ * @package App\Event
  */
 class MessageRecieved extends Event
 {

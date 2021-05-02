@@ -11,7 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
 use Intervention\Image\ImageManagerStatic as Image;
 use Scandinaver\Shared\EventBusNotFoundException;
-use Scandinaver\Translate\Domain\Permissions\Text;
+use Scandinaver\Translate\Domain\Permission\Text;
 use Scandinaver\Translate\UI\Command\CompleteTextCommand;
 use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
 use Scandinaver\Translate\UI\Command\CreateTextCommand;

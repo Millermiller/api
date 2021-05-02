@@ -4,9 +4,9 @@
 namespace Scandinaver\Common\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Common\Domain\Services\IntroService;
+use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Query\IntrosQuery;
-use Scandinaver\Common\UI\Resources\IntroTransformer;
+use Scandinaver\Common\UI\Resource\IntroTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

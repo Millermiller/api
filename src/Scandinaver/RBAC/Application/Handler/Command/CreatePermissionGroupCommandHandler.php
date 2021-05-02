@@ -4,10 +4,10 @@
 namespace Scandinaver\RBAC\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\RBAC\Domain\Exceptions\PermissionGroupDublicateException;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Exception\PermissionGroupDublicateException;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
-use Scandinaver\RBAC\UI\Resources\PermissionGroupTransformer;
+use Scandinaver\RBAC\UI\Resource\PermissionGroupTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

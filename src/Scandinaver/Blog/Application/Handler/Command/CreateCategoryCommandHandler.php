@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Blog\Domain\Exception\CategoryDuplicateException;
-use Scandinaver\Blog\Domain\Services\CategoryService;
+use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
 use Scandinaver\Shared\AbstractHandler;

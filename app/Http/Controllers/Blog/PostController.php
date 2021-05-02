@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\Blog\Domain\Permissions\Post;
+use Scandinaver\Blog\Domain\Permission\Post;
 use Scandinaver\Blog\UI\Command\CreatePostCommand;
 use Scandinaver\Blog\UI\Command\DeletePostCommand;
 use Scandinaver\Blog\UI\Command\UpdatePostCommand;

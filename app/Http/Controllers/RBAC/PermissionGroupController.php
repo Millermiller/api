@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\RBAC\Domain\Permissions\PermissionGroup;
+use Scandinaver\RBAC\Domain\Permission\PermissionGroup;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionGroupCommand;

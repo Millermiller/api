@@ -4,9 +4,9 @@
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionsQuery;
-use Scandinaver\RBAC\UI\Resources\PermissionTransformer;
+use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

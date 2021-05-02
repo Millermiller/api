@@ -22,24 +22,25 @@ return [
     */
     'managers'                   => [
         'default' => [
-            'dev'           => env('APP_DEBUG', false),
+            'dev'           => env('APP_DEBUG', FALSE),
             'meta'          => env('DOCTRINE_METADATA', 'annotations'),
             'connection'    => env('DB_CONNECTION', 'mysql'),
             'namespaces'    => [],
             'paths'         => [
-                base_path('src/Scandinaver/Puzzle/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Puzzle\Domain\Model',
-                base_path('src/Scandinaver/User/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\User\Domain\Model',
+                base_path('src/Scandinaver/Puzzle/Infrastructure/Persistence/Doctrine/Mapping')    => 'Scandinaver\Puzzle\Domain\Model',
+                base_path('src/Scandinaver/User/Infrastructure/Persistence/Doctrine/Mapping')      => 'Scandinaver\User\Domain\Model',
                 base_path('src/Scandinaver/Translate/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Translate\Domain\Model',
-                base_path('src/Scandinaver/Common/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Common\Domain\Model',
-                base_path('src/Scandinaver/Blog/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Blog\Domain\Model',
-                base_path('src/Scandinaver/Learn/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\Learn\Domain\Model',
-                base_path('src/Scandinaver/RBAC/Infrastructure/Persistence/Doctrine/Mapping') => 'Scandinaver\RBAC\Domain\Model',
+                base_path('src/Scandinaver/Common/Infrastructure/Persistence/Doctrine/Mapping')    => 'Scandinaver\Common\Domain\Model',
+                base_path('src/Scandinaver/Blog/Infrastructure/Persistence/Doctrine/Mapping')      => 'Scandinaver\Blog\Domain\Model',
+                base_path('src/Scandinaver/Learn/Infrastructure/Persistence/Doctrine/Mapping')     => 'Scandinaver\Learn\Domain\Model',
+                base_path('src/Scandinaver/RBAC/Infrastructure/Persistence/Doctrine/Mapping')      => 'Scandinaver\RBAC\Domain\Model',
+                base_path('src/Scandinaver/Settings/Infrastructure/Persistence/Doctrine/Mapping')  => 'Scandinaver\Settings\Domain\Model',
             ],
             'repository'    => Doctrine\ORM\EntityRepository::class,
             'proxies'       => [
-                'namespace'     => false,
+                'namespace'     => FALSE,
                 'path'          => storage_path('proxies'),
-                'auto_generate' => env('DOCTRINE_PROXY_AUTOGENERATE', true)
+                'auto_generate' => env('DOCTRINE_PROXY_AUTOGENERATE', TRUE),
             ],
             /*
             |--------------------------------------------------------------------------
@@ -47,12 +48,12 @@ return [
             |--------------------------------------------------------------------------
             |
             | The listener array expects the key to be a Doctrine event
-            | e.g. Doctrine\ORM\Events::onFlush
+            | e.g. Doctrine\ORM\Event::onFlush
             |
             */
             'events'        => [
                 'listeners'   => [],
-                'subscribers' => []
+                'subscribers' => [],
             ],
             'filters'       => [],
             /*
@@ -79,8 +80,8 @@ return [
             */
             'mapping_types' => [
                 //'enum' => 'string'
-            ]
-        ]
+            ],
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
@@ -114,7 +115,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_types'               => [
-        'json' => Scandinaver\Common\Infrastructure\Persistence\Doctrine\UnicodeJsonType::class
+        'json' => Scandinaver\Common\Infrastructure\Persistence\Doctrine\UnicodeJsonType::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +135,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_string_functions'    => [
-        'FIELD'       => DoctrineExtensions\Query\Mysql\Field::class,
+        'FIELD' => DoctrineExtensions\Query\Mysql\Field::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -156,7 +157,7 @@ return [
     | - LaravelDoctrine\ORM\Loggers\FileLogger
     |--------------------------------------------------------------------------
     */
-    'logger'                     => env('DOCTRINE_LOGGER', false),
+    'logger'                     => env('DOCTRINE_LOGGER', FALSE),
     /*
     |--------------------------------------------------------------------------
     | Cache
@@ -168,21 +169,21 @@ return [
     | Available: apc|array|file|memcached|redis|void
     |
     */
-    'cache' => [
-        'second_level'     => false,
-        'default'          => env('DOCTRINE_CACHE', 'array'),
-        'namespace'        => null,
-        'metadata'         => [
-            'driver'       => env('DOCTRINE_METADATA_CACHE', env('DOCTRINE_CACHE', 'array')),
-            'namespace'    => null,
+    'cache'                      => [
+        'second_level' => FALSE,
+        'default'      => env('DOCTRINE_CACHE', 'array'),
+        'namespace'    => NULL,
+        'metadata'     => [
+            'driver'    => env('DOCTRINE_METADATA_CACHE', env('DOCTRINE_CACHE', 'array')),
+            'namespace' => NULL,
         ],
-        'query'            => [
-            'driver'       => env('DOCTRINE_QUERY_CACHE', env('DOCTRINE_CACHE', 'array')),
-            'namespace'    => null,
+        'query'        => [
+            'driver'    => env('DOCTRINE_QUERY_CACHE', env('DOCTRINE_CACHE', 'array')),
+            'namespace' => NULL,
         ],
-        'result'           => [
-            'driver'       => env('DOCTRINE_RESULT_CACHE', env('DOCTRINE_CACHE', 'array')),
-            'namespace'    => null,
+        'result'       => [
+            'driver'    => env('DOCTRINE_RESULT_CACHE', env('DOCTRINE_CACHE', 'array')),
+            'namespace' => NULL,
         ],
     ],
     /*
@@ -196,7 +197,7 @@ return [
     |
     */
     'gedmo'                      => [
-        'all_mappings' => false
+        'all_mappings' => FALSE,
     ],
     /*
      |--------------------------------------------------------------------------
@@ -206,7 +207,7 @@ return [
      |  Enables the Doctrine Presence Verifier for Validation
      |
      */
-    'doctrine_presence_verifier' => true,
+    'doctrine_presence_verifier' => TRUE,
 
     /*
      |--------------------------------------------------------------------------
@@ -217,6 +218,6 @@ return [
      |
      */
     'notifications'              => [
-        'channel' => 'database'
-    ]
+        'channel' => 'database',
+    ],
 ];

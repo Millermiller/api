@@ -7,7 +7,7 @@ use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Translate\Domain\Services\TextService;
+use Scandinaver\Translate\Domain\Service\TextService;
 
 /**
  * Class TextsCountQueryHandler

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Validation\ValidationException;
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\User\Domain\Exceptions\UserNotFoundException;
+use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\UI\Command\LoginCommand;
 use Scandinaver\User\UI\Query\UserStateQuery;
 

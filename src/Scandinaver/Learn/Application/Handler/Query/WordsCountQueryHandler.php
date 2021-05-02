@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Primitive;
-use Scandinaver\Learn\Domain\Services\WordService;
+use Scandinaver\Learn\Domain\Service\WordService;
 use Scandinaver\Learn\UI\Query\WordsCountQuery;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

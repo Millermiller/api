@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Primitive;
-use Scandinaver\Learn\Domain\Services\AudioService;
+use Scandinaver\Learn\Domain\Service\AudioService;
 use Scandinaver\Learn\UI\Query\AudioCountQuery;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

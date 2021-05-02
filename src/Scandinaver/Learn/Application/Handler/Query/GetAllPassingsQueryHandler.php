@@ -4,9 +4,9 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Services\TestService;
-use Scandinaver\Learn\UI\Resources\PassingTransformer;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Service\TestService;
+use Scandinaver\Learn\UI\Resource\PassingTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Learn\UI\Query\GetAllPassingsQuery;

@@ -8,7 +8,7 @@ use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\Role;
 
 /**
- * Interface Permissions
+ * Interface Permission
  *
  * @package Scandinaver\User\Domain\Contract
  */

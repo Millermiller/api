@@ -13,7 +13,7 @@ use Scandinaver\Common\Domain\Contract\UserInterface;
 /**
  * Class UserRegistered
  *
- * @package App\Events
+ * @package App\Event
  */
 class UserRegistered
 {

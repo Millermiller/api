@@ -1,0 +1,132 @@
+<?php
+
+
+namespace Scandinaver\Learn\Domain\Service;
+
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
+use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
+use Scandinaver\Learn\Domain\Exception\AudioFileCantParsedException;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Exception\WordNotFoundException;
+use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Shared\DTO;
+
+/**
+ * Class AudioService
+ *
+ * @package Scandinaver\Learn\Domain\Services
+ */
+class AudioService implements BaseServiceInterface
+{
+    use WordTrait;
+    use LanguageTrait;
+
+    private WordRepositoryInterface $wordsRepository;
+
+    private AudioParserInterface $parser;
+
+    public function __construct(
+        WordRepositoryInterface $wordsRepository,
+        AudioParserInterface $parser
+    ) {
+        $this->wordsRepository = $wordsRepository;
+        $this->parser          = $parser;
+    }
+
+    public function count(): int
+    {
+        return $this->wordsRepository->countAudio();
+    }
+
+    /**
+     * @param  string  $language
+     *
+     * @return int
+     * @throws LanguageNotFoundException
+     */
+    public function countByLanguage(string $language): int
+    {
+        $language = $this->getLanguage($language);
+
+        return $this->wordsRepository->getCountAudioByLanguage($language);
+    }
+
+    /**
+     * @param  int           $word
+     * @param  UploadedFile  $file
+     *
+     * @return Word
+     * @throws WordNotFoundException
+     */
+    public function upload(int $word, UploadedFile $file): Word
+    {
+        $word = $this->getWord($word);
+
+        $path = $file->store('audio');
+
+        $word->setAudio($path);
+
+        $this->wordsRepository->save($word);
+
+        return $word;
+    }
+
+    /**
+     * TODO: use laravel curl wrapper and Storage. Move to infrastructure
+     *
+     * @param  int  $word
+     *
+     * @return string
+     * @throws WordNotFoundException
+     */
+    public function parse(int $word): string
+    {
+        $word = $this->getWord($word);
+
+        try {
+            $link = $this->parser->parse($word->getWord());
+
+            $curl = curl_init();
+            curl_setopt(
+                $curl,
+                CURLOPT_URL,
+                'https://forvo.com/player-mp3Handler.php?path=' . $link
+            );
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+            //curl_setopt($curl, CURLOPT_COOKIEFILE, BASE_URL . '/temp/cookie.txt');
+            $file = curl_exec($curl);
+            curl_close($curl);
+
+            $filename = Str::random(32);
+
+            touch(public_path() . '/audio/' . $filename . '.mp3');
+            $fp       = fopen(public_path() . '/audio/' . $filename . '.mp3', 'w');
+            $filesize = fwrite($fp, $file);
+            fclose($fp);
+
+            if ($filesize > 0) {
+                $word->setAudio('/audio/' . $filename . '.mp3');
+                $this->wordsRepository->save($word);
+            }
+        } catch (AudioFileCantParsedException $e) {
+            //
+        }
+
+        return $word;
+    }
+
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
+
+    public function one(int $id): DTO
+    {
+        // TODO: Implement one() method.
+    }
+
+}

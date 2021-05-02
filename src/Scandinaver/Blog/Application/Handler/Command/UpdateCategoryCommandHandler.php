@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
-use Scandinaver\Blog\Domain\Services\CategoryService;
+use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Command\UpdateCategoryCommand;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
 use Scandinaver\Shared\AbstractHandler;

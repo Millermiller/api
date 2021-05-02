@@ -7,12 +7,12 @@ use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Blog\Domain\Model\Post;
-use Scandinaver\User\UI\Resources\UserTransformer;
+use Scandinaver\User\UI\Resource\UserTransformer;
 
 /**
  * Class PostTransformer
  *
- * @package Scandinaver\Blog\UI\Resources
+ * @package Scandinaver\Blog\UI\Resource
  */
 class PostTransformer extends TransformerAbstract
 {

@@ -9,9 +9,9 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
-use Scandinaver\Translate\Domain\Services\TextService;
+use Scandinaver\Translate\Domain\Service\TextService;
 use Scandinaver\Translate\UI\Query\GetTextQuery;
-use Scandinaver\Translate\UI\Resources\TextTransformer;
+use Scandinaver\Translate\UI\Resource\TextTransformer;
 
 /**
  * Class GetTextQueryHandler

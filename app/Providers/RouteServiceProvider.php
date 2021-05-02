@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Class RouteServiceProvider
  *
- * @package App\Providers
+ * @package App\Provider
  */
 class RouteServiceProvider extends ServiceProvider
 {
@@ -70,6 +70,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware(['auth:api'])->group(base_path('routes/api/permission.php'));
 
         Route::middleware(['auth:api'])->group(base_path('routes/api/permission-group.php'));
+
+        Route::middleware(['auth:api'])->group(base_path('routes/api/settings.php'));
 
         Route::middleware(['auth:api', 'touchUser',])->group(base_path('routes/api/user.php'));
 

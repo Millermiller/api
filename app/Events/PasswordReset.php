@@ -13,7 +13,7 @@ use Scandinaver\User\Domain\Model\User;
 /**
  * Class PasswordReset
  *
- * @package App\Events
+ * @package App\Event
  */
 class PasswordReset
 {

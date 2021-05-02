@@ -4,10 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learn\Domain\Exceptions\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Services\AssetService;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
-use Scandinaver\Learn\UI\Resources\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

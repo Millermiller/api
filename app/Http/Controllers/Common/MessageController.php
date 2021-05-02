@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Permissions\Message;
+use Scandinaver\Common\Domain\Permission\Message;
 use Scandinaver\Common\UI\Command\DeleteMessageCommand;
 use Scandinaver\Common\UI\Query\MessageQuery;
 use Scandinaver\Common\UI\Query\MessagesQuery;

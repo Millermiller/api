@@ -8,7 +8,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\RBAC\Domain\Permissions\Permission;
+use Scandinaver\RBAC\Domain\Permission\Permission;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;
@@ -27,7 +27,6 @@ class PermissionController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -41,7 +40,6 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $id): JsonResponse
     {
@@ -55,7 +53,6 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $id): JsonResponse
     {
@@ -69,7 +66,6 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function store(Request $request): JsonResponse
     {
@@ -84,7 +80,6 @@ class PermissionController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function update(Request $request, int $id): JsonResponse
     {

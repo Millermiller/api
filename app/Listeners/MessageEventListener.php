@@ -10,7 +10,7 @@ use Mail;
 /**
  * Class MessageEventListener
  *
- * @package App\Listeners
+ * @package App\Listener
  */
 class MessageEventListener
 {

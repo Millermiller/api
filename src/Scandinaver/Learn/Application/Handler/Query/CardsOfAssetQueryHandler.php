@@ -4,10 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\Learn\Domain\Exceptions\AssetNotFoundException;
-use Scandinaver\Learn\Domain\Services\CardService;
+use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
+use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
-use Scandinaver\Learn\UI\Resources\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

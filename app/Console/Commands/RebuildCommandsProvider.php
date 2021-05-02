@@ -21,7 +21,7 @@ class RebuildCommandsProvider extends GeneratorCommand
 
     private ?string $domain;
 
-    protected string $serviceProviderPath = 'Application/Providers';
+    protected string $serviceProviderPath = 'Application/Provider';
 
     protected $type = 'Service provider';
 
@@ -104,7 +104,7 @@ class RebuildCommandsProvider extends GeneratorCommand
     {
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        return "{$path}src/Scandinaver/{$this->domain}/Application/Providers/{$name}.php";
+        return "{$path}src/Scandinaver/{$this->domain}/Application/Provider/{$name}.php";
     }
 
     /**
@@ -138,7 +138,7 @@ class RebuildCommandsProvider extends GeneratorCommand
             'DummyNamespace',
         ], [
                 $class,
-                "{$this->getDefaultNamespace($name)}\\$this->domain\\Application\\Providers",
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\Application\\Provider",
             ], $stub);
     }
 }

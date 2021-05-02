@@ -15,7 +15,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Permissions\Card;
+use Scandinaver\Learn\Domain\Permission\Card;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
 use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
 use Scandinaver\Learn\UI\Command\CreateAssetCommand;
@@ -51,7 +51,7 @@ class AssetController extends Controller
      */
     public function index(string $languageId): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::VIEW);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
 
         return response()->json([
             'words'     => $this->commandBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_WORDS)),
@@ -67,7 +67,7 @@ class AssetController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::SHOW, $id);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::SHOW, $id);
 
         return $this->execute(new CardsOfAssetQuery(Auth::user(), $id));
     }
@@ -80,7 +80,7 @@ class AssetController extends Controller
      */
     public function store(CreateAssetRequest $request): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::CREATE);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::CREATE);
 
         $data = $request->toArray();
 
@@ -96,7 +96,7 @@ class AssetController extends Controller
      */
     public function update(int $id, UpdateAssetRequest $request): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::UPDATE, $id);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::UPDATE, $id);
 
         return $this->execute(new UpdateAssetCommand(Auth::user(), $id, $request->toArray()));
     }
@@ -109,7 +109,7 @@ class AssetController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::DELETE, $id);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::DELETE, $id);
 
         return $this->execute(new DeleteAssetCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
@@ -248,7 +248,7 @@ class AssetController extends Controller
      */
     public function addCard(int $asset, int $card): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permissions\Asset::ADD_CARD);
+        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::ADD_CARD);
 
         return $this->execute(new AddCardToAssetCommand(Auth::user(), $asset, $card), JsonResponse::HTTP_CREATED);
     }

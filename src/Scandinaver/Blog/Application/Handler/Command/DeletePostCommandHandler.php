@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
-use Scandinaver\Blog\Domain\Services\BlogService;
+use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Command\DeletePostCommand;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;

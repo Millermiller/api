@@ -5,9 +5,9 @@ namespace Scandinaver\Common\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
-use Scandinaver\Common\Domain\Services\IntroService;
+use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Query\IntroQuery;
-use Scandinaver\Common\UI\Resources\IntroTransformer;
+use Scandinaver\Common\UI\Resource\IntroTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

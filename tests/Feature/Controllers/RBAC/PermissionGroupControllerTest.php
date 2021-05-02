@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Scandinaver\RBAC\Domain\Model\PermissionGroup;
 use Scandinaver\RBAC\Domain\Model\Role;
-use Scandinaver\RBAC\Domain\Services\RBACService;
+use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 

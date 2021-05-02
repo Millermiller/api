@@ -24,7 +24,7 @@ class CreateEvent extends GeneratorCommand
 
     protected $type = 'Event';
 
-    protected string $eventPath = 'Domain/Events';
+    protected string $eventPath = 'Domain/Event';
 
     /**
      * Get the stub file for the generator.

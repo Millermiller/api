@@ -6,7 +6,7 @@ namespace Scandinaver\User\Application\Handler\Command;
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\User\Domain\Services\UserService;
+use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Command\UpdateUserSettingsCommand;
 
 /**

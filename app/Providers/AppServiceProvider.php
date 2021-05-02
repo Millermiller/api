@@ -9,7 +9,7 @@ use Laravel\Passport\Passport;
 /**
  * Class AppServiceProvider
  *
- * @package App\Providers
+ * @package App\Provider
  */
 class AppServiceProvider extends ServiceProvider
 {

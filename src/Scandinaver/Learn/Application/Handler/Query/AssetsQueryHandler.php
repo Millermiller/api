@@ -5,9 +5,9 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Exception;
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learn\Domain\Services\AssetService;
+use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Query\AssetsQuery;
-use Scandinaver\Learn\UI\Resources\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\CommandInterface;
 

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\Blog\Domain\Permissions\Category;
+use Scandinaver\Blog\Domain\Permission\Category;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
 use Scandinaver\Blog\UI\Command\UpdateCategoryCommand;
