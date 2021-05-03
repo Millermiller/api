@@ -15,7 +15,6 @@ use Scandinaver\Learn\UI\Command\CompleteTestCommand;
 use Scandinaver\Learn\UI\Command\DeletePassingCommand;
 use Scandinaver\Learn\UI\Command\UpdatePassingCommand;
 use Scandinaver\Learn\UI\Query\GetAllPassingsQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class TestController
@@ -31,7 +30,6 @@ class TestController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function complete(TestCompleteRequest $request, int $assetId): JsonResponse
     {
@@ -47,7 +45,6 @@ class TestController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function getAllPassing(string $language): JsonResponse
     {
@@ -61,7 +58,6 @@ class TestController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroyPassing(int $id): JsonResponse
     {
@@ -76,7 +72,6 @@ class TestController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function updatePassing(UpdatePassingRequest $request, int $id): JsonResponse
     {

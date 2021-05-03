@@ -64,7 +64,7 @@ class RebuildEventsProvider extends GeneratorCommand
             $class        = Str::replaceFirst('.php', '', $event->getFilename());
             $classHandler = "{$class}Listener";
 
-            $eventBindings[] = '\'Scandinaver\\' . $this->domain . '\Domain\Events\\' . $class . '\' => [' . PHP_EOL . "            " . '\'Scandinaver\\' . $this->domain . '\Domain\Events\Listeners\\' . $classHandler . '\',' . PHP_EOL . "        " . '],';
+            $eventBindings[] = '\'Scandinaver\\' . $this->domain . '\Domain\Event\\' . $class . '\' => [' . PHP_EOL . "            " . '\'Scandinaver\\' . $this->domain . '\Domain\Event\Listener\\' . $classHandler . '\',' . PHP_EOL . "        " . '],';
         }
 
         $serviceprovider = $this->buildClass($name);

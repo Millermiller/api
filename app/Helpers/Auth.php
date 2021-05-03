@@ -17,7 +17,7 @@ class Auth
     /**
      * @return UserInterface
      */
-    public static function user(): UserInterface
+    public static function user(): ?UserInterface
     {
         return \Auth::user();
     }

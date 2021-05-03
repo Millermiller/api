@@ -7,6 +7,7 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\OptimisticLockException;
+use Psr\Log\LoggerInterface;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**
@@ -60,15 +61,22 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
 
     /**
      * @param $object
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function delete($object): void
     {
-        $this->_em->remove($object);
-        $this->_em->flush($object);
-        $this->fireEvents($object);
+       // $this->_em->getConnection()->beginTransaction();
+
+        try {
+            $this->fireEvents($object);
+            $this->_em->remove($object);
+            $this->_em->flush($object);
+         //   $this->_em->getConnection()->commit();
+        } catch (\Exception $e) {
+            /** @var LoggerInterface $logger */
+            $logger = app('LoggerInterface');
+            $logger->error($e->getMessage());
+        }
+
     }
 
     private function fireEvents(object $entity): void

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Common\Domain\Service\IntroFactory;
 use Scandinaver\Common\Domain\Service\IntroService;
@@ -146,7 +147,7 @@ class UserService implements BaseServiceInterface
      * @return User|null
      * @throws UserNotFoundException
      */
-    public function login(array $credentials): ?User
+    public function login(array $credentials): ?UserInterface
     {
         if (!Auth::attempt($credentials, TRUE)) {
             throw new UserNotFoundException();
@@ -256,19 +257,19 @@ class UserService implements BaseServiceInterface
 
         $stateDTO->setSite(config('app.MAIN_SITE'));
 
-        $wordAssetsDTO = $this->assetService->getAssetsByType($language->getTitle(), $user, Asset::TYPE_WORDS);
+        $wordAssetsDTO = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_WORDS);
         $stateDTO->setWordsDTO($wordAssetsDTO);
 
-        $sentencesAssetsDTO = $this->assetService->getAssetsByType($language->getTitle(), $user, Asset::TYPE_SENTENCES);
+        $sentencesAssetsDTO = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_SENTENCES);
         $stateDTO->setSentencesDTO($sentencesAssetsDTO);
 
         $stateDTO->setPersonalDTO($personalData);
         $stateDTO->setFavouriteAssetDTO($favouriteAssetDTO);
 
-        $textsDTO = $this->textService->getTextsForUser($language->getTitle(), $user);
+        $textsDTO = $this->textService->getTextsForUser($language->getLetter(), $user);
         $stateDTO->setTextsDTO($textsDTO);
 
-        $puzzles    = $this->puzzleService->getForUser($language->getTitle(), $user);
+        $puzzles    = $this->puzzleService->getForUser($language->getLetter(), $user);
         $puzzlesDTO = [];
         foreach ($puzzles as $puzzle) {
             $puzzlesDTO[] = PuzzleFactory::toDTO($puzzle);
@@ -364,8 +365,6 @@ class UserService implements BaseServiceInterface
         $user->delete();
 
         $this->userRepository->delete($user);
-
-        // event(new UserDeleted($user));
     }
 
 }

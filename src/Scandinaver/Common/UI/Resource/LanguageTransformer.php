@@ -18,9 +18,8 @@ class LanguageTransformer extends TransformerAbstract
         return [
             'id'     => $languageDTO->getId(),
             'title'  => $languageDTO->getTitle(),
-            'label'  => $languageDTO->getLabel(),
-            'letter' => $languageDTO->getLabel(),
-            'flag'   => $languageDTO->getFlag(),
+            'letter' => $languageDTO->getLetter(),
+            'flag'   => asset($languageDTO->getFlag())
         ];
     }
 }

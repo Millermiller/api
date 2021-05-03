@@ -15,7 +15,15 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-
+        'Scandinaver\Common\Domain\Event\LanguageCreated' => [
+            'Scandinaver\Common\Domain\Event\Listener\LanguageCreatedListener',
+        ],
+        'Scandinaver\Common\Domain\Event\LanguageDeleted' => [
+            'Scandinaver\Common\Domain\Event\Listener\LanguageDeletedListener',
+        ],
+        'Scandinaver\Common\Domain\Event\LanguageUpdated' => [
+            'Scandinaver\Common\Domain\Event\Listener\LanguageUpdatedListener',
+        ],
     ];
 
     public function boot()

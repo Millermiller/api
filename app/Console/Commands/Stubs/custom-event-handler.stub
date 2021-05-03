@@ -9,7 +9,6 @@ use DummyEventNamespace;
  * Class DummyClass
  *
  * @package DummyNamespace
- *
  */
 class DummyClass
 {
@@ -18,7 +17,7 @@ class DummyClass
 
     }
 
-    public function handle(DummyEventClass $event)
+    public function handle(DummyEventClass $event): void
     {
 
     }

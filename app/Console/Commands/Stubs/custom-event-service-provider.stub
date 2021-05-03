@@ -3,7 +3,7 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Foundation\Support\Provider\EventServiceProvider as ServiceProvider;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 /**
  * Class DummyClass

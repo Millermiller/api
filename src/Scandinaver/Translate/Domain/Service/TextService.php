@@ -170,4 +170,16 @@ class TextService
 
         return $nextText;
     }
+
+    public function removePassingsByUser(UserInterface $user): void
+    {
+        /** @var Result[] $passings */
+        $passings = $this->resultRepository->findBy([
+            'user' => $user
+        ]);
+
+        foreach ($passings as $passing) {
+            $this->resultRepository->delete($passing);
+        }
+    }
 }

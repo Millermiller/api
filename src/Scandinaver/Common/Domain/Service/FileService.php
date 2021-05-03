@@ -5,8 +5,11 @@ namespace Scandinaver\Common\Domain\Service;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Psr\Log\LoggerInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * Class FileService
@@ -17,14 +20,15 @@ class FileService
 {
     private UserRepositoryInterface $userRepository;
 
-    /**
-     * FileService constructor.
-     *
-     * @param  UserRepositoryInterface  $userRepository
-     */
-    public function __construct(UserRepositoryInterface $userRepository)
+    private LoggerInterface $logger;
+
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        LoggerInterface $logger
+    )
     {
         $this->userRepository = $userRepository;
+        $this->logger = $logger;
     }
 
     /**
@@ -43,6 +47,19 @@ class FileService
 
         $this->userRepository->save($user);
 
-        return public_path('/uploads/u/') . $filename;
+        return asset('/uploads/u/') . $filename;
+    }
+
+    public function uploadFlag(Language $language, UploadedFile $photo): string
+    {
+        $filename = $language->getLetter() . '.' . $photo->extension();
+
+        try {
+            $photo->move(public_path('/img/'), $filename);
+
+            return "/img/$filename";
+        } catch (FileException $e) {
+            $this->logger->error($e->getMessage());
+        }
     }
 }

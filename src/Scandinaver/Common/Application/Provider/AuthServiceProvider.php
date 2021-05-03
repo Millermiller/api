@@ -5,8 +5,9 @@ namespace Scandinaver\Common\Application\Provider;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Scandinaver\Common\Domain\Permission\{Intro, Log, Message};
+use Scandinaver\Common\Domain\Permission\{Intro, Language, Log, Message};
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AuthServiceProvider
@@ -44,9 +45,29 @@ class AuthServiceProvider extends ServiceProvider
             });
 
         /* LANGUAGE */
-        Gate::define('view-languages',
+        Gate::define(Language::VIEW,
             function (?UserInterface $user) {
-                return TRUE;
+                return $user->can(Language::VIEW);
+            });
+
+        Gate::define(Language::SHOW,
+            function (?UserInterface $user) {
+                return $user->can(Language::SHOW);
+            });
+
+        Gate::define(Language::CREATE,
+            function (?User $user) {
+                return $user->can(Language::CREATE);
+            });
+
+        Gate::define(Language::UPDATE,
+            function (?UserInterface $user) {
+                return $user->can(Language::UPDATE);
+            });
+
+        Gate::define(Language::DELETE,
+            function (?UserInterface $user) {
+                return $user->can(Language::DELETE);
             });
 
         /* LOG */

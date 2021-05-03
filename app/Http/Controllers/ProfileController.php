@@ -21,7 +21,6 @@ class ProfileController extends Controller
      * @param  UploadAvatarRequest  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function uploadImage(UploadAvatarRequest $request): JsonResponse
     {
@@ -32,7 +31,6 @@ class ProfileController extends Controller
      * @param  ProfileRequest  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function edit(ProfileRequest $request): JsonResponse
     {

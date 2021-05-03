@@ -34,13 +34,13 @@ class DashboardController extends Controller
         // $unread = Message::find(['readed' => 0]);
 
         return response()->json([
-                'users'    => $this->execute(new UsersQuery()),
-                'words'    => $this->execute(new WordsCountQuery()),
-                'assets'   => $this->execute(new AssetsCountQuery($language)),
-                'audio'    => $this->execute(new AudioCountQuery()),
-                'texts'    => $this->execute(new TextsCountQuery()),
+                //'users'    => $this->execute(new UsersQuery()),
+                //'words'    => $this->execute(new WordsCountQuery()),
+                //'assets'   => $this->execute(new AssetsCountQuery($language)),
+                //'audio'    => $this->execute(new AudioCountQuery()),
+                //'texts'    => $this->execute(new TextsCountQuery()),
                 //  'log'      => Activity::with('causer', 'subject')->get(),
-                'messages' => $this->execute(new MessagesQuery()),
+                //'messages' => $this->execute(new MessagesQuery()),
             ]);
     }
 

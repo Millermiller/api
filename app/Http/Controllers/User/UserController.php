@@ -8,7 +8,6 @@ use App\Http\Requests\ProfileRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\Shared\EventBusNotFoundException;
 use Scandinaver\User\Domain\Permission\User;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
@@ -26,7 +25,6 @@ class UserController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -40,7 +38,6 @@ class UserController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $userId): JsonResponse
     {
@@ -54,7 +51,6 @@ class UserController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function store(ProfileRequest $request): JsonResponse
     {
@@ -71,7 +67,6 @@ class UserController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function update(Request $request, int $userId): JsonResponse
     {
@@ -85,7 +80,6 @@ class UserController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $userId): JsonResponse
     {

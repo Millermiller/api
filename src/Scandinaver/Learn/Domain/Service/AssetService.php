@@ -3,11 +3,15 @@
 
 namespace Scandinaver\Learn\Domain\Service;
 
+use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Psr\Log\LoggerInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
@@ -17,9 +21,10 @@ use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exception\CardAlreadyAddedException;
 use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\{Asset};
+use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset, PersonalAsset, SentenceAsset, WordAsset};
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
+use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 
 /**
  * Class AssetService
@@ -39,14 +44,26 @@ class AssetService implements BaseServiceInterface
 
     private PersonalAssetRepositoryInterface $personalAssetRepository;
 
+    private UserRepositoryInterface $userRepository;
+
+    private LoggerInterface $logger;
+
+    private LanguageService $languageService;
+
     public function __construct(
         PassingRepositoryInterface $passingRepository,
         AssetRepositoryInterface $assetRepository,
-        PersonalAssetRepositoryInterface $personalAssetRepository
+        PersonalAssetRepositoryInterface $personalAssetRepository,
+        UserRepositoryInterface $userRepository,
+        LoggerInterface $logger,
+        LanguageService $languageService
     ) {
         $this->passingRepository       = $passingRepository;
         $this->assetRepository         = $assetRepository;
         $this->personalAssetRepository = $personalAssetRepository;
+        $this->userRepository          = $userRepository;
+        $this->logger                  = $logger;
+        $this->languageService         = $languageService;
     }
 
     /**
@@ -97,8 +114,6 @@ class AssetService implements BaseServiceInterface
      *
      * @throws AssetNotFoundException
      * @throws BindingResolutionException
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function delete(int $id): void
     {
@@ -380,5 +395,102 @@ class AssetService implements BaseServiceInterface
 
         $asset->removeCard($card);
         $this->assetRepository->save($asset);
+    }
+
+    /**
+     * @param  Language  $language
+     *
+     * @throws BindingResolutionException
+     * @throws LanguageNotFoundException|ConnectionException
+     */
+    public function removeByLanguage(Language $language): void
+    {
+        /** @var WordAsset[] $wordAssets */
+        $wordAssets = $this->getAssets($language->getLetter(), Asset::TYPE_WORDS);
+        /** @var SentenceAsset[] $wordAssets */
+        $sentenceAssets = $this->getAssets($language->getLetter(), Asset::TYPE_SENTENCES);
+        /** @var PersonalAsset[] $wordAssets */
+        $personalAssets = $this->getAssets($language->getLetter(), Asset::TYPE_PERSONAL);
+        /** @var FavouriteAsset[] $wordAssets */
+        $favouriteAssets = $this->getAssets($language->getLetter(), Asset::TYPE_FAVORITES);
+
+        $manager = app('em');
+        $manager->getConnection()->beginTransaction();
+
+        try {
+            foreach ($wordAssets as $wordAsset) {
+                $wordAsset->delete();
+                $this->assetRepository->delete($wordAsset);
+            }
+
+            foreach ($sentenceAssets as $sentenceAsset) {
+                $sentenceAsset->delete();
+                $this->assetRepository->delete($sentenceAsset);
+            }
+
+            foreach ($personalAssets as $personalAsset) {
+                $personalAsset->delete();
+                $this->assetRepository->delete($personalAsset);
+            }
+
+            foreach ($favouriteAssets as $favouriteAsset) {
+                $favouriteAsset->delete();
+                $this->assetRepository->delete($favouriteAsset);
+            }
+
+            $manager->getConnection()->commit();
+        } catch (Exception $e) {
+            $manager->getConnection()->rollBack();
+            $this->logger->error($e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function removeByUser(UserInterface $user): void
+    {
+        /** @var Language[] $languages $languages */
+        $languages = $this->languageService->all();
+
+        foreach ($languages as $language) {
+            $assets = $user->getPersonalAssets($language);
+            $favouriteAsset = $user->getFavouriteAsset($language);
+
+            if ($favouriteAsset !== NULL) {
+                $favouriteAsset->delete();
+                $this->assetRepository->delete($favouriteAsset);
+            }
+
+            foreach ($assets as $asset) {
+                $asset->delete();
+                $this->assetRepository->delete($asset);
+            }
+        }
+    }
+
+    /**
+     * @param  Language  $language
+     *
+     * @throws ConnectionException
+     */
+    public function createDefaultAssets(Language $language): void
+    {
+        /** @var  UserInterface[] $users */
+        $users   = $this->userRepository->findAll();
+        $manager = app('em');
+        $manager->getConnection()->beginTransaction();
+
+        try {
+            foreach ($users as $user) {
+                $favourite = new FavouriteAsset($language);
+                $favourite->setOwner($user);
+                $user->addPersonalAsset($favourite);
+                $this->assetRepository->save($favourite);
+            }
+            $manager->getConnection()->commit();
+        } catch (Exception $e) {
+            $manager->getConnection()->rollBack();
+            $this->logger->error($e->getMessage());
+            throw $e;
+        }
     }
 }

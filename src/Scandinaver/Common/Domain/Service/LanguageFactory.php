@@ -17,7 +17,7 @@ class LanguageFactory
     {
         $language = new Language();
 
-        $language->setLabel($languageDTO->getLabel());
+        $language->setLetter($languageDTO->getLetter());
         $language->setTitle($languageDTO->getTitle());
 
         return $language;
@@ -29,8 +29,7 @@ class LanguageFactory
 
         $languageDTO->setId($language->getId());
         $languageDTO->setTitle($language->getTitle());
-        $languageDTO->setLabel($language->getLabel());
-        $languageDTO->setLetter($language->getLabel());
+        $languageDTO->setLetter($language->getLetter());
         $languageDTO->setFlag(asset('img/'.$language->getFlag()));
 
         return $languageDTO;

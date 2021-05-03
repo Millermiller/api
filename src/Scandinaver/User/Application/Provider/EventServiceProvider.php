@@ -15,7 +15,12 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-
+        'Scandinaver\User\Domain\Event\UserCreated' => [
+            'Scandinaver\User\Domain\Event\Listener\UserCreatedListener',
+        ],
+        'Scandinaver\User\Domain\Event\UserDeleted' => [
+            'Scandinaver\User\Domain\Event\Listener\UserDeletedListener',
+        ],
     ];
 
     public function boot()

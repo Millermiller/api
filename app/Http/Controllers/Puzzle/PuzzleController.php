@@ -37,7 +37,6 @@ class PuzzleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(PuzzlesRequest $request): JsonResponse
     {
@@ -53,7 +52,6 @@ class PuzzleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function byUser(UserPuzzlesRequest $request): JsonResponse
     {
@@ -69,7 +67,6 @@ class PuzzleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $id): JsonResponse
     {
@@ -84,7 +81,6 @@ class PuzzleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function store(string $language, Request $request): JsonResponse
     {
@@ -111,7 +107,6 @@ class PuzzleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function complete(int $id): JsonResponse
     {
@@ -125,7 +120,6 @@ class PuzzleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $id): JsonResponse
     {

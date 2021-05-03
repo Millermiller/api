@@ -18,7 +18,6 @@ class LanguageDTOTransformer extends TransformerAbstract
         return [
             'id'     => $languageDTO->getId(),
             'title'  => $languageDTO->getTitle(),
-            'label'  => $languageDTO->getLabel(),
             'letter' => $languageDTO->getLetter(),
             'flag'   => $languageDTO->getFlag(),
         ];

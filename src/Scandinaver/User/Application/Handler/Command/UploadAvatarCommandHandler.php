@@ -3,6 +3,7 @@
 
 namespace Scandinaver\User\Application\Handler\Command;
 
+use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Primitive;
 use Scandinaver\Common\Domain\Service\FileService;
 use Scandinaver\Shared\AbstractHandler;
@@ -33,6 +34,6 @@ class UploadAvatarCommandHandler extends AbstractHandler
     {
         $path = $this->service->uploadAvatar($command->getUser(), $command->getPhoto());
 
-        $this->resource = new Primitive($path);
+        $this->resource = new Item($path, fn($data) => ['path' => $data]);
     }
 } 
