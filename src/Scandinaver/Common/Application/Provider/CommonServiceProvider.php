@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\Application\Provider;
 
 use Illuminate\Support\ServiceProvider;
+use Psr\Log\LoggerInterface;
 use Scandinaver\Common\Domain\Contract\HashInterface;
 use Scandinaver\Common\Domain\Contract\RedisInterface;
 
@@ -29,6 +30,11 @@ class CommonServiceProvider extends ServiceProvider
         $this->app->bind(
             RedisInterface::class,
             'Scandinaver\Common\Infrastructure\Service\LaravelRedis'
+        );
+
+        $this->app->bind(
+            LoggerInterface::class,
+            'Scandinaver\Common\Infrastructure\Service\Logger'
         );
     }
 }

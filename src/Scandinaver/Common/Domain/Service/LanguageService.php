@@ -4,7 +4,9 @@
 namespace Scandinaver\Common\Domain\Service;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Common\Domain\DTO\LanguageDTO;
+use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
 
@@ -15,16 +17,18 @@ use Scandinaver\Shared\DTO;
  */
 class LanguageService implements BaseServiceInterface
 {
+    use LanguageTrait;
+
     private LanguageRepositoryInterface $languageRepository;
 
-    private AssetRepositoryInterface $assetRepository;
+    private FileService $fileService;
 
     public function __construct(
         LanguageRepositoryInterface $languageRepository,
-        AssetRepositoryInterface $assetRepository
+        FileService $fileService
     ) {
         $this->languageRepository = $languageRepository;
-        $this->assetRepository    = $assetRepository;
+        $this->fileService = $fileService;
     }
 
     public function all(): array
@@ -37,4 +41,58 @@ class LanguageService implements BaseServiceInterface
         // TODO: Implement one() method.
     }
 
+    public function createLanguage(array $data): Language
+    {
+        $languageDTO = new LanguageDTO();
+        $languageDTO->setTitle($data['title']);
+        $languageDTO->setLetter($data['letter']);
+
+        $language = LanguageFactory::fromDTO($languageDTO);
+
+        $flagPath = $this->fileService->uploadFlag($language, $data['flag']);
+        $language->setFlag($flagPath);
+
+        $this->languageRepository->save($language);
+
+        //TODO: implements creating favourite assets and other events
+
+        return $language;
+    }
+
+    /**
+     * @param  int    $id
+     * @param  array  $data
+     *
+     * @return Language
+     * @throws LanguageNotFoundException
+     */
+    public function updateLanguage(int $id, array $data): Language
+    {
+        $language = $this->getLanguageByid($id);
+
+        if ($data['flag'] !== NULL) {
+            $flagPath = $this->fileService->uploadFlag($language, $data['flag']);
+            $language->setFlag($flagPath);
+        }
+
+        unset($data['flag']);
+
+        $this->languageRepository->update($language, $data);
+
+        return $language;
+    }
+
+    /**
+     * @param  int  $id
+     *
+     * @throws LanguageNotFoundException
+     */
+    public function deleteLanguage(int $id): void
+    {
+        $language = $this->getLanguageByid($id);
+
+        $language->delete();
+
+        $this->languageRepository->delete($language);
+    }
 }

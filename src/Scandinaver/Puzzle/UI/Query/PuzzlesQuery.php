@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @package Scandinaver\Puzzle\UI\Query
  *
- * @see     \Scandinaver\Puzzle\Application\Handler\Query\PuzzlesHandler
+ * @see     \Scandinaver\Puzzle\Application\Handler\Query\PuzzlesQueryHandler
  */
 class PuzzlesQuery implements CommandInterface
 {

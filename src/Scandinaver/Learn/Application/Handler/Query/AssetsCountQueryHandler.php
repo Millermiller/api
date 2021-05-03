@@ -29,7 +29,6 @@ class AssetsCountQueryHandler extends AbstractHandler
     /**
      * @param  AssetsCountQuery|CommandInterface  $query
      *
-     * @return int
      * @throws LanguageNotFoundException
      */
     public function handle(CommandInterface $query): void

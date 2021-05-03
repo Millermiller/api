@@ -2,9 +2,9 @@ Scandinaver\Common\Domain\Model\Language:
   type: entity
   table: language
   indexes:
-    name:
+    letter:
       columns:
-        - name
+        - letter
     id:
       columns:
         - id
@@ -20,14 +20,14 @@ Scandinaver\Common\Domain\Model\Language:
       generator:
         strategy: IDENTITY
   fields:
-    name:
+    letter:
       type: string
       scale: 0
       length: 50
       unique: false
       nullable: false
       precision: 0
-    label:
+    title:
       type: string
       scale: 0
       length: 50

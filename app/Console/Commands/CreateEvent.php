@@ -56,13 +56,9 @@ class CreateEvent extends GeneratorCommand
     }
 
     /**
-     * Execute the console command.
-     *
-     * @return bool|null
-     *
      * @throws FileNotFoundException
      */
-    public function handle(): ?bool
+    public function handle(): void
     {
         $this->domain = $this->ask('domain');
 

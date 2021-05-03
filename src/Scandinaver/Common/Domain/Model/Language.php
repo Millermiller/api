@@ -4,6 +4,8 @@
 namespace Scandinaver\Common\Domain\Model;
 
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
+use Scandinaver\Common\Domain\Event\LanguageCreated;
+use Scandinaver\Common\Domain\Event\LanguageDeleted;
 use Scandinaver\Shared\AggregateRoot;
 
 /**
@@ -15,11 +17,16 @@ class Language extends AggregateRoot implements UrlRoutable
 {
     private int $id;
 
-    private string $name;
+    private string $letter;
 
-    private string $label;
+    private string $title;
 
     private string $flag;
+
+    public function __construct()
+    {
+        $this->pushEvent(new LanguageCreated($this));
+    }
 
     public static function getRouteKeyName(): string
     {
@@ -33,22 +40,22 @@ class Language extends AggregateRoot implements UrlRoutable
 
     public function getTitle(): string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setTitle(string $name): void
+    public function setTitle(string $title): void
     {
-        $this->name = $name;
+        $this->title = $title;
     }
 
-    public function getLabel(): string
+    public function getLetter(): string
     {
-        return $this->label;
+        return $this->letter;
     }
 
-    public function setLabel(string $label): void
+    public function setLetter(string $letter): void
     {
-        $this->label = $label;
+        $this->letter = $letter;
     }
 
     public function getFlag(): string
@@ -63,6 +70,6 @@ class Language extends AggregateRoot implements UrlRoutable
 
     public function delete()
     {
-        // TODO: Implement delete() method.
+        $this->pushEvent(new LanguageDeleted($this));
     }
 }

@@ -17,6 +17,8 @@ use Scandinaver\RBAC\Domain\Model\{Permission, Role};
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Translate\Domain\Model\Result as TranslateResult;
 use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\User\Domain\Event\UserCreated;
+use Scandinaver\User\Domain\Event\UserDeleted;
 use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
 
 /**
@@ -86,6 +88,8 @@ class User extends AggregateRoot implements UserInterface,
         $this->translates  = new ArrayCollection();
         $this->roles       = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+
+        $this->pushEvent(new UserCreated($this));
     }
 
     public function getKey(): int
@@ -206,7 +210,7 @@ class User extends AggregateRoot implements UserInterface,
 
     public function getAvatar(): string
     {
-        return asset('/uploads/u/a/' . $this->photo);
+        return asset('/uploads/u/' . $this->photo);
     }
 
     public function isActive(): bool
@@ -365,7 +369,7 @@ class User extends AggregateRoot implements UserInterface,
 
     public function delete()
     {
-        // TODO: Implement delete() method.
+       $this->pushEvent(new UserDeleted($this));
     }
 
     /**

@@ -61,7 +61,7 @@ class CreateEventHandler extends GeneratorCommand
      *
      * @throws FileNotFoundException
      */
-    public function handle(): ?bool
+    public function handle(): void
     {
         $name = $this->getNameInput();
 

@@ -29,9 +29,30 @@ trait LanguageTrait
         /** @var Language $language */
         $language = $repository->findOneBy(
             [
-                'name' => $name,
+                'letter' => $name,
             ]
         );
+
+        if ($language === NULL) {
+            throw new LanguageNotFoundException();
+        }
+
+        return $language;
+    }
+
+    /**
+     * @param  int  $id
+     *
+     * @return Language
+     * @throws LanguageNotFoundException
+     */
+    private function getLanguageById(int $id): Language
+    {
+        /** @var  LanguageRepositoryInterface $repository */
+        $repository = Container::getInstance()->get(LanguageRepositoryInterface::class);
+
+        /** @var Language $language */
+        $language = $repository->find($id);
 
         if ($language === NULL) {
             throw new LanguageNotFoundException();

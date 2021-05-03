@@ -31,7 +31,7 @@ class Result
     public function __construct(Text $text, UserInterface $user, Language $language)
     {
         $this->language = $language;
-        $this->user = $user;
-        $this->text = $text;
+        $this->user     = $user;
+        $this->text     = $text;
     }
 }
