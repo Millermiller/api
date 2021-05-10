@@ -5,6 +5,7 @@ namespace Scandinaver\Puzzle\UI\Command;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class PuzzleCompleteCommand
@@ -32,5 +33,10 @@ class PuzzleCompleteCommand implements CommandInterface
     public function getPuzzle(): int
     {
         return $this->puzzle;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

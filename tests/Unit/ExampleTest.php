@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use Aws\Polly\PollyClient;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+
     /**
      * A basic test example.
      *
@@ -14,6 +14,6 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-       $this->assertEquals(true, true);
+        $this->assertEquals(TRUE, TRUE);
     }
 }

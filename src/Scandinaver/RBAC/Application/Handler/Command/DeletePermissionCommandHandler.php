@@ -8,7 +8,7 @@ use Scandinaver\RBAC\Domain\Exception\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeletePermissionCommandHandler
@@ -28,11 +28,11 @@ class DeletePermissionCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeletePermissionCommand|CommandInterface  $command
+     * @param  DeletePermissionCommand|BaseCommandInterface  $command
      *
      * @throws PermissionNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->deletePermission($command->getId());
 

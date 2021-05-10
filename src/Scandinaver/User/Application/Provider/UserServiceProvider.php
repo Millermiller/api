@@ -13,6 +13,7 @@ use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
  */
 class UserServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
         $this->app->bind(

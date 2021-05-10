@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class CommentQuery
@@ -12,8 +12,9 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Blog\Application\Handler\Query\CommentHandler
  */
-class CommentQuery implements CommandInterface
+class CommentQuery implements QueryInterface
 {
+
     private int $id;
 
     public function __construct(int $id)

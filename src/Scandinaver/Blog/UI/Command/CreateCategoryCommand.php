@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
+use Scandinaver\Blog\Domain\DTO\CategoryDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -14,6 +15,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class CreateCategoryCommand implements CommandInterface
 {
+
     private array $data;
 
     public function __construct(array $data)
@@ -21,8 +23,8 @@ class CreateCategoryCommand implements CommandInterface
         $this->data = $data;
     }
 
-    public function getData(): array
+    public function buildDTO(): CategoryDTO
     {
-        return $this->data;
+        return CategoryDTO::fromArray($this->data);
     }
 }

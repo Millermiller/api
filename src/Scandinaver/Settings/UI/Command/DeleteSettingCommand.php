@@ -4,6 +4,7 @@
 namespace Scandinaver\Settings\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeleteSettingCommand
@@ -24,5 +25,10 @@ class DeleteSettingCommand implements CommandInterface
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

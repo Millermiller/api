@@ -9,7 +9,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\CreateRoleCommand;
 use Scandinaver\RBAC\UI\Resource\RoleTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreateRoleCommandHandler
@@ -29,13 +29,13 @@ class CreateRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateRoleCommand|CommandInterface  $command
+     * @param  CreateRoleCommand|BaseCommandInterface  $command
      *
      * @throws RoleDublicateException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
-        $role = $this->service->createRole($command->getData());
+        $role = $this->service->createRole($command->buildDTO());
 
         $this->resource = new Item($role, new RoleTransformer());
     }

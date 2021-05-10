@@ -6,7 +6,7 @@ namespace Scandinaver\Shared;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use ReflectionClass;
 use ReflectionException;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CommandBus
@@ -16,18 +16,18 @@ use Scandinaver\Shared\Contract\CommandInterface;
 class CommandBus
 {
     /**
-     * @param  CommandInterface  $command
+     * @param  BaseCommandInterface  $command
      *
      * @return mixed
      */
-    public function execute(CommandInterface $command)
+    public function execute(BaseCommandInterface $command)
     {
         $handler = $this->resolveHandler($command);
         $handler->handle($command);
         return $handler->processData();
     }
 
-    public function resolveHandler(CommandInterface $command): ?AbstractHandler
+    public function resolveHandler(BaseCommandInterface $command): ?AbstractHandler
     {
         try {
             return app()->make($this->getHandlerClass($command));
@@ -37,11 +37,11 @@ class CommandBus
     }
 
     /**
-     * @param  CommandInterface  $command
+     * @param  BaseCommandInterface  $command
      *
      * @return string
      */
-    public function getHandlerClass(CommandInterface $command): string
+    public function getHandlerClass(BaseCommandInterface $command): string
     {
         $fullName = (new ReflectionClass($command))->getName();
         $parts = explode('\\', $fullName);

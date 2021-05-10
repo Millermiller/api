@@ -4,8 +4,6 @@
 namespace Scandinaver\User\Domain\Contract\Repository;
 
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
-use Scandinaver\Translate\Domain\Model\Text;
-use Scandinaver\User\Domain\Model\{Plan, User};
 
 /**
  * Interface UserRepositoryInterface
@@ -14,6 +12,7 @@ use Scandinaver\User\Domain\Model\{Plan, User};
  */
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {
+
     /**
      * @param $string
      *

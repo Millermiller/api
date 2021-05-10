@@ -4,6 +4,7 @@
 namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\Plan;
 
 /**
@@ -14,6 +15,7 @@ use Scandinaver\User\Domain\Model\Plan;
  */
 class DeletePlanCommand implements CommandInterface
 {
+
     private Plan $plan;
 
     public function __construct(Plan $plan)
@@ -24,5 +26,10 @@ class DeletePlanCommand implements CommandInterface
     public function getPlan(): Plan
     {
         return $this->plan;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

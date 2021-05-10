@@ -15,6 +15,9 @@ use Scandinaver\User\Domain\Contract\Permissions;
  */
 interface UserInterface extends Permissions
 {
+
+    public function getId(): int;
+
     public function isPremium(): bool;
 
     public function getAvatar(): string;

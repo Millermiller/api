@@ -9,7 +9,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\RoleQuery;
 use Scandinaver\RBAC\UI\Resource\RoleTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class RoleQueryHandler
@@ -29,11 +29,11 @@ class RoleQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  RoleQuery|CommandInterface  $query
+     * @param  RoleQuery|BaseCommandInterface  $query
      *
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $role = $this->service->getRole($query->getId());
 

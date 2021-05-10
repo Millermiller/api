@@ -33,10 +33,11 @@ class Puzzle extends AggregateRoot
 
     private Language $language;
 
-    public function __construct(PuzzleText $text, PuzzleTranslate $translate)
+    public function __construct(PuzzleText $text, PuzzleTranslate $translate, Language $language)
     {
         $this->text      = $text;
         $this->translate = $translate;
+        $this->language  = $language;
 
         $this->pushEvent(new PuzzleCreated($this));
     }
@@ -88,7 +89,7 @@ class Puzzle extends AggregateRoot
     }
 
     //todo: implement
-    public function delete()
+    public function onDelete()
     {
         // $this->pushEvent(PuzzleDeleted($this));
     }

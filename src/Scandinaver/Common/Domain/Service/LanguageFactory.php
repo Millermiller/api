@@ -13,6 +13,7 @@ use Scandinaver\Common\Domain\Model\Language;
  */
 class LanguageFactory
 {
+
     public static function fromDTO(LanguageDTO $languageDTO): Language
     {
         $language = new Language();
@@ -25,12 +26,13 @@ class LanguageFactory
 
     public static function toDTO(Language $language): LanguageDTO
     {
-        $languageDTO = new LanguageDTO();
+        $languageDTO = LanguageDTO::fromArray([
+            'id'     => $language->getId(),
+            'letter' => $language->getLetter(),
+            'title'  => $language->getTitle(),
+        ]);
 
-        $languageDTO->setId($language->getId());
-        $languageDTO->setTitle($language->getTitle());
-        $languageDTO->setLetter($language->getLetter());
-        $languageDTO->setFlag(asset('img/'.$language->getFlag()));
+        $languageDTO->setFlag(asset('img/' . $language->getFlag()));
 
         return $languageDTO;
     }

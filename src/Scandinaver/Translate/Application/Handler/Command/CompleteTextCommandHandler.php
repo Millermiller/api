@@ -5,7 +5,7 @@ namespace Scandinaver\Translate\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
 use Scandinaver\Translate\Domain\Service\TextService;
 use Scandinaver\Translate\UI\Command\CompleteTextCommand;
@@ -17,6 +17,7 @@ use Scandinaver\Translate\UI\Command\CompleteTextCommand;
  */
 class CompleteTextCommandHandler extends AbstractHandler
 {
+
     private TextService $textService;
 
     public function __construct(TextService $textService)
@@ -27,11 +28,11 @@ class CompleteTextCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CompleteTextCommand|CommandInterface  $command
+     * @param  CompleteTextCommand|BaseCommandInterface  $command
      *
      * @throws TextNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->textService->giveNextLevel($command->getUser(), $command->getText());
 

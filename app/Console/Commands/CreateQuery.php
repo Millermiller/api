@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateQuery extends GeneratorCommand
 {
+
     /**
      * The console command name.
      *
@@ -95,7 +96,8 @@ class CreateQuery extends GeneratorCommand
 
         $this->info($this->type . ' created successfully.');
 
-        Artisan::call('createQueryHandler', [
+        Artisan::call('createQueryHandler',
+            [
                 'name'   => "{$name}QueryHandler",
                 'domain' => $this->domain,
             ]);
@@ -129,15 +131,16 @@ class CreateQuery extends GeneratorCommand
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
-        $handlerClass     = $class."Handler";
+        $handlerClass     = $class . "Handler";
 
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [
-            $class,
-            "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass"
         ],
+            [
+                $class,
+                "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass",
+            ],
             $stub);
     }
 

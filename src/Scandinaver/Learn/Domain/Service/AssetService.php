@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Learn\Domain\Service;
 
-use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
@@ -50,13 +49,16 @@ class AssetService implements BaseServiceInterface
 
     private LanguageService $languageService;
 
+    private AssetFactory $assetFactory;
+
     public function __construct(
         PassingRepositoryInterface $passingRepository,
         AssetRepositoryInterface $assetRepository,
         PersonalAssetRepositoryInterface $personalAssetRepository,
         UserRepositoryInterface $userRepository,
         LoggerInterface $logger,
-        LanguageService $languageService
+        LanguageService $languageService,
+        AssetFactory $assetFactory
     ) {
         $this->passingRepository       = $passingRepository;
         $this->assetRepository         = $assetRepository;
@@ -64,6 +66,7 @@ class AssetService implements BaseServiceInterface
         $this->userRepository          = $userRepository;
         $this->logger                  = $logger;
         $this->languageService         = $languageService;
+        $this->assetFactory = $assetFactory;
     }
 
     /**
@@ -81,28 +84,18 @@ class AssetService implements BaseServiceInterface
 
     /**
      * @param  UserInterface  $user
-     * @param  array          $data
+     * @param  AssetDTO $assetDTO
      *
      * @return Asset
-     * @throws LanguageNotFoundException
      * @throws Exception
      */
-    public function create(UserInterface $user, array $data): Asset
+    public function create(UserInterface $user, AssetDTO $assetDTO): Asset
     {
-        $language = $this->getLanguage($data['language']);
-
-        $assetDTO = new AssetDTO();
-
-        $assetDTO->setTitle($data['title']);
-        $assetDTO->setLanguage($language);
-        $assetDTO->setBasic((bool)$data['basic']);
-        $assetDTO->setType($data['type']);
-        $assetDTO->setLevel($data['level']);
-        if ((bool)$data['basic'] === FALSE) {
+        if ($assetDTO->isBasic() === FALSE) {
             $assetDTO->setUser($user);
         }
 
-        $asset = AssetFactory::fromDTO($assetDTO);
+        $asset = $this->assetFactory->fromDTO($assetDTO);
 
         $this->assetRepository->save($asset);
 
@@ -119,7 +112,6 @@ class AssetService implements BaseServiceInterface
     {
         $asset      = $this->getAsset($id);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
-        $asset->delete();
         $repository->delete($asset);
     }
 
@@ -146,7 +138,7 @@ class AssetService implements BaseServiceInterface
      * @param  UserInterface  $user
      * @param  int            $type
      *
-     * @return array|AssetDTO[]
+     * @return array|Asset[]
      * @throws LanguageNotFoundException|BindingResolutionException
      */
     public function getAssetsByType(string $language, UserInterface $user, int $type): array
@@ -157,40 +149,34 @@ class AssetService implements BaseServiceInterface
 
         $assets = $repository->getByLanguage($language);
 
-        $data = [];
-
         $isNextAssetAvailable = FALSE;
 
         /** @var Asset $asset */
         foreach ($assets as $asset) {
 
-            $assetDTO = AssetFactory::toDTO($asset);
-
             $result = $asset->getBestResultForUser($user);
-            $assetDTO->setBestResult($result);
+            $asset->setBestResult($result);
 
             if ($asset->isFirstAsset() || $isNextAssetAvailable) {
-                $assetDTO->setActive(TRUE);
+                $asset->setActive(TRUE);
             }
 
-            $assetDTO->setCompleted($asset->isCompletedByUser($user));
+            $asset->setCompleted($asset->isCompletedByUser($user));
             $isNextAssetAvailable = $asset->isCompletedByUser($user);
 
             if ($asset->getLevel() <= 5 || $user->isPremium()) { // TODO: implement settings
-                $assetDTO->setAvailable(TRUE);
+                $asset->setAvailable(TRUE);
             }
-
-            $data[] = $assetDTO;
         }
 
-        return $data;
+        return $assets;
     }
 
     /**
      * @param  string         $language
      * @param  UserInterface  $user
      *
-     * @return array|AssetDTO[]
+     * @return array|Asset[]
      * @throws LanguageNotFoundException
      */
     public function getPersonalAssets(string $language, UserInterface $user): array
@@ -198,28 +184,24 @@ class AssetService implements BaseServiceInterface
         $language = $this->getLanguage($language);
 
         $personalAssets = $user->getPersonalAssets($language);
-        $personalData   = [];
+
         foreach ($personalAssets as $personalAsset) {
 
-            $assetDTO = AssetFactory::toDTO($personalAsset);
-
             if ($user->isPremium()) {
-                $assetDTO->setActive(TRUE);
-                $assetDTO->setAvailable(TRUE);
+                $personalAsset->setActive(TRUE);
+                $personalAsset->setAvailable(TRUE);
             }
 
             if ($personalAsset->isFavorite()) {
-                $assetDTO->setActive(TRUE);
-                $assetDTO->setAvailable(TRUE);
+                $personalAsset->setActive(TRUE);
+                $personalAsset->setAvailable(TRUE);
             }
 
             $result = $personalAsset->getBestResultForUser($user);
-            $assetDTO->setBestResult($result);
-
-            $personalData[] = $assetDTO;
+            $personalAsset->setBestResult($result);
         }
 
-        return $personalData;
+        return $personalAssets;
     }
 
     /**
@@ -227,13 +209,13 @@ class AssetService implements BaseServiceInterface
      * @param  int            $asset
      * @param  array          $data
      *
-     * @return AssetDTO
+     * @return Asset
      * @throws AssetNotFoundException
      * @throws BindingResolutionException
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function updateAsset(UserInterface $user, int $asset, array $data): AssetDTO
+    public function updateAsset(UserInterface $user, int $asset, array $data): Asset
     {
         $asset      = $this->getAsset($asset);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
@@ -247,10 +229,9 @@ class AssetService implements BaseServiceInterface
         /** @var  Asset $asset */
         $asset = $repository->update($asset, $payloadData);
 
-        $assetDTO = AssetFactory::toDTO($asset);
-        $assetDTO->setBestResult($asset->getBestResultForUser($user));
+        $asset->setBestResult($asset->getBestResultForUser($user));
 
-        return $assetDTO;
+        return $asset;
     }
 
     /**
@@ -401,7 +382,8 @@ class AssetService implements BaseServiceInterface
      * @param  Language  $language
      *
      * @throws BindingResolutionException
-     * @throws LanguageNotFoundException|ConnectionException
+     * @throws LanguageNotFoundException
+     * @throws Exception
      */
     public function removeByLanguage(Language $language): void
     {
@@ -419,22 +401,18 @@ class AssetService implements BaseServiceInterface
 
         try {
             foreach ($wordAssets as $wordAsset) {
-                $wordAsset->delete();
                 $this->assetRepository->delete($wordAsset);
             }
 
             foreach ($sentenceAssets as $sentenceAsset) {
-                $sentenceAsset->delete();
                 $this->assetRepository->delete($sentenceAsset);
             }
 
             foreach ($personalAssets as $personalAsset) {
-                $personalAsset->delete();
                 $this->assetRepository->delete($personalAsset);
             }
 
             foreach ($favouriteAssets as $favouriteAsset) {
-                $favouriteAsset->delete();
                 $this->assetRepository->delete($favouriteAsset);
             }
 
@@ -456,7 +434,6 @@ class AssetService implements BaseServiceInterface
             $favouriteAsset = $user->getFavouriteAsset($language);
 
             if ($favouriteAsset !== NULL) {
-                $favouriteAsset->delete();
                 $this->assetRepository->delete($favouriteAsset);
             }
 
@@ -470,7 +447,7 @@ class AssetService implements BaseServiceInterface
     /**
      * @param  Language  $language
      *
-     * @throws ConnectionException
+     * @throws Exception
      */
     public function createDefaultAssets(Language $language): void
     {

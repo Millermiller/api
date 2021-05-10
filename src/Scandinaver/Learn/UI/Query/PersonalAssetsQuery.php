@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\UI\Query;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class PersonalAssetsQuery
@@ -13,7 +13,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Learn\Application\Handler\Query\PersonalAssetsQueryHandler
  */
-class PersonalAssetsQuery implements CommandInterface
+class PersonalAssetsQuery implements QueryInterface
 {
     private UserInterface $user;
 

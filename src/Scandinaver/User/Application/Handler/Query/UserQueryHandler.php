@@ -5,7 +5,7 @@ namespace Scandinaver\User\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Query\UserQuery;
@@ -18,6 +18,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
  */
 class UserQueryHandler extends AbstractHandler
 {
+
     private UserService $userService;
 
     public function __construct(UserService $userService)
@@ -28,11 +29,11 @@ class UserQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  UserQuery|CommandInterface  $query
+     * @param  UserQuery|BaseCommandInterface  $query
      *
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $user = $this->userService->one($query->getKey());
 

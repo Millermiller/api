@@ -2,31 +2,87 @@
 
 namespace Tests\Feature\Controllers\Common;
 
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\RBAC\Domain\Model\Permission;
+use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class LanguageControllerTest
+ *
+ * @package Tests\Feature\Controllers\Common
+ */
 class LanguageControllerTest extends TestCase
 {
 
     private int $languagesNumber = 2;
 
+    private User $user;
+
+    private Collection $languages;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $languages = entity(Language::class, $this->languagesNumber)->create(['name' => 'is']);
+        $this->user = entity(User::class)->create();
+
+        $this->languages = entity(Language::class, $this->languagesNumber)->create(['letter' => 'is']);
     }
 
-    public function testLanguages()
+    public function testIndex()
     {
-        $response = $this->get(route('languages:all'));
+        $response        = $this->get(route('languages:all'));
         $decodedResponse = json_decode($response->getContent());
 
+        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
         self::assertCount($this->languagesNumber, $decodedResponse);
 
         $response->assertJsonStructure(
             [
                 \Tests\Responses\Language::response(),
+            ]
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testStore()
+    {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Language::CREATE
+        ]);
+        $this->user->allow($permission);
+
+        $this->actingAs($this->user, 'api');
+
+        $testLanguageTitle  = 'TESTTITLE';
+        $testLanguageLetter = 'TESTLETTER';
+
+        $response = $this->post(
+            route('languages:create'),
+            [
+                'title'  => $testLanguageTitle,
+                'letter' => $testLanguageLetter,
+                'file'   => UploadedFile::fake()->image('file.png', 600, 600),
+            ]
+        );
+
+        self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+
+        $response->assertJsonStructure(
+            \Tests\Responses\Language::response()
+        );
+
+        $response->assertJsonFragment(
+            [
+                'title'  => $testLanguageTitle,
+                'letter' => $testLanguageLetter,
             ]
         );
     }

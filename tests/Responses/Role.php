@@ -14,7 +14,7 @@ class Role implements ResponseInterface
             'name',
             'slug',
             'description',
-            'permissions'
+            'permissions',
         ];
     }
 }

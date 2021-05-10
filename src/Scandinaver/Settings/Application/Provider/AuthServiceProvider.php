@@ -15,31 +15,17 @@ use Scandinaver\Settings\Domain\Permission\Settings;
  */
 class AuthServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
-        Gate::define(Settings::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(Settings::VIEW, fn(UserInterface $user): bool => $user->can(Settings::VIEW));
 
-        Gate::define(Settings::SHOW,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Settings::SHOW, fn(UserInterface $user, int $userId) => $user->can(Settings::SHOW));
 
-        Gate::define(Settings::CREATE,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(Settings::CREATE, fn(UserInterface $user): bool => $user->can(Settings::CREATE));
 
-        Gate::define(Settings::UPDATE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Settings::UPDATE, fn(UserInterface $user, int $userId) => $user->can(Settings::UPDATE));
 
-        Gate::define(Settings::DELETE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Settings::DELETE, fn(UserInterface $user, int $userId): bool => $user->can(Settings::DELETE));
     }
 }

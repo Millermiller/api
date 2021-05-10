@@ -14,6 +14,7 @@ use Scandinaver\RBAC\Domain\Model\Role;
  */
 interface Permissions
 {
+
     public function attachRole(Role $role): void;
 
     public function detachRole(Role $role): void;

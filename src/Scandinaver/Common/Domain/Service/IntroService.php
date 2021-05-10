@@ -16,6 +16,7 @@ use Scandinaver\Shared\Contract\BaseServiceInterface;
  */
 class IntroService implements BaseServiceInterface
 {
+
     private IntroRepositoryInterface $introRepository;
 
     /**
@@ -53,20 +54,12 @@ class IntroService implements BaseServiceInterface
     }
 
     /**
-     * @param  array  $data
+     * @param  IntroDTO  $introDTO
      *
      * @return Intro
      */
-    public function create(array $data): Intro
+    public function create(IntroDTO $introDTO): Intro
     {
-        $introDTO = new IntroDTO();
-        $introDTO->setPage($data['page']);
-        $introDTO->setTarget($data['target']);
-        $introDTO->setContent($data['content']);
-        $introDTO->setTooltipClass($data['tooltipClass']);
-        $introDTO->setSort($data['sort']);
-        $introDTO->setPosition($data['position']);
-
         $intro = IntroFactory::fromDTO($introDTO);
 
         $this->introRepository->save($intro);
@@ -75,17 +68,19 @@ class IntroService implements BaseServiceInterface
     }
 
     /**
-     * @param  int    $id
-     * @param  array  $data
+     * @param  int       $id
+     * @param  IntroDTO  $introDTO
      *
      * @return Intro
      * @throws IntroNotFoundException
      */
-    public function update(int $id, array $data): Intro
+    public function update(int $id, IntroDTO $introDTO): Intro
     {
         $intro = $this->getIntro($id);
 
-        $this->introRepository->update($intro, $data);
+        $intro = IntroFactory::update($intro, $introDTO);
+
+        $this->introRepository->save($intro);
 
         return $intro;
     }
@@ -98,8 +93,6 @@ class IntroService implements BaseServiceInterface
     public function delete(int $id)
     {
         $intro = $this->getIntro($id);
-
-        $intro->delete();
 
         $this->introRepository->delete($intro);
     }

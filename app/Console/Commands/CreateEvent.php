@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateEvent extends GeneratorCommand
 {
+
     protected $name = 'scandinaver:event';
 
     protected string $domain;
@@ -72,7 +73,8 @@ class CreateEvent extends GeneratorCommand
 
         $this->info($this->type . ' created successfully.');
 
-        $this->call('scandinaver:event:handler', [
+        $this->call('scandinaver:event:handler',
+            [
                 'name'   => "{$name}",
                 'domain' => $this->domain,
             ]);
@@ -125,7 +127,8 @@ class CreateEvent extends GeneratorCommand
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
-        ], [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"],
+        ],
+            [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"],
             $stub);
     }
 }

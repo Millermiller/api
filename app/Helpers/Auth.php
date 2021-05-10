@@ -3,9 +3,7 @@
 
 namespace App\Helpers;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class Auth
@@ -14,9 +12,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class Auth
 {
-    /**
-     * @return UserInterface
-     */
+
     public static function user(): ?UserInterface
     {
         return \Auth::user();

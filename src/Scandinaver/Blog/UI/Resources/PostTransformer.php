@@ -16,6 +16,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
  */
 class PostTransformer extends TransformerAbstract
 {
+
     protected $availableIncludes = [
         'comments',
     ];

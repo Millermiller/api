@@ -8,7 +8,7 @@ use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\UI\Query\LogQuery;
 use Scandinaver\Common\UI\Resource\LogTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class LogQueryHandler
@@ -27,9 +27,9 @@ class LogQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  LogQuery|CommandInterface  $query
+     * @param  LogQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $log = $this->logRepository->find($query->getLogId());
 

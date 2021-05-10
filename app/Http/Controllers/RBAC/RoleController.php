@@ -4,9 +4,11 @@
 namespace App\Http\Controllers\RBAC;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RBAC\CreateRoleRequest;
+use App\Http\Requests\RBAC\UpdateRoleRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Http\{JsonResponse};
 use Scandinaver\RBAC\Domain\Permission\Role;
 use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
 use Scandinaver\RBAC\UI\Command\CreateRoleCommand;
@@ -14,7 +16,6 @@ use Scandinaver\RBAC\UI\Command\DeleteRoleCommand;
 use Scandinaver\RBAC\UI\Command\DetachPermissionFromRoleCommand;
 use Scandinaver\RBAC\UI\Command\UpdateRoleCommand;
 use Scandinaver\RBAC\UI\Query\{RoleQuery, RolesQuery};
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class RoleController
@@ -27,7 +28,6 @@ class RoleController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -41,7 +41,6 @@ class RoleController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $id): JsonResponse
     {
@@ -51,11 +50,37 @@ class RoleController extends Controller
     }
 
     /**
+     * @param  CreateRoleRequest  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function store(CreateRoleRequest $request): JsonResponse
+    {
+        Gate::authorize(Role::CREATE);
+
+        return $this->execute(new CreateRoleCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * @param  UpdateRoleRequest  $request
+     * @param  int                $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function update(UpdateRoleRequest $request, int $id): JsonResponse
+    {
+        Gate::authorize(Role::UPDATE, $id);
+
+        return $this->execute(new UpdateRoleCommand($id, $request->toArray()));
+    }
+
+    /**
      * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $id): JsonResponse
     {
@@ -65,56 +90,31 @@ class RoleController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  int  $id
+     * @param  int  $permissionId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function store(Request $request): JsonResponse
-    {
-        Gate::authorize(Role::CREATE);
-
-        return $this->execute(new CreateRoleCommand($request->toArray()), JsonResponse::HTTP_CREATED);
-    }
-
-    /**
-     * @param  Request  $request
-     * @param  int      $id
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     * @throws EventBusNotFoundException
-     */
-    public function update(Request $request, int $id): JsonResponse
+    public function attachPermission(int $id, int $permissionId): JsonResponse
     {
         Gate::authorize(Role::UPDATE, $id);
 
-        return $this->execute(new UpdateRoleCommand($id, $request->toArray()));
+        return $this->execute(new AttachPermissionToRoleCommand($id, $permissionId));
     }
 
     /**
-     * @param  int  $roleId
+     * @param  int  $id
      * @param  int  $permissionId
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
+     * @throws AuthorizationException
      */
-    public function attachPermission(int $roleId, int $permissionId): JsonResponse
+    public function detachPermission(int $id, int $permissionId): JsonResponse
     {
-        return $this->execute(new AttachPermissionToRoleCommand($roleId, $permissionId));
-    }
+        Gate::authorize(Role::UPDATE, $id);
 
-    /**
-     * @param  int  $roleId
-     * @param  int  $permissionId
-     *
-     * @return JsonResponse
-     * @throws EventBusNotFoundException
-     */
-    public function detachPermission(int $roleId, int $permissionId): JsonResponse
-    {
-        return $this->execute(new DetachPermissionFromRoleCommand($roleId, $permissionId));
+        return $this->execute(new DetachPermissionFromRoleCommand($id, $permissionId));
     }
 
     public function search()

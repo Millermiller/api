@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\Application\Provider;
 
+use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\Contract\Repository\CommentRepositoryInterface;
@@ -21,18 +22,22 @@ use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
  */
 class DoctrineServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
+        /** @var EntityManager $em */
+        $em = $this->app['em'];
+
         $this->app->bind(PostRepositoryInterface::class,
-            fn() => new PostRepository($this->app['em'], $this->app['em']->getClassMetadata(Post::class))
+            fn() => new PostRepository($em, $em->getClassMetadata(Post::class))
         );
 
         $this->app->bind(CategoryRepositoryInterface::class,
-            fn() => new CategoryRepository($this->app['em'], $this->app['em']->getClassMetadata(Category::class))
+            fn() => new CategoryRepository($em, $em->getClassMetadata(Category::class))
         );
 
         $this->app->bind(CommentRepositoryInterface::class,
-            fn() => new CommentRepository($this->app['em'], $this->app['em']->getClassMetadata(Comment::class))
+            fn() => new CommentRepository($em, $em->getClassMetadata(Comment::class))
         );
     }
 }

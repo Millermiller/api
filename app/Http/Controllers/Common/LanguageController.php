@@ -3,12 +3,12 @@
 
 namespace App\Http\Controllers\Common;
 
-
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\CreateLanguageRequest;
+use App\Http\Requests\Common\UpdateLanguageRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Scandinaver\Common\Domain\Permission\Language;
 use Scandinaver\Common\UI\Command\CreateLanguageCommand;
 use Scandinaver\Common\UI\Command\DeleteLanguageCommand;
@@ -35,33 +35,33 @@ class LanguageController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  CreateLanguageRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateLanguageRequest $request): JsonResponse
     {
         Gate::authorize(Language::CREATE);
 
-        $data = $request->toArray();
+        $data         = $request->toArray();
         $data['flag'] = $request->file('file');
 
         return $this->execute(new CreateLanguageCommand($data), JsonResponse::HTTP_CREATED);
     }
 
     /**
-     * @param  Request  $request
-     * @param  int      $id
+     * @param  UpdateLanguageRequest  $request
+     * @param  int                    $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateLanguageRequest $request, int $id): JsonResponse
     {
         Gate::authorize(Language::UPDATE, $id);
 
-        $data = $request->toArray();
+        $data         = $request->toArray();
         $data['flag'] = $request->file('file');
 
         return $this->execute(new UpdateLanguageCommand($id, $data));

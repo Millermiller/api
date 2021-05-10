@@ -6,6 +6,8 @@ namespace Scandinaver\Blog\Domain\Model;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Scandinaver\Blog\Domain\Event\PostCreated;
+use Scandinaver\Blog\Domain\Event\PostDeleted;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Shared\AggregateRoot;
@@ -17,6 +19,7 @@ use Scandinaver\Shared\AggregateRoot;
  */
 class Post extends AggregateRoot
 {
+
     private ?int $id;
 
     private string $title;
@@ -46,6 +49,8 @@ class Post extends AggregateRoot
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+
+        $this->pushEvent(new PostCreated($this));
     }
 
     /**
@@ -149,9 +154,9 @@ class Post extends AggregateRoot
         $this->views = $views;
     }
 
-    public function delete()
+    public function onDelete()
     {
-        //  $this->pushEvent(PostDeleted());
+          $this->pushEvent(new PostDeleted($this));
     }
 
     public function getAnonse(): ?string

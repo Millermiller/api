@@ -57,12 +57,9 @@ Scandinaver\User\Domain\Model\User:
       nullable: true
       precision: 0
     photo:
-      type: string
-      scale: 0
-      length: 255
+      type: text
       unique: false
       nullable: true
-      precision: 0
     restoreLink:
       type: string
       scale: 0

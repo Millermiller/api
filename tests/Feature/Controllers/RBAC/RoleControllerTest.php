@@ -11,6 +11,11 @@ use Scandinaver\RBAC\Domain\Model\Role;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class RoleControllerTest
+ *
+ * @package Tests\Feature\Controllers\RBAC
+ */
 class RoleControllerTest extends TestCase
 {
 
@@ -19,7 +24,6 @@ class RoleControllerTest extends TestCase
     private Collection $roles;
 
     private int $rolesCount = 3;
-
 
     protected function setUp(): void
     {
@@ -30,37 +34,62 @@ class RoleControllerTest extends TestCase
         $this->roles = entity(Role::class, $this->rolesCount)->create();
     }
 
-    public function testIndex()
+    /**
+     * @throws Exception
+     */
+    public function testIndex(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::VIEW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('role:all'));
+        $response        = $this->get(route('role:all'));
         $decodedResponse = json_decode($response->getContent());
         self::assertCount($this->rolesCount, $decodedResponse);
         $response->assertJsonStructure(
-          [
-            \Tests\Responses\Role::response(),
-          ]
+            [
+                \Tests\Responses\Role::response(),
+            ]
         );
     }
 
-    public function testShow()
+    /**
+     * @throws Exception
+     */
+    public function testShow(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::SHOW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(
-          route('role:show', ['id' => $this->roles->first()->getId()])
+            route('role:show', ['id' => $this->roles->first()->getId()])
         );
         $response->assertJsonStructure(\Tests\Responses\Role::response());
         $response->assertJsonFragment(
-          [
-            'id' => $this->roles->first()->getId(),
-          ]
+            [
+                'id' => $this->roles->first()->getId(),
+            ]
         );
     }
 
-    public function testDestroy()
+    /**
+     * @throws Exception
+     */
+    public function testDestroy(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::DELETE
+        ]);
+        $this->user->allow($permission);
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::SHOW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $roleId = 1;
@@ -68,67 +97,81 @@ class RoleControllerTest extends TestCase
         $response = $this->delete(route('role:delete', ['id' => $roleId]));
 
         self::assertEquals(
-          JsonResponse::HTTP_NO_CONTENT,
-          $response->getStatusCode()
+            JsonResponse::HTTP_NO_CONTENT,
+            $response->getStatusCode()
         );
 
         $response = $this->get(route('role:show', ['id' => $roleId]));
 
         self::assertEquals(
-          JsonResponse::HTTP_NOT_FOUND,
-          $response->getStatusCode()
+            JsonResponse::HTTP_NOT_FOUND,
+            $response->getStatusCode()
         );
     }
 
-    public function testStore()
+    /**
+     * @throws Exception
+     */
+    public function testStore(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::CREATE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $testRoleName = 'TEST_PERMISSION';
-        $testRoleSlug = 'TEST_SLUG';
+        $testRoleName        = 'TEST_PERMISSION';
+        $testRoleSlug        = 'TEST_SLUG';
         $testRoleDescription = 'TEST_DESCRIPTION';
 
         $response = $this->post(
-          route(
-            'role:create',
-            [
-              'name' => $testRoleName,
-              'slug' => $testRoleSlug,
-              'description' => $testRoleDescription,
-            ]
-          )
+            route(
+                'role:create',
+                [
+                    'name'        => $testRoleName,
+                    'slug'        => $testRoleSlug,
+                    'description' => $testRoleDescription,
+                ]
+            )
         );
 
         self::assertEquals(
-          JsonResponse::HTTP_CREATED,
-          $response->getStatusCode()
+            JsonResponse::HTTP_CREATED,
+            $response->getStatusCode()
         );
 
         $response->assertJsonStructure(\Tests\Responses\Role::response());
 
         $response->assertJsonFragment(
-          [
-            'name' => $testRoleName,
-            'slug' => $testRoleSlug,
-            'description' => $testRoleDescription,
-          ]
+            [
+                'name'        => $testRoleName,
+                'slug'        => $testRoleSlug,
+                'description' => $testRoleDescription,
+            ]
         );
     }
 
-    public function testUpdate()
+    /**
+     * @throws Exception
+     */
+    public function testUpdate(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::UPDATE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testRoleName = 'TEST_PERMISSION';
         $testRoleSlug = 'TEST_SLUG';
 
         $response = $this->put(
-          route('role:update', ['id' => $this->roles->first()->getId()]),
-          [
-            'name' => $testRoleName,
-            'slug' => $testRoleSlug,
-            'description' => '',
-          ]
+            route('role:update', ['id' => $this->roles->first()->getId()]),
+            [
+                'name'        => $testRoleName,
+                'slug'        => $testRoleSlug,
+                'description' => '',
+            ]
         );
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
@@ -136,23 +179,31 @@ class RoleControllerTest extends TestCase
         $response->assertJsonStructure(\Tests\Responses\Role::response());
 
         $response->assertJsonFragment(
-          [
-            'name' => $testRoleName,
-            'slug' => $testRoleSlug,
-          ]
+            [
+                'name' => $testRoleName,
+                'slug' => $testRoleSlug,
+            ]
         );
     }
 
-    public function testAttachPermission()
+    /**
+     * @throws Exception
+     */
+    public function testAttachPermission(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::UPDATE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
+
         /** @var Permission $testPermission */
         $testPermission = entity(Permission::class, 1)->create();
 
         $response = $this->post(route('role:attachPermission',
-          [
-            'roleId' => $this->roles->first()->getId(),
-            'permissionId' => $testPermission->getId(),
+            [
+                'roleId'       => $this->roles->first()->getId(),
+                'permissionId' => $testPermission->getId(),
             ]
         ));
 
@@ -162,8 +213,12 @@ class RoleControllerTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testDetachPermission()
+    public function testDetachPermission(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\Role::UPDATE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         /** @var Role $role */
@@ -175,10 +230,10 @@ class RoleControllerTest extends TestCase
         $role->attachPermission($testPermission);
 
         $response = $this->delete(route('role:attachPermission',
-          [
-            'roleId' => $role->getId(),
-            'permissionId' => $testPermission->getId(),
-          ]
+            [
+                'roleId'       => $role->getId(),
+                'permissionId' => $testPermission->getId(),
+            ]
         ));
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
@@ -189,6 +244,6 @@ class RoleControllerTest extends TestCase
      */
     public function testSearch()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

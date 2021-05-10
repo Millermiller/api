@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\UI\Query;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class AssetByForUserByTypeQuery
@@ -13,7 +13,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Learn\Application\Handler\Query\AssetForUserByTypeQueryHandler
  */
-class AssetForUserByTypeQuery implements CommandInterface
+class AssetForUserByTypeQuery implements QueryInterface
 {
     private string $type;
 

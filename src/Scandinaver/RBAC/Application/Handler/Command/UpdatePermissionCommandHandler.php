@@ -10,7 +10,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;
 use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdatePermissionCommandHandler
@@ -30,12 +30,12 @@ class UpdatePermissionCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdatePermissionCommand|CommandInterface  $command
+     * @param  UpdatePermissionCommand|BaseCommandInterface  $command
      *
      * @throws PermissionNotFoundException
      * @throws PermissionGroupNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $permission = $this->service->updatePermission($command->getId(), $command->getData());
 

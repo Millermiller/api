@@ -8,7 +8,7 @@ use Scandinaver\RBAC\Domain\Exception\RoleNotFoundException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\DeleteRoleCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeleteRoleCommandHandler
@@ -28,11 +28,11 @@ class DeleteRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteRoleCommand|CommandInterface  $command
+     * @param  DeleteRoleCommand|BaseCommandInterface  $command
      *
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->deleteRole($command->getId());
 

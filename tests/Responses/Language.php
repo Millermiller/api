@@ -16,7 +16,6 @@ class Language implements ResponseInterface
         return [
             'id',
             'title',
-            'label',
             'flag',
             'letter',
         ];

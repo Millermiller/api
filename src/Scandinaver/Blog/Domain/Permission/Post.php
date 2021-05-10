@@ -11,6 +11,7 @@ namespace Scandinaver\Blog\Domain\Permission;
  */
 class Post
 {
+
     public const VIEW   = 'view-posts';
     public const SHOW   = 'show-post';
     public const CREATE = 'create-post';

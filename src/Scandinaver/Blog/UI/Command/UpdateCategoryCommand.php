@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
+use Scandinaver\Blog\Domain\DTO\CategoryDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -14,6 +15,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class UpdateCategoryCommand implements CommandInterface
 {
+
     private int $categoryId;
 
     private array $data;
@@ -32,5 +34,10 @@ class UpdateCategoryCommand implements CommandInterface
     public function getCategoryId(): int
     {
         return $this->categoryId;
+    }
+
+    public function buildDTO(): CategoryDTO
+    {
+        return CategoryDTO::fromArray($this->data);
     }
 }

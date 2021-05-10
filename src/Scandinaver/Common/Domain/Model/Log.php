@@ -5,13 +5,14 @@ namespace Scandinaver\Common\Domain\Model;
 
 use DateTime;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Shared\AggregateRoot;
 
 /**
  * Class Log
  *
  * @package Scandinaver\Common\Domain\Model
  */
-class Log
+class Log extends AggregateRoot
 {
     private int $id;
 
@@ -76,5 +77,10 @@ class Log
     public function getExtra(): ?array
     {
         return $this->extra;
+    }
+
+    public function onDelete()
+    {
+        // TODO: Implement onDelete() method.
     }
 }

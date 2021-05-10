@@ -3,8 +3,8 @@
 
 namespace Scandinaver\User\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class GetUserQuery
@@ -12,11 +12,12 @@ use Scandinaver\User\Domain\Model\User;
  * @see     \Scandinaver\User\Application\Handler\Query\GetUserQueryHandler
  * @package Scandinaver\User\UI\Query
  */
-class GetUserQuery implements CommandInterface
+class GetUserQuery implements QueryInterface
 {
-    private User $user;
 
-    public function __construct(User $user)
+    private UserInterface $user;
+
+    public function __construct(UserInterface $user)
     {
         $this->user = $user;
     }

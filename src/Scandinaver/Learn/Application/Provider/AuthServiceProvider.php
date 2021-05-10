@@ -17,79 +17,50 @@ use Scandinaver\Learn\Domain\Permission\Test;
  */
 class AuthServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
         /* ASSET */
-        Gate::define(Asset::VIEW, function (UserInterface $user) {
-            return $user->can(Asset::VIEW);
-        });
+        Gate::define(Asset::VIEW, fn(UserInterface $user): bool => $user->can(Asset::VIEW));
 
-        Gate::define(Asset::SHOW, function (UserInterface $user, $id) {
-            return $user->can(Asset::SHOW);
-        });
+        Gate::define(Asset::SHOW, fn(UserInterface $user, $id): bool => $user->can(Asset::SHOW));
 
-        Gate::define(Asset::CREATE, function (UserInterface $user) {
-            return $user->can(Asset::CREATE);
-        });
+        Gate::define(Asset::CREATE, fn(UserInterface $user): bool => $user->can(Asset::CREATE));
 
-        Gate::define(Asset::UPDATE, function (UserInterface $user, $id) {
-            return $user->can(Asset::UPDATE);
-        });
+        Gate::define(Asset::UPDATE, fn(UserInterface $user, $id): bool => $user->can(Asset::UPDATE));
 
-        Gate::define(Asset::DELETE, function (UserInterface $user, $id) {
-            return $user->can(Asset::DELETE);
-        });
+        Gate::define(Asset::DELETE, fn(UserInterface $user, $id): bool => $user->can(Asset::DELETE));
 
-        Gate::define(Asset::ADD_CARD, function (UserInterface $user) {
-            return TRUE;
-        });
+        Gate::define(Asset::ADD_CARD, fn(UserInterface $user): bool => TRUE);
 
         /* FAVOURITE */
-        Gate::define(Asset::CREATE_FAVOURITE, function (UserInterface $user, $id) {
-            return $user->can(Asset::CREATE_FAVOURITE);
-        });
+        Gate::define(Asset::CREATE_FAVOURITE,
+            fn(UserInterface $user, $id): bool => $user->can(Asset::CREATE_FAVOURITE));
 
-        Gate::define(Asset::DELETE_FAVOURITE, function (UserInterface $user, $id) {
-            return $user->can(Asset::DELETE_FAVOURITE);
-        });
+        Gate::define(Asset::DELETE_FAVOURITE,
+            fn(UserInterface $user, $id): bool => $user->can(Asset::DELETE_FAVOURITE));
 
         /* CARD */
-        Gate::define(Card::VIEW, function (UserInterface $user) {
-            return $user->can(Card::VIEW);
-        });
+        Gate::define(Card::VIEW, fn(UserInterface $user): bool => $user->can(Card::VIEW));
 
-        Gate::define(Card::CREATE, function (UserInterface $user) {
-            return $user->can(Card::CREATE);
-        });
+        Gate::define(Card::CREATE, fn(UserInterface $user): bool => $user->can(Card::CREATE));
 
-        Gate::define(Card::UPDATE, function (UserInterface $user, $id) {
-            return $user->can(Card::UPDATE);
-        });
+        Gate::define(Card::UPDATE, fn(UserInterface $user, $id): bool => $user->can(Card::UPDATE));
 
-        Gate::define(Card::DELETE, function (UserInterface $user, int $assetId) {
-            return $user->can(Card::DELETE);
-        });
+        Gate::define(Card::DELETE, fn(UserInterface $user, int $assetId): bool => $user->can(Card::DELETE));
 
-        Gate::define(Card::SEARCH, function (UserInterface $user) {
-            return $user->can(Card::SEARCH);
-        });
+        Gate::define(Card::SEARCH, fn(UserInterface $user): bool => $user->can(Card::SEARCH));
 
         /* TEST */
 
-        Gate::define(Test::COMPLETE, function (UserInterface $user, $assetId) {
-            return TRUE;
-        });
+        Gate::define(Test::COMPLETE, fn(UserInterface $user, $assetId): bool => $user->can(Test::COMPLETE));
 
-        Gate::define(Test::GET_ALL_PASSINGS, function (UserInterface $user) {
-            return TRUE;
-        });
+        Gate::define(Test::GET_ALL_PASSINGS, fn(UserInterface $user): bool => $user->can(Test::GET_ALL_PASSINGS));
 
-        Gate::define(Test::DELETE_PASSING, function (UserInterface $user, $passingId) {
-            return TRUE;
-        });
+        Gate::define(Test::DELETE_PASSING,
+            fn(UserInterface $user, $passingId): bool => $user->can(Test::DELETE_PASSING));
 
-        Gate::define(Test::UPDATE_PASSING, function (UserInterface $user, $passingId) {
-            return TRUE;
-        });
+        Gate::define(Test::UPDATE_PASSING,
+            fn(UserInterface $user, $passingId): bool => $user->can(Test::UPDATE_PASSING));
     }
 }

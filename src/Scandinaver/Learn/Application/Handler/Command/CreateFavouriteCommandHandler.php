@@ -4,12 +4,12 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Learn\Domain\Service\{FavouriteService};
 use Scandinaver\Learn\Domain\Exception\CardAlreadyAddedException;
 use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
+use Scandinaver\Learn\Domain\Service\{FavouriteService};
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreateFavouriteCommandHandler
@@ -28,12 +28,12 @@ class CreateFavouriteCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateFavouriteCommand|CommandInterface  $command
+     * @param  CreateFavouriteCommand|BaseCommandInterface  $command
      *
      * @throws CardAlreadyAddedException
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->favouriteService->create($command->getUser(), $command->getCard());
 

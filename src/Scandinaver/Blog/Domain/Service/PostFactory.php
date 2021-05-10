@@ -3,8 +3,13 @@
 
 namespace Scandinaver\Blog\Domain\Service;
 
+use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
-use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
+use Scandinaver\Blog\Domain\Model\{Category, Post};
+use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
+use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
  * Class PostFactory
@@ -13,15 +18,49 @@ use Scandinaver\Blog\Domain\Model\Post;
  */
 class PostFactory
 {
-    public static function fromDTO(PostDTO $postDTO): Post
+
+    private CategoryRepositoryInterface $categoryRepository;
+
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepository,
+        UserRepositoryInterface $userRepository
+    )
     {
+        $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @param  PostDTO  $postDTO
+     *
+     * @return Post
+     * @throws CategoryNotFoundException|UserNotFoundException
+     */
+    public function fromDTO(PostDTO $postDTO): Post
+    {
+        $categoryId = $postDTO->getCategoryId();
+        /** @var Category $category */
+        $category = $this->categoryRepository->find($categoryId);
+        if ($category === NULL) {
+            throw new CategoryNotFoundException();
+        }
+
+        $userId = $postDTO->getUserId();
+        /** @var UserInterface $user */
+        $user = $this->userRepository->find($userId);
+        if ($user === NULL) {
+            throw new UserNotFoundException();
+        }
+
         $post = new Post();
 
         $post->setTitle($postDTO->getTitle());
-        $post->setCategory($postDTO->getCategory());
+        $post->setCategory($category);
+        $post->setUser($user);
         $post->setContent($postDTO->getContent());
         $post->setAnonse($postDTO->getAnonce());
-        $post->setUser($postDTO->getUser());
         $post->setStatus($postDTO->getStatus());
         $post->setCommentStatus(1);
         $post->setViews(0);
@@ -29,17 +68,50 @@ class PostFactory
         return $post;
     }
 
-    public static function toDTO(Post $post): PostDTO
+    public function toDTO(Post $post): PostDTO
     {
-        $postDTO = new PostDTO();
-        $postDTO->setId($post->getId());
-        $postDTO->setTitle($post->getTitle());
-        $postDTO->setCategory($post->getCategory());
-        $postDTO->setContent($post->getContent());
-        $postDTO->setAnonce($post->getAnonse());
-        $postDTO->setUser($post->getUser());
-        $postDTO->setStatus($post->getStatus());
+        return PostDTO::fromArray([
+            'id'       => $post->getId(),
+            'title'    => $post->getTitle(),
+            'category' => $post->getCategory()->getId(),
+            'status'   => $post->getStatus(),
+            'content'  => $post->getContent(),
+            'anonce'   => $post->getAnonse(),
+            'userId'   => $post->getUser()->getId(),
+        ]);
+    }
 
-        return $postDTO;
+    /**
+     * @param  Post     $post
+     * @param  PostDTO  $postDTO
+     *
+     * @return Post
+     * @throws CategoryNotFoundException
+     * @throws UserNotFoundException
+     */
+    public function update(Post $post, PostDTO $postDTO): Post
+    {
+        $userId = $postDTO->getUserId();
+        /** @var UserInterface $user */
+        $user = $this->userRepository->find($userId);
+        if ($user === NULL) {
+            throw new UserNotFoundException();
+        }
+
+        $categoryId = $postDTO->getCategoryId();
+        /** @var Category $category */
+        $category = $this->categoryRepository->find($categoryId);
+        if ($category === NULL) {
+            throw new CategoryNotFoundException();
+        }
+
+        $post->setTitle($postDTO->getTitle());
+        $post->setContent($postDTO->getContent());
+        $post->setStatus($postDTO->getStatus());
+        $post->setAnonse($postDTO->getAnonce());
+        $post->setUser($user);
+        $post->setCategory($category);
+
+        return $post;
     }
 }

@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Translate;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\translate\CreateTextRequest;
+use App\Http\Requests\translate\UpdateTextRequest;
 use Exception;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
 use Intervention\Image\ImageManagerStatic as Image;
-use Scandinaver\Shared\EventBusNotFoundException;
 use Scandinaver\Translate\Domain\Permission\Text;
 use Scandinaver\Translate\UI\Command\CompleteTextCommand;
 use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
@@ -40,11 +41,23 @@ class TextController extends Controller
 
     /**
      * @param  string  $language
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function index(string $language): JsonResponse
+    {
+        Gate::authorize(Text::VIEW);
+
+        return $this->execute(new GetTextsQuery($language));
+    }
+
+    /**
+     * @param  string  $language
      * @param  int     $textId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(string $language, int $textId): JsonResponse
     {
@@ -54,11 +67,73 @@ class TextController extends Controller
     }
 
     /**
+     * @param  CreateTextRequest  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function store(CreateTextRequest $request): JsonResponse
+    {
+        Gate::authorize(Text::CREATE);
+
+        return $this->execute(new CreateTextCommand());
+
+        // $title     = $this->cleartext(Input::get('title'));
+        // $origtext  = $this->cleartext(Input::get('origtext'));
+        // $translate = $this->cleartext(Input::get('translate'));
+        // $text = Text::create(['title' => $title, 'text' => $origtext, 'translate' => $translate]);
+        // $sentences = explode('.', trim($translate));
+        // array_pop($sentences);
+        // foreach ($sentences as $num => $sentence) {
+        //     $words           = explode(' ', str_replace(',', '', trim($sentence)));
+        //     $sentences[$num] = $words;
+        // }
+        // foreach ($sentences as $num => $sentence) {
+        //     foreach ($sentence as $word) {
+        //         TextWord::create(['text_id' => $text->id, 'sentence_num' => $num, 'word' => $word]);
+        //     }
+        // }
+        // return response()->json(['success' => true, 'id' => $text->id]);
+    }
+
+    /**
+     * @param  UpdateTextRequest  $request
+     * @param  int                $id
+     *
+     * @throws AuthorizationException
+     */
+    public function update(UpdateTextRequest $request, int $id)
+    {
+        Gate::authorize(Text::UPDATE, $id);
+    }
+
+    /**
      * @param  int  $textId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
+     */
+    public function destroy(int $textId): JsonResponse
+    {
+        Gate::authorize(Text::DELETE, $textId);
+
+        return $this->execute(new DeleteTextCommand($textId));
+
+        // try {
+        //     /** @var int $text */
+        //     $text = Text::findOrFail($id);
+        //     $text->result()->delete();
+        //     return response()->json(['success' => $text->delete()]);
+        // } catch (\Exception $e) {
+        //     return response()->json(['success' => false, 'msg' => $e->getMessage()]);
+        // }
+    }
+
+    /**
+     * @param  int  $textId
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function complete(int $textId): JsonResponse
     {
@@ -68,25 +143,10 @@ class TextController extends Controller
     }
 
     /**
-     * @param  string  $language
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     * @throws EventBusNotFoundException
-     */
-    public function all(string $language): JsonResponse
-    {
-        Gate::authorize(Text::VIEW);
-
-        return $this->execute(new GetTextsQuery($language));
-    }
-
-    /**
      * @param  int  $textId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function view(int $textId): JsonResponse
     {
@@ -119,42 +179,10 @@ class TextController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     * @throws EventBusNotFoundException
-     */
-    public function store(Request $request): JsonResponse
-    {
-        Gate::authorize(Text::CREATE);
-
-        return $this->execute(new CreateTextCommand());
-
-        // $title     = $this->cleartext(Input::get('title'));
-        // $origtext  = $this->cleartext(Input::get('origtext'));
-        // $translate = $this->cleartext(Input::get('translate'));
-        // $text = Text::create(['title' => $title, 'text' => $origtext, 'translate' => $translate]);
-        // $sentences = explode('.', trim($translate));
-        // array_pop($sentences);
-        // foreach ($sentences as $num => $sentence) {
-        //     $words           = explode(' ', str_replace(',', '', trim($sentence)));
-        //     $sentences[$num] = $words;
-        // }
-        // foreach ($sentences as $num => $sentence) {
-        //     foreach ($sentence as $word) {
-        //         TextWord::create(['text_id' => $text->id, 'sentence_num' => $num, 'word' => $word]);
-        //     }
-        // }
-        // return response()->json(['success' => true, 'id' => $text->id]);
-    }
-
-    /**
      * @param  int  $textId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function publish(int $textId): JsonResponse
     {
@@ -169,45 +197,11 @@ class TextController extends Controller
     }
 
     /**
-     * @param  int  $textId
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     * @throws EventBusNotFoundException
-     */
-    public function destroy(int $textId): JsonResponse
-    {
-        Gate::authorize(Text::DELETE, $textId);
-
-        return $this->execute(new DeleteTextCommand($textId));
-
-        // try {
-        //     /** @var int $text */
-        //     $text = Text::findOrFail($id);
-        //     $text->result()->delete();
-        //     return response()->json(['success' => $text->delete()]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['success' => false, 'msg' => $e->getMessage()]);
-        // }
-    }
-
-    /**
-     * @param  int  $textId
-     *
-     * @throws AuthorizationException
-     */
-    public function update(int $textId)
-    {
-        Gate::authorize(Text::UPDATE, $textId);
-    }
-
-    /**
      * @param  int      $textId
      * @param  Request  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function addExtras(int $textId, Request $request): JsonResponse
     {
@@ -261,7 +255,6 @@ class TextController extends Controller
      * @param  int  $word
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function getSynonyms(int $word): JsonResponse
     {
@@ -277,7 +270,6 @@ class TextController extends Controller
      * @param  Request  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function addSynonym(Request $request): JsonResponse
     {
@@ -292,7 +284,6 @@ class TextController extends Controller
      * @param  int  $synonym
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function deleteSynonym(int $synonym): JsonResponse
     {
@@ -317,9 +308,9 @@ class TextController extends Controller
         $new_filename = uniqid();
         $file->setName($new_filename);
         $file->addValidations([
-                new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
-                new Size('5M'),
-            ]);
+            new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
+            new Size('5M'),
+        ]);
         try {
             $file->upload();
             $url = '/uploads/photo/' . $file->getNameWithExtension();
@@ -350,10 +341,10 @@ class TextController extends Controller
             $message = implode(', ', $errors);
 
             return response()->json([
-                    'msg'     => $message,
-                    'success' => FALSE,
-                    'mess'    => $e->getMessage(),
-                ]);
+                'msg'     => $message,
+                'success' => FALSE,
+                'mess'    => $e->getMessage(),
+            ]);
         }
     }
 
@@ -363,7 +354,6 @@ class TextController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function updateDescription(int $textId, Request $request): JsonResponse
     {

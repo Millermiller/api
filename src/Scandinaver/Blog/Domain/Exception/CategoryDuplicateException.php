@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
  */
 class CategoryDuplicateException extends Exception
 {
+
     protected $code = JsonResponse::HTTP_UNPROCESSABLE_ENTITY;
 
     protected $message = 'Category already exists';

@@ -144,4 +144,9 @@ class TextDTO extends DTO
     {
         $this->available = $available;
     }
+
+    public static function fromArray(array $data): TextDTO
+    {
+        return new self();
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Controllers\Reader;
 
-use App\Http\Controllers\Reader\ReaderController;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
@@ -14,6 +13,7 @@ use Tests\TestCase;
  */
 class ReaderControllerTest extends TestCase
 {
+
     private User $user;
 
     private Language $language;
@@ -24,7 +24,7 @@ class ReaderControllerTest extends TestCase
 
         $this->user = entity(User::class, 1)->create();
 
-        $this->language = entity(Language::class)->create(['name' => 'is']);
+        $this->language = entity(Language::class)->create(['letter' => 'is']);
     }
 
     /**
@@ -34,11 +34,12 @@ class ReaderControllerTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('read', [
-            'language' => $this->language->getTitle(),
-            'text' => 'hallo'
-        ]));
+        $response = $this->get(route('read',
+            [
+                'language' => $this->language->getTitle(),
+                'text'     => 'hallo',
+            ]));
 
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

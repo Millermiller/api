@@ -4,6 +4,7 @@
 namespace Scandinaver\Translate\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class CreateTextCommand
@@ -16,5 +17,10 @@ class CreateTextCommand implements CommandInterface
 {
     public function __construct()
     {
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

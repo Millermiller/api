@@ -5,8 +5,14 @@ namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 
+/**
+ * Trait RefreshDatabase
+ *
+ * @package Tests
+ */
 trait RefreshDatabase
 {
+
     use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     /**
@@ -33,6 +39,6 @@ trait RefreshDatabase
     {
         $this->artisan('doctrine:schema:create');
 
-        $this->app[Kernel::class]->setArtisan(null);
+        $this->app[Kernel::class]->setArtisan(NULL);
     }
 }

@@ -18,7 +18,7 @@ class Setting implements ResponseInterface
             'title',
             'slug',
             'type',
-            'value'
+            'value',
         ];
     }
 }

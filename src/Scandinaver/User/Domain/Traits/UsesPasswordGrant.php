@@ -13,6 +13,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 trait UsesPasswordGrant
 {
+
     /**
      * @param $userIdentifier
      *

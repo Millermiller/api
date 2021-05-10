@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TestCompleteRequest;
-use App\Http\Requests\UpdatePassingRequest;
+use App\Http\Requests\Learn\TestCompleteRequest;
+use App\Http\Requests\Learn\UpdatePassingRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +25,48 @@ class TestController extends Controller
 {
 
     /**
+     * @param  string  $language
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function index(string $language): JsonResponse
+    {
+        Gate::authorize(Test::GET_ALL_PASSINGS);
+
+        return $this->execute(new GetAllPassingsQuery($language));
+    }
+
+    /**
+     * @param  UpdatePassingRequest  $request
+     * @param  int                   $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function update(UpdatePassingRequest $request, int $id): JsonResponse
+    {
+        Gate::authorize(Test::UPDATE_PASSING, $id);
+
+        $data = $request->toArray();
+
+        return $this->execute(new UpdatePassingCommand($id, $data));
+    }
+
+    /**
+     * @param  int  $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        Gate::authorize(Test::DELETE_PASSING, $id);
+
+        return $this->execute(new DeletePassingCommand($id), JsonResponse::HTTP_NO_CONTENT);
+    }
+
+    /**
      * @param  TestCompleteRequest  $request
      * @param  int                  $assetId
      *
@@ -38,47 +80,5 @@ class TestController extends Controller
         $data = $request->toArray();
 
         return $this->execute(new CompleteTestCommand(Auth::user(), $assetId, $data), JsonResponse::HTTP_CREATED);
-    }
-
-    /**
-     * @param  string  $language
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function getAllPassing(string $language): JsonResponse
-    {
-        Gate::authorize(Test::GET_ALL_PASSINGS);
-
-        return $this->execute(new GetAllPassingsQuery($language));
-    }
-
-    /**
-     * @param  int  $id
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function destroyPassing(int $id): JsonResponse
-    {
-        Gate::authorize(Test::DELETE_PASSING, $id);
-
-        return $this->execute(new DeletePassingCommand($id), JsonResponse::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @param  UpdatePassingRequest  $request
-     * @param  int                   $id
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function updatePassing(UpdatePassingRequest $request, int $id): JsonResponse
-    {
-        Gate::authorize(Test::UPDATE_PASSING, $id);
-
-        $data = $request->toArray();
-
-        return $this->execute(new UpdatePassingCommand($id, $data));
     }
 }

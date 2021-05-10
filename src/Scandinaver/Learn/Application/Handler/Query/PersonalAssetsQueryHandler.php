@@ -7,9 +7,9 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
-use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class PersonalAssetsQueryHandler
@@ -28,14 +28,14 @@ class PersonalAssetsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PersonalAssetsQuery|CommandInterface  $query
+     * @param  PersonalAssetsQuery|BaseCommandInterface  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $assetDTOs = $this->assetService->getPersonalAssets($query->getLanguage(), $query->getUser());
 
-        $this->resource = new Collection($assetDTOs, new AssetDTOTransformer());
+        $this->resource = new Collection($assetDTOs, new AssetTransformer());
     }
 }

@@ -11,7 +11,6 @@ use Scandinaver\Common\Domain\Permission\Message;
 use Scandinaver\Common\UI\Command\DeleteMessageCommand;
 use Scandinaver\Common\UI\Query\MessageQuery;
 use Scandinaver\Common\UI\Query\MessagesQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class MessageController
@@ -24,7 +23,6 @@ class MessageController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -38,7 +36,6 @@ class MessageController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show($id): JsonResponse
     {
@@ -52,7 +49,6 @@ class MessageController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $messageId): JsonResponse
     {

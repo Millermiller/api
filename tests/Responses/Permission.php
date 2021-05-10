@@ -14,7 +14,7 @@ class Permission implements ResponseInterface
             'name',
             'slug',
             'description',
-            'group' => PermissionGroup::response()
+            'group' => PermissionGroup::response(),
         ];
     }
 }

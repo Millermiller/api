@@ -19,35 +19,35 @@ return [
     | Supported: "gd", "imagick"
     |
     */
-    'driver' => env('AVATAR_DRIVER'),
+    'driver'      => env('AVATAR_DRIVER'),
 
     // Initial generator class
-    'generator' => DefaultGenerator::class,
+    'generator'   => DefaultGenerator::class,
 
     // Whether all characters supplied must be replaced with their closest ASCII counterparts
-    'ascii' => env('AVATAR_ASCII'),
+    'ascii'       => env('AVATAR_ASCII'),
 
     // Image shape: circle or square
-    'shape' => env('AVATAR_SHAPE'),
+    'shape'       => env('AVATAR_SHAPE'),
 
     // Image width, in pixel
-    'width' => env('AVATAR_WIDTH'),
+    'width'       => env('AVATAR_WIDTH'),
 
     // Image height, in pixel
-    'height' => env('AVATAR_HEIGHT'),
+    'height'      => env('AVATAR_HEIGHT'),
 
     // Number of characters used as initials. If name consists of single word, the first N character will be used
-    'chars' => env('AVATAR_CHARS'),
+    'chars'       => env('AVATAR_CHARS'),
 
     // font size
-    'fontSize' => env('AVATAR_FONTSIZE'),
+    'fontSize'    => env('AVATAR_FONTSIZE'),
 
     // convert initial letter in uppercase
-    'uppercase' => env('AVATAR_UPPERCASE'),
+    'uppercase'   => env('AVATAR_UPPERCASE'),
 
     // Fonts used to render text.
     // If contains more than one fonts, randomly selected based on name supplied
-    'fonts' => [__DIR__.'/../fonts/OpenSans-Bold.ttf', __DIR__.'/../fonts/rockwell.ttf'],
+    'fonts'       => [__DIR__ . '/../fonts/OpenSans-Bold.ttf', __DIR__ . '/../fonts/rockwell.ttf'],
 
     // List of foreground colors to be used, randomly selected based on name supplied
     'foregrounds' => [
@@ -73,8 +73,8 @@ return [
         '#FF5722',
     ],
 
-    'border'    => [
-        'size' => env('AVATAR_BORDER_SIZE'),
+    'border' => [
+        'size'  => env('AVATAR_BORDER_SIZE'),
 
         // border color, available value are:
         // 'foreground' (same as foreground color)

@@ -5,7 +5,7 @@ namespace Scandinaver\Puzzle\Application\Handler\Query;
 
 use Scandinaver\Puzzle\UI\Query\PuzzleQuery;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class PuzzleQueryHandler
@@ -20,9 +20,9 @@ class PuzzleQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PuzzleQuery|CommandInterface  $query
+     * @param  PuzzleQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         // TODO: Implement handle() method.
     }

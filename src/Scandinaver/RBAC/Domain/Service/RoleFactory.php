@@ -3,6 +3,7 @@
 
 namespace Scandinaver\RBAC\Domain\Service;
 
+use Scandinaver\RBAC\Domain\DTO\RoleDTO;
 use Scandinaver\RBAC\Domain\Model\Role;
 
 /**
@@ -12,12 +13,13 @@ use Scandinaver\RBAC\Domain\Model\Role;
  */
 class RoleFactory
 {
-    public static function build(array $data): Role
+
+    public function fromDTO(RoleDTO $roleDTO): Role
     {
         $role = new Role();
-        $role->setName($data['name']);
-        $role->setSlug($data['slug']);
-        $role->setDescription($data['description']);
+        $role->setName($roleDTO->getName());
+        $role->setSlug($roleDTO->getSlug());
+        $role->setDescription($roleDTO->getDescription());
 
         return $role;
     }

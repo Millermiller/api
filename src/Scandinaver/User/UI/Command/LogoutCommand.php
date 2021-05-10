@@ -3,8 +3,9 @@
 
 namespace Scandinaver\User\UI\Command;
 
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class LogoutCommand
@@ -14,15 +15,21 @@ use Scandinaver\User\Domain\Model\User;
  */
 class LogoutCommand implements CommandInterface
 {
-    private User $user;
 
-    public function __construct(User $user)
+    private UserInterface $user;
+
+    public function __construct(UserInterface $user)
     {
         $this->user = $user;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

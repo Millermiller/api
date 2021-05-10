@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class AddCardToAssetCommand
@@ -41,5 +42,10 @@ class AddCardToAssetCommand implements CommandInterface
     public function getCard(): int
     {
         return $this->card;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

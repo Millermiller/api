@@ -49,8 +49,10 @@ class LanguageService implements BaseServiceInterface
 
         $language = LanguageFactory::fromDTO($languageDTO);
 
-        $flagPath = $this->fileService->uploadFlag($language, $data['flag']);
-        $language->setFlag($flagPath);
+        if (isset($data['flag'])) {
+            $flagPath = $this->fileService->uploadFlag($language, $data['flag']);
+            $language->setFlag($flagPath);
+        }
 
         $this->languageRepository->save($language);
 

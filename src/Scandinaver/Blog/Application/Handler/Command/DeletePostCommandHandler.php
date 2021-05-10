@@ -8,7 +8,7 @@ use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Command\DeletePostCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeletePostCommandHandler
@@ -17,6 +17,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DeletePostCommandHandler extends AbstractHandler
 {
+
     private BlogService $blogService;
 
     public function __construct(BlogService $blogService)
@@ -27,11 +28,11 @@ class DeletePostCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeletePostCommand|CommandInterface  $command
+     * @param  DeletePostCommand|BaseCommandInterface  $command
      *
      * @throws PostNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->blogService->deletePost($command->getPostId());
 

@@ -9,7 +9,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\UpdateRoleCommand;
 use Scandinaver\RBAC\UI\Resource\RoleTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdateRoleCommandHandler
@@ -29,11 +29,11 @@ class UpdateRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateRoleCommand|CommandInterface  $command
+     * @param  UpdateRoleCommand|BaseCommandInterface  $command
      *
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $role = $this->service->updateRole($command->getId(), $command->getData());
 

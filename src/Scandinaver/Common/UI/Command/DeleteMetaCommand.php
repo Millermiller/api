@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeleteMetaCommand
@@ -12,6 +13,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DeleteMetaCommand implements CommandInterface
 {
+
     private $meta;
 
     /**
@@ -27,5 +29,10 @@ class DeleteMetaCommand implements CommandInterface
     public function getMeta()
     {
         return $this->meta;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

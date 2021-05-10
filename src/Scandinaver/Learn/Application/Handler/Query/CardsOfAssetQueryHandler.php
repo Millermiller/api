@@ -7,9 +7,9 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
-use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CardsOfAssetQueryHandler
@@ -28,15 +28,15 @@ class CardsOfAssetQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CardsOfAssetQuery|CommandInterface  $query
+     * @param  CardsOfAssetQuery|BaseCommandInterface  $query
      *
      * @throws AssetNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $data = $this->cardService->getCards($query->getUser(), $query->getAsset());
 
-        $this->resource = new Item($data, new AssetDTOTransformer());
+        $this->resource = new Item($data, new AssetTransformer());
 
         $this->fractal->parseIncludes('cards');
     }

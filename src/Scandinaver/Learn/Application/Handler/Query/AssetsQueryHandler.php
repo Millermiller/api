@@ -7,9 +7,9 @@ use Exception;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Query\AssetsQuery;
-use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class AssetsQueryHandler
@@ -28,14 +28,14 @@ class AssetsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AssetsQuery|CommandInterface  $query
+     * @param  AssetsQuery|BaseCommandInterface  $query
      *
      * @throws Exception
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $assetDTOs = $this->assetService->getAssetsForApp($query->getLanguage(), $query->getUser());
 
-        $this->resource = new Collection($assetDTOs, new AssetDTOTransformer());
+        $this->resource = new Collection($assetDTOs, new AssetTransformer());
     }
 }

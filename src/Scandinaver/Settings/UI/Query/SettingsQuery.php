@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Settings\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class SettingsQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see \Scandinaver\Settings\Application\Handler\Query\SettingsQueryHandler
  */
-class SettingsQuery implements CommandInterface
+class SettingsQuery implements QueryInterface
 {
     public function __construct()
     {

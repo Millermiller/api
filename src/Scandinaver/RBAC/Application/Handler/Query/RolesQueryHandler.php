@@ -8,7 +8,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\RolesQuery;
 use Scandinaver\RBAC\UI\Resource\RoleTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class RolesQueryHandler
@@ -17,6 +17,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class RolesQueryHandler extends AbstractHandler
 {
+
     private RBACService $service;
 
     public function __construct(RBACService $service)
@@ -27,9 +28,9 @@ class RolesQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  RolesQuery|CommandInterface  $query
+     * @param  RolesQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $roles = $this->service->getAllRoles();
 

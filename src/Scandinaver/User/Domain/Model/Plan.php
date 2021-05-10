@@ -12,6 +12,7 @@ use JsonSerializable;
  */
 class Plan implements JsonSerializable
 {
+
     private $id;
 
     private string $name;

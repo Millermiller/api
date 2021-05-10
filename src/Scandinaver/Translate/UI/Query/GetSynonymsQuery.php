@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Translate\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class GetSynonymsQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Translate\Application\Handler\Query\GetSynonymsQueryHandler
  */
-class GetSynonymsQuery implements CommandInterface
+class GetSynonymsQuery implements QueryInterface
 {
     private int $word;
 

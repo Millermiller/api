@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Blog\Domain\DTO;
 
-use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\DTO;
 
@@ -14,11 +13,12 @@ use Scandinaver\Shared\DTO;
  */
 class PostDTO extends DTO
 {
+
     private ?int $id;
 
     private string $title;
 
-    private Category $category;
+    private int $categoryId;
 
     private int $status;
 
@@ -26,7 +26,7 @@ class PostDTO extends DTO
 
     private string $anonce;
 
-    private UserInterface $user;
+    private int $userId;
 
     public function getId(): ?int
     {
@@ -48,14 +48,14 @@ class PostDTO extends DTO
         $this->title = $title;
     }
 
-    public function getCategory(): Category
+    public function getCategoryId(): int
     {
-        return $this->category;
+        return $this->categoryId;
     }
 
-    public function setCategory(Category $category): void
+    public function setCategoryId(int $categoryId): void
     {
-        $this->category = $category;
+        $this->categoryId = $categoryId;
     }
 
     public function getStatus(): int
@@ -78,7 +78,6 @@ class PostDTO extends DTO
         $this->content = $content;
     }
 
-
     public function getAnonce(): string
     {
         return $this->anonce;
@@ -89,13 +88,27 @@ class PostDTO extends DTO
         $this->anonce = $anonce;
     }
 
-    public function getUser(): UserInterface
+    public function getUserId(): int
     {
-        return $this->user;
+        return $this->userId;
     }
 
-    public function setUser(UserInterface $user): void
+    public function setUserId(int $userId): void
     {
-        $this->user = $user;
+        $this->userId = $userId;
+    }
+
+    public static function fromArray(array $data): PostDTO
+    {
+        $postDTO = new self();
+        $postDTO->setId($data['id'] ?? NULL);
+        $postDTO->setTitle($data['title']);
+        $postDTO->setCategoryId($data['category']);
+        $postDTO->setStatus($data['status'] ?? 0);
+        $postDTO->setContent($data['content']);
+        $postDTO->setAnonce($data['anonce'] ?? '');
+        $postDTO->setUserId($data['userId']);
+
+        return $postDTO;
     }
 }

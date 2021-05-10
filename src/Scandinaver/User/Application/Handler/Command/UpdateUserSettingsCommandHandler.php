@@ -5,7 +5,7 @@ namespace Scandinaver\User\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Command\UpdateUserSettingsCommand;
 
@@ -27,9 +27,9 @@ class UpdateUserSettingsCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateUserSettingsCommand|CommandInterface  $command
+     * @param  UpdateUserSettingsCommand|BaseCommandInterface  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->updateUserInfo($command->getUser(), $command->getData());
 

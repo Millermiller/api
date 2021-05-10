@@ -11,6 +11,7 @@ namespace Scandinaver\RBAC\Domain\Permission;
  */
 class Permission
 {
+
     public const VIEW   = 'view-permissions';
     public const SHOW   = 'show-permission';
     public const CREATE = 'create-permission';

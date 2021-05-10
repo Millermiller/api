@@ -65,7 +65,7 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     public function delete($object): void
     {
        // $this->_em->getConnection()->beginTransaction();
-
+        $object->onDelete();
         try {
             $this->fireEvents($object);
             $this->_em->remove($object);

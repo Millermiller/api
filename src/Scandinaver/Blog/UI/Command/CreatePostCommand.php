@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
+use Scandinaver\Blog\Domain\DTO\PostDTO;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
@@ -11,10 +12,11 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @package Scandinaver\Blog\UI\Command
  *
- * @see     \Scandinaver\Blog\Application\Handler\Command\CreatePostHandler
+ * @see     \Scandinaver\Blog\Application\Handler\Command\CreatePostCommandHandler
  */
 class CreatePostCommand implements CommandInterface
 {
+
     private array $data;
 
     private UserInterface $user;
@@ -25,13 +27,11 @@ class CreatePostCommand implements CommandInterface
         $this->user = $user;
     }
 
-    public function getData(): array
+    public function buildDTO(): PostDTO
     {
-        return $this->data;
-    }
+        $data           = $this->data;
+        $data['userId'] = $this->user->getId();
 
-    public function getUser(): UserInterface
-    {
-        return $this->user;
+        return PostDTO::fromArray($data);
     }
 }

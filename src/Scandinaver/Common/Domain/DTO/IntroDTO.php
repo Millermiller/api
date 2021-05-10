@@ -3,12 +3,14 @@
 
 namespace Scandinaver\Common\Domain\DTO;
 
+use Scandinaver\Shared\DTO;
+
 /**
  * Class IntroDTO
  *
  * @package Scandinaver\Common\Domain\DTO
  */
-class IntroDTO
+class IntroDTO extends DTO
 {
     private ?int $id;
 
@@ -92,5 +94,20 @@ class IntroDTO
     public function getContent(): string
     {
         return $this->content;
+    }
+
+    public static function fromArray(array $data): IntroDTO
+    {
+        $introDTO = new self();
+
+        $introDTO->setId($data['id'] ?? NULL);
+        $introDTO->setPage($data['page']);
+        $introDTO->setTarget($data['target']);
+        $introDTO->setContent($data['content']);
+        $introDTO->setPosition($data['position']);
+        $introDTO->setTooltipClass($data['tooltipClass']);
+        $introDTO->setSort($data['sort']);
+
+        return $introDTO;
     }
 }

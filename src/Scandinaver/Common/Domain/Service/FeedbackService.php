@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Common\Domain\Service;
 
-use Scandinaver\Common\Domain\Contract\Repository\MessageRepositoryInterface;
-use Scandinaver\Common\Domain\Model\Message;
+use Scandinaver\Common\Domain\Contract\Repository\FeedbackRepositoryInterface;
+use Scandinaver\Common\Domain\DTO\FeedbackDTO;
+use Scandinaver\Common\Domain\Model\Feedback;
 
 /**
  * Class FeedbackService
@@ -13,26 +14,24 @@ use Scandinaver\Common\Domain\Model\Message;
  */
 class FeedbackService
 {
-    private MessageRepositoryInterface $messageRepository;
+    private FeedbackRepositoryInterface $feedbackRepository;
 
     /**
      * FeedbackService constructor.
      *
-     * @param  MessageRepositoryInterface  $messageRepository
+     * @param  FeedbackRepositoryInterface  $messageRepository
      */
-    public function __construct(MessageRepositoryInterface $messageRepository)
+    public function __construct(FeedbackRepositoryInterface $messageRepository)
     {
-        $this->messageRepository = $messageRepository;
+        $this->feedbackRepository = $messageRepository;
     }
 
-    public function saveFeedback(array $request): Message
+    public function create(FeedbackDTO $feedbackDTO): Feedback
     {
-        $message = new Message($request['name'], $request['message']);
+        $feedback = FeedbackFactory::fromDTO($feedbackDTO);
 
-        $this->messageRepository->save($message);
+        $this->feedbackRepository->save($feedback);
 
-        //  event(new MessageEvent($message));
-
-        return $message;
+        return $feedback;
     }
 }

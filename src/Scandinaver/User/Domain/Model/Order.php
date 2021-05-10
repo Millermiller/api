@@ -13,6 +13,7 @@ use Scandinaver\Common\Domain\Contract\UserInterface;
  */
 class Order
 {
+
     private int $id;
 
     private int $sum;

@@ -3,18 +3,24 @@
 namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use App\Http\Controllers\Learn\FavouriteController;
-use Tests\TestCase;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Learn\Domain\Model\WordAsset;
+use Scandinaver\Learn\Domain\Permission\Asset;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
+use Tests\TestCase;
 
+/**
+ * Class FavouriteControllerTest
+ *
+ * @package Tests\Feature\Controllers\Learn
+ */
 class FavouriteControllerTest extends TestCase
 {
+
     private User $user;
 
     private WordAsset $wordasset;
@@ -25,6 +31,7 @@ class FavouriteControllerTest extends TestCase
 
     private Card $favouriteCard;
 
+
     /**
      * @throws Exception
      */
@@ -33,19 +40,31 @@ class FavouriteControllerTest extends TestCase
         parent::setUp();
 
         /** @var Language $language */
-        $language = entity(Language::class)->create(['name' => 'is']);
+        $language = entity(Language::class)->create(['letter' => 'is']);
 
         $this->user           = entity(User::class)->create();
         $this->wordasset      = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $language]);
-        $this->favouriteAsset = entity(FavouriteAsset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
+        $this->favouriteAsset = entity(FavouriteAsset::class)->create([
+            'user'     => $this->user,
+            'language' => $language,
+            'favorite' => 1,
+        ]);
 
-        $passing = entity(Passing::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->wordasset]);
+        $passing = entity(Passing::class)->create([
+            'user'     => $this->user,
+            'language' => $language,
+            'asset'    => $this->wordasset,
+        ]);
         $this->user->addPassing($passing);
-        $passing = entity(Passing::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
+        $passing = entity(Passing::class)->create([
+            'user'     => $this->user,
+            'language' => $language,
+            'asset'    => $this->favouriteAsset,
+        ]);
         $this->user->addPassing($passing);
 
-        $this->card = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset ]);
-        $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset ]);
+        $this->card          = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset]);
+        $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset]);
 
         $this->favouriteAsset->setOwner($this->user);
         $this->user->addPersonalAsset($this->favouriteAsset);
@@ -54,23 +73,27 @@ class FavouriteControllerTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testDestroy()
+    public function testDestroy(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::DELETE_FAVOURITE);
+        $permission = new Permission(Asset::DELETE_FAVOURITE);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('favourite:remove', [
-            'card' => $this->favouriteCard->getId()
-        ]));
-        $response = $response;
+        $response = $this->delete(route('favourite:remove',
+            [
+                'card' => $this->favouriteCard->getId(),
+            ]));
+
         static::assertEquals(204, $response->getStatusCode());
     }
 
-    public function testStore()
+    /**
+     * @throws Exception
+     */
+    public function testStore(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::CREATE_FAVOURITE);
+        $permission = new Permission(Asset::CREATE_FAVOURITE);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');

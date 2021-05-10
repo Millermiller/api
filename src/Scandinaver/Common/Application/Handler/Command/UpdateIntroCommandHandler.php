@@ -9,7 +9,7 @@ use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Command\UpdateIntroCommand;
 use Scandinaver\Common\UI\Resource\IntroTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdateIntroCommandHandler
@@ -29,13 +29,13 @@ class UpdateIntroCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateIntroCommand|CommandInterface  $command
+     * @param  UpdateIntroCommand|BaseCommandInterface  $command
      *
      * @throws IntroNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
-        $intro = $this->service->update($command->getIntroId(), $command->getData());
+        $intro = $this->service->update($command->getIntroId(), $command->buildDTO());
 
         $this->resource = new Item($intro, new IntroTransformer());
     }

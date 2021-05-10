@@ -8,7 +8,7 @@ use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeleteCategoryCommandHandler
@@ -17,6 +17,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DeleteCategoryCommandHandler extends AbstractHandler
 {
+
     private CategoryService $service;
 
     public function __construct(CategoryService $service)
@@ -27,11 +28,11 @@ class DeleteCategoryCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteCategoryCommand|CommandInterface  $command
+     * @param  DeleteCategoryCommand|BaseCommandInterface  $command
      *
      * @throws CategoryNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->delete($command->getCategoryId());
 

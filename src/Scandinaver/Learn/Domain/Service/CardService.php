@@ -25,6 +25,7 @@ use Scandinaver\Learn\Domain\DTO\WordDTO;
 use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
+use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Example;
 use Scandinaver\Learn\Domain\Model\Translate;
@@ -70,7 +71,8 @@ class CardService implements BaseServiceInterface
         FavouriteAssetRepositoryInterface $favouriteAssetRepository,
         WordRepositoryInterface $wordRepository,
         TranslaterInterface $translater,
-        SearchInterface $searchService
+        SearchInterface $searchService,
+        AssetFactory $assetFactory
     ) {
         $this->assetRepository          = $assetRepository;
         $this->cardRepository           = $cardRepository;
@@ -81,6 +83,7 @@ class CardService implements BaseServiceInterface
         $this->wordRepository           = $wordRepository;
         $this->translater               = $translater;
         $this->searchService            = $searchService;
+        $this->assetFactory = $assetFactory;
     }
 
     /**
@@ -160,37 +163,29 @@ class CardService implements BaseServiceInterface
      * @param  UserInterface  $user
      * @param  int            $asset
      *
-     * @return AssetDTO
+     * @return Asset
      * @throws AssetNotFoundException
      */
-    public function getCards(UserInterface $user, int $asset): AssetDTO
+    public function getCards(UserInterface $user, int $asset): Asset
     {
         $asset    = $this->getAsset($asset);
-        $assetDTO = AssetFactory::toDTO($asset);
 
         $language = $asset->getLanguage();
-        $assetDTO->setLanguage($language);
 
         $favouriteAsset = $user->getFavouriteAsset($language);
 
         $passing = $asset->getBestResultForUser($user);
-        $assetDTO->setBestResult($passing);
+        $asset->setBestResult($passing);
 
         $cards = $asset->getCards();
 
-        $cardsDTO = [];
-        foreach ($cards as $card) {
-            $cardDTO = CardFactory::toDTO($card);
-
-            $cardDTO->setFavourite(
+        foreach ($cards as &$card) {
+            $card->setFavourite(
                 in_array($card->getWord()->getId(), $favouriteAsset->getWordsIds())
             );
-            $cardsDTO[] = $cardDTO;
         }
 
-        $assetDTO->setCards($cardsDTO);
-
-        return $assetDTO;
+        return $asset;
     }
 
     /**

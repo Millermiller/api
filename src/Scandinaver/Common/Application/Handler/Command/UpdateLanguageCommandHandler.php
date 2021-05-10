@@ -8,8 +8,8 @@ use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\UI\Command\UpdateLanguageCommand;
 use Scandinaver\Common\UI\Resource\LanguageTransformer;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdateLanguageCommandHandler
@@ -29,11 +29,11 @@ class UpdateLanguageCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateLanguageCommand|CommandInterface  $command
+     * @param  UpdateLanguageCommand|BaseCommandInterface  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle($command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $language = $this->languageService->updateLanguage($command->getId(), $command->getData());
 

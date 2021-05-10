@@ -8,7 +8,7 @@ use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Puzzle\UI\Command\CreatePuzzleCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreatePuzzleCommandHandler
@@ -17,6 +17,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class CreatePuzzleCommandHandler extends AbstractHandler
 {
+
     private PuzzleService $puzzleService;
 
     public function __construct(PuzzleService $puzzleService)
@@ -27,13 +28,13 @@ class CreatePuzzleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreatePuzzleCommand|CommandInterface  $command
+     * @param  CreatePuzzleCommand|BaseCommandInterface  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
-        $this->puzzleService->create($command->getLanguage(), $command->getData());
+        $this->puzzleService->create($command->buildDTO());
 
         $this->resource = new NullResource();
     }

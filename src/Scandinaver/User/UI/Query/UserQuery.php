@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class UserQuery
@@ -11,8 +11,9 @@ use Scandinaver\Shared\Contract\CommandInterface;
  * @see     \Scandinaver\User\Application\Handler\Query\UserQueryHandler
  * @package Scandinaver\User\UI\Query
  */
-class UserQuery implements CommandInterface
+class UserQuery implements QueryInterface
 {
+
     private $key;
 
     /**

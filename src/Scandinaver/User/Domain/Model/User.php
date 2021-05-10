@@ -29,6 +29,7 @@ use Scandinaver\User\Domain\Traits\UsesPasswordGrant;
 class User extends AggregateRoot implements UserInterface,
     \Illuminate\Contracts\Auth\Authenticatable
 {
+
     use Authenticatable;
     use CanResetPassword;
     use HasApiTokens;
@@ -83,11 +84,12 @@ class User extends AggregateRoot implements UserInterface,
 
     public function __construct()
     {
-        $this->passings    = new ArrayCollection();
-        $this->texts       = new ArrayCollection();
-        $this->translates  = new ArrayCollection();
-        $this->roles       = new ArrayCollection();
-        $this->permissions = new ArrayCollection();
+        $this->passings       = new ArrayCollection();
+        $this->texts          = new ArrayCollection();
+        $this->translates     = new ArrayCollection();
+        $this->roles          = new ArrayCollection();
+        $this->permissions    = new ArrayCollection();
+        $this->personalAssets = new ArrayCollection();
 
         $this->pushEvent(new UserCreated($this));
     }
@@ -367,9 +369,9 @@ class User extends AggregateRoot implements UserInterface,
         return $permissions;
     }
 
-    public function delete()
+    public function onDelete()
     {
-       $this->pushEvent(new UserDeleted($this));
+        $this->pushEvent(new UserDeleted($this));
     }
 
     /**

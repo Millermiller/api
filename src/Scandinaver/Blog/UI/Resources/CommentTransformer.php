@@ -15,6 +15,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
  */
 class CommentTransformer extends TransformerAbstract
 {
+
     protected $defaultIncludes = [
         'user',
     ];

@@ -10,5 +10,5 @@ namespace Scandinaver\Shared;
  */
 abstract class DTO
 {
-
+    abstract public static function fromArray(array $data): DTO;
 }

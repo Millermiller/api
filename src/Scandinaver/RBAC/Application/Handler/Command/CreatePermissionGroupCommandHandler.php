@@ -9,7 +9,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Resource\PermissionGroupTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreatePermissionGroupCommandHandler
@@ -29,13 +29,13 @@ class CreatePermissionGroupCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreatePermissionGroupCommand|CommandInterface  $command
+     * @param  CreatePermissionGroupCommand|BaseCommandInterface  $command
      *
      * @throws PermissionGroupDublicateException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
-        $permissionGroup = $this->service->createPermissionGroup($command->getData());
+        $permissionGroup = $this->service->createPermissionGroup($command->buildDTO());
 
         $this->resource = new Item($permissionGroup, new PermissionGroupTransformer());
     }

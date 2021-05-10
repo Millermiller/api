@@ -4,6 +4,7 @@
 namespace Scandinaver\RBAC\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DetachPermissionFromRoleCommand
@@ -14,6 +15,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DetachPermissionFromRoleCommand implements CommandInterface
 {
+
     private int $roleId;
 
     private int $permissionId;
@@ -32,5 +34,10 @@ class DetachPermissionFromRoleCommand implements CommandInterface
     public function getPermissionId(): int
     {
         return $this->permissionId;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

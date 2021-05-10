@@ -2,13 +2,11 @@
 
 namespace Tests\Feature\Controllers\RBAC;
 
-use App\Http\Controllers\RBAC\PermissionGroupController;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\RBAC\Domain\Model\PermissionGroup;
-use Scandinaver\RBAC\Domain\Model\Role;
-use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
@@ -34,96 +32,133 @@ class PermissionGroupControllerTest extends TestCase
 
         $this->permissionGroups = entity(PermissionGroup::class, $this->permissionGroupsCount)->create();
     }
-    
-    public function testIndex()
+
+    /**
+     * @throws Exception
+     */
+    public function testIndex(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\PermissionGroup::VIEW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('permission:group:all'));
+        $response        = $this->get(route('permission:group:all'));
         $decodedResponse = json_decode($response->getContent());
-        self::assertCount($this->permissionGroupsCount, $decodedResponse);
+        self::assertCount($this->permissionGroupsCount + 1, $decodedResponse);
         $response->assertJsonStructure(
-          [
-            \Tests\Responses\PermissionGroup::response(),
-          ]
+            [
+                \Tests\Responses\PermissionGroup::response(),
+            ]
         );
     }
 
-    public function testShow()
+    /**
+     * @throws Exception
+     */
+    public function testShow(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\PermissionGroup::SHOW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(route('permission:group:show', ['id' => $this->permissionGroups->first()->getId()]));
         $response->assertJsonStructure(\Tests\Responses\PermissionGroup::response());
         $response->assertJsonFragment(
-          [
-            'id' => $this->permissionGroups->first()->getId(),
-          ]
+            [
+                'id' => $this->permissionGroups->first()->getId(),
+            ]
         );
     }
 
-    public function testStore()
+    /**
+     * @throws Exception
+     */
+    public function testStore(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\PermissionGroup::CREATE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $testPermissionGroupName = 'TEST_PERMISSION';
-        $testPermissionGroupSlug = 'TEST_SLUG';
+        $testPermissionGroupName        = 'TEST_PERMISSION';
+        $testPermissionGroupSlug        = 'TEST_SLUG';
         $testPermissionGroupDescription = 'TEST_DESCRIPTION';
 
-        $response = $this->post(route('permission:group:create', [
-          'name' => $testPermissionGroupName,
-          'slug' => $testPermissionGroupSlug,
-          'description' => $testPermissionGroupDescription,
-        ]));
+        $response = $this->post(route('permission:group:create',
+            [
+                'name'        => $testPermissionGroupName,
+                'slug'        => $testPermissionGroupSlug,
+                'description' => $testPermissionGroupDescription,
+            ]));
 
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
 
         $response->assertJsonStructure(\Tests\Responses\PermissionGroup::response());
 
         $response->assertJsonFragment(
-          [
-            'name' => $testPermissionGroupName,
-            'slug' => $testPermissionGroupSlug,
-            'description' => $testPermissionGroupDescription,
-          ]
+            [
+                'name'        => $testPermissionGroupName,
+                'slug'        => $testPermissionGroupSlug,
+                'description' => $testPermissionGroupDescription,
+            ]
         );
     }
 
-    public function testUpdate()
+    /**
+     * @throws Exception
+     */
+    public function testUpdate(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\PermissionGroup::UPDATE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testPermissionGroupName = 'TEST_PERMISSION';
         $testPermissionGroupSlug = 'TEST_SLUG';
 
         $response = $this->put(
-          route('permission:group:update', ['id' => $this->permissionGroups->first()->getId()]),
-          [
-            'name' => $testPermissionGroupName,
-            'slug' => $testPermissionGroupSlug,
-            'description' => '',
-          ]
+            route('permission:group:update', ['id' => $this->permissionGroups->first()->getId()]),
+            [
+                'name'        => $testPermissionGroupName,
+                'slug'        => $testPermissionGroupSlug,
+                'description' => '',
+            ]
         );
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure(
-          \Tests\Responses\PermissionGroup::response()
+            \Tests\Responses\PermissionGroup::response()
         );
 
         $response->assertJsonFragment(
-          [
-            'name' => $testPermissionGroupName,
-            'slug' => $testPermissionGroupSlug,
-          ]
+            [
+                'name' => $testPermissionGroupName,
+                'slug' => $testPermissionGroupSlug,
+            ]
         );
     }
 
-    public function testDestroy()
+    /**
+     * @throws Exception
+     */
+    public function testDestroy(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\RBAC\Domain\Permission\PermissionGroup::DELETE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('permission:group:delete', ['id' => $this->permissionGroups->first()->getId()]));
+        $response = $this->delete(route('permission:group:delete',
+            ['id' => $this->permissionGroups->first()->getId()]));
 
         self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
     }
@@ -133,6 +168,6 @@ class PermissionGroupControllerTest extends TestCase
      */
     public function testSearch()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

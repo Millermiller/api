@@ -13,5 +13,5 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
  */
 interface LanguageRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getByName(string $name): Language;
+    public function getByName(string $letter): Language;
 }

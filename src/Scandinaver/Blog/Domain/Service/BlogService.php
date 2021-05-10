@@ -6,11 +6,11 @@ namespace Scandinaver\Blog\Domain\Service;
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
+use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
-use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Blog\Domain\Model\Post;
-use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
  * Class BlogService
@@ -24,12 +24,16 @@ class BlogService implements BaseServiceInterface
 
     private CategoryRepositoryInterface $categoryRepository;
 
+    private PostFactory $postFactory;
+
     public function __construct(
         PostRepositoryInterface $postRepository,
-        CategoryRepositoryInterface $categoryRepository
+        CategoryRepositoryInterface $categoryRepository,
+        PostFactory $postFactory
     ) {
         $this->postRepository     = $postRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->postFactory        = $postFactory;
     }
 
     public function all(): array
@@ -65,21 +69,16 @@ class BlogService implements BaseServiceInterface
         return $post;
     }
 
-    public function create(UserInterface $user, array $data): Post
+    /**
+     * @param  PostDTO  $postDTO
+     *
+     * @return Post
+     * @throws CategoryNotFoundException
+     * @throws UserNotFoundException
+     */
+    public function create(PostDTO $postDTO): Post
     {
-        $categoryId = $data['category'];
-        /** @var Category $category */
-        $category = $this->categoryRepository->find($categoryId);
-
-        $postDTO = new PostDTO();
-        $postDTO->setTitle($data['title']);
-        $postDTO->setCategory($category);
-        $postDTO->setStatus($data['status'] ?? 0);
-        $postDTO->setContent($data['content']);
-        $postDTO->setAnonce($data['anonce'] ?? '');
-        $postDTO->setUser($user);
-
-        $post = PostFactory::fromDTO($postDTO);
+        $post = $this->postFactory->fromDTO($postDTO);
 
         $this->postRepository->save($post);
 
@@ -87,17 +86,21 @@ class BlogService implements BaseServiceInterface
     }
 
     /**
-     * @param  int    $post
-     * @param  array  $data
+     * @param  int      $post
+     * @param  PostDTO  $postDTO
      *
      * @return Post
+     * @throws CategoryNotFoundException
      * @throws PostNotFoundException
+     * @throws UserNotFoundException
      */
-    public function updatePost(int $post, array $data): Post
+    public function updatePost(int $post, PostDTO $postDTO): Post
     {
         $post = $this->getPost($post);
 
-        $this->postRepository->update($post, $data);
+        $post = $this->postFactory->update($post, $postDTO);
+
+        $this->postRepository->save($post);
 
         return $post;
     }
@@ -110,7 +113,6 @@ class BlogService implements BaseServiceInterface
     public function deletePost(int $post)
     {
         $post = $this->getPost($post);
-        $post->delete();
         $this->postRepository->delete($post);
     }
 

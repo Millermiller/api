@@ -4,7 +4,7 @@
 namespace Scandinaver\Translate\Application\Handler\Query;
 
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
 
 /**
@@ -14,15 +14,16 @@ use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
  */
 class GetSynonymsQueryHandler extends AbstractHandler
 {
+
     public function __construct()
     {
         parent::__construct();
     }
 
     /**
-     * @param  GetSynonymsQuery|CommandInterface  $query
+     * @param  GetSynonymsQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         // TODO: Implement handle() method.
     }

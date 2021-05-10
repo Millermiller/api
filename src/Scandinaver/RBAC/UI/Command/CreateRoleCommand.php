@@ -3,7 +3,9 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
+use Scandinaver\RBAC\Domain\DTO\RoleDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class CreateRoleCommand
@@ -14,6 +16,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class CreateRoleCommand implements CommandInterface
 {
+
     private array $data;
 
     public function __construct(array $data)
@@ -21,8 +24,8 @@ class CreateRoleCommand implements CommandInterface
         $this->data = $data;
     }
 
-    public function getData(): array
+    public function buildDTO(): RoleDTO
     {
-        return $this->data;
+        return RoleDTO::fromArray($this->data);
     }
 }

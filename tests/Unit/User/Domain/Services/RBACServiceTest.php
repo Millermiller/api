@@ -5,7 +5,6 @@ namespace Tests\Unit\User\Domain\Services;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\RBAC\Domain\DTO\PermissionDTO;
-use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\DTO\RoleDTO;
 use Scandinaver\RBAC\Domain\Exception\PermissionDublicateException;
 use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
@@ -60,12 +59,12 @@ class RBACServiceTest extends TestCase
     public function testCreateRole()
     {
         $data = [
-            'name' => 'TEST NAME',
-            'slug' => 'TEST SLUG',
-            'description' => 'TEST DESCRIPTION'
+            'name'        => 'TEST NAME',
+            'slug'        => 'TEST SLUG',
+            'description' => 'TEST DESCRIPTION',
         ];
 
-        $role = $this->service->createRole($data);
+        $role = $this->service->createRole(RoleDTO::fromArray($data));
 
         static::assertInstanceOf(Role::class, $role);
     }
@@ -78,8 +77,8 @@ class RBACServiceTest extends TestCase
 
         try {
             $this->service->deleteRole($role->getId());
-            self::assertTrue(true);
-        } catch (\Exception $e) {
+            self::assertTrue(TRUE);
+        } catch (Exception $e) {
             self::fail($e->getMessage());
         }
     }
@@ -101,15 +100,15 @@ class RBACServiceTest extends TestCase
         /** @var PermissionGroup $permissionGroup */
         $permissionGroup = entity(PermissionGroup::class, 1)->create();
 
-        $newName = 'newName';
-        $newSlug = 'newSlug';
+        $newName        = 'newName';
+        $newSlug        = 'newSlug';
         $newDescription = 'newDescription';
 
         $data = [
-          'name' => $newName,
-          'slug' => $newSlug,
-          'description' => $newDescription,
-          'group' => $permissionGroup->getId()
+            'name'        => $newName,
+            'slug'        => $newSlug,
+            'description' => $newDescription,
+            'group'       => $permissionGroup->getId(),
         ];
 
         /** @var Permission $result */
@@ -202,9 +201,9 @@ class RBACServiceTest extends TestCase
         $testRoleSlug = 'TEST_SLUG';
 
         $data = [
-          'name' => $testRoleName,
-          'slug' => $testRoleSlug,
-          'description' => '',
+            'name'        => $testRoleName,
+            'slug'        => $testRoleSlug,
+            'description' => '',
         ];
 
         $result = $this->service->updateRole($role->getId(), $data);
@@ -221,21 +220,21 @@ class RBACServiceTest extends TestCase
      */
     public function testCreatePermission()
     {
-        $testPermissionName = 'TEST_PERMISSION';
-        $testPermissionSlug = 'TEST_SLUG';
+        $testPermissionName        = 'TEST_PERMISSION';
+        $testPermissionSlug        = 'TEST_SLUG';
         $testPermissionDescription = 'TEST_DESCRIPTION';
 
         /** @var PermissionGroup $permissionGroup */
         $permissionGroup = entity(PermissionGroup::class, 1)->create();
 
         $data = [
-          'name' => $testPermissionName,
-          'slug' => $testPermissionSlug,
-          'description' => $testPermissionDescription,
-          'group' => $permissionGroup->getId()
+            'name'        => $testPermissionName,
+            'slug'        => $testPermissionSlug,
+            'description' => $testPermissionDescription,
+            'group'       => $permissionGroup->getId(),
         ];
 
-        $result = $this->service->createPermission($data);
+        $result = $this->service->createPermission(PermissionDTO::fromArray($data));
         self::assertInstanceOf(Permission::class, $result);
 
         self::assertEquals($testPermissionName, $result->getName());
@@ -273,8 +272,8 @@ class RBACServiceTest extends TestCase
 
         try {
             $this->service->deletePermission($permission->getId());
-            self::assertTrue(true);
-        } catch (\Exception $e) {
+            self::assertTrue(TRUE);
+        } catch (Exception $e) {
             self::fail($e->getMessage());
         }
     }

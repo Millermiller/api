@@ -7,7 +7,7 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Service\WordService;
 use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class AddWordAndTranslateCommandHandler
@@ -26,9 +26,9 @@ class AddWordAndTranslateCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  AddWordAndTranslateCommand|CommandInterface  $command
+     * @param  AddWordAndTranslateCommand|BaseCommandInterface  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->wordService->create(
             config('app.lang'),

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class WordsCountByLanguageQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Learn\Application\Handler\Query\WordsCountByLanguageQueryHandler
  */
-class WordsCountByLanguageQuery implements CommandInterface
+class WordsCountByLanguageQuery implements QueryInterface
 {
     private string $language;
 

@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Blog;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Blog\CreateCommentRequest;
+use App\Http\Requests\Blog\UpdateCommentRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Scandinaver\Blog\Domain\Permission\Comment;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
 use Scandinaver\Blog\UI\Query\{CommentQuery, CommentsQuery};
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class CommentController
@@ -27,7 +27,6 @@ class CommentController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -41,7 +40,6 @@ class CommentController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show($id): JsonResponse
     {
@@ -51,13 +49,12 @@ class CommentController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  CreateCommentRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateCommentRequest $request): JsonResponse
     {
         Gate::authorize(Comment::CREATE);
 
@@ -65,18 +62,17 @@ class CommentController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  int      $commentId
+     * @param  UpdateCommentRequest  $request
+     * @param  int                   $commentId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function update(Request $request, int $commentId): JsonResponse
+    public function update(UpdateCommentRequest $request, int $commentId): JsonResponse
     {
         Gate::authorize(Comment::UPDATE, $commentId);
 
-        return $this->execute(new UpdateCommentCommand($commentId, $request->toArray()));
+        return $this->execute(new UpdateCommentCommand(Auth::user(), $commentId, $request->toArray()));
     }
 
     /**
@@ -84,7 +80,6 @@ class CommentController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $commentId): JsonResponse
     {

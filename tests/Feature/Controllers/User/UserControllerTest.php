@@ -2,8 +2,9 @@
 
 namespace Tests\Feature\Controllers\User;
 
-use App\Http\Controllers\User\UserController;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
@@ -14,6 +15,7 @@ use Tests\TestCase;
  */
 class UserControllerTest extends TestCase
 {
+
     private int $userCount = 3;
 
     private User $user;
@@ -27,22 +29,36 @@ class UserControllerTest extends TestCase
         entity(User::class, $this->userCount)->create();
     }
 
-    public function testIndex()
+    /**
+     * @throws Exception
+     */
+    public function testIndex(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\User\Domain\Permission\User::VIEW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('user:all'));
+        $response        = $this->get(route('user:all'));
         $decodedResponse = json_decode($response->getContent());
         self::assertCount($this->userCount + 1, $decodedResponse);
         $response->assertJsonStructure(
             [
-                \Tests\Responses\User::response()
+                \Tests\Responses\User::response(),
             ]
         );
     }
 
-    public function testShow()
+    /**
+     * @throws Exception
+     */
+    public function testShow(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\User\Domain\Permission\User::SHOW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(route('user:show', ['id' => 1]));
@@ -60,24 +76,32 @@ class UserControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testStore()
+    public function testStore(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
-    public function testUpdate()
+    /**
+     * @throws Exception
+     */
+    public function testUpdate(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\User\Domain\Permission\User::UPDATE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testLogin = 'TESTLOGIN';
         $testEmail = 'TESTEMAIL@MAIL.COM';
 
-        $response = $this->put(route('user:update', ['id' => 1]), [
-            'login' => $testLogin,
-            'email' => $testEmail,
-            'roles' => [],
-            'password' => '12345'
-        ]);
+        $response = $this->put(route('user:update', ['id' => 1]),
+            [
+                'login'    => $testLogin,
+                'email'    => $testEmail,
+                'roles'    => [],
+                'password' => '12345',
+            ]);
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
@@ -93,8 +117,19 @@ class UserControllerTest extends TestCase
         );
     }
 
-    public function testDestroy()
+    /**
+     * @throws Exception
+     */
+    public function testDestroy(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\User\Domain\Permission\User::DELETE
+        ]);
+        $this->user->allow($permission);
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\User\Domain\Permission\User::SHOW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $userId = 1;
@@ -111,16 +146,16 @@ class UserControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testActive()
+    public function testActive(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testSearch()
+    public function testSearch(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

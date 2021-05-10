@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeleteCategoryCommand
@@ -14,6 +15,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DeleteCategoryCommand implements CommandInterface
 {
+
     private int $categoryId;
 
     public function __construct(int $categoryId)
@@ -24,5 +26,10 @@ class DeleteCategoryCommand implements CommandInterface
     public function getCategoryId(): int
     {
         return $this->categoryId;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

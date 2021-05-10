@@ -2,9 +2,13 @@
 
 namespace Tests\Feature\Controllers\Puzzle;
 
-use App\Http\Controllers\Puzzle\PuzzleController;
 use Tests\TestCase;
 
+/**
+ * Class PuzzleControllerTest
+ *
+ * @package Tests\Feature\Controllers\Puzzle
+ */
 class PuzzleControllerTest extends TestCase
 {
 
@@ -16,56 +20,56 @@ class PuzzleControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testShow()
+    public function testShow(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testByUser()
+    public function testByUser(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testStore()
+    public function testStore(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testUpdate()
+    public function testUpdate(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testComplete()
+    public function testComplete(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testDestroy()
+    public function testDestroy(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testIndex()
+    public function testIndex(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

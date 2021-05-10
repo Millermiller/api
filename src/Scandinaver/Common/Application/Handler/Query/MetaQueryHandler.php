@@ -5,7 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Query;
 
 use Scandinaver\Common\UI\Query\MetaQuery;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class MetaQueryHandler
@@ -20,9 +20,9 @@ class MetaQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  MetaQuery|CommandInterface  $query
+     * @param  MetaQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         // TODO: Implement handle() method.
     }

@@ -18,7 +18,7 @@ use LaravelDoctrine\ORM\Testing\Factory;
 
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\Common\Domain\Model\Message::class, function (Faker $faker, array $attributes) {
+$factory->define(\Scandinaver\Common\Domain\Model\Feedback::class, function (Faker $faker, array $attributes) {
 
     return [
         'message' => $faker->unique()->text(50),

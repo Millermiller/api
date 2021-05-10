@@ -7,8 +7,8 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\UI\Command\CreateLanguageCommand;
 use Scandinaver\Common\UI\Resource\LanguageTransformer;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreateLanguageCommandHandler
@@ -27,9 +27,9 @@ class CreateLanguageCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param CreateLanguageCommand|CommandInterface $command
+     * @param CreateLanguageCommand|BaseCommandInterface $command
      */
-    public function handle($command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $language = $this->languageService->createLanguage($command->getData());
 

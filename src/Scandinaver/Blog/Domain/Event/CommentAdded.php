@@ -14,19 +14,11 @@ use Scandinaver\Shared\DomainEvent;
  */
 class CommentAdded implements DomainEvent
 {
-    private Post $post;
-
     private Comment $comment;
 
-    public function __construct(Post $post, Comment $comment)
+    public function __construct(Comment $comment)
     {
-        $this->post    = $post;
         $this->comment = $comment;
-    }
-
-    public function getPost(): Post
-    {
-        return $this->post;
     }
 
     public function getComment(): Comment

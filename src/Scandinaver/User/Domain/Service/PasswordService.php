@@ -13,6 +13,7 @@ use Scandinaver\User\Domain\Model\User;
  */
 class PasswordService
 {
+
     private Hasher $hasher;
 
     public function __construct(Hasher $hasher)

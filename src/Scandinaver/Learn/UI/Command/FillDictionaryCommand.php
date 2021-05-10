@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class FillDictionaryCommand
@@ -32,5 +33,10 @@ class FillDictionaryCommand implements CommandInterface
     public function getWord(): int
     {
         return $this->word;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

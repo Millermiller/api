@@ -8,6 +8,7 @@ use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\Domain\Service\WordService;
 use Scandinaver\Learn\UI\Query\WordsCountQuery;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -27,9 +28,9 @@ class WordsCountQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  WordsCountQuery|CommandInterface  $query
+     * @param  WordsCountQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $count = $this->wordService->count();
 

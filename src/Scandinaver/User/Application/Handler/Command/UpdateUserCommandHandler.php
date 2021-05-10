@@ -5,7 +5,7 @@ namespace Scandinaver\User\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Command\UpdateUserCommand;
@@ -29,11 +29,11 @@ class UpdateUserCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateUserCommand|CommandInterface  $command
+     * @param  UpdateUserCommand|BaseCommandInterface  $command
      *
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $user = $this->userService->updateUser($command->getUser(), $command->getData());
 

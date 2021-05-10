@@ -13,24 +13,62 @@ use Scandinaver\Shared\DTO;
  */
 class RoleDTO extends DTO
 {
-    private Role $role;
+    private ?int $id;
 
-    public function __construct(Role $role)
+    private string $name;
+
+    private string $slug;
+
+    private string $description;
+
+    public function getId(): ?int
     {
-        $this->role = $role;
+        return $this->id;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function setId(?int $id): void
     {
-        return [
-            'id'          => $this->role->getId(),
-            'name'        => $this->role->getName(),
-            'slug'        => $this->role->getSlug(),
-            'description' => $this->role->getDescription(),
-            'permissions' => $this->role->getPermissions()->map(fn($permission) => $permission->toDTO())->toArray(),
-        ];
+        $this->id = $id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public static function fromArray(array $data): RoleDTO
+    {
+        $roleDTO = new self();
+
+        $roleDTO->setName($data['name']);
+        $roleDTO->setSlug($data['slug']);
+        $roleDTO->setDescription($data['description']);
+
+        return $roleDTO;
     }
 }

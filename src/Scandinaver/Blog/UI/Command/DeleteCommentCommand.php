@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeleteCommentCommand
@@ -27,4 +28,8 @@ class DeleteCommentCommand implements CommandInterface
         return $this->commentId;
     }
 
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
+    }
 }

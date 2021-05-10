@@ -39,10 +39,10 @@ class Handler extends ExceptionHandler
      * Report or log an exception.
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  Exception  $exception
+     * @param  Throwable  $exception
      *
      * @return void
-     * @throws Exception
+     * @throws Throwable
      */
     public function report(Throwable $exception)
     {
@@ -70,7 +70,7 @@ class Handler extends ExceptionHandler
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
+    protected function unauthenticated($request, AuthenticationException $exception): \Symfony\Component\HttpFoundation\Response
     {
         return response()->json(['message' => $exception->getMessage()], 403);
     }

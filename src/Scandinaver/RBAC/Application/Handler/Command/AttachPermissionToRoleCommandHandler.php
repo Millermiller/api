@@ -9,7 +9,7 @@ use Scandinaver\RBAC\Domain\Exception\RoleNotFoundException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class AttachPermissionToRoleCommandHandler
@@ -29,12 +29,12 @@ class AttachPermissionToRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  AttachPermissionToRoleCommand|CommandInterface  $command
+     * @param  AttachPermissionToRoleCommand|BaseCommandInterface  $command
      *
      * @throws PermissionNotFoundException
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->attachPermissionToRole($command->getRoleId(), $command->getPermissionId());
 

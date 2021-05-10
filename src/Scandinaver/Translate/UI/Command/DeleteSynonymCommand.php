@@ -4,6 +4,7 @@
 namespace Scandinaver\Translate\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeleteSynonymCommand
@@ -19,5 +20,10 @@ class DeleteSynonymCommand implements CommandInterface
     public function __construct(int $synonym)
     {
         $this->synonym = $synonym;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

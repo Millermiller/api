@@ -8,7 +8,7 @@ use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoriesQuery;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CategoriesQueryHandler
@@ -17,6 +17,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class CategoriesQueryHandler extends AbstractHandler
 {
+
     private CategoryService $service;
 
     public function __construct(CategoryService $service)
@@ -27,11 +28,11 @@ class CategoriesQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CategoriesQuery|CommandInterface  $command
+     * @param  CategoriesQuery|BaseCommandInterface  $command
      *
      * @return void
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $categories = $this->service->all();
 

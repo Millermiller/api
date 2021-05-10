@@ -13,6 +13,7 @@ use Exception;
  */
 class PermissionGroupNotFoundException extends Exception
 {
+
     protected $code = '404';
 
     protected $message = 'Permission group not found';

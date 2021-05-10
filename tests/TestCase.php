@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Artisan;
  */
 abstract class TestCase extends BaseTestCase
 {
+
     use DatabaseMigrations;
 
     /**
@@ -22,7 +23,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->make(Kernel::class)->bootstrap();
 
@@ -33,8 +34,8 @@ abstract class TestCase extends BaseTestCase
 
     protected function setUp(): void
     {
-        if (file_exists(__DIR__.'/../bootstrap/cache/config.php')) {
-            unlink(__DIR__.'/../bootstrap/cache/config.php');
+        if (file_exists(__DIR__ . '/../bootstrap/cache/config.php')) {
+            unlink(__DIR__ . '/../bootstrap/cache/config.php');
         }
 
         parent::setUp();

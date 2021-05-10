@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Resource\CardTransformer;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Learn\UI\Query\SearchCardQuery;
 
@@ -28,11 +29,11 @@ class SearchCardQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  SearchCardQuery|CommandInterface  $query
+     * @param  SearchCardQuery|BaseCommandInterface  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $cards = $this->service->search($query->getLanguage(), $query->getQuery(), $query->getIsSentence());
 

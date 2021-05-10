@@ -2,13 +2,19 @@
 
 namespace Tests\Feature\Controllers\Common;
 
-use App\Http\Controllers\Common\IntroController;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Scandinaver\Common\Domain\Model\Intro;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
+/**
+ * Class IntroControllerTest
+ *
+ * @package Tests\Feature\Controllers\Common
+ */
 class IntroControllerTest extends TestCase
 {
 
@@ -27,11 +33,18 @@ class IntroControllerTest extends TestCase
         $this->intro = entity(Intro::class, $this->introNumber)->create();
     }
 
-    public function testIndex()
+    /**
+     * @throws Exception
+     */
+    public function testIndex(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Intro::VIEW,
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('intro:all'));
+        $response        = $this->get(route('intro:all'));
         $decodedResponse = json_decode($response->getContent());
 
         self::assertCount($this->introNumber, $decodedResponse);
@@ -43,25 +56,32 @@ class IntroControllerTest extends TestCase
         );
     }
 
-    public function testStore()
+    /**
+     * @throws Exception
+     */
+    public function testStore(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Intro::CREATE,
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $testIntroPage = 'TESTPAGE';
-        $testIntroContent = 'TESTCONTENT';
-        $testIntroPosition = 'top';
-        $testIntroTarget = '#top';
-        $testIntroSort = 5;
+        $testIntroPage         = 'TESTPAGE';
+        $testIntroContent      = 'TESTCONTENT';
+        $testIntroPosition     = 'top';
+        $testIntroTarget       = '#top';
+        $testIntroSort         = 5;
         $testIntroTooltipClass = 'tooltipClass';
 
         $response = $this->post(
             route('intro:create'),
             [
-                'page' => $testIntroPage,
-                'target' => $testIntroTarget,
-                'position' => $testIntroPosition,
-                'content' => $testIntroContent,
-                'sort' => $testIntroSort,
+                'page'         => $testIntroPage,
+                'target'       => $testIntroTarget,
+                'position'     => $testIntroPosition,
+                'content'      => $testIntroContent,
+                'sort'         => $testIntroSort,
                 'tooltipClass' => $testIntroTooltipClass,
             ]
         );
@@ -74,22 +94,29 @@ class IntroControllerTest extends TestCase
 
         $response->assertJsonFragment(
             [
-                'page' => $testIntroPage,
-                'target' => $testIntroTarget,
-                'position' => $testIntroPosition,
-                'content' => $testIntroContent,
-                'sort' => $testIntroSort,
+                'page'         => $testIntroPage,
+                'target'       => $testIntroTarget,
+                'position'     => $testIntroPosition,
+                'content'      => $testIntroContent,
+                'sort'         => $testIntroSort,
                 'tooltipClass' => $testIntroTooltipClass,
             ]
         );
     }
 
-    public function testShow()
+    /**
+     * @throws Exception
+     */
+    public function testShow(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Intro::SHOW,
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testIntroId = 1;
-        $response = $this->get(route('intro:show', ['introId' => $testIntroId]));
+        $response    = $this->get(route('intro:show', ['id' => $testIntroId]));
 
         $response->assertJsonStructure(
             \Tests\Responses\Intro::response()
@@ -102,26 +129,32 @@ class IntroControllerTest extends TestCase
         );
     }
 
-
-    public function testUpdate()
+    /**
+     * @throws Exception
+     */
+    public function testUpdate(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Intro::UPDATE,
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $testIntroPage = 'TESTPAGE';
-        $testIntroContent = 'TESTCONTENT';
-        $testIntroPosition = 'top';
-        $testIntroTarget = '#top';
-        $testIntroSort = 5;
+        $testIntroPage         = 'TESTPAGE';
+        $testIntroContent      = 'TESTCONTENT';
+        $testIntroPosition     = 'top';
+        $testIntroTarget       = '#top';
+        $testIntroSort         = 5;
         $testIntroTooltipClass = 'tooltipClass';
 
         $response = $this->put(
-            route('intro:update', ['introId' => $this->intro->first()->getId()]),
+            route('intro:update', ['id' => $this->intro->first()->getId()]),
             [
-                'page' => $testIntroPage,
-                'target' => $testIntroTarget,
-                'position' => $testIntroPosition,
-                'content' => $testIntroContent,
-                'sort' => $testIntroSort,
+                'page'         => $testIntroPage,
+                'target'       => $testIntroTarget,
+                'position'     => $testIntroPosition,
+                'content'      => $testIntroContent,
+                'sort'         => $testIntroSort,
                 'tooltipClass' => $testIntroTooltipClass,
             ]
         );
@@ -134,23 +167,30 @@ class IntroControllerTest extends TestCase
 
         $response->assertJsonFragment(
             [
-                'page' => $testIntroPage,
-                'target' => $testIntroTarget,
-                'position' => $testIntroPosition,
-                'content' => $testIntroContent,
-                'sort' => $testIntroSort,
+                'page'         => $testIntroPage,
+                'target'       => $testIntroTarget,
+                'position'     => $testIntroPosition,
+                'content'      => $testIntroContent,
+                'sort'         => $testIntroSort,
                 'tooltipClass' => $testIntroTooltipClass,
             ]
         );
     }
 
-    public function testDestroy()
+    /**
+     * @throws Exception
+     */
+    public function testDestroy(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Intro::DELETE,
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testIntroId = 1;
 
-        $response = $this->delete(route('intro:delete', ['introId' => $testIntroId]));
+        $response = $this->delete(route('intro:delete', ['id' => $testIntroId]));
 
         self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
     }

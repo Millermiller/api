@@ -4,15 +4,16 @@
 namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Blog\CreateCategoryRequest;
+use App\Http\Requests\Blog\UpdateCategoryRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Http\{JsonResponse};
 use Scandinaver\Blog\Domain\Permission\Category;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
 use Scandinaver\Blog\UI\Command\UpdateCategoryCommand;
 use Scandinaver\Blog\UI\Query\{CategoriesQuery, CategoryQuery};
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class CategoryController
@@ -38,7 +39,6 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $categoryId): JsonResponse
     {
@@ -48,13 +48,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  CreateCategoryRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateCategoryRequest $request): JsonResponse
     {
         Gate::authorize(Category::CREATE);
 
@@ -62,14 +61,13 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  int      $categoryId
+     * @param  UpdateCategoryRequest  $request
+     * @param  int                    $categoryId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function update(Request $request, int $categoryId): JsonResponse
+    public function update(UpdateCategoryRequest $request, int $categoryId): JsonResponse
     {
         Gate::authorize(Category::UPDATE, $categoryId);
 
@@ -81,7 +79,6 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $categoryId): JsonResponse
     {

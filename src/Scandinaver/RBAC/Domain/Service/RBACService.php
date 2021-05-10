@@ -8,6 +8,9 @@ use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
+use Scandinaver\RBAC\Domain\DTO\PermissionDTO;
+use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
+use Scandinaver\RBAC\Domain\DTO\RoleDTO;
 use Scandinaver\RBAC\Domain\Exception\PermissionDublicateException;
 use Scandinaver\RBAC\Domain\Exception\PermissionGroupDublicateException;
 use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
@@ -24,6 +27,7 @@ use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
  */
 class RBACService
 {
+
     private UserRepositoryInterface $userRepository;
 
     private PermissionRepositoryInterface $permissionRepository;
@@ -32,16 +36,28 @@ class RBACService
 
     private PermissionGroupRepositoryInterface $permissionGroupRepository;
 
+    private PermissionFactory $permissionFactory;
+
+    private PermissionGroupFactory $permissionGroupFactory;
+
+    private RoleFactory $roleFactory;
+
     public function __construct(
         UserRepositoryInterface $userRepository,
         PermissionRepositoryInterface $permissionRepository,
         RoleRepositoryInterface $roleRepository,
-        PermissionGroupRepositoryInterface $permissionGroupRepository
+        PermissionGroupRepositoryInterface $permissionGroupRepository,
+        PermissionFactory $permissionFactory,
+        PermissionGroupFactory $permissionGroupFactory,
+        RoleFactory $roleFactory
     ) {
         $this->userRepository            = $userRepository;
         $this->permissionRepository      = $permissionRepository;
         $this->permissionGroupRepository = $permissionGroupRepository;
         $this->roleRepository            = $roleRepository;
+        $this->permissionFactory         = $permissionFactory;
+        $this->permissionGroupFactory    = $permissionGroupFactory;
+        $this->roleFactory               = $roleFactory;
     }
 
 
@@ -61,22 +77,22 @@ class RBACService
     }
 
     /**
-     * @param  array  $data
+     * @param  RoleDTO  $roleDTO
      *
      * @return Role
      * @throws RoleDublicateException
      */
-    public function createRole(array $data): Role
+    public function createRole(RoleDTO $roleDTO): Role
     {
-        $role = RoleFactory::build($data);
+        $role = $this->roleFactory->fromDTO($roleDTO);
 
-        $isDublicate = $this->roleRepository->findOneBy(
+        $isDuplicate = $this->roleRepository->findOneBy(
             [
-                'slug' => $data['slug'],
+                'slug' => $role->getSlug(),
             ]
         );
 
-        if ($isDublicate !== NULL) {
+        if ($isDuplicate !== NULL) {
             throw new RoleDublicateException();
         }
 
@@ -110,33 +126,26 @@ class RBACService
     {
         $role = $this->getRole($id);
 
-        $role->delete();
-
         $this->roleRepository->delete($role);
     }
 
     /**
-     * @param  array  $data
+     * @param  PermissionDTO  $permissionDTO
      *
      * @return Permission
      * @throws PermissionDublicateException|PermissionGroupNotFoundException
      */
-    public function createPermission(array $data): Permission
+    public function createPermission(PermissionDTO $permissionDTO): Permission
     {
-        $groupId = $data['group'];
-        if ($groupId) {
-            $data['group'] = $this->getPermissionGroup($groupId);
-        }
+        $permission = $this->permissionFactory->fromDTO($permissionDTO);
 
-        $permission = PermissionFactory::build($data);
-
-        $isDublicate = $this->permissionRepository->findOneBy(
+        $isDuplicate = $this->permissionRepository->findOneBy(
             [
-                'slug' => $data['slug'],
+                'slug' => $permission->getSlug(),
             ]
         );
 
-        if ($isDublicate !== NULL) {
+        if ($isDuplicate !== NULL) {
             throw new PermissionDublicateException();
         }
 
@@ -180,25 +189,23 @@ class RBACService
     {
         $permission = $this->getPermission($id);
 
-        $permission->delete();
-
         $this->permissionRepository->delete($permission);
     }
 
 
     /**
-     * @param  array  $data
+     * @param  PermissionGroupDTO  $permissionGroupDTO
      *
      * @return PermissionGroup
      * @throws PermissionGroupDublicateException
      */
-    public function createPermissionGroup(array $data): PermissionGroup
+    public function createPermissionGroup(PermissionGroupDTO $permissionGroupDTO): PermissionGroup
     {
-        $permissionGroup = PermissionGroupFactory::build($data);
+        $permissionGroup = $this->permissionGroupFactory->fromDTO($permissionGroupDTO);
 
         $isDuplicate = $this->permissionGroupRepository->findOneBy(
             [
-                'slug' => $data['slug'],
+                'slug' => $permissionGroup->getSlug(),
             ]
         );
 
@@ -235,8 +242,6 @@ class RBACService
     public function deletePermissionGroup(int $id): void
     {
         $permissionGroup = $this->getPermissionGroup($id);
-
-        $permissionGroup->delete();
 
         $this->permissionGroupRepository->delete($permissionGroup);
     }
@@ -278,8 +283,8 @@ class RBACService
     }
 
     /**
-     * @param  UserInterface        $user
-     * @param  Permission  $permission
+     * @param  UserInterface  $user
+     * @param  Permission     $permission
      *
      * @throws Exception
      */
@@ -291,8 +296,8 @@ class RBACService
     }
 
     /**
-     * @param  UserInterface        $user
-     * @param  Permission  $permission
+     * @param  UserInterface  $user
+     * @param  Permission     $permission
      *
      * @throws Exception
      */
@@ -305,7 +310,7 @@ class RBACService
 
     /**
      * @param  UserInterface  $user
-     * @param  Role  $role
+     * @param  Role           $role
      *
      * @throws Exception
      */
@@ -318,7 +323,7 @@ class RBACService
 
     /**
      * @param  UserInterface  $user
-     * @param  Role  $role
+     * @param  Role           $role
      *
      * @throws Exception
      */

@@ -17,13 +17,13 @@ class Post implements ResponseInterface
             'id',
             'title',
             'content',
-            'user' => User::response(),
+            'user'     => User::response(),
             'views',
             'category' => Category::response(),
             'comments',
             'status',
             'comment_status',
-            'created_at'
+            'created_at',
         ];
     }
 }

@@ -3,7 +3,7 @@
 
 namespace DummyNamespace;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class DummyClass
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see DummyHandlerClass
  */
-class DummyClass implements CommandInterface
+class DummyClass implements QueryInterface
 {
     public function __construct()
     {

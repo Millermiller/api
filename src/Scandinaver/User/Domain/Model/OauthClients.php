@@ -12,6 +12,7 @@ use DateTime;
  */
 class OauthClients
 {
+
     protected int $id;
 
     protected int $userId;

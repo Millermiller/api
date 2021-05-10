@@ -11,6 +11,7 @@ namespace Scandinaver\Blog\Domain\Permission;
  */
 class Comment
 {
+
     public const VIEW   = 'view-comments';
     public const SHOW   = 'show-comment';
     public const CREATE = 'create-comment';

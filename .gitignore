@@ -1,20 +1,10 @@
-/node_modules
-/public/main
-/public/sub
 /public/uploads
 /public/audio
-/storage/*.key
 /vendor
 /.idea
-/.vagrant
-npm-debug.log
-yarn-error.log
 
-/.env.example
 /.env
-/.env.dusk.local
 /.env.testing.example
-/public/sub/backend/
-/.laradock/
 /storage
 /.phpunit.result.cache
+/.phpstorm.meta.php

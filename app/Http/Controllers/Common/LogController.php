@@ -11,7 +11,6 @@ use Scandinaver\Common\Domain\Permission\Log;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
 use Scandinaver\Common\UI\Query\LogQuery;
 use Scandinaver\Common\UI\Query\LogsQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class LogController
@@ -24,7 +23,6 @@ class LogController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -38,7 +36,6 @@ class LogController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show($id): JsonResponse
     {
@@ -52,7 +49,6 @@ class LogController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy($id): JsonResponse
     {

@@ -4,6 +4,8 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
+use Scandinaver\Blog\Domain\Event\CommentAdded;
+use Scandinaver\Blog\Domain\Event\CommentDeleted;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\AggregateRoot;
 
@@ -14,6 +16,7 @@ use Scandinaver\Shared\AggregateRoot;
  */
 class Comment extends AggregateRoot
 {
+
     private int $id;
 
     private ?string $text;
@@ -25,6 +28,11 @@ class Comment extends AggregateRoot
     private DateTime $createdAt;
 
     private ?DateTime $updatedAt;
+
+    public function __construct()
+    {
+        $this->pushEvent(new CommentAdded($this));
+    }
 
     public function getId(): int
     {
@@ -51,9 +59,9 @@ class Comment extends AggregateRoot
         $this->user = $user;
     }
 
-    public function delete()
+    public function onDelete()
     {
-        // TODO: Implement delete() method.
+        $this->pushEvent(new CommentDeleted($this));
     }
 
     public function setPost(Post $post): void

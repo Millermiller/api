@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\Domain\Model;
 
 use DateTime;
+use Scandinaver\Blog\Domain\Event\CategoryCreated;
 use Scandinaver\Blog\Domain\Event\CategoryDeleted;
 use Scandinaver\Blog\Domain\Event\CategoryNameUpdated;
 use Scandinaver\Shared\AggregateRoot;
@@ -15,6 +16,7 @@ use Scandinaver\Shared\AggregateRoot;
  */
 class Category extends AggregateRoot
 {
+
     private int $id;
 
     private string $title;
@@ -26,11 +28,18 @@ class Category extends AggregateRoot
     public function __construct(string $name)
     {
         $this->title = $name;
+
+        $this->pushEvent(new CategoryCreated($this));
     }
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getTitle(): string
@@ -44,7 +53,7 @@ class Category extends AggregateRoot
         $this->pushEvent(new CategoryNameUpdated($this));
     }
 
-    public function delete()
+    public function onDelete()
     {
         $this->pushEvent(new CategoryDeleted($this));
     }

@@ -75,10 +75,8 @@ class SettingsService implements BaseServiceInterface
         return $setting->getValue();
     }
 
-    public function createSetting(array $data): Setting
+    public function createSetting(SettingDTO $settingDTO): Setting
     {
-        $settingDTO = new SettingDTO($data['title'], $data['slug'], $data['type']);
-
         $setting = SettingFactory::fromDTO($settingDTO);
 
         $this->settingRepository->save($setting);

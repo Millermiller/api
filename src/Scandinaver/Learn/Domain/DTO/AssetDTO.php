@@ -5,7 +5,6 @@ namespace Scandinaver\Learn\Domain\DTO;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Shared\DTO;
 
 /**
@@ -15,15 +14,8 @@ use Scandinaver\Shared\DTO;
  */
 class AssetDTO extends DTO
 {
+
     private ?int $id;
-
-    private bool $active = FALSE;
-
-    private bool $available = FALSE;
-
-    private bool $completed = FALSE;
-
-    private ?Passing $bestResult = NULL;
 
     private int $type;
 
@@ -32,17 +24,26 @@ class AssetDTO extends DTO
     private bool $basic;
 
     private Language $language;
-    
+
+    private string $languageLetter;
+
+    private int $languageId;
+
     private ?UserInterface $user = NULL;
-    
+
     private ?int $level;
 
-    /** @var CardDTO[] $cards  */
+    /** @var CardDTO[] $cards */
     private array $cards;
 
-    public function getBestResult(): ?Passing
+    public function getId(): ?int
     {
-        return $this->bestResult;
+        return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getType(): int
@@ -50,9 +51,19 @@ class AssetDTO extends DTO
         return $this->type;
     }
 
+    public function setType(int $type): void
+    {
+        $this->type = $type;
+    }
+
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     public function isBasic(): bool
@@ -60,24 +71,19 @@ class AssetDTO extends DTO
         return $this->basic;
     }
 
+    public function setBasic(bool $basic): void
+    {
+        $this->basic = $basic;
+    }
+
     public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setActive(bool $active): void
+    public function setLanguage(Language $language): void
     {
-        $this->active = $active;
-    }
-
-    public function setAvailable(bool $available): void
-    {
-        $this->available = $available;
-    }
-
-    public function setBestResult(?Passing $bestResult): void
-    {
-        $this->bestResult = $bestResult;
+        $this->language = $language;
     }
 
     public function getOwner(): ?UserInterface
@@ -90,54 +96,14 @@ class AssetDTO extends DTO
         return $this->level;
     }
 
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    public function setType(int $type): void
-    {
-        $this->type = $type;
-    }
-
-    public function setBasic(bool $basic): void
-    {
-        $this->basic = $basic;
-    }
-
-    public function setUser(?UserInterface $user): void
-    {
-        $this->user = $user;
-    }
-
-    public function setLanguage(Language $language): void
-    {
-        $this->language = $language;
-    }
-
     public function setLevel(?int $level): void
     {
         $this->level = $level;
     }
 
-    public function getId(): ?int
+    public function setUser(?UserInterface $user): void
     {
-        return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function isActive(): bool
-    {
-        return $this->active;
-    }
-
-    public function isAvailable(): bool
-    {
-        return $this->available;
+        $this->user = $user;
     }
 
     public function getCards(): array
@@ -150,21 +116,42 @@ class AssetDTO extends DTO
         $this->cards = $cards;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return count($this->cards);
     }
 
-    public function isCompleted(): bool
+    public function getLanguageId(): int
     {
-        return $this->completed;
+        return $this->languageId;
     }
 
-    public function setCompleted(bool $completed): void
+    public function setLanguageId(int $languageId): void
     {
-        $this->completed = $completed;
+        $this->languageId = $languageId;
+    }
+
+    public function getLanguageLetter(): string
+    {
+        return $this->languageLetter;
+    }
+
+    public function setLanguageLetter(string $languageLetter): void
+    {
+        $this->languageLetter = $languageLetter;
+    }
+
+    public static function fromArray(array $data): AssetDTO
+    {
+        $assetDTO = new self();
+
+        $assetDTO->setId($data['id'] ?? NULL);
+        $assetDTO->setTitle($data['title']);
+        $assetDTO->setBasic((bool)$data['basic']);
+        $assetDTO->setType($data['type']);
+        $assetDTO->setLevel($data['level']);
+        $assetDTO->setLanguageLetter($data['language']);
+
+        return $assetDTO;
     }
 }

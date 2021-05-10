@@ -4,17 +4,17 @@
 namespace App\Http\Controllers\RBAC;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RBAC\CreatePermissionRequest;
+use App\Http\Requests\RBAC\UpdatePermissionRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Scandinaver\RBAC\Domain\Permission\Permission;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
 use Scandinaver\RBAC\UI\Query\PermissionsQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class RoleController
@@ -49,6 +49,33 @@ class PermissionController extends Controller
     }
 
     /**
+     * @param  CreatePermissionRequest  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function store(CreatePermissionRequest $request): JsonResponse
+    {
+        Gate::authorize(Permission::CREATE);
+
+        return $this->execute(new CreatePermissionCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * @param  UpdatePermissionRequest  $request
+     * @param  int                      $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function update(UpdatePermissionRequest $request, int $id): JsonResponse
+    {
+        Gate::authorize(Permission::UPDATE, $id);
+
+        return $this->execute(new UpdatePermissionCommand($id, $request->toArray()));
+    }
+
+    /**
      * @param  int  $id
      *
      * @return JsonResponse
@@ -60,34 +87,6 @@ class PermissionController extends Controller
 
         return $this->execute(new DeletePermissionCommand($id), JsonResponse::HTTP_NO_CONTENT);
     }
-
-    /**
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function store(Request $request): JsonResponse
-    {
-        Gate::authorize(Permission::CREATE);
-
-        return $this->execute(new CreatePermissionCommand($request->toArray()), JsonResponse::HTTP_CREATED);
-    }
-
-    /**
-     * @param  Request  $request
-     * @param  int      $id
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function update(Request $request, int $id): JsonResponse
-    {
-        Gate::authorize(Permission::UPDATE, $id);
-
-        return $this->execute(new UpdatePermissionCommand($id, $request->toArray()));
-    }
-
 
     public function search()
     {

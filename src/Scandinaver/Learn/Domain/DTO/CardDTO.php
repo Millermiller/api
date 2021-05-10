@@ -28,7 +28,7 @@ class CardDTO extends DTO
     /** @var Example[] $examples*/
     private array $examples;
 
-    private bool $favourite;
+
 
     public function getId(): ?int
     {
@@ -98,5 +98,10 @@ class CardDTO extends DTO
     public function setExamples(array $examples): void
     {
         $this->examples = $examples;
+    }
+
+    public static function fromArray(array $data): CardDTO
+    {
+        return new self();
     }
 }

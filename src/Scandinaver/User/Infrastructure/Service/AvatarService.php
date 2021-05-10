@@ -20,9 +20,9 @@ class AvatarService implements AvatarServiceInterface
 
     private Avatar $service;
 
-    public function __construct(Avatar $service)
+    public function __construct()
     {
-        $this->service = $service;
+        $this->service = app()->make('avatar');
     }
 
     /**
@@ -58,7 +58,7 @@ class AvatarService implements AvatarServiceInterface
 
                         return asset('/uploads/u/a/' . $photo);
                     } catch (Exception $exception) {
-                        return $this->service->create($login)->toBase64()->encoded;
+                        return $this->service->create($login)->toBase64();
                     }
                 }
                 else {
@@ -67,7 +67,7 @@ class AvatarService implements AvatarServiceInterface
             }
         }
         else {
-            return $this->service->create($login)->toBase64()->encoded;
+            return $this->service->create($login)->toBase64();
         }
     }
 }

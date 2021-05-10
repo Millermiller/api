@@ -21,8 +21,8 @@ use Scandinaver\Common\Domain\Model\Language;
 $factory->define(Language::class, function (Faker $faker, array $attributes) {
 
     return [
-        'name' => $attributes['name'],
-        'label' => $faker->unique()->text(10),
+        'letter' => $attributes['letter'],
+        'title' => $faker->unique()->text(10),
         'flag' => '/img/is_round.png',
     ];
 });

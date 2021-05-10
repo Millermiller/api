@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class MetaQuery
  *
  * @package Scandinaver\Common\UI\Query
  */
-class MetaQuery implements CommandInterface
+class MetaQuery implements QueryInterface
 {
     private int $id;
 

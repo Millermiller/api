@@ -9,7 +9,7 @@ use Scandinaver\Learn\Domain\Service\AudioService;
 use Scandinaver\Learn\UI\Command\UploadAudioCommand;
 use Scandinaver\Learn\UI\Resource\WordTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UploadAudioCommandHandler
@@ -28,11 +28,11 @@ class UploadAudioCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UploadAudioCommand|CommandInterface  $command
+     * @param  UploadAudioCommand|BaseCommandInterface  $command
      *
      * @throws WordNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $word = $this->audioService->upload($command->getWord(), $command->getFile());
 

@@ -5,7 +5,7 @@ namespace Scandinaver\User\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Query\UsersQuery;
 use Scandinaver\User\UI\Resource\UserTransformer;
@@ -17,6 +17,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
  */
 class UsersQueryHandler extends AbstractHandler
 {
+
     private UserService $userService;
 
     public function __construct(UserService $userService)
@@ -27,9 +28,9 @@ class UsersQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  UsersQuery|CommandInterface  $query
+     * @param  UsersQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $users = $this->userService->all();
 

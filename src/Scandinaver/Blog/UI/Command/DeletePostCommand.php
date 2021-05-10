@@ -4,6 +4,7 @@
 namespace Scandinaver\Blog\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeletePostCommand
@@ -25,5 +26,10 @@ class DeletePostCommand implements CommandInterface
     public function getPostId(): int
     {
         return $this->postId;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

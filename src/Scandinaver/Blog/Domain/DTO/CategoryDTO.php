@@ -12,6 +12,7 @@ use Scandinaver\Shared\DTO;
  */
 class CategoryDTO extends DTO
 {
+
     private ?int $id;
 
     private string $title;
@@ -34,5 +35,15 @@ class CategoryDTO extends DTO
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public static function fromArray(array $data): CategoryDTO
+    {
+        $categoryDTO = new self();
+
+        $categoryDTO->setId($data['id'] ?? NULL);
+        $categoryDTO->setTitle($data['title'] ?? NULL);
+
+        return $categoryDTO;
     }
 }

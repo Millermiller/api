@@ -9,7 +9,7 @@ use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\CreateCardCommand;
 use Scandinaver\Learn\UI\Resource\CardTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreateCardCommandHandler
@@ -28,11 +28,11 @@ class CreateCardCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateCardCommand|CommandInterface  $command
+     * @param  CreateCardCommand|BaseCommandInterface  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $card =  $this->service->createCard(
             $command->getUser(),

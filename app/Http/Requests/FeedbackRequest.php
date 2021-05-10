@@ -12,10 +12,6 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class FeedbackRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return TRUE;
-    }
 
     public function rules(): array
     {

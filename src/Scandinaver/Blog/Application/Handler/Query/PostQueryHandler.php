@@ -9,7 +9,7 @@ use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Query\PostQuery;
 use Scandinaver\Blog\UI\Resources\PostTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class PostQueryHandler
@@ -18,6 +18,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class PostQueryHandler extends AbstractHandler
 {
+
     private BlogService $blogService;
 
     public function __construct(BlogService $blogService)
@@ -28,11 +29,11 @@ class PostQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PostQuery|CommandInterface  $query
+     * @param  PostQuery|BaseCommandInterface  $query
      *
      * @throws PostNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $post = $this->blogService->one($query->getId());
 

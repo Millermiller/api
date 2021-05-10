@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\Domain\Service;
 
 use Exception;
+use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\DTO\AssetDTO;
 use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\PersonalAsset;
@@ -17,32 +18,40 @@ use Scandinaver\Learn\Domain\Model\WordAsset;
  */
 class AssetFactory
 {
+    use LanguageTrait;
+
     /**
-     * @param  AssetDTO  $dto
+     * @param  AssetDTO  $assetDTO
      *
      * @return Asset
      * @throws Exception
      */
-    public static function fromDTO(AssetDTO $dto): Asset
+    public function fromDTO(AssetDTO $assetDTO): Asset
     {
-        $type = $dto->getType();
+        $type = $assetDTO->getType();
+
+        $languageId = $assetDTO->getLanguageLetter();
+        $language = $this->getLanguage($languageId);
 
         switch ($type) {
             case Asset::TYPE_WORDS:
-                $asset = new WordAsset($dto->getTitle(), $dto->isBasic(), 0, $dto->getLanguage());
+                $asset = new WordAsset($assetDTO->getTitle(), $assetDTO->isBasic(), 0, $language);
                 break;
             case Asset::TYPE_SENTENCES:
-                $asset = new SentenceAsset($dto->getTitle(), $dto->isBasic(), 0, $dto->getLanguage());
+                $asset = new SentenceAsset($assetDTO->getTitle(), $assetDTO->isBasic(), 0, $language);
                 break;
             case Asset::TYPE_PERSONAL:
-                $asset = new PersonalAsset($dto->getTitle(), $dto->isBasic(), 0, $dto->getLanguage());
+                $asset = new PersonalAsset($assetDTO->getTitle(), $assetDTO->isBasic(), 0, $language);
                 break;
             default:
                 throw new Exception('undefined type');
         }
 
-        $asset->setOwner($dto->getOwner());
-        $asset->setLevel($dto->getLevel());
+
+        $asset->setLanguage($language);
+
+        $asset->setOwner($assetDTO->getOwner());
+        $asset->setLevel($assetDTO->getLevel());
         $asset->setType($type);
 
         return $asset;

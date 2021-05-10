@@ -3,22 +3,25 @@
 
 namespace Tests\Unit\Repositories\Asset;
 
+use Doctrine\ORM\EntityManager;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\User\Domain\Model\{Plan, User};
 use Scandinaver\Learn\Domain\Model\WordAsset;
+use Scandinaver\User\Domain\Model\{User};
 use Tests\TestCase;
 
 /**
  * Class AssetRepositoryTest
+ *
  * @package Tests\Repositories\Asset
  */
 class AssetRepositoryTest extends TestCase
 {
+
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $entityManager;
 
@@ -27,10 +30,7 @@ class AssetRepositoryTest extends TestCase
      */
     private $repository;
 
-    /**
-     * @var Language
-     */
-    private $language;
+    private Language $language;
 
     /**
      * @var User
@@ -46,10 +46,12 @@ class AssetRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->language = entity(Language::class)->create(['name' => 'is']);
+        $this->language = entity(Language::class)->create(['letter' => 'is']);
 
         $this->user       = entity(User::class)->create();
-        $this->wordassets = entity(WordAsset::class, 2)->create(['user' => $this->user, 'language' => $this->language])->toArray();
+        $this->wordassets = entity(WordAsset::class, 2)->create(['user'     => $this->user,
+                                                                 'language' => $this->language,
+        ])->toArray();
 
         $this->entityManager = app('Doctrine\ORM\EntityManager');
 
@@ -61,7 +63,7 @@ class AssetRepositoryTest extends TestCase
     {
         $asset = $this->repository->getFirstAsset($this->language, Asset::TYPE_WORDS);
 
-        $this->assertInstanceOf( Asset::class, $asset);
+        $this->assertInstanceOf(Asset::class, $asset);
     }
 
     public function testGetPublicAssets()
@@ -75,12 +77,12 @@ class AssetRepositoryTest extends TestCase
 
     //public function testGetPersonalAssets()
     //{
-        // $user = entity(User::class)->create();
-//
-        // $assets = $this->repository->getPersonalAssets($this->language, $user);
-//
-        // $this->assertIsArray($assets);
-//
-        // $this->assertInstanceOf(Asset::class, $assets[0]);
+    // $user = entity(User::class)->create();
+    //
+    // $assets = $this->repository->getPersonalAssets($this->language, $user);
+    //
+    // $this->assertIsArray($assets);
+    //
+    // $this->assertInstanceOf(Asset::class, $assets[0]);
     //}
 }
