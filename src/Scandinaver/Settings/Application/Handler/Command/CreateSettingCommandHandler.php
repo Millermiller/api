@@ -7,8 +7,8 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Command\CreateSettingCommand;
 use Scandinaver\Settings\UI\Resource\SettingTransformer;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreateSettingCommandHandler
@@ -28,9 +28,9 @@ class CreateSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param CreateSettingCommand|CommandInterface $command
+     * @param CreateSettingCommand|BaseCommandInterface $command
      */
-    public function handle($command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $setting = $this->settingsService->createSetting($command->getData());
 

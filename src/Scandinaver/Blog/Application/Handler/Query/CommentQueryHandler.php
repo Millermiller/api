@@ -9,7 +9,7 @@ use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Query\CommentQuery;
 use Scandinaver\Blog\UI\Resources\CommentTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CommentQueryHandler
@@ -18,6 +18,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class CommentQueryHandler extends AbstractHandler
 {
+
     private CommentService $service;
 
     public function __construct(CommentService $service)
@@ -28,11 +29,11 @@ class CommentQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CommentQuery|CommandInterface  $query
+     * @param  CommentQuery|BaseCommandInterface  $query
      *
      * @throws CommentNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $comment = $this->service->one($query->getId());
 

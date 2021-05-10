@@ -2,9 +2,13 @@
 
 namespace Tests\Feature\Controllers\Translate;
 
-use App\Http\Controllers\Translate\TextController;
 use Tests\TestCase;
 
+/**
+ * Class TextControllerTest
+ *
+ * @package Tests\Feature\Controllers\Translate
+ */
 class TextControllerTest extends TestCase
 {
 
@@ -16,120 +20,120 @@ class TextControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testGetSynonyms()
+    public function testGetSynonyms(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testSaveSentences()
+    public function testSaveSentences(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testShow()
+    public function testShow(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testUpdate()
+    public function testUpdate(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testComplete()
+    public function testComplete(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testPublish()
+    public function testPublish(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testAddSynonym()
+    public function testAddSynonym(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testView()
+    public function testView(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testAddExtras()
+    public function testAddExtras(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testUpdateDescription()
+    public function testUpdateDescription(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testDestroy()
+    public function testDestroy(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testDeleteSynonym()
+    public function testDeleteSynonym(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testUploadImage()
+    public function testUploadImage(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testStore()
+    public function testStore(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testAll()
+    public function testAll(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

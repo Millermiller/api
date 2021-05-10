@@ -68,7 +68,7 @@ class Language extends AggregateRoot implements UrlRoutable
         $this->flag = $flag;
     }
 
-    public function delete()
+    public function onDelete()
     {
         $this->pushEvent(new LanguageDeleted($this));
     }

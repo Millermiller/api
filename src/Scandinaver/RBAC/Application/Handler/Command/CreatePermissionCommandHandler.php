@@ -10,7 +10,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreatePermissionCommandHandler
@@ -30,14 +30,14 @@ class CreatePermissionCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreatePermissionCommand|CommandInterface  $command
+     * @param  CreatePermissionCommand|BaseCommandInterface  $command
      *
      * @throws PermissionDublicateException
      * @throws PermissionGroupNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
-        $permission = $this->service->createPermission($command->getData());
+        $permission = $this->service->createPermission($command->buildDTO());
 
         $this->fractal->parseIncludes('group');
 

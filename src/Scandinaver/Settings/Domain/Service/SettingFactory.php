@@ -26,10 +26,10 @@ class SettingFactory
 
     public static function toDTO(Setting $setting): SettingDTO
     {
-        return new SettingDTO(
-            $setting->getTitle(),
-            $setting->getSlug(),
-            $setting->getType(),
-        );
+        return SettingDTO::fromArray([
+            'title' => $setting->getTitle(),
+            'slug' => $setting->getSlug(),
+            'type' => $setting->getType(),
+        ]);
     }
 }

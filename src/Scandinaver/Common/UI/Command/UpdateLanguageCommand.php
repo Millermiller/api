@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class UpdateLanguageCommand
@@ -32,5 +33,10 @@ class UpdateLanguageCommand implements CommandInterface
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

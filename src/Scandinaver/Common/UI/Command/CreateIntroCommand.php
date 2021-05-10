@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Common\UI\Command;
 
+use Scandinaver\Common\Domain\DTO\IntroDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -21,8 +22,8 @@ class CreateIntroCommand implements CommandInterface
         $this->data = $data;
     }
 
-    public function getData(): array
+    public function buildDTO(): IntroDTO
     {
-        return $this->data;
+        return IntroDTO::fromArray($this->data);
     }
 }

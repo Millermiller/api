@@ -4,6 +4,7 @@
 namespace Scandinaver\Settings\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class SetSettingCommand
@@ -41,5 +42,10 @@ class SetSettingCommand implements CommandInterface
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

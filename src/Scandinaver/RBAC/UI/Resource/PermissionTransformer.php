@@ -15,6 +15,7 @@ use Scandinaver\RBAC\Domain\Model\Permission;
  */
 class PermissionTransformer extends TransformerAbstract
 {
+
     protected $availableIncludes = [
         'group',
     ];

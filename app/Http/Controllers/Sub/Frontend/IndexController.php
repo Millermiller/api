@@ -41,7 +41,6 @@ class IndexController extends Controller
      * @param  StateRequest  $request
      *
      * @return JsonResponse
-     * @throws EventBusNotFoundException
      */
     public function state(StateRequest $request): JsonResponse
     {

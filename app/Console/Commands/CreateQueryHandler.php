@@ -3,7 +3,6 @@
 
 namespace App\Console\Commands;
 
-use Artisan;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
@@ -17,22 +16,13 @@ use Symfony\Component\Console\Input\InputArgument;
 class CreateQueryHandler extends GeneratorCommand
 {
 
-    /**
-     * @var string
-     */
     protected $name = 'createQueryHandler';
 
-    private string $domain;
-
-    /**
-     * @var string
-     */
     protected string $queryHandlerPath = 'Application/Handler/Query';
 
-    /**
-     * @var string
-     */
     protected $type = 'QueryHandler';
+
+    private string $domain;
 
     /**
      * @inheritDoc
@@ -130,12 +120,14 @@ class CreateQueryHandler extends GeneratorCommand
         return str_replace([
             'DummyClass',
             'DummyQueryClass',
-            'DummyQueryNamespace'
-        ], [
+            'DummyQueryNamespace',
+        ],
+            [
                 $class,
                 $queryClass,
-                "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass"
-            ], $stub);
+                "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace\\$queryClass",
+            ],
+            $stub);
     }
 
 }

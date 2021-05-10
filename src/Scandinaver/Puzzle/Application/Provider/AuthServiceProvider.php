@@ -15,34 +15,21 @@ use Scandinaver\Puzzle\Domain\Permission\Puzzle;
  */
 class AuthServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
-        Gate::define(Puzzle::VIEW, function (UserInterface $user) {
-            return TRUE;
-        });
+        Gate::define(Puzzle::VIEW, fn(UserInterface $user): bool => $user->can(Puzzle::VIEW));
 
-        Gate::define('view-puzzles-by-user', function (UserInterface $user) {
-            return TRUE;
-        });
+        Gate::define('view-puzzles-by-user', fn(UserInterface $user): bool => TRUE);
 
-        Gate::define(Puzzle::SHOW, function (UserInterface $user, int $puzzleId) {
-            return TRUE;
-        });
+        Gate::define(Puzzle::SHOW, fn(UserInterface $user, int $puzzleId): bool => $user->can(Puzzle::SHOW));
 
-        Gate::define(Puzzle::CREATE, function (UserInterface $user) {
-            return TRUE;
-        });
+        Gate::define(Puzzle::CREATE, fn(UserInterface $user): bool => $user->can(Puzzle::CREATE));
 
-        Gate::define(Puzzle::UPDATE, function (UserInterface $user, int $puzzleId) {
-            return TRUE;
-        });
+        Gate::define(Puzzle::UPDATE, fn(UserInterface $user, int $puzzleId): bool => $user->can(Puzzle::UPDATE));
 
-        Gate::define(Puzzle::COMPLETE, function (UserInterface $user, int $puzzleId) {
-            return TRUE;
-        });
+        Gate::define(Puzzle::COMPLETE, fn(UserInterface $user, int $puzzleId): bool => $user->can(Puzzle::COMPLETE));
 
-        Gate::define(Puzzle::DELETE, function (UserInterface $user, int $puzzleId) {
-            return TRUE;
-        });
+        Gate::define(Puzzle::DELETE, fn(UserInterface $user, int $puzzleId): bool => $user->can(Puzzle::DELETE));
     }
 }

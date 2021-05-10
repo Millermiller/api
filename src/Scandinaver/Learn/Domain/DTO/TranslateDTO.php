@@ -12,14 +12,25 @@ use Scandinaver\Shared\DTO;
  */
 class TranslateDTO extends DTO
 {
+
     private ?int $id;
 
     private string $value;
 
     public function __construct(?int $id, string $value)
     {
-        $this->id = $id;
+        $this->id    = $id;
         $this->value = $value;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getValue(): string
@@ -32,13 +43,8 @@ class TranslateDTO extends DTO
         $this->value = $value;
     }
 
-    public function getId(): int
+    public static function fromArray(array $data): TranslateDTO
     {
-        return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
+        return new self($data['id'] ?? NULL, $data['value']);
     }
 }

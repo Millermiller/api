@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class RoleQuery
@@ -12,8 +12,9 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\RBAC\Application\Handler\Query\RoleQueryHandler
  */
-class RoleQuery implements CommandInterface
+class RoleQuery implements QueryInterface
 {
+
     private int $id;
 
     public function __construct(int $id)

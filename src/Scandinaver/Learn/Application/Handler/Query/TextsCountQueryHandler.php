@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Translate\Domain\Service\TextService;
 
@@ -26,9 +27,9 @@ class TextsCountQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AssetsCountQuery|CommandInterface  $query
+     * @param  AssetsCountQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $count = $this->textService->count();
 

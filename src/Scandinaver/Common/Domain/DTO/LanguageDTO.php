@@ -95,4 +95,15 @@ class LanguageDTO extends DTO
     {
         $this->assetsAll = $assetsAll;
     }
+
+    public static function fromArray(array $data): LanguageDTO
+    {
+        $languageDTO = new self();
+
+        $languageDTO->setId($data['id'] ?? NULL);
+        $languageDTO->setLetter($data['letter']);
+        $languageDTO->setTitle($data['title']);
+
+        return $languageDTO;
+    }
 }

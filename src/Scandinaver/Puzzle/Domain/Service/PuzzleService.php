@@ -7,10 +7,9 @@ use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
+use Scandinaver\Puzzle\Domain\DTO\PuzzleDTO;
 use Scandinaver\Puzzle\Domain\Exception\PuzzleNotFoundException;
 use Scandinaver\Puzzle\Domain\Model\Puzzle;
-use Scandinaver\Puzzle\Domain\Model\PuzzleText;
-use Scandinaver\Puzzle\Domain\Model\PuzzleTranslate;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**
@@ -20,13 +19,17 @@ use Scandinaver\Shared\Contract\BaseServiceInterface;
  */
 class PuzzleService implements BaseServiceInterface
 {
+
     use LanguageTrait;
 
     private PuzzleRepositoryInterface $puzzleRepository;
 
-    public function __construct(PuzzleRepositoryInterface $puzzleRepository)
+    private PuzzleFactory $puzzleFactory;
+
+    public function __construct(PuzzleRepositoryInterface $puzzleRepository, PuzzleFactory $puzzleFactory)
     {
         $this->puzzleRepository = $puzzleRepository;
+        $this->puzzleFactory    = $puzzleFactory;
     }
 
     public function one(int $id): Puzzle
@@ -38,16 +41,13 @@ class PuzzleService implements BaseServiceInterface
     }
 
     /**
-     * @param  string  $language
-     * @param  array   $data
+     * @param  PuzzleDTO  $puzzleDTO
      *
      * @throws LanguageNotFoundException
      */
-    public function create(string $language, array $data)
+    public function create(PuzzleDTO $puzzleDTO)
     {
-        $language = $this->getLanguage($language);
-        $puzzle   = new Puzzle(new PuzzleText($data['text']), new PuzzleTranslate($data['translate']));
-        $puzzle->setLanguage($language);
+        $puzzle = $this->puzzleFactory->fromDTO($puzzleDTO);
 
         $this->puzzleRepository->save($puzzle);
     }
@@ -76,8 +76,6 @@ class PuzzleService implements BaseServiceInterface
     public function delete(int $id)
     {
         $puzzle = $this->getPuzzle($id);
-
-        $puzzle->delete();
 
         $this->puzzleRepository->delete($puzzle);
     }

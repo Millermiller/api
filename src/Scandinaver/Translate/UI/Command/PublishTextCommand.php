@@ -4,6 +4,7 @@
 namespace Scandinaver\Translate\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class PublishTextCommand
@@ -19,5 +20,10 @@ class PublishTextCommand implements CommandInterface
     public function __construct(int $text)
     {
         $this->text = $text;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Settings\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class SettingQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see \Scandinaver\Settings\Application\Handler\Query\SettingQueryHandler
  */
-class SettingQuery implements CommandInterface
+class SettingQuery implements QueryInterface
 {
     private int $id;
 

@@ -8,7 +8,7 @@ use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Query\IntrosQuery;
 use Scandinaver\Common\UI\Resource\IntroTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class IntrosQueryHandler
@@ -27,9 +27,9 @@ class IntrosQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  IntrosQuery|CommandInterface  $query
+     * @param  IntrosQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $intros = $this->introService->all();
 

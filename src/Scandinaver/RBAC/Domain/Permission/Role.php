@@ -11,6 +11,7 @@ namespace Scandinaver\RBAC\Domain\Permission;
  */
 class Role
 {
+
     public const VIEW   = 'view-roles';
     public const SHOW   = 'show-role';
     public const CREATE = 'create-role';

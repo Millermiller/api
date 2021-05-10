@@ -7,7 +7,7 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeleteLogCommandHandler
@@ -26,9 +26,9 @@ class DeleteLogCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteLogCommand|CommandInterface  $command
+     * @param  DeleteLogCommand|BaseCommandInterface  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $log = $this->logRepository->find($command->getLogId());
         $this->logRepository->delete($log);

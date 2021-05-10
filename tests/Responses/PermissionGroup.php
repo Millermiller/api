@@ -10,10 +10,10 @@ class PermissionGroup implements ResponseInterface
     public static function response(): array
     {
         return [
-          "id",
-          "name",
-          "slug",
-          "description",
+            "id",
+            "name",
+            "slug",
+            "description",
         ];
     }
 

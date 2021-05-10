@@ -4,10 +4,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Http\{JsonResponse};
 use Scandinaver\User\Domain\Permission\User;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
@@ -47,12 +48,12 @@ class UserController extends Controller
     }
 
     /**
-     * @param  ProfileRequest  $request
+     * @param  CreateUserRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function store(ProfileRequest $request): JsonResponse
+    public function store(CreateUserRequest $request): JsonResponse
     {
         Gate::authorize(User::CREATE);
 
@@ -62,13 +63,13 @@ class UserController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  int      $userId
+     * @param  UpdateUserRequest  $request
+     * @param  int                $userId
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, int $userId): JsonResponse
+    public function update(UpdateUserRequest $request, int $userId): JsonResponse
     {
         Gate::authorize(User::UPDATE, $userId);
 

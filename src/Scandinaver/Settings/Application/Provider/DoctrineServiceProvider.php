@@ -4,6 +4,7 @@
 namespace Scandinaver\Settings\Application\Provider;
 
 
+use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Settings\Domain\Contract\Repository\SettingRepositoryInterface;
 use Scandinaver\Settings\Domain\Model\Setting;
@@ -18,14 +19,12 @@ class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        /** @var EntityManager $em */
+        $em = $this->app['em'];
+
         $this->app->bind(
             SettingRepositoryInterface::class,
-            function () {
-                return new SettingRepository(
-                    $this->app['em'],
-                    $this->app['em']->getClassMetadata(Setting::class)
-                );
-            }
+            fn() => new SettingRepository($em, $em->getClassMetadata(Setting::class))
         );
     }
 }

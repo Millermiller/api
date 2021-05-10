@@ -4,6 +4,7 @@
 namespace Scandinaver\RBAC\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeleteRoleCommand
@@ -14,6 +15,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DeleteRoleCommand implements CommandInterface
 {
+
     private int $id;
 
     public function __construct(int $id)
@@ -24,5 +26,10 @@ class DeleteRoleCommand implements CommandInterface
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

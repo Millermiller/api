@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Blog;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Blog\CreatePostRequest;
+use App\Http\Requests\Blog\UpdatePostRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Support\Str;
 use Scandinaver\Blog\Domain\Permission\Post;
 use Scandinaver\Blog\UI\Command\CreatePostCommand;
 use Scandinaver\Blog\UI\Command\DeletePostCommand;
 use Scandinaver\Blog\UI\Command\UpdatePostCommand;
 use Scandinaver\Blog\UI\Query\PostQuery;
 use Scandinaver\Blog\UI\Query\PostsQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class PostController
@@ -27,7 +29,6 @@ class PostController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -41,7 +42,6 @@ class PostController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $postId): JsonResponse
     {
@@ -51,13 +51,12 @@ class PostController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  CreatePostRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreatePostRequest $request): JsonResponse
     {
         Gate::authorize('create-post');
 
@@ -65,18 +64,17 @@ class PostController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  int      $postId
+     * @param  UpdatePostRequest  $request
+     * @param  int                $postId
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function update(Request $request, int $postId): JsonResponse
+    public function update(UpdatePostRequest $request, int $postId): JsonResponse
     {
         Gate::authorize(Post::UPDATE, $postId);
 
-        return $this->execute(new UpdatePostCommand($postId, $request->toArray()));
+        return $this->execute(new UpdatePostCommand(Auth::user(), $postId, $request->toArray()));
     }
 
     /**
@@ -84,7 +82,6 @@ class PostController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy(int $postId): JsonResponse
     {
@@ -107,7 +104,7 @@ class PostController extends Controller
 
         $file            = $request->file('img');
         $destinationPath = public_path() . '/uploads/articles/';
-        $filename        = str_random(20) . '.' . $file->getClientOriginalExtension() ?: 'png';
+        $filename        = Str::random(20) . '.' . $file->getClientOriginalExtension() ?: 'png';
 
         $file->move($destinationPath, $filename);
 

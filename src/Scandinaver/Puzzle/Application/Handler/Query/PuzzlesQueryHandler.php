@@ -9,7 +9,7 @@ use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Puzzle\UI\Query\PuzzlesQuery;
 use Scandinaver\Puzzle\UI\Resource\PuzzleTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class PuzzlesQueryHandler
@@ -28,11 +28,11 @@ class PuzzlesQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PuzzlesQuery|CommandInterface  $query
+     * @param  PuzzlesQuery|BaseCommandInterface  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $puzzles = $this->puzzleService->allByLanguage($query->getLanguage());
 

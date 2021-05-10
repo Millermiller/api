@@ -3,8 +3,6 @@
 
 namespace Scandinaver\RBAC\Domain\DTO;
 
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\PermissionGroup;
 use Scandinaver\Shared\DTO;
 
 /**
@@ -14,27 +12,64 @@ use Scandinaver\Shared\DTO;
  */
 class PermissionDTO extends DTO
 {
-    private Permission $permission;
 
-    private ?PermissionGroup $permissionGroup;
+    private string $slug;
 
-    public function __construct(Permission $permission)
+    private string $name;
+
+    private int $groupId;
+
+    private ?string $description;
+
+    public function getSlug(): string
     {
-        $this->permission      = $permission;
-        $this->permissionGroup = $permission->getGroup();
+        return $this->slug;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function setSlug(string $slug): void
     {
-        return [
-            'id'          => $this->permission->getId(),
-            'name'        => $this->permission->getName(),
-            'slug'        => $this->permission->getSlug(),
-            'description' => $this->permission->getDescription(),
-           // 'group'       => $this->permissionGroup ? $this->permissionGroup->toDTO() : NULL,
-        ];
+        $this->slug = $slug;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getGroupId(): int
+    {
+        return $this->groupId;
+    }
+
+    public function setGroupId(int $groupId): void
+    {
+        $this->groupId = $groupId;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public static function fromArray(array $data): PermissionDTO
+    {
+        $permissionDTO = new self();
+
+        $permissionDTO->setName($data['name']);
+        $permissionDTO->setSlug($data['slug']);
+        $permissionDTO->setDescription($data['description']);
+        $permissionDTO->setGroupId($data['group']);
+
+        return $permissionDTO;
     }
 }

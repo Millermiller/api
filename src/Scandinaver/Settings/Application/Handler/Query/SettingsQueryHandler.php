@@ -7,8 +7,8 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Query\SettingsQuery;
 use Scandinaver\Settings\UI\Resource\SettingTransformer;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class SettingsQueryHandler
@@ -27,9 +27,9 @@ class SettingsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param SettingsQuery|CommandInterface $query
+     * @param SettingsQuery|BaseCommandInterface $query
      */
-    public function handle($query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $settings = $this->settingsService->all();
 

@@ -10,20 +10,15 @@ use Tests\TestCase;
 
 /**
  * Class LanguageRepositoryTest
+ *
  * @package Tests\Repositories\Language
  */
 class LanguageRepositoryTest extends TestCase
 {
 
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
+    private EntityManager $entityManager;
 
-    /**
-     * @var LanguageRepositoryInterface
-     */
-    private $repository;
+    private LanguageRepositoryInterface $repository;
 
     public function setUp(): void
     {
@@ -32,14 +27,13 @@ class LanguageRepositoryTest extends TestCase
         $this->entityManager = app('Doctrine\ORM\EntityManager');
 
         $this->repository = $this->app->make(LanguageRepositoryInterface::class);
-
     }
 
-   public function testGetByName()
-   {
-       /** @var Language $language */
-       $language = entity(Language::class)->create(['name' => 'is']);
+    public function testGetByName()
+    {
+        /** @var Language $language */
+        $language = entity(Language::class)->create(['letter' => 'is']);
 
-       $this->assertInstanceOf( Language::class, $this->repository->getByName($language->getTitle()));
-   }
+        $this->assertInstanceOf(Language::class, $this->repository->getByName($language->getLetter()));
+    }
 }

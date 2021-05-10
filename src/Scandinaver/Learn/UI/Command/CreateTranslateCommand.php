@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class CreateTranslateCommand
@@ -45,5 +46,10 @@ class CreateTranslateCommand implements CommandInterface
     public function getValue(): string
     {
         return $this->value;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

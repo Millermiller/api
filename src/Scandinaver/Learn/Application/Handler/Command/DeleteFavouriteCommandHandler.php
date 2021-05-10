@@ -8,7 +8,7 @@ use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Service\{FavouriteService};
 use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeleteFavouriteCommandHandler
@@ -27,11 +27,11 @@ class DeleteFavouriteCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteFavouriteCommand|CommandInterface  $command
+     * @param  DeleteFavouriteCommand|BaseCommandInterface  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->favouriteService->delete($command->getUser(), $command->getCard());
 

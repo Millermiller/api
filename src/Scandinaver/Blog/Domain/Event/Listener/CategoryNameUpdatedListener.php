@@ -13,6 +13,7 @@ use Scandinaver\Blog\Domain\Event\CategoryNameUpdated;
  */
 class CategoryNameUpdatedListener
 {
+
     private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)

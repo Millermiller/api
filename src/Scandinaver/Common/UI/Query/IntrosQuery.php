@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class IntrosQuery
  *
  * @package Scandinaver\Common\UI\Query
  */
-class IntrosQuery implements CommandInterface
+class IntrosQuery implements QueryInterface
 {
 
 }

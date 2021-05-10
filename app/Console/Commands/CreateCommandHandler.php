@@ -15,13 +15,14 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateCommandHandler extends GeneratorCommand
 {
-    protected $name = 'createCommandHandler';
 
-    private ?string $domain;
+    protected $name = 'createCommandHandler';
 
     protected string $commandHandlerPath = 'Application/Handler/Command';
 
     protected $type = 'CommandHandler';
+
+    private ?string $domain;
 
     /**
      * Get the stub file for the generator.
@@ -120,10 +121,12 @@ class CreateCommandHandler extends GeneratorCommand
             'DummyClass',
             'DummyCommandClass',
             'DummyCommandNamespace',
-        ], [
+        ],
+            [
                 $class,
                 $commandClass,
                 "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace\\$commandClass",
-            ], $stub);
+            ],
+            $stub);
     }
 }

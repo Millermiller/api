@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CreateEventHandler extends GeneratorCommand
 {
+
     protected $name = 'scandinaver:event:handler';
 
     protected ?string $domain;
@@ -75,7 +76,8 @@ class CreateEventHandler extends GeneratorCommand
 
         $this->info($this->type . ' created successfully.');
 
-        $this->call('scandinaver:rebuild:events', [
+        $this->call('scandinaver:rebuild:events',
+            [
                 'domain' => $this->domain,
             ]);
     }
@@ -126,10 +128,12 @@ class CreateEventHandler extends GeneratorCommand
             'DummyClass',
             'DummyEventClass',
             'DummyEventNamespace',
-        ], [
+        ],
+            [
                 "{$class}Listener",
                 $class,
                 "\\{$this->getDefaultNamespace($name)}\\$this->domain\\Domain\\Event\\{$class}",
-            ], $stub);
+            ],
+            $stub);
     }
 }

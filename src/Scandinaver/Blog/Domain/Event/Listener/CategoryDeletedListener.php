@@ -13,6 +13,7 @@ use Scandinaver\Blog\Domain\Event\CategoryDeleted;
  */
 class CategoryDeletedListener
 {
+
     private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)

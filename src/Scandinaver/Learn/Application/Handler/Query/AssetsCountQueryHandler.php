@@ -8,6 +8,7 @@ use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -27,11 +28,11 @@ class AssetsCountQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AssetsCountQuery|CommandInterface  $query
+     * @param  AssetsCountQuery|BaseCommandInterface  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $count = $this->assetService->count($query->getLanguage());
 

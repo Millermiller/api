@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Controllers\Blog;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Blog\Domain\Model\Category;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
@@ -14,6 +16,7 @@ use Tests\TestCase;
  */
 class CategoryControllerTest extends TestCase
 {
+
     private int $categoryCount = 2;
 
     private User $user;
@@ -26,9 +29,16 @@ class CategoryControllerTest extends TestCase
         entity(Category::class, $this->categoryCount)->create();
     }
 
+    /**
+     * @throws Exception
+     */
     public function testIndex()
     {
-        $response = $this->get(route('category:all'));
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response        = $this->get(route('category:all'));
         $decodedResponse = json_decode($response->getContent());
         self::assertCount($this->categoryCount, $decodedResponse);
         $response->assertJsonStructure(
@@ -41,10 +51,17 @@ class CategoryControllerTest extends TestCase
         );
     }
 
+    /**
+     * @throws Exception
+     */
     public function testShow()
     {
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::SHOW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
         $testCategoryId = 1;
-        $response = $this->get(route('category:show', ['categoryId' => $testCategoryId]));
+        $response       = $this->get(route('category:show', ['categoryId' => $testCategoryId]));
         $response->assertJsonStructure(
             [
                 'id',
@@ -58,9 +75,13 @@ class CategoryControllerTest extends TestCase
         );
     }
 
-
+    /**
+     * @throws Exception
+     */
     public function testStore()
     {
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::CREATE);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testCategoryName = 'TESTCATEGORY';
@@ -82,8 +103,13 @@ class CategoryControllerTest extends TestCase
         );
     }
 
-    public function testCreateDublicate()
+    /**
+     * @throws Exception
+     */
+    public function testCreateDuplicate(): void
     {
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::CREATE);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testCategoryName = 'TESTCATEGORY';
@@ -97,14 +123,20 @@ class CategoryControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
-    public function testUpdate()
+    /**
+     * @throws Exception
+     */
+    public function testUpdate(): void
     {
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::UPDATE);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testCategoryName = 'TESTCATEGORY';
-        $testCategoryId = 1;
+        $testCategoryId   = 1;
 
-        $response = $this->put(route('category:update', ['categoryId' => $testCategoryId]), ['title' => $testCategoryName]);
+        $response = $this->put(route('category:update', ['categoryId' => $testCategoryId]),
+            ['title' => $testCategoryName]);
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
@@ -121,8 +153,16 @@ class CategoryControllerTest extends TestCase
         );
     }
 
-    public function testDestroy()
+    /**
+     * @throws Exception
+     */
+    public function testDestroy(): void
     {
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::DELETE);
+        $this->user->allow($permission);
+        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::SHOW);
+        $this->user->allow($permission);
+
         $this->actingAs($this->user, 'api');
 
         $testCategoryId = 1;

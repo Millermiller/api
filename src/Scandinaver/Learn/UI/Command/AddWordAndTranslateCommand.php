@@ -4,6 +4,7 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class AddWordAndTranslateCommand
@@ -40,5 +41,10 @@ class AddWordAndTranslateCommand implements CommandInterface
     public function getIssentence(): int
     {
         return $this->issentence;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

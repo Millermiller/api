@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Puzzle\UI\Command;
 
+use Scandinaver\Puzzle\Domain\DTO\PuzzleDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -15,23 +16,16 @@ use Scandinaver\Shared\Contract\CommandInterface;
 class CreatePuzzleCommand implements CommandInterface
 {
 
-    private string $language;
-
     private array $data;
 
     public function __construct(string $language, array $data)
     {
-        $this->language = $language;
-        $this->data     = $data;
+        $this->data                   = $data;
+        $this->data['languageLetter'] = $language;
     }
 
-    public function getLanguage(): string
+    public function buildDTO(): PuzzleDTO
     {
-        return $this->language;
-    }
-
-    public function getData(): array
-    {
-        return $this->data;
+        return PuzzleDTO::fromArray($this->data);
     }
 }

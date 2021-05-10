@@ -13,24 +13,62 @@ use Scandinaver\Shared\DTO;
  */
 class PermissionGroupDTO extends DTO
 {
-    private PermissionGroup $permissionGroup;
+    private ?int $id;
 
-    public function __construct(PermissionGroup $permissionGroup)
+    private string $name;
+
+    private string $slug;
+
+    private string $description;
+
+    public function getId(): ?int
     {
-        $this->permissionGroup = $permissionGroup;
+        return $this->id;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function setId(?int $id): void
     {
-        return [
-            'id'          => $this->permissionGroup->getId(),
-            'name'        => $this->permissionGroup->getName(),
-            'slug'        => $this->permissionGroup->getSlug(),
-            'description' => $this->permissionGroup->getDescription(),
-        ];
+        $this->id = $id;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public static function fromArray(array $data): PermissionGroupDTO
+    {
+        $permissionGroupDTO = new self();
+
+        $permissionGroupDTO->setName($data['name']);
+        $permissionGroupDTO->setSlug($data['slug']);
+        $permissionGroupDTO->setDescription($data['description']);
+
+        return $permissionGroupDTO;
+    }
 }

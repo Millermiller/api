@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Scandinaver\Shared\{CommandBus, Contract\CommandInterface};
+use Scandinaver\Shared\{CommandBus, Contract\BaseCommandInterface};
 
 /**
  * Class Controller
@@ -36,12 +36,12 @@ class Controller extends BaseController
     }
 
     /**
-     * @param  CommandInterface  $command
-     * @param  int     $code
+     * @param  BaseCommandInterface  $command
+     * @param  int                   $code
      *
      * @return JsonResponse
      */
-    protected function execute(CommandInterface $command, int $code = 200): JsonResponse
+    protected function execute(BaseCommandInterface $command, int $code = 200): JsonResponse
     {
         try {
             return response()->json($this->commandBus->execute($command), $code);

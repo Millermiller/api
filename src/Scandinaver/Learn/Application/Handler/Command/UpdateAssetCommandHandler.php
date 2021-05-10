@@ -10,9 +10,9 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
-use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
+use Scandinaver\Learn\UI\Resource\AssetTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdateAssetCommandHandler
@@ -36,17 +36,17 @@ class UpdateAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateAssetCommand|CommandInterface  $command
+     * @param  UpdateAssetCommand|BaseCommandInterface  $command
      *
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws BindingResolutionException
      * @throws AssetNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $asset = $this->assetService->updateAsset($command->getUser(), $command->getAsset(), $command->getData());
 
-        $this->resource = new Item($asset, new AssetDTOTransformer());
+        $this->resource = new Item($asset, new AssetTransformer());
     }
 }

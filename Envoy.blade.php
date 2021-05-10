@@ -34,6 +34,12 @@
     rm -rf {{ $new_release_dir }}/storage
     ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
 
+    echo "Linking public directory"
+    rm -rf {{ $new_release_dir }}/public/audio
+    rm -rf {{ $new_release_dir }}/public/uploads
+    ln -nfs {{ $app_dir }}/public/audio {{ $new_release_dir }}/public/audio
+    ln -nfs {{ $app_dir }}/public/uploads {{ $new_release_dir }}/public/uploads
+
     echo 'Linking .env file'
     ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
 

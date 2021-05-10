@@ -13,6 +13,7 @@ use Scandinaver\RBAC\Domain\Model\PermissionGroup;
  */
 class PermissionGroupTransformer extends TransformerAbstract
 {
+
     public function transform(PermissionGroup $permissionGroup): array
     {
         return [

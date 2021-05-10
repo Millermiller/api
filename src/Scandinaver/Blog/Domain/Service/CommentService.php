@@ -5,12 +5,12 @@ namespace Scandinaver\Blog\Domain\Service;
 
 use Scandinaver\Blog\Domain\Contract\Repository\CommentRepositoryInterface;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
+use Scandinaver\Blog\Domain\DTO\CommentDTO;
 use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Model\Comment;
-use Scandinaver\Blog\Domain\Model\Post;
-use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
  * Class CategoryService
@@ -19,16 +19,21 @@ use Scandinaver\Shared\Contract\BaseServiceInterface;
  */
 class CommentService implements BaseServiceInterface
 {
+
     private CommentRepositoryInterface $commentRepository;
 
     private PostRepositoryInterface $postRepository;
 
+    private CommentFactory $commentFactory;
+
     public function __construct(
         CommentRepositoryInterface $commentRepository,
-        PostRepositoryInterface $postRepository
+        PostRepositoryInterface $postRepository,
+        CommentFactory $commentFactory
     ) {
         $this->commentRepository = $commentRepository;
         $this->postRepository    = $postRepository;
+        $this->commentFactory    = $commentFactory;
     }
 
     public function all(): array
@@ -58,25 +63,15 @@ class CommentService implements BaseServiceInterface
     }
 
     /**
-     * @param  UserInterface   $user
-     * @param  array  $data
+     * @param  CommentDTO  $commentDTO
      *
      * @return Comment
      * @throws PostNotFoundException
+     * @throws UserNotFoundException
      */
-    public function create(UserInterface $user, array $data): Comment
+    public function create(CommentDTO $commentDTO): Comment
     {
-        /** @var Post $post */
-        $post = $this->postRepository->find($data['post_id']);
-
-        if ($post === NULL) {
-            throw new PostNotFoundException();
-        }
-
-        $comment = new Comment();
-        $comment->setText($data['text']);
-        $comment->setUser($user);
-        $comment->setPost($post);
+        $comment = $this->commentFactory->fromDTO($commentDTO);
 
         $this->commentRepository->save($comment);
 
@@ -84,13 +79,13 @@ class CommentService implements BaseServiceInterface
     }
 
     /**
-     * @param  int    $commentId
-     * @param  array  $data
+     * @param  int         $commentId
+     * @param  CommentDTO  $commentDTO
      *
      * @return Comment
      * @throws CommentNotFoundException
      */
-    public function update(int $commentId, array $data): Comment
+    public function update(int $commentId, CommentDTO $commentDTO): Comment
     {
         /** @var Comment $comment */
         $comment = $this->commentRepository->find($commentId);
@@ -99,7 +94,9 @@ class CommentService implements BaseServiceInterface
             throw new CommentNotFoundException();
         }
 
-        $this->commentRepository->update($comment, $data);
+        $comment->setText($commentDTO->getText());
+
+        $this->commentRepository->save($comment);
 
         return $comment;
     }
@@ -117,8 +114,6 @@ class CommentService implements BaseServiceInterface
         if ($comment === NULL) {
             throw new CommentNotFoundException();
         }
-
-        $comment->delete();
 
         $this->commentRepository->delete($comment);
     }

@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\UI\Command;
 
 use Illuminate\Http\UploadedFile;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class UploadAudioCommand
@@ -33,5 +34,10 @@ class UploadAudioCommand implements CommandInterface
     public function getFile(): UploadedFile
     {
         return $this->file;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

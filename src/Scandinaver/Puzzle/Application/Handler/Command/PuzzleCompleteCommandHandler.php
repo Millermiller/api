@@ -8,7 +8,7 @@ use Scandinaver\Puzzle\Domain\Exception\PuzzleNotFoundException;
 use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class PuzzleCompleteCommandHandler
@@ -27,11 +27,11 @@ class PuzzleCompleteCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  PuzzleCompleteCommand|CommandInterface  $command
+     * @param  PuzzleCompleteCommand|BaseCommandInterface  $command
      *
      * @throws PuzzleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->puzzleService->completed($command->getUser(), $command->getPuzzle());
 

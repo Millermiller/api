@@ -6,6 +6,7 @@ namespace Scandinaver\User\Application\Provider;
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\User\Domain\Permission\User;
 
 /**
  * Class AuthServiceProvider
@@ -14,31 +15,17 @@ use Scandinaver\Common\Domain\Contract\UserInterface;
  */
 class AuthServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
-        Gate::define(\Scandinaver\User\Domain\Permission\User::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(User::VIEW, fn(UserInterface $user): bool => $user->can(User::VIEW));
 
-        Gate::define(\Scandinaver\User\Domain\Permission\User::SHOW,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(User::SHOW, fn(UserInterface $user, int $userId): bool => $user->can(User::SHOW));
 
-        Gate::define(\Scandinaver\User\Domain\Permission\User::CREATE,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(User::CREATE, fn(UserInterface $user): bool => $user->can(User::CREATE));
 
-        Gate::define(\Scandinaver\User\Domain\Permission\User::UPDATE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(User::UPDATE, fn(UserInterface $user, int $userId): bool => $user->can(User::UPDATE));
 
-        Gate::define(\Scandinaver\User\Domain\Permission\User::DELETE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(User::DELETE, fn(UserInterface $user, int $userId): bool => $user->can(User::DELETE));
     }
 }

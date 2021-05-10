@@ -9,7 +9,7 @@ use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoryQuery;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CategoryQueryHandler
@@ -29,11 +29,11 @@ class CategoryQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CategoryQuery|CommandInterface  $query
+     * @param  CategoryQuery|BaseCommandInterface  $query
      *
      * @throws CategoryNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $category = $this->service->one($query->getId());
 

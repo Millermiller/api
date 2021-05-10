@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class MessageQuery
@@ -11,7 +11,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  * @see     \Scandinaver\Common\Application\Handler\Query\MessageHandler
  * @package Scandinaver\Common\UI\Query
  */
-class MessageQuery implements CommandInterface
+class MessageQuery implements QueryInterface
 {
     private int $id;
 

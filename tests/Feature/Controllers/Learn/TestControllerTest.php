@@ -2,9 +2,13 @@
 
 namespace Tests\Feature\Controllers\Learn;
 
-use App\Http\Controllers\Learn\TestController;
 use Tests\TestCase;
 
+/**
+ * Class TestControllerTest
+ *
+ * @package Tests\Feature\Controllers\Learn
+ */
 class TestControllerTest extends TestCase
 {
 
@@ -16,16 +20,16 @@ class TestControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testResult()
+    public function testResult(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
      * TODO: implement
      */
-    public function testComplete()
+    public function testComplete(): void
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

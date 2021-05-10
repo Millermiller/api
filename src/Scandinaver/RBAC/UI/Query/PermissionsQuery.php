@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class PermissionsQuery
@@ -12,8 +12,9 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\RBAC\Application\Handler\Query\PermissionsQueryHandler
  */
-class PermissionsQuery implements CommandInterface
+class PermissionsQuery implements QueryInterface
 {
+
     public function __construct()
     {
 

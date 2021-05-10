@@ -13,6 +13,7 @@ use Exception;
  */
 class PermissionNotFoundException extends Exception
 {
+
     protected $code = '404';
 
     protected $message = 'Permission not found';

@@ -7,8 +7,9 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Service\TestService;
 use Scandinaver\Learn\UI\Command\CompleteTestCommand;
+use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CompleteTestCommandHandler
@@ -27,11 +28,12 @@ class CompleteTestCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CompleteTestCommand|CommandInterface  $command
+     * @param  CompleteTestCommand|BaseCommandInterface  $command
      *
      * @throws AssetNotFoundException
+     * @throws SettingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->testService->savePassing(
             $command->getUser(),

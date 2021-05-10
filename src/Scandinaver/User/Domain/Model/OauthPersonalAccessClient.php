@@ -12,6 +12,7 @@ use DateTime;
  */
 class OauthPersonalAccessClient
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")

@@ -8,7 +8,7 @@ use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\FillDictionaryCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class FillDictionaryCommandHandler
@@ -27,11 +27,11 @@ class FillDictionaryCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  FillDictionaryCommand|CommandInterface  $command
+     * @param  FillDictionaryCommand|BaseCommandInterface  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->cardService->fillDictionary($command->getLanguage(), $command->getWord());
 

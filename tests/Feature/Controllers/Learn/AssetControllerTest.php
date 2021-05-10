@@ -3,17 +3,17 @@
 namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Throwable;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Learn\Domain\Model\Asset;
 use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\Learn\Domain\Model\FavouriteAsset;
 use Scandinaver\Learn\Domain\Model\Passing;
 use Scandinaver\Learn\Domain\Model\WordAsset;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
+use Throwable;
 
 /**
  * Class AssetControllerTest
@@ -40,18 +40,26 @@ class AssetControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->language = entity(Language::class)->create(['name' => 'is']);
+        $this->language = entity(Language::class)->create(['letter' => 'is']);
 
-        $this->user = entity(User::class)->create();
-        $this->asset = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $this->language]);
+        $this->user           = entity(User::class)->create();
+        $this->asset          = entity(WordAsset::class)->create(['user'     => $this->user,
+                                                                  'language' => $this->language,
+        ]);
         $this->favouriteAsset = entity(FavouriteAsset::class)->create(
             ['user' => $this->user, 'language' => $this->language, 'favorite' => 1]
         );
-        $this->card = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
+        $this->card           = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
 
-        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->asset, 'language' => $this->language]);
+        $passing = entity(Passing::class)->create(['user'     => $this->user,
+                                                   'asset'    => $this->asset,
+                                                   'language' => $this->language,
+        ]);
         $this->user->addPassing($passing);
-        $passing = entity(Passing::class)->create(['user' => $this->user, 'asset' => $this->favouriteAsset, 'language' => $this->language]);
+        $passing = entity(Passing::class)->create(['user'     => $this->user,
+                                                   'asset'    => $this->favouriteAsset,
+                                                   'language' => $this->language,
+        ]);
         $this->user->addPassing($passing);
 
         $this->favouriteAsset->setOwner($this->user);
@@ -69,33 +77,33 @@ class AssetControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(
-          route('asset:show', ['id' => $this->asset->getId()])
+            route('asset:show', ['id' => $this->asset->getId()])
         );
 
         $response->assertJsonStructure(
-          [
-            'id',
-            'type',
-            'title',
-            'level',
-            'count',
-            'basic',
-            'language',
-            'cards' => [
-              [
+            [
                 'id',
-                'favourite',
-                'word' => [
-                  'id',
-                  'value',
+                'type',
+                'title',
+                'level',
+                'count',
+                'basic',
+                'language',
+                'cards' => [
+                    [
+                        'id',
+                        'favourite',
+                        'word'      => [
+                            'id',
+                            'value',
+                        ],
+                        'translate' => [
+                            'id',
+                            'value',
+                        ],
+                    ],
                 ],
-                'translate' => [
-                  'id',
-                  'value',
-                ],
-              ],
-            ],
-          ]
+            ]
         );
     }
 
@@ -112,9 +120,9 @@ class AssetControllerTest extends TestCase
             route(
                 'asset:update',
                 [
-                    'id' => $this->asset->getId(),
-                    'type' => Asset::TYPE_WORDS,
-                    'level' => 2
+                    'id'    => $this->asset->getId(),
+                    'type'  => Asset::TYPE_WORDS,
+                    'level' => 2,
                 ]
             ),
             [
@@ -160,12 +168,12 @@ class AssetControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response = $this->post(route(
-                                    'asset:card:add',
-                                    [
-                                        'asset' => $this->asset->getId(),
-                                        'card' => $this->card->getId(),
-                                    ]
-                                ));
+            'asset:card:add',
+            [
+                'asset' => $this->asset->getId(),
+                'card'  => $this->card->getId(),
+            ]
+        ));
 
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
     }
@@ -180,12 +188,12 @@ class AssetControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response = $this->delete(route(
-                                    'asset:card:remove',
-                                    [
-                                        'asset' => $this->asset->getId(),
-                                        'card' => $this->card->getId(),
-                                    ]
-                                ));
+            'asset:card:remove',
+            [
+                'asset' => $this->asset->getId(),
+                'card'  => $this->card->getId(),
+            ]
+        ));
 
         self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
     }
@@ -195,7 +203,7 @@ class AssetControllerTest extends TestCase
      */
     public function testGetWords()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -203,7 +211,7 @@ class AssetControllerTest extends TestCase
      */
     public function testGetPersonal()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -211,7 +219,7 @@ class AssetControllerTest extends TestCase
      */
     public function testShowAsset()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -219,7 +227,7 @@ class AssetControllerTest extends TestCase
      */
     public function testShowValues()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -227,7 +235,7 @@ class AssetControllerTest extends TestCase
      */
     public function testChangeAsset()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -235,7 +243,7 @@ class AssetControllerTest extends TestCase
      */
     public function testGetAllSentences()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -243,7 +251,7 @@ class AssetControllerTest extends TestCase
      */
     public function testAddBasicAssetLevel()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -251,7 +259,7 @@ class AssetControllerTest extends TestCase
      */
     public function testAddPair()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -259,7 +267,7 @@ class AssetControllerTest extends TestCase
      */
     public function testEditTranslate()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -267,7 +275,7 @@ class AssetControllerTest extends TestCase
      */
     public function testAssetsMobile()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -275,7 +283,7 @@ class AssetControllerTest extends TestCase
      */
     public function testShowExamples()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -283,7 +291,7 @@ class AssetControllerTest extends TestCase
      */
     public function testChangeUsedTranslate()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -295,20 +303,21 @@ class AssetControllerTest extends TestCase
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->post(route('asset:store'), [
-            'language' => 'is',
-            'title' => 'TEST CREATE ASSET',
-            'level' => 2,
-            'type' => Asset::TYPE_WORDS,
-            'basic' => true
-        ]);
+        $response = $this->post(route('asset:store'),
+            [
+                'language' => 'is',
+                'title'    => 'TEST CREATE ASSET',
+                'level'    => 2,
+                'type'     => Asset::TYPE_WORDS,
+                'basic'    => TRUE,
+            ]);
 
         $response->assertJsonStructure(
             [
                 'id',
                 'title',
                 'level',
-              //  'result',
+                //  'result',
                 'basic',
                 'language',
                 'count',
@@ -325,7 +334,7 @@ class AssetControllerTest extends TestCase
      */
     public function testFindAudio()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -348,7 +357,7 @@ class AssetControllerTest extends TestCase
      */
     public function testGetSentences()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -356,7 +365,7 @@ class AssetControllerTest extends TestCase
      */
     public function testUploadSentences()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -364,6 +373,6 @@ class AssetControllerTest extends TestCase
      */
     public function testUploadAudio()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

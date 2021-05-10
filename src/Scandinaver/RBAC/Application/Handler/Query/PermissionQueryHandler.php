@@ -9,7 +9,7 @@ use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
 use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class PermissionQueryHandler
@@ -29,11 +29,11 @@ class PermissionQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PermissionQuery|CommandInterface  $query
+     * @param  PermissionQuery|BaseCommandInterface  $query
      *
      * @throws PermissionNotFoundException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $permission = $this->service->getPermission($query->getId());
 

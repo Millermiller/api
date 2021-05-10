@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class AudioCountByLanguageQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Learn\Application\Handler\Query\AudioCountByLanguageQueryHandler
  */
-class AudioCountByLanguageQuery implements CommandInterface
+class AudioCountByLanguageQuery implements QueryInterface
 {
     private string $language;
 

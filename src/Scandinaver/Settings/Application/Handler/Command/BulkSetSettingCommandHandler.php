@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Command\BulkSetSettingCommand;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class BulkSetSettingCommandHandler
@@ -28,11 +28,11 @@ class BulkSetSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  BulkSetSettingCommand|CommandInterface  $command
+     * @param  BulkSetSettingCommand|BaseCommandInterface  $command
      *
      * @throws SettingNotFoundException
      */
-    public function handle($command): void
+    public function handle(BaseCommandInterface$command): void
     {
         $this->settingsService->bulkSetValue($command->getData());
 

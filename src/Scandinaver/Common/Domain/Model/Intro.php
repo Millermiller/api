@@ -103,7 +103,7 @@ class Intro extends AggregateRoot
         $this->target = $target;
     }
 
-    public function delete()
+    public function onDelete()
     {
         // TODO: Implement delete() method.
     }

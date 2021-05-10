@@ -8,7 +8,7 @@ use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\EditTranslateCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class EditTranslateCommandHandler
@@ -27,11 +27,11 @@ class EditTranslateCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  EditTranslateCommand|CommandInterface  $command
+     * @param  EditTranslateCommand|BaseCommandInterface  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->cardService->editTranslate($command->getTranslate(), $command->getText());
 

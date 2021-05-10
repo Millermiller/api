@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\UI\Query\AudioCountByLanguageQuery;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -20,11 +21,11 @@ class AudioCountByLanguageQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AudioCountByLanguageQuery|CommandInterface $query
+     * @param  AudioCountByLanguageQuery|BaseCommandInterface $query
      *
      * @inheritDoc
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         // TODO: Implement handle() method.
     }

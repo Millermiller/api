@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use Scandinaver\Learn\UI\Query\WordsCountByLanguageQuery;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -20,9 +21,9 @@ class WordsCountByLanguageQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  WordsCountByLanguageQuery|CommandInterface  $query
+     * @param  WordsCountByLanguageQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         // TODO: Implement handle() method.
     }

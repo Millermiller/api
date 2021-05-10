@@ -12,6 +12,7 @@ use DateTime;
  */
 class OauthRefreshToken
 {
+
     protected string $id;
 
     protected int $accessTokenId;

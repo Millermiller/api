@@ -6,7 +6,7 @@ namespace Scandinaver\User\Application\Handler\Query;
 use Exception;
 use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Query\GetStateQuery;
 use Scandinaver\User\UI\Resource\StateTransformer;
@@ -18,6 +18,7 @@ use Scandinaver\User\UI\Resource\StateTransformer;
  */
 class GetStateQueryHandler extends AbstractHandler
 {
+
     protected UserService $userService;
 
     public function __construct(UserService $userService)
@@ -28,11 +29,11 @@ class GetStateQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetStateQuery|CommandInterface  $query
+     * @param  GetStateQuery|BaseCommandInterface  $query
      *
      * @throws Exception
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $stateDTO = $this->userService->getState($query->getUser(), $query->getLanguage());
 

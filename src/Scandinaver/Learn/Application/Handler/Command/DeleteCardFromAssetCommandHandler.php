@@ -9,7 +9,7 @@ use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeleteCardFromAssetCommandHandler
@@ -28,12 +28,12 @@ class DeleteCardFromAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteCardFromAssetCommand|CommandInterface  $command
+     * @param  DeleteCardFromAssetCommand|BaseCommandInterface  $command
      *
      * @throws AssetNotFoundException
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->removeCard($command->getAsset(), $command->getCard());
 

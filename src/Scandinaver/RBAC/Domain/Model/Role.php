@@ -16,6 +16,7 @@ use Scandinaver\Shared\AggregateRoot;
  */
 class Role extends AggregateRoot
 {
+
     private int $id;
 
     private string $name;
@@ -110,7 +111,7 @@ class Role extends AggregateRoot
         return $this->id;
     }
 
-    public function delete()
+    public function onDelete()
     {
         // TODO: Implement delete() method.
     }

@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'queue' => env('SCOUT_QUEUE', false),
+    'queue' => env('SCOUT_QUEUE', FALSE),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'after_commit' => false,
+    'after_commit' => FALSE,
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ return [
     */
 
     'chunk' => [
-        'searchable' => 500,
+        'searchable'   => 500,
         'unsearchable' => 500,
     ],
 
@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'soft_delete' => false,
+    'soft_delete' => FALSE,
 
     /*
     |--------------------------------------------------------------------------
@@ -98,7 +98,7 @@ return [
     |
     */
 
-    'identify' => env('SCOUT_IDENTIFY', false),
+    'identify' => env('SCOUT_IDENTIFY', FALSE),
 
     /*
     |--------------------------------------------------------------------------
@@ -112,7 +112,7 @@ return [
     */
 
     'algolia' => [
-        'id' => env('ALGOLIA_APP_ID', ''),
+        'id'     => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
 

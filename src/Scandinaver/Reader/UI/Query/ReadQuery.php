@@ -4,7 +4,7 @@
 namespace Scandinaver\Reader\UI\Query;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class ReadQuery
@@ -13,7 +13,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Reader\Application\Handler\Query\ReadQueryHandler
  */
-class ReadQuery implements CommandInterface
+class ReadQuery implements QueryInterface
 {
     private string $text;
 

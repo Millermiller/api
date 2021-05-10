@@ -11,16 +11,14 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Common\Domain\Service\IntroFactory;
 use Scandinaver\Common\Domain\Service\IntroService;
-use Scandinaver\Common\Domain\Service\LanguageFactory;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset};
+use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset, PersonalAsset};
 use Scandinaver\Learn\Domain\Service\AssetFactory;
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Puzzle\Domain\Service\PuzzleFactory;
@@ -33,7 +31,7 @@ use Scandinaver\Translate\Domain\Service\TextService;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
-use Scandinaver\User\Domain\DTO\StateDTO;
+use Scandinaver\User\Domain\DTO\State;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Model\{Plan, User};
 
@@ -208,6 +206,11 @@ class UserService implements BaseServiceInterface
 
         $this->userRepository->save($user);
 
+        $isLoggedIn = Auth::check();
+        if ($isLoggedIn === FALSE) {
+            Auth::loginUsingId($user->getId(), TRUE);
+        }
+
         return $user;
     }
 
@@ -215,80 +218,61 @@ class UserService implements BaseServiceInterface
      * @param  User    $user
      * @param  string  $language
      *
-     * @return StateDTO
+     * @return State
      * @throws LanguageNotFoundException|BindingResolutionException
      */
-    public function getState(User $user, string $language): StateDTO
+    public function getState(User $user, string $language): State
     {
         $language = $this->getLanguage($language);
 
-        /** @var Asset[] $personalAssets TODO: move to AssetService::getAssetsByType() */
+        /** @var PersonalAsset[] $personalAssets TODO: move to AssetService::getAssetsByType() */
         $personalAssets = $user->getPersonalAssets($language);
-        $personalData   = [];
         foreach ($personalAssets as $personalAsset) {
-            $dto = AssetFactory::toDTO($personalAsset);
 
             if ($user->isPremium()) {
-                $dto->setActive(TRUE);
-                $dto->setAvailable(TRUE);
+                $personalAsset->setActive(TRUE);
+                $personalAsset->setAvailable(TRUE);
             }
 
             if ($personalAsset->isFavorite()) {
-                $dto->setActive(TRUE);
-                $dto->setAvailable(TRUE);
+                $personalAsset->setActive(TRUE);
+                $personalAsset->setAvailable(TRUE);
             }
 
             $result = $personalAsset->getBestResultForUser($user);
-            $dto->setBestResult($result);
-
-            $personalData[] = $dto;
+            $personalAsset->setBestResult($result);
         }
 
         $favouriteAsset = $user->getFavouriteAsset($language);
         $result         = $favouriteAsset->getBestResultForUser($user);
+        $favouriteAsset->setActive(TRUE);
+        $favouriteAsset->setAvailable(TRUE);
+        $favouriteAsset->setBestResult($result);
 
-        $favouriteAssetDTO = AssetFactory::toDTO($favouriteAsset);
-        $favouriteAssetDTO->setActive(TRUE);
-        $favouriteAssetDTO->setAvailable(TRUE);
-
-        $favouriteAssetDTO->setBestResult($result);
-
-        $stateDTO = new StateDTO();
+        $stateDTO = new State();
 
         $stateDTO->setSite(config('app.MAIN_SITE'));
 
-        $wordAssetsDTO = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_WORDS);
-        $stateDTO->setWordsDTO($wordAssetsDTO);
+        $wordAssets = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_WORDS);
+        $stateDTO->setWordsAssets($wordAssets);
 
-        $sentencesAssetsDTO = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_SENTENCES);
-        $stateDTO->setSentencesDTO($sentencesAssetsDTO);
+        $sentencesAssets = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_SENTENCES);
+        $stateDTO->setSentencesAssets($sentencesAssets);
 
-        $stateDTO->setPersonalDTO($personalData);
-        $stateDTO->setFavouriteAssetDTO($favouriteAssetDTO);
+        $stateDTO->setPersonalAssets($personalAssets);
+        $stateDTO->setFavouriteAsset($favouriteAsset);
 
-        $textsDTO = $this->textService->getTextsForUser($language->getLetter(), $user);
-        $stateDTO->setTextsDTO($textsDTO);
+        $texts = $this->textService->getTextsForUser($language->getLetter(), $user);
+        $stateDTO->setTexts($texts);
 
-        $puzzles    = $this->puzzleService->getForUser($language->getLetter(), $user);
-        $puzzlesDTO = [];
-        foreach ($puzzles as $puzzle) {
-            $puzzlesDTO[] = PuzzleFactory::toDTO($puzzle);
-        }
-        $stateDTO->setPuzzlesDTO($puzzlesDTO);
+        $puzzles = $this->puzzleService->getForUser($language->getLetter(), $user);
+        $stateDTO->setPuzzles($puzzles);
 
-        $intros    = $this->introService->all();
-        $introsDTO = [];
-        foreach ($intros as $intro) {
-            $introsDTO[] = IntroFactory::toDTO($intro);
-        }
-        $stateDTO->setIntroDTO($introsDTO);
+        $intros = $this->introService->all();
+        $stateDTO->setIntro($intros);
 
-        $languages    = $this->languageService->all();
-        $languagesDTO = [];
-        foreach ($languages as $language) {
-            $languagesDTO[] = LanguageFactory::toDTO($language);
-        }
-        $stateDTO->setLanguagesDTO($languagesDTO);
+        $languages = $this->languageService->all();
+        $stateDTO->setLanguages($languages);
 
         return $stateDTO;
     }
@@ -361,8 +345,6 @@ class UserService implements BaseServiceInterface
         if ($user === NULL) {
             throw new UserNotFoundException();
         }
-
-        $user->delete();
 
         $this->userRepository->delete($user);
     }

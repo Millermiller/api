@@ -8,8 +8,8 @@ use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Command\SetSettingCommand;
 use Scandinaver\Settings\UI\Resource\SettingTransformer;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class SetSettingCommandHandler
@@ -29,11 +29,11 @@ class SetSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  SetSettingCommand|CommandInterface  $command
+     * @param  SetSettingCommand|BaseCommandInterface  $command
      *
      * @throws SettingNotFoundException
      */
-    public function handle($command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $setting = $this->settingsService->setValue($command->getId(), $command->getValue());
 

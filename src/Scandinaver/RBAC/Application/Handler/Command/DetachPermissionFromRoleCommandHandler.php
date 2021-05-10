@@ -9,7 +9,7 @@ use Scandinaver\RBAC\Domain\Exception\RoleNotFoundException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\DetachPermissionFromRoleCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DetachPermissionFromRoleCommandHandler
@@ -29,12 +29,12 @@ class DetachPermissionFromRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DetachPermissionFromRoleCommand|CommandInterface  $command
+     * @param  DetachPermissionFromRoleCommand|BaseCommandInterface  $command
      *
      * @throws PermissionNotFoundException
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->detachPermissionFromRole($command->getRoleId(), $command->getPermissionId());
 

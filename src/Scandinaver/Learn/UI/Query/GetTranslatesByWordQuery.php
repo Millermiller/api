@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class GetTranslatesByWordQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Learn\Application\Handler\Query\GetTranslatesByWordQueryHandler
  */
-class GetTranslatesByWordQuery implements CommandInterface
+class GetTranslatesByWordQuery implements QueryInterface
 {
     private int $word;
 

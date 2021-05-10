@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Settings;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\BulkSetValueRequest;
+use App\Http\Requests\Settings\CreateSettingRequest;
+use App\Http\Requests\Settings\SetValueRequest;
+use App\Http\Requests\Settings\UpdateSettingRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Scandinaver\Settings\Domain\Permission\Settings;
 use Scandinaver\Settings\UI\Command\BulkSetSettingCommand;
 use Scandinaver\Settings\UI\Command\CreateSettingCommand;
@@ -25,6 +28,7 @@ use Scandinaver\Settings\UI\Query\SettingsQuery;
  */
 class SettingsController extends Controller
 {
+
     /**
      * @return JsonResponse
      * @throws AuthorizationException
@@ -50,16 +54,30 @@ class SettingsController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  CreateSettingRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateSettingRequest $request): JsonResponse
     {
         Gate::authorize(Settings::CREATE);
 
         return $this->execute(new CreateSettingCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * @param  UpdateSettingRequest  $request
+     * @param  int                   $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function update(UpdateSettingRequest $request, int $id): JsonResponse
+    {
+        Gate::authorize(Settings::UPDATE, $id);
+
+        return $this->execute(new UpdateSettingCommand($id, $request->toArray()));
     }
 
     /**
@@ -76,27 +94,13 @@ class SettingsController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  int      $id
+     * @param  SetValueRequest  $request
+     * @param  int              $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, int $id): JsonResponse
-    {
-        Gate::authorize(Settings::UPDATE, $id);
-
-        return $this->execute(new UpdateSettingCommand($id, $request->toArray()));
-    }
-
-    /**
-     * @param  Request  $request
-     * @param  int      $id
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function setValue(Request $request, int $id): JsonResponse
+    public function setValue(SetValueRequest $request, int $id): JsonResponse
     {
         Gate::authorize(Settings::UPDATE, $id);
 
@@ -104,12 +108,12 @@ class SettingsController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  BulkSetValueRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function bulkSetValue(Request $request): JsonResponse
+    public function bulkSetValue(BulkSetValueRequest $request): JsonResponse
     {
         Gate::authorize(Settings::CREATE);
 

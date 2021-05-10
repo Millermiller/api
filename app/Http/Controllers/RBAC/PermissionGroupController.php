@@ -4,16 +4,17 @@
 namespace App\Http\Controllers\RBAC;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RBAC\CreatePermissionGroupRequest;
+use App\Http\Requests\RBAC\UpdatePermissionGroupRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Http\{JsonResponse};
 use Scandinaver\RBAC\Domain\Permission\PermissionGroup;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
 use Scandinaver\RBAC\UI\Query\PermissionGroupsQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class RoleController
@@ -26,7 +27,6 @@ class PermissionGroupController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -40,7 +40,6 @@ class PermissionGroupController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show(int $id): JsonResponse
     {
@@ -50,27 +49,12 @@ class PermissionGroupController extends Controller
     }
 
     /**
-     * @param  int  $id
+     * @param  CreatePermissionGroupRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function destroy(int $id): JsonResponse
-    {
-        Gate::authorize(PermissionGroup::DELETE, $id);
-
-        return $this->execute(new DeletePermissionGroupCommand($id), JsonResponse::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     * @throws EventBusNotFoundException
-     */
-    public function store(Request $request): JsonResponse
+    public function store(CreatePermissionGroupRequest $request): JsonResponse
     {
         Gate::authorize(PermissionGroup::CREATE);
 
@@ -78,20 +62,31 @@ class PermissionGroupController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  int      $id
+     * @param  UpdatePermissionGroupRequest  $request
+     * @param  int                           $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdatePermissionGroupRequest $request, int $id): JsonResponse
     {
         Gate::authorize(PermissionGroup::UPDATE, $id);
 
         return $this->execute(new UpdatePermissionGroupCommand($id, $request->toArray()));
     }
 
+    /**
+     * @param  int  $id
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        Gate::authorize(PermissionGroup::DELETE, $id);
+
+        return $this->execute(new DeletePermissionGroupCommand($id), JsonResponse::HTTP_NO_CONTENT);
+    }
 
     public function search()
     {

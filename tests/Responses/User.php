@@ -27,7 +27,7 @@ class User implements ResponseInterface
             // 'assets_opened',
             // 'assets_created',
             'roles',
-            'permissions'
+            'permissions',
 
         ];
     }

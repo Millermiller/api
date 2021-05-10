@@ -13,6 +13,7 @@ use Scandinaver\Blog\Domain\Model\Category;
  */
 class CategoryTransformer extends TransformerAbstract
 {
+
     public function transform(Category $category): array
     {
         return [

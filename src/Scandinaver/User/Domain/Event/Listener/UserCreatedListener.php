@@ -4,8 +4,7 @@
 namespace Scandinaver\User\Domain\Event\Listener;
 
 use Psr\Log\LoggerInterface;
-use \Scandinaver\User\Domain\Event\UserCreated;
-use Scandinaver\User\Domain\Event\UserDeleted;
+use Scandinaver\User\Domain\Event\UserCreated;
 
 /**
  * Class UserCreatedListener
@@ -23,12 +22,13 @@ class UserCreatedListener
         $this->logger = $logger;
     }
 
-    public function handle(UserDeleted $event): void
+    public function handle(UserCreated $event): void
     {
         $user = $event->getUser();
 
-        $this->logger->info('User {login} created', [
-            'login' => $user->getLogin()
-        ]);
+        $this->logger->info('User {login} created',
+            [
+                'login' => $user->getLogin(),
+            ]);
     }
 }

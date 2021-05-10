@@ -13,7 +13,7 @@ use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class AddCardToAssetCommandHandler
@@ -32,7 +32,7 @@ class AddCardToAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  AddCardToAssetCommand|CommandInterface  $command
+     * @param  AddCardToAssetCommand|BaseCommandInterface  $command
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -41,7 +41,7 @@ class AddCardToAssetCommandHandler extends AbstractHandler
      * @throws CardAlreadyAddedException
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->addCard(
             $command->getUser(),

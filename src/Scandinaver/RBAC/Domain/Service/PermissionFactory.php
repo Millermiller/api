@@ -4,7 +4,11 @@
 namespace Scandinaver\RBAC\Domain\Service;
 
 
+use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
+use Scandinaver\RBAC\Domain\DTO\PermissionDTO;
+use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Model\Permission;
+use Scandinaver\RBAC\Domain\Model\PermissionGroup;
 
 /**
  * Class PermissionFactory
@@ -13,12 +17,36 @@ use Scandinaver\RBAC\Domain\Model\Permission;
  */
 class PermissionFactory
 {
-    public static function build(array $data): Permission
+
+    /**
+     * @var PermissionGroupRepositoryInterface
+     */
+    private PermissionGroupRepositoryInterface $permissionGroupRepository;
+
+    public function __construct(PermissionGroupRepositoryInterface $permissionGroupRepository)
     {
-        $permission = new Permission($data['slug']);
-        $permission->setName($data['name']);
-        $permission->setGroup($data['group']);
-        $permission->setDescription($data['description']);
+        $this->permissionGroupRepository = $permissionGroupRepository;
+    }
+
+    /**
+     * @param  PermissionDTO  $permissionDTO
+     *
+     * @return Permission
+     * @throws PermissionGroupNotFoundException
+     */
+    public function fromDTO(PermissionDTO $permissionDTO): Permission
+    {
+        $permissionGroupId = $permissionDTO->getGroupId();
+        /** @var PermissionGroup $permissionGroup */
+        $permissionGroup = $this->permissionGroupRepository->find($permissionGroupId);
+        if ($permissionGroup === NULL) {
+            throw new PermissionGroupNotFoundException();
+        }
+
+        $permission = new Permission($permissionDTO->getSlug());
+        $permission->setName($permissionDTO->getName());
+        $permission->setGroup($permissionGroup);
+        $permission->setDescription($permissionDTO->getDescription());
 
         return $permission;
     }

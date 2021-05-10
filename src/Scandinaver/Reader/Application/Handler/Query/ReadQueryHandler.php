@@ -7,7 +7,7 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
 use Scandinaver\Reader\UI\Query\ReadQuery;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class ReadQueryHandler
@@ -26,9 +26,9 @@ class ReadQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  ReadQuery|CommandInterface  $query
+     * @param  ReadQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $path = $this->reader->read($query->getUser(), $query->getLanguage(), $query->getText());
 

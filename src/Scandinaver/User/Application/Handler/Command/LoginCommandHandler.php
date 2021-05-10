@@ -5,7 +5,7 @@ namespace Scandinaver\User\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Command\LoginCommand;
@@ -18,6 +18,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
  */
 class LoginCommandHandler extends AbstractHandler
 {
+
     protected UserService $userService;
 
     public function __construct(UserService $userService)
@@ -28,11 +29,11 @@ class LoginCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  LoginCommand|CommandInterface  $command
+     * @param  LoginCommand|BaseCommandInterface  $command
      *
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $user = $this->userService->login($command->getCredentials());
 

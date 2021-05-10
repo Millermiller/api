@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class UpdateMetaCommand
@@ -12,6 +13,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class UpdateMetaCommand implements CommandInterface
 {
+
     private $meta;
 
     private array $data;
@@ -36,5 +38,10 @@ class UpdateMetaCommand implements CommandInterface
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

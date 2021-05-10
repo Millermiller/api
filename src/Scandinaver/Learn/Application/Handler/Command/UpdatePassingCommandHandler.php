@@ -6,9 +6,9 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Learn\Domain\Exception\PassingNotFoundException;
 use Scandinaver\Learn\Domain\Service\TestService;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Learn\UI\Command\UpdatePassingCommand;
+use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdatePassingHandler
@@ -28,11 +28,11 @@ class UpdatePassingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdatePassingCommand|CommandInterface  $command
+     * @param  UpdatePassingCommand|BaseCommandInterface  $command
      *
      * @throws PassingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->updatePassing($command->getId(), $command->getData());
 

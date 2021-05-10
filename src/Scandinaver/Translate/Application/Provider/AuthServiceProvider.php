@@ -15,30 +15,19 @@ use Scandinaver\Translate\Domain\Permission\Text;
  */
 class AuthServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
-        Gate::define(Text::VIEW, function (UserInterface $user) {
-            return TRUE;
-        });
+        Gate::define(Text::VIEW, fn(UserInterface $user): bool => $user->can(Text::VIEW));
 
-        Gate::define(Text::SHOW, function (UserInterface $user, int $textId) {
-            return TRUE;
-        });
+        Gate::define(Text::SHOW, fn(UserInterface $user, int $textId): bool => $user->can(Text::SHOW));
 
-        Gate::define('complete-text', function (UserInterface $user, int $textId) {
-            return TRUE;
-        });
+        Gate::define('complete-text', fn(UserInterface $user, int $textId): bool => $user->can('complete-text'));
 
-        Gate::define(Text::CREATE, function (UserInterface $user) {
-            return TRUE;
-        });
+        Gate::define(Text::CREATE, fn(UserInterface $user): bool => $user->can(Text::CREATE));
 
-        Gate::define(Text::UPDATE, function (UserInterface $user, int $textId) {
-            return TRUE;
-        });
+        Gate::define(Text::UPDATE, fn(UserInterface $user, int $textId): bool => $user->can(Text::UPDATE));
 
-        Gate::define(Text::DELETE, function (UserInterface $user, int $textId) {
-            return TRUE;
-        });
+        Gate::define(Text::DELETE, fn(UserInterface $user, int $textId): bool => $user->can(Text::DELETE));
     }
 }

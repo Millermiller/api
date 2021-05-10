@@ -7,7 +7,7 @@ use Auth;
 use Laravel\Passport\Token;
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\UI\Command\LogoutCommand;
 
 /**
@@ -24,9 +24,9 @@ class LogoutCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  LogoutCommand|CommandInterface  $command
+     * @param  LogoutCommand|BaseCommandInterface  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         setcookie('authfrontend._token.local', FALSE, time() - 1000, '/', '.' . config('app.DOMAIN'));
 

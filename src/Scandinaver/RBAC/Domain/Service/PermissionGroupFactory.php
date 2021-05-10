@@ -3,6 +3,7 @@
 
 namespace Scandinaver\RBAC\Domain\Service;
 
+use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
 use Scandinaver\RBAC\Domain\Model\PermissionGroup;
 
 /**
@@ -12,12 +13,13 @@ use Scandinaver\RBAC\Domain\Model\PermissionGroup;
  */
 class PermissionGroupFactory
 {
-    public static function build(array $data): PermissionGroup
+
+    public function fromDTO(PermissionGroupDTO $permissionGroupDTO): PermissionGroup
     {
         $permissionGroup = new PermissionGroup();
-        $permissionGroup->setName($data['name']);
-        $permissionGroup->setSlug($data['slug']);
-        $permissionGroup->setDescription($data['description']);
+        $permissionGroup->setName($permissionGroupDTO->getName());
+        $permissionGroup->setSlug($permissionGroupDTO->getSlug());
+        $permissionGroup->setDescription($permissionGroupDTO->getDescription());
 
         return $permissionGroup;
     }

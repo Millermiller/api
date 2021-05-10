@@ -17,81 +17,40 @@ use Scandinaver\RBAC\Domain\Permission\Role;
  */
 class AuthServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
-        Gate::define(Role::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(Role::VIEW, fn(UserInterface $user): bool => $user->can(Role::VIEW));
 
-        Gate::define(Role::SHOW,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Role::SHOW, fn(UserInterface $user, int $userId): bool => $user->can(Role::SHOW));
 
-        Gate::define(Role::CREATE,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(Role::CREATE, fn(UserInterface $user): bool => $user->can(Role::CREATE));
 
-        Gate::define(Role::UPDATE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Role::UPDATE, fn(UserInterface $user, int $userId): bool => $user->can(Role::UPDATE));
 
-        Gate::define(Role::DELETE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Role::DELETE, fn(UserInterface $user, int $userId): bool => $user->can(Role::DELETE));
 
-        Gate::define(Permission::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(Permission::VIEW, fn(UserInterface $user): bool => $user->can(Permission::VIEW));
 
-        Gate::define(Permission::SHOW,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Permission::SHOW, fn(UserInterface $user, int $userId): bool => $user->can(Permission::SHOW));
 
-        Gate::define(Permission::CREATE,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(Permission::CREATE, fn(UserInterface $user): bool => $user->can(Permission::CREATE));
 
-        Gate::define(Permission::UPDATE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Permission::UPDATE, fn(UserInterface $user, int $userId): bool => $user->can(Permission::UPDATE));
 
-        Gate::define(Permission::DELETE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+        Gate::define(Permission::DELETE, fn(UserInterface $user, int $userId): bool => $user->can(Permission::DELETE));
 
-        Gate::define(PermissionGroup::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(PermissionGroup::VIEW, fn(UserInterface $user): bool => $user->can(PermissionGroup::VIEW));
 
         Gate::define(PermissionGroup::SHOW,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+            fn(UserInterface $user, int $userId): bool => $user->can(PermissionGroup::SHOW));
 
-        Gate::define(PermissionGroup::CREATE,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+        Gate::define(PermissionGroup::CREATE, fn(UserInterface $user): bool => $user->can(PermissionGroup::CREATE));
 
         Gate::define(PermissionGroup::UPDATE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+            fn(UserInterface $user, int $userId): bool => $user->can(PermissionGroup::UPDATE));
 
         Gate::define(PermissionGroup::DELETE,
-            function (UserInterface $user, int $userId) {
-                return TRUE;
-            });
+            fn(UserInterface $user, int $userId): bool => $user->can(PermissionGroup::DELETE));
     }
 }

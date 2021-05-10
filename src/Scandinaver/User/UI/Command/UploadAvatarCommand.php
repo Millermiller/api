@@ -6,6 +6,7 @@ namespace Scandinaver\User\UI\Command;
 use Illuminate\Http\UploadedFile;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class UploadAvatarCommand
@@ -16,6 +17,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class UploadAvatarCommand implements CommandInterface
 {
+
     private UploadedFile $photo;
 
     private UserInterface $user;
@@ -34,5 +36,10 @@ class UploadAvatarCommand implements CommandInterface
     public function getUser(): UserInterface
     {
         return $this->user;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

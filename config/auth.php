@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard'     => 'web',
         'passwords' => 'users',
     ],
 
@@ -37,12 +37,12 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',
+            'driver'   => 'session',
             'provider' => 'users',
         ],
 
         'api' => [
-            'driver' => 'passport',
+            'driver'   => 'passport',
             'provider' => 'users',
         ],
     ],
@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'doctrine',
-            'model' => Scandinaver\User\Domain\Model\User::class,
+            'model'  => Scandinaver\User\Domain\Model\User::class,
         ],
     ],
 
@@ -86,10 +86,12 @@ return [
     |
     */
 
-    'password' => [
-        'email' => 'emails.password',
-        'table' => 'password_resets',
-        'expire' => 60,
+    'passwords' => [
+        'users' => [
+            'provider' => 'users',
+            'table'    => 'password_resets',
+            'expire'   => 60,
+        ],
     ],
 
 ];

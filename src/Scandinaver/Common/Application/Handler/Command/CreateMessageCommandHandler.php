@@ -3,9 +3,12 @@
 
 namespace Scandinaver\Common\Application\Handler\Command;
 
+use League\Fractal\Resource\Item;
+use Scandinaver\Common\Domain\Service\FeedbackService;
 use Scandinaver\Common\UI\Command\CreateMessageCommand;
+use Scandinaver\Common\UI\Resource\FeedbackTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreateMessageCommandHandler
@@ -14,16 +17,22 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class CreateMessageCommandHandler extends AbstractHandler
 {
-    public function __construct()
+
+    private FeedbackService $feedbackService;
+
+    public function __construct(FeedbackService $feedbackService)
     {
         parent::__construct();
+        $this->feedbackService = $feedbackService;
     }
 
     /**
-     * @param  CreateMessageCommand|CommandInterface  $command
+     * @param  CreateMessageCommand|BaseCommandInterface  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
-        // TODO: Implement handle() method.
+        $feedback = $this->feedbackService->create($command->buildDTO());
+
+        $this->resource = new Item($feedback, new FeedbackTransformer());
     }
 } 

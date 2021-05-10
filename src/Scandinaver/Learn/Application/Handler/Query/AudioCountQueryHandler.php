@@ -7,6 +7,7 @@ use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\Domain\Service\AudioService;
 use Scandinaver\Learn\UI\Query\AudioCountQuery;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -26,9 +27,9 @@ class AudioCountQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AudioCountQuery|CommandInterface  $query
+     * @param  AudioCountQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $count = $this->audioService->count();
 

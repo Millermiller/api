@@ -16,19 +16,19 @@ use Scandinaver\Shared\BaseRepository;
 class LanguageRepository extends BaseRepository implements LanguageRepositoryInterface
 {
     /**
-     * @param  string  $name
+     * @param  string  $letter
      *
      * @return Language
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getByName(string $name): Language
+    public function getByName(string $letter): Language
     {
         return $this->createQueryBuilder('language')
                     ->select('l')
                     ->from($this->getEntityName(), 'l')
-                    ->where('l.name = :name')
-                    ->setParameter('name', $name)
+                    ->where('l.letter = :letter')
+                    ->setParameter('letter', $letter)
                     ->getQuery()
                     ->getSingleResult();
     }

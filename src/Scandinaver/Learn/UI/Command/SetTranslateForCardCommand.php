@@ -12,6 +12,7 @@ use Scandinaver\Learn\Domain\Model\Card;
 use Scandinaver\Learn\Domain\Model\Translate;
 use Scandinaver\Learn\Domain\Model\Word;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class SetTranslateForCardCommand
@@ -72,5 +73,10 @@ class SetTranslateForCardCommand implements CommandInterface
     public function getCard(): Card
     {
         return $this->cardRepository->find($this->card_id);
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

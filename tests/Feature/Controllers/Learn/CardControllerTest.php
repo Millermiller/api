@@ -32,10 +32,12 @@ class CardControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->language = entity(Language::class)->create(['name' => 'is']);
+        $this->language = entity(Language::class)->create(['letter' => 'is']);
 
-        $this->user = entity(User::class)->create();
-        $this->asset = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $this->language]);
+        $this->user           = entity(User::class)->create();
+        $this->asset          = entity(WordAsset::class)->create(['user'     => $this->user,
+                                                                  'language' => $this->language,
+        ]);
         $this->favouriteAsset = entity(FavouriteAsset::class)->create(
             ['user' => $this->user, 'language' => $this->language, 'favorite' => 1]
         );
@@ -53,7 +55,7 @@ class CardControllerTest extends TestCase
      */
     public function testShow()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -61,7 +63,7 @@ class CardControllerTest extends TestCase
      */
     public function testUpdate()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -69,7 +71,7 @@ class CardControllerTest extends TestCase
      */
     public function testSearch()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -77,7 +79,7 @@ class CardControllerTest extends TestCase
      */
     public function testCreate()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 
     /**
@@ -85,6 +87,6 @@ class CardControllerTest extends TestCase
      */
     public function testIndex()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

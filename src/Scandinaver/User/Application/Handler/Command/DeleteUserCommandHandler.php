@@ -5,7 +5,7 @@ namespace Scandinaver\User\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
@@ -17,6 +17,7 @@ use Scandinaver\User\UI\Command\DeleteUserCommand;
  */
 class DeleteUserCommandHandler extends AbstractHandler
 {
+
     private UserService $userService;
 
     public function __construct(UserService $userService)
@@ -27,11 +28,11 @@ class DeleteUserCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteUserCommand|CommandInterface  $command
+     * @param  DeleteUserCommand|BaseCommandInterface  $command
      *
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->userService->delete($command->getUser());
 

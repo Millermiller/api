@@ -8,7 +8,7 @@ use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\UpdateCardCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdateCardCommandHandler
@@ -27,11 +27,11 @@ class UpdateCardCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateCardCommand|CommandInterface  $command
+     * @param  UpdateCardCommand|BaseCommandInterface  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->cardService->updateCard($command->getCard(), $command->getData());
 

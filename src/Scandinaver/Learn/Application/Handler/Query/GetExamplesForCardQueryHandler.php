@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
 use Scandinaver\Learn\UI\Resource\ExampleTransformer;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -28,9 +29,9 @@ class GetExamplesForCardQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetExamplesForCardQuery|CommandInterface  $query
+     * @param  GetExamplesForCardQuery|BaseCommandInterface  $query
      */
-    public function handle($query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $examples = $this->cardService->getExamples($query->getCard());
 

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateAssetRequest;
-use App\Http\Requests\PersonalRequest;
-use App\Http\Requests\UpdateAssetRequest;
+use App\Http\Requests\Learn\CreateAssetRequest;
+use App\Http\Requests\Learn\PersonalRequest;
+use App\Http\Requests\Learn\UpdateAssetRequest;
 use Exception;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -34,7 +34,6 @@ use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
 use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
 use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Class AssetController
@@ -43,6 +42,7 @@ use Scandinaver\Shared\EventBusNotFoundException;
  */
 class AssetController extends Controller
 {
+
     /**
      * @param  string  $languageId
      *

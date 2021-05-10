@@ -4,6 +4,7 @@
 namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class LoginCommand
@@ -13,6 +14,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class LoginCommand implements CommandInterface
 {
+
     private string $login;
 
     private string $password;
@@ -37,5 +39,10 @@ class LoginCommand implements CommandInterface
     public function getCredentials(): array
     {
         return $this->credentials;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

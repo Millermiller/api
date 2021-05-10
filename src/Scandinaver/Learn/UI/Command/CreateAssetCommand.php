@@ -4,7 +4,9 @@
 namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Learn\Domain\DTO\AssetDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class CreateAssetCommand
@@ -30,8 +32,8 @@ class CreateAssetCommand implements CommandInterface
         return $this->user;
     }
 
-    public function getData(): array
+    public function buildDTO(): AssetDTO
     {
-        return $this->data;
+        return AssetDTO::fromArray($this->data);
     }
 }

@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\Application\Handler\Command;
 use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Command\SetTranslateForCardCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class SetTranslateForCardHandler
@@ -25,9 +25,9 @@ class SetTranslateForCardCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  SetTranslateForCardCommand|CommandInterface  $command
+     * @param  SetTranslateForCardCommand|BaseCommandInterface  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         //
     }

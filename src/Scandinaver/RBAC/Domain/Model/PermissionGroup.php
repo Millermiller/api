@@ -13,6 +13,7 @@ use Scandinaver\Shared\AggregateRoot;
  */
 class PermissionGroup extends AggregateRoot
 {
+
     private int $id;
 
     private string $name;
@@ -30,7 +31,7 @@ class PermissionGroup extends AggregateRoot
         return $this->id;
     }
 
-    public function delete()
+    public function onDelete()
     {
         // TODO: Implement delete() method.
     }

@@ -4,17 +4,17 @@
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Common\CreateIntroRequest;
+use App\Http\Requests\Common\UpdateIntroRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Scandinaver\Common\Domain\Permission\Intro;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
 use Scandinaver\Common\UI\Command\UpdateIntroCommand;
 use Scandinaver\Common\UI\Query\IntroQuery;
 use Scandinaver\Common\UI\Query\IntrosQuery;
-use Scandinaver\Shared\EventBusNotFoundException;
 
 /**
  * Created by PhpStorm.
@@ -31,7 +31,6 @@ class IntroController extends Controller
     /**
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function index(): JsonResponse
     {
@@ -45,7 +44,6 @@ class IntroController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function show($id): JsonResponse
     {
@@ -55,13 +53,12 @@ class IntroController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  CreateIntroRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateIntroRequest $request): JsonResponse
     {
         Gate::authorize(Intro::CREATE);
 
@@ -69,14 +66,13 @@ class IntroController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param           $id
+     * @param  UpdateIntroRequest  $request
+     * @param                      $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
-    public function update(Request $request, $id): JsonResponse
+    public function update(UpdateIntroRequest $request, $id): JsonResponse
     {
         Gate::authorize(Intro::UPDATE, $id);
 
@@ -88,7 +84,6 @@ class IntroController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws EventBusNotFoundException
      */
     public function destroy($id): JsonResponse
     {

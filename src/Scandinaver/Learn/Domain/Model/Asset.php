@@ -55,6 +55,14 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
 
     protected ?UserInterface $owner;
 
+    private ?Passing $bestResult = NULL;
+
+    private bool $active = FALSE;
+
+    private bool $available = FALSE;
+
+    private bool $completed = FALSE;
+
     /**
      * Asset constructor.
      *
@@ -206,7 +214,7 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
         }
     }
 
-    public function delete()
+    public function onDelete()
     {
         $this->pushEvent(new AssetDeleted($this));
     }
@@ -276,5 +284,45 @@ abstract class Asset extends AggregateRoot implements UrlRoutable, AssetInterfac
     public function getCount(): int
     {
         return $this->cards->count();
+    }
+
+    public function getBestResult(): ?Passing
+    {
+        return $this->bestResult;
+    }
+
+    public function setBestResult(?Passing $bestResult): void
+    {
+        $this->bestResult = $bestResult;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): void
+    {
+        $this->available = $available;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(bool $completed): void
+    {
+        $this->completed = $completed;
     }
 }

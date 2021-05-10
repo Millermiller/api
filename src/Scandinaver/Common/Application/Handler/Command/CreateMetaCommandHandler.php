@@ -5,7 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\UI\Command\CreateMetaCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class CreateMetaCommandHandler
@@ -20,9 +20,9 @@ class CreateMetaCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateMetaCommand|CommandInterface  $command
+     * @param  CreateMetaCommand|BaseCommandInterface  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         // TODO: Implement handle() method.
     }

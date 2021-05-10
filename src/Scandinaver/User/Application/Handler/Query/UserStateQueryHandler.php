@@ -5,7 +5,7 @@ namespace Scandinaver\User\Application\Handler\Query;
 
 use Exception;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Query\UserStateQuery;
 
@@ -16,6 +16,7 @@ use Scandinaver\User\UI\Query\UserStateQuery;
  */
 class UserStateQueryHandler extends AbstractHandler
 {
+
     protected UserService $userService;
 
     public function __construct(UserService $userService)
@@ -26,11 +27,11 @@ class UserStateQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  UserStateQuery|CommandInterface  $query
+     * @param  UserStateQuery|BaseCommandInterface  $query
      *
      * @throws Exception
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $stateDTO = $this->userService->getState($query->getUser());
     }

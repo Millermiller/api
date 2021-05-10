@@ -19,6 +19,9 @@ class AssetTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'cards',
+        'active',
+        'available',
+        'completed'
     ];
 
     protected $defaultIncludes = [
@@ -38,7 +41,7 @@ class AssetTransformer extends TransformerAbstract
             'title' => $asset->getTitle(),
             'level' => $asset->getLevel(),
             'basic' => $asset->getBasic(),
-            'count' => $asset->getCount()
+            'count' => $asset->getCount(),
         ];
     }
 
@@ -54,5 +57,20 @@ class AssetTransformer extends TransformerAbstract
         $language = $asset->getLanguage();
 
         return $this->item($language, new LanguageTransformer());
+    }
+
+    public function includeCompleted(Asset $asset): Primitive
+    {
+        return $this->primitive($asset->isCompleted());
+    }
+
+    public function includeActive(Asset $asset): Primitive
+    {
+        return $this->primitive($asset->isActive());
+    }
+
+    public function includeAvailable(Asset $asset): Primitive
+    {
+        return $this->primitive($asset->isAvailable());
     }
 }

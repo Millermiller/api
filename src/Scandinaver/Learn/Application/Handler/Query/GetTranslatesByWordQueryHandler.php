@@ -9,6 +9,7 @@ use Scandinaver\Learn\Domain\Service\WordService;
 use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
 use Scandinaver\Learn\UI\Resource\TranslateTransformer;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -28,9 +29,9 @@ class GetTranslatesByWordQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetTranslatesByWordQuery|CommandInterface  $query
+     * @param  GetTranslatesByWordQuery|BaseCommandInterface  $query
      */
-    public function handle($query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $translates = $this->wordService->getTranslates($query->getWord());
 

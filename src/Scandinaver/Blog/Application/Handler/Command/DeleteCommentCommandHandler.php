@@ -8,7 +8,7 @@ use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeleteCommentCommandHandler
@@ -17,6 +17,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DeleteCommentCommandHandler extends AbstractHandler
 {
+
     private CommentService $service;
 
     public function __construct(CommentService $service)
@@ -27,11 +28,11 @@ class DeleteCommentCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteCommentCommand|CommandInterface  $command
+     * @param  DeleteCommentCommand|BaseCommandInterface  $command
      *
      * @throws CommentNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->delete($command->getCommentId());
 

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Reader;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Reader\ReadRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
 use Scandinaver\Reader\Domain\Permission\Reader;
 use Scandinaver\Reader\UI\Query\ReadQuery;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -19,14 +19,15 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class ReaderController extends Controller
 {
+
     /**
-     * @param  string   $language
-     * @param  Request  $request
+     * @param  string       $language
+     * @param  ReadRequest  $request
      *
      * @return BinaryFileResponse
      * @throws AuthorizationException
      */
-    public function index(string $language, Request $request): BinaryFileResponse
+    public function index(string $language, ReadRequest $request): BinaryFileResponse
     {
         Gate::authorize(Reader::READ);
 

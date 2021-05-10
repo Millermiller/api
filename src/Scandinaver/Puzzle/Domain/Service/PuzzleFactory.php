@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Puzzle\Domain\Service;
 
+use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Puzzle\Domain\DTO\PuzzleDTO;
 use Scandinaver\Puzzle\Domain\Model\Puzzle;
 use Scandinaver\Puzzle\Domain\Model\PuzzleText;
@@ -15,22 +17,30 @@ use Scandinaver\Puzzle\Domain\Model\PuzzleTranslate;
  */
 class PuzzleFactory
 {
-    public static function fromDTO(PuzzleDTO $puzzleDTO): Puzzle
+    use LanguageTrait;
+
+    /**
+     * @param  PuzzleDTO  $puzzleDTO
+     *
+     * @return Puzzle
+     * @throws LanguageNotFoundException
+     */
+    public function fromDTO(PuzzleDTO $puzzleDTO): Puzzle
     {
-        $puzzleText = new PuzzleText($puzzleDTO->getText());
+        $language = $this->getLanguage($puzzleDTO->getLanguageLetter());
+
+        $puzzleText      = new PuzzleText($puzzleDTO->getText());
         $puzzleTranslate = new PuzzleTranslate($puzzleDTO->getTranslate());
 
-        return new Puzzle($puzzleText, $puzzleTranslate);
+        return new Puzzle($puzzleText, $puzzleTranslate, $language);
     }
 
     public static function toDTO(Puzzle $puzzle): PuzzleDTO
     {
-        $puzzleDTO = new PuzzleDTO();
-
-        $puzzleDTO->setId($puzzle->getId());
-        $puzzleDTO->setText($puzzle->getText()->toNative());
-        $puzzleDTO->setTranslate($puzzle->getTranslate()->toNative());
-
-        return $puzzleDTO;
+        return PuzzleDTO::fromArray([
+            'id'        => $puzzle->getId(),
+            'text'      => $puzzle->getText()->toNative(),
+            'translate' => $puzzle->getTranslate()->toNative(),
+        ]);
     }
 }

@@ -9,12 +9,8 @@ namespace App\Helpers;
  */
 class StringHelper
 {
-    /**
-     * @param $text
-     *
-     * @return string
-     */
-    static public function cleartext($text): string
+
+    static public function cleartext(string $text): string
     {
         return str_replace(["\r\n", "\r", "\n"], '', strip_tags(trim($text)));
     }

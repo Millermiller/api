@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Controllers\Common;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Common\Domain\Model\Log;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
 
@@ -14,6 +16,7 @@ use Tests\TestCase;
  */
 class LogControllerTest extends TestCase
 {
+
     private User $user;
 
     private int $logsNumber = 5;
@@ -27,11 +30,18 @@ class LogControllerTest extends TestCase
         entity(Log::class, $this->logsNumber)->create(['user' => $this->user]);
     }
 
-    public function testIndex()
+    /**
+     * @throws Exception
+     */
+    public function testIndex(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Log::VIEW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('log.index'));
+        $response        = $this->get(route('log.index'));
         $decodedResponse = json_decode($response->getContent());
 
         self::assertCount($this->logsNumber, $decodedResponse);
@@ -43,19 +53,33 @@ class LogControllerTest extends TestCase
         );
     }
 
-    public function testShow()
+    /**
+     * @throws Exception
+     */
+    public function testShow(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Log::SHOW
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(route('log.show', ['log' => 1]));
 
         $response->assertJsonStructure(
-                \Tests\Responses\Log::response()
+            \Tests\Responses\Log::response()
         );
     }
 
-    public function testDestroy()
+    /**
+     * @throws Exception
+     */
+    public function testDestroy(): void
     {
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\Common\Domain\Permission\Log::DELETE
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->delete(route('log.destroy', ['log' => 1]));

@@ -9,7 +9,7 @@ use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
 use Scandinaver\Blog\UI\Resources\CommentTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class UpdateCommentCommandHandler
@@ -18,6 +18,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class UpdateCommentCommandHandler extends AbstractHandler
 {
+
     private CommentService $service;
 
     public function __construct(CommentService $service)
@@ -28,13 +29,13 @@ class UpdateCommentCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateCommentCommand|CommandInterface  $command
+     * @param  UpdateCommentCommand|BaseCommandInterface  $command
      *
      * @throws CommentNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
-        $comment = $this->service->update($command->getCommentId(), $command->getData());
+        $comment = $this->service->update($command->getCommentId(), $command->buildDTO());
 
         $this->resource = new Item($comment, new CommentTransformer());
     }

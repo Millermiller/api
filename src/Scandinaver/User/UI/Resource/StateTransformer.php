@@ -6,12 +6,12 @@ namespace Scandinaver\User\UI\Resource;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Common\UI\Resource\IntroDTOTransformer;
-use Scandinaver\Common\UI\Resource\LanguageDTOTransformer;
-use Scandinaver\Learn\UI\Resource\AssetDTOTransformer;
-use Scandinaver\Puzzle\UI\Resource\PuzzleDTOTransformer;
-use Scandinaver\Translate\UI\Resource\TextDTOTransformer;
-use Scandinaver\User\Domain\DTO\StateDTO;
+use Scandinaver\Common\UI\Resource\IntroTransformer;
+use Scandinaver\Common\UI\Resource\LanguageTransformer;
+use Scandinaver\Learn\UI\Resource\AssetTransformer;
+use Scandinaver\Puzzle\UI\Resource\PuzzleTransformer;
+use Scandinaver\Translate\UI\Resource\TextTransformer;
+use Scandinaver\User\Domain\DTO\State;
 
 /**
  * Class StateTransformer
@@ -20,6 +20,7 @@ use Scandinaver\User\Domain\DTO\StateDTO;
  */
 class StateTransformer extends TransformerAbstract
 {
+
     protected $defaultIncludes = [
         'words',
         'sentences',
@@ -31,70 +32,68 @@ class StateTransformer extends TransformerAbstract
         'sites',
     ];
 
-    public function transform(StateDTO $stateDTO): array
+    public function transform(State $stateDTO): array
     {
         return [
             'site'        => $stateDTO->getSite(),
-            'favourite'   => $stateDTO->getFavouriteAssetDTO(),
-            'texts'       => $stateDTO->getTextsDTO(),
             'currentSite' => $stateDTO->getCurrentSite(),
             'domain'      => $stateDTO->getDomain(),
         ];
     }
 
-    public function includeWords(StateDTO $stateDTO): Collection
+    public function includeWords(State $stateDTO): Collection
     {
-        $wordsDTO = $stateDTO->getWordsDTO();
+        $wordsAssets = $stateDTO->getWordsAssets();
 
-        return $this->collection($wordsDTO, new AssetDTOTransformer());
+        return $this->collection($wordsAssets, new AssetTransformer());
     }
 
-    public function includeSentences(StateDTO $stateDTO): Collection
+    public function includeSentences(State $stateDTO): Collection
     {
-        $sentencesDTO = $stateDTO->getSentencesDTO();
+        $sentencesAssets = $stateDTO->getSentencesAssets();
 
-        return $this->collection($sentencesDTO, new AssetDTOTransformer());
+        return $this->collection($sentencesAssets, new AssetTransformer());
     }
 
-    public function includePersonal(StateDTO $stateDTO): Collection
+    public function includePersonal(State $stateDTO): Collection
     {
-        $personalDTO = $stateDTO->getPersonalDTO();
+        $personalAssets = $stateDTO->getPersonalAssets();
 
-        return $this->collection($personalDTO, new AssetDTOTransformer());
+        return $this->collection($personalAssets, new AssetTransformer());
     }
 
-    public function includeFavourite(StateDTO $stateDTO): Item
+    public function includeFavourite(State $stateDTO): Item
     {
-        $favouriteDTO = $stateDTO->getFavouriteAssetDTO();
+        $favouriteAsset = $stateDTO->getFavouriteAsset();
 
-        return $this->item($favouriteDTO, new AssetDTOTransformer());
+        return $this->item($favouriteAsset, new AssetTransformer());
     }
 
-    public function includeTexts(StateDTO $stateDTO): Collection
+    public function includeTexts(State $stateDTO): Collection
     {
-        $textsDTO = $stateDTO->getTextsDTO();
+        $texts = $stateDTO->getTexts();
 
-        return $this->collection($textsDTO, new TextDTOTransformer());
+        return $this->collection($texts, new TextTransformer());
     }
 
-    public function includePuzzles(StateDTO $stateDTO): Collection
+    public function includePuzzles(State $stateDTO): Collection
     {
-        $puzzlesDTO = $stateDTO->getPuzzlesDTO();
+        $puzzlesDTO = $stateDTO->getPuzzles();
 
-        return $this->collection($puzzlesDTO, new PuzzleDTOTransformer());
+        return $this->collection($puzzlesDTO, new PuzzleTransformer());
     }
 
-    public function includeIntro(StateDTO $stateDTO): Collection
+    public function includeIntro(State $stateDTO): Collection
     {
-        $introDTO = $stateDTO->getIntroDTO();
+        $intros = $stateDTO->getIntro();
 
-        return $this->collection($introDTO, new IntroDTOTransformer());
+        return $this->collection($intros, new IntroTransformer());
     }
 
-    public function includeSites(StateDTO $stateDTO): Collection
+    public function includeSites(State $stateDTO): Collection
     {
-        $languagesDTO = $stateDTO->getLanguagesDTO();
+        $languages = $stateDTO->getLanguages();
 
-        return $this->collection($languagesDTO, new LanguageDTOTransformer());
+        return $this->collection($languages, new LanguageTransformer());
     }
 }

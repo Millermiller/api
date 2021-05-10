@@ -4,6 +4,7 @@
 namespace Scandinaver\RBAC\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class UpdatePermissionGroupCommand
@@ -14,6 +15,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class UpdatePermissionGroupCommand implements CommandInterface
 {
+
     private int $id;
 
     private array $data;
@@ -32,5 +34,10 @@ class UpdatePermissionGroupCommand implements CommandInterface
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

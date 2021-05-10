@@ -122,8 +122,8 @@ class Version20200627151711 extends AbstractMigration
         $this->addSql(
             'CREATE TABLE language (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
-                    name VARCHAR(255), 
-                    label VARCHAR(255), 
+                    title VARCHAR(255), 
+                    letter VARCHAR(255), 
                     flag VARCHAR(255))');
 
         $this->addSql(
@@ -274,6 +274,16 @@ class Version20200627151711 extends AbstractMigration
                     title VARCHAR(255), 
                     slug VARCHAR(255),
                     data VARCHAR(255),
+                    created_at VARCHAR(255),
+                    updated_at VARCHAR(255)
+                    )');
+
+        $this->addSql(
+            'CREATE TABLE result_text (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+                    text_id VARCHAR(255), 
+                    language_id VARCHAR(255),
+                    user_id VARCHAR(255),
                     created_at VARCHAR(255),
                     updated_at VARCHAR(255)
                     )');

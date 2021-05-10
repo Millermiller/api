@@ -13,6 +13,7 @@ use Illuminate\Support\ServiceProvider;
  */
 class RBACServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
 

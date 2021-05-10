@@ -4,7 +4,7 @@
 namespace Scandinaver\Puzzle\UI\Query;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class UserPuzzlesQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  * @see     \Scandinaver\Puzzle\Application\Handler\Query\UserPuzzlesQueryHandler
  * @package Scandinaver\Puzzle\UI\Query
  */
-class UserPuzzlesQuery implements CommandInterface
+class UserPuzzlesQuery implements QueryInterface
 {
     private UserInterface $user;
 

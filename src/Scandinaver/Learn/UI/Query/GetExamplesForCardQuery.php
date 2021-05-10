@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class GetExamplesForCardQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Learn\Application\Handler\Query\GetExamplesForCardQueryHandler
  */
-class GetExamplesForCardQuery implements CommandInterface
+class GetExamplesForCardQuery implements QueryInterface
 {
     private int $card;
 

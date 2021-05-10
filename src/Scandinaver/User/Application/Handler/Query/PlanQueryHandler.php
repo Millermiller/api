@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Application\Handler\Query;
 
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\User\UI\Query\PlanQuery;
 
 /**
@@ -14,6 +14,7 @@ use Scandinaver\User\UI\Query\PlanQuery;
  */
 class PlanQueryHandler extends AbstractHandler
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -21,11 +22,11 @@ class PlanQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PlanQuery|CommandInterface  $query
+     * @param  PlanQuery|BaseCommandInterface  $query
      *
      * @inheritDoc
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         // TODO: Implement handle() method.
     }

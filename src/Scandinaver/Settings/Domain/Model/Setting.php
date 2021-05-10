@@ -43,7 +43,7 @@ class Setting extends AggregateRoot
         return $this->id;
     }
 
-    public function delete()
+    public function onDelete()
     {
         // TODO: Implement delete() method.
     }

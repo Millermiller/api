@@ -4,6 +4,7 @@
 namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Model\Plan;
 
 /**
@@ -14,6 +15,7 @@ use Scandinaver\User\Domain\Model\Plan;
  */
 class UpdatePlanCommand implements CommandInterface
 {
+
     private Plan $plan;
 
     private array $data;
@@ -32,5 +34,10 @@ class UpdatePlanCommand implements CommandInterface
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

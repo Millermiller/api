@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class LanguagesQuery
@@ -11,7 +11,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  * @see     \Scandinaver\Common\Application\Handler\Query\LanguagesQueryHandler
  * @package Scandinaver\Common\UI\Query
  */
-class LanguagesQuery implements CommandInterface
+class LanguagesQuery implements QueryInterface
 {
 
 }

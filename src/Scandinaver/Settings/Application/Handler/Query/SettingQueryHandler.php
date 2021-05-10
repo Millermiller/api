@@ -8,8 +8,8 @@ use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Query\SettingQuery;
 use Scandinaver\Settings\UI\Resource\SettingTransformer;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class SettingQueryHandler
@@ -29,11 +29,11 @@ class SettingQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  SettingQuery|CommandInterface  $query
+     * @param  SettingQuery|BaseCommandInterface  $query
      *
      * @throws SettingNotFoundException
      */
-    public function handle($query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $setting = $this->settingsService->one($query->getId());
 

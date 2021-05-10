@@ -5,8 +5,8 @@ namespace Scandinaver\Common\Application\Provider;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Scandinaver\Common\Domain\Permission\{Intro, Language, Log, Message};
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Permission\{Intro, Language, Log, Message};
 use Scandinaver\User\Domain\Model\User;
 
 /**
@@ -16,90 +16,59 @@ use Scandinaver\User\Domain\Model\User;
  */
 class AuthServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
         /* INTRO */
         Gate::define(Intro::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+            fn(UserInterface $user): bool => $user->can(Intro::VIEW));
 
         Gate::define(Intro::SHOW,
-            function (UserInterface $user, $id) {
-                return TRUE;
-            });
+            fn(UserInterface $user, $id): bool => $user->can(Intro::SHOW));
 
         Gate::define(Intro::CREATE,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+            fn(UserInterface $user): bool => $user->can(Intro::CREATE));
 
         Gate::define(Intro::UPDATE,
-            function (UserInterface $user, $id) {
-                return TRUE;
-            });
+            fn(UserInterface $user, $id): bool => $user->can(Intro::UPDATE));
 
         Gate::define(Intro::DELETE,
-            function (UserInterface $user, $id) {
-                return TRUE;
-            });
+            fn(UserInterface $user, $id): bool => $user->can(Intro::DELETE));
 
         /* LANGUAGE */
         Gate::define(Language::VIEW,
-            function (?UserInterface $user) {
-                return $user->can(Language::VIEW);
-            });
+            fn(?UserInterface $user): bool => TRUE);
 
         Gate::define(Language::SHOW,
-            function (?UserInterface $user) {
-                return $user->can(Language::SHOW);
-            });
+            fn(?UserInterface $user): bool => $user->can(Language::SHOW));
 
         Gate::define(Language::CREATE,
-            function (?User $user) {
-                return $user->can(Language::CREATE);
-            });
+            fn(?User $user): bool => $user->can(Language::CREATE));
 
         Gate::define(Language::UPDATE,
-            function (?UserInterface $user) {
-                return $user->can(Language::UPDATE);
-            });
+            fn(?UserInterface $user): bool => $user->can(Language::UPDATE));
 
         Gate::define(Language::DELETE,
-            function (?UserInterface $user) {
-                return $user->can(Language::DELETE);
-            });
+            fn(?UserInterface $user): bool => $user->can(Language::DELETE));
 
         /* LOG */
         Gate::define(Log::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+            fn(UserInterface $user): bool => TRUE);
 
         Gate::define(Log::SHOW,
-            function (UserInterface $user, int $id) {
-                return TRUE;
-            });
+            fn(UserInterface $user, int $id): bool => $user->can(Log::SHOW));
 
         Gate::define(Log::DELETE,
-            function (UserInterface $user, int $id) {
-                return TRUE;
-            });
+            fn(UserInterface $user, int $id): bool => $user->can(Log::DELETE));
 
         /* MESSAGE */
         Gate::define(Message::VIEW,
-            function (UserInterface $user) {
-                return TRUE;
-            });
+            fn(UserInterface $user): bool => $user->can(Message::VIEW));
 
         Gate::define(Message::SHOW,
-            function (UserInterface $user, int $id) {
-                return TRUE;
-            });
+            fn(UserInterface $user, int $id): bool => $user->can(Message::SHOW));
 
         Gate::define(Message::DELETE,
-            function (UserInterface $user, int $id) {
-                return TRUE;
-            });
+            fn(UserInterface $user, int $id): bool => $user->can(Message::DELETE));
     }
 }

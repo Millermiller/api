@@ -12,6 +12,7 @@ use Scandinaver\Common\Domain\Contract\UserInterface;
  */
 interface AvatarServiceInterface
 {
+
     /**
      * @param  UserInterface  $user
      *

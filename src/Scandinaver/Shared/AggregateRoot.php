@@ -34,5 +34,5 @@ abstract class AggregateRoot implements EqualInterface
         $this->domainEvents[] = $domainEvent;
     }
 
-    abstract public function delete();
+    abstract public function onDelete();
 }

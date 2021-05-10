@@ -11,6 +11,7 @@ namespace Scandinaver\User\Domain\Permission;
  */
 class User
 {
+
     public const VIEW   = 'view-users';
     public const SHOW   = 'show-user';
     public const CREATE = 'create-user';

@@ -4,7 +4,7 @@
 namespace Scandinaver\Reader\UI\Query;
 
 use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class ReadCardQuery
@@ -13,7 +13,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Reader\Application\Handler\Query\ReadCardQueryHandler
  */
-class ReadCardQuery implements CommandInterface
+class ReadCardQuery implements QueryInterface
 {
     private Card $card;
 

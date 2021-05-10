@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
+use Scandinaver\Blog\Domain\DTO\PostDTO;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
@@ -14,23 +16,25 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class UpdatePostCommand implements CommandInterface
 {
+
     private int $postId;
 
     private array $data;
 
-    public function __construct(int $postId, array $data)
+    public function __construct(UserInterface $user, int $postId, array $data)
     {
-        $this->postId = $postId;
-        $this->data   = $data;
-    }
-
-    public function getData(): array
-    {
-        return $this->data;
+        $this->postId         = $postId;
+        $this->data           = $data;
+        $this->data['userId'] = $user->getId();
     }
 
     public function getPostId(): int
     {
         return $this->postId;
+    }
+
+    public function buildDTO(): PostDTO
+    {
+        return PostDTO::fromArray($this->data);
     }
 }

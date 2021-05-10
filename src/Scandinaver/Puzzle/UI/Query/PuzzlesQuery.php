@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Puzzle\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class PuzzlesQuery
@@ -12,7 +12,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\Puzzle\Application\Handler\Query\PuzzlesQueryHandler
  */
-class PuzzlesQuery implements CommandInterface
+class PuzzlesQuery implements QueryInterface
 {
     private string $language;
 

@@ -6,9 +6,10 @@ namespace Scandinaver\Common\Application\Handler\Query;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Log;
+use Scandinaver\Common\UI\Query\LogsQuery;
 use Scandinaver\Common\UI\Resource\LogTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class LogsQueryHandler
@@ -27,9 +28,9 @@ class LogsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  Query  $query
+     * @param  LogsQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         /** @var Log[] $logs */
         $logs = $this->logRepository->findAll();

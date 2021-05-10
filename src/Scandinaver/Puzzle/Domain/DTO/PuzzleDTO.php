@@ -18,6 +18,8 @@ class PuzzleDTO extends DTO
 
     private string $translate;
 
+    private string $languageLetter;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,5 +48,27 @@ class PuzzleDTO extends DTO
     public function setTranslate(string $translate): void
     {
         $this->translate = $translate;
+    }
+
+    public function getLanguageLetter(): string
+    {
+        return $this->languageLetter;
+    }
+
+    public function setLanguageLetter(string $languageLetter): void
+    {
+        $this->languageLetter = $languageLetter;
+    }
+
+    public static function fromArray(array $data): PuzzleDTO
+    {
+        $puzzleDTO = new self();
+
+        $puzzleDTO->setId($data['id'] ?? NULL);
+        $puzzleDTO->setText($data['text']);
+        $puzzleDTO->setTranslate($data['translate']);
+        $puzzleDTO->setLanguageLetter($data['languageLetter']);
+
+        return $puzzleDTO;
     }
 }

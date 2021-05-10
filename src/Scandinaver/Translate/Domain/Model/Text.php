@@ -46,6 +46,10 @@ class Text extends AggregateRoot
 
     private $textResults;
 
+    private bool $active;
+
+    private bool $available;
+
     public function getTitle(): string
     {
         return $this->title;
@@ -135,7 +139,7 @@ class Text extends AggregateRoot
         return $this->textResults;
     }
 
-    public function delete()
+    public function onDelete()
     {
         // TODO: Implement delete() method.
     }
@@ -143,5 +147,25 @@ class Text extends AggregateRoot
     public function setText(string $text): void
     {
         $this->text = $text;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $value): void
+    {
+        $this->active = $value;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $value): void
+    {
+        $this->available = $value;
     }
 }

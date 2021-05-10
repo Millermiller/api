@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\QueryInterface;
 
 /**
  * Class RolesQuery
@@ -12,8 +12,9 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @see     \Scandinaver\RBAC\Application\Handler\Query\RolesQueryHandler
  */
-class RolesQuery implements CommandInterface
+class RolesQuery implements QueryInterface
 {
+
     public function __construct()
     {
 

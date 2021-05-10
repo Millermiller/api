@@ -15,14 +15,32 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-        'Scandinaver\Blog\Domain\Event\CategoryDeleted'     => [
+        'Scandinaver\Blog\Domain\Event\CategoryCreated' => [
+            'Scandinaver\Blog\Domain\Event\Listener\CategoryCreatedListener',
+        ],
+        'Scandinaver\Blog\Domain\Event\CategoryDeleted' => [
             'Scandinaver\Blog\Domain\Event\Listener\CategoryDeletedListener',
         ],
         'Scandinaver\Blog\Domain\Event\CategoryNameUpdated' => [
             'Scandinaver\Blog\Domain\Event\Listener\CategoryNameUpdatedListener',
         ],
-        'Scandinaver\Blog\Domain\Event\CommentAdded'        => [
+        'Scandinaver\Blog\Domain\Event\CommentAdded' => [
             'Scandinaver\Blog\Domain\Event\Listener\CommentAddedListener',
+        ],
+        'Scandinaver\Blog\Domain\Event\CommentDeleted' => [
+            'Scandinaver\Blog\Domain\Event\Listener\CommentDeletedListener',
+        ],
+        'Scandinaver\Blog\Domain\Event\CommentUpdated' => [
+            'Scandinaver\Blog\Domain\Event\Listener\CommentUpdatedListener',
+        ],
+        'Scandinaver\Blog\Domain\Event\PostCreated' => [
+            'Scandinaver\Blog\Domain\Event\Listener\PostCreatedListener',
+        ],
+        'Scandinaver\Blog\Domain\Event\PostDeleted' => [
+            'Scandinaver\Blog\Domain\Event\Listener\PostDeletedListener',
+        ],
+        'Scandinaver\Blog\Domain\Event\PostUpdated' => [
+            'Scandinaver\Blog\Domain\Event\Listener\PostUpdatedListener',
         ],
     ];
 

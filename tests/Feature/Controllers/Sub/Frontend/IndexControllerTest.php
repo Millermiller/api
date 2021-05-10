@@ -14,6 +14,7 @@ use Tests\TestCase;
 
 /**
  * Class IndexControllerTest
+ *
  * @package Tests\Feature\Controllers\Sub\Frontend
  */
 class IndexControllerTest extends TestCase
@@ -49,24 +50,30 @@ class IndexControllerTest extends TestCase
         parent::setUp();
 
         /** @var Language $language */
-        $language = entity(Language::class)->create(['name' => 'is']);
+        $language = entity(Language::class)->create(['letter' => 'is']);
 
         $this->user           = entity(User::class)->create();
         $this->wordasset      = entity(WordAsset::class)->create(['user' => $this->user, 'language' => $language]);
-        $this->favouriteAsset = entity(FavouriteAsset::class)->create(['user' => $this->user, 'language' => $language, 'favorite' => 1]);
+        $this->favouriteAsset = entity(FavouriteAsset::class)->create(['user'     => $this->user,
+                                                                       'language' => $language,
+                                                                       'favorite' => 1,
+        ]);
 
         entity(Passing::class)->create(['user' => $this->user, 'language' => $language, 'asset' => $this->wordasset]);
-        entity(Passing::class)->create(['user' => $this->user, 'language' => $language, 'asset' =>  $this->favouriteAsset]);
+        entity(Passing::class)->create(['user'     => $this->user,
+                                        'language' => $language,
+                                        'asset'    => $this->favouriteAsset,
+        ]);
 
-        $this->card = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset ]);
-        $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset ]);
+        $this->card          = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset]);
+        $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset]);
     }
 
     public function testIndex()
     {
         $response = $this->get('/');
         $this->assertEquals(200, $response->getStatusCode());
-   }
+    }
 
     public function testGetUser()
     {
@@ -93,7 +100,7 @@ class IndexControllerTest extends TestCase
 
         $response = $this->get(route('asset:words', ['language' => 'is']));
 
-        $response->assertJsonStructure([['count', 'id', 'title', 'level',  'type']]);
+        $response->assertJsonStructure([['count', 'id', 'title', 'level', 'type']]);
     }
 
     //public function testSentences()

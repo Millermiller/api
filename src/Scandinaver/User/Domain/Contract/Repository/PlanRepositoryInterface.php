@@ -13,5 +13,6 @@ use Scandinaver\User\Domain\Model\Plan;
  */
 interface PlanRepositoryInterface extends BaseRepositoryInterface
 {
+
     public function findByName(string $name): Plan;
 }

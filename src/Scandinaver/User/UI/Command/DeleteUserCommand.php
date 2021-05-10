@@ -4,6 +4,7 @@
 namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\DTO;
 
 /**
  * Class DeleteUserCommand
@@ -13,6 +14,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class DeleteUserCommand implements CommandInterface
 {
+
     private int $id;
 
     public function __construct(int $user)
@@ -23,5 +25,10 @@ class DeleteUserCommand implements CommandInterface
     public function getUser(): int
     {
         return $this->id;
+    }
+
+    public function buildDTO(): DTO
+    {
+        // TODO: Implement buildDTO() method.
     }
 }

@@ -8,7 +8,7 @@ use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class DeleteIntroCommandHandler
@@ -27,11 +27,11 @@ class DeleteIntroCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteIntroCommand|CommandInterface  $command
+     * @param  DeleteIntroCommand|BaseCommandInterface  $command
      *
      * @throws IntroNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(BaseCommandInterface $command): void
     {
         $this->service->delete($command->getId());
 

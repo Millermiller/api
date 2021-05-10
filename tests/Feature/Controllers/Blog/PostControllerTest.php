@@ -7,9 +7,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Scandinaver\Blog\Domain\Model\Category;
 use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\RBAC\Domain\Model\Permission;
 use Scandinaver\User\Domain\Model\User;
 use Tests\TestCase;
-use Scandinaver\RBAC\Domain\Model\Permission;
 
 /**
  * Class PostControllerTest
@@ -38,14 +38,23 @@ class PostControllerTest extends TestCase
         $this->post = entity(Post::class, $this->postCount)->create(
             [
                 'category' => $this->category,
-                'user' => $this->user,
+                'user'     => $this->user,
             ]
         );
     }
 
-    public function testIndex()
+    /**
+     * @throws Exception
+     */
+    public function testIndex(): void
     {
-        $response = $this->get(route('post:all'));
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Blog\Domain\Permission\POST::VIEW,
+        ]);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response        = $this->get(route('post:all'));
         $decodedResponse = json_decode($response->getContent());
 
         self::assertCount($this->postCount, $decodedResponse);
@@ -57,10 +66,19 @@ class PostControllerTest extends TestCase
         );
     }
 
-    public function testShow()
+    /**
+     * @throws Exception
+     */
+    public function testShow(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Blog\Domain\Permission\POST::SHOW,
+        ]);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
         $testPostId = 1;
-        $response = $this->get(route('post:show', ['postId' => $testPostId]));
+        $response   = $this->get(route('post:show', ['postId' => $testPostId]));
 
         $response->assertJsonStructure(
             \Tests\Responses\Post::response()
@@ -76,23 +94,26 @@ class PostControllerTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testStore()
+    public function testStore(): void
     {
-        $permission = entity(Permission::class)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Post::CREATE]);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Blog\Domain\Permission\POST::CREATE,
+        ]);
         $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
 
         $this->actingAs($this->user, 'api');
 
         $testPostContent = 'TESTCONTENT';
-        $testPostTitle = 'TESTTITLE';
+        $testPostTitle   = 'TESTTITLE';
 
         $response = $this->post(
             route('post:create'),
             [
                 'category' => $this->category->getId(),
-                'status' => 1,
-                'title' => $testPostTitle,
-                'content' => $testPostContent,
+                'status'   => 1,
+                'title'    => $testPostTitle,
+                'content'  => $testPostContent,
             ]
         );
 
@@ -105,23 +126,34 @@ class PostControllerTest extends TestCase
         $response->assertJsonFragment(
             [
                 'content' => $testPostContent,
-                'title' => $testPostTitle,
+                'title'   => $testPostTitle,
             ]
         );
     }
 
-    public function testUpdate()
+    /**
+     * @throws Exception
+     */
+    public function testUpdate(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Blog\Domain\Permission\POST::UPDATE,
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $testPostContent = 'TESTCONTENT';
-        $testPostTitle = 'TESTTITLE';
+        $testPostTitle   = 'TESTTITLE';
+        $testPostAnonce  = 'TESTANONCE';
 
         $response = $this->put(
             route('post:update', ['postId' => $this->post->first()->getId()]),
             [
-                'title' => $testPostTitle,
-                'content' => $testPostContent,
+                'title'    => $testPostTitle,
+                'content'  => $testPostContent,
+                'category' => 1,
+                'status'   => 1,
+                'anonce'   => $testPostAnonce,
             ]
         );
 
@@ -134,13 +166,20 @@ class PostControllerTest extends TestCase
         $response->assertJsonFragment(
             [
                 'content' => $testPostContent,
-                'title' => $testPostTitle,
+                'title'   => $testPostTitle,
             ]
         );
     }
 
-    public function testDestroy()
+    /**
+     * @throws Exception
+     */
+    public function testDestroy(): void
     {
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Blog\Domain\Permission\POST::DELETE,
+        ]);
+        $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->delete(route('post:delete', ['postId' => $this->post->first()->getId()]));
@@ -153,6 +192,6 @@ class PostControllerTest extends TestCase
      */
     public function testUpload()
     {
-        self::assertEquals(true, true);
+        self::assertEquals(TRUE, TRUE);
     }
 }

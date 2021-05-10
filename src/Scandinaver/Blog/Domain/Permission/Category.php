@@ -11,6 +11,7 @@ namespace Scandinaver\Blog\Domain\Permission;
  */
 class Category
 {
+
     public const VIEW   = 'view-categories';
     public const SHOW   = 'show-category';
     public const CREATE = 'create-category';

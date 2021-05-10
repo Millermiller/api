@@ -8,7 +8,7 @@ use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\UI\Query\LanguagesQuery;
 use Scandinaver\Common\UI\Resource\LanguageTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class LanguagesQueryHandler
@@ -32,9 +32,9 @@ class LanguagesQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  LanguagesQuery|CommandInterface  $query
+     * @param  LanguagesQuery|BaseCommandInterface  $query
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $languages = $this->languageService->all();
 

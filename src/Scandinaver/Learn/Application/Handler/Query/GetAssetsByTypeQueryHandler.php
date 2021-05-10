@@ -10,7 +10,7 @@ use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learn\UI\Resource\AssetTransformer;
 use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Shared\Contract\BaseCommandInterface;
 
 /**
  * Class GetAssetsByTypeQueryHandler
@@ -29,12 +29,12 @@ class GetAssetsByTypeQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetAssetsByTypeQuery|CommandInterface  $query
+     * @param  GetAssetsByTypeQuery|BaseCommandInterface  $query
      *
      * @throws LanguageNotFoundException
      * @throws BindingResolutionException
      */
-    public function handle(CommandInterface $query): void
+    public function handle(BaseCommandInterface $query): void
     {
         $assets = $this->assetService->getAssets($query->getLanguage(), $query->getType());
 

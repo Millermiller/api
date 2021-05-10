@@ -82,26 +82,21 @@ class TextService
 
         $activeArray = $this->textRepository->getActiveIds($user, $language);
 
+        /** @var Text[] $texts */
         $texts = $this->textRepository->getByLanguage($language);
 
         $counter = 0;
 
-        $textsDTO = [];
-
         foreach ($texts as &$text) {
-
-            $textDTO = TextFactory::toDTO($text);
 
             $counter++;
 
-            $textDTO->setActive(in_array($text->getId(), $activeArray));
+            $text->setActive(in_array($text->getId(), $activeArray));
 
-            $textDTO->setAvailable($counter < 3 || $user->isActive());
-
-            $textsDTO[] = $textDTO;
+            $text->setAvailable($counter < 3 || $user->isActive());
         }
 
-        return $textsDTO;
+        return $texts;
     }
 
     /**
