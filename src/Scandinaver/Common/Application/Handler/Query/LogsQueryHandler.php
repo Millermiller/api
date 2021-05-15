@@ -35,6 +35,7 @@ class LogsQueryHandler extends AbstractHandler
         /** @var Log[] $logs */
         $logs = $this->logRepository->findAll();
 
+        $this->fractal->parseExcludes(['owner.roles', 'owner.permissions']);
         $this->resource = new Collection($logs, new LogTransformer());
     }
 } 

@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
+use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Service\AssetService;
@@ -36,6 +37,6 @@ class AssetsCountQueryHandler extends AbstractHandler
     {
         $count = $this->assetService->count($query->getLanguage());
 
-        $this->resource = new Primitive($count);
+        $this->resource = new Item($count, fn($data) => ['count' => $data]);
     }
 }

@@ -19,7 +19,7 @@ class PermissionGroupDTO extends DTO
 
     private string $slug;
 
-    private string $description;
+    private ?string $description;
 
     public function getId(): ?int
     {
@@ -51,12 +51,12 @@ class PermissionGroupDTO extends DTO
         $this->slug = $slug;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -67,7 +67,7 @@ class PermissionGroupDTO extends DTO
 
         $permissionGroupDTO->setName($data['name']);
         $permissionGroupDTO->setSlug($data['slug']);
-        $permissionGroupDTO->setDescription($data['description']);
+        $permissionGroupDTO->setDescription($data['description'] ?? NULL);
 
         return $permissionGroupDTO;
     }

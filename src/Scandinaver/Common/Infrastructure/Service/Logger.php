@@ -4,9 +4,7 @@
 namespace Scandinaver\Common\Infrastructure\Service;
 
 use App\Helpers\Auth;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\TransactionRequiredException;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Log\{LoggerInterface, LoggerTrait};
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
@@ -34,13 +32,12 @@ class Logger implements LoggerInterface
      * @param  string  $message
      * @param  array   $context
      *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws TransactionRequiredException
      */
     public function log($level, $message, array $context = [])
     {
-        $log = new Log(Auth::user(), $level, $message, $context);
+        $user = Auth::user();
+
+        $log = new Log($user, $level, $message, $context);
 
         try {
             $this->logRepository->save($log);
@@ -48,6 +45,7 @@ class Logger implements LoggerInterface
 
                 \Illuminate\Support\Facades\Log::error($message, $context);
 
+                /** @var EntityManagerInterface $manager */
                 $manager = app('em');
 
                 if (!$manager->isOpen()) {
@@ -58,7 +56,7 @@ class Logger implements LoggerInterface
                 }
 
                 /** @var User $user */
-                $user = $manager->find('Scandinaver\User\Domain\Model\User', 1);
+
 
                 $trace = [];
                 if (is_array($context)) {

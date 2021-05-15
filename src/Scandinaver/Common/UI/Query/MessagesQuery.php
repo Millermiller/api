@@ -8,7 +8,7 @@ use Scandinaver\Shared\Contract\QueryInterface;
 /**
  * Class MessagesQuery
  *
- * @see     \Scandinaver\Common\Application\Handler\Query\MessagesHandler
+ * @see     \Scandinaver\Common\Application\Handler\Query\MessagesQueryHandler
  * @package Scandinaver\Common\UI\Query
  */
 class MessagesQuery implements QueryInterface

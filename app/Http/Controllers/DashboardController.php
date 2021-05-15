@@ -29,18 +29,13 @@ class DashboardController extends Controller
 
     public function all(string $language): JsonResponse
     {
-        // $last_day_users = User::where('created_at', '>', Carbon::yesterday())->count();
-        // $message_count = Message::all()->count();
-        // $unread = Message::find(['readed' => 0]);
-
         return response()->json([
-                //'users'    => $this->execute(new UsersQuery()),
-                //'words'    => $this->execute(new WordsCountQuery()),
-                //'assets'   => $this->execute(new AssetsCountQuery($language)),
-                //'audio'    => $this->execute(new AudioCountQuery()),
-                //'texts'    => $this->execute(new TextsCountQuery()),
-                //  'log'      => Activity::with('causer', 'subject')->get(),
-                //'messages' => $this->execute(new MessagesQuery()),
+                'users'    => $this->commandBus->execute(new UsersQuery()),
+                'words'    => $this->commandBus->execute(new WordsCountQuery()),
+                'assets'   => $this->commandBus->execute(new AssetsCountQuery($language)),
+                'audio'    => 0,
+                'texts'    => $this->commandBus->execute(new TextsCountQuery()),
+                'messages' => 0,
             ]);
     }
 

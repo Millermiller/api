@@ -53,7 +53,7 @@ class AuthServiceProvider extends ServiceProvider
 
         /* LOG */
         Gate::define(Log::VIEW,
-            fn(UserInterface $user): bool => TRUE);
+            fn(UserInterface $user): bool =>  $user->can(Log::VIEW));
 
         Gate::define(Log::SHOW,
             fn(UserInterface $user, int $id): bool => $user->can(Log::SHOW));
