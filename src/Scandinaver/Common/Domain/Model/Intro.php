@@ -17,13 +17,13 @@ class Intro extends AggregateRoot
 
     private string $page;
 
-    private string $target = 'undefined';
+    private ?string $target = NULL;
 
     private ?string $content = NULL;
 
     private string $position;
 
-    private string $tooltipClass;
+    private ?string $header = NULL;
 
     private int $sort;
 
@@ -63,14 +63,14 @@ class Intro extends AggregateRoot
         $this->position = $position;
     }
 
-    public function getTooltipclass(): ?string
+    public function getHeader(): ?string
     {
-        return $this->tooltipClass;
+        return $this->header;
     }
 
-    public function setTooltipclass(string $tooltipClass): void
+    public function setHeader(?string $header): void
     {
-        $this->tooltipClass = $tooltipClass;
+        $this->header = $header;
     }
 
     public function getSort(): ?int
@@ -93,12 +93,12 @@ class Intro extends AggregateRoot
         $this->content = $content;
     }
 
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->target;
     }
 
-    public function setTarget(string $target): void
+    public function setTarget(?string $target): void
     {
         $this->target = $target;
     }
@@ -106,5 +106,10 @@ class Intro extends AggregateRoot
     public function onDelete()
     {
         // TODO: Implement delete() method.
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
     }
 }

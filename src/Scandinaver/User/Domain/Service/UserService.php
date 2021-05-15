@@ -268,7 +268,7 @@ class UserService implements BaseServiceInterface
         $puzzles = $this->puzzleService->getForUser($language->getLetter(), $user);
         $stateDTO->setPuzzles($puzzles);
 
-        $intros = $this->introService->all();
+        $intros = $this->introService->active();
         $stateDTO->setIntro($intros);
 
         $languages = $this->languageService->all();

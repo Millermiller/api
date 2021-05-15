@@ -16,16 +16,7 @@ class IntroFactory
 
     public static function fromDTO(IntroDTO $introDTO): Intro
     {
-        $intro = new Intro();
-
-        $intro->setPage($introDTO->getPage());
-        $intro->setTarget($introDTO->getTarget());
-        $intro->setPosition($introDTO->getPosition());
-        $intro->setContent($introDTO->getContent());
-        $intro->setTooltipclass($introDTO->getTooltipClass());
-        $intro->setSort($introDTO->getSort());
-
-        return $intro;
+        return self::update(new Intro(), $introDTO);
     }
 
     public static function toDTO(Intro $intro): IntroDTO
@@ -36,7 +27,7 @@ class IntroFactory
             'target'       => $intro->getTarget(),
             'content'      => $intro->getContent(),
             'position'     => $intro->getPosition(),
-            'tooltipClass' => $intro->getTooltipclass(),
+            'header'       => $intro->getHeader(),
             'sort'         => $intro->getSort(),
         ]);
     }
@@ -47,8 +38,9 @@ class IntroFactory
         $intro->setTarget($introDTO->getTarget());
         $intro->setPosition($introDTO->getPosition());
         $intro->setContent($introDTO->getContent());
-        $intro->setTooltipclass($introDTO->getTooltipClass());
+        $intro->setHeader($introDTO->getHeader());
         $intro->setSort($introDTO->getSort());
+        $intro->setActive($introDTO->isActive());
 
         return $intro;
     }

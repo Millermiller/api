@@ -28,11 +28,18 @@ Scandinaver\Common\Domain\Model\Intro:
       nullable: true
       precision: 0
       options:
-        default: undefined
+        default: null
     content:
       type: text
       scale: 0
       length: 65535
+      unique: false
+      nullable: true
+      precision: 0
+    header:
+      type: string
+      scale: 0
+      length: 255
       unique: false
       nullable: true
       precision: 0
@@ -43,16 +50,6 @@ Scandinaver\Common\Domain\Model\Intro:
       unique: false
       nullable: true
       precision: 0
-      options:
-        default: 'false'
-    tooltipClass:
-      type: string
-      scale: 0
-      length: 255
-      unique: false
-      nullable: true
-      precision: 0
-      column: tooltipClass
     sort:
       type: integer
       scale: 0
@@ -61,7 +58,7 @@ Scandinaver\Common\Domain\Model\Intro:
       nullable: true
       precision: 0
       options:
-        default: '100'
+        default: 0
     active:
       type: boolean
       scale: 0

@@ -9,6 +9,7 @@ use Scandinaver\Blog\Domain\Permission\Category;
 use Scandinaver\Blog\Domain\Permission\Comment;
 use Scandinaver\Blog\Domain\Permission\Post;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\User\Domain\Model\User;
 
 /**
  * Class AuthServiceProvider
@@ -35,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('upload-post', fn(UserInterface $user, int $postId) => TRUE);
 
         /* CATEGORY */
-        Gate::define(Category::VIEW, fn(?UserInterface $user) => $user->can(Category::VIEW));
+        Gate::define(Category::VIEW, fn(?UserInterface $user) => $user === NULL || $user->can(Category::VIEW));
 
         Gate::define(Category::SHOW, fn(?UserInterface $user, int $id) => $user->can(Category::SHOW));
 
@@ -46,7 +47,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define(Category::DELETE, fn(UserInterface $user, int $id) => $user->can(Category::DELETE));
 
         /* COMMENT */
-        Gate::define(Comment::VIEW, fn(?UserInterface $user) => $user->can(Comment::VIEW));
+        Gate::define(Comment::VIEW, fn(?UserInterface $user) => $user === NULL || $user->can(Comment::VIEW));
 
         Gate::define(Comment::SHOW, fn(?UserInterface $user, int $id) => $user->can(Comment::SHOW));
 
