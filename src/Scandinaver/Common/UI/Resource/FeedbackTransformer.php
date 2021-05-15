@@ -21,7 +21,7 @@ class FeedbackTransformer extends TransformerAbstract
             'id'        => $feedback->getId(),
             'name'      => $feedback->getName(),
             'message'   => $feedback->getMessage(),
-            'createdAt' => $feedback->getCreatedAt()->format('d.m.Y'),
+            'createdAt' => $feedback->getCreatedAt()->format('d.m.Y H:i:s'),
         ];
     }
 }

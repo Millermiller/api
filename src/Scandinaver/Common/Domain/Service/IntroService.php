@@ -45,12 +45,14 @@ class IntroService implements BaseServiceInterface
         return $this->getIntro($id);
     }
 
-    /**
-     * @return array
-     */
-    public function groupped(): array
+    public function active(): array
     {
-        return $this->introRepository->getGrouppedIntro();
+        return $this->introRepository->findBy([
+            'active' => TRUE,
+        ],
+            [
+                'sort' => 'ASC',
+            ]);
     }
 
     /**

@@ -64,7 +64,7 @@ class Log extends AggregateRoot
         return $this->createdAt;
     }
 
-    public function getOwner(): UserInterface
+    public function getOwner(): ?UserInterface
     {
         return $this->owner;
     }

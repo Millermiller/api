@@ -13,16 +13,18 @@ use Scandinaver\Common\Domain\Model\Intro;
  */
 class IntroTransformer extends TransformerAbstract
 {
-    public function transform(Intro $introDTO): array
+
+    public function transform(Intro $intro): array
     {
         return [
-            'id'           => $introDTO->getId(),
-            'page'         => $introDTO->getPage(),
-            'target'       => $introDTO->getTarget(),
-            'content'      => $introDTO->getContent(),
-            'position'     => $introDTO->getPosition(),
-            'tooltipClass' => $introDTO->getTooltipClass(),
-            'sort'         => $introDTO->getSort(),
+            'id'         => $intro->getId(),
+            'page'       => $intro->getPage(),
+            'target'     => $intro->getTarget(),
+            'content'    => $intro->getContent(),
+            'position'   => $intro->getPosition(),
+            'headerText' => $intro->getHeader(),
+            'sort'       => $intro->getSort(),
+            'active'     => $intro->isActive(),
         ];
     }
 }
