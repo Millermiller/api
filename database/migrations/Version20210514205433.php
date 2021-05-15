@@ -5,7 +5,7 @@ namespace Database\Migrations;
 use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
-class Version20210412124724 extends AbstractMigration
+class Version20210514205433 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -14,9 +14,7 @@ class Version20210412124724 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP INDEX name ON category');
-        $this->addSql('ALTER TABLE category CHANGE name title VARCHAR(255) NOT NULL');
-        $this->addSql('CREATE INDEX name ON category (title)');
+        $this->addSql('ALTER TABLE intro CHANGE position position VARCHAR(255) DEFAULT NULL, CHANGE sort sort INT DEFAULT 0, CHANGE tooltipclass header VARCHAR(255) DEFAULT NULL');
     }
 
     /**
@@ -26,8 +24,6 @@ class Version20210412124724 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP INDEX name ON category');
-        $this->addSql('ALTER TABLE category CHANGE title name VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('CREATE INDEX name ON category (name)');
+        $this->addSql('ALTER TABLE intro CHANGE position position VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'false\' COLLATE `utf8mb4_unicode_ci`, CHANGE sort sort INT DEFAULT 100, CHANGE header tooltipClass VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }

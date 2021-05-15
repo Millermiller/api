@@ -4,8 +4,10 @@
 namespace Scandinaver\Common\UI\Resource;
 
 
+use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Common\Domain\Model\Log;
+use Scandinaver\User\UI\Resource\UserTransformer;
 
 /**
  * Class LogTransformer
@@ -14,6 +16,10 @@ use Scandinaver\Common\Domain\Model\Log;
  */
 class LogTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'owner'
+    ];
+
     public function transform(Log $log): array
     {
         return [
@@ -24,5 +30,12 @@ class LogTransformer extends TransformerAbstract
             'extra'      => $log->getExtra(),
             'created_at' => $log->getCreatedAt()->format('Y-m-d H:i:s'),
         ];
+    }
+
+    public function includeOwner(Log $log): Item
+    {
+        $owner = $log->getOwner();
+
+        return $this->item($owner, new UserTransformer());
     }
 }

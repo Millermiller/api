@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
+use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Primitive;
 use Scandinaver\Learn\UI\Query\AssetsCountQuery;
 use Scandinaver\Shared\AbstractHandler;
@@ -33,6 +34,6 @@ class TextsCountQueryHandler extends AbstractHandler
     {
         $count = $this->textService->count();
 
-        $this->resource = new Primitive($count);
+        $this->resource = new Item($count, fn($data) => ['count' => $count]);
     }
 }

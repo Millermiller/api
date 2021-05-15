@@ -16,15 +16,17 @@ class IntroDTO extends DTO
 
     private string $page;
 
-    private string $target;
+    private ?string $target;
 
     private string $content;
 
     private string $position;
 
-    private string $tooltipClass;
+    private ?string $header;
 
     private int $sort;
+
+    private bool $active;
 
     public function getId(): ?int
     {
@@ -46,12 +48,12 @@ class IntroDTO extends DTO
         $this->page = $page;
     }
 
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->target;
     }
 
-    public function setTarget(string $target): void
+    public function setTarget(?string $target): void
     {
         $this->target = $target;
     }
@@ -71,14 +73,14 @@ class IntroDTO extends DTO
         $this->position = $position;
     }
 
-    public function getTooltipClass(): string
+    public function getHeader(): ?string
     {
-        return $this->tooltipClass;
+        return $this->header;
     }
 
-    public function setTooltipClass(string $tooltipClass): void
+    public function setHeader(?string $header): void
     {
-        $this->tooltipClass = $tooltipClass;
+        $this->header = $header;
     }
 
     public function getSort(): int
@@ -96,6 +98,17 @@ class IntroDTO extends DTO
         return $this->content;
     }
 
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
+    }
+
     public static function fromArray(array $data): IntroDTO
     {
         $introDTO = new self();
@@ -105,9 +118,11 @@ class IntroDTO extends DTO
         $introDTO->setTarget($data['target']);
         $introDTO->setContent($data['content']);
         $introDTO->setPosition($data['position']);
-        $introDTO->setTooltipClass($data['tooltipClass']);
+        $introDTO->setHeader($data['headerText']);
         $introDTO->setSort($data['sort']);
+        $introDTO->setActive($data['active']);
 
         return $introDTO;
     }
+
 }

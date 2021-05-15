@@ -3,8 +3,10 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
-use Scandinaver\Common\Domain\Service\MessageService;
+use League\Fractal\Resource\Collection;
+use Scandinaver\Common\Domain\Service\FeedbackService;
 use Scandinaver\Common\UI\Query\MessagesQuery;
+use Scandinaver\Common\UI\Resource\FeedbackTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\BaseCommandInterface;
 
@@ -16,13 +18,13 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class MessagesQueryHandler extends AbstractHandler
 {
 
-    private MessageService $messageService;
+    private FeedbackService $feedbackService;
 
-    public function __construct(MessageService $messageService)
+    public function __construct(FeedbackService $feedbackService)
     {
         parent::__construct();
 
-        $this->messageService = $messageService;
+        $this->feedbackService = $feedbackService;
     }
 
     /**
@@ -30,7 +32,8 @@ class MessagesQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        // TODO: implement messages
-        //return $this->messageService->all();
+        $feedbacks = $this->feedbackService->all();
+
+        $this->resource = new Collection($feedbacks, new FeedbackTransformer());
     }
 } 

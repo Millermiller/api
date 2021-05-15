@@ -34,6 +34,6 @@ class WordsCountQueryHandler extends AbstractHandler
     {
         $count = $this->wordService->count();
 
-        $this->resource =new Item($count, fn($data) => ['path' => $data]);
+        $this->resource =new Item($count, fn($data) => ['count' => $data]);
     }
 }
