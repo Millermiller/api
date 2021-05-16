@@ -3,7 +3,11 @@
 
 namespace Tests\Responses;
 
-
+/**
+ * Class Intro
+ *
+ * @package Tests\Responses
+ */
 class Intro implements ResponseInterface
 {
 
@@ -15,7 +19,7 @@ class Intro implements ResponseInterface
             'target',
             'content',
             'position',
-            'tooltipClass',
+            'headerText',
             'sort',
         ];
     }

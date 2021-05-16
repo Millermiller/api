@@ -110,10 +110,12 @@ class PostControllerTest extends TestCase
         $response = $this->post(
             route('post:create'),
             [
-                'category' => $this->category->getId(),
-                'status'   => 1,
-                'title'    => $testPostTitle,
-                'content'  => $testPostContent,
+                'category'       => $this->category->getId(),
+                'status'         => 1,
+                'title'          => $testPostTitle,
+                'content'        => $testPostContent,
+                'comment_status' => 1,
+                'anonse'         => $testPostContent,
             ]
         );
 
@@ -153,7 +155,8 @@ class PostControllerTest extends TestCase
                 'content'  => $testPostContent,
                 'category' => 1,
                 'status'   => 1,
-                'anonce'   => $testPostAnonce,
+                'comment_status' => 1,
+                'anonse'   => $testPostAnonce,
             ]
         );
 

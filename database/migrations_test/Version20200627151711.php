@@ -190,7 +190,7 @@ class Version20200627151711 extends AbstractMigration
                     target VARCHAR(255),
                     content VARCHAR(255),
                     position VARCHAR(255),
-                    tooltipClass VARCHAR(255),
+                    header VARCHAR(255),
                     sort VARCHAR(255),
                     active VARCHAR(255),
                     created_at VARCHAR(255),

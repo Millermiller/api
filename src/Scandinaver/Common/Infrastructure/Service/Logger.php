@@ -6,6 +6,7 @@ namespace Scandinaver\Common\Infrastructure\Service;
 use App\Helpers\Auth;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Illuminate\Support\Env;
 use Psr\Log\{LoggerInterface, LoggerTrait};
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Model\Log;
@@ -55,9 +56,6 @@ class Logger implements LoggerInterface
                     );
                 }
 
-                /** @var User $user */
-
-
                 $trace = [];
                 if (is_array($context)) {
                     foreach ($context as $item) {
@@ -68,8 +66,11 @@ class Logger implements LoggerInterface
                 }
 
                 $log = new Log($user, $level, $message, [], $trace);
-                $manager->persist($log);
-                $manager->flush($log);
+                // TODO: wtf
+                if (Env::get('APP_ENV') !== 'testing') {
+                    $manager->persist($log);
+                    $manager->flush($log);
+                }
         }
     }
 }

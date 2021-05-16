@@ -82,7 +82,8 @@ class IntroControllerTest extends TestCase
                 'position'     => $testIntroPosition,
                 'content'      => $testIntroContent,
                 'sort'         => $testIntroSort,
-                'tooltipClass' => $testIntroTooltipClass,
+                'headerText'   => $testIntroTooltipClass,
+                'active'       => 1,
             ]
         );
 
@@ -99,7 +100,7 @@ class IntroControllerTest extends TestCase
                 'position'     => $testIntroPosition,
                 'content'      => $testIntroContent,
                 'sort'         => $testIntroSort,
-                'tooltipClass' => $testIntroTooltipClass,
+                'headerText'   => $testIntroTooltipClass,
             ]
         );
     }
@@ -155,7 +156,8 @@ class IntroControllerTest extends TestCase
                 'position'     => $testIntroPosition,
                 'content'      => $testIntroContent,
                 'sort'         => $testIntroSort,
-                'tooltipClass' => $testIntroTooltipClass,
+                'headerText'   => $testIntroTooltipClass,
+                'active'       => 1,
             ]
         );
 
@@ -172,7 +174,7 @@ class IntroControllerTest extends TestCase
                 'position'     => $testIntroPosition,
                 'content'      => $testIntroContent,
                 'sort'         => $testIntroSort,
-                'tooltipClass' => $testIntroTooltipClass,
+                'headerText'   => $testIntroTooltipClass,
             ]
         );
     }
