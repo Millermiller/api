@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.40.0.
+ * Generated for Laravel 8.41.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -9840,7 +9840,7 @@
          * if the proxy is trusted (see "setTrustedProxies()"), otherwise it returns
          * the latter (from the "SERVER_PROTOCOL" server parameter).
          *
-         * @return string 
+         * @return string|null 
          * @static 
          */ 
         public static function getProtocolVersion()
@@ -15775,6 +15775,247 @@
      
 }
 
+    namespace Laravolt\Avatar { 
+            /**
+     * 
+     *
+     */ 
+        class Facade {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setGenerator($generator)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setGenerator($generator);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function create($name)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->create($name);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function applyTheme($config)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->applyTheme($config);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addTheme($name, $config)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->addTheme($name, $config);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function toBase64()
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->toBase64();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function save($path, $quality = 90)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->save($path, $quality);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function toSvg()
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->toSvg();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function toGravatar($param = null)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->toGravatar($param);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getInitial()
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->getInitial();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getImageObject()
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->getImageObject();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function buildAvatar()
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->buildAvatar();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getAttribute($key)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->getAttribute($key);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setTheme($theme)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setTheme($theme);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setBackground($hex)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setBackground($hex);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setForeground($hex)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setForeground($hex);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setDimension($width, $height = null)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setDimension($width, $height);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setFontSize($size)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setFontSize($size);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setFontFamily($font)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setFontFamily($font);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setBorder($size, $color, $radius = 0)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setBorder($size, $color, $radius);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setBorderRadius($radius)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setBorderRadius($radius);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setShape($shape)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setShape($shape);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setChars($chars)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setChars($chars);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setFont($font)
+        {
+                        /** @var \Laravolt\Avatar\Avatar $instance */
+                        return $instance->setFont($font);
+        }
+         
+    }
+     
+}
+
     namespace Aws\Laravel { 
             /**
      * Facade for the AWS service
@@ -16776,247 +17017,6 @@
      
 }
 
-    namespace Laravolt\Avatar { 
-            /**
-     * 
-     *
-     */ 
-        class Facade {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setGenerator($generator)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setGenerator($generator);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function create($name)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->create($name);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function applyTheme($config)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->applyTheme($config);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function addTheme($name, $config)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->addTheme($name, $config);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function toBase64()
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->toBase64();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function save($path, $quality = 90)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->save($path, $quality);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function toSvg()
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->toSvg();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function toGravatar($param = null)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->toGravatar($param);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getInitial()
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->getInitial();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getImageObject()
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->getImageObject();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function buildAvatar()
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->buildAvatar();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getAttribute($key)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->getAttribute($key);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setTheme($theme)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setTheme($theme);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setBackground($hex)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setBackground($hex);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setForeground($hex)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setForeground($hex);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setDimension($width, $height = null)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setDimension($width, $height);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setFontSize($size)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setFontSize($size);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setFontFamily($font)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setFontFamily($font);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setBorder($size, $color, $radius = 0)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setBorder($size, $color, $radius);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setBorderRadius($radius)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setBorderRadius($radius);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setShape($shape)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setShape($shape);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setChars($chars)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setChars($chars);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setFont($font)
-        {
-                        /** @var \Laravolt\Avatar\Avatar $instance */
-                        return $instance->setFont($font);
-        }
-         
-    }
-     
-}
-
     namespace Illuminate\Http { 
             /**
      * 
@@ -17595,6 +17595,23 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->simplePaginate($perPage, $columns, $pageName, $page);
+            }
+             
+                /**
+             * Paginate the given query into a cursor paginator.
+             *
+             * @param int|null $perPage
+             * @param array $columns
+             * @param string $cursorName
+             * @param string|null $cursor
+             * @return \Illuminate\Contracts\Pagination\Paginator 
+             * @throws \Illuminate\Pagination\CursorPaginationException
+             * @static 
+             */ 
+            public static function cursorPaginate($perPage = null, $columns = [], $cursorName = 'cursor', $cursor = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->cursorPaginate($perPage, $columns, $cursorName, $cursor);
             }
              
                 /**
@@ -20337,10 +20354,10 @@ namespace  {
             class EntityManager extends \LaravelDoctrine\ORM\Facades\EntityManager {}
             class Registry extends \LaravelDoctrine\ORM\Facades\Registry {}
             class Doctrine extends \LaravelDoctrine\ORM\Facades\Doctrine {}
+            class Avatar extends \Laravolt\Avatar\Facade {}
             class AWS extends \Aws\Laravel\AwsFacade {}
             class Debugbar extends \Barryvdh\Debugbar\Facade {}
             class Clockwork extends \Clockwork\Support\Laravel\Facade {}
-            class Avatar extends \Laravolt\Avatar\Facade {}
      
 }
 
