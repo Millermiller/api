@@ -4,7 +4,6 @@
 namespace Scandinaver\RBAC\Application\Provider;
 
 
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
@@ -24,19 +23,34 @@ class DoctrineServiceProvider extends ServiceProvider
 
     public function register()
     {
-        /** @var EntityManager $em */
-        $em = $this->app['em'];
-
-        $this->app->bind(RoleRepositoryInterface::class,
-            fn() => new RoleRepository($em, $em->getClassMetadata(Role::class))
+        $this->app->bind(
+            RoleRepositoryInterface::class,
+            function () {
+                return new RoleRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Role::class)
+                );
+            }
         );
 
-        $this->app->bind(PermissionRepositoryInterface::class,
-            fn() => new PermissionRepository($em, $em->getClassMetadata(Permission::class))
+        $this->app->bind(
+            PermissionRepositoryInterface::class,
+            function () {
+                return new PermissionRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Permission::class)
+                );
+            }
         );
 
-        $this->app->bind(PermissionGroupRepositoryInterface::class,
-            fn() => new PermissionGroupRepository($em, $em->getClassMetadata(PermissionGroup::class))
+        $this->app->bind(
+            PermissionGroupRepositoryInterface::class,
+            function () {
+                return new PermissionGroupRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(PermissionGroup::class)
+                );
+            }
         );
     }
 }

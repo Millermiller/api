@@ -3,7 +3,6 @@
 
 namespace Scandinaver\User\Application\Provider;
 
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
@@ -27,27 +26,44 @@ class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        /** @var EntityManager $em */
-        $em = $this->app['em'];
-
         $this->app->bind(
             UserRepositoryInterface::class,
-            fn() => new UserRepository($em, $em->getClassMetadata(User::class))
+            function () {
+                return new UserRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(User::class)
+                );
+            }
         );
 
         $this->app->bind(
             PlanRepositoryInterface::class,
-            fn() => new PlanRepository($em, $em->getClassMetadata(Plan::class))
+            function () {
+                return new PlanRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Plan::class)
+                );
+            }
         );
 
         $this->app->bind(
             RoleRepositoryInterface::class,
-            fn() => new RoleRepository($em, $em->getClassMetadata(Role::class))
+            function () {
+                return new RoleRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Role::class)
+                );
+            }
         );
 
         $this->app->bind(
             PermissionRepositoryInterface::class,
-            fn() => new PermissionRepository($em, $em->getClassMetadata(Permission::class))
+            function () {
+                return new PermissionRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Permission::class)
+                );
+            }
         );
     }
 }

@@ -4,7 +4,6 @@
 namespace Scandinaver\Learn\Application\Provider;
 
 
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
@@ -47,57 +46,104 @@ class DoctrineServiceProvider extends ServiceProvider
 
     public function register()
     {
-        /** @var EntityManager $em */
-        $em = $this->app['em'];
-
         $this->app->bind(
             CardRepositoryInterface::class,
-            fn() => new CardRepository($em, $em->getClassMetadata(Card::class))
+            function () {
+                return new CardRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Card::class)
+                );
+            }
         );
 
         $this->app->bind(
             TranslateRepositoryInterface::class,
-            fn() => new TranslateRepository($em, $em->getClassMetadata(Translate::class))
+            function () {
+                return new TranslateRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Translate::class)
+                );
+            }
         );
 
         $this->app->bind(
             WordRepositoryInterface::class,
-            fn() => new WordRepository($em, $em->getClassMetadata(Word::class))
+            function () {
+                return new WordRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Word::class)
+                );
+            }
         );
 
         $this->app->bind(
             AssetRepositoryInterface::class,
-            fn() => new AssetRepository($em, $em->getClassMetadata(Asset::class))
+            function () {
+                return new AssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Asset::class)
+                );
+            }
         );
 
         $this->app->bind(
             FavouriteAssetRepositoryInterface::class,
-            fn() => new FavouriteAssetRepository($em,
-                $em->getClassMetadata(FavouriteAsset::class))
+            function () {
+                return new FavouriteAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(FavouriteAsset::class)
+                );
+            }
         );
 
-        $this->app->bind(WordAssetRepositoryInterface::class,
-            fn() => new WordAssetRepository($em, $em->getClassMetadata(WordAsset::class))
+        $this->app->bind(
+            WordAssetRepositoryInterface::class,
+            function () {
+                return new WordAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(WordAsset::class)
+                );
+            }
         );
 
         $this->app->bind(
             SentenceAssetRepositoryInterface::class,
-            fn() => new SentenceAssetRepository($em, $em->getClassMetadata(SentenceAsset::class))
+            function () {
+                return new SentenceAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(SentenceAsset::class)
+                );
+            }
         );
 
         $this->app->bind(
             PersonalAssetRepositoryInterface::class,
-            fn() => new PersonalAssetRepository($em, $em->getClassMetadata(PersonalAsset::class))
+            function () {
+                return new PersonalAssetRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(PersonalAsset::class)
+                );
+            }
         );
 
         $this->app->bind(
             PassingRepositoryInterface::class,
-            fn() => new PassingRepository($em, $em->getClassMetadata(Passing::class))
+            function () {
+                return new PassingRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Passing::class)
+                );
+            }
         );
 
         $this->app->bind(
             ExampleRepositoryInterface::class,
-            fn() => new ExampleRepository($em, $em->getClassMetadata(Example::class))
+            function () {
+                return new ExampleRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Example::class)
+                );
+            }
         );
     }
 }

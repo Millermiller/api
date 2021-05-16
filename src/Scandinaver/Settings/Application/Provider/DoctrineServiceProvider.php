@@ -19,12 +19,14 @@ class DoctrineServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        /** @var EntityManager $em */
-        $em = $this->app['em'];
-
         $this->app->bind(
             SettingRepositoryInterface::class,
-            fn() => new SettingRepository($em, $em->getClassMetadata(Setting::class))
+            function () {
+                return new SettingRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Setting::class)
+                );
+            }
         );
     }
 }

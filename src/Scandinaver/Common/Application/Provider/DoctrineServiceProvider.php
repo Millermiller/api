@@ -3,7 +3,6 @@
 
 namespace Scandinaver\Common\Application\Provider;
 
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
@@ -33,33 +32,54 @@ class DoctrineServiceProvider extends ServiceProvider
     public function register()
     {
         Passport::ignoreMigrations();
-
-        /** @var EntityManager $em */
-        $em = $this->app['em'];
-
         $this->app->bind(
             LanguageRepositoryInterface::class,
-            fn() => new LanguageRepository($em, $em->getClassMetadata(Language::class))
+            function () {
+                return new LanguageRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Language::class)
+                );
+            }
         );
 
         $this->app->bind(
             IntroRepositoryInterface::class,
-            fn() => new IntroRepository($em, $em->getClassMetadata(Intro::class))
+            function () {
+                return new IntroRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Intro::class)
+                );
+            }
         );
 
         $this->app->bind(
             FeedbackRepositoryInterface::class,
-            fn() => new FeedbackRepository($em, $em->getClassMetadata(Feedback::class))
+            function () {
+                return new FeedbackRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Feedback::class)
+                );
+            }
         );
 
         $this->app->bind(
             PostRepositoryInterface::class,
-            fn() => new PostRepository($em, $em->getClassMetadata(Post::class))
+            function () {
+                return new PostRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Post::class)
+                );
+            }
         );
 
         $this->app->bind(
             LogRepositoryInterface::class,
-            fn() => new LogRepository($em, $em->getClassMetadata(Log::class))
+            function () {
+                return new LogRepository(
+                    $this->app['em'],
+                    $this->app['em']->getClassMetadata(Log::class)
+                );
+            }
         );
     }
 }
