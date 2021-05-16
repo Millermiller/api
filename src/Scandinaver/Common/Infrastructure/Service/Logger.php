@@ -65,7 +65,7 @@ class Logger implements LoggerInterface
                     }
                 }
 
-                $log = new Log($user, $level, $message, [], $trace);
+                $log = new Log(NULL, $level, $message, [], $trace);
                 // TODO: wtf
                 if (Env::get('APP_ENV') !== 'testing') {
                     $manager->persist($log);

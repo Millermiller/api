@@ -25,17 +25,19 @@ class LogTransformer extends TransformerAbstract
         return [
             'id'         => $log->getId(),
             'message'    => $log->interpolate(),
-            'owner'      => $log->getOwner(),
             'level'      => $log->getLevelName(),
             'extra'      => $log->getExtra(),
             'created_at' => $log->getCreatedAt()->format('Y-m-d H:i:s'),
         ];
     }
 
-    public function includeOwner(Log $log): Item
+    public function includeOwner(Log $log): ?Item
     {
         $owner = $log->getOwner();
 
-        return $this->item($owner, new UserTransformer());
+        if ($owner !== NULL) {
+            return $this->item($owner, new UserTransformer());
+        }
+         return NULL;
     }
 }
