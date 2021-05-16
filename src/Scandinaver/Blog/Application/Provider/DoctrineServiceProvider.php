@@ -26,7 +26,7 @@ class DoctrineServiceProvider extends ServiceProvider
     public function register()
     {
         /** @var EntityManager $em */
-        $em = $this->app['em'];
+        $em = app('em');
 
         $this->app->bind(PostRepositoryInterface::class,
             fn() => new PostRepository($em, $em->getClassMetadata(Post::class))
