@@ -48,9 +48,7 @@ class State
     /** @var Language[] $languagesDTO */
     private array $languages;
 
-    private string $currentSite = '';
-
-    private string $domain = '';
+    private Language $currentLanguage;
 
     public function getSite(): string
     {
@@ -142,23 +140,13 @@ class State
         $this->languages = $languages;
     }
 
-    public function getCurrentSite(): string
+    public function getCurrentLanguage(): Language
     {
-        return $this->currentSite;
+        return $this->currentLanguage;
     }
 
-    public function setCurrentSite(string $currentSite): void
+    public function setCurrentLanguage(Language $currentLanguage): void
     {
-        $this->currentSite = $currentSite;
-    }
-
-    public function getDomain(): string
-    {
-        return $this->domain;
-    }
-
-    public function setDomain(string $domain): void
-    {
-        $this->domain = $domain;
+        $this->currentLanguage = $currentLanguage;
     }
 }

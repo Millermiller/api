@@ -29,15 +29,14 @@ class StateTransformer extends TransformerAbstract
         'texts',
         'puzzles',
         'intro',
-        'sites',
+        'languages',
+        'currentLanguage'
     ];
 
     public function transform(State $stateDTO): array
     {
         return [
-            'site'        => $stateDTO->getSite(),
-            'currentSite' => $stateDTO->getCurrentSite(),
-            'domain'      => $stateDTO->getDomain(),
+            'site' => $stateDTO->getSite(),
         ];
     }
 
@@ -90,10 +89,17 @@ class StateTransformer extends TransformerAbstract
         return $this->collection($intros, new IntroTransformer());
     }
 
-    public function includeSites(State $stateDTO): Collection
+    public function includeLanguages(State $stateDTO): Collection
     {
         $languages = $stateDTO->getLanguages();
 
         return $this->collection($languages, new LanguageTransformer());
+    }
+
+    public function includeCurrentLanguage(State $stateDTO): Item
+    {
+        $language = $stateDTO->getCurrentLanguage();
+
+        return $this->item($language, new LanguageTransformer());
     }
 }

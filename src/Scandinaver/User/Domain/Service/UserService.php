@@ -274,6 +274,8 @@ class UserService implements BaseServiceInterface
         $languages = $this->languageService->all();
         $stateDTO->setLanguages($languages);
 
+        $stateDTO->setCurrentLanguage($language);
+
         return $stateDTO;
     }
 
