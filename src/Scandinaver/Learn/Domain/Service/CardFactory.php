@@ -56,7 +56,7 @@ class CardFactory
         $cardDTO->setCreator($card->getCreator());
         $cardDTO->setWordDTO($wordDTO);
         $cardDTO->setTranslateDTO($translateDTO);
-        $cardDTO->setExamples($card->getExamples()->toArray());
+        $cardDTO->setExamplesDTO($card->getExamples()->map(fn($example) => ExampleFactory::toDTO($example))->toArray());
 
         return $cardDTO;
     }

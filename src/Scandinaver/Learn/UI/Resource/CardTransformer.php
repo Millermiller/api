@@ -31,7 +31,6 @@ class CardTransformer extends TransformerAbstract
         return [
             'id'        => $card->getId(),
             'favourite' => $card->isFavourite(),
-            'examples'  => [],
         ];
     }
 

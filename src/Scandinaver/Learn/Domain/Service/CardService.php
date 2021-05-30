@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Illuminate\Http\UploadedFile;
@@ -18,7 +19,6 @@ use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Service\SearchInterface;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
-use Scandinaver\Learn\Domain\DTO\AssetDTO;
 use Scandinaver\Learn\Domain\DTO\CardDTO;
 use Scandinaver\Learn\Domain\DTO\TranslateDTO;
 use Scandinaver\Learn\Domain\DTO\WordDTO;
@@ -86,6 +86,22 @@ class CardService implements BaseServiceInterface
         $this->assetFactory = $assetFactory;
     }
 
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
+
+    /**
+     * @param  int  $id
+     *
+     * @return Card
+     * @throws CardNotFoundException
+     */
+    public function one(int $id): Card
+    {
+        return $this->getCard($id);
+    }
+
     /**
      * @param  UserInterface  $user
      * @param  string         $language
@@ -119,39 +135,49 @@ class CardService implements BaseServiceInterface
     }
 
     /**
-     * @param  int    $card
-     * @param  array  $data
+     * @param  int      $cardId
+     * @param  CardDTO  $cardDTO
      *
      * @return Card
      * @throws CardNotFoundException
      */
-    public function updateCard(int $card, array $data): Card
+    public function updateCard(int $cardId, CardDTO $cardDTO): Card
     {
-        $card = $this->getCard($card);
+        $card = $this->getCard($cardId);
 
-        $card->setWordValue($data['word']['value']);
+        $card->setWordValue($cardDTO->getWordDTO()->getValue());
 
-        $card->setTranslateValue($data['translate']['value']);
+        $card->setTranslateValue($cardDTO->getTranslateDTO()->getValue());
 
-        $card->clearExamples();
+        foreach ($cardDTO->getExamplesDTO() as $exampleDTO) {
+            $exampleDTO->setCard($card);
 
-        foreach ($data['examples'] as $exampleData) {
-            if (isset($exampleData['id'])) {
+            if ($exampleDTO->getId() === NULL) {
+                $example = ExampleFactory::fromDTO($exampleDTO);
+                $card->addExample($example);
+            }
+
+            if ($exampleDTO->getId() !== NULL) {
                 /** @var Example $example */
-                $example = $this->exampleRepository->find($exampleData['id']);
-                if ($example === NULL) {
-                    $example = new Example($exampleData['text'], $exampleData['value'], $card);
-                }
-                else {
-                    $example->setText($exampleData['text']);
-                    $example->setValue($exampleData['value']);
-                }
+                $example = $card->getExamples()->filter(fn($item) => $item->getId() === $exampleDTO->getId())->first();
+                $example->setText($exampleDTO->getText());
+                $example->setValue($exampleDTO->getValue());
+                $this->exampleRepository->save($example);
             }
-            else {
-                $example = new Example($exampleData['text'], $exampleData['value'], $card);
+        }
+
+        $newExamplesCollection = new ArrayCollection($cardDTO->getExamplesDTO());
+
+        foreach ($card->getExamples() as $example) {
+            if ($example->getId() === NULL) {
+                continue;
             }
-            $this->exampleRepository->save($example);
-            $card->addExample($example);
+            $isExist = $newExamplesCollection->exists(function($key, $val) use ($example) {
+                return $val->getId() === $example->getId();
+            });
+            if ($isExist === FALSE) {
+                $card->getExamples()->removeElement($example);
+            }
         }
 
         $this->cardRepository->save($card);
@@ -344,22 +370,6 @@ class CardService implements BaseServiceInterface
         }
 
         fclose($handle);
-    }
-
-    public function all(): array
-    {
-        // TODO: Implement all() method.
-    }
-
-    /**
-     * @param  int  $id
-     *
-     * @return Card
-     * @throws CardNotFoundException
-     */
-    public function one(int $id): Card
-    {
-        return $this->getCard($id);
     }
 
     /**
