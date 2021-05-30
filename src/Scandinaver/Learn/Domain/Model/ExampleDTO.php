@@ -12,23 +12,58 @@ use Scandinaver\Shared\DTO;
  */
 class ExampleDTO extends DTO
 {
-    private Example $example;
+    private ?int $id;
+    private string $text;
+    private string $value;
+    private Card $card;
 
-    public function __construct(Example $example)
+    public function getId(): ?int
     {
-        $this->example = $example;
+        return $this->id;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function setId(?int $id): void
     {
-        return [
-            'id'      => $this->example->getId(),
-            'card_id' => $this->example->getCard()->getId(),
-            'text'    => $this->example->getText(),
-            'value'   => $this->example->getValue(),
-        ];
+        $this->id = $id;
     }
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    public function setText(string $text): void
+    {
+        $this->text = $text;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    public function setValue(string $value): void
+    {
+        $this->value = $value;
+    }
+
+    public function getCard(): Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(Card $card): void
+    {
+        $this->card = $card;
+    }
+
+    public static function fromArray(array $data): ExampleDTO
+    {
+        $exampleDTO = new self();
+        $exampleDTO->setId($data['id'] ?? NULL);
+        $exampleDTO->setText($data['text']);
+        $exampleDTO->setValue($data['value']);
+        return $exampleDTO;
+    }
+
 }

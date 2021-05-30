@@ -13,10 +13,13 @@ use Scandinaver\Learn\Domain\Model\Example;
  */
 class ExampleTransformer extends TransformerAbstract
 {
+
     public function transform(Example $example): array
     {
         return [
-
+            'id'    => $example->getId(),
+            'text'  => $example->getText(),
+            'value' => $example->getValue(),
         ];
     }
 }

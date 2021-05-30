@@ -33,7 +33,7 @@ class UpdateCardCommandHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $command): void
     {
-        $this->cardService->updateCard($command->getCard(), $command->getData());
+        $this->cardService->updateCard($command->getCardId(), $command->buildDTO());
 
         $this->resource = new NullResource();
     }

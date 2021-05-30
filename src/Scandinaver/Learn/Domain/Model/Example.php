@@ -12,7 +12,7 @@ use DateTime;
  */
 class Example
 {
-    private int $id;
+    private ?int $id = NULL;
 
     private string $text;
 
@@ -24,21 +24,14 @@ class Example
 
     private Card $card;
 
-    public function __construct(string $text, string $value, Card $card)
-    {
-        $this->setText($text);
-        $this->setValue($value);
-        $this->setCard($card);
-    }
-
-    public function setUpdatedAt(?DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getText(): string
@@ -59,11 +52,6 @@ class Example
     public function setValue(string $value): void
     {
         $this->value = $value;
-    }
-
-    public function getCreatedAt(): ?DateTime
-    {
-        return $this->createdAt;
     }
 
     public function getCard(): Card

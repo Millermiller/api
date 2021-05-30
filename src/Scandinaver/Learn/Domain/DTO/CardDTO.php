@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Domain\DTO;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Model\Language;
 use Scandinaver\Learn\Domain\Model\Example;
+use Scandinaver\Learn\Domain\Model\ExampleDTO;
 use Scandinaver\Shared\DTO;
 
 /**
@@ -25,10 +26,8 @@ class CardDTO extends DTO
 
     private TranslateDTO $translateDTO;
 
-    /** @var Example[] $examples*/
-    private array $examples;
-
-
+    /** @var ExampleDTO[] $examplesDTO*/
+    private array $examplesDTO;
 
     public function getId(): ?int
     {
@@ -80,24 +79,14 @@ class CardDTO extends DTO
         $this->translateDTO = $translateDTO;
     }
 
-    public function isFavourite(): bool
+    public function getExamplesDTO(): array
     {
-        return $this->favourite;
+        return $this->examplesDTO;
     }
 
-    public function setFavourite(bool $favourite): void
+    public function setExamplesDTO(array $examplesDTO): void
     {
-        $this->favourite = $favourite;
-    }
-
-    public function getExamples(): array
-    {
-        return $this->examples;
-    }
-
-    public function setExamples(array $examples): void
-    {
-        $this->examples = $examples;
+        $this->examplesDTO = $examplesDTO;
     }
 
     public static function fromArray(array $data): CardDTO
