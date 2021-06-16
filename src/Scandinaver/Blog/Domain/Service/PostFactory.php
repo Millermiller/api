@@ -6,7 +6,7 @@ namespace Scandinaver\Blog\Domain\Service;
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
-use Scandinaver\Blog\Domain\Model\{Category, Post};
+use Scandinaver\Blog\Domain\Entity\{Category, Post};
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;

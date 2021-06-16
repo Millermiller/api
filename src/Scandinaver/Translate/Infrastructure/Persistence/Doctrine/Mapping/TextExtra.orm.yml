@@ -1,60 +1,52 @@
-Scandinaver\Translate\Domain\Model\TextExtra:
+Scandinaver\Translate\Domain\Entity\TextExtra:
   type: entity
   table: text_extras
   indexes:
     text_id:
       columns:
         - text_id
-        - orig
-        - extra
+        - object
+        - value
     IDX_3317FC22698D3548:
       columns:
         - text_id
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
-    orig:
+    object:
       type: string
-      scale: 0
       length: 255
       unique: false
       nullable: false
-      precision: 0
-    extra:
+    value:
       type: string
-      scale: 0
       length: 255
       unique: false
       nullable: false
-      precision: 0
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
       column: created_at
+      gedmo:
+        timestampable:
+          on: create
     updatedAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: true
-      precision: 0
       column: updated_at
+      gedmo:
+        timestampable:
+          on: update
   manyToOne:
     text:
-      targetEntity: Scandinaver\Translate\Domain\Model\Text
+      targetEntity: Scandinaver\Translate\Domain\Entity\Text
       cascade: {  }
       fetch: LAZY
       mappedBy: null

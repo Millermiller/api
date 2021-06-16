@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Settings\Domain\Model\Setting;
+use Scandinaver\Settings\Domain\Entity\Setting;
 
 /** @var Factory $factory */
 $factory->define(Setting::class, function (Faker $faker, array $attributes) {

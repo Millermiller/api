@@ -8,7 +8,7 @@ use Scandinaver\Shared\DTO;
 /**
  * Class RoleDTO
  *
- * @package Scandinaver\RBAC\Domain\Model
+ * @package Scandinaver\RBAC\Domain\Entity
  */
 class PermissionDTO extends DTO
 {

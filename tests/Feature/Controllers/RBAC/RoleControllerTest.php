@@ -6,9 +6,9 @@ namespace Tests\Feature\Controllers\RBAC;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\Role;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\RBAC\Domain\Entity\Role;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

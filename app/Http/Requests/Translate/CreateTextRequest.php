@@ -15,7 +15,10 @@ class CreateTextRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'     => 'required',
+            'language'  => 'required',
+            'original'  => 'required',
+            'translate' => 'required'
         ];
     }
 }

@@ -1,2 +1,2 @@
-Scandinaver\Learn\Domain\Model\SentenceAsset:
+Scandinaver\Learn\Domain\Entity\SentenceAsset:
   type: entity

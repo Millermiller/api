@@ -9,7 +9,7 @@ use Scandinaver\Shared\DTO;
 /**
  * Class PermissionGroupDTO
  *
- * @package Scandinaver\RBAC\Domain\Model
+ * @package Scandinaver\RBAC\Domain\Entity
  */
 class PermissionGroupDTO extends DTO
 {

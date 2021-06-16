@@ -1,4 +1,4 @@
-Scandinaver\Common\Domain\Model\Language:
+Scandinaver\Common\Domain\Entity\Language:
   type: entity
   table: language
   indexes:
@@ -11,34 +11,24 @@ Scandinaver\Common\Domain\Model\Language:
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     letter:
       type: string
-      scale: 0
-      length: 50
+      length: 5
       unique: false
       nullable: false
-      precision: 0
     title:
       type: string
-      scale: 0
       length: 50
       unique: false
       nullable: false
-      precision: 0
     flag:
       type: string
-      scale: 0
-      length: 50
+      length: 255
       unique: false
       nullable: false
-      precision: 0
   lifecycleCallbacks: { }

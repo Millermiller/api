@@ -15,7 +15,11 @@ class UpdateTextRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'       => 'required',
+            'extra'       => 'present|array',
+            'sentences'   => 'present|array',
+            'published'   => 'required',
+            'description' => 'present'
         ];
     }
 }

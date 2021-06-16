@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\UI\Resource;
 
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Learn\Domain\Model\Example;
+use Scandinaver\Learn\Domain\Entity\Example;
 
 /**
  * Class ExampleTransformer

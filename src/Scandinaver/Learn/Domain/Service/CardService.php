@@ -16,20 +16,20 @@ use Scandinaver\Learn\Domain\Contract\Repository\ExampleRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Service\SearchInterface;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
 use Scandinaver\Learn\Domain\DTO\CardDTO;
 use Scandinaver\Learn\Domain\DTO\TranslateDTO;
-use Scandinaver\Learn\Domain\DTO\WordDTO;
+use Scandinaver\Learn\Domain\DTO\TermDTO;
 use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\Learn\Domain\Model\Example;
-use Scandinaver\Learn\Domain\Model\Translate;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\Card;
+use Scandinaver\Learn\Domain\Entity\Example;
+use Scandinaver\Learn\Domain\Entity\Translate;
+use Scandinaver\Learn\Domain\Entity\Term;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Storage;
 
@@ -56,11 +56,13 @@ class CardService implements BaseServiceInterface
 
     private FavouriteAssetRepositoryInterface $favouriteAssetRepository;
 
-    private WordRepositoryInterface $wordRepository;
+    private TermRepositoryInterface $termRepository;
 
     private TranslaterInterface $translater;
 
     private SearchInterface $searchService;
+
+    private AssetFactory $assetFactory;
 
     public function __construct(
         AssetRepositoryInterface $assetRepository,
@@ -69,7 +71,7 @@ class CardService implements BaseServiceInterface
         ExampleRepositoryInterface $exampleRepository,
         TranslateRepositoryInterface $translateRepository,
         FavouriteAssetRepositoryInterface $favouriteAssetRepository,
-        WordRepositoryInterface $wordRepository,
+        TermRepositoryInterface $termRepository,
         TranslaterInterface $translater,
         SearchInterface $searchService,
         AssetFactory $assetFactory
@@ -80,10 +82,10 @@ class CardService implements BaseServiceInterface
         $this->exampleRepository        = $exampleRepository;
         $this->translateRepository      = $translateRepository;
         $this->favouriteAssetRepository = $favouriteAssetRepository;
-        $this->wordRepository           = $wordRepository;
+        $this->termRepository           = $termRepository;
         $this->translater               = $translater;
         $this->searchService            = $searchService;
-        $this->assetFactory = $assetFactory;
+        $this->assetFactory             = $assetFactory;
     }
 
     public function all(): array
@@ -120,11 +122,11 @@ class CardService implements BaseServiceInterface
         $cardDTO->setCreator($user);
         $cardDTO->setLanguage($language);
 
-        $wordDTO = new WordDTO(NULL, $word);
+        $termDTO = new TermDTO(NULL, $word);
 
         $translateDTO = new TranslateDTO(NULL, $translate);
 
-        $cardDTO->setWordDTO($wordDTO);
+        $cardDTO->setTermDTO($termDTO);
         $cardDTO->setTranslateDTO($translateDTO);
 
         $card = CardFactory::fromDTO($cardDTO);
@@ -145,7 +147,7 @@ class CardService implements BaseServiceInterface
     {
         $card = $this->getCard($cardId);
 
-        $card->setWordValue($cardDTO->getWordDTO()->getValue());
+        $card->setTermValue($cardDTO->getTermDTO()->getValue());
 
         $card->setTranslateValue($cardDTO->getTranslateDTO()->getValue());
 
@@ -207,7 +209,7 @@ class CardService implements BaseServiceInterface
 
         foreach ($cards as &$card) {
             $card->setFavourite(
-                in_array($card->getWord()->getId(), $favouriteAsset->getWordsIds())
+                in_array($card->getTerm()->getId(), $favouriteAsset->getTermsIds())
             );
         }
 
@@ -276,18 +278,18 @@ class CardService implements BaseServiceInterface
 
     /**
      * @param  string  $language
-     * @param  int     $word
+     * @param  int     $termId
      *
      * @throws LanguageNotFoundException
      */
-    public function fillDictionary(string $language, int $word): void
+    public function fillDictionary(string $language, int $termId): void
     {
         $language = $this->getLanguage($language);
 
-        /** @var Word $word */
-        $word = $this->wordRepository->find($word);
+        /** @var Term $term */
+        $term = $this->termRepository->find($termId);
 
-        $results = $this->translater->translate($language, $word);
+        $results = $this->translater->translate($language, $term);
 
         foreach ($results['translations'] as $result) {
             $translate = new Translate();
@@ -295,11 +297,11 @@ class CardService implements BaseServiceInterface
             $translate->setSentence(0);
             $translate->setLanguage($language);
 
-            $word->addTranslate($translate);
+            $term->addTranslate($translate);
 
             $card = new Card();
             $card->setType(0);
-            $card->setWord($word);
+            $card->setTerm($term);
             $card->setTranslate($translate);
             $card->setLanguage($language);
 
@@ -339,30 +341,31 @@ class CardService implements BaseServiceInterface
             $orig           = $data[0];
             $translateValue = $data[1];
 
-            $isWordExist = $this->wordRepository->findOneBy(
+            $isTermExist = $this->termRepository->findOneBy(
                 [
-                    'word' => $orig,
+                    'value' => $orig,
                 ]
             );
 
-            if ($isWordExist) {
+            if ($isTermExist) {
                 continue;
             }
 
-            $word = new Word();
-            $word->setSentence(1);
-            $word->setValue($orig);
-            $word->setIsPublic(1);
+            //TODO: use factory
+            $term = new Term();
+            $term->setSentence(1);
+            $term->setValue($orig);
+            $term->setIsPublic(1);
 
             $translate = new Translate();
             $translate->setValue($translateValue);
             $translate->setSentence(1);
             $translate->setLanguage($language);
-            $translate->setWord($word);
+            $translate->setTerm($term);
 
             $card = new Card();
             $card->setLanguage($language);
-            $card->setWord($word);
+            $card->setTerm($term);
             $card->setTranslate($translate);
             $card->setType(1);
 

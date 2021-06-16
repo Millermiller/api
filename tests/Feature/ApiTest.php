@@ -3,12 +3,10 @@
 
 namespace Tests\Feature;
 
-use Scandinaver\Common\Application\Handler\Query\LanguagesHandler;
-use Scandinaver\Common\Domain\Contract\Query\LanguagesHandlerInterface;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\WordAsset;
-use Scandinaver\User\Domain\Model\Plan;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\User\Domain\Entity\Plan;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

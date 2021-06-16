@@ -3,8 +3,8 @@
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\User\Domain\Model\Plan;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\Plan;
+use Scandinaver\User\Domain\Entity\User;
 
 /** @var Factory $factory */
 $factory->define(User::class,

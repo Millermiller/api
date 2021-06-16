@@ -3,17 +3,16 @@
 
 namespace Scandinaver\Blog\Application\Provider;
 
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\Contract\Repository\CommentRepositoryInterface;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
-use Scandinaver\Blog\Domain\Model\Category;
-use Scandinaver\Blog\Domain\Model\Comment;
-use Scandinaver\Blog\Domain\Model\Post;
-use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\CategoryRepository;
-use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\CommentRepository;
-use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
+use Scandinaver\Blog\Domain\Entity\Category;
+use Scandinaver\Blog\Domain\Entity\Comment;
+use Scandinaver\Blog\Domain\Entity\Post;
+use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\Repository\CategoryRepository;
+use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\Repository\CommentRepository;
+use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\Repository\PostRepository;
 
 /**
  * Class DoctrineServiceProvider

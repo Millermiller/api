@@ -5,7 +5,7 @@ namespace Scandinaver\User\Domain\Service;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Scandinaver\User\Domain\Model\Order;
+use Scandinaver\User\Domain\Entity\Order;
 
 /**
  * Class PaymentService

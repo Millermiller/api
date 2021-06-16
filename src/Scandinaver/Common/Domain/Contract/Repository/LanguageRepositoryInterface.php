@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\Domain\Contract\Repository;
 
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**

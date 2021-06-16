@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Domain\Contract\Repository;
 
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
-use Scandinaver\User\Domain\Model\Plan;
+use Scandinaver\User\Domain\Entity\Plan;
 
 /**
  * Interface PlanRepositoryInterface

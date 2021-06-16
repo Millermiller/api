@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Domain\Traits;
 
 use EntityManager;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Trait UsesPasswordGrant

@@ -8,10 +8,10 @@ use Illuminate\Support\ServiceProvider;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
-use Scandinaver\RBAC\Domain\Model\{Permission, PermissionGroup, Role};
-use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\PermissionGroupRepository;
-use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\PermissionRepository;
-use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\RoleRepository;
+use Scandinaver\RBAC\Domain\Entity\{Permission, PermissionGroup, Role};
+use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository\PermissionGroupRepository;
+use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository\PermissionRepository;
+use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository\RoleRepository;
 
 /**
  * Class DoctrineServiceProvider

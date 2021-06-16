@@ -4,11 +4,11 @@ namespace Tests\Feature\Controllers\Blog;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Blog\Domain\Model\Category;
-use Scandinaver\Blog\Domain\Model\Comment;
-use Scandinaver\Blog\Domain\Model\Post;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Blog\Domain\Entity\Category;
+use Scandinaver\Blog\Domain\Entity\Comment;
+use Scandinaver\Blog\Domain\Entity\Post;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

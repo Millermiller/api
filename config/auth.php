@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'doctrine',
-            'model'  => Scandinaver\User\Domain\Model\User::class,
+            'model'  => Scandinaver\User\Domain\Entity\User::class,
         ],
     ],
 

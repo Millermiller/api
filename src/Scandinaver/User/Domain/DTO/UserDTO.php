@@ -8,7 +8,7 @@ use Scandinaver\Shared\DTO;
 /**
  * Class UserDTO
  *
- * @package Scandinaver\User\Domain\Model
+ * @package Scandinaver\User\Domain\Entity
  */
 class UserDTO extends DTO
 {

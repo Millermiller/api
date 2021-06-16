@@ -17,7 +17,7 @@ use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Exception\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Exception\RoleDublicateException;
 use Scandinaver\RBAC\Domain\Exception\RoleNotFoundException;
-use Scandinaver\RBAC\Domain\Model\{Permission, PermissionGroup, Role};
+use Scandinaver\RBAC\Domain\Entity\{Permission, PermissionGroup, Role};
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 
 /**

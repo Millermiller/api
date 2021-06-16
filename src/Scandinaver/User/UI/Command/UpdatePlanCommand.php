@@ -5,7 +5,7 @@ namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\DTO;
-use Scandinaver\User\Domain\Model\Plan;
+use Scandinaver\User\Domain\Entity\Plan;
 
 /**
  * Class UpdatePlanCommand

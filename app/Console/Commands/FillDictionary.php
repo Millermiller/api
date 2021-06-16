@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use Doctrine\ORM\NoResultException;
 use Illuminate\Console\Command;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
+use Scandinaver\Learn\Domain\Entity\Word;
 use Scandinaver\Learn\UI\Command\FillDictionaryCommand;
 use Scandinaver\Shared\CommandBus;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -34,7 +34,7 @@ class FillDictionary extends Command
 
     private CommandBus $commandBus;
 
-    private WordRepositoryInterface $wordRepository;
+    private TermRepositoryInterface $wordRepository;
     /**
      * @var LanguageRepositoryInterface
      */
@@ -44,10 +44,10 @@ class FillDictionary extends Command
      * FillDictionary constructor.
      *
      * @param  CommandBus                   $commandBus
-     * @param  WordRepositoryInterface      $wordRepository
+     * @param  TermRepositoryInterface      $wordRepository
      * @param  LanguageRepositoryInterface  $languageRepository
      */
-    public function __construct(CommandBus $commandBus, WordRepositoryInterface $wordRepository, LanguageRepositoryInterface $languageRepository)
+    public function __construct(CommandBus $commandBus, TermRepositoryInterface $wordRepository, LanguageRepositoryInterface $languageRepository)
     {
         parent::__construct();
         $this->commandBus         = $commandBus;

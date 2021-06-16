@@ -5,7 +5,7 @@ namespace Scandinaver\Learn\Domain\Contract;
 
 
 use Doctrine\Common\Collections\Collection;
-use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Entity\Card;
 
 /**
  * Interface AssetInterface

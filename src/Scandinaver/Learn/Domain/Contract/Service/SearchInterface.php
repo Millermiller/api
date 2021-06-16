@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Contract\Service;
 
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 
 /**
  * Class SearchInterface

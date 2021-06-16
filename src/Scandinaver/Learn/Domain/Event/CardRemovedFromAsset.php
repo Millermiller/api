@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learn\Domain\Event;
 
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\Card;
 use Scandinaver\Shared\DomainEvent;
 
 /**

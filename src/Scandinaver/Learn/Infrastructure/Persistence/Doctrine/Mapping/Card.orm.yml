@@ -1,63 +1,53 @@
-Scandinaver\Learn\Domain\Model\Card:
+Scandinaver\Learn\Domain\Entity\Card:
   type: entity
   table: cards
   indexes:
-    word_id:
+    term_id:
       columns:
-        - word_id
+        - term_id
     translate_id:
       columns:
         - translate_id
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
+    type:
+      type: integer
+      unique: false
+      nullable: false
+      column: type
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: true
-      precision: 0
+      nullable: false
       column: created_at
       gedmo:
         timestampable:
           on: create
     updatedAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: true
-      precision: 0
       column: updated_at
       gedmo:
         timestampable:
           on: update
-    type:
-      type: integer
-      unique: false
-      nullable: false
-      column: type
   manyToOne:
-    word:
-      targetEntity: Scandinaver\Learn\Domain\Model\Word
+    term:
+      targetEntity: Scandinaver\Learn\Domain\Entity\Term
       cascade: [ "persist", "merge" ]
       fetch: EAGER
       joinColumns:
-        word_id:
+        term_id:
           referencedColumnName: id
       orphanRemoval: false
     translate:
-      targetEntity: Scandinaver\Learn\Domain\Model\Translate
+      targetEntity: Scandinaver\Learn\Domain\Entity\Translate
       cascade: [ "persist", "merge" ]
       fetch: EAGER
       mappedBy: null
@@ -67,7 +57,7 @@ Scandinaver\Learn\Domain\Model\Card:
           referencedColumnName: id
       orphanRemoval: false
     language:
-      targetEntity: Scandinaver\Common\Domain\Model\Language
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
       cascade: { }
       fetch: LAZY
       mappedBy: null
@@ -78,7 +68,7 @@ Scandinaver\Learn\Domain\Model\Card:
       orphanRemoval: false
   oneToMany:
     examples:
-      targetEntity: Scandinaver\Learn\Domain\Model\Example
+      targetEntity: Scandinaver\Learn\Domain\Entity\Example
       cascade: [ "persist", "merge" ]
       fetch: EAGER
       mappedBy: card
@@ -90,7 +80,7 @@ Scandinaver\Learn\Domain\Model\Card:
       orderBy: null
   #manyToMany:
   #    assets:
-  #        targetEntity:  Scandinaver\Learn\Domain\Model\Asset
+  #        targetEntity:  Scandinaver\Learn\Domain\Entity\Asset
   #        joinTable:
   #            name: asset_cards
   #            joinColumns:

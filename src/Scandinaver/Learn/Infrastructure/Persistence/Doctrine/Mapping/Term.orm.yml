@@ -1,0 +1,82 @@
+Scandinaver\Learn\Domain\Entity\Term:
+  type: entity
+  table: term
+  indexes:
+    value:
+      columns:
+        - value
+        - user_id
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    value:
+      type: string
+      length: 255
+      unique: false
+      nullable: false
+    morph:
+      type: string
+      length: 255
+      unique: false
+      nullable: true
+    frequency:
+      type: float
+      precision: 0
+      length: 255
+      unique: false
+      nullable: true
+    sentence:
+      type: boolean
+      unique: false
+      nullable: true
+    isPublic:
+      type: boolean
+      unique: false
+      nullable: false
+      column: is_public
+      options:
+        default: true
+    createdAt:
+      type: datetime
+      unique: false
+      nullable: false
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    creator:
+      targetEntity: Scandinaver\User\Domain\Entity\User
+      cascade: { }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      nullable: true
+      joinColumns:
+        user_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  oneToMany:
+    translates:
+      targetEntity: Scandinaver\Learn\Domain\Entity\Translate
+      cascade:
+        - remove
+      fetch: EAGER
+      mappedBy: term
+      inversedBy: null
+      orphanRemoval: false
+
+  lifecycleCallbacks: { }

@@ -6,7 +6,7 @@ namespace Scandinaver\Common\Domain\Service;
 use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\DTO\IntroDTO;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
-use Scandinaver\Common\Domain\Model\Intro;
+use Scandinaver\Common\Domain\Entity\Intro;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**

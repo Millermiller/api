@@ -3,12 +3,11 @@
 
 namespace Scandinaver\Learn\Application\Handler\Query;
 
-use Scandinaver\Learn\Domain\Exception\WordNotFoundException;
+use Scandinaver\Learn\Domain\Exception\TermNotFoundException;
 use Scandinaver\Learn\Domain\Service\AudioService;
 use Scandinaver\Learn\UI\Query\FindAudioQuery;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\BaseCommandInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class FindAudioQueryHandler
@@ -29,10 +28,10 @@ class FindAudioQueryHandler extends AbstractHandler
     /**
      * @param  FindAudioQuery|BaseCommandInterface  $query
      *
-     * @throws WordNotFoundException
+     * @throws TermNotFoundException
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $this->audioService->parse($query->getWord());
+        $this->audioService->parse($query->getId());
     }
 } 

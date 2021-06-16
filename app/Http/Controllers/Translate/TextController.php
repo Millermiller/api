@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Translate;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\translate\CreateTextRequest;
-use App\Http\Requests\translate\UpdateTextRequest;
+use App\Http\Requests\HasLanguageRequest;
+use App\Http\Requests\Translate\CreateTextRequest;
+use App\Http\Requests\Translate\UpdateTextRequest;
 use Exception;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -19,8 +20,9 @@ use Scandinaver\Translate\UI\Command\CreateTextCommand;
 use Scandinaver\Translate\UI\Command\CreateTextExtraCommand;
 use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
 use Scandinaver\Translate\UI\Command\DeleteTextCommand;
-use Scandinaver\Translate\UI\Command\PublishTextCommand;
 use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
+use Scandinaver\Translate\UI\Command\UpdateTextCommand;
+use Scandinaver\Translate\UI\Command\UploadTextImageCommand;
 use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
 use Scandinaver\Translate\UI\Query\GetTextQuery;
 use Scandinaver\Translate\UI\Query\GetTextsQuery;
@@ -40,30 +42,31 @@ class TextController extends Controller
 {
 
     /**
-     * @param  string  $language
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function index(string $language): JsonResponse
+    public function index(HasLanguageRequest $request): JsonResponse
     {
         Gate::authorize(Text::VIEW);
+
+        $language = $request->get('lang');
 
         return $this->execute(new GetTextsQuery($language));
     }
 
     /**
-     * @param  string  $language
-     * @param  int     $textId
+     * @param  int  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function show(string $language, int $textId): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        Gate::authorize(Text::SHOW, $textId);
+        Gate::authorize(Text::SHOW, $id);
 
-        return $this->execute(new GetTextQuery($textId));
+        return $this->execute(new GetTextQuery($id));
     }
 
     /**
@@ -76,35 +79,21 @@ class TextController extends Controller
     {
         Gate::authorize(Text::CREATE);
 
-        return $this->execute(new CreateTextCommand());
-
-        // $title     = $this->cleartext(Input::get('title'));
-        // $origtext  = $this->cleartext(Input::get('origtext'));
-        // $translate = $this->cleartext(Input::get('translate'));
-        // $text = Text::create(['title' => $title, 'text' => $origtext, 'translate' => $translate]);
-        // $sentences = explode('.', trim($translate));
-        // array_pop($sentences);
-        // foreach ($sentences as $num => $sentence) {
-        //     $words           = explode(' ', str_replace(',', '', trim($sentence)));
-        //     $sentences[$num] = $words;
-        // }
-        // foreach ($sentences as $num => $sentence) {
-        //     foreach ($sentence as $word) {
-        //         TextWord::create(['text_id' => $text->id, 'sentence_num' => $num, 'word' => $word]);
-        //     }
-        // }
-        // return response()->json(['success' => true, 'id' => $text->id]);
+        return $this->execute(new CreateTextCommand($request->toArray()));
     }
 
     /**
      * @param  UpdateTextRequest  $request
      * @param  int                $id
      *
+     * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateTextRequest $request, int $id)
+    public function update(int $id, UpdateTextRequest $request): JsonResponse
     {
         Gate::authorize(Text::UPDATE, $id);
+
+        return $this->execute(new UpdateTextCommand($id, $request->toArray()));
     }
 
     /**
@@ -118,15 +107,6 @@ class TextController extends Controller
         Gate::authorize(Text::DELETE, $textId);
 
         return $this->execute(new DeleteTextCommand($textId));
-
-        // try {
-        //     /** @var int $text */
-        //     $text = Text::findOrFail($id);
-        //     $text->result()->delete();
-        //     return response()->json(['success' => $text->delete()]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['success' => false, 'msg' => $e->getMessage()]);
-        // }
     }
 
     /**
@@ -179,79 +159,6 @@ class TextController extends Controller
     }
 
     /**
-     * @param  int  $textId
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function publish(int $textId): JsonResponse
-    {
-        Gate::authorize(Text::UPDATE, $textId);
-
-        return $this->execute(new PublishTextCommand($textId));
-
-        // $publish = (int)Input::get('published');
-        // $id      = Input::get('id');
-        // $result = Text::find($id)->update(['published' => $publish]);
-        // return response()->json(['success' => $result]);
-    }
-
-    /**
-     * @param  int      $textId
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function addExtras(int $textId, Request $request): JsonResponse
-    {
-        Gate::authorize(Text::UPDATE, $textId);
-
-        return $this->execute(new CreateTextExtraCommand());
-
-        // $data = Input::get('data');
-        // $textid = trim(Input::get('text_id'));
-        // TextExtra::where('text_id', $textid)->delete();
-        // foreach ($data as $extra) {
-        //     $textExtra = new TextExtra(
-        //         [
-        //             'text_id' => $textid,
-        //             'orig'    => trim($extra['orig']),
-        //             'extra'   => trim($extra['extra'])
-        //         ]
-        //     );
-        // }
-        // return response()->json(['success' => true]);
-    }
-
-    /**
-     * @param  int      $textId
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function saveSentences(int $textId, Request $request): JsonResponse
-    {
-        Gate::authorize(Text::UPDATE, $textId);
-
-        // $data   = Input::get('data');
-        // $textId = Input::get('text_id');
-        // TextWord::where('text_id', $textId)->delete();
-        // foreach ($data as $sentence) {
-        //     foreach ($sentence as $word) {
-        //         $model = new TextWord([
-        //             'text_id'      => $word['text_id'],
-        //             'word'         => $word['word'],
-        //             'orig'         => $word['orig'],
-        //             'sentence_num' => $word['sentence_num']
-        //         ]);
-        //     }
-        // }
-        // return response()->json(['success' => true]);
-    }
-
-    /**
      * @param  int  $word
      *
      * @return JsonResponse
@@ -292,60 +199,17 @@ class TextController extends Controller
     }
 
     /**
-     * @param  int  $textId
+     * @param  int      $id
+     * @param  Request  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function uploadImage(int $textId): JsonResponse
+    public function uploadImage(int $id, Request $request): JsonResponse
     {
-        Gate::authorize(Text::UPDATE, $textId);
+        Gate::authorize(Text::UPDATE, $id);
 
-        $this->authorize('update', Text::class);
-
-        $storage      = new FileSystem(public_path() . '/uploads/photo/');
-        $file         = new File('file', $storage);
-        $new_filename = uniqid();
-        $file->setName($new_filename);
-        $file->addValidations([
-            new Mimetype(['image/png', 'image/jpg', 'image/jpeg']),
-            new Size('5M'),
-        ]);
-        try {
-            $file->upload();
-            $url = '/uploads/photo/' . $file->getNameWithExtension();
-
-            // Image::configure(array('driver' => 'GD'));
-            $img = Image::make(public_path() . $url);
-
-            if ($img->getWidth() > 1000) {
-                $img->widen(600);
-            }
-
-            if ($img->getHeight() > 1000) {
-                $img->heighten(600);
-            }
-
-            $img->save(NULL, 100);
-
-            $thumb = Image::make(public_path() . $url);
-            $thumb->widen(150);
-            $thumb->save(public_path() . '/uploads/thumbs/' . $file->getNameWithExtension());
-
-            $text        = Text::find($id);
-            $text->image = '/uploads/photo/' . $file->getNameWithExtension();
-
-            return response()->json(['success' => $text->save()]);
-        } catch (Exception $e) {
-            $errors  = $file->getErrors();
-            $message = implode(', ', $errors);
-
-            return response()->json([
-                'msg'     => $message,
-                'success' => FALSE,
-                'mess'    => $e->getMessage(),
-            ]);
-        }
+        return $this->execute(new UploadTextImageCommand($id, $request->file('file')));
     }
 
     /**

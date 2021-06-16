@@ -11,11 +11,11 @@ use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Exception\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Exception\RoleDublicateException;
 use Scandinaver\RBAC\Domain\Exception\RoleNotFoundException;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\PermissionGroup;
-use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\RBAC\Domain\Entity\PermissionGroup;
+use Scandinaver\RBAC\Domain\Entity\Role;
 use Scandinaver\RBAC\Domain\Service\RBACService;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

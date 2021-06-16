@@ -2,14 +2,14 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
+use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
 
 /** @var Factory $factory */
 $factory->define(FavouriteAsset::class, function (Faker $faker, array $attributes) {
 
     static $level = 1;
 
-    $cards = entity(\Scandinaver\Learn\Domain\Model\Card::class, 2)->create(['language' => $attributes['language']])->toArray();
+    $cards = entity(\Scandinaver\Learn\Domain\Entity\Card::class, 2)->create(['language' => $attributes['language']])->toArray();
 
     return [
       //  'id' => random_int(1, 999),

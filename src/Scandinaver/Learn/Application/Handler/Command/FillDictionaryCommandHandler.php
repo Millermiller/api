@@ -33,7 +33,7 @@ class FillDictionaryCommandHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $command): void
     {
-        $this->cardService->fillDictionary($command->getLanguage(), $command->getWord());
+        $this->cardService->fillDictionary($command->getLanguage(), $command->getTermId());
 
         $this->resource = new NullResource();
     }

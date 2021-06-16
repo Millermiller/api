@@ -6,7 +6,7 @@ namespace Scandinaver\Common\Domain\Service;
 use Exception;
 use Scandinaver\Common\Domain\Contract\Repository\FeedbackRepositoryInterface;
 use Scandinaver\Common\Domain\DTO\FeedbackDTO;
-use Scandinaver\Common\Domain\Model\Feedback;
+use Scandinaver\Common\Domain\Entity\Feedback;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**

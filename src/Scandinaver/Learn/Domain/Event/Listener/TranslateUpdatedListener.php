@@ -26,11 +26,11 @@ class TranslateUpdatedListener
      */
     public function handle(TranslateUpdated $event)
     {
-        $word  = $event->getTranslate();
-        $value = $event->getValue();
+        $translate = $event->getTranslate();
+        $value     = $event->getValue();
 
-        $word->setValue($value);
+        $translate->setValue($value);
 
-        $this->translateRepository->save($word);
+        $this->translateRepository->save($translate);
     }
 }

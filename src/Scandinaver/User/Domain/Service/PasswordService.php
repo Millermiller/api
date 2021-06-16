@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Domain\Service;
 
 use Illuminate\Contracts\Hashing\Hasher;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Class PasswordService

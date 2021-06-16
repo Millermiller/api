@@ -5,10 +5,10 @@ namespace Scandinaver\Learn\Domain\Service;
 
 use Scandinaver\Learn\Domain\DTO\CardDTO;
 use Scandinaver\Learn\Domain\DTO\TranslateDTO;
-use Scandinaver\Learn\Domain\DTO\WordDTO;
-use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\Learn\Domain\Model\Translate;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\DTO\TermDTO;
+use Scandinaver\Learn\Domain\Entity\Card;
+use Scandinaver\Learn\Domain\Entity\Translate;
+use Scandinaver\Learn\Domain\Entity\Term;
 
 /**
  * Class CardFabric
@@ -20,15 +20,15 @@ class CardFactory
     public static function fromDTO(CardDTO $cardDTO): Card
     {
         $card      = new Card();
-        $word      = new Word();
+        $term      = new Term();
         $translate = new Translate();
 
-        $word->setValue($cardDTO->getWordDTO()->getValue());
+        $term->setValue($cardDTO->getTermDTO()->getValue());
         $translate->setValue($cardDTO->getTranslateDTO()->getValue());
 
-        $translate->setWord($word);
+        $translate->setTerm($term);
 
-        $card->setWord($word);
+        $card->setTerm($term);
         $card->setTranslate($translate);
 
         $card->setCreator($cardDTO->getCreator());
@@ -41,9 +41,9 @@ class CardFactory
     {
         $cardDTO = new CardDTO();
 
-        $wordDTO = new WordDTO(
-            $card->getWord()->getId(),
-            $card->getWord()->getValue()
+        $termDTO = new TermDTO(
+            $card->getTerm()->getId(),
+            $card->getTerm()->getValue()
         );
 
         $translateDTO = new TranslateDTO(
@@ -54,7 +54,7 @@ class CardFactory
         $cardDTO->setId($card->getId());
         $cardDTO->setLanguage($card->getLanguage());
         $cardDTO->setCreator($card->getCreator());
-        $cardDTO->setWordDTO($wordDTO);
+        $cardDTO->setTermDTO($termDTO);
         $cardDTO->setTranslateDTO($translateDTO);
         $cardDTO->setExamplesDTO($card->getExamples()->map(fn($example) => ExampleFactory::toDTO($example))->toArray());
 

@@ -7,11 +7,11 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\AudioParserInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
+use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\AudioFileCantParsedException;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Exception\WordNotFoundException;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Exception\TermNotFoundException;
+use Scandinaver\Learn\Domain\Entity\Term;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
 
@@ -22,24 +22,24 @@ use Scandinaver\Shared\DTO;
  */
 class AudioService implements BaseServiceInterface
 {
-    use WordTrait;
+    use TermTrait;
     use LanguageTrait;
 
-    private WordRepositoryInterface $wordsRepository;
+    private TermRepositoryInterface $termRepository;
 
     private AudioParserInterface $parser;
 
     public function __construct(
-        WordRepositoryInterface $wordsRepository,
+        TermRepositoryInterface $termRepository,
         AudioParserInterface $parser
     ) {
-        $this->wordsRepository = $wordsRepository;
+        $this->termRepository = $termRepository;
         $this->parser          = $parser;
     }
 
     public function count(): int
     {
-        return $this->wordsRepository->countAudio();
+        return $this->termRepository->countAudio();
     }
 
     /**
@@ -52,43 +52,43 @@ class AudioService implements BaseServiceInterface
     {
         $language = $this->getLanguage($language);
 
-        return $this->wordsRepository->getCountAudioByLanguage($language);
+        return $this->termRepository->getCountAudioByLanguage($language);
     }
 
     /**
-     * @param  int           $word
+     * @param  int           $id
      * @param  UploadedFile  $file
      *
-     * @return Word
-     * @throws WordNotFoundException
+     * @return Term
+     * @throws TermNotFoundException
      */
-    public function upload(int $word, UploadedFile $file): Word
+    public function upload(int $id, UploadedFile $file): Term
     {
-        $word = $this->getWord($word);
+        $term = $this->getTerm($id);
 
         $path = $file->store('audio');
 
-        $word->setAudio($path);
+        $term->setAudio($path);
 
-        $this->wordsRepository->save($word);
+        $this->termRepository->save($term);
 
-        return $word;
+        return $term;
     }
 
     /**
      * TODO: use laravel curl wrapper and Storage. Move to infrastructure
      *
-     * @param  int  $word
+     * @param  int  $id
      *
      * @return string
-     * @throws WordNotFoundException
+     * @throws TermNotFoundException
      */
-    public function parse(int $word): string
+    public function parse(int $id): string
     {
-        $word = $this->getWord($word);
+        $term = $this->getTerm($id);
 
         try {
-            $link = $this->parser->parse($word->getWord());
+            $link = $this->parser->parse($term->getValue());
 
             $curl = curl_init();
             curl_setopt(
@@ -109,14 +109,14 @@ class AudioService implements BaseServiceInterface
             fclose($fp);
 
             if ($filesize > 0) {
-                $word->setAudio('/audio/' . $filename . '.mp3');
-                $this->wordsRepository->save($word);
+                $term->setAudio('/audio/' . $filename . '.mp3');
+                $this->termRepository->save($term);
             }
         } catch (AudioFileCantParsedException $e) {
             //
         }
 
-        return $word;
+        return $term;
     }
 
     public function all(): array

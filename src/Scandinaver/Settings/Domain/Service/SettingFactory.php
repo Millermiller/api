@@ -4,7 +4,7 @@
 namespace Scandinaver\Settings\Domain\Service;
 
 use Scandinaver\Settings\Domain\DTO\SettingDTO;
-use Scandinaver\Settings\Domain\Model\Setting;
+use Scandinaver\Settings\Domain\Entity\Setting;
 
 /**
  * Class SettingFactory

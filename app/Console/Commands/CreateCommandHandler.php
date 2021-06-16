@@ -115,7 +115,7 @@ class CreateCommandHandler extends GeneratorCommand
     {
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $commandNamespace = str_replace('/', '\\', 'UI/Command');
-        $commandClass     = $class;
+        $commandClass     = str_replace('Handler', '', $class);
 
         return str_replace([
             'DummyClass',

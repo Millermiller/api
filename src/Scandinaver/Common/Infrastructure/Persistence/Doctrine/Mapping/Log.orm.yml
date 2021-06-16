@@ -1,4 +1,4 @@
-Scandinaver\Common\Domain\Model\Log:
+Scandinaver\Common\Domain\Entity\Log:
   type: entity
   table: log
   indexes:
@@ -8,61 +8,44 @@ Scandinaver\Common\Domain\Model\Log:
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     message:
       type: text
-      scale: 0
       unique: false
       nullable: false
-      precision: 0
     level:
       type: integer
-      scale: 0
       length: 1
       unique: false
       nullable: true
-      precision: 0
     levelName:
       type: string
-      scale: 0
       length: 255
       unique: false
       nullable: true
-      precision: 0
     context:
       type: array
-      scale: 0
       unique: false
       nullable: true
-      precision: 0
     extra:
       type: array
-      scale: 0
       unique: false
       nullable: true
-      precision: 0
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: true
-      precision: 0
+      nullable: false
       column: created_at
       gedmo:
         timestampable:
           on: create
   manyToOne:
     owner:
-      targetEntity: Scandinaver\User\Domain\Model\User
+      targetEntity: Scandinaver\User\Domain\Entity\User
       cascade: [ "persist", "merge" ]
       fetch: LAZY
       joinColumns:

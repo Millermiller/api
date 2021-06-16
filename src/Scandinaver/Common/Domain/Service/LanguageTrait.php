@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\Domain\Service;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 

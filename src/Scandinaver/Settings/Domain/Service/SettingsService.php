@@ -7,7 +7,7 @@ use Scandinaver\Common\Domain\Contract\RedisInterface;
 use Scandinaver\Settings\Domain\Contract\Repository\SettingRepositoryInterface;
 use Scandinaver\Settings\Domain\DTO\SettingDTO;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
-use Scandinaver\Settings\Domain\Model\Setting;
+use Scandinaver\Settings\Domain\Entity\Setting;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**
@@ -60,7 +60,9 @@ class SettingsService implements BaseServiceInterface
         if ($cached !== NULL) {
             /** @var Setting $setting */
             $setting = unserialize($cached);
-            return $setting->getValue();
+            if ($setting instanceof Setting) {
+                return $setting->getValue();
+            }
         }
 
         /** @var Setting $setting */
@@ -112,7 +114,6 @@ class SettingsService implements BaseServiceInterface
     public function deleteSetting(int $id): void
     {
         $setting = $this->getSetting($id);
-        $setting->delete();
 
         $this->settingRepository->delete($setting);
 

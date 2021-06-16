@@ -4,15 +4,14 @@
 namespace Scandinaver\Learn\Domain\DTO;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Example;
-use Scandinaver\Learn\Domain\Model\ExampleDTO;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Entity\ExampleDTO;
 use Scandinaver\Shared\DTO;
 
 /**
  * Class CardDTO
  *
- * @package Scandinaver\Learn\Domain\Model
+ * @package Scandinaver\Learn\Domain\Entity
  */
 class CardDTO extends DTO
 {
@@ -22,7 +21,7 @@ class CardDTO extends DTO
 
     private Language $language;
 
-    private WordDTO $wordDTO;
+    private TermDTO $termDTO;
 
     private TranslateDTO $translateDTO;
 
@@ -64,14 +63,14 @@ class CardDTO extends DTO
         return $this->translateDTO;
     }
 
-    public function getWordDTO(): WordDTO
+    public function getTermDTO(): TermDTO
     {
-        return $this->wordDTO;
+        return $this->termDTO;
     }
 
-    public function setWordDTO(WordDTO $wordDTO): void
+    public function setTermDTO(TermDTO $termDTO): void
     {
-        $this->wordDTO = $wordDTO;
+        $this->termDTO = $termDTO;
     }
 
     public function setTranslateDTO(TranslateDTO $translateDTO): void

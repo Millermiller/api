@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Psr\Log\LoggerInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 

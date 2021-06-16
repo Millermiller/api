@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\Domain\Event;
 
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Shared\DomainEvent;
 
 /**

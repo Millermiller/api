@@ -5,9 +5,9 @@ namespace Tests\Feature\Controllers\Settings;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\Settings\Domain\Model\Setting;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\Settings\Domain\Entity\Setting;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

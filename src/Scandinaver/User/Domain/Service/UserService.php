@@ -3,14 +3,14 @@
 
 namespace Scandinaver\User\Domain\Service;
 
-use Auth;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Support\Facades\Auth;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
@@ -18,13 +18,11 @@ use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset, PersonalAsset};
-use Scandinaver\Learn\Domain\Service\AssetFactory;
+use Scandinaver\Learn\Domain\Entity\{Asset, FavouriteAsset, PersonalAsset};
 use Scandinaver\Learn\Domain\Service\AssetService;
-use Scandinaver\Puzzle\Domain\Service\PuzzleFactory;
 use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
-use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\RBAC\Domain\Entity\Role;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Translate\Domain\Service\TextService;
@@ -33,7 +31,7 @@ use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
 use Scandinaver\User\Domain\DTO\State;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
-use Scandinaver\User\Domain\Model\{Plan, User};
+use Scandinaver\User\Domain\Entity\{Plan, User};
 
 /**
  * Class UserService
@@ -234,11 +232,6 @@ class UserService implements BaseServiceInterface
                 $personalAsset->setAvailable(TRUE);
             }
 
-            if ($personalAsset->isFavorite()) {
-                $personalAsset->setActive(TRUE);
-                $personalAsset->setAvailable(TRUE);
-            }
-
             $result = $personalAsset->getBestResultForUser($user);
             $personalAsset->setBestResult($result);
         }
@@ -279,9 +272,9 @@ class UserService implements BaseServiceInterface
         return $stateDTO;
     }
 
-    public function getInfo(): User
+    public function getInfo(): UserInterface
     {
-        return Auth::user();
+        return \App\Helpers\Auth::user();
     }
 
     public function updatePlan(User $user): void

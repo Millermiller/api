@@ -6,7 +6,7 @@ namespace Scandinaver\Common\UI\Resource;
 
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Common\Domain\Model\Log;
+use Scandinaver\Common\Domain\Entity\Log;
 use Scandinaver\User\UI\Resource\UserTransformer;
 
 /**

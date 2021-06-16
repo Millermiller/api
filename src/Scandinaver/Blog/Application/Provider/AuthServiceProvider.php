@@ -9,7 +9,7 @@ use Scandinaver\Blog\Domain\Permission\Category;
 use Scandinaver\Blog\Domain\Permission\Comment;
 use Scandinaver\Blog\Domain\Permission\Post;
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Class AuthServiceProvider

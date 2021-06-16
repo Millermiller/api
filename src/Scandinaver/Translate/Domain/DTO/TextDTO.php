@@ -3,13 +3,15 @@
 
 namespace Scandinaver\Translate\Domain\DTO;
 
-use Scandinaver\Common\Domain\Model\Language;
+use App\Helpers\StringHelper;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Shared\DTO;
+use Scandinaver\Translate\Domain\Entity\Sentence;
 
 /**
  * Class TextDTO
  *
- * @package Scandinaver\Translate\Domain\Model
+ * @package Scandinaver\Translate\Domain\Entity
  */
 class TextDTO extends DTO
 {
@@ -19,21 +21,31 @@ class TextDTO extends DTO
 
     private Language $language;
 
+    private string $languageLetter;
+
     private int $level;
 
-    private string $description;
+    private ?string $description = NULL;
 
     private string $text;
+
+    private string $translate;
 
     private ?string $image;
 
     private int $count;
 
-    private array $extra;
+    /** @var ExtraDTO[] $extraDTO */
+    private array $extraDTO;
+
+    /** @var Sentence[] $sentences */
+    private array $sentences;
 
     private bool $active;
 
     private bool $available;
+
+    private bool $published;
 
     public function getId(): ?int
     {
@@ -65,19 +77,23 @@ class TextDTO extends DTO
         $this->level = $level;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
-        return $this->description;
+        if ($this->description === NULL) {
+            return NULL;
+        }
+
+        return StringHelper::cleartext($this->description);
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
     public function getText(): string
     {
-        return $this->text;
+        return StringHelper::cleartext($this->text);
     }
 
     public function setText(string $text): void
@@ -103,16 +119,6 @@ class TextDTO extends DTO
     public function setCount(int $count): void
     {
         $this->count = $count;
-    }
-
-    public function getExtra(): array
-    {
-        return $this->extra;
-    }
-
-    public function setExtra(array $extra): void
-    {
-        $this->extra = $extra;
     }
 
     public function getTitle(): string
@@ -145,8 +151,85 @@ class TextDTO extends DTO
         $this->available = $available;
     }
 
+    public function getLanguageLetter(): string
+    {
+        return $this->languageLetter;
+    }
+
+    public function setLanguageLetter(string $languageLetter): void
+    {
+        $this->languageLetter = $languageLetter;
+    }
+
+    public function getTranslate(): string
+    {
+        return StringHelper::cleartext($this->translate);
+    }
+
+    public function setTranslate(string $translate): void
+    {
+        $this->translate = $translate;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): void
+    {
+        $this->published = $published;
+    }
+
+
+    public function getExtraDTO(): array
+    {
+        return $this->extraDTO;
+    }
+
+    public function setExtraDTO(array $extraDTO): void
+    {
+        $this->extraDTO = $extraDTO;
+    }
+
+    public function getSentences(): array
+    {
+        return $this->sentences;
+    }
+
+    public function setSentences(array $sentences): void
+    {
+        $this->sentences = $sentences;
+    }
+
     public static function fromArray(array $data): TextDTO
     {
-        return new self();
+        $textDTO = new self();
+
+        $extraDTO = [];
+        foreach ($data['extra'] as $extra) {
+            $extraDTO[] = ExtraDTO::fromArray($extra);
+        }
+
+        $sentences = [];
+        foreach ($data['sentences'] as $key => $sentenceData) {
+            $sentence = new Sentence($key);
+            foreach ($sentenceData as $word) {
+                $wordDTO = WordDTO::fromArray($word);
+                $sentence->addWord($wordDTO);
+            }
+            $sentences[] = $sentence;
+        }
+
+        $textDTO->setTitle($data['title']);
+        $textDTO->setLanguageLetter($data['language']);
+        $textDTO->setText($data['original']);
+        $textDTO->setTranslate($data['translate']);
+        $textDTO->setExtraDTO($extraDTO);
+        $textDTO->setSentences($sentences);
+        $textDTO->setPublished($data['published']);
+        $textDTO->setDescription($data['description'] ?? NULL);
+
+        return $textDTO;
     }
 }

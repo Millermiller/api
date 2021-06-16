@@ -4,14 +4,14 @@ namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Learn\Domain\Model\Passing;
-use Scandinaver\Learn\Domain\Model\WordAsset;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\Card;
+use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
+use Scandinaver\Learn\Domain\Entity\Passing;
+use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 use Throwable;
 
@@ -87,13 +87,12 @@ class AssetControllerTest extends TestCase
                 'title',
                 'level',
                 'count',
-                'basic',
                 'language',
                 'cards' => [
                     [
                         'id',
                         'favourite',
-                        'word'      => [
+                        'term'      => [
                             'id',
                             'value',
                         ],
@@ -130,7 +129,7 @@ class AssetControllerTest extends TestCase
             ]
         );
 
-        $response->assertJsonStructure(['id', 'title', 'basic', 'level', 'language']);
+        $response->assertJsonStructure(['id', 'title', 'level', 'language']);
 
         $data = $response->decodeResponseJson();
         static::assertEquals('TEST UPDATE ASSET', $data['title']);
@@ -317,8 +316,6 @@ class AssetControllerTest extends TestCase
                 'id',
                 'title',
                 'level',
-                //  'result',
-                'basic',
                 'language',
                 'count',
                 'cards',

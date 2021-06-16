@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\UI\Resource;
 
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 
 /**
  * Class IntroDTOTransformer

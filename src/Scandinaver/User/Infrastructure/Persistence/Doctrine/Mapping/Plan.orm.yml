@@ -1,45 +1,31 @@
-Scandinaver\User\Domain\Model\Plan:
+Scandinaver\User\Domain\Entity\Plan:
   type: entity
   table: plan
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     name:
       type: string
-      scale: 0
       length: 50
       unique: false
       nullable: false
-      precision: 0
     period:
       type: string
-      scale: 0
       length: 50
       unique: false
       nullable: false
-      precision: 0
     cost:
       type: integer
-      scale: 0
-      length: null
       unique: false
       nullable: true
-      precision: 0
     costPerMonth:
       type: integer
-      scale: 0
-      length: null
       unique: false
       nullable: true
-      precision: 0
       column: cost_per_month
   lifecycleCallbacks: { }

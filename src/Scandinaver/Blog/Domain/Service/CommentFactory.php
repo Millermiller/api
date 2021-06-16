@@ -7,11 +7,11 @@ namespace Scandinaver\Blog\Domain\Service;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\CommentDTO;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
-use Scandinaver\Blog\Domain\Model\Comment;
-use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Blog\Domain\Entity\Comment;
+use Scandinaver\Blog\Domain\Entity\Post;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Class CommentFactory

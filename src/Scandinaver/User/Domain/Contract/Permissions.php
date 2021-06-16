@@ -4,8 +4,8 @@
 namespace Scandinaver\User\Domain\Contract;
 
 
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\RBAC\Domain\Entity\Role;
 
 /**
  * Interface Permission

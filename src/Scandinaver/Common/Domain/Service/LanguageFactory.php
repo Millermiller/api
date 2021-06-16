@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\Domain\Service;
 
 use Scandinaver\Common\Domain\DTO\LanguageDTO;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 
 /**
  * Class LanguageFactory

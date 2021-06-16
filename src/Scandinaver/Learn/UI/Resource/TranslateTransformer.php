@@ -4,7 +4,7 @@
 namespace Scandinaver\Learn\UI\Resource;
 
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Learn\Domain\Model\Translate;
+use Scandinaver\Learn\Domain\Entity\Translate;
 
 /**
  * Class TranslateTransformer

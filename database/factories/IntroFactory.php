@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Common\Domain\Model\Intro;
+use Scandinaver\Common\Domain\Entity\Intro;
 
 /** @var Factory $factory */
 $factory->define(Intro::class, function (Faker $faker, array $attributes) {

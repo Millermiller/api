@@ -5,7 +5,7 @@ namespace Scandinaver\Learn\UI\Resource;
 
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Learn\Domain\Model\Passing;
+use Scandinaver\Learn\Domain\Entity\Passing;
 use Scandinaver\User\UI\Resource\UserTransformer;
 
 /**

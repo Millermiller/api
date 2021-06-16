@@ -6,16 +6,16 @@ namespace Scandinaver\User\Application\Provider;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\Role;
-use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\PermissionRepository;
-use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\RoleRepository;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\RBAC\Domain\Entity\Role;
+use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository\PermissionRepository;
+use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository\RoleRepository;
 use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
-use Scandinaver\User\Domain\Model\Plan;
-use Scandinaver\User\Domain\Model\User;
-use Scandinaver\User\Infrastructure\Persistence\Doctrine\PlanRepository;
-use Scandinaver\User\Infrastructure\Persistence\Doctrine\UserRepository;
+use Scandinaver\User\Domain\Entity\Plan;
+use Scandinaver\User\Domain\Entity\User;
+use Scandinaver\User\Infrastructure\Persistence\Doctrine\Repository\PlanRepository;
+use Scandinaver\User\Infrastructure\Persistence\Doctrine\Repository\UserRepository;
 
 /**
  * Class DoctrineServiceProvider

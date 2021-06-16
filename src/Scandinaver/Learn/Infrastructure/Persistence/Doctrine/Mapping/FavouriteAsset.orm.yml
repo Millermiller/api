@@ -1,2 +1,2 @@
-Scandinaver\Learn\Domain\Model\FavouriteAsset:
+Scandinaver\Learn\Domain\Entity\FavouriteAsset:
   type: entity

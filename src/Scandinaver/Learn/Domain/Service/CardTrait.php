@@ -5,7 +5,7 @@ namespace Scandinaver\Learn\Domain\Service;
 
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
-use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Entity\Card;
 
 /**
  * Trait CardTrait

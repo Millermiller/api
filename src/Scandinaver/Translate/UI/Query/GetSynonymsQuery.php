@@ -14,10 +14,15 @@ use Scandinaver\Shared\Contract\QueryInterface;
  */
 class GetSynonymsQuery implements QueryInterface
 {
-    private int $word;
+    private int $id;
 
-    public function __construct(int $word)
+    public function __construct(int $id)
     {
-        $this->word = $word;
+        $this->id = $id;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 }

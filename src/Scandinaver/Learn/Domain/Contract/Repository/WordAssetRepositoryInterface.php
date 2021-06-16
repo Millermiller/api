@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learn\Domain\Contract\Repository;
 
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Entity\Asset;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**

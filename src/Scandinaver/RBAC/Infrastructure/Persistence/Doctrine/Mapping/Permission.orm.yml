@@ -1,26 +1,22 @@
-Scandinaver\RBAC\Domain\Model\Permission:
+Scandinaver\RBAC\Domain\Entity\Permission:
   type: entity
   table: permission
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     name:
       type: string
-      length: 50
+      length: 255
       unique: true
       nullable: false
     slug:
       type: string
-      length: 50
+      length: 255
       unique: true
       nullable: false
     description:
@@ -29,29 +25,22 @@ Scandinaver\RBAC\Domain\Model\Permission:
       nullable: true
     updatedAt:
       type: datetime
-      scale: 0
-      length: null
-      unique: false
-      nullable: true
-      precision: 0
+      nullable: false
       column: updated_at
       gedmo:
         timestampable:
           on: update
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: true
-      precision: 0
       column: created_at
       gedmo:
         timestampable:
           on: create
   manyToOne:
     group:
-      targetEntity: Scandinaver\RBAC\Domain\Model\PermissionGroup
+      targetEntity: Scandinaver\RBAC\Domain\Entity\PermissionGroup
       cascade: { }
       fetch: LAZY
       mappedBy: null

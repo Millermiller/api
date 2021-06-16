@@ -1,15 +1,17 @@
 <?php
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Model\WordAsset;
+use Scandinaver\Learn\Domain\Entity\Card;
+use Scandinaver\Learn\Domain\Entity\WordAsset;
 
 /** @var Factory $factory */
 $factory->define(WordAsset::class, function (Faker $faker, array $attributes) {
 
     static $level = 1;
 
-    $cards = entity(\Scandinaver\Learn\Domain\Model\Card::class, 2)->create(['language' => $attributes['language']])->toArray();
+    $cards = entity(Card::class, 2)->create(['language' => $attributes['language']])->toArray();
 
     return [
       //  'id' => random_int(1, 999),
@@ -20,6 +22,6 @@ $factory->define(WordAsset::class, function (Faker $faker, array $attributes) {
         'favorite' =>  $attributes['favorite'] ?? 0,
         'language' => $attributes['language'],
         'users' => [$attributes['user']],
-        'cards' => new \Doctrine\Common\Collections\ArrayCollection($cards)
+        'cards' => new ArrayCollection($cards)
     ];
 });

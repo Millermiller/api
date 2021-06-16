@@ -9,7 +9,7 @@ use League\Fractal\TransformerAbstract;
 use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
 use Scandinaver\RBAC\UI\Resource\RoleTransformer;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Class UserTransformer

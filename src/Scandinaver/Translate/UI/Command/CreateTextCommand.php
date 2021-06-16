@@ -5,6 +5,7 @@ namespace Scandinaver\Translate\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\DTO;
+use Scandinaver\Translate\Domain\DTO\TextDTO;
 
 /**
  * Class CreateTextCommand
@@ -15,12 +16,16 @@ use Scandinaver\Shared\DTO;
  */
 class CreateTextCommand implements CommandInterface
 {
-    public function __construct()
+
+    private array $data;
+
+    public function __construct(array $data)
     {
+        $this->data = $data;
     }
 
-    public function buildDTO(): DTO
+    public function buildDTO(): TextDTO
     {
-        // TODO: Implement buildDTO() method.
+        return TextDTO::fromArray($this->data);
     }
 }

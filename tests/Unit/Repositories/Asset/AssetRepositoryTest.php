@@ -4,12 +4,12 @@
 namespace Tests\Unit\Repositories\Asset;
 
 use Doctrine\ORM\EntityManager;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\WordAsset;
-use Scandinaver\User\Domain\Model\{User};
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\User\Domain\Entity\{User};
 use Tests\TestCase;
 
 /**

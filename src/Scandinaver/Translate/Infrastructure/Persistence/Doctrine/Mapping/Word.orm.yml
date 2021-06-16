@@ -1,4 +1,4 @@
-Scandinaver\Translate\Domain\Model\Word:
+Scandinaver\Translate\Domain\Entity\Word:
   type: entity
   table: word_in_text
   indexes:
@@ -13,56 +13,45 @@ Scandinaver\Translate\Domain\Model\Word:
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     sentenceNum:
       type: integer
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
       column: sentence_num
     word:
       type: string
-      scale: 0
       length: 255
       unique: false
       nullable: false
-      precision: 0
     orig:
       type: string
-      scale: 0
       length: 255
       unique: false
-      nullable: false
-      precision: 0
+      nullable: true
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
       column: created_at
+      gedmo:
+        timestampable:
+          on: create
     updatedAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: false
-      precision: 0
+      nullable: true
       column: updated_at
+      gedmo:
+        timestampable:
+          on: update
   manyToOne:
     text:
-      targetEntity: Scandinaver\Translate\Domain\Model\Text
+      targetEntity: Scandinaver\Translate\Domain\Entity\Text
       cascade: {  }
       fetch: LAZY
       mappedBy: null
@@ -73,7 +62,7 @@ Scandinaver\Translate\Domain\Model\Word:
       orphanRemoval: false
   oneToMany:
     synonyms:
-      targetEntity: Scandinaver\Translate\Domain\Model\Synonym
+      targetEntity: Scandinaver\Translate\Domain\Entity\Synonym
       cascade: {  }
       fetch: LAZY
       mappedBy: word

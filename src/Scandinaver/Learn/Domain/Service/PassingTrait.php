@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\Domain\Service;
 use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\PassingNotFoundException;
-use Scandinaver\Learn\Domain\Model\Passing;
+use Scandinaver\Learn\Domain\Entity\Passing;
 
 /**
  * Trait PassingTrait

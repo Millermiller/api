@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\Domain\Contract\Repository;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**
- * Interface WordRepositoryInterface
+ * Interface TermRepositoryInterface
  *
  * @package Scandinaver\Learn\Domain\Contract\Repository
  */

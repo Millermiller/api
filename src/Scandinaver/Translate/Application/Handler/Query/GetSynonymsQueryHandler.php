@@ -3,9 +3,12 @@
 
 namespace Scandinaver\Translate\Application\Handler\Query;
 
+use League\Fractal\Resource\Collection;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Translate\Domain\Service\TextService;
 use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
+use Scandinaver\Translate\UI\Resource\SynonymTransformer;
 
 /**
  * Class GetSynonymsQueryHandler
@@ -15,9 +18,13 @@ use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
 class GetSynonymsQueryHandler extends AbstractHandler
 {
 
-    public function __construct()
+    private TextService $textService;
+
+    public function __construct(TextService $textService)
     {
         parent::__construct();
+
+        $this->textService = $textService;
     }
 
     /**
@@ -25,6 +32,8 @@ class GetSynonymsQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        // TODO: Implement handle() method.
+        $synonyms = $this->textService->getSynonymsByWordId($query->getId());
+
+        $this->resource = new Collection($synonyms, new SynonymTransformer());
     }
 } 
