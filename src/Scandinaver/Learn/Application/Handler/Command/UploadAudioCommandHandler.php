@@ -4,10 +4,10 @@
 namespace Scandinaver\Learn\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
-use Scandinaver\Learn\Domain\Exception\WordNotFoundException;
+use Scandinaver\Learn\Domain\Exception\TermNotFoundException;
 use Scandinaver\Learn\Domain\Service\AudioService;
 use Scandinaver\Learn\UI\Command\UploadAudioCommand;
-use Scandinaver\Learn\UI\Resource\WordTransformer;
+use Scandinaver\Learn\UI\Resource\TermTransformer;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\BaseCommandInterface;
 
@@ -30,12 +30,12 @@ class UploadAudioCommandHandler extends AbstractHandler
     /**
      * @param  UploadAudioCommand|BaseCommandInterface  $command
      *
-     * @throws WordNotFoundException
+     * @throws TermNotFoundException
      */
     public function handle(BaseCommandInterface $command): void
     {
-        $word = $this->audioService->upload($command->getWord(), $command->getFile());
+        $term = $this->audioService->upload($command->getTermId(), $command->getFile());
 
-        $this->resource = new Item($word, new WordTransformer());
+        $this->resource = new Item($term, new TermTransformer());
     }
 } 

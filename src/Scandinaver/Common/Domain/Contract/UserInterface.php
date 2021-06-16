@@ -3,9 +3,10 @@
 
 namespace Scandinaver\Common\Domain\Contract;
 
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
+use Scandinaver\Shared\Contract\EqualInterface;
 use Scandinaver\User\Domain\Contract\Permissions;
 
 /**
@@ -13,7 +14,7 @@ use Scandinaver\User\Domain\Contract\Permissions;
  *
  * @package Scandinaver\Common\Domain\Contract
  */
-interface UserInterface extends Permissions
+interface UserInterface extends EqualInterface, Permissions
 {
 
     public function getId(): int;

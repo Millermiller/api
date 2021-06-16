@@ -9,8 +9,8 @@ use Exception;
 use Illuminate\Support\Env;
 use Psr\Log\{LoggerInterface, LoggerTrait};
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
-use Scandinaver\Common\Domain\Model\Log;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Entity\Log;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Class Logger

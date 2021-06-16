@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Stream;
 use Scandinaver\Common\Domain\Contract\HashInterface;
 use Scandinaver\Common\Domain\Contract\RedisInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;

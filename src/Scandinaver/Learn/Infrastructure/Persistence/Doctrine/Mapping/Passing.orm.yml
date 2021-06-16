@@ -1,4 +1,4 @@
-Scandinaver\Learn\Domain\Model\Passing:
+Scandinaver\Learn\Domain\Entity\Passing:
   type: entity
   table: test_result
   indexes:
@@ -11,55 +11,41 @@ Scandinaver\Learn\Domain\Model\Passing:
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     completed:
       type: boolean
-      length: null
       unique: false
       nullable: false
     percent:
       type: integer
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
     data:
       type: json
       nullable: false
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: true
-      precision: 0
+      nullable: false
       column: created_at
       gedmo:
         timestampable:
           on: create
     updatedAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: true
-      precision: 0
       column: updated_at
       gedmo:
         timestampable:
           on: update
   manyToOne:
     asset:
-      targetEntity: Scandinaver\Learn\Domain\Model\Asset
+      targetEntity: Scandinaver\Learn\Domain\Entity\Asset
       cascade:
         - persist
       fetch: LAZY
@@ -70,7 +56,7 @@ Scandinaver\Learn\Domain\Model\Passing:
           referencedColumnName: id
       orphanRemoval: false
     language:
-      targetEntity: Scandinaver\Common\Domain\Model\Language
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
       cascade: { }
       fetch: LAZY
       mappedBy: language
@@ -79,11 +65,11 @@ Scandinaver\Learn\Domain\Model\Passing:
           referencedColumnName: id
       orphanRemoval: false
     user:
-      targetEntity: Scandinaver\User\Domain\Model\User
+      targetEntity: Scandinaver\User\Domain\Entity\User
       cascade: { }
       fetch: LAZY
       mappedBy: null
-      inversedBy: tests
+      inversedBy: passings
       joinColumns:
         user_id:
           referencedColumnName: id

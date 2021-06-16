@@ -5,21 +5,19 @@ namespace Scandinaver\Common\Application\Provider;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
-use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
-use Scandinaver\Blog\Domain\Model\Post;
-use Scandinaver\Blog\Infrastructure\Persistence\Doctrine\PostRepository;
 use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Contract\Repository\FeedbackRepositoryInterface;
-use Scandinaver\Common\Domain\Model\Intro;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Common\Domain\Model\Log;
-use Scandinaver\Common\Domain\Model\Feedback;
-use Scandinaver\Common\Infrastructure\Persistence\Doctrine\IntroRepository;
-use Scandinaver\Common\Infrastructure\Persistence\Doctrine\LanguageRepository;
-use Scandinaver\Common\Infrastructure\Persistence\Doctrine\LogRepository;
-use Scandinaver\Common\Infrastructure\Persistence\Doctrine\FeedbackRepository;
+use Scandinaver\Common\Domain\Entity\Intro;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Common\Domain\Entity\Log;
+use Scandinaver\Common\Domain\Entity\Feedback;
+use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\IntroRepository;
+use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\LanguageRepository;
+use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\LogRepository;
+use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\FeedbackRepository;
+use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**
  * Class DoctrineServiceProvider
@@ -58,16 +56,6 @@ class DoctrineServiceProvider extends ServiceProvider
                 return new FeedbackRepository(
                     $this->app['em'],
                     $this->app['em']->getClassMetadata(Feedback::class)
-                );
-            }
-        );
-
-        $this->app->bind(
-            PostRepositoryInterface::class,
-            function () {
-                return new PostRepository(
-                    $this->app['em'],
-                    $this->app['em']->getClassMetadata(Post::class)
                 );
             }
         );

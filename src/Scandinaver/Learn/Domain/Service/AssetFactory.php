@@ -6,10 +6,10 @@ namespace Scandinaver\Learn\Domain\Service;
 use Exception;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\DTO\AssetDTO;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\PersonalAsset;
-use Scandinaver\Learn\Domain\Model\SentenceAsset;
-use Scandinaver\Learn\Domain\Model\WordAsset;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\PersonalAsset;
+use Scandinaver\Learn\Domain\Entity\SentenceAsset;
+use Scandinaver\Learn\Domain\Entity\WordAsset;
 
 /**
  * Class AssetFactory
@@ -35,13 +35,13 @@ class AssetFactory
 
         switch ($type) {
             case Asset::TYPE_WORDS:
-                $asset = new WordAsset($assetDTO->getTitle(), $assetDTO->isBasic(), 0, $language);
+                $asset = new WordAsset($assetDTO->getTitle(), $language);
                 break;
             case Asset::TYPE_SENTENCES:
-                $asset = new SentenceAsset($assetDTO->getTitle(), $assetDTO->isBasic(), 0, $language);
+                $asset = new SentenceAsset($assetDTO->getTitle(), $language);
                 break;
             case Asset::TYPE_PERSONAL:
-                $asset = new PersonalAsset($assetDTO->getTitle(), $assetDTO->isBasic(), 0, $language);
+                $asset = new PersonalAsset($assetDTO->getTitle(), $language);
                 break;
             default:
                 throw new Exception('undefined type');
@@ -52,7 +52,6 @@ class AssetFactory
 
         $asset->setOwner($assetDTO->getOwner());
         $asset->setLevel($assetDTO->getLevel());
-        $asset->setType($type);
 
         return $asset;
     }
@@ -71,7 +70,6 @@ class AssetFactory
         $assetDTO->setType($asset->getType());
         $assetDTO->setLevel($asset->getLevel());
         $assetDTO->setLanguage($asset->getLanguage());
-        $assetDTO->setBasic($asset->getBasic());
 
         $cardsDTOs = $asset->getCards()->map(fn($card) => CardFactory::toDTO($card))->toArray();
         $assetDTO->setCards($cardsDTOs);

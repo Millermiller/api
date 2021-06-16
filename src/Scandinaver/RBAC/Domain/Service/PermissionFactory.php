@@ -7,8 +7,8 @@ namespace Scandinaver\RBAC\Domain\Service;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\DTO\PermissionDTO;
 use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\RBAC\Domain\Model\PermissionGroup;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\RBAC\Domain\Entity\PermissionGroup;
 
 /**
  * Class PermissionFactory

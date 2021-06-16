@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Sub\Frontend;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StateRequest;
+use App\Http\Requests\HasLanguageRequest;
 use Exception;
 use Illuminate\Http\{JsonResponse};
-use Scandinaver\Shared\EventBusNotFoundException;
 use Scandinaver\User\UI\Query\GetStateQuery;
 use Scandinaver\User\UI\Query\GetUserQuery;
 
@@ -38,11 +37,11 @@ class IndexController extends Controller
     }
 
     /**
-     * @param  StateRequest  $request
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
      */
-    public function state(StateRequest $request): JsonResponse
+    public function state(HasLanguageRequest $request): JsonResponse
     {
         $language = $request->get('lang');
 

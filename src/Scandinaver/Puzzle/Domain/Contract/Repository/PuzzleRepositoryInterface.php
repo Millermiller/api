@@ -4,8 +4,8 @@
 namespace Scandinaver\Puzzle\Domain\Contract\Repository;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Puzzle\Domain\Entity\Puzzle;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**

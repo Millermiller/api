@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HasLanguageRequest;
 use App\Http\Requests\Learn\CreateAssetRequest;
-use App\Http\Requests\Learn\PersonalRequest;
 use App\Http\Requests\Learn\UpdateAssetRequest;
 use Exception;
 use Gate;
@@ -14,10 +14,10 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Entity\Asset;
 use Scandinaver\Learn\Domain\Permission\Card;
 use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
-use Scandinaver\Learn\UI\Command\AddWordAndTranslateCommand;
+use Scandinaver\Learn\UI\Command\AddTermAndTranslateCommand;
 use Scandinaver\Learn\UI\Command\CreateAssetCommand;
 use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
 use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
@@ -32,7 +32,7 @@ use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
 use Scandinaver\Learn\UI\Query\FindAudioQuery;
 use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
-use Scandinaver\Learn\UI\Query\GetTranslatesByWordQuery;
+use Scandinaver\Learn\UI\Query\GetTranslatesByTermQuery;
 use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
 
 /**
@@ -47,7 +47,7 @@ class AssetController extends Controller
      * @param  string  $languageId
      *
      * @return JsonResponse
-     * @throws AuthorizationException
+     * @throws AuthorizationException|BindingResolutionException
      */
     public function index(string $languageId): JsonResponse
     {
@@ -135,11 +135,11 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  PersonalRequest  $request
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
      */
-    public function getPersonal(PersonalRequest $request): JsonResponse
+    public function getPersonal(HasLanguageRequest $request): JsonResponse
     {
         $language = $request->get('lang');
 
@@ -147,24 +147,24 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  int  $wordId
+     * @param  int  $termId
      *
      * @return JsonResponse
      */
-    public function findAudio(int $wordId): JsonResponse
+    public function findAudio(int $termId): JsonResponse
     {
-        return $this->execute(new FindAudioQuery($wordId));
+        return $this->execute(new FindAudioQuery($termId));
     }
 
     /**
      * @param  string  $languageId
-     * @param  int     $wordId
+     * @param  int     $termId
      *
      * @return JsonResponse
      */
-    public function showValues(string $languageId, int $wordId): JsonResponse
+    public function showValues(string $languageId, int $termId): JsonResponse
     {
-        return $this->execute(new GetTranslatesByWordQuery($wordId));
+        return $this->execute(new GetTranslatesByTermQuery($termId));
     }
 
     /**
@@ -209,13 +209,13 @@ class AssetController extends Controller
 
     /**
      * @param  Request  $request
-     * @param  int      $wordId
+     * @param  int      $termId
      *
      * @return JsonResponse
      */
-    public function uploadAudio(Request $request, int $wordId): JsonResponse
+    public function uploadAudio(Request $request, int $termId): JsonResponse
     {
-        return $this->execute(new UploadAudioCommand($wordId, $request->file('audiofile')), JsonResponse::HTTP_CREATED);
+        return $this->execute(new UploadAudioCommand($termId, $request->file('audiofile')), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -225,7 +225,7 @@ class AssetController extends Controller
      */
     public function addPair(Request $request): JsonResponse
     {
-        return $this->execute(new AddWordAndTranslateCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new AddTermAndTranslateCommand($request->toArray()), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -279,7 +279,7 @@ class AssetController extends Controller
         // $validator = Validator::make(
         //     ['language' => $language],
         //     [
-        //         'language' => 'exists:Scandinaver\Common\Domain\Model\Language,name'
+        //         'language' => 'exists:Scandinaver\Common\Domain\Entity\Language,name'
         //     ],
         //     [
         //         'exists' => 'Неверный параметр'

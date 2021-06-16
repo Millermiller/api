@@ -6,8 +6,8 @@ namespace Scandinaver\Puzzle\Application\Provider;
 
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
-use Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine\PuzzleRepository;
+use Scandinaver\Puzzle\Domain\Entity\Puzzle;
+use Scandinaver\Puzzle\Infrastructure\Persistence\Doctrine\Repository\PuzzleRepository;
 
 /**
  * Class DoctrineServiceProvider

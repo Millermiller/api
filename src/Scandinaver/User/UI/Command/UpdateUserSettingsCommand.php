@@ -6,7 +6,7 @@ namespace Scandinaver\User\UI\Command;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\DTO;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Class UpdateUserSettingsCommand

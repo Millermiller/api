@@ -5,7 +5,7 @@ namespace Scandinaver\Common\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
-use Scandinaver\Common\Domain\Model\Log;
+use Scandinaver\Common\Domain\Entity\Log;
 use Scandinaver\Common\UI\Query\LogsQuery;
 use Scandinaver\Common\UI\Resource\LogTransformer;
 use Scandinaver\Shared\AbstractHandler;

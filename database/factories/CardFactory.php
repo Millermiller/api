@@ -2,21 +2,23 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Entity\Card;
+use Scandinaver\Learn\Domain\Entity\Term;
+use Scandinaver\Learn\Domain\Entity\Translate;
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\Learn\Domain\Model\Card::class, function (Faker $faker, array $attributes) {
+$factory->define(Card::class, function (Faker $faker, array $attributes) {
 
-    /** @var Word $word */
-    $word = entity(Word::class)->create([
+    /** @var Term $term */
+    $term = entity(Term::class)->create([
         'language' => $attributes['language'],
         'creator' => null
     ]);
 
-    $translate = entity(\Scandinaver\Learn\Domain\Model\Translate::class)->create(['word' => $word]);
+    $translate = entity(Translate::class)->create(['word' => $term]);
 
     return [
-        'word' => $word,
+        'term' => $term,
         'translate' => $translate,
         'asset' => $attributes['asset'] ?? null
     ];

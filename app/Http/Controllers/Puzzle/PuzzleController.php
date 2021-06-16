@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Puzzle;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HasLanguageRequest;
 use App\Http\Requests\Puzzle\CreatePuzzleRequest;
-use App\Http\Requests\Puzzle\PuzzlesRequest;
 use App\Http\Requests\Puzzle\UpdatePuzzleRequest;
-use App\Http\Requests\Puzzle\UserPuzzlesRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
@@ -33,12 +32,12 @@ class PuzzleController extends Controller
 {
 
     /**
-     * @param  PuzzlesRequest  $request
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function index(PuzzlesRequest $request): JsonResponse
+    public function index(HasLanguageRequest $request): JsonResponse
     {
         Gate::authorize(Puzzle::VIEW);
 
@@ -101,12 +100,12 @@ class PuzzleController extends Controller
     }
 
     /**
-     * @param  UserPuzzlesRequest  $request
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function byUser(UserPuzzlesRequest $request): JsonResponse
+    public function byUser(HasLanguageRequest $request): JsonResponse
     {
         Gate::authorize('view-puzzles-by-user');
 

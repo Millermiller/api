@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use Elasticsearch\Client;
 use Illuminate\Console\Command;
-use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
+use Scandinaver\Learn\Domain\Entity\Word;
 
 /**
  * Class ReindexElastic
@@ -30,15 +30,15 @@ class ReindexElastic extends Command
 
     private Client $elasticsearch;
 
-    private WordRepositoryInterface $wordRepository;
+    private TermRepositoryInterface $wordRepository;
 
     /**
      * Create a new command instance.
      *
      * @param  Client                   $elasticsearch
-     * @param  WordRepositoryInterface  $wordRepository
+     * @param  TermRepositoryInterface  $wordRepository
      */
-    public function __construct(Client $elasticsearch, WordRepositoryInterface $wordRepository)
+    public function __construct(Client $elasticsearch, TermRepositoryInterface $wordRepository)
     {
         parent::__construct();
 

@@ -65,11 +65,11 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::middleware(['auth:api'])->group(base_path('routes/api/puzzle.php'));
 
-        Route::middleware(['auth:api'])->group(base_path('routes/api/role.php'));
+        Route::middleware(['auth:api'])->group(base_path('routes/api/RBAC/role.php'));
 
-        Route::middleware(['auth:api'])->group(base_path('routes/api/permission.php'));
+        Route::middleware(['auth:api'])->group(base_path('routes/api/RBAC/permission.php'));
 
-        Route::middleware(['auth:api'])->group(base_path('routes/api/permission-group.php'));
+        Route::middleware(['auth:api'])->group(base_path('routes/api/RBAC/permission-group.php'));
 
         Route::middleware(['auth:api'])->group(base_path('routes/api/settings.php'));
 
@@ -79,7 +79,9 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::middleware(['auth:api', 'touchUser', 'checkPlan'])->group(base_path('routes/api/test.php'));
 
-        Route::middleware(['auth:api', 'touchUser', 'checkPlan'])->group(base_path('routes/api/translate.php'));
+        Route::middleware(['auth:api', 'touchUser', 'checkPlan'])->group(base_path('routes/api/translate/translate.php'));
+
+        Route::middleware(['auth:api', 'touchUser', 'checkPlan'])->group(base_path('routes/api/translate/synonym.php'));
 
 
     }

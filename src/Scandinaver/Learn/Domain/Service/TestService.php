@@ -9,7 +9,7 @@ use Scandinaver\Learn\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learn\Domain\Exception\PassingNotFoundException;
-use Scandinaver\Learn\Domain\Model\Passing;
+use Scandinaver\Learn\Domain\Entity\Passing;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
@@ -91,6 +91,7 @@ class TestService implements BaseServiceInterface
         $payload = [
             'time'   => $data['time'],
             'errors' => $data['errors'] ?? [],
+            'cards'  => $data['cards'] ?? [],
         ];
 
         $data['payload'] = $payload;

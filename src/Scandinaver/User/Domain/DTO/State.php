@@ -3,17 +3,17 @@
 
 namespace Scandinaver\User\Domain\DTO;
 
-use Scandinaver\Common\Domain\Model\Intro;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Intro;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\DTO\AssetDTO;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Learn\Domain\Model\PersonalAsset;
-use Scandinaver\Learn\Domain\Model\SentenceAsset;
-use Scandinaver\Learn\Domain\Model\WordAsset;
+use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
+use Scandinaver\Learn\Domain\Entity\PersonalAsset;
+use Scandinaver\Learn\Domain\Entity\SentenceAsset;
+use Scandinaver\Learn\Domain\Entity\WordAsset;
 use Scandinaver\Puzzle\Domain\DTO\PuzzleDTO;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\Puzzle\Domain\Entity\Puzzle;
 use Scandinaver\Translate\Domain\DTO\TextDTO;
-use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\Translate\Domain\Entity\Text;
 
 /**
  * Class StateDTO

@@ -14,27 +14,27 @@ use Scandinaver\Learn\Domain\Contract\Repository\PersonalAssetRepositoryInterfac
 use Scandinaver\Learn\Domain\Contract\Repository\SentenceAssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\WordAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\Learn\Domain\Model\Example;
-use Scandinaver\Learn\Domain\Model\FavouriteAsset;
-use Scandinaver\Learn\Domain\Model\Passing;
-use Scandinaver\Learn\Domain\Model\PersonalAsset;
-use Scandinaver\Learn\Domain\Model\SentenceAsset;
-use Scandinaver\Learn\Domain\Model\Translate;
-use Scandinaver\Learn\Domain\Model\Word;
-use Scandinaver\Learn\Domain\Model\WordAsset;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\CardRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\ExampleRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\FavouriteAssetRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\PassingRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\PersonalAssetRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\SentenceAssetRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\TranslateRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\WordAssetRepository;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\WordRepository;
+use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\Card;
+use Scandinaver\Learn\Domain\Entity\Example;
+use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
+use Scandinaver\Learn\Domain\Entity\Passing;
+use Scandinaver\Learn\Domain\Entity\PersonalAsset;
+use Scandinaver\Learn\Domain\Entity\SentenceAsset;
+use Scandinaver\Learn\Domain\Entity\Term;
+use Scandinaver\Learn\Domain\Entity\Translate;
+use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\AssetRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\CardRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\ExampleRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\FavouriteAssetRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\PassingRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\PersonalAssetRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\SentenceAssetRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\TranslateRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\WordAssetRepository;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\TermRepository;
 
 /**
  * Class DoctrineServiceProvider
@@ -67,11 +67,11 @@ class DoctrineServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            WordRepositoryInterface::class,
+            TermRepositoryInterface::class,
             function () {
-                return new WordRepository(
+                return new TermRepository(
                     $this->app['em'],
-                    $this->app['em']->getClassMetadata(Word::class)
+                    $this->app['em']->getClassMetadata(Term::class)
                 );
             }
         );

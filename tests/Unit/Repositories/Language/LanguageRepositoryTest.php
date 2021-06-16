@@ -5,7 +5,7 @@ namespace Tests\Unit\Repositories\Language;
 
 use Doctrine\ORM\EntityManager;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Tests\TestCase;
 
 /**

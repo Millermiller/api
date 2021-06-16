@@ -14,15 +14,15 @@ use Scandinaver\Shared\Contract\QueryInterface;
  */
 class FindAudioQuery implements QueryInterface
 {
-    private int $word;
+    private int $id;
 
-    public function __construct(int $word)
+    public function __construct(int $id)
     {
-        $this->word = $word;
+        $this->id = $id;
     }
 
-    public function getWord(): int
+    public function getId(): int
     {
-        return $this->word;
+        return $this->id;
     }
 }

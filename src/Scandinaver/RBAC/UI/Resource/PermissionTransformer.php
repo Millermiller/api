@@ -6,7 +6,7 @@ namespace Scandinaver\RBAC\UI\Resource;
 
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
-use Scandinaver\RBAC\Domain\Model\Permission;
+use Scandinaver\RBAC\Domain\Entity\Permission;
 
 /**
  * Class PermissionTransformer

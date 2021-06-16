@@ -9,7 +9,7 @@ use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Puzzle\Domain\DTO\PuzzleDTO;
 use Scandinaver\Puzzle\Domain\Exception\PuzzleNotFoundException;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\Puzzle\Domain\Entity\Puzzle;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**

@@ -4,7 +4,8 @@
 namespace Scandinaver\Translate\Domain\Service;
 
 use Scandinaver\Translate\Domain\DTO\TextDTO;
-use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\Translate\Domain\Entity\Text;
+use Scandinaver\Translate\Domain\Entity\Word;
 
 /**
  * Class TextFactory
@@ -21,6 +22,24 @@ class TextFactory
         $text->setTitle($textDTO->getTitle());
         $text->setDescription($textDTO->getDescription());
         $text->setText($textDTO->getText());
+        $text->setTranslate($textDTO->getTranslate());
+
+        $sentences = explode('.', trim($text->getText()));
+        array_pop($sentences);
+        foreach ($sentences as $num => $sentence) {
+            $words           = explode(' ', str_replace(',', '', trim($sentence)));
+            $sentences[$num] = $words;
+        }
+
+        foreach ($sentences as $num => $sentence) {
+            foreach ($sentence as $word) {
+                $wordEntity = new Word();
+                $wordEntity->setSentenceNum($num);
+                $wordEntity->setWord($word);
+                $wordEntity->setText($text);
+                $text->addWord($wordEntity);
+            }
+        }
 
         return $text;
     }

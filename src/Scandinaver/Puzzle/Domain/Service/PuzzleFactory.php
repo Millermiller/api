@@ -6,9 +6,9 @@ namespace Scandinaver\Puzzle\Domain\Service;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Puzzle\Domain\DTO\PuzzleDTO;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
-use Scandinaver\Puzzle\Domain\Model\PuzzleText;
-use Scandinaver\Puzzle\Domain\Model\PuzzleTranslate;
+use Scandinaver\Puzzle\Domain\Entity\Puzzle;
+use Scandinaver\Puzzle\Domain\Entity\PuzzleText;
+use Scandinaver\Puzzle\Domain\Entity\PuzzleTranslate;
 
 /**
  * Class PuzzleFactory

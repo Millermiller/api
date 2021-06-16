@@ -1,4 +1,4 @@
-Scandinaver\Translate\Domain\Model\Text:
+Scandinaver\Translate\Domain\Entity\Text:
   type: entity
   table: text
   indexes:
@@ -11,83 +11,62 @@ Scandinaver\Translate\Domain\Model\Text:
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     level:
       type: integer
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
     title:
       type: string
-      scale: 0
       length: 255
       unique: false
       nullable: false
-      precision: 0
     description:
       type: text
-      scale: 0
-      length: 65535
       unique: false
       nullable: true
-      precision: 0
     text:
       type: text
-      scale: 0
-      length: 65535
       unique: false
       nullable: false
-      precision: 0
     translate:
       type: text
-      scale: 0
-      length: 65535
       unique: false
       nullable: false
-      precision: 0
     published:
-      type: integer
-      scale: 0
-      length: null
+      type: boolean
       unique: false
       nullable: false
-      precision: 0
+      options:
+        default: true
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
       column: created_at
+      gedmo:
+        timestampable:
+          on: create
     updatedAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
       nullable: true
-      precision: 0
       column: updated_at
+      gedmo:
+        timestampable:
+          on: update
     image:
       type: string
-      scale: 0
       length: 255
       unique: false
       nullable: true
-      precision: 0
   manyToMany:
   #users:
-  #    targetEntity: Scandinaver\User\Domain\Model\User
+  #    targetEntity: Scandinaver\User\Domain\Entity\User
   #    cascade: {  }
   #    fetch: LAZY
   #    mappedBy: texts
@@ -96,7 +75,7 @@ Scandinaver\Translate\Domain\Model\Text:
   #    orderBy: null
   manyToOne:
     language:
-      targetEntity: Scandinaver\Common\Domain\Model\Language
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
       cascade: {  }
       fetch: LAZY
       mappedBy: null
@@ -107,23 +86,25 @@ Scandinaver\Translate\Domain\Model\Text:
       orphanRemoval: false
   oneToMany:
     extra:
-      targetEntity: Scandinaver\Translate\Domain\Model\TextExtra
-      cascade: {  }
+      targetEntity: Scandinaver\Translate\Domain\Entity\TextExtra
+      cascade:
+        - persist
       fetch: LAZY
       mappedBy: text
       inversedBy: null
-      orphanRemoval: false
+      orphanRemoval: true
       orderBy: null
     words:
-      targetEntity: Scandinaver\Translate\Domain\Model\Word
-      cascade: {  }
+      targetEntity: Scandinaver\Translate\Domain\Entity\Word
+      cascade:
+        - persist
       fetch: LAZY
       mappedBy: text
       inversedBy: null
-      orphanRemoval: false
+      orphanRemoval: true
       orderBy: null
     textResults:
-      targetEntity: Scandinaver\Translate\Domain\Model\Result
+      targetEntity: Scandinaver\Translate\Domain\Entity\Result
       cascade:
         - remove
       fetch: LAZY

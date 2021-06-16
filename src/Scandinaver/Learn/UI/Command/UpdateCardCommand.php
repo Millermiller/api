@@ -5,8 +5,8 @@ namespace Scandinaver\Learn\UI\Command;
 
 use Scandinaver\Learn\Domain\DTO\CardDTO;
 use Scandinaver\Learn\Domain\DTO\TranslateDTO;
-use Scandinaver\Learn\Domain\DTO\WordDTO;
-use Scandinaver\Learn\Domain\Model\ExampleDTO;
+use Scandinaver\Learn\Domain\DTO\TermDTO;
+use Scandinaver\Learn\Domain\Entity\ExampleDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\DTO;
 
@@ -46,7 +46,7 @@ class UpdateCardCommand implements CommandInterface
         }
 
         $cardDTO->setExamplesDTO($examplesDTO);
-        $cardDTO->setWordDTO(WordDTO::fromArray($this->data['word']));
+        $cardDTO->setTermDTO(TermDTO::fromArray($this->data['word']));
         $cardDTO->setTranslateDTO(TranslateDTO::fromArray($this->data['translate']));
         $cardDTO->setId($this->data['id']);
 

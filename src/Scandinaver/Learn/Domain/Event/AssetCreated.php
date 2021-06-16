@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Event;
 
-use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Entity\Asset;
 use Scandinaver\Shared\DomainEvent;
 
 /**

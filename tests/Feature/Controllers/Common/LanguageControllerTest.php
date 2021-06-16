@@ -6,9 +6,9 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\RBAC\Domain\Model\Permission;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\RBAC\Domain\Entity\Permission;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

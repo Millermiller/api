@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Blog\Domain\Event;
 
-use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Blog\Domain\Entity\Post;
 use Scandinaver\Shared\DomainEvent;
 
 /**

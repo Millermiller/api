@@ -2,8 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Blog\Domain\Model\Category;
-use Scandinaver\Learn\Domain\Model\WordAsset;
+use Scandinaver\Blog\Domain\Entity\Category;
 
 /** @var Factory $factory */
 $factory->define(Category::class, function (Faker $faker, array $attributes) {

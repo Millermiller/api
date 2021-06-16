@@ -3,13 +3,13 @@
 
 namespace Scandinaver\RBAC\Domain\DTO;
 
-use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\RBAC\Domain\Entity\Role;
 use Scandinaver\Shared\DTO;
 
 /**
  * Class RoleDTO
  *
- * @package Scandinaver\RBAC\Domain\Model
+ * @package Scandinaver\RBAC\Domain\Entity
  */
 class RoleDTO extends DTO
 {

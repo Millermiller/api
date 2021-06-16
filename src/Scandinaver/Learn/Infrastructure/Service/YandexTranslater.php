@@ -6,9 +6,9 @@ namespace Scandinaver\Learn\Infrastructure\Service;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Contract\Service\TranslaterInterface;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Entity\Term;
 
 /**
  * Class YandexTranslater
@@ -38,10 +38,10 @@ class YandexTranslater implements TranslaterInterface
         $this->logger = $logger;
     }
 
-    public function translate(Language $language, Word $word): ?array
+    public function translate(Language $language, Term $term): ?array
     {
         try {
-            return $this->getTranslate($language, $word->getWord());
+            return $this->getTranslate($language, $term->getValue());
         } catch (GuzzleException $e) {
             $this->logger->error($e->getMessage());
         }

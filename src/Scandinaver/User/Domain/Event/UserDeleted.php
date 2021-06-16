@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Domain\Event;
 
 use Scandinaver\Shared\DomainEvent;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\User\Domain\Entity\User;
 
 /**
  * Class UserDeleted

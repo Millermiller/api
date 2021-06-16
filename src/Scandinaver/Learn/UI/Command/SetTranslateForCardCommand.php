@@ -6,15 +6,16 @@ namespace Scandinaver\Learn\UI\Command;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\WordRepositoryInterface;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Domain\Model\Card;
-use Scandinaver\Learn\Domain\Model\Translate;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Domain\Entity\Card;
+use Scandinaver\Learn\Domain\Entity\Translate;
+use Scandinaver\Learn\Domain\Entity\Term;
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\DTO;
 
 /**
+ * //TODO: refactor
  * Class SetTranslateForCardCommand
  *
  * @package Scandinaver\Learn\UI\Command
@@ -31,7 +32,7 @@ class SetTranslateForCardCommand implements CommandInterface
 
     private CardRepositoryInterface $cardRepository;
 
-    private WordRepositoryInterface $wordRepository;
+    private TermRepositoryInterface $wordRepository;
 
     private TranslateRepositoryInterface $translateRepository;
 
@@ -49,13 +50,13 @@ class SetTranslateForCardCommand implements CommandInterface
         $this->translate_id = $data['translate_id'];
 
         $this->cardRepository      = app()->make('CardRepositoryInterface');
-        $this->wordRepository      = app()->make('WordRepositoryInterface');
+        $this->wordRepository      = app()->make('TermRepositoryInterface');
         $this->translateRepository = app()->make(
             'TranslateRepositoryInterface'
         );
     }
 
-    public function getWord(): Word
+    public function getWord(): Term
     {
         return $this->wordRepository->find($this->word_id);
     }

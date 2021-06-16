@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Controllers\Reader;
 
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

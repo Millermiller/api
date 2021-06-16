@@ -18,8 +18,8 @@ class CreateUserRequest extends FormRequest
         $id = Auth::user()->getKey();
 
         return [
-            'login'    => "required|string|alpha_num|max:255|unique:Scandinaver\User\Domain\Model\User,login,$id",
-            'email'    => "required|string|email|max:255|unique:Scandinaver\User\Domain\Model\User,email,$id",
+            'login'    => "required|string|alpha_num|max:255|unique:Scandinaver\User\Domain\Entity\User,login,$id",
+            'email'    => "required|string|email|max:255|unique:Scandinaver\User\Domain\Entity\User,email,$id",
             'password' => 'nullable|string|min:6|confirmed',
         ];
     }

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Puzzle\Domain\Event;
 
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\Puzzle\Domain\Entity\Puzzle;
 use Scandinaver\Shared\DomainEvent;
 
 /**

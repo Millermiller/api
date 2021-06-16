@@ -8,7 +8,7 @@ use Scandinaver\Shared\DTO;
 /**
  * Class PuzzleDTO
  *
- * @package Scandinaver\Puzzle\Domain\Model
+ * @package Scandinaver\Puzzle\Domain\Entity
  */
 class PuzzleDTO extends DTO
 {

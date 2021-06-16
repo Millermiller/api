@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\UI\Resource;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Entity\Card;
 
 /**
  * Class CardTransformer
@@ -16,7 +16,7 @@ use Scandinaver\Learn\Domain\Model\Card;
 class CardTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = [
-        'word',
+        'term',
         'translate',
         'examples',
     ];
@@ -34,11 +34,11 @@ class CardTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeWord(Card $card): Item
+    public function includeTerm(Card $card): Item
     {
-        $word = $card->getWord();
+        $term = $card->getTerm();
 
-        return $this->item($word, new WordTransformer());
+        return $this->item($term, new TermTransformer());
     }
 
     public function includeTranslate(Card $card): Item

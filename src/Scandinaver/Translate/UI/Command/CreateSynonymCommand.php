@@ -5,6 +5,7 @@ namespace Scandinaver\Translate\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\DTO;
+use Scandinaver\Translate\Domain\DTO\SynonymDTO;
 
 /**
  * Class CreateSynonymCommand
@@ -15,12 +16,16 @@ use Scandinaver\Shared\DTO;
  */
 class CreateSynonymCommand implements CommandInterface
 {
+
+    private array $data;
+
     public function __construct(array $data)
     {
+        $this->data = $data;
     }
 
-    public function buildDTO(): DTO
+    public function buildDTO(): SynonymDTO
     {
-        // TODO: Implement buildDTO() method.
+        return SynonymDTO::fromArray($this->data);
     }
 }

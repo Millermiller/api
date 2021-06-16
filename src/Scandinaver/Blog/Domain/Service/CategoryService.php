@@ -7,7 +7,7 @@ use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\CategoryDTO;
 use Scandinaver\Blog\Domain\Exception\CategoryDuplicateException;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
-use Scandinaver\Blog\Domain\Model\Category;
+use Scandinaver\Blog\Domain\Entity\Category;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**

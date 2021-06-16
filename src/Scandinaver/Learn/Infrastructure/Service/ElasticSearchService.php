@@ -4,10 +4,10 @@
 namespace Scandinaver\Learn\Infrastructure\Service;
 
 use Elasticsearch\Client;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Service\SearchInterface;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Learn\Domain\Entity\Term;
 
 /**
  * Class ElasticSearchService
@@ -35,14 +35,14 @@ class ElasticSearchService implements SearchInterface
         }
 
         $cards  = [];
-        $model  = new Word();
+        $model  = new Term();
         $result = $this->elasticsearch->search([
             'index' => $model->searchableAs(),
             'body'  => [
                 "query" => [
                     "bool" => [
                         "must" => [
-                            ["match" => ["word" => $query]],
+                            ["match" => ["value" => $query]],
                             ["match" => ["is_sentence" => (int)$isSentence]],
                         ],
                     ],
@@ -54,7 +54,7 @@ class ElasticSearchService implements SearchInterface
         foreach($result['hits']['hits'] as $item) {
             $id = (int) $item['_id'];
             $cards += $this->cardRepository->findBy([
-                'word' => $id
+                'value' => $id
             ]);
         }
 

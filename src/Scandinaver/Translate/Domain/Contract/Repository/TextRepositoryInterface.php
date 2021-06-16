@@ -4,9 +4,9 @@
 namespace Scandinaver\Translate\Domain\Contract\Repository;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
-use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\Translate\Domain\Entity\Text;
 
 /**
  * Interface TextRepositoryInterface

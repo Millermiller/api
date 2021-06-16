@@ -18,6 +18,8 @@ class TestCompleteRequest extends FormRequest
             'id'      => 'required',
             'time'    => 'required',
             'percent' => 'required',
+            'errors'  => 'present|array',
+            'cards'   => 'present|array',
         ];
     }
 }

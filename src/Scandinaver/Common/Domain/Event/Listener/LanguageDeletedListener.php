@@ -7,7 +7,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Psr\Log\LoggerInterface;
 use Scandinaver\Common\Domain\Event\LanguageDeleted;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Entity\Asset;
 use Scandinaver\Learn\Domain\Service\AssetService;
 
 /**

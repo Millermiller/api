@@ -8,7 +8,7 @@ use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Primitive;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Common\UI\Resource\LanguageTransformer;
-use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Entity\Asset;
 
 /**
  * Class AssetTransformer
@@ -40,7 +40,6 @@ class AssetTransformer extends TransformerAbstract
             'type'  => $asset->getType(),
             'title' => $asset->getTitle(),
             'level' => $asset->getLevel(),
-            'basic' => $asset->getBasic(),
             'count' => $asset->getCount(),
         ];
     }

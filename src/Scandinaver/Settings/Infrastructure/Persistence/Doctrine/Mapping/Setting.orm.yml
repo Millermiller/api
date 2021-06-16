@@ -1,4 +1,4 @@
-Scandinaver\Settings\Domain\Model\Setting:
+Scandinaver\Settings\Domain\Entity\Setting:
   type: entity
   table: settings
   indexes:
@@ -11,50 +11,37 @@ Scandinaver\Settings\Domain\Model\Setting:
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     title:
       type: string
-      scale: 0
       length: 255
       unique: true
       nullable: false
-      precision: 0
     slug:
       type: string
-      scale: 0
       length: 255
       unique: true
       nullable: false
-      precision: 0
     data:
       type: json
       nullable: false
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: true
-      precision: 0
+      nullable: false
       column: created_at
       gedmo:
         timestampable:
           on: create
     updatedAt:
       type: datetime
-      scale: 0
       length: null
       unique: false
       nullable: true
-      precision: 0
       column: updated_at
       gedmo:
         timestampable:

@@ -7,8 +7,8 @@ namespace Scandinaver\Settings\Application\Provider;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\ServiceProvider;
 use Scandinaver\Settings\Domain\Contract\Repository\SettingRepositoryInterface;
-use Scandinaver\Settings\Domain\Model\Setting;
-use Scandinaver\Settings\Infrastructure\Persistence\Doctrine\SettingRepository;
+use Scandinaver\Settings\Domain\Entity\Setting;
+use Scandinaver\Settings\Infrastructure\Persistence\Doctrine\Repository\SettingRepository;
 
 /**
  * Class DoctrineServiceProvider

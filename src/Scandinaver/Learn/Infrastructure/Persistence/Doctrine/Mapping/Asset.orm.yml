@@ -1,4 +1,4 @@
-Scandinaver\Learn\Domain\Model\Asset:
+Scandinaver\Learn\Domain\Entity\Asset:
   type: entity
   table: asset
   inheritanceType: SINGLE_TABLE
@@ -6,10 +6,10 @@ Scandinaver\Learn\Domain\Model\Asset:
     name: type
     type: integer
   discriminatorMap:
-    0: Scandinaver\Learn\Domain\Model\PersonalAsset
-    1: Scandinaver\Learn\Domain\Model\WordAsset
-    2: Scandinaver\Learn\Domain\Model\SentenceAsset
-    3: Scandinaver\Learn\Domain\Model\FavouriteAsset
+    1: Scandinaver\Learn\Domain\Entity\WordAsset
+    2: Scandinaver\Learn\Domain\Entity\SentenceAsset
+    3: Scandinaver\Learn\Domain\Entity\PersonalAsset
+    4: Scandinaver\Learn\Domain\Entity\FavouriteAsset
   indexes:
     id:
       columns:
@@ -23,74 +23,45 @@ Scandinaver\Learn\Domain\Model\Asset:
   id:
     id:
       type: integer
-      scale: 0
-      length: null
-      unique: false
       nullable: false
-      precision: 0
       id: true
       generator:
         strategy: IDENTITY
   fields:
     title:
       type: string
-      scale: 0
       length: 255
       unique: false
       nullable: false
-      precision: 0
-    basic:
-      type: integer
-      scale: 0
-      length: null
-      unique: false
-      nullable: false
-      precision: 0
     level:
       type: integer
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
       gedmo:
         - sortablePosition
     category:
       type: integer
       gedmo:
         - sortableGroup
-    favorite:
-      type: integer
-      scale: 0
-      length: null
-      unique: false
-      nullable: true
-      precision: 0
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: true
-      precision: 0
+      nullable: false
       column: created_at
       gedmo:
         timestampable:
           on: create
     updatedAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: false
-      precision: 0
+      nullable: true
       column: updated_at
       gedmo:
         timestampable:
           on: update
   manyToMany:
     cards:
-      targetEntity: Scandinaver\Learn\Domain\Model\Card
+      targetEntity: Scandinaver\Learn\Domain\Entity\Card
       joinTable:
         name: asset_cards
         joinColumns:
@@ -105,7 +76,7 @@ Scandinaver\Learn\Domain\Model\Asset:
       orderBy: null
   manyToOne:
     language:
-      targetEntity: Scandinaver\Common\Domain\Model\Language
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
       cascade: { }
       fetch: LAZY
       mappedBy: language
@@ -114,9 +85,9 @@ Scandinaver\Learn\Domain\Model\Asset:
           referencedColumnName: id
       orphanRemoval: false
     owner:
-      targetEntity: Scandinaver\User\Domain\Model\User
+      targetEntity: Scandinaver\User\Domain\Entity\User
       fetch: LAZY
-      inversedBy: createdAssets
+      inversedBy: personalAssets
       joinColumns:
         owner_id:
           referencedColumnName: id
@@ -125,7 +96,7 @@ Scandinaver\Learn\Domain\Model\Asset:
       nullable: true
   oneToMany:
     passings:
-      targetEntity: Scandinaver\Learn\Domain\Model\Passing
+      targetEntity: Scandinaver\Learn\Domain\Entity\Passing
       cascade:
         - remove
       fetch: LAZY

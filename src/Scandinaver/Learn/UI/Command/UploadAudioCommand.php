@@ -16,19 +16,19 @@ use Scandinaver\Shared\DTO;
  */
 class UploadAudioCommand implements CommandInterface
 {
-    private int $word;
+    private int $termId;
 
     private UploadedFile $file;
 
-    public function __construct(int $word, UploadedFile $file)
+    public function __construct(int $termId, UploadedFile $file)
     {
-        $this->word = $word;
+        $this->termId = $termId;
         $this->file = $file;
     }
 
-    public function getWord(): int
+    public function getTermId(): int
     {
-        return $this->word;
+        return $this->termId;
     }
 
     public function getFile(): UploadedFile

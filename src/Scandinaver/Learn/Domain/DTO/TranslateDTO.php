@@ -8,7 +8,7 @@ use Scandinaver\Shared\DTO;
 /**
  * Class TranslateDTO
  *
- * @package Scandinaver\Learn\Domain\Model
+ * @package Scandinaver\Learn\Domain\Entity
  */
 class TranslateDTO extends DTO
 {

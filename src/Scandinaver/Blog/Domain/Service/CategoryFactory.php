@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Domain\Service;
 
 
 use Scandinaver\Blog\Domain\DTO\CategoryDTO;
-use Scandinaver\Blog\Domain\Model\Category;
+use Scandinaver\Blog\Domain\Entity\Category;
 
 /**
  * Class CategoryFactory

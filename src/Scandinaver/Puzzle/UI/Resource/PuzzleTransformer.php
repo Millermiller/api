@@ -4,7 +4,7 @@
 namespace Scandinaver\Puzzle\UI\Resource;
 
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Puzzle\Domain\Model\Puzzle;
+use Scandinaver\Puzzle\Domain\Entity\Puzzle;
 
 /**
  * Class PuzzleTransformer

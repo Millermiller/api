@@ -1,4 +1,4 @@
-Scandinaver\Blog\Domain\Model\Post:
+Scandinaver\Blog\Domain\Entity\Post:
   type: entity
   table: post
   indexes:
@@ -13,90 +13,63 @@ Scandinaver\Blog\Domain\Model\Post:
         - id
   id:
     id:
-      type: bigint
-      scale: 0
-      length: null
-      unique: false
+      type: integer
       nullable: false
-      precision: 0
-      options:
-        unsigned: true
       id: true
       generator:
         strategy: IDENTITY
   fields:
     title:
       type: string
-      scale: 0
       length: 200
       unique: false
       nullable: false
-      precision: 0
     content:
       type: text
-      scale: 0
-      length: 0
       unique: false
       nullable: true
-      precision: 0
     anonse:
       type: text
-      scale: 0
-      length: 65535
       unique: false
       nullable: true
-      precision: 0
     status:
       type: boolean
-      scale: 0
-      length: null
       unique: false
       nullable: false
-      precision: 0
       options:
-        default: '1'
+        default: false
     commentStatus:
-      type: integer
-      scale: 0
-      length: null
+      type: boolean
       unique: false
       nullable: false
-      precision: 0
       options:
-        default: '1'
+        default: true
       column: comment_status
     views:
-      type: bigint
-      scale: 0
-      length: null
+      type: integer
       unique: false
       nullable: false
-      precision: 0
-    updatedAt:
-      type: datetime
-      scale: 0
-      length: null
-      unique: false
-      nullable: true
-      precision: 0
-      column: updated_at
-      gedmo:
-        timestampable:
-          on: update
+      options:
+        default: 0
     createdAt:
       type: datetime
-      scale: 0
-      length: null
       unique: false
-      nullable: true
-      precision: 0
+      nullable: false
       column: created_at
       gedmo:
         timestampable:
           on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
   oneToMany:
     comments:
-      targetEntity: Scandinaver\Blog\Domain\Model\Comment
+      targetEntity: Scandinaver\Blog\Domain\Entity\Comment
       cascade: { }
       fetch: EAGER
       mappedBy: post
@@ -105,7 +78,7 @@ Scandinaver\Blog\Domain\Model\Post:
       orderBy: null
   manyToOne:
     user:
-      targetEntity: Scandinaver\User\Domain\Model\User
+      targetEntity: Scandinaver\User\Domain\Entity\User
       cascade: { }
       fetch: LAZY
       mappedBy: null
@@ -115,7 +88,7 @@ Scandinaver\Blog\Domain\Model\Post:
           referencedColumnName: id
       orphanRemoval: false
     category:
-      targetEntity: Scandinaver\Blog\Domain\Model\Category
+      targetEntity: Scandinaver\Blog\Domain\Entity\Category
       cascade: { }
       fetch: LAZY
       mappedBy: null
@@ -125,7 +98,7 @@ Scandinaver\Blog\Domain\Model\Post:
           referencedColumnName: id
       orphanRemoval: false
     language:
-      targetEntity: Scandinaver\Common\Domain\Model\Language
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
       cascade: { }
       fetch: LAZY
       mappedBy: null

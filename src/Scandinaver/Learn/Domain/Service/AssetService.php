@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Psr\Log\LoggerInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
@@ -20,7 +20,7 @@ use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learn\Domain\Exception\CardAlreadyAddedException;
 use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learn\Domain\Model\{Asset, FavouriteAsset, PersonalAsset, SentenceAsset, WordAsset};
+use Scandinaver\Learn\Domain\Entity\{Asset, FavouriteAsset, PersonalAsset, SentenceAsset, WordAsset};
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Shared\DTO;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
@@ -265,16 +265,16 @@ class AssetService implements BaseServiceInterface
 
             /** @var Asset $item */
             foreach ($item->getCards() as $card) {
-                $word = $card->getWord();
+                $term = $card->getTerm();
 
-                if ($word === NULL) {
+                if ($term === NULL) {
                     continue;
                 }
 
                 $cards[] = [
                     'id'       => $card->getId(),
-                    'word'     => $word->getValue(),
-                    'trans'    => preg_replace(
+                    'value'     => $term->getValue(),
+                    'translate'    => preg_replace(
                         '/^(\d\\)\s)/',
                         '',
                         $card->getTranslate()->getValue()
@@ -299,7 +299,6 @@ class AssetService implements BaseServiceInterface
                 'level'  => $item->getLevel(),
                 'title'  => $item->getTitle(),
                 'type'   => $item->getType(),
-                'basic'  => $item->getBasic(),
                 'cards'  => $cards,
             ];
 

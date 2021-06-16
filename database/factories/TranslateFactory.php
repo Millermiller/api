@@ -2,9 +2,10 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
+use Scandinaver\Learn\Domain\Entity\Translate;
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\Learn\Domain\Model\Translate::class, function (Faker $faker, array $attributes) {
+$factory->define(Translate::class, function (Faker $faker, array $attributes) {
 
     return [
        // 'id' => random_int(1, 999),

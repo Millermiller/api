@@ -8,7 +8,7 @@ use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
-use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Blog\Domain\Entity\Post;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 

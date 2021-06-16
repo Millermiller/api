@@ -4,7 +4,7 @@
 namespace Scandinaver\RBAC\Domain\Service;
 
 use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
-use Scandinaver\RBAC\Domain\Model\PermissionGroup;
+use Scandinaver\RBAC\Domain\Entity\PermissionGroup;
 
 /**
  * Class PermissionFactory

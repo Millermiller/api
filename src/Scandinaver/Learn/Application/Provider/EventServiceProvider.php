@@ -30,8 +30,8 @@ class EventServiceProvider extends ServiceProvider
         'Scandinaver\Learn\Domain\Event\TranslateUpdated'     => [
             'Scandinaver\Learn\Domain\Event\Listener\TranslateUpdatedListener',
         ],
-        'Scandinaver\Learn\Domain\Event\WordUpdated'          => [
-            'Scandinaver\Learn\Domain\Event\Listener\WordUpdatedListener',
+        'Scandinaver\Learn\Domain\Event\TermUpdated'          => [
+            'Scandinaver\Learn\Domain\Event\Listener\TermUpdatedListener',
         ],
     ];
 

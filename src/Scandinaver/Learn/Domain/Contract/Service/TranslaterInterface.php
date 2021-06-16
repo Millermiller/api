@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Domain\Contract\Service;
 
 
-use Scandinaver\Common\Domain\Model\Language;
-use Scandinaver\Learn\Domain\Model\Word;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Entity\Term;
 
 /**
  * Interface TranslaterInterface
@@ -17,9 +17,9 @@ interface TranslaterInterface
 
     /**
      * @param  Language  $language
-     * @param  Word      $word
+     * @param  Term      $term
      *
      * @return mixed
      */
-    public function translate(Language $language, Word $word);
+    public function translate(Language $language, Term $term);
 }

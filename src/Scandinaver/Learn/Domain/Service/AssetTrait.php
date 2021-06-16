@@ -6,7 +6,7 @@ namespace Scandinaver\Learn\Domain\Service;
 use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\AssetNotFoundException;
-use Scandinaver\Learn\Domain\Model\Asset;
+use Scandinaver\Learn\Domain\Entity\Asset;
 
 /**
  * Trait AssetTrait

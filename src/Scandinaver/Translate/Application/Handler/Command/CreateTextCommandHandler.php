@@ -3,9 +3,12 @@
 
 namespace Scandinaver\Translate\Application\Handler\Command;
 
+use League\Fractal\Resource\Item;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Translate\Domain\Service\TextService;
 use Scandinaver\Translate\UI\Command\CreateTextCommand;
+use Scandinaver\Translate\UI\Resource\TextTransformer;
 
 /**
  * Class CreateTextCommandHandler
@@ -15,9 +18,13 @@ use Scandinaver\Translate\UI\Command\CreateTextCommand;
 class CreateTextCommandHandler extends AbstractHandler
 {
 
-    public function __construct()
+    private TextService $textService;
+
+    public function __construct(TextService $textService)
     {
         parent::__construct();
+
+        $this->textService = $textService;
     }
 
     /**
@@ -25,6 +32,8 @@ class CreateTextCommandHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $command): void
     {
-        // TODO: Implement handle() method.
+        $text = $this->textService->createText($command->buildDTO());
+
+        $this->resource = new Item($text, new TextTransformer());
     }
 } 

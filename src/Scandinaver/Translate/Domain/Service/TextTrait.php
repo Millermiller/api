@@ -6,7 +6,7 @@ namespace Scandinaver\Translate\Domain\Service;
 use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
-use Scandinaver\Translate\Domain\Model\Text;
+use Scandinaver\Translate\Domain\Entity\Text;
 
 /**
  * Trait TextTrait

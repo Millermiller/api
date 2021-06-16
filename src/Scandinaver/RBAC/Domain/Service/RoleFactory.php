@@ -4,7 +4,7 @@
 namespace Scandinaver\RBAC\Domain\Service;
 
 use Scandinaver\RBAC\Domain\DTO\RoleDTO;
-use Scandinaver\RBAC\Domain\Model\Role;
+use Scandinaver\RBAC\Domain\Entity\Role;
 
 /**
  * Class RoleFactory

@@ -5,7 +5,7 @@ namespace Scandinaver\Common\UI\Resource;
 
 
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Common\Domain\Model\Feedback;
+use Scandinaver\Common\Domain\Entity\Feedback;
 
 /**
  * Class FeedbackTransformer

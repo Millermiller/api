@@ -95,10 +95,10 @@ class Version20200627151711 extends AbstractMigration
                     language_id VARCHAR(255))');
 
         $this->addSql(
-            'CREATE TABLE word (
+            'CREATE TABLE term (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    word VARCHAR(255),
-                    creator_id VARCHAR(255),
+                    value VARCHAR(255),
+                    user_id VARCHAR(255),
                     audio VARCHAR(255),
                     sentence VARCHAR(255),
                     is_public VARCHAR(255),
@@ -111,7 +111,7 @@ class Version20200627151711 extends AbstractMigration
         $this->addSql(
             'CREATE TABLE translate (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    word_id VARCHAR(255), 
+                    term_id VARCHAR(255), 
                     value VARCHAR(255), 
                     sentence VARCHAR(255), 
                     updated_at VARCHAR(255), 
@@ -141,7 +141,7 @@ class Version20200627151711 extends AbstractMigration
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     language_id VARCHAR(255), 
                     translate_id VARCHAR(255), 
-                    word_id VARCHAR(255), 
+                    term_id VARCHAR(255), 
                     user_id VARCHAR(255), 
                     type VARCHAR(255), 
                     updated_at VARCHAR(255), 

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Controllers\Common;
 
-use Scandinaver\Common\Domain\Model\Feedback;
-use Scandinaver\User\Domain\Model\User;
+use Scandinaver\Common\Domain\Entity\Feedback;
+use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
 /**

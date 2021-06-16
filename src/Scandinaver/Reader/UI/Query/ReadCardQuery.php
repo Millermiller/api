@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Reader\UI\Query;
 
-use Scandinaver\Learn\Domain\Model\Card;
+use Scandinaver\Learn\Domain\Entity\Card;
 use Scandinaver\Shared\Contract\QueryInterface;
 
 /**

@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
 
 /** @var Factory $factory */
-$factory->define(\Scandinaver\RBAC\Domain\Model\PermissionGroup::class, function (Faker $faker, array $attributes) {
+$factory->define(\Scandinaver\RBAC\Domain\Entity\PermissionGroup::class, function (Faker $faker, array $attributes) {
 
     $name = $attributes['name'] ?? null;
     $slug = $attributes['slug'] ?? null;

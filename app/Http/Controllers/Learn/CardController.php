@@ -12,7 +12,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Common\Domain\Model\Language;
+use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Permission\Card;
 use Scandinaver\Learn\UI\Command\CreateCardCommand;
 use Scandinaver\Learn\UI\Command\UpdateCardCommand;

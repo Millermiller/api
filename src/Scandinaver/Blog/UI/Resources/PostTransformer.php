@@ -6,7 +6,7 @@ namespace Scandinaver\Blog\UI\Resources;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Blog\Domain\Model\Post;
+use Scandinaver\Blog\Domain\Entity\Post;
 use Scandinaver\User\UI\Resource\UserTransformer;
 
 /**

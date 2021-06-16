@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Domain\Service;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Scandinaver\Learn\Domain\Model\Asset;
-use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\AssetRepository;
+use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository\AssetRepository;
 
 /**
  * Class AssetRepositoryFactory

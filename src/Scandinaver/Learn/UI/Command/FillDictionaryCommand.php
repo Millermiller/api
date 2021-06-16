@@ -17,12 +17,12 @@ class FillDictionaryCommand implements CommandInterface
 {
     private string $language;
 
-    private int $word;
+    private int $termId;
 
-    public function __construct(string $language, int $word)
+    public function __construct(string $language, int $termId)
     {
         $this->language = $language;
-        $this->word     = $word;
+        $this->termId     = $termId;
     }
 
     public function getLanguage(): string
@@ -30,9 +30,9 @@ class FillDictionaryCommand implements CommandInterface
         return $this->language;
     }
 
-    public function getWord(): int
+    public function getTermId(): int
     {
-        return $this->word;
+        return $this->termId;
     }
 
     public function buildDTO(): DTO

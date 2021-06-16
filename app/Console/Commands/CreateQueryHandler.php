@@ -115,7 +115,7 @@ class CreateQueryHandler extends GeneratorCommand
     {
         $class          = str_replace($this->getNamespace($name) . '\\', '', $name);
         $queryNamespace = str_replace('/', '\\', 'UI/Query');
-        $queryClass     = $class;
+        $queryClass     = str_replace('Handler', '', $class);
 
         return str_replace([
             'DummyClass',

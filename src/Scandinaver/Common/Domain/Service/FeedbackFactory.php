@@ -5,7 +5,7 @@ namespace Scandinaver\Common\Domain\Service;
 
 
 use Scandinaver\Common\Domain\DTO\FeedbackDTO;
-use Scandinaver\Common\Domain\Model\Feedback;
+use Scandinaver\Common\Domain\Entity\Feedback;
 
 /**
  * Class FeedbackFactory

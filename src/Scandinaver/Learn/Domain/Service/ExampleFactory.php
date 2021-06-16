@@ -4,8 +4,8 @@
 namespace Scandinaver\Learn\Domain\Service;
 
 
-use Scandinaver\Learn\Domain\Model\Example;
-use Scandinaver\Learn\Domain\Model\ExampleDTO;
+use Scandinaver\Learn\Domain\Entity\Example;
+use Scandinaver\Learn\Domain\Entity\ExampleDTO;
 
 /**
  * Class ExampleFactory
