@@ -5,14 +5,14 @@ namespace Scandinaver\Translate\Infrastructure\Persistence\Doctrine\Repository;
 
 
 use Scandinaver\Shared\BaseRepository;
-use Scandinaver\Translate\Domain\Contract\Repository\TextExtraRepositoryInterface;
+use Scandinaver\Translate\Domain\Contract\Repository\TooltipRepositoryInterface;
 
 /**
- * Class TextExtraRepository
+ * Class TooltipRepository
  *
  * @package Scandinaver\Translate\Infrastructure\Persistence\Doctrine\Repository
  */
-class TextExtraRepository extends BaseRepository implements TextExtraRepositoryInterface
+class TooltipRepository extends BaseRepository implements TooltipRepositoryInterface
 {
 
 }

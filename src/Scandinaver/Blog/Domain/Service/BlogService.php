@@ -60,7 +60,6 @@ class BlogService implements BaseServiceInterface
      */
     private function getPost(int $id): Post
     {
-        /** @var  Post $post */
         $post = $this->postRepository->find($id);
         if ($post === NULL) {
             throw new PostNotFoundException();

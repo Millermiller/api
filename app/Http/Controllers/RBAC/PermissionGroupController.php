@@ -15,6 +15,7 @@ use Scandinaver\RBAC\UI\Command\DeletePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
 use Scandinaver\RBAC\UI\Query\PermissionGroupsQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class RoleController
@@ -58,7 +59,7 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize(PermissionGroup::CREATE);
 
-        return $this->execute(new CreatePermissionGroupCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreatePermissionGroupCommand($request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -85,7 +86,7 @@ class PermissionGroupController extends Controller
     {
         Gate::authorize(PermissionGroup::DELETE, $id);
 
-        return $this->execute(new DeletePermissionGroupCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeletePermissionGroupCommand($id), Response::HTTP_NO_CONTENT);
     }
 
     public function search()

@@ -38,10 +38,7 @@ class CommentService implements BaseServiceInterface
 
     public function all(): array
     {
-        /** @var Comment[] $comments */
-        $comments = $this->commentRepository->findAll();
-
-        return $comments;
+        return $this->commentRepository->findAll();
     }
 
     /**
@@ -52,7 +49,6 @@ class CommentService implements BaseServiceInterface
      */
     public function one(int $id): Comment
     {
-        /** @var Comment $comment */
         $comment = $this->commentRepository->find($id);
 
         if ($comment === NULL) {
@@ -87,7 +83,6 @@ class CommentService implements BaseServiceInterface
      */
     public function update(int $commentId, CommentDTO $commentDTO): Comment
     {
-        /** @var Comment $comment */
         $comment = $this->commentRepository->find($commentId);
 
         if ($comment === NULL) {
@@ -108,7 +103,6 @@ class CommentService implements BaseServiceInterface
      */
     public function delete(int $commentId): void
     {
-        /** @var Comment $comment */
         $comment = $this->commentRepository->find($commentId);
 
         if ($comment === NULL) {

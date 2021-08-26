@@ -35,17 +35,17 @@ class TextDTO extends DTO
 
     private int $count;
 
-    /** @var ExtraDTO[] $extraDTO */
-    private array $extraDTO;
-
-    /** @var Sentence[] $sentences */
-    private array $sentences;
+    /** @var TooltipDTO[] $tooltipDTO */
+    private array $tooltipDTO;
 
     private bool $active;
 
     private bool $available;
 
     private bool $published;
+
+    /** @var DictionaryItemDTO[] $dictionary */
+    private array $dictionary;
 
     public function getId(): ?int
     {
@@ -182,51 +182,46 @@ class TextDTO extends DTO
     }
 
 
-    public function getExtraDTO(): array
+    public function getTooltipDTO(): array
     {
-        return $this->extraDTO;
+        return $this->tooltipDTO;
     }
 
-    public function setExtraDTO(array $extraDTO): void
+    public function setTooltipDTO(array $tooltipDTO): void
     {
-        $this->extraDTO = $extraDTO;
+        $this->tooltipDTO = $tooltipDTO;
     }
 
-    public function getSentences(): array
+    public function getDictionary(): array
     {
-        return $this->sentences;
+        return $this->dictionary;
     }
 
-    public function setSentences(array $sentences): void
+    public function setDictionary(array $dictionary): void
     {
-        $this->sentences = $sentences;
+        $this->dictionary = $dictionary;
     }
 
     public static function fromArray(array $data): TextDTO
     {
         $textDTO = new self();
 
-        $extraDTO = [];
-        foreach ($data['extra'] as $extra) {
-            $extraDTO[] = ExtraDTO::fromArray($extra);
+        $tooltipsDTO = [];
+        foreach ($data['tooltips'] as $tooltipData) {
+            $tooltipsDTO[] = TooltipDTO::fromArray($tooltipData);
         }
 
-        $sentences = [];
-        foreach ($data['sentences'] as $key => $sentenceData) {
-            $sentence = new Sentence($key);
-            foreach ($sentenceData as $word) {
-                $wordDTO = WordDTO::fromArray($word);
-                $sentence->addWord($wordDTO);
-            }
-            $sentences[] = $sentence;
+        $dictionary = [];
+        foreach ($data['dictionary'] as $dictionaryItemData) {
+            $dictionary[] = DictionaryItemDTO::fromArray($dictionaryItemData);
         }
+        $textDTO->setDictionary($dictionary);
 
         $textDTO->setTitle($data['title']);
         $textDTO->setLanguageLetter($data['language']);
         $textDTO->setText($data['original']);
         $textDTO->setTranslate($data['translate']);
-        $textDTO->setExtraDTO($extraDTO);
-        $textDTO->setSentences($sentences);
+        $textDTO->setTooltipDTO($tooltipsDTO);
         $textDTO->setPublished($data['published']);
         $textDTO->setDescription($data['description'] ?? NULL);
 

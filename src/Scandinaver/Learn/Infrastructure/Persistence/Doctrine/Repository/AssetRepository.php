@@ -61,7 +61,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
     /**
      * @param  Language  $language
      *
-     * @return array
+     * @return array<Asset>
      */
     public function getByLanguage(Language $language): array
     {

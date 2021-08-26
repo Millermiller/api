@@ -32,7 +32,7 @@ class CreateSettingCommandHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $command): void
     {
-        $setting = $this->settingsService->createSetting($command->getData());
+        $setting = $this->settingsService->createSetting($command->buildDTO());
 
         $this->resource = new Item($setting, new SettingTransformer());
     }

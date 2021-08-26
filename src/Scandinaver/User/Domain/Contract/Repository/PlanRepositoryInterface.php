@@ -9,6 +9,7 @@ use Scandinaver\User\Domain\Entity\Plan;
 /**
  * Interface PlanRepositoryInterface
  *
+ * @extends BaseRepositoryInterface<Plan>
  * @package Scandinaver\User\Domain\Contract
  */
 interface PlanRepositoryInterface extends BaseRepositoryInterface

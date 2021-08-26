@@ -7,7 +7,7 @@ use Exception;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 use Scandinaver\Translate\Domain\DTO\SynonymDTO;
 use Scandinaver\Translate\Domain\Entity\Synonym;
-use Scandinaver\Translate\Domain\Entity\Word;
+use Scandinaver\Translate\Domain\Entity\DictionaryItem;
 
 /**
  * Class SynonymFactory
@@ -32,7 +32,7 @@ class SynonymFactory
      */
     public function fromDTO(SynonymDTO $synonymDTO): Synonym
     {
-        /** @var Word $word */
+        /** @var DictionaryItem $word */
         $word = $this->wordRepository->find($synonymDTO->getWordId());
         if ($word === NULL) {
             throw new Exception('word ' . $synonymDTO->getWordId() . ' not found');

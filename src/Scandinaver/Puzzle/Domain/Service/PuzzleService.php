@@ -34,10 +34,7 @@ class PuzzleService implements BaseServiceInterface
 
     public function one(int $id): Puzzle
     {
-        /** @var Puzzle $puzzle */
-        $puzzle = $this->puzzleRepository->find($id);
-
-        return $puzzle;
+        return $this->puzzleRepository->find($id);
     }
 
     /**
@@ -62,10 +59,7 @@ class PuzzleService implements BaseServiceInterface
     {
         $language = $this->getLanguage($language);
 
-        /** @var Puzzle[] $puzzles */
-        $puzzles = $this->puzzleRepository->getByLanguage($language);
-
-        return $puzzles;
+        return $this->puzzleRepository->getByLanguage($language);
     }
 
     /**
@@ -88,7 +82,6 @@ class PuzzleService implements BaseServiceInterface
      */
     private function getPuzzle(int $puzzleId): Puzzle
     {
-        /** @var Puzzle $puzzle */
         $puzzle = $this->puzzleRepository->find($puzzleId);
 
         if ($puzzle === NULL) {
@@ -116,14 +109,13 @@ class PuzzleService implements BaseServiceInterface
      * @param  string         $language
      * @param  UserInterface  $user
      *
-     * @return array|Puzzle[]
+     * @return Puzzle[]
      * @throws LanguageNotFoundException
      */
     public function getForUser(string $language, UserInterface $user): array
     {
         $language = $this->getLanguage($language);
 
-        /** @var Puzzle[] $puzzles */
         return $this->puzzleRepository->getForUser($language, $user);
     }
 

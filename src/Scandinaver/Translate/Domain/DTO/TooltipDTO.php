@@ -7,11 +7,11 @@ namespace Scandinaver\Translate\Domain\DTO;
 use Scandinaver\Shared\DTO;
 
 /**
- * Class ExtraDTO
+ * Class TooltipDTO
  *
  * @package Scandinaver\Translate\Domain\DTO
  */
-class ExtraDTO extends DTO
+class TooltipDTO extends DTO
 {
     private ?int $id;
 
@@ -49,13 +49,13 @@ class ExtraDTO extends DTO
         $this->value = $value;
     }
 
-    public static function fromArray(array $data): ExtraDTO
+    public static function fromArray(array $data): TooltipDTO
     {
-        $extraDTO = new self();
-        $extraDTO->setId($data['id'] ?? NULL);
-        $extraDTO->setObject($data['object']);
-        $extraDTO->setValue($data['value']);
+        $tooltipDTO = new self();
+        $tooltipDTO->setId($data['id'] ?? NULL);
+        $tooltipDTO->setObject($data['object']);
+        $tooltipDTO->setValue($data['value']);
 
-        return $extraDTO;
+        return $tooltipDTO;
     }
 }

@@ -62,7 +62,6 @@ class FeedbackService implements BaseServiceInterface
      */
     private function getFeedback(int $id): Feedback
     {
-        /** @var Feedback $feedback */
         $feedback = $this->feedbackRepository->find($id);
         if ($feedback === NULL) {
             throw new \Exception('Feedback not found');

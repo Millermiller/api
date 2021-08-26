@@ -35,7 +35,7 @@ class CreateUserCommandHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $command): void
     {
-        $user = $this->service->registration($command->getData());
+        $user = $this->service->registration($command->buildDTO());
 
         $this->resource = new Item($user, new UserTransformer());
     }

@@ -1,12 +1,12 @@
-Scandinaver\Translate\Domain\Entity\Word:
+Scandinaver\Translate\Domain\Entity\DictionaryItem:
   type: entity
-  table: word_in_text
+  table: text__dictionary
   indexes:
     text_id:
       columns:
         - text_id
         - sentence_num
-        - word
+        - object
     IDX_1B42EF50698D3548:
       columns:
         - text_id
@@ -23,16 +23,19 @@ Scandinaver\Translate\Domain\Entity\Word:
       unique: false
       nullable: false
       column: sentence_num
-    word:
+    object:
       type: string
       length: 255
       unique: false
       nullable: false
-    orig:
+    value:
       type: string
       length: 255
       unique: false
       nullable: true
+    coordinates:
+      type: json
+      nullable: false
     createdAt:
       type: datetime
       unique: false
@@ -63,9 +66,10 @@ Scandinaver\Translate\Domain\Entity\Word:
   oneToMany:
     synonyms:
       targetEntity: Scandinaver\Translate\Domain\Entity\Synonym
-      cascade: {  }
+      cascade:
+        - persist
       fetch: LAZY
       mappedBy: word
       inversedBy: null
-      orphanRemoval: false
+      orphanRemoval: true
   lifecycleCallbacks: {  }

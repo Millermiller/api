@@ -44,7 +44,7 @@ Scandinaver\Learn\Domain\Entity\Passing:
         timestampable:
           on: update
   manyToOne:
-    asset:
+    subject:
       targetEntity: Scandinaver\Learn\Domain\Entity\Asset
       cascade:
         - persist

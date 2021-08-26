@@ -19,7 +19,7 @@ class RoleDTO extends DTO
 
     private string $slug;
 
-    private string $description;
+    private ?string $description;
 
     public function getId(): ?int
     {
@@ -51,12 +51,12 @@ class RoleDTO extends DTO
         $this->slug = $slug;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -65,9 +65,10 @@ class RoleDTO extends DTO
     {
         $roleDTO = new self();
 
+        $roleDTO->setId($data['id'] ?? NULL);
         $roleDTO->setName($data['name']);
         $roleDTO->setSlug($data['slug']);
-        $roleDTO->setDescription($data['description']);
+        $roleDTO->setDescription($data['description'] ?? NULL);
 
         return $roleDTO;
     }

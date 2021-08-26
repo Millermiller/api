@@ -20,6 +20,7 @@ use Scandinaver\Settings\UI\Command\SetSettingCommand;
 use Scandinaver\Settings\UI\Command\UpdateSettingCommand;
 use Scandinaver\Settings\UI\Query\SettingQuery;
 use Scandinaver\Settings\UI\Query\SettingsQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SettingsController
@@ -63,7 +64,7 @@ class SettingsController extends Controller
     {
         Gate::authorize(Settings::CREATE);
 
-        return $this->execute(new CreateSettingCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreateSettingCommand($request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -90,7 +91,7 @@ class SettingsController extends Controller
     {
         Gate::authorize(Settings::DELETE, $id);
 
-        return $this->execute(new DeleteSettingCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteSettingCommand($id), Response::HTTP_NO_CONTENT);
     }
 
     /**

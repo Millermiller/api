@@ -32,13 +32,14 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param  string  $id
+     * @template T
+     * @param  class-string<T>  $className
      *
-     * @return Application|mixed|string
+     * @return T
      */
-    public function get($id)
+    public function get($className)
     {
-        return app($id);
+        return app($className);
     }
 
     /**

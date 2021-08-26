@@ -41,14 +41,13 @@ class PostFactory
     public function fromDTO(PostDTO $postDTO): Post
     {
         $categoryId = $postDTO->getCategoryId();
-        /** @var Category $category */
+
         $category = $this->categoryRepository->find($categoryId);
         if ($category === NULL) {
             throw new CategoryNotFoundException();
         }
 
         $userId = $postDTO->getUserId();
-        /** @var UserInterface $user */
         $user = $this->userRepository->find($userId);
         if ($user === NULL) {
             throw new UserNotFoundException();
@@ -92,14 +91,13 @@ class PostFactory
     public function update(Post $post, PostDTO $postDTO): Post
     {
         $userId = $postDTO->getUserId();
-        /** @var UserInterface $user */
+
         $user = $this->userRepository->find($userId);
         if ($user === NULL) {
             throw new UserNotFoundException();
         }
 
         $categoryId = $postDTO->getCategoryId();
-        /** @var Category $category */
         $category = $this->categoryRepository->find($categoryId);
         if ($category === NULL) {
             throw new CategoryNotFoundException();

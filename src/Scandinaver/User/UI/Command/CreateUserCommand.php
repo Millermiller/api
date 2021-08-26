@@ -4,7 +4,7 @@
 namespace Scandinaver\User\UI\Command;
 
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\User\Domain\DTO\UserDTO;
 
 /**
  * Class CreateUserCommand
@@ -32,8 +32,8 @@ class CreateUserCommand implements CommandInterface
         return $this->data;
     }
 
-    public function buildDTO(): DTO
+    public function buildDTO(): UserDTO
     {
-        // TODO: Implement buildDTO() method.
+        return UserDTO::fromArray($this->data);
     }
 }

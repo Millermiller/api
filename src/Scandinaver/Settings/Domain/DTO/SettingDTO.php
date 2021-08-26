@@ -19,12 +19,7 @@ class SettingDTO extends DTO
 
     private string $type;
 
-    public function __construct(string $title, string $slug, string $type)
-    {
-        $this->title = $title;
-        $this->slug  = $slug;
-        $this->type  = $type;
-    }
+    private ?string $description = NULL;
 
     public function getTitle(): string
     {
@@ -56,8 +51,25 @@ class SettingDTO extends DTO
         $this->type = $type;
     }
 
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
     public static function fromArray(array $data): SettingDTO
     {
-        return new self($data['title'], $data['slug'], $data['type']);
+        $settingDTO = new self();
+        $settingDTO->setTitle($data['title']);
+        $settingDTO->setSlug($data['slug']);
+        $settingDTO->setType($data['type']);
+        $settingDTO->setDescription($data['description'] ?? NULL);
+
+        return $settingDTO;
     }
 }

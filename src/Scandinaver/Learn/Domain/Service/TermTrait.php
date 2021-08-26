@@ -23,10 +23,8 @@ trait TermTrait
      */
     private function getTerm(int $id): Term
     {
-        /** @var  TermRepositoryInterface $repository */
         $repository = Container::getInstance()->get(TermRepositoryInterface::class);
 
-        /** @var Term $term */
         $term = $repository->find($id);
 
         if ($term === NULL) {

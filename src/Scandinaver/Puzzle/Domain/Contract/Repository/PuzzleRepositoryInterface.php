@@ -11,6 +11,7 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 /**
  * Interface PuzzleRepositoryInterface
  *
+ * @extends BaseRepositoryInterface<Puzzle>
  * @package Scandinaver\Puzzle\Domain\Contract
  */
 interface PuzzleRepositoryInterface extends BaseRepositoryInterface
@@ -19,10 +20,16 @@ interface PuzzleRepositoryInterface extends BaseRepositoryInterface
     /**
      * @param  Language  $language
      *
-     * @return mixed
+     * @return Puzzle[]
      */
-    public function getByLanguage(Language $language);
+    public function getByLanguage(Language $language): array;
 
+    /**
+     * @param  Language       $language
+     * @param  UserInterface  $user
+     *
+     * @return Puzzle[]
+     */
     public function getForUser(Language $language, UserInterface $user): array;
 
     public function addForUser(UserInterface $user, Puzzle $puzzle): void;

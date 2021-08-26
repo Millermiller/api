@@ -1,6 +1,6 @@
-Scandinaver\Translate\Domain\Entity\Result:
+Scandinaver\Translate\Domain\Entity\Passing:
   type: entity
-  table: result_text
+  table: text__passing
   indexes:
     user_id:
       columns:
@@ -16,15 +16,19 @@ Scandinaver\Translate\Domain\Entity\Result:
       generator:
         strategy: IDENTITY
   fields:
-    textId:
-      type: integer
-      length: null
+    completed:
+      type: boolean
       unique: false
       nullable: false
-      column: text_id
+    percent:
+      type: integer
+      unique: false
+      nullable: false
+    data:
+      type: json
+      nullable: false
     createdAt:
       type: datetime
-      length: null
       unique: false
       nullable: false
       column: created_at
@@ -33,7 +37,6 @@ Scandinaver\Translate\Domain\Entity\Result:
           on: create
     updatedAt:
       type: datetime
-      length: null
       unique: false
       nullable: true
       column: updated_at
@@ -41,6 +44,17 @@ Scandinaver\Translate\Domain\Entity\Result:
         timestampable:
           on: update
   manyToOne:
+    subject:
+      targetEntity: Scandinaver\Translate\Domain\Entity\Text
+      cascade:
+        - persist
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: passings
+      joinColumns:
+        text_id:
+          referencedColumnName: id
+      orphanRemoval: false
     language:
       targetEntity: Scandinaver\Common\Domain\Entity\Language
       cascade: {  }
@@ -59,16 +73,6 @@ Scandinaver\Translate\Domain\Entity\Result:
       inversedBy: translates
       joinColumns:
         user_id:
-          referencedColumnName: id
-      orphanRemoval: false
-    text:
-      targetEntity: Scandinaver\Translate\Domain\Entity\Text
-      cascade: {  }
-      fetch: LAZY
-      mappedBy: null
-      inversedBy: textResults
-      joinColumns:
-        text_id:
           referencedColumnName: id
       orphanRemoval: false
   lifecycleCallbacks: {  }

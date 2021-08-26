@@ -100,7 +100,7 @@ Scandinaver\Learn\Domain\Entity\Asset:
       cascade:
         - remove
       fetch: LAZY
-      mappedBy: asset
+      mappedBy: subject
       inversedBy: null
       orphanRemoval: false
       orderBy: null

@@ -16,6 +16,7 @@ use Scandinaver\RBAC\UI\Command\DeleteRoleCommand;
 use Scandinaver\RBAC\UI\Command\DetachPermissionFromRoleCommand;
 use Scandinaver\RBAC\UI\Command\UpdateRoleCommand;
 use Scandinaver\RBAC\UI\Query\{RoleQuery, RolesQuery};
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class RoleController
@@ -59,7 +60,7 @@ class RoleController extends Controller
     {
         Gate::authorize(Role::CREATE);
 
-        return $this->execute(new CreateRoleCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreateRoleCommand($request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -86,7 +87,7 @@ class RoleController extends Controller
     {
         Gate::authorize(Role::DELETE, $id);
 
-        return $this->execute(new DeleteRoleCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteRoleCommand($id), Response::HTTP_NO_CONTENT);
     }
 
     /**

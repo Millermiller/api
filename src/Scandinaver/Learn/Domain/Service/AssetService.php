@@ -127,10 +127,7 @@ class AssetService implements BaseServiceInterface
         $language   = $this->getLanguage($language);
         $repository = AssetRepositoryFactory::getByType($type);
 
-        /** @var Asset[] $assets */
-        $assets = $repository->getByLanguage($language);
-
-        return $assets;
+        return $repository->getByLanguage($language);
     }
 
     /**
@@ -149,20 +146,19 @@ class AssetService implements BaseServiceInterface
 
         $assets = $repository->getByLanguage($language);
 
-        $isNextAssetAvailable = FALSE;
+        $isNextAvailable = FALSE;
 
-        /** @var Asset $asset */
         foreach ($assets as $asset) {
 
             $result = $asset->getBestResultForUser($user);
             $asset->setBestResult($result);
 
-            if ($asset->isFirstAsset() || $isNextAssetAvailable) {
+            if ($asset->isFirst() || $isNextAvailable) {
                 $asset->setActive(TRUE);
             }
 
             $asset->setCompleted($asset->isCompletedByUser($user));
-            $isNextAssetAvailable = $asset->isCompletedByUser($user);
+            $isNextAvailable = $asset->isCompletedByUser($user);
 
             if ($asset->getLevel() <= 5 || $user->isPremium()) { // TODO: implement settings
                 $asset->setAvailable(TRUE);
@@ -206,19 +202,15 @@ class AssetService implements BaseServiceInterface
 
     /**
      * @param  UserInterface  $user
-     * @param  int            $asset
+     * @param  int            $id
      * @param  array          $data
      *
      * @return Asset
      * @throws AssetNotFoundException
-     * @throws BindingResolutionException
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
-    public function updateAsset(UserInterface $user, int $asset, array $data): Asset
+    public function updateAsset(UserInterface $user, int $id, array $data): Asset
     {
-        $asset      = $this->getAsset($asset);
-        $repository = AssetRepositoryFactory::getByType($asset->getType());
+        $asset      = $this->getAsset($id);
 
         $payloadData = [ //TODO: implement language
             'title' => $data['title'],
@@ -226,8 +218,7 @@ class AssetService implements BaseServiceInterface
             'level' => $data['level'],
         ];
 
-        /** @var  Asset $asset */
-        $asset = $repository->update($asset, $payloadData);
+        $asset = $this->assetRepository->update($asset, $payloadData);
 
         $asset->setBestResult($asset->getBestResultForUser($user));
 
@@ -425,7 +416,6 @@ class AssetService implements BaseServiceInterface
 
     public function removeByUser(UserInterface $user): void
     {
-        /** @var Language[] $languages $languages */
         $languages = $this->languageService->all();
 
         foreach ($languages as $language) {
@@ -450,7 +440,6 @@ class AssetService implements BaseServiceInterface
      */
     public function createDefaultAssets(Language $language): void
     {
-        /** @var  UserInterface[] $users */
         $users   = $this->userRepository->findAll();
         $manager = app('em');
         $manager->getConnection()->beginTransaction();

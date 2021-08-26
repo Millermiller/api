@@ -34,6 +34,7 @@ use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
 use Scandinaver\Learn\UI\Query\GetTranslatesByTermQuery;
 use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AssetController
@@ -84,7 +85,7 @@ class AssetController extends Controller
 
         $data = $request->toArray();
 
-        return $this->execute(new CreateAssetCommand(Auth::user(), $data), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreateAssetCommand(Auth::user(), $data), Response::HTTP_CREATED);
     }
 
     /**
@@ -111,7 +112,7 @@ class AssetController extends Controller
     {
         Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::DELETE, $id);
 
-        return $this->execute(new DeleteAssetCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteAssetCommand($id), Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -157,23 +158,21 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  string  $languageId
-     * @param  int     $termId
+     * @param  int  $termId
      *
      * @return JsonResponse
      */
-    public function showValues(string $languageId, int $termId): JsonResponse
+    public function showValues(int $termId): JsonResponse
     {
         return $this->execute(new GetTranslatesByTermQuery($termId));
     }
 
     /**
-     * @param  string  $languageId
-     * @param  int     $cardId
+     * @param  int  $cardId
      *
      * @return JsonResponse
      */
-    public function showExamples(string $languageId, int $cardId): JsonResponse
+    public function showExamples(int $cardId): JsonResponse
     {
         return $this->execute(new GetExamplesForCardQuery($cardId));
     }
@@ -204,7 +203,7 @@ class AssetController extends Controller
             }
         }
 
-        return response()->json(NULL, 200);
+        return response()->json(NULL);
     }
 
     /**
@@ -215,7 +214,7 @@ class AssetController extends Controller
      */
     public function uploadAudio(Request $request, int $termId): JsonResponse
     {
-        return $this->execute(new UploadAudioCommand($termId, $request->file('audiofile')), JsonResponse::HTTP_CREATED);
+        return $this->execute(new UploadAudioCommand($termId, $request->file('audiofile')), Response::HTTP_CREATED);
     }
 
     /**
@@ -225,7 +224,7 @@ class AssetController extends Controller
      */
     public function addPair(Request $request): JsonResponse
     {
-        return $this->execute(new AddTermAndTranslateCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new AddTermAndTranslateCommand($request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -250,7 +249,7 @@ class AssetController extends Controller
     {
         Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::ADD_CARD);
 
-        return $this->execute(new AddCardToAssetCommand(Auth::user(), $asset, $card), JsonResponse::HTTP_CREATED);
+        return $this->execute(new AddCardToAssetCommand(Auth::user(), $asset, $card), Response::HTTP_CREATED);
     }
 
     /**
@@ -265,7 +264,7 @@ class AssetController extends Controller
         Gate::authorize(Card::DELETE, [$card, $asset]); //todo: change permission
 
         return $this->execute(new DeleteCardFromAssetCommand(Auth::user(), $asset, $card),
-            JsonResponse::HTTP_NO_CONTENT);
+            Response::HTTP_NO_CONTENT);
     }
 
     /**

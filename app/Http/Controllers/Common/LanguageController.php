@@ -14,6 +14,7 @@ use Scandinaver\Common\UI\Command\CreateLanguageCommand;
 use Scandinaver\Common\UI\Command\DeleteLanguageCommand;
 use Scandinaver\Common\UI\Command\UpdateLanguageCommand;
 use Scandinaver\Common\UI\Query\LanguagesQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class LanguageController
@@ -47,7 +48,7 @@ class LanguageController extends Controller
         $data         = $request->toArray();
         $data['flag'] = $request->file('file');
 
-        return $this->execute(new CreateLanguageCommand($data), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreateLanguageCommand($data), Response::HTTP_CREATED);
     }
 
     /**
@@ -77,7 +78,7 @@ class LanguageController extends Controller
     {
         Gate::authorize(Language::DELETE, $id);
 
-        $this->execute(new DeleteLanguageCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        $this->execute(new DeleteLanguageCommand($id), Response::HTTP_NO_CONTENT);
 
         return response()->json(NULL, 204);
     }

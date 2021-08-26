@@ -10,6 +10,7 @@ use App\Http\Requests\Learn\UpdateCardRequest;
 use App\Http\Requests\Learn\SearchRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Scandinaver\Common\Domain\Entity\Language;
@@ -18,6 +19,7 @@ use Scandinaver\Learn\UI\Command\CreateCardCommand;
 use Scandinaver\Learn\UI\Command\UpdateCardCommand;
 use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
 use Scandinaver\Learn\UI\Query\SearchCardQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CardController
@@ -53,6 +55,7 @@ class CardController extends Controller
      *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws BindingResolutionException
      */
     public function update(int $card, UpdateCardRequest $request): JsonResponse
     {
@@ -75,7 +78,7 @@ class CardController extends Controller
 
         return $this->execute(new CreateCardCommand(Auth::user(), $language, $request->get('word'),
             $request->get('translate')),
-            JsonResponse::HTTP_CREATED);
+            Response::HTTP_CREATED);
     }
 
     /**
@@ -115,7 +118,7 @@ class CardController extends Controller
     {
         $file = $request->file('file');
 
-        return $this->execute(new UploadCsvSentencesCommand($languageId, $file), JsonResponse::HTTP_CREATED);
+        return $this->execute(new UploadCsvSentencesCommand($languageId, $file), Response::HTTP_CREATED);
     }
 
 }

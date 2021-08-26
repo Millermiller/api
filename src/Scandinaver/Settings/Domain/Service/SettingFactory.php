@@ -20,6 +20,7 @@ class SettingFactory
         $setting->setTitle($settingDTO->getTitle());
         $setting->setSlug($settingDTO->getSlug());
         $setting->setType($settingDTO->getType());
+        $setting->setDescription($settingDTO->getType());
 
         return $setting;
     }

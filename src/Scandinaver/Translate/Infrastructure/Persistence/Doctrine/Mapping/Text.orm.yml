@@ -64,15 +64,6 @@ Scandinaver\Translate\Domain\Entity\Text:
       length: 255
       unique: false
       nullable: true
-  manyToMany:
-  #users:
-  #    targetEntity: Scandinaver\User\Domain\Entity\User
-  #    cascade: {  }
-  #    fetch: LAZY
-  #    mappedBy: texts
-  #    inversedBy: null
-  #    joinTable: {  }
-  #    orderBy: null
   manyToOne:
     language:
       targetEntity: Scandinaver\Common\Domain\Entity\Language
@@ -85,8 +76,8 @@ Scandinaver\Translate\Domain\Entity\Text:
           referencedColumnName: id
       orphanRemoval: false
   oneToMany:
-    extra:
-      targetEntity: Scandinaver\Translate\Domain\Entity\TextExtra
+    tooltips:
+      targetEntity: Scandinaver\Translate\Domain\Entity\Tooltip
       cascade:
         - persist
       fetch: LAZY
@@ -94,8 +85,8 @@ Scandinaver\Translate\Domain\Entity\Text:
       inversedBy: null
       orphanRemoval: true
       orderBy: null
-    words:
-      targetEntity: Scandinaver\Translate\Domain\Entity\Word
+    dictionary:
+      targetEntity: Scandinaver\Translate\Domain\Entity\DictionaryItem
       cascade:
         - persist
       fetch: LAZY
@@ -103,12 +94,12 @@ Scandinaver\Translate\Domain\Entity\Text:
       inversedBy: null
       orphanRemoval: true
       orderBy: null
-    textResults:
-      targetEntity: Scandinaver\Translate\Domain\Entity\Result
+    passings:
+      targetEntity: Scandinaver\Translate\Domain\Entity\Passing
       cascade:
         - remove
       fetch: LAZY
-      mappedBy: text
+      mappedBy: subject
       inversedBy: null
       orphanRemoval: false
       orderBy: null

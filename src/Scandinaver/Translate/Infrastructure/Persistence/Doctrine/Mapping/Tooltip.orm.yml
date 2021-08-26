@@ -1,6 +1,6 @@
-Scandinaver\Translate\Domain\Entity\TextExtra:
+Scandinaver\Translate\Domain\Entity\Tooltip:
   type: entity
-  table: text_extras
+  table: text__tooltip
   indexes:
     text_id:
       columns:
@@ -50,7 +50,7 @@ Scandinaver\Translate\Domain\Entity\TextExtra:
       cascade: {  }
       fetch: LAZY
       mappedBy: null
-      inversedBy: extra
+      inversedBy: tooltips
       joinColumns:
         text_id:
           referencedColumnName: id

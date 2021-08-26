@@ -28,7 +28,7 @@ abstract class AbstractHandler
     }
 
     /**
-     * @param $command
+     * @param  BaseCommandInterface  $command
      */
     public abstract function handle(BaseCommandInterface $command): void;
 

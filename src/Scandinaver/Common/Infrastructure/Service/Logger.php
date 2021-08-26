@@ -38,7 +38,7 @@ class Logger implements LoggerInterface
     {
         $user = Auth::user();
 
-        $log = new Log($user, $level, $message, $context);
+        $log = new Log($user, $level, $message, $context, $context);
 
         try {
             $this->logRepository->save($log);

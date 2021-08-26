@@ -7,13 +7,13 @@ use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Shared\DTO;
 
 /**
- * Class CreateTextExtraCommand
+ * Class CreateTooltipCommand
  *
  * @package Scandinaver\Translate\UI\Command
  *
- * @see     \Scandinaver\Translate\Application\Handler\Command\CreateTextExtraCommandHandler
+ * @see     \Scandinaver\Translate\Application\Handler\Command\CreateTooltipCommandHandler
  */
-class CreateTextExtraCommand implements CommandInterface
+class CreateTooltipCommand implements CommandInterface
 {
     public function __construct()
     {

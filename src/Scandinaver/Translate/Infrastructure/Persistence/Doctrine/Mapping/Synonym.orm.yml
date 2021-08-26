@@ -1,11 +1,11 @@
 Scandinaver\Translate\Domain\Entity\Synonym:
   type: entity
-  table: synonym
+  table: text__synonym
   indexes:
     word_id:
       columns:
-        - word_id
-        - synonym
+        - dictionary_item_id
+        - value
   id:
     id:
       type: integer
@@ -14,7 +14,7 @@ Scandinaver\Translate\Domain\Entity\Synonym:
       generator:
         strategy: IDENTITY
   fields:
-    synonym:
+    value:
       type: string
       length: 255
       unique: false
@@ -37,13 +37,13 @@ Scandinaver\Translate\Domain\Entity\Synonym:
           on: update
   manyToOne:
     word:
-      targetEntity: Scandinaver\Translate\Domain\Entity\Word
+      targetEntity: Scandinaver\Translate\Domain\Entity\DictionaryItem
       cascade: {  }
       fetch: LAZY
       mappedBy: null
       inversedBy: synonyms
       joinColumns:
-        word_id:
+        dictionary_item_id:
           referencedColumnName: id
       orphanRemoval: false
   lifecycleCallbacks: {  }

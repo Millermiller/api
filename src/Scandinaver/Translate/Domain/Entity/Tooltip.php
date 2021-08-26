@@ -6,11 +6,11 @@ namespace Scandinaver\Translate\Domain\Entity;
 use DateTime;
 
 /**
- * Class TextExtra
+ * Class Tooltip
  *
  * @package Scandinaver\Translate\Domain\Entity
  */
-class TextExtra
+class Tooltip
 {
     private ?int $id = NULL;
 

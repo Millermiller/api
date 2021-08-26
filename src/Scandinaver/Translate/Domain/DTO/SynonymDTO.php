@@ -13,9 +13,21 @@ use Scandinaver\Shared\DTO;
  */
 class SynonymDTO extends DTO
 {
+    private ?int $id;
+
     private int $wordId;
 
     private string $value;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
 
     public function getValue(): string
     {
@@ -40,8 +52,9 @@ class SynonymDTO extends DTO
     public static function fromArray(array $data): SynonymDTO
     {
         $synonymDTO = new self();
+        $synonymDTO->setId($data['id'] ?? NULL);
         $synonymDTO->setValue($data['value']);
-        $synonymDTO->setWordId($data['wordId']);
+        // $synonymDTO->setWordId($data['wordId'] || NULL);
         return $synonymDTO;
     }
 

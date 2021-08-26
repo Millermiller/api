@@ -14,6 +14,7 @@ use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
 use Scandinaver\Blog\UI\Command\UpdateCategoryCommand;
 use Scandinaver\Blog\UI\Query\{CategoriesQuery, CategoryQuery};
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CategoryController
@@ -57,7 +58,7 @@ class CategoryController extends Controller
     {
         Gate::authorize(Category::CREATE);
 
-        return $this->execute(new CreateCategoryCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreateCategoryCommand($request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -84,7 +85,7 @@ class CategoryController extends Controller
     {
         Gate::authorize(Category::DELETE, $categoryId);
 
-        return $this->execute(new DeleteCategoryCommand($categoryId), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteCategoryCommand($categoryId), Response::HTTP_NO_CONTENT);
     }
 
 }

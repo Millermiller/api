@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\User\Domain\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 /**
@@ -136,11 +137,11 @@ class UserControllerTest extends TestCase
 
         $response = $this->delete(route('user:delete', ['id' => $userId]));
 
-        self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
+        self::assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
 
         $response = $this->get(route('user:show', ['id' => $userId]));
 
-        self::assertEquals(JsonResponse::HTTP_NOT_FOUND, $response->getStatusCode());
+        self::assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }
 
     /**

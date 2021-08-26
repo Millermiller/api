@@ -16,10 +16,20 @@ class UpdateTextRequest extends FormRequest
     {
         return [
             'title'       => 'required',
-            'extra'       => 'present|array',
-            'sentences'   => 'present|array',
+            'tooltips'    => 'present|array',
             'published'   => 'required',
-            'description' => 'present'
+            'description' => 'present',
+            'dictionary'  => 'present|array',
+            'dictionary.*.value'  => 'required',
+            'dictionary.*.text'  => 'required',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'dictionary.*.value.required' => 'Введите значение перевода',
+            'dictionary.*.text.required'  => 'Введите ключ перевода',
         ];
     }
 }

@@ -15,7 +15,7 @@ use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Entity\{Asset, FavouriteAsset, Passing};
 use Scandinaver\RBAC\Domain\Entity\{Permission, Role};
 use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Translate\Domain\Entity\Result as TranslateResult;
+use Scandinaver\Translate\Domain\Entity\Passing as TranslateResult;
 use Scandinaver\Translate\Domain\Entity\Text;
 use Scandinaver\User\Domain\Event\UserCreated;
 use Scandinaver\User\Domain\Event\UserDeleted;
@@ -63,10 +63,11 @@ class User extends AggregateRoot implements UserInterface,
 
     private Plan $plan;
 
-    private Collection $passings;
+    private Collection $assetPassings;
 
-    private Collection $translates;
+    private Collection $textPassings;
 
+    /** @var Collection<Asset> */
     private Collection $personalAssets;
 
     private Collection $puzzles;
@@ -377,20 +378,20 @@ class User extends AggregateRoot implements UserInterface,
     /**
      * @param  Passing  $passing
      */
-    public function addPassing(Passing $passing)
+    public function addAssetPassing(Passing $passing)
     {
-        if (!$this->passings->contains($passing)) {
-            $this->passings->add($passing);
+        if (!$this->assetPassings->contains($passing)) {
+            $this->assetPassings->add($passing);
         }
     }
 
     /**
      * @param  TranslateResult  $result
      */
-    public function addTranslate(TranslateResult $result)
+    public function addTextPassing(TranslateResult $result)
     {
-        if (!$this->translates->contains($result)) {
-            $this->translates->add($result);
+        if (!$this->textPassings->contains($result)) {
+            $this->textPassings->add($result);
         }
     }
 

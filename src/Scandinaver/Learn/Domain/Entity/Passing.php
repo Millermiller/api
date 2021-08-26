@@ -5,37 +5,20 @@ namespace Scandinaver\Learn\Domain\Entity;
 
 use DateTime;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Entity\AbstractLearnItem;
+use Scandinaver\Common\Domain\Entity\AbstractPassing;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Shared\AggregateRoot;
 
 /**
  * Class Passing
  *
  * @package Scandinaver\Learn\Domain\Entity
  */
-class Passing extends AggregateRoot
+class Passing extends AbstractPassing
 {
-    private ?int $id;
-
-    private Language $language;
-
-    private Asset $asset;
-
-    private UserInterface $user;
-
-    private bool $completed;
-
-    private int $percent;
-
-    private array $data;
-
-    private DateTime $createdAt;
-
-    private ?DateTime $updatedAt;
-
     public function __construct(Asset $asset, UserInterface $user, bool $completed, array $data)
     {
-        $this->asset     = $asset;
+        $this->subject   = $asset;
         $this->language  = $asset->getLanguage();
         $this->user      = $user;
         $this->completed = $completed;
@@ -43,34 +26,9 @@ class Passing extends AggregateRoot
         $this->data      = $data['payload'];
     }
 
-    public function isCompleted(): bool
-    {
-        return $this->completed;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
     public function onDelete()
     {
         // TODO: Implement delete() method.
-    }
-
-    public function getAsset(): Asset
-    {
-        return $this->asset;
-    }
-
-    public function getUser(): UserInterface
-    {
-        return $this->user;
-    }
-
-    public function getPercent(): int
-    {
-        return $this->percent;
     }
 
     public function getTime(): int
@@ -81,20 +39,5 @@ class Passing extends AggregateRoot
     public function getErrors(): array
     {
         return $this->data['errors'];
-    }
-
-    public function setPercent(int $percent): void
-    {
-        $this->percent = $percent;
-    }
-
-    public function setCompleted(bool $completed): void
-    {
-        $this->completed = $completed;
-    }
-
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
     }
 }

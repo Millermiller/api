@@ -16,7 +16,7 @@ use Scandinaver\Translate\Domain\Entity\Synonym;
 class SynonymTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = [
-        'word'
+       // 'word'
     ];
 
     public function transform(Synonym $synonym): array
@@ -31,6 +31,6 @@ class SynonymTransformer extends TransformerAbstract
     {
         $word = $synonym->getWord();
 
-        return $this->item($word, new WordTransformer());
+        return $this->item($word, new DictionaryItemTransformer());
     }
 }

@@ -9,16 +9,16 @@ use Scandinaver\Shared\BaseRepository;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\SynonymRepositoryInterface;
-use Scandinaver\Translate\Domain\Contract\Repository\TextExtraRepositoryInterface;
+use Scandinaver\Translate\Domain\Contract\Repository\TooltipRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\WordRepositoryInterface;
-use Scandinaver\Translate\Domain\Entity\Result;
+use Scandinaver\Translate\Domain\Entity\Passing;
 use Scandinaver\Translate\Domain\Entity\Synonym;
 use Scandinaver\Translate\Domain\Entity\Text;
-use Scandinaver\Translate\Domain\Entity\TextExtra;
-use Scandinaver\Translate\Domain\Entity\Word;
+use Scandinaver\Translate\Domain\Entity\Tooltip;
+use Scandinaver\Translate\Domain\Entity\DictionaryItem;
 use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\Repository\SynonymRepository;
-use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\Repository\TextExtraRepository;
+use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\Repository\TooltipRepository;
 use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\Repository\WordRepository;
 use Scandinaver\Translate\Domain\Service\{TextService, SynonymFactory};
 use Scandinaver\Translate\Infrastructure\Persistence\Doctrine\Repository\ResultRepository;
@@ -49,7 +49,7 @@ class DoctrineServiceProvider extends ServiceProvider
             function () {
                 return new ResultRepository(
                     $this->app['em'],
-                    $this->app['em']->getClassMetadata(Result::class)
+                    $this->app['em']->getClassMetadata(Passing::class)
                 );
             }
         );
@@ -65,11 +65,11 @@ class DoctrineServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            TextExtraRepositoryInterface::class,
+            TooltipRepositoryInterface::class,
             function () {
-                return new TextExtraRepository(
+                return new TooltipRepository(
                     $this->app['em'],
-                    $this->app['em']->getClassMetadata(TextExtra::class)
+                    $this->app['em']->getClassMetadata(Tooltip::class)
                 );
             }
         );
@@ -79,7 +79,7 @@ class DoctrineServiceProvider extends ServiceProvider
             function () {
                 return new WordRepository(
                     $this->app['em'],
-                    $this->app['em']->getClassMetadata(Word::class)
+                    $this->app['em']->getClassMetadata(DictionaryItem::class)
                 );
             }
         );
@@ -90,7 +90,7 @@ class DoctrineServiceProvider extends ServiceProvider
             ->give(function(){
                 return new BaseRepository(
                     $this->app['em'],
-                    $this->app['em']->getClassMetadata(Word::class)
+                    $this->app['em']->getClassMetadata(DictionaryItem::class)
                 );
             });
     }

@@ -45,7 +45,7 @@ class PassingTransformer extends TransformerAbstract
 
     public function includeAsset(Passing $passing): Item
     {
-        $asset = $passing->getAsset();
+        $asset = $passing->getSubject();
 
         return new Item($asset, new AssetTransformer());
     }

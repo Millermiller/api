@@ -47,5 +47,12 @@ class GetStateQueryHandler extends AbstractHandler
             'sentences.available',
             'sentences.completed',
         ]);
+
+        $this->fractal->parseExcludes([
+            'texts.text',
+            'texts.translate',
+            'texts.tooltips',
+            'texts.dictionary',
+        ]);
     }
 } 

@@ -13,6 +13,7 @@ use Scandinaver\User\Domain\Permission\User;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
 use Scandinaver\User\UI\Command\UpdateUserCommand;
+use Symfony\Component\HttpFoundation\Response;
 use Scandinaver\User\UI\Query\{UserQuery, UsersQuery};
 
 /**
@@ -86,7 +87,7 @@ class UserController extends Controller
     {
         Gate::authorize(User::DELETE, $userId);
 
-        return $this->execute(new DeleteUserCommand($userId), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteUserCommand($userId), Response::HTTP_NO_CONTENT);
     }
 
     /**

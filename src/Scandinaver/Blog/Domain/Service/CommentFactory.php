@@ -46,13 +46,11 @@ class CommentFactory
         $userId = $commentDTO->getUserId();
         $postId = $commentDTO->getPostId();
 
-        /** @var User $user */
         $user = $this->userRepository->find($userId);
         if ($user === NULL) {
             throw new UserNotFoundException();
         }
 
-        /** @var Post $post */
         $post = $this->postRepository->find($postId);
         if ($post === NULL) {
             throw new PostNotFoundException();

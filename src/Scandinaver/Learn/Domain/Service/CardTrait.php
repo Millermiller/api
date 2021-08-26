@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learn\Domain\Service;
 
+use Scandinaver\Common\Infrastructure\Service\Container;
 use Scandinaver\Learn\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Entity\Card;
@@ -22,10 +23,8 @@ trait CardTrait
      */
     private function getCard(int $id): Card
     {
-        /** @var  CardRepositoryInterface $repository */
-        $repository = app(CardRepositoryInterface::class);
+        $repository = Container::getInstance()->get(CardRepositoryInterface::class);
 
-        /** @var Card $card */
         $card = $repository->find($id);
 
         if ($card === NULL) {

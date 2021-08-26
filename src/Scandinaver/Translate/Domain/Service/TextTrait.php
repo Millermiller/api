@@ -23,10 +23,8 @@ trait TextTrait
      */
     private function getText(int $id): Text
     {
-        /** @var  TextRepositoryInterface $repository */
         $repository = Container::getInstance()->get(TextRepositoryInterface::class);
 
-        /** @var Text $text */
         $text = $repository->find($id);
 
         if ($text === null) {

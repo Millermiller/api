@@ -7,6 +7,7 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Learn\Domain\Permission\Asset;
 use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
@@ -24,7 +25,7 @@ class FavouriteController extends Controller
      * @param  int     $card
      *
      * @return JsonResponse
-     * @throws AuthorizationException
+     * @throws AuthorizationException|BindingResolutionException
      */
     public function store(int $card): JsonResponse
     {
@@ -36,10 +37,11 @@ class FavouriteController extends Controller
     }
 
     /**
-     * @param  int     $card
+     * @param  int  $card
      *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws BindingResolutionException
      */
     public function destroy(int $card): JsonResponse
     {

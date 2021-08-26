@@ -10,6 +10,7 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 /**
  * Interface PassingRepositoryInterface
  *
+ * @extends BaseRepositoryInterface<Passing>
  * @package Scandinaver\Learn\Domain\Contract\Repository
  */
 interface PassingRepositoryInterface extends BaseRepositoryInterface

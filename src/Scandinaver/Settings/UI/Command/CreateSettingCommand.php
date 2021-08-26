@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
+use Scandinaver\Settings\Domain\DTO\SettingDTO;
 use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class CreateSettingCommand
@@ -27,8 +27,8 @@ class CreateSettingCommand implements CommandInterface
         return $this->data;
     }
 
-    public function buildDTO(): DTO
+    public function buildDTO(): SettingDTO
     {
-        // TODO: Implement buildDTO() method.
+        return SettingDTO::fromArray($this->data);
     }
 }

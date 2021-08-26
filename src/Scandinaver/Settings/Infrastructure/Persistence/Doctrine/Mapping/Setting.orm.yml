@@ -29,6 +29,10 @@ Scandinaver\Settings\Domain\Entity\Setting:
     data:
       type: json
       nullable: false
+    description:
+      type: text
+      unique: false
+      nullable: true
     createdAt:
       type: datetime
       unique: false

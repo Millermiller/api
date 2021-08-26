@@ -23,10 +23,8 @@ trait PassingTrait
      */
     private function getPassing(int $id): Passing
     {
-        /** @var  PassingRepositoryInterface $repository */
         $repository = Container::getInstance()->get(PassingRepositoryInterface::class);
 
-        /** @var Passing $passing */
         $passing = $repository->find($id);
 
         if ($passing === NULL) {

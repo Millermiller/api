@@ -21,11 +21,12 @@ class AssetTransformer extends TransformerAbstract
         'cards',
         'active',
         'available',
-        'completed'
+        'completed',
     ];
 
     protected $defaultIncludes = [
-        'language'
+        'language',
+        'bestResult'
     ];
 
     /**
@@ -71,5 +72,15 @@ class AssetTransformer extends TransformerAbstract
     public function includeAvailable(Asset $asset): Primitive
     {
         return $this->primitive($asset->isAvailable());
+    }
+
+    public function includeBestResult(Asset $asset): Primitive
+    {
+        $bestResult = $asset->getBestResult();
+
+        if ($bestResult === NULL) {
+            return $this->primitive(0);
+        }
+        return $this->primitive($bestResult->getPercent());
     }
 }

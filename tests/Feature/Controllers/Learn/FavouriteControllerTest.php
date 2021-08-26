@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Entity\Card;
 use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
@@ -21,7 +22,7 @@ use Tests\TestCase;
 class FavouriteControllerTest extends TestCase
 {
 
-    private User $user;
+    private UserInterface $user;
 
     private WordAsset $wordasset;
 
@@ -55,13 +56,13 @@ class FavouriteControllerTest extends TestCase
             'language' => $language,
             'asset'    => $this->wordasset,
         ]);
-        $this->user->addPassing($passing);
+        $this->user->addAssetPassing($passing);
         $passing = entity(Passing::class)->create([
             'user'     => $this->user,
             'language' => $language,
             'asset'    => $this->favouriteAsset,
         ]);
-        $this->user->addPassing($passing);
+        $this->user->addAssetPassing($passing);
 
         $this->card          = entity(Card::class)->create(['language' => $language, 'asset' => $this->wordasset]);
         $this->favouriteCard = entity(Card::class)->create(['language' => $language, 'asset' => $this->favouriteAsset]);

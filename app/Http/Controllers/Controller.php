@@ -10,6 +10,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Scandinaver\Shared\{CommandBus, Contract\BaseCommandInterface};
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Controller
@@ -25,14 +27,18 @@ class Controller extends BaseController
 
     protected CommandBus $commandBus;
 
+    private LoggerInterface $logger;
+
     /**
      * Controller constructor.
      *
-     * @param  CommandBus  $commandBus
+     * @param  CommandBus       $commandBus
+     * @param  LoggerInterface  $logger
      */
-    public function __construct(CommandBus $commandBus)
+    public function __construct(CommandBus $commandBus, LoggerInterface $logger)
     {
         $this->commandBus = $commandBus;
+        $this->logger = $logger;
     }
 
     /**
@@ -46,8 +52,9 @@ class Controller extends BaseController
         try {
             return response()->json($this->commandBus->execute($command), $code);
         } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), $exception->getTrace());
             return new JsonResponse($exception->getMessage(),
-                $exception->getCode() === 0 ? JsonResponse::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode());
+                $exception->getCode() === 0 ? Response::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode());
         }
     }
 

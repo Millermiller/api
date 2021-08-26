@@ -10,12 +10,18 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 /**
  * Interface AssetRepositoryInterface
  *
+ * @extends BaseRepositoryInterface<Asset>
  * @package Scandinaver\Learn\Domain\Contract\Repository
  */
 interface AssetRepositoryInterface extends BaseRepositoryInterface
 {
     public function getByLanguage(Language $language): array;
 
+    /**
+     * @param  Language  $language
+     *
+     * @return Asset[]
+     */
     public function getPublicAssets(Language $language): array;
 
     public function getCountByLanguage(Language $language): int;

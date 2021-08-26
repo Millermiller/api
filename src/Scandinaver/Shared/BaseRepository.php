@@ -35,14 +35,14 @@ class BaseRepository extends EntityRepository implements BaseRepositoryInterface
     }
 
     /**
-     * @param         $entity
-     * @param  array  $data
+     * @param  mixed|object  $entity
+     * @param  array         $data
      *
-     * @return object
+     * @return mixed|object
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function update($entity, array $data): object
+    public function update($entity, array $data)
     {
         foreach ($data as $key => $value) {
             $key = Inflector::camelize($key);

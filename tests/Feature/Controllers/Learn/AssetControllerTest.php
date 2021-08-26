@@ -55,12 +55,12 @@ class AssetControllerTest extends TestCase
                                                    'asset'    => $this->asset,
                                                    'language' => $this->language,
         ]);
-        $this->user->addPassing($passing);
+        $this->user->addAssetPassing($passing);
         $passing = entity(Passing::class)->create(['user'     => $this->user,
                                                    'asset'    => $this->favouriteAsset,
                                                    'language' => $this->language,
         ]);
-        $this->user->addPassing($passing);
+        $this->user->addAssetPassing($passing);
 
         $this->favouriteAsset->setOwner($this->user);
         $this->user->addPersonalAsset($this->favouriteAsset);

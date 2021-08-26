@@ -224,10 +224,22 @@ class RBACService
      *
      * @return PermissionGroup
      * @throws PermissionGroupNotFoundException
+     * @throws PermissionGroupDublicateException
      */
     public function updatePermissionGroup(int $id, array $data): PermissionGroup
     {
         $permissionGroup = $this->getPermissionGroup($id);
+
+        // TODO: сделать нормальную проверку дубликатов
+        $isDuplicate = $this->permissionGroupRepository->findOneBy(
+            [
+                'slug' => $data['slug'],
+            ]
+        );
+
+        if ($isDuplicate !== NULL && $isDuplicate->getId() !== $permissionGroup->getId()) {
+            throw new PermissionGroupDublicateException();
+        }
 
         $this->permissionGroupRepository->update($permissionGroup, $data);
 
@@ -342,7 +354,6 @@ class RBACService
      */
     public function getRole(int $id): Role
     {
-        /** @var Role $role */
         $role = $this->roleRepository->find($id);
         if ($role === NULL) {
             throw new RoleNotFoundException();
@@ -359,7 +370,6 @@ class RBACService
      */
     public function getPermission(int $id): Permission
     {
-        /** @var Permission $permission */
         $permission = $this->permissionRepository->find($id);
         if ($permission === NULL) {
             throw new PermissionNotFoundException();
@@ -376,7 +386,6 @@ class RBACService
      */
     public function getPermissionGroup(int $id): PermissionGroup
     {
-        /** @var PermissionGroup $permissionGroup */
         $permissionGroup = $this->permissionGroupRepository->find($id);
         if ($permissionGroup === NULL) {
             throw new PermissionGroupNotFoundException();

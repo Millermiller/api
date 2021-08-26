@@ -15,6 +15,7 @@ use Scandinaver\Common\UI\Command\DeleteIntroCommand;
 use Scandinaver\Common\UI\Command\UpdateIntroCommand;
 use Scandinaver\Common\UI\Query\IntroQuery;
 use Scandinaver\Common\UI\Query\IntrosQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Created by PhpStorm.
@@ -62,7 +63,7 @@ class IntroController extends Controller
     {
         Gate::authorize(Intro::CREATE);
 
-        return $this->execute(new CreateIntroCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreateIntroCommand($request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -89,6 +90,6 @@ class IntroController extends Controller
     {
         Gate::authorize(Intro::DELETE, $id);
 
-        return $this->execute(new DeleteIntroCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteIntroCommand($id), Response::HTTP_NO_CONTENT);
     }
 }

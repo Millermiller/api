@@ -64,12 +64,9 @@ class TestService implements BaseServiceInterface
     {
         $language = $this->getLanguage($language);
 
-        /** @var Passing[] $passings */
-        $passings = $this->passingRepository->findBy([
+        return $this->passingRepository->findBy([
             'language' => $language,
         ]);
-
-        return $passings;
     }
 
     /**
@@ -125,8 +122,6 @@ class TestService implements BaseServiceInterface
     public function deletePassing(int $id)
     {
         $passing = $this->getPassing($id);
-
-        $passing->delete();
 
         $this->passingRepository->delete($passing);
     }

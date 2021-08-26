@@ -67,7 +67,7 @@ class PermissionDTO extends DTO
 
         $permissionDTO->setName($data['name']);
         $permissionDTO->setSlug($data['slug']);
-        $permissionDTO->setDescription($data['description']);
+        $permissionDTO->setDescription($data['description'] ?? NULL);
         $permissionDTO->setGroupId($data['group']);
 
         return $permissionDTO;

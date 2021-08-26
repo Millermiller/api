@@ -11,6 +11,7 @@ use Scandinaver\Common\Domain\Permission\Log;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
 use Scandinaver\Common\UI\Query\LogQuery;
 use Scandinaver\Common\UI\Query\LogsQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class LogController
@@ -54,6 +55,6 @@ class LogController extends Controller
     {
         Gate::authorize(Log::DELETE, $id);
 
-        return $this->execute(new DeleteLogCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteLogCommand($id), Response::HTTP_NO_CONTENT);
     }
 }

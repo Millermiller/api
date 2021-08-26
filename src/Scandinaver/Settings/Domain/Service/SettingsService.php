@@ -65,7 +65,6 @@ class SettingsService implements BaseServiceInterface
             }
         }
 
-        /** @var Setting $setting */
         $setting = $this->settingRepository->findOneBy([
             'slug' => $slug
         ]);
@@ -167,7 +166,6 @@ class SettingsService implements BaseServiceInterface
      */
     private function getSetting(int $id): Setting
     {
-        /** @var  Setting $setting */
         $setting = $this->settingRepository->find($id);
 
         if ($setting === NULL) {

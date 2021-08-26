@@ -47,10 +47,9 @@ class TermService implements BaseServiceInterface
         return $this->termRepository->count([]);
     }
 
-    public function countByLanguage(string $language): int
+    public function countByLanguage(string $lang): int
     {
-        /** @var Language $language */
-        $language = $this->languageRepository->find($language);
+        $language = $this->languageRepository->find($lang);
 
         return $this->termRepository->getCountByLanguage($language);
     }

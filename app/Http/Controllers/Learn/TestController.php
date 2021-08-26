@@ -15,6 +15,7 @@ use Scandinaver\Learn\UI\Command\CompleteTestCommand;
 use Scandinaver\Learn\UI\Command\DeletePassingCommand;
 use Scandinaver\Learn\UI\Command\UpdatePassingCommand;
 use Scandinaver\Learn\UI\Query\GetAllPassingsQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class TestController
@@ -63,7 +64,7 @@ class TestController extends Controller
     {
         Gate::authorize(Test::DELETE_PASSING, $id);
 
-        return $this->execute(new DeletePassingCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeletePassingCommand($id), Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -79,6 +80,6 @@ class TestController extends Controller
 
         $data = $request->toArray();
 
-        return $this->execute(new CompleteTestCommand(Auth::user(), $assetId, $data), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CompleteTestCommand(Auth::user(), $assetId, $data), Response::HTTP_CREATED);
     }
 }

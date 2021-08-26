@@ -197,7 +197,7 @@ Scandinaver\User\Domain\Entity\User:
           referencedColumnName: owner_id
       orderBy:
         category: DESC
-    passings:
+    assetPassings:
       targetEntity: Scandinaver\Learn\Domain\Entity\Passing
       cascade:
         - persist
@@ -208,8 +208,8 @@ Scandinaver\User\Domain\Entity\User:
         id:
           referencedColumnName: user_id
       orderBy: null
-    translates:
-      targetEntity: Scandinaver\Translate\Domain\Entity\Result
+    textPassings:
+      targetEntity: Scandinaver\Translate\Domain\Entity\Passing
       cascade:
         - persist
       fetch: LAZY

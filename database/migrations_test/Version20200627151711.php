@@ -274,16 +274,20 @@ class Version20200627151711 extends AbstractMigration
                     title VARCHAR(255), 
                     slug VARCHAR(255),
                     data VARCHAR(255),
+                    description VARCHAR(255),
                     created_at VARCHAR(255),
                     updated_at VARCHAR(255)
                     )');
 
         $this->addSql(
-            'CREATE TABLE result_text (
+            'CREATE TABLE text__passing (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     text_id VARCHAR(255), 
                     language_id VARCHAR(255),
                     user_id VARCHAR(255),
+                    completed VARCHAR(255),
+                    percent VARCHAR(255),
+                    data VARCHAR(255),
                     created_at VARCHAR(255),
                     updated_at VARCHAR(255)
                     )');

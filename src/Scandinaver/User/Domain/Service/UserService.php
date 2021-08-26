@@ -22,7 +22,6 @@ use Scandinaver\Learn\Domain\Entity\{Asset, FavouriteAsset, PersonalAsset};
 use Scandinaver\Learn\Domain\Service\AssetService;
 use Scandinaver\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
-use Scandinaver\RBAC\Domain\Entity\Role;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Translate\Domain\Service\TextService;
@@ -30,6 +29,7 @@ use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
 use Scandinaver\User\Domain\DTO\State;
+use Scandinaver\User\Domain\DTO\UserDTO;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Entity\{Plan, User};
 
@@ -72,6 +72,8 @@ class UserService implements BaseServiceInterface
 
     private AvatarServiceInterface $avatarService;
 
+    private UserFactory $userFactory;
+
     public function __construct(AssetRepositoryInterface $assetRepository,
                                 FavouriteAssetRepositoryInterface $favouriteAssetRepository,
                                 PersonalAssetRepositoryInterface $personalAssetRepository,
@@ -85,7 +87,8 @@ class UserService implements BaseServiceInterface
                                 PuzzleService $puzzleService,
                                 LanguageService $languageService,
                                 AvatarServiceInterface $avatarService,
-                                IntroService $introService)
+                                IntroService $introService,
+                                UserFactory $userFactory)
     {
         $this->userRepository           = $userRepository;
         $this->planRepository           = $planRepository;
@@ -101,6 +104,7 @@ class UserService implements BaseServiceInterface
         $this->languageService          = $languageService;
         $this->avatarService            = $avatarService;
         $this->roleRepository           = $roleRepository;
+        $this->userFactory              = $userFactory;
     }
 
     /**
@@ -120,9 +124,8 @@ class UserService implements BaseServiceInterface
      * @return User
      * @throws UserNotFoundException
      */
-    private function getUser(int $id): User
+    private function getUser(int $id): UserInterface
     {
-        /** @var User $user */
         $user = $this->userRepository->find($id);
         if ($user === NULL) {
             throw new UserNotFoundException();
@@ -133,7 +136,6 @@ class UserService implements BaseServiceInterface
 
     public function all(): array
     {
-        /** @var User[] $users */
         return $this->userRepository->findAll();
     }
 
@@ -153,48 +155,21 @@ class UserService implements BaseServiceInterface
     }
 
     /**
-     * @param  array  $data
+     * @param  UserDTO  $userDTO
      *
      * @return User
      * @throws Exception
      */
-    public function registration(array $data): User
+    public function registration(UserDTO $userDTO): User
     {
-        /** @var Plan $plan */
         $plan = $this->planRepository->find(1);
 
-        /** @var Language[] $languages */
         $languages = $this->languageRepository->findAll();
 
-        $user = new User();
-        $user->setLogin($data['login']);
-        $user->setEmail($data['email']);
-        $user->setPassword(bcrypt($data['password']));
+        $user = $this->userFactory->fromDTO($userDTO);
+
         $user->setPlan($plan);
-        $user->setCreatedAt(Carbon::now());
         $user->setActive(TRUE);
-        $user->setActiveTo(Carbon::now());
-
-        if (array_key_exists('_roles', $data)) {
-            $roles = $data['_roles'];
-            foreach ($roles as $item) {
-                /** @var Role $role */
-                $role = $this->roleRepository->find($item['_id']);
-                $user->attachRole($role);
-            }
-        }
-        else {
-            /** @var Role $defaultRole */
-            $defaultRole = $this->roleRepository->findOneBy([
-                'slug' => 'user',
-            ]);
-
-            if ($defaultRole === NULL) {
-                throw new Exception('Default role not found');
-            }
-
-            $user->attachRole($defaultRole);
-        }
 
         foreach ($languages as $language) {
             $favourite = new FavouriteAsset($language);
@@ -322,10 +297,7 @@ class UserService implements BaseServiceInterface
             $data['plan'] = $this->planRepository->find($data['plan']['id']);
         }
 
-        /** @var User $user */
-        $user = $this->userRepository->update($user, $data);
-
-        return $user;
+        return $this->userRepository->update($user, $data);
     }
 
     /**
@@ -335,7 +307,6 @@ class UserService implements BaseServiceInterface
      */
     public function delete(int $id): void
     {
-        /** @var User $user */
         $user = $this->userRepository->find($id);
         if ($user === NULL) {
             throw new UserNotFoundException();

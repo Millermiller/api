@@ -26,6 +26,8 @@ class Setting extends AggregateRoot
 
     private array $data = [];
 
+    private ?string $description;
+
     private DateTime $createdAt;
 
     private ?DateTime $updatedAt;
@@ -103,5 +105,15 @@ class Setting extends AggregateRoot
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 }

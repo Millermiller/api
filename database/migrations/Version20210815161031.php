@@ -5,7 +5,7 @@ namespace Database\Migrations;
 use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
-class Version20210616171811 extends AbstractMigration
+class Version20210815161031 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -14,7 +14,8 @@ class Version20210616171811 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE asset DROP favorite');
+        $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526C4B89032C FOREIGN KEY (post_id) REFERENCES post (id)');
+        $this->addSql('ALTER TABLE term DROP audio, CHANGE value value VARCHAR(255) NOT NULL');
     }
 
     /**
@@ -24,6 +25,7 @@ class Version20210616171811 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE asset ADD favorite TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE comment DROP FOREIGN KEY FK_9474526C4B89032C');
+        $this->addSql('ALTER TABLE term ADD audio VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE value value VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }

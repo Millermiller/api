@@ -11,16 +11,25 @@ use Scandinaver\Translate\Domain\Entity\Text;
 /**
  * Interface TextRepositoryInterface
  *
+ * @extends BaseRepositoryInterface<Text>
  * @package Scandinaver\Translate\Domain\Contract\Repository
  */
 interface TextRepositoryInterface extends BaseRepositoryInterface
 {
     public function getFirstText(Language $language): Text;
 
+    /**
+     * @param  UserInterface  $user
+     *
+     * @return Text[]
+     */
     public function getForUser(UserInterface $user): array;
 
-    public function getActiveIds(UserInterface $user, Language $language): array;
-
+    /**
+     * @param  Language  $language
+     *
+     * @return Text[]
+     */
     public function getByLanguage(Language $language): array;
 
     public function getNextText(Text $text): Text;

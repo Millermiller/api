@@ -5,11 +5,13 @@ namespace Scandinaver\Learn\Domain\Contract\Repository;
 
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Entity\Card;
 use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 
 /**
  * Interface CardRepositoryInterface
  *
+ * @extends BaseRepositoryInterface<Card>
  * @package Scandinaver\Learn\Domain\Contract\Repository
  */
 interface CardRepositoryInterface extends BaseRepositoryInterface

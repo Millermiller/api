@@ -9,6 +9,7 @@ use Scandinaver\Shared\Contract\BaseRepositoryInterface;
 /**
  * Interface LanguageRepositoryInterface
  *
+ * @extends BaseRepositoryInterface<Language>
  * @package Scandinaver\Common\Domain\Contract
  */
 interface LanguageRepositoryInterface extends BaseRepositoryInterface

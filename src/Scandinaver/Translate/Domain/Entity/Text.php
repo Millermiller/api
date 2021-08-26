@@ -7,20 +7,20 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Entity\AbstractLearnItem;
+use Scandinaver\Common\Domain\Entity\HasLevel;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Shared\AggregateRoot;
 
 /**
  * Class Text
  *
  * @package Scandinaver\Translate\Domain\Entity
  */
-class Text extends AggregateRoot
+class Text extends AbstractLearnItem
 {
+    use HasLevel;
 
     private int $id;
-
-    private int $level;
 
     private string $title;
 
@@ -42,23 +42,15 @@ class Text extends AggregateRoot
 
     private Language $language;
 
-    private Collection $extra;
+    private Collection $tooltips;
 
-    /** @var Collection|ArrayCollection|Word[] */
-    private Collection $words;
-
-    private $textResults;
-
-    private bool $active;
-
-    private bool $available;
-
-    private array $dictionary = [];
+    /** @var Collection|DictionaryItem[] */
+    private Collection $dictionary;
 
     public function __construct()
     {
-        $this->extra = new ArrayCollection();
-        $this->words = new ArrayCollection();
+        $this->tooltips = new ArrayCollection();
+        $this->dictionary = new ArrayCollection();
     }
 
     public function getTitle(): string
@@ -104,16 +96,6 @@ class Text extends AggregateRoot
         return $this->id;
     }
 
-    public function getLevel(): int
-    {
-        return $this->level;
-    }
-
-    public function setLevel(int $level): void
-    {
-        $this->level = $level;
-    }
-
     public function getLanguage(): Language
     {
         return $this->language;
@@ -135,19 +117,19 @@ class Text extends AggregateRoot
     }
 
     /**
-     * @return Collection|Word[]
+     * @return Collection|DictionaryItem[]
      */
-    public function getWords(): Collection
+    public function getTranslates(): Collection
     {
-        return $this->words;
+        return $this->dictionary;
     }
 
     /**
-     * @return Collection|TextExtra[]
+     * @return Collection|Tooltip[]
      */
-    public function getExtra(): Collection
+    public function getTooltips(): Collection
     {
-        return $this->extra;
+        return $this->tooltips;
     }
 
     public function isPublished(): bool
@@ -160,34 +142,9 @@ class Text extends AggregateRoot
         $this->published = $published;
     }
 
-    public function getTextResults()
-    {
-        return $this->textResults;
-    }
-
     public function onDelete()
     {
         // TODO: Implement delete() method.
-    }
-
-    public function isActive(): bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(bool $value): void
-    {
-        $this->active = $value;
-    }
-
-    public function isAvailable(): bool
-    {
-        return $this->available;
-    }
-
-    public function setAvailable(bool $value): void
-    {
-        $this->available = $value;
     }
 
     public function getTranslate(): string
@@ -200,44 +157,44 @@ class Text extends AggregateRoot
         $this->translate = $translate;
     }
 
+    public function addDictionaryItem(DictionaryItem $dictionaryItem): void
+    {
+        $this->dictionary->add($dictionaryItem);
+    }
+
     public function getSentences(): array
     {
         $sentences = [];
 
-        foreach ($this->words as $word) {
-            $sentences[$word->getSentenceNum()][] = [
-                'id'          => $word->getId(),
-                'orig'        => $word->getOrig(),
-                'word'        => $word->getValue(),
-                'sentenceNum' => $word->getSentenceNum(),
-                'textId'      => $word->getText()->getId(),
+        foreach ($this->dictionary as $dictionaryItem) {
+            $sentences[$dictionaryItem->getSentenceNum()][] = [
+                'id'          => $dictionaryItem->getId(),
+                'orig'        => $dictionaryItem->getValue(),
+                'word'        => $dictionaryItem->getObject(),
+                'sentenceNum' => $dictionaryItem->getSentenceNum(),
+                'textId'      => $dictionaryItem->getText()->getId(),
             ];
         }
 
         return $sentences;
     }
 
-    public function addWord(Word $word): void
+    public function addWord(DictionaryItem $word): void
     {
-        if ($this->words->contains($word) === FALSE) {
-            $this->words->add($word);
+        if ($this->dictionary->contains($word) === FALSE) {
+            $this->dictionary->add($word);
         }
     }
 
-    public function addExtra(TextExtra $extra): void
+    public function addTooltip(Tooltip $tooltip): void
     {
-        if ($this->extra->contains($extra) === FALSE) {
-            $this->extra->add($extra);
+        if ($this->tooltips->contains($tooltip) === FALSE) {
+            $this->tooltips->add($tooltip);
         }
     }
 
-    public function getDictionary(): array
+    public function getDictionary(): Collection
     {
         return $this->dictionary;
-    }
-
-    public function setDictionary(array $dictionary): void
-    {
-        $this->dictionary = $dictionary;
     }
 }

@@ -37,7 +37,7 @@ class PermissionFactory
     public function fromDTO(PermissionDTO $permissionDTO): Permission
     {
         $permissionGroupId = $permissionDTO->getGroupId();
-        /** @var PermissionGroup $permissionGroup */
+
         $permissionGroup = $this->permissionGroupRepository->find($permissionGroupId);
         if ($permissionGroup === NULL) {
             throw new PermissionGroupNotFoundException();

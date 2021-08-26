@@ -15,6 +15,7 @@ use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
 use Scandinaver\RBAC\UI\Command\UpdatePermissionCommand;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
 use Scandinaver\RBAC\UI\Query\PermissionsQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class RoleController
@@ -58,7 +59,7 @@ class PermissionController extends Controller
     {
         Gate::authorize(Permission::CREATE);
 
-        return $this->execute(new CreatePermissionCommand($request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreatePermissionCommand($request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -85,7 +86,7 @@ class PermissionController extends Controller
     {
         Gate::authorize(Permission::DELETE, $id);
 
-        return $this->execute(new DeletePermissionCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeletePermissionCommand($id), Response::HTTP_NO_CONTENT);
     }
 
     public function search()

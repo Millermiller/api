@@ -18,6 +18,7 @@ use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;
 use Scandinaver\Puzzle\UI\Query\PuzzleQuery;
 use Scandinaver\Puzzle\UI\Query\PuzzlesQuery;
 use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Created by PhpStorm.
@@ -60,17 +61,18 @@ class PuzzleController extends Controller
     }
 
     /**
-     * @param  string               $language
      * @param  CreatePuzzleRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function store(CreatePuzzleRequest $request, string $language): JsonResponse
+    public function store(CreatePuzzleRequest $request): JsonResponse
     {
         Gate::authorize(Puzzle::CREATE);
 
-        return $this->execute(new CreatePuzzleCommand($language, $request->toArray()), JsonResponse::HTTP_CREATED);
+        $language = $request->get('language');
+
+        return $this->execute(new CreatePuzzleCommand($language, $request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -83,7 +85,7 @@ class PuzzleController extends Controller
     public function update(UpdatePuzzleRequest $request, int $id): JsonResponse
     {
         Gate::authorize(Puzzle::UPDATE, $id);
-        // return response()->json($puzzle, 200);
+        return response()->json(null, 200);
     }
 
     /**
@@ -96,7 +98,7 @@ class PuzzleController extends Controller
     {
         Gate::authorize(Puzzle::DELETE, $id);
 
-        return $this->execute(new DeletePuzzleCommand($id), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeletePuzzleCommand($id), Response::HTTP_NO_CONTENT);
     }
 
     /**

@@ -19,8 +19,11 @@ class TextTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = [
         'language',
-        'extra',
+        'tooltips',
         'image',
+        'dictionary',
+        'text',
+        'translate'
     ];
 
     public function transform(Text $text): array
@@ -30,14 +33,25 @@ class TextTransformer extends TransformerAbstract
             'title'       => $text->getTitle(),
             'level'       => $text->getLevel(),
             'description' => $text->getDescription(),
-            'text'        => $text->getText(),
-            'count'       => $text->getWords()->count(),
-            'extra'       => $text->getExtra()->toArray(),
-            'sentences'   => $text->getSentences(),
-            'dictionary'  => $text->getDictionary(),
-            'translate'   => $text->getTranslate(),
-            'published'   => $text->isPublished()
+            'count'       => $text->getTranslates()->count(),
+            'published'   => $text->isPublished(),
+            'available'   => TRUE,
+            'active'      => TRUE
         ];
+    }
+
+    public function includeText(Text $text): Primitive
+    {
+        $content = $text->getText();
+
+        return $this->primitive($content);
+    }
+
+    public function includeTranslate(Text $text): Primitive
+    {
+        $content = $text->getTranslate();
+
+        return $this->primitive($content);
     }
 
     public function includeLanguage(Text $text): Item
@@ -47,11 +61,18 @@ class TextTransformer extends TransformerAbstract
         return $this->item($language, new LanguageTransformer());
     }
 
-    public function includeExtra(Text $text): Collection
+    public function includeTooltips(Text $text): Collection
     {
-        $extras = $text->getExtra();
+        $tooltips = $text->getTooltips();
 
-        return $this->collection($extras, new TextExtraTransformer());
+        return $this->collection($tooltips, new TooltipTransformer());
+    }
+
+    public function includeDictionary(Text $text): Collection
+    {
+        $dictionary = $text->getDictionary();
+
+        return $this->collection($dictionary, new DictionaryItemTransformer());
     }
 
     public function includeImage(Text $text): Primitive

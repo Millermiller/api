@@ -7,27 +7,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use PDO;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\SynonymRepositoryInterface;
-use Scandinaver\Translate\Domain\Contract\Repository\TextExtraRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
+use Scandinaver\Translate\Domain\Contract\Repository\TooltipRepositoryInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\WordRepositoryInterface;
-use Scandinaver\Translate\Domain\DTO\ExtraDTO;
+use Scandinaver\Translate\Domain\DTO\DictionaryItemDTO;
 use Scandinaver\Translate\Domain\DTO\SynonymDTO;
 use Scandinaver\Translate\Domain\DTO\TextDTO;
-use Scandinaver\Translate\Domain\DTO\WordDTO;
-use Scandinaver\Translate\Domain\Entity\Sentence;
-use Scandinaver\Translate\Domain\Entity\Word;
-use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
-use Scandinaver\Translate\Domain\Entity\Result;
+use Scandinaver\Translate\Domain\DTO\TooltipDTO;
+use Scandinaver\Translate\Domain\Entity\DictionaryItem;
+use Scandinaver\Translate\Domain\Entity\Passing;
 use Scandinaver\Translate\Domain\Entity\Synonym;
 use Scandinaver\Translate\Domain\Entity\Text;
-use Scandinaver\Translate\Domain\Entity\TextExtra;
+use Scandinaver\Translate\Domain\Entity\Tooltip;
+use Scandinaver\Translate\Domain\Exception\SynonymAlreadyExistsException;
+use Scandinaver\Translate\Domain\Exception\TextNotFoundException;
 
 /**
  * Class TextService
@@ -45,7 +44,7 @@ class TextService
 
     private SynonymRepositoryInterface $synonymRepository;
 
-    private TextExtraRepositoryInterface $textExtraRepository;
+    private TooltipRepositoryInterface $tooltipRepository;
 
     private SynonymFactory $synonymFactory;
 
@@ -55,7 +54,7 @@ class TextService
         TextRepositoryInterface $textRepository,
         ResultRepositoryInterface $resultRepository,
         SynonymRepositoryInterface $synonymRepository,
-        TextExtraRepositoryInterface $textExtraRepository,
+        TooltipRepositoryInterface $tooltipRepository,
         WordRepositoryInterface $wordRepository,
         SynonymFactory $synonymFactory
     ) {
@@ -63,8 +62,8 @@ class TextService
         $this->resultRepository  = $resultRepository;
         $this->synonymRepository = $synonymRepository;
         $this->synonymFactory    = $synonymFactory;
-        $this->textExtraRepository = $textExtraRepository;
-        $this->wordRepository = $wordRepository;
+        $this->tooltipRepository = $tooltipRepository;
+        $this->wordRepository    = $wordRepository;
     }
 
     public function count(): int
@@ -88,14 +87,13 @@ class TextService
     /**
      * @param  string  $language
      *
-     * @return array|Text[]
+     * @return Text[]
      * @throws LanguageNotFoundException
      */
     public function getAllByLanguage(string $language): array
     {
         $language = $this->getLanguage($language);
 
-        /** @var Text $texts */
         return $this->textRepository->findBy(['language' => $language]);
     }
 
@@ -110,25 +108,35 @@ class TextService
     {
         $language = $this->getLanguage($language);
 
-        $activeArray = $this->textRepository->getActiveIds($user, $language);
-
-        /** @var Text[] $texts */
         $texts = $this->textRepository->getByLanguage($language);
 
-        $counter = 0;
+        $isNextAvailable = FALSE;
 
-        foreach ($texts as &$text) {
+        foreach ($texts as $text) {
+            $result = $text->getBestResultForUser($user);
+            $text->setBestResult($result);
 
-            $counter++;
+            if ($text->isFirst() || $isNextAvailable) {
+                $text->setActive(TRUE);
+            }
 
-            $text->setActive(in_array($text->getId(), $activeArray));
+            $text->setCompleted($text->isCompletedByUser($user));
+            $isNextAvailable = $text->isCompletedByUser($user);
 
-            $text->setAvailable($counter < 3 || $user->isActive());
+            if ($text->getLevel() <= 5 || $user->isPremium()) { // TODO: implement settings
+                $text->setAvailable(TRUE);
+            }
         }
 
         return $texts;
     }
 
+    /**
+     * @param  TextDTO  $textDTO
+     *
+     * @return Text
+     * @throws LanguageNotFoundException
+     */
     public function createText(TextDTO $textDTO): Text
     {
         $language = $this->getLanguage($textDTO->getLanguageLetter());
@@ -151,15 +159,15 @@ class TextService
      * @param  TextDTO  $textDTO
      *
      * @return Text
-     * @throws TextNotFoundException
+     * @throws TextNotFoundException|SynonymAlreadyExistsException
      */
     public function updateText(int $id, TextDTO $textDTO): Text
     {
         $text = $this->getText($id);
 
-        $text = $this->updateExtras($text, $textDTO->getExtraDTO());
+        $text = $this->updateTooltips($text, $textDTO->getTooltipDTO());
 
-        $text = $this->updateSentences($text, $textDTO->getSentences());
+        $text = $this->updateDictionary($text, $textDTO->getDictionary());
 
         $text->setPublished($textDTO->isPublished());
 
@@ -172,42 +180,42 @@ class TextService
 
     /**
      * @param  Text   $text
-     * @param  ExtraDTO[]  $data
+     * @param  TooltipDTO[]  $data
      *
      * @return Text
      */
-    private function updateExtras(Text $text, array $data): Text
+    private function updateTooltips(Text $text, array $data): Text
     {
-        foreach ($data as $extraDTO) {
+        foreach ($data as $tooltipDTO) {
             // add
-            if ($extraDTO->getId() === NULL) {
-                $extra = ExtraFactory::fromDTO($extraDTO);
-                $extra->setText($text);
-                $text->addExtra($extra);
+            if ($tooltipDTO->getId() === NULL) {
+                $tooltip = TooltipFactory::fromDTO($tooltipDTO);
+                $tooltip->setText($text);
+                $text->addTooltip($tooltip);
             }
 
             //update
-            if ($extraDTO->getId() !== NULL) {
-                /** @var TextExtra $extra */
-                $extra = $text->getExtra()->filter(fn($item) => $item->getId() === $extraDTO->getId())->first();
-                $extra->setObject($extraDTO->getObject());
-                $extra->setValue($extraDTO->getValue());
-                $this->textExtraRepository->save($extra);
+            if ($tooltipDTO->getId() !== NULL) {
+                /** @var Tooltip $tooltip */
+                $tooltip = $text->getTooltips()->filter(fn($item) => $item->getId() === $tooltipDTO->getId())->first();
+                $tooltip->setObject($tooltipDTO->getObject());
+                $tooltip->setValue($tooltipDTO->getValue());
+                $this->tooltipRepository->save($tooltip);
             }
         }
 
         // delete
-        $newExtraCollection = new ArrayCollection($data);
-        foreach ($text->getExtra() as $extra) {
+        $newTooltipCollection = new ArrayCollection($data);
+        foreach ($text->getTooltips() as $tooltip) {
             // new entity, continue
-            if ($extra->getId() === NULL) {
+            if ($tooltip->getId() === NULL) {
                 continue;
             }
-            $isExist = $newExtraCollection->exists(function($key, $val) use ($extra) {
-                return $val->getId() === $extra->getId();
+            $isExist = $newTooltipCollection->exists(function($key, $val) use ($tooltip) {
+                return $val->getId() === $tooltip->getId();
             });
             if ($isExist === FALSE) {
-                $text->getExtra()->removeElement($extra);
+                $text->getTooltips()->removeElement($tooltip);
             }
         }
 
@@ -215,59 +223,100 @@ class TextService
     }
 
     /**
-     * @param  Text   $text
-     * @param  Sentence[]  $data
+     * @param  Text                 $text
+     * @param  DictionaryItemDTO[]  $data
      *
      * @return Text
+     * @throws SynonymAlreadyExistsException
      */
-    private function updateSentences(Text $text, array $data): Text
+    private function updateDictionary(Text $text, array $data): Text
     {
-        $newWordsCollection = new ArrayCollection();
+        foreach ($data as $dictionaryItemDTO) {
+            // add
+            if ($dictionaryItemDTO->getId() === NULL) {
+                $dictionaryItem = DictionaryItemFactory::fromDTO($dictionaryItemDTO);
+                $dictionaryItem->setText($text);
+                $text->addDictionaryItem($dictionaryItem);
+            }
 
-        foreach ($data as $sentence) {
-            $sentenceNum = $sentence->getId();
-            /** @var WordDTO[] $words */
-            $words = $sentence->getWords();
-            foreach ($words as $wordDTO) {
-                $newWordsCollection->add($wordDTO);
-                if ($wordDTO->getId() === NULL) {
-                    $word = new Word();
-                    $word->setSentenceNum($sentenceNum);
-                    $word->setWord($wordDTO->getObject());
-                    $word->setOrig($wordDTO->getValue());
-                    $word->setText($text);
-                    $text->addWord($word);
-                }
+            //update
+            if ($dictionaryItemDTO->getId() !== NULL) {
+                /** @var DictionaryItem $dictionaryItem */
+                $dictionaryItem = $text->getDictionary()->filter(fn($item) => $item->getId() === $dictionaryItemDTO->getId())->first();
+                $dictionaryItem->setObject($dictionaryItemDTO->getText());
+                $dictionaryItem->setValue($dictionaryItemDTO->getValue());
+                $dictionaryItem->setCoordinates($dictionaryItemDTO->getCoordinates());
 
-                if ($wordDTO->getId() !== NULL) {
-                    /** @var Word $word */
-                    $word = $text->getWords()->filter(fn($item) => $item->getId() === $wordDTO->getId())->first();
-                    $word->setWord($wordDTO->getObject());
-                    $word->setOrig($wordDTO->getValue());
-                    $this->wordRepository->save($word);
-                }
+                $dictionaryItem = $this->updateSynonyms($dictionaryItem, $dictionaryItemDTO->getSynonyms());
+
+                $this->wordRepository->save($dictionaryItem);
             }
         }
 
-        foreach ($text->getWords() as $word) {
+        // delete
+        $newDictionaryItemCollection = new ArrayCollection($data);
+        foreach ($text->getDictionary() as $dictionaryItem) {
             // new entity, continue
-            if ($word->getId() === NULL) {
+            if ($dictionaryItem->getId() === NULL) {
                 continue;
             }
-            $isExist = $newWordsCollection->exists(function($key, $val) use ($word) {
-                return $val->getId() === $word->getId();
+            $isExist = $newDictionaryItemCollection->exists(function($key, $val) use ($dictionaryItem) {
+                return $val->getId() === $dictionaryItem->getId();
             });
             if ($isExist === FALSE) {
-                $text->getWords()->removeElement($word);
+                $text->getDictionary()->removeElement($dictionaryItem);
             }
         }
 
         return $text;
     }
 
+    /**
+     * @param  DictionaryItem  $dictionaryItem
+     * @param  array           $data
+     *
+     * @return DictionaryItem
+     * @throws SynonymAlreadyExistsException
+     */
+    public function updateSynonyms(DictionaryItem $dictionaryItem, array $data): DictionaryItem
+    {
+        foreach ($data as $synonymDTO) {
+            // add
+            if ($synonymDTO->getId() === NULL) {
+                $synonym = new Synonym($dictionaryItem, $synonymDTO->getValue());
+                $dictionaryItem->addSynonym($synonym);
+            }
+
+            //update
+            if ($synonymDTO->getId() !== NULL) {
+                /** @var Synonym $synonym */
+                $synonym = $dictionaryItem->getSynonyms()->filter(fn($item) => $item->getId() === $synonymDTO->getId())->first();
+                $synonym->setValue($synonymDTO->getValue());
+
+                $this->synonymRepository->save($synonym);
+            }
+        }
+
+        // delete
+        $newSynonymCollection = new ArrayCollection($data);
+        foreach ($dictionaryItem->getSynonyms() as $synonym) {
+            // new entity, continue
+            if ($synonym->getId() === NULL) {
+                continue;
+            }
+            $isExist = $newSynonymCollection->exists(function($key, $val) use ($synonym) {
+                return $val->getId() === $synonym->getId();
+            });
+            if ($isExist === FALSE) {
+                $dictionaryItem->getSynonyms()->removeElement($synonym);
+            }
+        }
+
+        return $dictionaryItem;
+    }
+
     private function getMaxLevel(Language $language): int
     {
-        /** @var Text $text */
         $texts = $this->textRepository->findBy([
             'language' => $language,
         ],
@@ -294,34 +343,6 @@ class TextService
     {
         $text = $this->getText($textId);
 
-        $sql = 'select 
-                              w.word as word,  w.orig
-                                  from word_in_text as w
-                                    where text_id = ? and w.orig != ""
-                              union 
-                                  select s.synonym as word,  w.orig
-                                    from word_in_text as w
-                                      left join synonym as s
-                                        on s.word_id = w.id
-                                      where text_id = ?
-                                    ';
-
-
-        $params = [$text->getId(), $text->getId()];
-
-        $stmt = app('em')->getConnection()->prepare($sql);
-        $stmt->execute($params);
-        $words = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $data = [];
-
-        foreach ($words as $word) {
-            if ($word['word'] !== NULL && $word['orig'] !== NULL) {
-                $data[mb_strtolower($word['orig'])][] = trim($word['word']);
-            }
-        }
-
-        $text->setDictionary($data);
 
         return $text;
     }
@@ -344,7 +365,7 @@ class TextService
         );
 
         if ($result === NULL) {
-            $result = new Result($nextText, $user, $text->getLanguage());
+            $result = new Passing($text, $user, TRUE, []);
         }
 
         $result = $this->resultRepository->save($result);
@@ -354,7 +375,6 @@ class TextService
 
     public function removePassingsByUser(UserInterface $user): void
     {
-        /** @var Result[] $passings */
         $passings = $this->resultRepository->findBy([
             'user' => $user,
         ]);
@@ -373,8 +393,8 @@ class TextService
     {
         $text = $this->getText($id);
 
-        $text->getExtra()->clear();
-        $text->getWords()->clear();
+        $text->getTooltips()->clear();
+        $text->getTranslates()->clear();
 
         $this->textRepository->delete($text);
     }

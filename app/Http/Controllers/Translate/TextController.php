@@ -8,16 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HasLanguageRequest;
 use App\Http\Requests\Translate\CreateTextRequest;
 use App\Http\Requests\Translate\UpdateTextRequest;
-use Exception;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\{JsonResponse, Request};
-use Intervention\Image\ImageManagerStatic as Image;
 use Scandinaver\Translate\Domain\Permission\Text;
 use Scandinaver\Translate\UI\Command\CompleteTextCommand;
 use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
 use Scandinaver\Translate\UI\Command\CreateTextCommand;
-use Scandinaver\Translate\UI\Command\CreateTextExtraCommand;
 use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
 use Scandinaver\Translate\UI\Command\DeleteTextCommand;
 use Scandinaver\Translate\UI\Command\UpdateDescriptionCommand;
@@ -26,8 +23,6 @@ use Scandinaver\Translate\UI\Command\UploadTextImageCommand;
 use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
 use Scandinaver\Translate\UI\Query\GetTextQuery;
 use Scandinaver\Translate\UI\Query\GetTextsQuery;
-use Upload\{File, Storage\FileSystem};
-use Upload\Validation\{Mimetype, Size};
 
 /**
  * Created by PhpStorm.

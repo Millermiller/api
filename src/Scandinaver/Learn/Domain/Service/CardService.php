@@ -260,15 +260,14 @@ class CardService implements BaseServiceInterface
     }
 
     /**
-     * @param  int     $translate
+     * @param  int     $id
      * @param  string  $text
      *
      * @return Translate
      */
-    public function editTranslate(int $translate, string $text): Translate
+    public function editTranslate(int $id, string $text): Translate
     {
-        /** @var Translate $translate */
-        $translate = $this->translateRepository->find($translate);
+        $translate = $this->translateRepository->find($id);
 
         $translate->setValue($text);
         $this->translateRepository->save($translate);
@@ -286,7 +285,6 @@ class CardService implements BaseServiceInterface
     {
         $language = $this->getLanguage($language);
 
-        /** @var Term $term */
         $term = $this->termRepository->find($termId);
 
         $results = $this->translater->translate($language, $term);

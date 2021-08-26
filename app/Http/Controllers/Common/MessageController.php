@@ -11,6 +11,7 @@ use Scandinaver\Common\Domain\Permission\Message;
 use Scandinaver\Common\UI\Command\DeleteMessageCommand;
 use Scandinaver\Common\UI\Query\MessageQuery;
 use Scandinaver\Common\UI\Query\MessagesQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class MessageController
@@ -54,7 +55,7 @@ class MessageController extends Controller
     {
         Gate::authorize(Message::DELETE, $messageId);
 
-        $this->execute(new DeleteMessageCommand($messageId), JsonResponse::HTTP_NO_CONTENT);
+        $this->execute(new DeleteMessageCommand($messageId), Response::HTTP_NO_CONTENT);
 
         return response()->json(NULL, 204);
     }

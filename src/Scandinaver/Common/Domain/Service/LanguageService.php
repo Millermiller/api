@@ -8,15 +8,16 @@ use Scandinaver\Common\Domain\DTO\LanguageDTO;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class LanguageService
  *
+ * @implements  BaseServiceInterface<Language>
  * @package Scandinaver\Common\Domain\Service
  */
 class LanguageService implements BaseServiceInterface
 {
+
     use LanguageTrait;
 
     private LanguageRepositoryInterface $languageRepository;
@@ -25,18 +26,21 @@ class LanguageService implements BaseServiceInterface
 
     public function __construct(
         LanguageRepositoryInterface $languageRepository,
-        FileService $fileService
+        FileService                 $fileService
     ) {
         $this->languageRepository = $languageRepository;
-        $this->fileService = $fileService;
+        $this->fileService        = $fileService;
     }
 
+    /**
+     * @return array<Language>
+     */
     public function all(): array
     {
         return $this->languageRepository->findAll();
     }
 
-    public function one(int $id): DTO
+    public function one(int $id)
     {
         // TODO: Implement one() method.
     }
@@ -92,8 +96,6 @@ class LanguageService implements BaseServiceInterface
     public function deleteLanguage(int $id): void
     {
         $language = $this->getLanguageByid($id);
-
-        $language->delete();
 
         $this->languageRepository->delete($language);
     }

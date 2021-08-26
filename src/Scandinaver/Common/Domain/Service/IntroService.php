@@ -107,7 +107,6 @@ class IntroService implements BaseServiceInterface
      */
     private function getIntro(int $id): Intro
     {
-        /** @var  Intro $intro */
         $intro = $this->introRepository->find($id);
 
         if ($intro === NULL) {

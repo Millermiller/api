@@ -4,6 +4,7 @@
 namespace Scandinaver\Translate\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
+use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Translate\Domain\Service\TextService;
@@ -29,6 +30,8 @@ class CreateTextCommandHandler extends AbstractHandler
 
     /**
      * @param  CreateTextCommand|BaseCommandInterface  $command
+     *
+     * @throws LanguageNotFoundException
      */
     public function handle(BaseCommandInterface $command): void
     {

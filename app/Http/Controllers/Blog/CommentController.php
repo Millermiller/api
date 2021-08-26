@@ -15,6 +15,7 @@ use Scandinaver\Blog\UI\Command\CreateCommentCommand;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
 use Scandinaver\Blog\UI\Command\UpdateCommentCommand;
 use Scandinaver\Blog\UI\Query\{CommentQuery, CommentsQuery};
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CommentController
@@ -58,7 +59,7 @@ class CommentController extends Controller
     {
         Gate::authorize(Comment::CREATE);
 
-        return $this->execute(new CreateCommentCommand(Auth::user(), $request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreateCommentCommand(Auth::user(), $request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -85,7 +86,7 @@ class CommentController extends Controller
     {
         Gate::authorize(Comment::DELETE, $commentId);
 
-        return $this->execute(new DeleteCommentCommand($commentId), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeleteCommentCommand($commentId), Response::HTTP_NO_CONTENT);
     }
 
     /**

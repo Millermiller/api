@@ -23,10 +23,8 @@ trait AssetTrait
      */
     private function getAsset(int $id): Asset
     {
-        /** @var  AssetRepositoryInterface $repository */
         $repository = Container::getInstance()->get(AssetRepositoryInterface::class);
 
-        /** @var Asset $asset */
         $asset = $repository->find($id);
 
         if ($asset === NULL) {

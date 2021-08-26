@@ -39,33 +39,6 @@ class TextRepository extends BaseRepository implements TextRepositoryInterface
                  ->getSingleResult();
     }
 
-    /**
-     * @param  UserInterface  $user
-     * @param  Language       $language
-     *
-     * @return array
-     */
-    public function getActiveIds(UserInterface $user, Language $language): array
-    {
-        $q = $this->_em->createQueryBuilder();
-
-        app('em')->getConfiguration()->addCustomHydrationMode(
-            'ColumnHydrator',
-            'Scandinaver\Common\Infrastructure\Persistence\Doctrine\ColumnHydrator'
-        );
-
-        return $q->select('r.textId')
-                 ->from(Result::class, 'r')
-                 ->join('r.text', 't')
-                 ->where($q->expr()->eq('r.user', ':user'))
-                 ->andWhere($q->expr()->eq('t.language', ':language'))
-                 ->setParameter('user', $user)
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getResult('ColumnHydrator');
-    }
-
-
     public function getForUser(UserInterface $user): array
     {
         // TODO: Implement getForUser() method.

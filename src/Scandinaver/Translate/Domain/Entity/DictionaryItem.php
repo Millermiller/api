@@ -4,23 +4,24 @@
 namespace Scandinaver\Translate\Domain\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Translate\Domain\Exception\SynonymAlreadyExistsException;
 
 /**
- * Class Word
+ * Class DictionaryItem
  *
  * @package Scandinaver\Translate\Domain\Entity
  */
-class Word
+class DictionaryItem
 {
-    private int $id;
+    private ?int $id = NULL;
 
     private int $sentenceNum;
 
-    private string $word;
+    private string $object;
 
-    private ?string $orig = NULL;
+    private ?string $value = NULL;
 
     private DateTime $createdAt;
 
@@ -30,34 +31,16 @@ class Word
 
     private Collection $synonyms;
 
-    public function setText(Text $text): void
+    private array $coordinates;
+
+    public function __construct()
     {
-        $this->text = $text;
+        $this->synonyms = new ArrayCollection();
     }
 
-    public function setSentenceNum(int $sentenceNum): void
+    public function getId(): ?int
     {
-        $this->sentenceNum = $sentenceNum;
-    }
-
-    public function setWord(string $word): void
-    {
-        $this->word = $word;
-    }
-
-    public function getSentenceNum(): int
-    {
-        return $this->sentenceNum;
-    }
-
-    public function getValue(): string
-    {
-        return $this->word;
-    }
-
-    public function getOrig(): ?string
-    {
-        return $this->orig;
+        return $this->id;
     }
 
     public function getText(): Text
@@ -65,9 +48,49 @@ class Word
         return $this->text;
     }
 
-    public function getId(): int
+    public function setText(Text $text): void
     {
-        return $this->id;
+        $this->text = $text;
+    }
+
+    public function getSentenceNum(): int
+    {
+        return $this->sentenceNum;
+    }
+
+    public function setSentenceNum(int $sentenceNum): void
+    {
+        $this->sentenceNum = $sentenceNum;
+    }
+
+    public function getObject(): string
+    {
+        return $this->object;
+    }
+
+    public function setObject(string $object): void
+    {
+        $this->object = $object;
+    }
+
+    public function getValue(): ?string
+    {
+        return $this->value;
+    }
+
+    public function setValue(?string $value): void
+    {
+        $this->value = $value;
+    }
+
+    public function getCoordinates(): array
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(array $coordinates): void
+    {
+        $this->coordinates = $coordinates;
     }
 
     /**
@@ -88,8 +111,11 @@ class Word
         $this->synonyms->add($synonym);
     }
 
-    public function setOrig(?string $orig): void
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getSynonyms()
     {
-        $this->orig = $orig;
+        return $this->synonyms;
     }
 }

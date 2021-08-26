@@ -4,52 +4,52 @@
 namespace Scandinaver\Translate\Domain\Entity;
 
 use DateTime;
-use Scandinaver\Shared\AggregateRoot;
 
 /**
  * Class Synonym
  *
  * @package Scandinaver\Translate\Domain\Entity
  */
-class Synonym extends AggregateRoot
+class Synonym
 {
-    private int $id;
+    private ?int $id = NULL;
 
-    private string $synonym;
+    private string $value;
 
-    private Word $word;
+    private DictionaryItem $word;
 
     private DateTime $createdAt;
 
     private ?DateTime $updatedAt;
 
-    public function getId(): int
+    public function __construct(DictionaryItem $word, string $value)
+    {
+        $this->word  = $word;
+        $this->value = $value;
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     public function getValue(): string
     {
-        return $this->synonym;
+        return $this->value;
     }
 
-    public function setValue(string $synonym): void
+    public function setValue(string $value): void
     {
-        $this->synonym = $synonym;
+        $this->value = $value;
     }
 
-    public function getWord(): Word
+    public function getWord(): DictionaryItem
     {
         return $this->word;
     }
 
-    public function setWord(Word $word): void
+    public function setWord(DictionaryItem $word): void
     {
         $this->word = $word;
-    }
-
-    public function onDelete()
-    {
-        // TODO: Implement onDelete() method.
     }
 }

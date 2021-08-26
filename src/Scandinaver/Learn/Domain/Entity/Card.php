@@ -140,7 +140,7 @@ class Card extends AggregateRoot
     }
 
     /**
-     * @return Collection|Example[]
+     * @return Collection<Example>|Example[]
      */
     public function getExamples(): Collection
     {

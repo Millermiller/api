@@ -32,10 +32,7 @@ class CategoryService implements BaseServiceInterface
 
     public function all(): array
     {
-        /** @var Category[] $categories */
-        $categories = $this->categoryRepo->findAll();
-
-        return $categories;
+        return $this->categoryRepo->findAll();
     }
 
     /**
@@ -57,7 +54,6 @@ class CategoryService implements BaseServiceInterface
      */
     private function getCategory(int $id): Category
     {
-        /** @var  Category $category */
         $category = $this->categoryRepo->find($id);
 
         if ($category === NULL) {

@@ -23,10 +23,8 @@ trait LanguageTrait
      */
     private function getLanguage(string $name): Language
     {
-        /** @var  LanguageRepositoryInterface $repository */
         $repository = Container::getInstance()->get(LanguageRepositoryInterface::class);
 
-        /** @var Language $language */
         $language = $repository->findOneBy(
             [
                 'letter' => $name,
@@ -48,10 +46,8 @@ trait LanguageTrait
      */
     private function getLanguageById(int $id): Language
     {
-        /** @var  LanguageRepositoryInterface $repository */
         $repository = Container::getInstance()->get(LanguageRepositoryInterface::class);
 
-        /** @var Language $language */
         $language = $repository->find($id);
 
         if ($language === NULL) {

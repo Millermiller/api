@@ -17,6 +17,7 @@ use Scandinaver\Blog\UI\Command\DeletePostCommand;
 use Scandinaver\Blog\UI\Command\UpdatePostCommand;
 use Scandinaver\Blog\UI\Query\PostQuery;
 use Scandinaver\Blog\UI\Query\PostsQuery;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PostController
@@ -60,7 +61,7 @@ class PostController extends Controller
     {
         Gate::authorize('create-post');
 
-        return $this->execute(new CreatePostCommand(Auth::user(), $request->toArray()), JsonResponse::HTTP_CREATED);
+        return $this->execute(new CreatePostCommand(Auth::user(), $request->toArray()), Response::HTTP_CREATED);
     }
 
     /**
@@ -87,7 +88,7 @@ class PostController extends Controller
     {
         Gate::authorize(Post::DELETE, $postId);
 
-        return $this->execute(new DeletePostCommand($postId), JsonResponse::HTTP_NO_CONTENT);
+        return $this->execute(new DeletePostCommand($postId), Response::HTTP_NO_CONTENT);
     }
 
     /**

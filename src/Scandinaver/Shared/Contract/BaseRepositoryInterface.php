@@ -8,10 +8,42 @@ use Doctrine\Common\Persistence\ObjectRepository;
 /**
  * Interface BaseRepositoryInterface
  *
+ * @template T
  * @package Scandinaver\Shared\Contract
  */
 interface BaseRepositoryInterface extends ObjectRepository
 {
+
+    /**
+     * @param  mixed  $id
+     *
+     * @return T|null
+     */
+    public function find($id, $lockMode = null, $lockVersion = null);
+
+    /**
+     * @return T[]
+     */
+    public function findAll();
+
+    /**
+     * Finds a single object by a set of criteria.
+     *
+     * @param  array  $criteria  The criteria.
+     *
+     * @return T|null The object.
+     */
+    public function findOneBy(array $criteria);
+
+    /**
+     * @param  array       $criteria
+     * @param  array|null  $orderBy
+     * @param  null        $limit
+     * @param  null        $offset
+     *
+     * @return T[]
+     */
+    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null);
 
     /**
      * @param  array  $criteria
@@ -23,15 +55,15 @@ interface BaseRepositoryInterface extends ObjectRepository
     /**
      * @param  object  $data
      *
-     * @return mixed
+     * @return T
      */
     public function save(object $data);
 
     /**
-     * @param  object  $entity
-     * @param  array   $data
+     * @param  T     $entity
+     * @param  array $data
      *
-     * @return mixed
+     * @return T
      */
     public function update(object $entity, array $data);
 

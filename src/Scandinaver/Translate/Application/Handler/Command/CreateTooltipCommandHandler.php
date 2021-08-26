@@ -5,14 +5,14 @@ namespace Scandinaver\Translate\Application\Handler\Command;
 
 use Scandinaver\Shared\AbstractHandler;
 use Scandinaver\Shared\Contract\BaseCommandInterface;
-use Scandinaver\Translate\UI\Command\CreateTextExtraCommand;
+use Scandinaver\Translate\UI\Command\CreateTooltipCommand;
 
 /**
- * Class CreateTextExtraCommandHandler
+ * Class CreateTooltipCommandHandler
  *
  * @package Scandinaver\Translate\Application\Handler\Command
  */
-class CreateTextExtraCommandHandler extends AbstractHandler
+class CreateTooltipCommandHandler extends AbstractHandler
 {
 
     public function __construct()
@@ -21,7 +21,7 @@ class CreateTextExtraCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateTextExtraCommand|BaseCommandInterface  $command
+     * @param  CreateTooltipCommand|BaseCommandInterface  $command
      */
     public function handle(BaseCommandInterface $command): void
     {
