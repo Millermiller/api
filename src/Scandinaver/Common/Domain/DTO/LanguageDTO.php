@@ -16,6 +16,10 @@ class LanguageDTO extends DTO
 
     private string $title;
 
+    private string $description;
+
+    private string $image;
+
     private string $label;
 
     private string $letter;
@@ -96,6 +100,16 @@ class LanguageDTO extends DTO
         $this->assetsAll = $assetsAll;
     }
 
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
     public static function fromArray(array $data): LanguageDTO
     {
         $languageDTO = new self();
@@ -103,6 +117,7 @@ class LanguageDTO extends DTO
         $languageDTO->setId($data['id'] ?? NULL);
         $languageDTO->setLetter($data['letter']);
         $languageDTO->setTitle($data['title']);
+        $languageDTO->setDescription($data['description']);
 
         return $languageDTO;
     }

@@ -31,4 +31,13 @@ Scandinaver\Common\Domain\Entity\Language:
       length: 255
       unique: false
       nullable: false
+    image:
+      type: string
+      length: 255
+      unique: false
+      nullable: false
+    description:
+      type: text
+      unique: false
+      nullable: true
   lifecycleCallbacks: { }

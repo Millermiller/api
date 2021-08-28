@@ -13,13 +13,16 @@ use Scandinaver\Common\Domain\Entity\Language;
  */
 class LanguageTransformer extends TransformerAbstract
 {
+
     public function transform(Language $languageDTO): array
     {
         return [
-            'id'     => $languageDTO->getId(),
-            'title'  => $languageDTO->getTitle(),
-            'letter' => $languageDTO->getLetter(),
-            'flag'   => asset($languageDTO->getFlag())
+            'id'          => $languageDTO->getId(),
+            'title'       => $languageDTO->getTitle(),
+            'description' => $languageDTO->getDescription(),
+            'letter'      => $languageDTO->getLetter(),
+            'flag'        => asset($languageDTO->getFlag()),
+            'image'       => asset($languageDTO->getImage()),
         ];
     }
 }

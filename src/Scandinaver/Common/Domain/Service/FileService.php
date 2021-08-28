@@ -62,4 +62,17 @@ class FileService
             $this->logger->error($e->getMessage());
         }
     }
+
+    public function uploadImage(Language $language, UploadedFile $photo): string
+    {
+        $filename = $photo->getClientOriginalName();
+
+        try {
+            $photo->move(public_path('/img/'), $filename);
+
+            return "/img/$filename";
+        } catch (FileException $e) {
+            $this->logger->error($e->getMessage());
+        }
+    }
 }

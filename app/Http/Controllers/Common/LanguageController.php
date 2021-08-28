@@ -62,8 +62,9 @@ class LanguageController extends Controller
     {
         Gate::authorize(Language::UPDATE, $id);
 
-        $data         = $request->toArray();
-        $data['flag'] = $request->file('file');
+        $data          = $request->toArray();
+        $data['flag']  = $request->file('file');
+        $data['image'] = $request->file('image');
 
         return $this->execute(new UpdateLanguageCommand($id, $data));
     }

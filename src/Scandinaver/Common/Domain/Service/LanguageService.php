@@ -81,7 +81,13 @@ class LanguageService implements BaseServiceInterface
             $language->setFlag($flagPath);
         }
 
+        if ($data['image'] !== NULL) {
+            $imagePath = $this->fileService->uploadImage($language, $data['image']);
+            $language->setImage($imagePath);
+        }
+
         unset($data['flag']);
+        unset($data['image']);
 
         $this->languageRepository->update($language, $data);
 
