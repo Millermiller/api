@@ -36,7 +36,7 @@ class LanguagesQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $languages = $this->languageService->all();
+        $languages = $this->languageService->all($query->getUser());
 
         $this->resource = new Collection($languages, new LanguageTransformer());
     }

@@ -35,7 +35,12 @@ class UserQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $user = $this->userService->one($query->getKey());
+        $user = $this->userService->one($query->getUserId());
+
+        $includes = $query->getIncludes();
+        if (in_array('roles', $includes)) {
+            $this->fractal->parseIncludes('roles');
+        }
 
         $this->resource = new Item($user, new UserTransformer());
     }

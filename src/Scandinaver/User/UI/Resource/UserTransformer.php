@@ -3,9 +3,10 @@
 
 namespace Scandinaver\User\UI\Resource;
 
-use League\Fractal\Resource\Collection;
-use League\Fractal\Resource\Primitive;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use League\Fractal\Resource\{Collection, Primitive};
 use League\Fractal\TransformerAbstract;
+use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
 use Scandinaver\RBAC\UI\Resource\RoleTransformer;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
@@ -21,15 +22,22 @@ class UserTransformer extends TransformerAbstract
 
     private AvatarServiceInterface $avatarService;
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function __construct()
     {
         $this->avatarService = app()->make(AvatarServiceInterface::class);
     }
 
-    protected $defaultIncludes = [
+    protected $availableIncludes = [
         'roles',
         'permissions',
+    ];
+
+    protected $defaultIncludes = [
         'avatar',
+        'permissionsSimple'
     ];
 
     public function transform(User $user): array
@@ -42,6 +50,15 @@ class UserTransformer extends TransformerAbstract
             'plan'      => $user->getPlan(),
             'active_to' => $user->getActiveTo(),
         ];
+    }
+
+    public function includePermissionsSimple(User $user): Primitive
+    {
+        $permissions = $user->getAllPermissions();
+
+        $permissionsList = $permissions->map(fn(Permission $permission) => $permission->getSlug());
+
+        return $this->primitive($permissionsList->toArray());
     }
 
     public function includeRoles(User $user): Collection

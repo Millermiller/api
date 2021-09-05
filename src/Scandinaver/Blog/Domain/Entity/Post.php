@@ -156,7 +156,7 @@ class Post extends AggregateRoot
 
     public function onDelete()
     {
-          $this->pushEvent(new PostDeleted($this));
+        $this->pushEvent(new PostDeleted($this));
     }
 
     public function getAnonse(): ?string

@@ -34,6 +34,11 @@ class UsersQueryHandler extends AbstractHandler
     {
         $users = $this->userService->all();
 
+        $includes = $query->getIncludes();
+        if (in_array('roles', $includes)) {
+            $this->fractal->parseIncludes('roles');
+        }
+
         $this->resource = new Collection($users, new UserTransformer());
     }
 } 

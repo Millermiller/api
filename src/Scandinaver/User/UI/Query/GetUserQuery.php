@@ -17,8 +17,21 @@ class GetUserQuery implements QueryInterface
 
     private UserInterface $user;
 
-    public function __construct(UserInterface $user)
+    private array $includes;
+
+    public function __construct(UserInterface $user, array $includes = [])
     {
         $this->user = $user;
+        $this->includes = $includes;
+    }
+
+    public function getUser(): UserInterface
+    {
+        return $this->user;
+    }
+
+    public function getIncludes(): array
+    {
+        return $this->includes;
     }
 }

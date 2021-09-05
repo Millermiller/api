@@ -416,7 +416,7 @@ class AssetService implements BaseServiceInterface
 
     public function removeByUser(UserInterface $user): void
     {
-        $languages = $this->languageService->all();
+        $languages = $this->languageService->all($user);
 
         foreach ($languages as $language) {
             $assets = $user->getPersonalAssets($language);

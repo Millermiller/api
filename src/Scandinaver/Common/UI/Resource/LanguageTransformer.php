@@ -23,6 +23,7 @@ class LanguageTransformer extends TransformerAbstract
             'letter'      => $languageDTO->getLetter(),
             'flag'        => asset($languageDTO->getFlag()),
             'image'       => asset($languageDTO->getImage()),
+            'active'      => $languageDTO->isActive()
         ];
     }
 }

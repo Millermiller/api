@@ -14,7 +14,15 @@ use Scandinaver\Shared\Contract\QueryInterface;
 class UsersQuery implements QueryInterface
 {
 
-    public function __construct()
+    private array $includes;
+
+    public function __construct(array $includes = [])
     {
+        $this->includes = $includes;
+    }
+
+    public function getIncludes(): array
+    {
+        return $this->includes;
     }
 }

@@ -21,6 +21,12 @@ Scandinaver\Common\Domain\Entity\Language:
       length: 5
       unique: false
       nullable: false
+    active:
+      type: boolean
+      unique: false
+      nullable: false
+      options:
+        default: false
     title:
       type: string
       length: 50

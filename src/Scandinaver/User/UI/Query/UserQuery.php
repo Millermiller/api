@@ -14,20 +14,29 @@ use Scandinaver\Shared\Contract\QueryInterface;
 class UserQuery implements QueryInterface
 {
 
-    private $key;
+    private int $userId;
+
+    private array $includes;
 
     /**
      * UserQuery constructor.
      *
-     * @param $key
+     * @param  int    $userId
+     * @param  array  $includes
      */
-    public function __construct($key)
+    public function __construct(int $userId, array $includes = [])
     {
-        $this->key = $key;
+        $this->userId = $userId;
+        $this->includes = $includes;
     }
 
-    public function getKey()
+    public function getUserId(): int
     {
-        return $this->key;
+        return $this->userId;
+    }
+
+    public function getIncludes(): array
+    {
+        return $this->includes;
     }
 }

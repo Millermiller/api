@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Common;
 
+use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\CreateLanguageRequest;
 use App\Http\Requests\Common\UpdateLanguageRequest;
@@ -32,7 +33,7 @@ class LanguageController extends Controller
     {
         Gate::authorize(Language::VIEW);
 
-        return $this->execute(new LanguagesQuery());
+        return $this->execute(new LanguagesQuery(auth('api')->user()));
     }
 
     /**

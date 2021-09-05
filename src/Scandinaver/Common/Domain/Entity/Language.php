@@ -19,6 +19,8 @@ class Language extends AggregateRoot implements UrlRoutable
 
     private string $letter;
 
+    private bool $active;
+
     private string $title;
 
     private ?string $description = NULL;
@@ -40,6 +42,16 @@ class Language extends AggregateRoot implements UrlRoutable
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
     }
 
     public function getTitle(): string

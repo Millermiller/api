@@ -8,7 +8,7 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\{JsonResponse};
+use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\User\Domain\Permission\User;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Command\DeleteUserCommand;
@@ -25,27 +25,34 @@ class UserController extends Controller
 {
 
     /**
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function index(): JsonResponse
-    {
-        Gate::authorize(User::VIEW);
-
-        return $this->execute(new UsersQuery());
-    }
-
-    /**
-     * @param  int  $userId
+     * @param  Request  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function show(int $userId): JsonResponse
+    public function index(Request $request): JsonResponse
+    {
+        Gate::authorize(User::VIEW);
+
+        $includes = $request->get('includes', []);
+
+        return $this->execute(new UsersQuery($includes));
+    }
+
+    /**
+     * @param  Request  $request
+     * @param  int      $userId
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function show(Request $request, int $userId): JsonResponse
     {
         Gate::authorize(User::SHOW, $userId);
 
-        return $this->execute(new UserQuery($userId));
+        $includes = $request->get('includes', []);
+
+        return $this->execute(new UserQuery($userId, $includes));
     }
 
     /**

@@ -5,7 +5,6 @@ namespace Scandinaver\User\Domain\Service;
 
 use Exception;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
-use Scandinaver\RBAC\Domain\Entity\Role;
 use Scandinaver\User\Domain\DTO\UserDTO;
 use Scandinaver\User\Domain\Entity\User;
 

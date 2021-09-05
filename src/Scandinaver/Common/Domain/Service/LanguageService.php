@@ -4,18 +4,17 @@
 namespace Scandinaver\Common\Domain\Service;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
+use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\DTO\LanguageDTO;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
 
 /**
  * Class LanguageService
  *
- * @implements  BaseServiceInterface<Language>
  * @package Scandinaver\Common\Domain\Service
  */
-class LanguageService implements BaseServiceInterface
+class LanguageService
 {
 
     use LanguageTrait;
@@ -35,9 +34,16 @@ class LanguageService implements BaseServiceInterface
     /**
      * @return array<Language>
      */
-    public function all(): array
+    public function all(?UserInterface $user): array
     {
-        return $this->languageRepository->findAll();
+        $criteria = [];
+
+        if ($user === NULL || $user->can(\Scandinaver\Common\Domain\Permission\Language::UPDATE) === FALSE) {
+            $criteria = [
+                'active' => TRUE
+            ];
+        }
+        return $this->languageRepository->findBy($criteria);
     }
 
     public function one(int $id)
@@ -88,6 +94,8 @@ class LanguageService implements BaseServiceInterface
 
         unset($data['flag']);
         unset($data['image']);
+
+        $data['active'] = filter_var($data['active'], FILTER_VALIDATE_BOOLEAN);
 
         $this->languageRepository->update($language, $data);
 

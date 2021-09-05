@@ -239,7 +239,7 @@ class UserService implements BaseServiceInterface
         $intros = $this->introService->active();
         $stateDTO->setIntro($intros);
 
-        $languages = $this->languageService->all();
+        $languages = $this->languageService->all($user);
         $stateDTO->setLanguages($languages);
 
         $stateDTO->setCurrentLanguage($language);
@@ -247,7 +247,7 @@ class UserService implements BaseServiceInterface
         return $stateDTO;
     }
 
-    public function getInfo(): UserInterface
+    public function getInfo(UserInterface $user): UserInterface
     {
         return \App\Helpers\Auth::user();
     }
@@ -289,12 +289,12 @@ class UserService implements BaseServiceInterface
 
         $user->setRoles($roleCollection);
 
-        if ($data['password'] === NULL) {
-            unset($data['password']);
+        if (array_key_exists('password', $data)) {
+            $data['password'] = bcrypt($data['password']);
         }
 
-        if (array_key_exists('plan', $data)) {
-            $data['plan'] = $this->planRepository->find($data['plan']['id']);
+        if (array_key_exists('plan', $data)) { //TODO: make plans
+            $data['plan'] = $this->planRepository->find($data['plan']['_id']);
         }
 
         return $this->userRepository->update($user, $data);
