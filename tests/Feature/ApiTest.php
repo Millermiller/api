@@ -19,15 +19,25 @@ class ApiTest extends TestCase
 
     private User $user;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var Language $language */
+        $language   = entity(Language::class)->create(['letter' => 'is']);
+        $this->user = entity(User::class)->create();
+        $assets     = entity(WordAsset::class, 2)->create(['user' => $this->user, 'language' => $language])->toArray();
+
+        foreach ($assets as $asset) {
+            // $cards = entity(\Scandinaver\Learn\Domain\Card::class, 2)->create(['asset' => $asset])->toArray();
+        }
+    }
+
     public function testLanguages()
     {
         $response = $this->get(route('languages:all'));
         $response->assertJsonStructure([
-            [
-                'title',
-                'letter',
-                'flag',
-            ],
+            \Tests\Responses\Language::response()
         ]);
     }
 
@@ -71,20 +81,6 @@ class ApiTest extends TestCase
                 ]);
         }
     */
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        /** @var Language $language */
-        $language   = entity(Language::class)->create(['letter' => 'is']);
-        $this->user = entity(User::class)->create();
-        $assets     = entity(WordAsset::class, 2)->create(['user' => $this->user, 'language' => $language])->toArray();
-
-        foreach ($assets as $asset) {
-            // $cards = entity(\Scandinaver\Learn\Domain\Card::class, 2)->create(['asset' => $asset])->toArray();
-        }
-    }
 
     // public function testExample()
     // {

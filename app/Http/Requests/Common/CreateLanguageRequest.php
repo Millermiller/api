@@ -15,7 +15,12 @@ class CreateLanguageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'       => 'required',
+            'description' => 'required',
+            'letter'      => 'required',
+            'file'        => 'required',
+            'image'       => 'required',
+            'active'      => 'required',
         ];
     }
 }

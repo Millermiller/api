@@ -10,7 +10,7 @@ use Scandinaver\Shared\Contract\QueryInterface;
  *
  * @package Scandinaver\Blog\UI\Query
  *
- * @see     \Scandinaver\Blog\Application\Handler\Query\CommentHandler
+ * @see     \Scandinaver\Blog\Application\Handler\Query\CommentQueryHandler
  */
 class CommentQuery implements QueryInterface
 {

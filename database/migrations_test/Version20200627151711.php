@@ -123,7 +123,10 @@ class Version20200627151711 extends AbstractMigration
             'CREATE TABLE language (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                     title VARCHAR(255), 
+                    description VARCHAR(255), 
+                    image VARCHAR(255), 
                     letter VARCHAR(255), 
+                    active VARCHAR(255), 
                     flag VARCHAR(255))');
 
         $this->addSql(

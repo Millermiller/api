@@ -19,16 +19,7 @@ class User implements ResponseInterface
             'avatar',
             'email',
             'active',
-            'active_to',
-            // 'plan' => Plan::response(),
-            // 'plan_id',
-            // 'name',
-            // 'photo',
-            // 'assets_opened',
-            // 'assets_created',
-            'roles',
-            'permissions',
-
+            'active_to'
         ];
     }
 }

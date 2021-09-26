@@ -4,6 +4,11 @@
 namespace Tests\Responses;
 
 
+/**
+ * Class Comment
+ *
+ * @package Tests\Responses
+ */
 class Comment implements ResponseInterface
 {
 

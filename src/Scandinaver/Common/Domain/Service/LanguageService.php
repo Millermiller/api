@@ -64,6 +64,14 @@ class LanguageService
             $language->setFlag($flagPath);
         }
 
+        if ($data['image'] !== NULL) {
+            $imagePath = $this->fileService->uploadImage($language, $data['image']);
+            $language->setImage($imagePath);
+        }
+
+        $isActive = filter_var($data['active'], FILTER_VALIDATE_BOOLEAN);
+        $language->setActive($isActive);
+
         $this->languageRepository->save($language);
 
         //TODO: implements creating favourite assets and other events
