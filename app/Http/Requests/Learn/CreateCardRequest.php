@@ -18,6 +18,7 @@ class CreateCardRequest extends FormRequest
         return [
             'word'      => 'required',
             'translate' => 'required',
+            'language'  => 'required',
         ];
     }
 }

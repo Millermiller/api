@@ -4,7 +4,7 @@ use App\Http\Controllers\Puzzle\PuzzleController;
 
 Route::group(
   [
-    'as' => 'puzzle',
+    'as' => 'puzzle:',
     'namespace' => 'App\Http\Controllers',
   ],
   function () {

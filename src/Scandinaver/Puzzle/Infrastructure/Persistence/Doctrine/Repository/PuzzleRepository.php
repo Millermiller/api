@@ -44,10 +44,6 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
                  ->getResult();
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
     public function addForUser(UserInterface $user, Puzzle $puzzle): void
     {
         //$user->addPuzzle($puzzle);

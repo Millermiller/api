@@ -1,0 +1,31 @@
+Scandinaver\Billing\Domain\Entity\Plan:
+  type: entity
+  table: plan
+  id:
+    id:
+      type: uuid
+      generator:
+        strategy: CUSTOM
+      customIdGenerator:
+        class: Ramsey\Uuid\Doctrine\UuidGenerator
+  fields:
+    name:
+      type: string
+      length: 50
+      unique: false
+      nullable: false
+    period:
+      type: dateinterval
+      unique: false
+      nullable: false
+    cost:
+      type: decimal
+      nullable: false
+      precision: 10
+      scale: 2
+    costPerMonth:
+      type: decimal
+      nullable: false
+      precision: 10
+      scale: 2
+  lifecycleCallbacks: { }

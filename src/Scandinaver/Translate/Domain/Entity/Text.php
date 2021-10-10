@@ -6,6 +6,7 @@ namespace Scandinaver\Translate\Domain\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Scandinaver\Common\Domain\Contract\LearnItemInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\AbstractLearnItem;
 use Scandinaver\Common\Domain\Entity\HasLevel;
@@ -16,7 +17,7 @@ use Scandinaver\Common\Domain\Entity\Language;
  *
  * @package Scandinaver\Translate\Domain\Entity
  */
-class Text extends AbstractLearnItem
+class Text extends AbstractLearnItem implements LearnItemInterface
 {
     use HasLevel;
 

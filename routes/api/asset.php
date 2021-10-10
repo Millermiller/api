@@ -8,8 +8,7 @@ Route::group(
     'namespace'  => 'App\Http\Controllers\Learn',
   ],
   function () {
-      // sub backend route
-      Route::get('/{language}/assets',           [AssetController::class, 'index'])->name('all');
+      Route::get('/asset',                       [AssetController::class, 'index'])->name('all');
 
       Route::get('/asset/{id}',                  [AssetController::class, 'show'])->name('show');
       Route::post('/asset',                      [AssetController::class, 'store'])->name('store');
@@ -21,21 +20,19 @@ Route::group(
 
       Route::post('/forvo/{id}',                 [AssetController::class, 'findAudio'])->name('forvo');//TODO: remove
 
-      Route::get('/{language}/values/{word}',    [AssetController::class, 'showValues'])->name('values:show');
+      Route::get('/values/{word}',               [AssetController::class, 'showValues'])->name('values:show');
 
-      Route::get('/{language}/examples/{card}',  [AssetController::class, 'showExamples'])->name('examples');
-
-      Route::post('/changeUsedTranslate',        [AssetController::class, 'changeUsedTranslate'])->name('change:translate');//TODO: remove
+      Route::get('/examples/{card}',             [AssetController::class, 'showExamples'])->name('examples');
 
       Route::post('/translate',                  [AssetController::class, 'editTranslate'])->name('translate:edit');
 
       Route::post('/audio',                      [AssetController::class, 'uploadAudio'])->name('audio:upload');
 
-      Route::get('/{language}/words',            [AssetController::class, 'getWords'])->name('words');
+      Route::get('/{language}/words',            [AssetController::class, 'getWordsAssets'])->name('words');//TODO: remove
 
-      Route::get('/{language}/sentences',        [AssetController::class, 'getSentences'])->name('sentences');
+      Route::get('/{language}/sentences',        [AssetController::class, 'getSentencesAssets'])->name('sentences');//TODO: remove
 
-      Route::get('/personal',                    [AssetController::class, 'getPersonal'])->name('personal');
+      Route::get('/personal',                    [AssetController::class, 'testGetPersonalAssets'])->name('personal');
 
       Route::post('/card',                       [AssetController::class, 'addPair'])->name('pair:create');//TODO: remove
 

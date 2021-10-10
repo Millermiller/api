@@ -34,7 +34,7 @@ class LanguageControllerTest extends TestCase
         $this->languages = entity(Language::class, $this->languagesNumber)->create(['letter' => 'is']);
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $response        = $this->get(route('languages:all'));
         $decodedResponse = json_decode($response->getContent());
@@ -52,7 +52,7 @@ class LanguageControllerTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testStore()
+    public function testStore(): void
     {
         $permission = entity(Permission::class)->create([
             'slug' => \Scandinaver\Common\Domain\Permission\Language::CREATE

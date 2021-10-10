@@ -25,13 +25,12 @@ use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
 use Scandinaver\Shared\Contract\BaseServiceInterface;
 use Scandinaver\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Translate\Domain\Service\TextService;
-use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
 use Scandinaver\User\Domain\DTO\State;
 use Scandinaver\User\Domain\DTO\UserDTO;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
-use Scandinaver\User\Domain\Entity\{Plan, User};
+use Scandinaver\User\Domain\Entity\{User};
 
 /**
  * Class UserService
@@ -47,8 +46,6 @@ class UserService implements BaseServiceInterface
     protected AssetService $assetService;
 
     protected UserRepositoryInterface $userRepository;
-
-    protected PlanRepositoryInterface $planRepository;
 
     protected LanguageRepositoryInterface $languageRepository;
 
@@ -79,7 +76,6 @@ class UserService implements BaseServiceInterface
                                 PersonalAssetRepositoryInterface $personalAssetRepository,
                                 AssetService $assetService,
                                 UserRepositoryInterface $userRepository,
-                                PlanRepositoryInterface $planRepository,
                                 LanguageRepositoryInterface $languageRepository,
                                 TextRepositoryInterface $textRepository,
                                 RoleRepositoryInterface $roleRepository,
@@ -91,7 +87,6 @@ class UserService implements BaseServiceInterface
                                 UserFactory $userFactory)
     {
         $this->userRepository           = $userRepository;
-        $this->planRepository           = $planRepository;
         $this->languageRepository       = $languageRepository;
         $this->assetRepository          = $assetRepository;
         $this->textRepository           = $textRepository;
@@ -162,13 +157,11 @@ class UserService implements BaseServiceInterface
      */
     public function registration(UserDTO $userDTO): User
     {
-        $plan = $this->planRepository->find(1);
 
         $languages = $this->languageRepository->findAll();
 
         $user = $this->userFactory->fromDTO($userDTO);
 
-        $user->setPlan($plan);
         $user->setActive(TRUE);
 
         foreach ($languages as $language) {
@@ -202,7 +195,7 @@ class UserService implements BaseServiceInterface
         $personalAssets = $user->getPersonalAssets($language);
         foreach ($personalAssets as $personalAsset) {
 
-            if ($user->isPremium()) {
+            if ($user->isRaising()) {
                 $personalAsset->setActive(TRUE);
                 $personalAsset->setAvailable(TRUE);
             }
@@ -252,14 +245,6 @@ class UserService implements BaseServiceInterface
         return \App\Helpers\Auth::user();
     }
 
-    public function updatePlan(User $user): void
-    {
-        if ($user->getActiveTo() < Carbon::now()) {
-            $plan = $this->planRepository->findByName('Basic');
-            $user->setPlan($plan);
-        }
-    }
-
     public function updateUserInfo(User $user, array $data): void
     {
         $data['password'] = isset($data['password']) ? bcrypt($data['password']) : $user->getPassword();
@@ -294,7 +279,7 @@ class UserService implements BaseServiceInterface
         }
 
         if (array_key_exists('plan', $data)) { //TODO: make plans
-            $data['plan'] = $this->planRepository->find($data['plan']['_id']);
+           // $data['plan'] = $this->planRepository->find($data['plan']['_id']);
         }
 
         return $this->userRepository->update($user, $data);

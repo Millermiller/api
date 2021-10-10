@@ -3,8 +3,6 @@
 
 namespace Scandinaver\Shared\Contract;
 
-use Scandinaver\Shared\ValueObject;
-
 /**
  * Interface ValueObjectInterface
  *
@@ -12,16 +10,9 @@ use Scandinaver\Shared\ValueObject;
  */
 interface ValueObjectInterface
 {
-    public function isNull(): bool;
+    public function __toString(): string;
 
-    public function isSame(ValueObject $object): bool;
-
-    /**
-     * @param $native
-     *
-     * @return mixed
-     */
-    public function fromNative($native);
+    public function isSame(ValueObjectInterface $object): bool;
 
     public function toNative();
 }

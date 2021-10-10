@@ -4,12 +4,17 @@ namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Mockery\MockInterface;
 use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learn\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learn\Domain\Entity\Asset;
 use Scandinaver\Learn\Domain\Entity\Card;
 use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
 use Scandinaver\Learn\Domain\Entity\Passing;
+use Scandinaver\Learn\Domain\Entity\PersonalAsset;
+use Scandinaver\Learn\Domain\Entity\SentenceAsset;
 use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learn\Domain\Service\AudioService;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
@@ -23,6 +28,8 @@ use Throwable;
 class AssetControllerTest extends TestCase
 {
 
+    private const LANGUAGE_LETTER = 'is';
+
     private User $user;
 
     private WordAsset $asset;
@@ -33,6 +40,8 @@ class AssetControllerTest extends TestCase
 
     private Language $language;
 
+    private PersonalAsset $personalAsset;
+
     /**
      * @throws Exception
      */
@@ -40,36 +49,75 @@ class AssetControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->language = entity(Language::class)->create(['letter' => 'is']);
+        $this->language = entity(Language::class)->create(['letter' => self::LANGUAGE_LETTER]);
 
-        $this->user           = entity(User::class)->create();
-        $this->asset          = entity(WordAsset::class)->create(['user'     => $this->user,
-                                                                  'language' => $this->language,
+        $this->user = entity(User::class)->create();
+
+        $this->asset = entity(WordAsset::class)->create([
+            'user'     => $this->user,
+            'language' => $this->language,
         ]);
+
+        entity(SentenceAsset::class)->create([
+            'user'     => $this->user,
+            'language' => $this->language,
+        ]);
+
         $this->favouriteAsset = entity(FavouriteAsset::class)->create(
             ['user' => $this->user, 'language' => $this->language, 'favorite' => 1]
         );
-        $this->card           = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
 
-        $passing = entity(Passing::class)->create(['user'     => $this->user,
-                                                   'asset'    => $this->asset,
-                                                   'language' => $this->language,
+        $this->personalAsset = entity(PersonalAsset::class)->create(
+            ['user' => $this->user, 'language' => $this->language, 'favorite' => 1]
+        );
+
+        $this->card = entity(Card::class)->create(['language' => $this->language, 'asset' => $this->asset]);
+
+        $passing = entity(Passing::class)->create([
+            'user'     => $this->user,
+            'asset'    => $this->asset,
+            'language' => $this->language,
         ]);
         $this->user->addAssetPassing($passing);
-        $passing = entity(Passing::class)->create(['user'     => $this->user,
-                                                   'asset'    => $this->favouriteAsset,
-                                                   'language' => $this->language,
+        $passing = entity(Passing::class)->create([
+            'user'     => $this->user,
+            'asset'    => $this->favouriteAsset,
+            'language' => $this->language,
         ]);
         $this->user->addAssetPassing($passing);
 
         $this->favouriteAsset->setOwner($this->user);
         $this->user->addPersonalAsset($this->favouriteAsset);
+
+        $this->personalAsset->setOwner($this->user);
+        $this->user->addPersonalAsset($this->personalAsset);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testIndex(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->get(route('asset:all', ['lang' => self::LANGUAGE_LETTER]));
+
+        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+
+        $response->assertJsonStructure(
+            [
+                'words'     => [\Tests\Responses\Asset::responseWithoutCards()],
+                'sentences' => [\Tests\Responses\Asset::responseWithoutCards()],
+            ]
+        );
     }
 
     /**
      * @throws Throwable
      */
-    public function testShow()
+    public function testShow(): void
     {
         $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::SHOW);
         $this->user->allow($permission);
@@ -81,222 +129,14 @@ class AssetControllerTest extends TestCase
         );
 
         $response->assertJsonStructure(
-            [
-                'id',
-                'type',
-                'title',
-                'level',
-                'count',
-                'language',
-                'cards' => [
-                    [
-                        'id',
-                        'favourite',
-                        'term'      => [
-                            'id',
-                            'value',
-                        ],
-                        'translate' => [
-                            'id',
-                            'value',
-                        ],
-                    ],
-                ],
-            ]
+            \Tests\Responses\Asset::response()
         );
     }
 
     /**
      * @throws Throwable
      */
-    public function testUpdate()
-    {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::UPDATE);
-        $this->user->allow($permission);
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->put(
-            route(
-                'asset:update',
-                [
-                    'id'    => $this->asset->getId(),
-                    'type'  => Asset::TYPE_WORDS,
-                    'level' => 2,
-                ]
-            ),
-            [
-                'title' => 'TEST UPDATE ASSET',
-            ]
-        );
-
-        $response->assertJsonStructure(['id', 'title', 'level', 'language']);
-
-        $data = $response->decodeResponseJson();
-        static::assertEquals('TEST UPDATE ASSET', $data['title']);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testIndex()
-    {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
-        $this->user->allow($permission);
-
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->get('/is/assets');
-
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
-
-        $response->assertJsonStructure(
-            [
-                'words',
-                'sentences',
-            ]
-        );
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testAddCard()
-    {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::ADD_CARD);
-        $this->user->allow($permission);
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->post(route(
-            'asset:card:add',
-            [
-                'asset' => $this->asset->getId(),
-                'card'  => $this->card->getId(),
-            ]
-        ));
-
-        self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testRemoveCard()
-    {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Card::DELETE);
-        $this->user->allow($permission);
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->delete(route(
-            'asset:card:remove',
-            [
-                'asset' => $this->asset->getId(),
-                'card'  => $this->card->getId(),
-            ]
-        ));
-
-        self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testGetWords()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testGetPersonal()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testShowAsset()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testShowValues()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testChangeAsset()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testGetAllSentences()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testAddBasicAssetLevel()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testAddPair()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testEditTranslate()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testAssetsMobile()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testShowExamples()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testChangeUsedTranslate()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testStore()
+    public function testStore(): void
     {
         $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::CREATE);
         $this->user->allow($permission);
@@ -327,17 +167,38 @@ class AssetControllerTest extends TestCase
     }
 
     /**
-     * TODO: implement
+     * @throws Throwable
      */
-    public function testFindAudio()
+    public function testUpdate(): void
     {
-        self::assertEquals(TRUE, TRUE);
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::UPDATE);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->put(
+            route(
+                'asset:update',
+                [
+                    'id'    => $this->asset->getId(),
+                    'type'  => Asset::TYPE_WORDS,
+                    'level' => 2,
+                ]
+            ),
+            [
+                'title' => 'TEST UPDATE ASSET',
+            ]
+        );
+
+        $response->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards());
+
+        $data = $response->decodeResponseJson();
+        static::assertEquals('TEST UPDATE ASSET', $data['title']);
     }
 
     /**
      * @throws Exception
      */
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::DELETE);
         $this->user->allow($permission);
@@ -350,9 +211,131 @@ class AssetControllerTest extends TestCase
     }
 
     /**
+     * @throws Exception
+     */
+    public function testGetWordsAssets(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->get(route('asset:words', ['language' => self::LANGUAGE_LETTER]));
+
+        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+
+        $response->assertJsonStructure([\Tests\Responses\Asset::responseWithoutCards()]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGetSentencesAssets(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->get(route('asset:sentences', ['language' => self::LANGUAGE_LETTER]));
+
+        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+
+        $response->assertJsonStructure([\Tests\Responses\Asset::responseWithoutCards()]);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testGetPersonalAssets(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->get(route('asset:personal', ['lang' => self::LANGUAGE_LETTER]));
+
+        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+
+        $response->assertJsonStructure([\Tests\Responses\Asset::responseWithoutCards()]);
+
+        $data = $response->decodeResponseJson();
+        self::assertEquals($this->personalAsset->getTitle(), $data[0]['title']);
+        self::assertEquals(Asset::TYPE_PERSONAL, $data[0]['type']);
+    }
+
+    public function testFindAudio(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $this->mock(AudioService::class,
+            function (MockInterface $mock) {
+                $mock->shouldReceive('parse')
+                     ->once()
+                     ->andReturn($this->card->getTerm());
+            });
+
+        $response = $this->post(route('asset:forvo', ['id' => 1]));
+
+        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+
+        $response->assertJsonStructure(['id', 'value']);
+    }
+
+    /**
+     * TODO: implement
+     *
+     * @throws Exception
+     */
+    public function testShowValues(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $this->mock(TranslateRepositoryInterface::class,
+            function (MockInterface $mock) {
+                $mock->shouldReceive('searchByIds')
+                     ->once()
+                     ->andReturn([$this->card->getTranslate()->getId()]);
+            });
+
+        $response = $this->get(route('asset:values:show',
+            [
+                'word' => $this->card->getTerm()->getId(),
+            ]));
+
+        // self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+
+        //  $response->assertJsonStructure(['id', 'value']);
+
+        self::assertEquals(TRUE, TRUE);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testShowExamples(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->get(route('asset:examples',
+                [
+                    'card' => $this->card->getId(),
+                ])
+        );
+
+        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+
+        $response->assertJsonStructure([\Tests\Responses\Example::response()]);
+    }
+
+    /**
      * TODO: implement
      */
-    public function testGetSentences()
+    public function testEditTranslate(): void
     {
         self::assertEquals(TRUE, TRUE);
     }
@@ -360,7 +343,7 @@ class AssetControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testUploadSentences()
+    public function testUploadAudio(): void
     {
         self::assertEquals(TRUE, TRUE);
     }
@@ -368,7 +351,55 @@ class AssetControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testUploadAudio()
+    public function testAddPair(): void
+    {
+        self::assertEquals(TRUE, TRUE);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testAddCard(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Asset::ADD_CARD);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->post(route(
+            'asset:card:add',
+            [
+                'asset' => $this->asset->getId(),
+                'card'  => $this->card->getId(),
+            ]
+        ));
+
+        self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRemoveCard(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Card::DELETE);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->delete(route(
+            'asset:card:remove',
+            [
+                'asset' => $this->asset->getId(),
+                'card'  => $this->card->getId(),
+            ]
+        ));
+
+        self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
+    }
+
+    /**
+     * TODO: implement
+     */
+    public function testAssetsMobile(): void
     {
         self::assertEquals(TRUE, TRUE);
     }

@@ -36,7 +36,7 @@ class UserFactory
         $user->setEmail($userDTO->getEmail());
         $user->setPassword(bcrypt($userDTO->getPassword()));
 
-        $user->setActiveTo(new \DateTime('+1 month'));
+        $user->setRaisedTo(new \DateTime('+1 month'));
 
         $rolesDTO = $userDTO->getRoles();
 

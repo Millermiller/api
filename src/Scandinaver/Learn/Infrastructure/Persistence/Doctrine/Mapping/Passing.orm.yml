@@ -68,8 +68,7 @@ Scandinaver\Learn\Domain\Entity\Passing:
       targetEntity: Scandinaver\User\Domain\Entity\User
       cascade: { }
       fetch: LAZY
-      mappedBy: null
-      inversedBy: passings
+      inversedBy: assetPassings
       joinColumns:
         user_id:
           referencedColumnName: id

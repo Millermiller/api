@@ -13,9 +13,4 @@ use Scandinaver\Shared\StringValueObject;
 class PuzzleText extends StringValueObject
 {
     protected string $value;
-
-    public function __construct(string $text)
-    {
-        $this->fromNative($text);
-    }
 }

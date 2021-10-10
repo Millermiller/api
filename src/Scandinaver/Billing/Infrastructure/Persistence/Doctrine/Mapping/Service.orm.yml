@@ -1,0 +1,27 @@
+Scandinaver\Billing\Domain\Entity\Service:
+  type: entity
+  table: service
+  indexes:
+    type:
+      columns:
+        - type_value
+    itemId:
+      columns:
+        - item_id
+  id:
+    id:
+      type: uuid
+      generator:
+        strategy: CUSTOM
+      customIdGenerator:
+        class: Ramsey\Uuid\Doctrine\UuidGenerator
+  fields:
+    itemId:
+      type: uuid
+      unique: true
+      nullable: false
+  embedded:
+    type:
+      class: Scandinaver\Billing\Domain\Entity\ServiceType
+      column: type_value
+  lifecycleCallbacks: { }

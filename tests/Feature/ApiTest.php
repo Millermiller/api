@@ -5,7 +5,6 @@ namespace Tests\Feature;
 
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Entity\WordAsset;
-use Scandinaver\User\Domain\Entity\Plan;
 use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
@@ -43,9 +42,6 @@ class ApiTest extends TestCase
 
     public function testIncorrectLanguageName()
     {
-        $plan = new Plan();
-        $plan->setId(1);
-
         $this->actingAs($this->user, 'api');
 
         $response = $this->get('/wronglanguagename/assets-mobile');

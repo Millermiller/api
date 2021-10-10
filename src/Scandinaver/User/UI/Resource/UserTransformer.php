@@ -47,8 +47,7 @@ class UserTransformer extends TransformerAbstract
             'login'     => $user->getLogin(),
             'email'     => $user->getEmail(),
             'active'    => $user->isActive(),
-            'plan'      => $user->getPlan(),
-            'active_to' => $user->getActiveTo(),
+            'active_to' => $user->getRaisedTo(),
         ];
     }
 

@@ -34,6 +34,12 @@ class LanguageRepositoryTest extends TestCase
         /** @var Language $language */
         $language = entity(Language::class)->create(['letter' => 'is']);
 
-        $this->assertInstanceOf(Language::class, $this->repository->getByName($language->getLetter()));
+        $result = $this->repository->findOneBy([
+            'letter' => $language->getLetter()
+        ]);
+
+        $this->assertInstanceOf(Language::class, $result);
+
+        $this->assertEquals($language->getLetter(), $result->getLetter());
     }
 }

@@ -30,7 +30,7 @@ class CreateCardCommand implements CommandInterface
         $this->user      = $user;
         $this->word      = $word;
         $this->translate = $translate;
-        $this->language = $language;
+        $this->language  = $language;
     }
 
     public function getLanguage(): string

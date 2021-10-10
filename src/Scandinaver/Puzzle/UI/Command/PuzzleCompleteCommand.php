@@ -10,7 +10,7 @@ use Scandinaver\Shared\DTO;
 /**
  * Class PuzzleCompleteCommand
  *
- * @see     \Scandinaver\Puzzle\Application\Handler\Command\PuzzleCompleteHandler
+ * @see     \Scandinaver\Puzzle\Application\Handler\Command\PuzzleCompleteCommandHandler
  * @package Scandinaver\Puzzle\Application\Command
  */
 class PuzzleCompleteCommand implements CommandInterface

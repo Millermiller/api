@@ -91,7 +91,6 @@ Scandinaver\Translate\Domain\Entity\Text:
         - persist
       fetch: LAZY
       mappedBy: text
-      inversedBy: null
       orphanRemoval: true
       orderBy: null
     passings:

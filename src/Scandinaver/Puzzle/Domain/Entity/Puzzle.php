@@ -4,7 +4,9 @@
 namespace Scandinaver\Puzzle\Domain\Entity;
 
 use DateTime;
+use Scandinaver\Common\Domain\Contract\LearnItemInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Entity\HasLevel;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Puzzle\Domain\Event\PuzzleCreated;
 use Scandinaver\Shared\AggregateRoot;
@@ -15,9 +17,10 @@ use Scandinaver\Shared\EventTrait;
  *
  * @package Scandinaver\Puzzle\Domain\Entity
  */
-class Puzzle extends AggregateRoot
+class Puzzle extends AggregateRoot implements LearnItemInterface
 {
     use EventTrait;
+    use HasLevel;
 
     private int $id;
 
@@ -92,5 +95,10 @@ class Puzzle extends AggregateRoot
     public function onDelete()
     {
         // $this->pushEvent(PuzzleDeleted($this));
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
     }
 }

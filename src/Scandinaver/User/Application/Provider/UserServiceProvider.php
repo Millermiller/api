@@ -20,5 +20,10 @@ class UserServiceProvider extends ServiceProvider
             AvatarServiceInterface::class,
             'Scandinaver\User\Infrastructure\Service\AvatarService'
         );
+
+        $this->app->bind(
+            AvatarServiceInterface::class,
+            'Scandinaver\User\Infrastructure\Service\AvatarService'
+        );
     }
 }

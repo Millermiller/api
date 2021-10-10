@@ -6,6 +6,7 @@ namespace Scandinaver\Learn\Domain\Entity;
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
+use Scandinaver\Common\Domain\Contract\LearnItemInterface;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\AbstractLearnItem;
 use Scandinaver\Common\Domain\Entity\HasLevel;
@@ -22,7 +23,7 @@ use Scandinaver\Learn\Domain\Exception\CardAlreadyAddedException;
  *
  * @package Scandinaver\Learn\Domain\Entity
  */
-abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInterface
+abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInterface, LearnItemInterface
 {
     use HasLevel;
 

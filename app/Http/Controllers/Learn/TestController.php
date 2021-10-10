@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HasLanguageRequest;
 use App\Http\Requests\Learn\TestCompleteRequest;
 use App\Http\Requests\Learn\UpdatePassingRequest;
 use Gate;
@@ -26,16 +27,16 @@ class TestController extends Controller
 {
 
     /**
-     * @param  string  $language
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function index(string $language): JsonResponse
+    public function index(HasLanguageRequest $request): JsonResponse
     {
         Gate::authorize(Test::GET_ALL_PASSINGS);
 
-        return $this->execute(new GetAllPassingsQuery($language));
+        return $this->execute(new GetAllPassingsQuery($request->get('lang')));
     }
 
     /**

@@ -10,7 +10,7 @@ Route::group(
   ],
   function () {
       Route::post('/complete/{id}',  [TestController::class, 'complete'])->name('complete');
-      Route::get('/{language}/test', [TestController::class, 'index'])->name('all');
+      Route::get('/test',            [TestController::class, 'index'])->name('all');
       Route::delete('/test/{id}',    [TestController::class, 'destroy'])->name('delete');
       Route::put('/test/{id}',       [TestController::class, 'update'])->name('update');
   }

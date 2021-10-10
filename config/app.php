@@ -218,6 +218,10 @@ return [
         Scandinaver\Settings\Application\Provider\DoctrineServiceProvider::class,
         Scandinaver\Settings\Application\Provider\EventServiceProvider::class,
         Scandinaver\Settings\Application\Provider\SettingsServiceProvider::class,
+        Scandinaver\Billing\Application\Provider\AuthServiceProvider::class,
+        Scandinaver\Billing\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Billing\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Billing\Application\Provider\BillingServiceProvider::class,
     ],
 
     /*

@@ -32,7 +32,7 @@ class CategoryControllerTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::VIEW);
         $this->user->allow($permission);
@@ -43,10 +43,7 @@ class CategoryControllerTest extends TestCase
         self::assertCount($this->categoryCount, $decodedResponse);
         $response->assertJsonStructure(
             [
-                [
-                    'id',
-                    'title',
-                ],
+                \Tests\Responses\Category::response(),
             ]
         );
     }
@@ -54,7 +51,7 @@ class CategoryControllerTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testShow()
+    public function testShow(): void
     {
         $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::SHOW);
         $this->user->allow($permission);
@@ -62,12 +59,11 @@ class CategoryControllerTest extends TestCase
 
         $testCategoryId = 1;
         $response       = $this->get(route('category:show', ['categoryId' => $testCategoryId]));
+
         $response->assertJsonStructure(
-            [
-                'id',
-                'title',
-            ]
+            \Tests\Responses\Category::response()
         );
+
         $response->assertJsonFragment(
             [
                 'id' => $testCategoryId,
@@ -78,7 +74,7 @@ class CategoryControllerTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testStore()
+    public function testStore(): void
     {
         $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::CREATE);
         $this->user->allow($permission);
@@ -91,11 +87,9 @@ class CategoryControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            [
-                'id',
-                'title',
-            ]
+            \Tests\Responses\Category::response()
         );
+
         $response->assertJsonFragment(
             [
                 'title' => $testCategoryName,
@@ -136,15 +130,13 @@ class CategoryControllerTest extends TestCase
         $testCategoryId   = 1;
 
         $response = $this->put(route('category:update', ['categoryId' => $testCategoryId]),
-            ['title' => $testCategoryName]);
+            ['title' => $testCategoryName]
+        );
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            [
-                'id',
-                'title',
-            ]
+            \Tests\Responses\Category::response()
         );
         $response->assertJsonFragment(
             [

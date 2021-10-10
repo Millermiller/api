@@ -160,7 +160,7 @@ class AssetService implements BaseServiceInterface
             $asset->setCompleted($asset->isCompletedByUser($user));
             $isNextAvailable = $asset->isCompletedByUser($user);
 
-            if ($asset->getLevel() <= 5 || $user->isPremium()) { // TODO: implement settings
+            if ($asset->getLevel() <= 5 || $user->isRaising()) { // TODO: implement settings
                 $asset->setAvailable(TRUE);
             }
         }
@@ -183,7 +183,7 @@ class AssetService implements BaseServiceInterface
 
         foreach ($personalAssets as $personalAsset) {
 
-            if ($user->isPremium()) {
+            if ($user->isRaising()) {
                 $personalAsset->setActive(TRUE);
                 $personalAsset->setAvailable(TRUE);
             }
@@ -300,7 +300,7 @@ class AssetService implements BaseServiceInterface
                         [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]
                     )
                     && $counter[$item->getType()] < 10)
-                || $user->isPremium()
+                || $user->isRaising()
                 || in_array(
                     $item->getType(),
                     [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]

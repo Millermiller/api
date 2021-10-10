@@ -69,8 +69,7 @@ Scandinaver\Translate\Domain\Entity\Passing:
       targetEntity: Scandinaver\User\Domain\Entity\User
       cascade: {  }
       fetch: LAZY
-      mappedBy: null
-      inversedBy: translates
+      inversedBy: textPassings
       joinColumns:
         user_id:
           referencedColumnName: id

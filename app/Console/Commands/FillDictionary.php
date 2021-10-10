@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Doctrine\ORM\NoResultException;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
-use Scandinaver\Learn\Domain\Entity\Word;
+use Scandinaver\Learn\Domain\Entity\Term;
 use Scandinaver\Learn\UI\Command\FillDictionaryCommand;
 use Scandinaver\Shared\CommandBus;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -55,33 +55,37 @@ class FillDictionary extends Command
         $this->languageRepository = $languageRepository;
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function handle()
     {
         $letter = $this->argument('Language');
+        $language = $this->languageRepository->findOneBy([
+            'letter' => $letter
+        ]);
 
-        try {
-            $language = $this->languageRepository->getByName($letter);
-        } catch (NoResultException $exception) {
+        if ($language === NULL) {
             $this->error('Language: ' . $letter . ' not found');
             exit;
         }
 
-        $this->info('Language: ' . $language->getLabel());
+        $this->info('Language: ' . $language->getTitle());
 
         $this->comment('Get words..');
 
-        /** @var Word[] $words */
-        $words = $this->wordRepository->getUntranslated($language);
+        /** @var Term[] $terms */
+        $terms = $this->wordRepository->getUntranslated($language);
 
-        $this->info('Words to translate: ' . count($words));
+        $this->info('Words to translate: ' . count($terms));
 
-        $bar = $this->output->createProgressBar(count($words));
+        $bar = $this->output->createProgressBar(count($terms));
         $bar->setRedrawFrequency(1);
         ProgressBar::setFormatDefinition('custom', ' %current%/%max% [%bar%] -- %percent:3s%% | %memory:6s% | %word% ');
         $bar->setFormat('custom');
-        foreach ($words as $word) {
-            $bar->setMessage($word->getWord(), 'word');
-            $this->commandBus->execute(new FillDictionaryCommand($language, $word));
+        foreach ($terms as $term) {
+            $bar->setMessage($term->getValue(), 'word');
+            $this->commandBus->execute(new FillDictionaryCommand($language->getLetter(), $term->getId()));
             $bar->advance();
         }
 

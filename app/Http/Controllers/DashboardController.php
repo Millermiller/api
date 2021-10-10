@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HasLanguageRequest;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Scandinaver\Learn\UI\Query\AssetsCountByLanguageQuery;
@@ -27,17 +28,17 @@ class DashboardController extends Controller
 {
 
     /**
-     * @param  string  $language
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
      * @throws BindingResolutionException
      */
-    public function all(string $language): JsonResponse
+    public function all(HasLanguageRequest $request): JsonResponse
     {
         return response()->json([
                 'users'    => $this->commandBus->execute(new UsersQuery()),
                 'words'    => $this->commandBus->execute(new TermsCountQuery()),
-                'assets'   => $this->commandBus->execute(new AssetsCountQuery($language)),
+                'assets'   => $this->commandBus->execute(new AssetsCountQuery($request->get('lang'))),
                 'audio'    => 0,
                 'texts'    => $this->commandBus->execute(new TextsCountQuery()),
                 'messages' => 0,

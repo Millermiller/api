@@ -81,7 +81,7 @@ class IndexControllerTest extends TestCase
 
         $response = $this->get(route('user-info', ['domain' => 'is']));
 
-        $response->assertJsonStructure(['id', 'login', 'avatar', 'email', 'active', 'plan', 'active_to']);
+        $response->assertJsonStructure(['id', 'login', 'avatar', 'email', 'active', 'active_to']);
     }
 
     public function testInfo()

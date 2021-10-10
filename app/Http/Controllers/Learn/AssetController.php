@@ -23,7 +23,6 @@ use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
 use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
 use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
 use Scandinaver\Learn\UI\Command\EditTranslateCommand;
-use Scandinaver\Learn\UI\Command\SetTranslateForCardCommand;
 use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
 use Scandinaver\Learn\UI\Command\UploadAudioCommand;
 use Scandinaver\Learn\UI\Query\AssetForUserByTypeQuery;
@@ -45,18 +44,19 @@ class AssetController extends Controller
 {
 
     /**
-     * @param  string  $languageId
+     * @param  HasLanguageRequest  $request
      *
      * @return JsonResponse
-     * @throws AuthorizationException|BindingResolutionException
+     * @throws AuthorizationException
+     * @throws BindingResolutionException
      */
-    public function index(string $languageId): JsonResponse
+    public function index(HasLanguageRequest $request): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
 
         return response()->json([
-            'words'     => $this->commandBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_WORDS)),
-            'sentences' => $this->commandBus->execute(new GetAssetsByTypeQuery($languageId, Asset::TYPE_SENTENCES)),
+            'words'     => $this->commandBus->execute(new GetAssetsByTypeQuery($request->get('lang'), Asset::TYPE_WORDS)),
+            'sentences' => $this->commandBus->execute(new GetAssetsByTypeQuery($request->get('lang'), Asset::TYPE_SENTENCES)),
         ]);
     }
 
@@ -120,7 +120,7 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      */
-    public function getWords(string $languageId): JsonResponse
+    public function getWordsAssets(string $languageId): JsonResponse
     {
         return $this->execute(new AssetForUserByTypeQuery($languageId, Auth::user(), Asset::TYPE_WORDS));
     }
@@ -130,7 +130,7 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      */
-    public function getSentences(string $languageId): JsonResponse
+    public function getSentencesAssets(string $languageId): JsonResponse
     {
         return $this->execute(new AssetForUserByTypeQuery($languageId, Auth::user(), Asset::TYPE_SENTENCES));
     }
@@ -140,7 +140,7 @@ class AssetController extends Controller
      *
      * @return JsonResponse
      */
-    public function getPersonal(HasLanguageRequest $request): JsonResponse
+    public function testGetPersonalAssets(HasLanguageRequest $request): JsonResponse
     {
         $language = $request->get('lang');
 
@@ -181,17 +181,6 @@ class AssetController extends Controller
      * @param  Request  $request
      *
      * @return JsonResponse
-     * @throws BindingResolutionException
-     */
-    public function changeUsedTranslate(Request $request): JsonResponse
-    {
-        return $this->execute(new SetTranslateForCardCommand($request->toArray()));
-    }
-
-    /**
-     * @param  Request  $request
-     *
-     * @return JsonResponse
      */
     public function editTranslate(Request $request): JsonResponse
     {
@@ -225,17 +214,6 @@ class AssetController extends Controller
     public function addPair(Request $request): JsonResponse
     {
         return $this->execute(new AddTermAndTranslateCommand($request->toArray()), Response::HTTP_CREATED);
-    }
-
-    /**
-     * @param  int      $assetId
-     * @param  Request  $request
-     *
-     * @return JsonResponse
-     */
-    public function changeAsset(int $assetId, Request $request): JsonResponse
-    {
-        return $this->execute(new UpdateAssetCommand(Auth::user(), $assetId, $request->toArray()));
     }
 
     /**

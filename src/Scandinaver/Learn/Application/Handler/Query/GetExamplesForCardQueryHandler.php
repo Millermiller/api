@@ -5,6 +5,7 @@ namespace Scandinaver\Learn\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
 use Scandinaver\Learn\Domain\Entity\Example;
+use Scandinaver\Learn\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learn\Domain\Service\CardService;
 use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
 use Scandinaver\Learn\UI\Resource\ExampleTransformer;
@@ -30,6 +31,8 @@ class GetExamplesForCardQueryHandler extends AbstractHandler
 
     /**
      * @param  GetExamplesForCardQuery|BaseCommandInterface  $query
+     *
+     * @throws CardNotFoundException
      */
     public function handle(BaseCommandInterface $query): void
     {

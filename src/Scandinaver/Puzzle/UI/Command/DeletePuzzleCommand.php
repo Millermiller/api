@@ -11,7 +11,7 @@ use Scandinaver\Shared\DTO;
  *
  * @package Scandinaver\Puzzle\UI\Command
  *
- * @see     \Scandinaver\Puzzle\Application\Handler\Command\DeletePuzzleHandler
+ * @see     \Scandinaver\Puzzle\Application\Handler\Command\DeletePuzzleCommandHandler
  */
 class DeletePuzzleCommand implements CommandInterface
 {

@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Common\Domain\Contract;
 
+use DateTime;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Entity\Asset;
 use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
@@ -19,8 +20,6 @@ interface UserInterface extends EqualInterface, Permissions
 
     public function getId(): int;
 
-    public function isPremium(): bool;
-
     public function getAvatar(): string;
 
     public function getPersonalAssets(Language $language): array;
@@ -28,4 +27,10 @@ interface UserInterface extends EqualInterface, Permissions
     public function addPersonalAsset(Asset $asset): void;
 
     public function getFavouriteAsset(Language $language): ?FavouriteAsset;
+
+    public function setRaisedTo(DateTime $to): void;
+
+    public function getRaisedTo(): DateTime;
+
+    public function isRaising(): bool;
 }

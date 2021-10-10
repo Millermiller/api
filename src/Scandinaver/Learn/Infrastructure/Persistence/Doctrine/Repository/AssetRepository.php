@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Learn\Infrastructure\Persistence\Doctrine\Repository;
 
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\CountTrait;
+use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\LevelTrait;
 use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learn\Domain\Entity\Asset;
 use Scandinaver\Shared\BaseRepository;
@@ -17,6 +17,9 @@ use Scandinaver\Shared\BaseRepository;
  */
 class AssetRepository extends BaseRepository implements AssetRepositoryInterface
 {
+    use CountTrait;
+    use LevelTrait;
+
     /**
      * @param  Language  $language
      *
@@ -27,7 +30,7 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
         $this->_em->createQuery();
 
         $query = $this->getEntityManager()->createQuery('
-        SELECT a FROM Scandinaver\Learn\Domain\Entity\WordAsset a
+        SELECT a FROM Scandinaver\Learn\Domain\Entity\Asset a
         WHERE (
                 a INSTANCE OF Scandinaver\Learn\Domain\Entity\WordAsset
                     OR 
@@ -37,25 +40,6 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
         )->setParameter('languageId', $language->getId());
 
         return $query->getResult();
-    }
-
-    /**
-     * @param  Language  $language
-     *
-     * @return int
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function getCountByLanguage(Language $language): int
-    {
-        $q = $this->_em->createQueryBuilder();
-
-        return $q->select('count(a.id)')
-                 ->from($this->getEntityName(), 'a')
-                 ->where($q->expr()->eq('a.language', ':language'))
-                 ->setParameter('language', $language)
-                 ->getQuery()
-                 ->getSingleScalarResult();
     }
 
     /**
@@ -71,32 +55,8 @@ class AssetRepository extends BaseRepository implements AssetRepositoryInterface
                  ->from($this->getEntityName(), 'a')
                  ->where($q->expr()->eq('a.language', ':language'))
                  ->setParameter('language', $language)
-                 ->orderBy('a.level', 'asc')
+                 ->orderBy('a.level', 'ASC')
                  ->getQuery()
                  ->getResult();
-    }
-
-    /**
-     * @param  Language  $language
-     * @param  int       $type
-     *
-     * @return Asset
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function getFirstAsset(Language $language, int $type): Asset
-    {
-        $q = $this->createQueryBuilder('asset');
-
-        return $q->select('a')
-                 ->from($this->getEntityName(), 'a')
-                 ->where('a.level = :level')
-                 ->andWhere('a.category = :type')
-                 ->andWhere($q->expr()->eq('a.language', ':language'))
-                 ->setParameter('level', 1)
-                 ->setParameter('language', $language)
-                 ->setParameter('type', $type)
-                 ->getQuery()
-                 ->getSingleResult();
     }
 }

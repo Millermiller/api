@@ -2,13 +2,17 @@
 
 namespace Tests\Feature\Controllers\Learn;
 
+use Exception;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Entity\Card;
 use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
 use Scandinaver\Learn\Domain\Entity\Passing;
 use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\User\Domain\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Throwable;
 
 /**
  * Class CardControllerTest
@@ -17,6 +21,7 @@ use Tests\TestCase;
  */
 class CardControllerTest extends TestCase
 {
+    private const LANGUAGE_LETTER = 'is';
 
     private User $user;
 
@@ -32,12 +37,14 @@ class CardControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->language = entity(Language::class)->create(['letter' => 'is']);
+        $this->language = entity(Language::class)->create(['letter' => self::LANGUAGE_LETTER]);
 
-        $this->user           = entity(User::class)->create();
-        $this->asset          = entity(WordAsset::class)->create(['user'     => $this->user,
-                                                                  'language' => $this->language,
+        $this->user  = entity(User::class)->create();
+        $this->asset = entity(WordAsset::class)->create([
+            'user'     => $this->user,
+            'language' => $this->language,
         ]);
+
         $this->favouriteAsset = entity(FavouriteAsset::class)->create(
             ['user' => $this->user, 'language' => $this->language, 'favorite' => 1]
         );
@@ -51,9 +58,59 @@ class CardControllerTest extends TestCase
     }
 
     /**
+     * @throws Throwable
+     */
+    public function testStore(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Card::CREATE);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->post(route('card:create', [
+            'language' => self::LANGUAGE_LETTER,
+            'word' => 'MY_WORD',
+            'translate' => 'MY_TRANSLATE'
+        ]));
+
+        self::assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
+        $response->assertJsonStructure(\Tests\Responses\Card::response());
+
+        $data = $response->decodeResponseJson();
+        self::assertEquals('MY_WORD', $data['term']['value']);
+        self::assertEquals('MY_TRANSLATE', $data['translate']['value']);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testUpdate(): void
+    {
+        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Card::UPDATE);
+        $this->user->allow($permission);
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->put(route('card:update', [
+            'card' => $this->card->getId(),
+        ]), [
+            'id'              => $this->card->getId(),
+            'examples'        => [],
+            'translate'       => [
+                'id' => $this->card->getTranslate()->getId(),
+                'value' => $this->card->getTranslate()->getValue()
+            ],
+            'word' => [
+                'id' => $this->card->getTerm()->getId(),
+                'value' => $this->card->getTerm()->getValue()
+            ]
+        ]);
+
+        self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    }
+
+    /**
      * TODO: implement
      */
-    public function testShow()
+    public function testSearch(): void
     {
         self::assertEquals(TRUE, TRUE);
     }
@@ -61,31 +118,7 @@ class CardControllerTest extends TestCase
     /**
      * TODO: implement
      */
-    public function testUpdate()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testSearch()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testCreate()
-    {
-        self::assertEquals(TRUE, TRUE);
-    }
-
-    /**
-     * TODO: implement
-     */
-    public function testIndex()
+    public function testUploadSentences(): void
     {
         self::assertEquals(TRUE, TRUE);
     }

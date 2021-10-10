@@ -78,7 +78,7 @@ class PuzzleController extends Controller
     /**
      * @param  UpdatePuzzleRequest  $request
      * @param  int                  $id
-     *
+     * TODO: implement
      * @return JsonResponse
      * @throws AuthorizationException
      */
