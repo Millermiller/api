@@ -11,7 +11,7 @@ Route::group(
         Route::get('/text/{id}',              [TextController::class, 'show'])->name('show');
         Route::put('/text/{id}',              [TextController::class, 'update'])->name('update');
 
-        Route::post('/{language}/nextTLevel', [TextController::class, 'nextLevel']);
+        Route::post('/{language}/nextTLevel', [TextController::class, 'nextLevel']); //TODO: we need this? move language to request body
         Route::post('/text',                  [TextController::class, 'store'])->name('create');
         Route::delete('/text/{id}',           [TextController::class, 'destroy'])->name('delete');
 

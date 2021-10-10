@@ -34,7 +34,7 @@ class CheckPlan
     public function handle($request, Closure $next)
     {
         if (\Auth::check()) {
-            $this->userService->updatePlan(Auth::user());
+           // $this->userService->updatePlan(Auth::user());
         }
 
         return $next($request);

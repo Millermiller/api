@@ -217,13 +217,16 @@ class CardService implements BaseServiceInterface
     }
 
     /**
-     * @param  int  $card
+     * @param  int  $id
      *
-     * @return Collection|Example[]|array
+     * @return Collection|Example[]
+     * @throws CardNotFoundException
      */
-    public function getExamples(int $card): array
+    public function getExamples(int $id): array
     {
-        return $card->getExamples();
+        $card = $this->getCard($id);
+
+        return $card->getExamples()->toArray();
     }
 
     /**

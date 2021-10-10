@@ -10,11 +10,8 @@ use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\RBAC\Domain\Entity\Role;
 use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository\PermissionRepository;
 use Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository\RoleRepository;
-use Scandinaver\User\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
-use Scandinaver\User\Domain\Entity\Plan;
 use Scandinaver\User\Domain\Entity\User;
-use Scandinaver\User\Infrastructure\Persistence\Doctrine\Repository\PlanRepository;
 use Scandinaver\User\Infrastructure\Persistence\Doctrine\Repository\UserRepository;
 
 /**
@@ -32,16 +29,6 @@ class DoctrineServiceProvider extends ServiceProvider
                 return new UserRepository(
                     $this->app['em'],
                     $this->app['em']->getClassMetadata(User::class)
-                );
-            }
-        );
-
-        $this->app->bind(
-            PlanRepositoryInterface::class,
-            function () {
-                return new PlanRepository(
-                    $this->app['em'],
-                    $this->app['em']->getClassMetadata(Plan::class)
                 );
             }
         );

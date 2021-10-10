@@ -22,17 +22,18 @@ class ReaderController extends Controller
 {
 
     /**
-     * @param  string       $language
      * @param  ReadRequest  $request
      *
      * @return BinaryFileResponse
-     * @throws AuthorizationException|BindingResolutionException
+     * @throws AuthorizationException
+     * @throws BindingResolutionException
      */
-    public function index(string $language, ReadRequest $request): BinaryFileResponse
+    public function __invoke(ReadRequest $request): BinaryFileResponse
     {
         Gate::authorize(Reader::READ);
 
-        $text = $request->get('text');
+        $text     = $request->get('text');
+        $language = $request->get('language');
 
         $data = $this->commandBus->execute(new ReadQuery(Auth::user(), $language, $text));
 

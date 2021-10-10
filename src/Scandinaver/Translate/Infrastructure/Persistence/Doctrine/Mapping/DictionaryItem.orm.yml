@@ -57,8 +57,7 @@ Scandinaver\Translate\Domain\Entity\DictionaryItem:
       targetEntity: Scandinaver\Translate\Domain\Entity\Text
       cascade: {  }
       fetch: LAZY
-      mappedBy: null
-      inversedBy: words
+      inversedBy: dictionary
       joinColumns:
         text_id:
           referencedColumnName: id

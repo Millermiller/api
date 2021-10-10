@@ -16,10 +16,13 @@ class TermDTO extends DTO
 
     private string $value;
 
+    private bool $public;
+
     public function __construct(?int $id, string $value)
     {
         $this->id    = $id;
         $this->value = $value;
+        $this->public = FALSE; //TODO: implement
     }
 
     public function getId(): int
@@ -46,5 +49,15 @@ class TermDTO extends DTO
     public static function fromArray(array $data): TermDTO
     {
         return new self($data['id'] ?? NULL, $data['value']);
+    }
+
+    public function isPublic(): bool
+    {
+        return $this->public;
+    }
+
+    public function setPublic(bool $public): void
+    {
+        $this->public = $public;
     }
 }

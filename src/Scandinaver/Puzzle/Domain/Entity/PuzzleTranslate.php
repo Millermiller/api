@@ -3,19 +3,14 @@
 
 namespace Scandinaver\Puzzle\Domain\Entity;
 
-use Scandinaver\Shared\ValueObject;
+use Scandinaver\Shared\StringValueObject;
 
 /**
  * Class PuzzleTranslate
  *
  * @package Scandinaver\Puzzle\Domain\Entity
  */
-class PuzzleTranslate extends ValueObject
+class PuzzleTranslate extends StringValueObject
 {
-    protected $value;
-
-    public function __construct(string $text)
-    {
-        $this->fromNative($text);
-    }
+    protected string $value;
 }

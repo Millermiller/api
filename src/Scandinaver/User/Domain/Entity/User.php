@@ -3,17 +3,16 @@
 
 namespace Scandinaver\User\Domain\Entity;
 
-use Carbon\Carbon;
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Exception;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Entity\{Asset, FavouriteAsset, Passing};
 use Scandinaver\RBAC\Domain\Entity\{Permission, Role};
+use Scandinaver\Billing\Domain\Entity\Order;
 use Scandinaver\Shared\AggregateRoot;
 use Scandinaver\Translate\Domain\Entity\Passing as TranslateResult;
 use Scandinaver\Translate\Domain\Entity\Text;
@@ -31,7 +30,6 @@ class User extends AggregateRoot implements UserInterface,
 {
 
     use Authenticatable;
-    use CanResetPassword;
     use HasApiTokens;
     use UsesPasswordGrant;
 
@@ -41,7 +39,7 @@ class User extends AggregateRoot implements UserInterface,
 
     private string $email;
 
-    private DateTime $activeTo;
+    private DateTime $raisedTo;
 
     private ?string $name;
 
@@ -60,8 +58,6 @@ class User extends AggregateRoot implements UserInterface,
     private DateTime $updatedAt;
 
     private DateTime $lastOnline;
-
-    private Plan $plan;
 
     private Collection $assetPassings;
 
@@ -82,6 +78,11 @@ class User extends AggregateRoot implements UserInterface,
      * @var Collection | Permission[]
      */
     private Collection $permissions;
+
+    /**
+     * @var Collection | Order[]
+     */
+    private Collection $orders;
 
     public function __construct()
     {
@@ -117,16 +118,6 @@ class User extends AggregateRoot implements UserInterface,
         return $this;
     }
 
-    public function getPlan(): Plan
-    {
-        return $this->plan;
-    }
-
-    public function setPlan(Plan $plan): void
-    {
-        $this->plan = $plan;
-    }
-
     public function getLogin(): string
     {
         return $this->login;
@@ -137,9 +128,9 @@ class User extends AggregateRoot implements UserInterface,
         $this->login = $login;
     }
 
-    public function getCreatedAt(): Carbon
+    public function getCreatedAt(): DateTime
     {
-        return Carbon::parse($this->createdAt);
+        return $this->createdAt;
     }
 
     public function setCreatedAt(DateTime $createdAt): void
@@ -196,19 +187,20 @@ class User extends AggregateRoot implements UserInterface,
         $this->photo = $photo;
     }
 
-    public function getActiveTo(): ?DateTime
+    public function isRaising(): bool
     {
-        return $this->activeTo;
+        return ($this->raisedTo > new DateTime());
     }
 
-    public function setActiveTo(DateTime $activeTo): void
+
+    public function setRaisedTo(DateTime $to): void
     {
-        $this->activeTo = $activeTo;
+        $this->raisedTo = $to;
     }
 
-    public function isPremium(): bool
+    public function getRaisedTo(): DateTime
     {
-        return ($this->activeTo > new DateTime());
+        return $this->raisedTo;
     }
 
     public function getAvatar(): string

@@ -1769,7 +1769,7 @@
                     /**
          * Get the currently authenticated user.
          *
-         * @return \Scandinaver\User\Domain\Model\User|null 
+         * @return \Scandinaver\User\Domain\Entity\User|null 
          * @static 
          */ 
         public static function user()
@@ -1804,7 +1804,7 @@
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \Scandinaver\User\Domain\Model\User|false 
+         * @return \Scandinaver\User\Domain\Entity\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1882,7 +1882,7 @@
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \Scandinaver\User\Domain\Model\User|false 
+         * @return \Scandinaver\User\Domain\Entity\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -1958,7 +1958,7 @@
                     /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \Scandinaver\User\Domain\Model\User 
+         * @return \Scandinaver\User\Domain\Entity\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -2060,7 +2060,7 @@
                     /**
          * Return the currently cached user.
          *
-         * @return \Scandinaver\User\Domain\Model\User|null 
+         * @return \Scandinaver\User\Domain\Entity\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -2106,7 +2106,7 @@
                     /**
          * Determine if the current user is authenticated. If not, throw an exception.
          *
-         * @return \Scandinaver\User\Domain\Model\User 
+         * @return \Scandinaver\User\Domain\Entity\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 

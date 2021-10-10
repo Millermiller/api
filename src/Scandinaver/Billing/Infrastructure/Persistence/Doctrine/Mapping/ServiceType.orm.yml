@@ -1,0 +1,4 @@
+Scandinaver\Billing\Domain\Entity\ServiceType:
+  type: embeddable
+  fields:
+    value: { type: string }

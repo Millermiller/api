@@ -123,7 +123,7 @@ class TextService
             $text->setCompleted($text->isCompletedByUser($user));
             $isNextAvailable = $text->isCompletedByUser($user);
 
-            if ($text->getLevel() <= 5 || $user->isPremium()) { // TODO: implement settings
+            if ($text->getLevel() <= 5 || $user->isRaising()) { // TODO: implement settings
                 $text->setAvailable(TRUE);
             }
         }
@@ -337,7 +337,7 @@ class TextService
      *
      * @return Text
      * @throws Exception
-     * @throws TextNotFoundException|\Doctrine\DBAL\Driver\Exception
+     * @throws TextNotFoundException|Exception
      */
     public function prepareText(int $textId): Text
     {
@@ -358,7 +358,7 @@ class TextService
     {
         $text = $this->getText($textId);
 
-        $nextText = $this->textRepository->getNextText($text);
+        $nextText = $this->textRepository->getNextLevel($text);
 
         $result = $this->resultRepository->findOneBy(
             ['user' => $user, 'text' => $text]

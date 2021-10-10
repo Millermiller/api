@@ -10,8 +10,8 @@ Route::get('/state',  [IndexController::class, 'state'])->name('state');
 Route::get('/me',     [IndexController::class, 'getUser'])->name('user-info');
 Route::get('/info',   [IndexController::class, 'getInfo'])->name('site-info');
 
-Route::post('/feedback', [FeedbackController::class, 'store'])->name('subdomain-feedback')->middleware(['addUserName']);
+Route::post('/feedback',    [FeedbackController::class, 'store'])->name('subdomain-feedback')->middleware(['addUserName']);
 
-Route::get('/{language}/read', [ReaderController::class, 'index'])->name('read')->middleware('file');
+Route::get('/read',   ReaderController::class)->name('read')->middleware('file');
 
-Route::get('/{language}/dashboard', [DashboardController::class, 'all']);
+Route::get('/dashboard',    [DashboardController::class, 'all']);

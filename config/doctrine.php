@@ -35,6 +35,7 @@ return [
                 base_path('src/Scandinaver/Learn/Infrastructure/Persistence/Doctrine/Mapping')     => 'Scandinaver\Learn\Domain\Entity',
                 base_path('src/Scandinaver/RBAC/Infrastructure/Persistence/Doctrine/Mapping')      => 'Scandinaver\RBAC\Domain\Entity',
                 base_path('src/Scandinaver/Settings/Infrastructure/Persistence/Doctrine/Mapping')  => 'Scandinaver\Settings\Domain\Entity',
+                base_path('src/Scandinaver/Billing/Infrastructure/Persistence/Doctrine/Mapping')   => 'Scandinaver\Billing\Domain\Entity',
             ],
             'repository'    => Scandinaver\Shared\BaseRepository::class,
             'proxies'       => [
@@ -116,6 +117,7 @@ return [
     */
     'custom_types'               => [
         'json' => Scandinaver\Common\Infrastructure\Persistence\Doctrine\UnicodeJsonType::class,
+        \Ramsey\Uuid\Doctrine\UuidType::NAME => \Ramsey\Uuid\Doctrine\UuidType::class
     ],
     /*
     |--------------------------------------------------------------------------

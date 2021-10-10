@@ -15,13 +15,13 @@ $factory->define(WordAsset::class, function (Faker $faker, array $attributes) {
 
     return [
       //  'id' => random_int(1, 999),
-        'title' => $faker->unique()->text(50),
+        'title' => $attributes['title'] ?? $faker->unique()->text(50),
         'basic' => 1,
         'type' => 1, //array_rand([0, 1, 2, 3]),
         'level' => $level++,
         'favorite' =>  $attributes['favorite'] ?? 0,
         'language' => $attributes['language'],
-        'users' => [$attributes['user']],
+        'owner' => $attributes['user'],
         'cards' => new ArrayCollection($cards)
     ];
 });

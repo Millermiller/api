@@ -25,7 +25,7 @@ class TranslateRepository extends BaseRepository implements TranslateRepositoryI
             "t, field(t.id, ".implode(", ", $ids).") as HIDDEN field"
         )
                  ->from($this->getEntityName(), 't')
-                 ->join('t.word', 'w')
+                 ->join('t.term', 'w')
                  ->where('t.id IN (:ids)')
                  ->setParameter('ids', $ids)
                  ->orderBy('field')

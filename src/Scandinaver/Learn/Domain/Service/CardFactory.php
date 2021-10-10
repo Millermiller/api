@@ -24,10 +24,13 @@ class CardFactory
         $translate = new Translate();
 
         $term->setValue($cardDTO->getTermDTO()->getValue());
+        $term->setIsPublic($cardDTO->getTermDTO()->isPublic());
         $translate->setValue($cardDTO->getTranslateDTO()->getValue());
 
         $translate->setTerm($term);
+        $translate->setSentence(1); //TODO: implement
 
+        $card->setType(Card::TYPE_WORD); //TODO: implement
         $card->setTerm($term);
         $card->setTranslate($translate);
 

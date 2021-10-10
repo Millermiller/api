@@ -13,13 +13,13 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learn\Domain\Permission\Card;
 use Scandinaver\Learn\UI\Command\CreateCardCommand;
 use Scandinaver\Learn\UI\Command\UpdateCardCommand;
 use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
 use Scandinaver\Learn\UI\Query\SearchCardQuery;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class CardController
@@ -31,22 +31,31 @@ class CardController extends Controller
 
     public function index()
     {
+        throw new HttpException('Not implemented');
     }
 
     public function show()
     {
+        throw new HttpException('Not implemented');
     }
 
     /**
-     * @param  string  $language
-     * @param  int     $card
-     * @param  int     $asset
+     * @param  CreateCardRequest  $request
      *
      * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function store(string $language, int $card, int $asset): JsonResponse
+    public function store(CreateCardRequest $request): JsonResponse
     {
+        Gate::authorize(Card::CREATE);
 
+        return $this->execute(new CreateCardCommand(
+            Auth::user(),
+            $request->get('language'),
+            $request->get('word'),
+            $request->get('translate')
+        ),
+            Response::HTTP_CREATED);
     }
 
     /**
@@ -64,23 +73,6 @@ class CardController extends Controller
         return response()->json($this->commandBus->execute(new UpdateCardCommand($card, $request->toArray())));
     }
 
-
-    /**
-     * @param  Language           $language
-     * @param  CreateCardRequest  $request
-     *
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function create(Language $language, CreateCardRequest $request): JsonResponse
-    {
-        Gate::authorize(Card::CREATE);
-
-        return $this->execute(new CreateCardCommand(Auth::user(), $language, $request->get('word'),
-            $request->get('translate')),
-            Response::HTTP_CREATED);
-    }
-
     /**
      * @param  string  $language
      * @param  int     $card
@@ -90,7 +82,7 @@ class CardController extends Controller
      */
     public function destroy(string $language, int $card, int $asset): JsonResponse
     {
-
+        throw new HttpException('Not implemented');
     }
 
     /**

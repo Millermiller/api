@@ -1,0 +1,65 @@
+Scandinaver\Billing\Domain\Entity\Order:
+  type: entity
+  table: "`order`"
+  indexes:
+    user:
+      columns:
+        - user_id
+    payment:
+      columns:
+        - payment_id
+    service_id:
+      columns:
+        - service_id
+  id:
+    id:
+      type: uuid
+      generator:
+        strategy: CUSTOM
+      customIdGenerator:
+        class: Ramsey\Uuid\Doctrine\UuidGenerator
+  fields:
+    createdAt:
+      type: datetime
+      unique: false
+      nullable: false
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    user:
+      targetEntity: Scandinaver\User\Domain\Entity\User
+      cascade: { }
+      fetch: LAZY
+      inversedBy: orders
+      joinColumns:
+        user_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  oneToOne:
+    payment:
+      targetEntity: Scandinaver\Billing\Domain\Entity\Payment
+      cascade: { }
+      fetch: LAZY
+      joinColumns:
+        payment_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    service:
+      targetEntity: Scandinaver\Billing\Domain\Entity\Service
+      cascade: { }
+      fetch: LAZY
+      joinColumns:
+        service_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: { }

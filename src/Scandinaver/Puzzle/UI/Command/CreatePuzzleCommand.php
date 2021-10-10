@@ -11,7 +11,7 @@ use Scandinaver\Shared\Contract\CommandInterface;
  *
  * @package Scandinaver\Puzzle\UI\Command
  *
- * @see     \Scandinaver\Puzzle\Application\Handler\Command\CreatePuzzleHandler
+ * @see     \Scandinaver\Puzzle\Application\Handler\Command\CreatePuzzleCommandHandler
  */
 class CreatePuzzleCommand implements CommandInterface
 {

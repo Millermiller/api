@@ -15,7 +15,8 @@ class ReadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'text' => 'required',
+            'language' => 'required'
         ];
     }
 }

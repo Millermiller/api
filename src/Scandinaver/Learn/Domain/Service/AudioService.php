@@ -80,10 +80,10 @@ class AudioService implements BaseServiceInterface
      *
      * @param  int  $id
      *
-     * @return string
+     * @return Term
      * @throws TermNotFoundException
      */
-    public function parse(int $id): string
+    public function parse(int $id): Term
     {
         $term = $this->getTerm($id);
 

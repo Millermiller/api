@@ -14,29 +14,25 @@ class StringValueObject implements ValueObjectInterface
 {
     protected string $value;
 
-    public function isNull(): bool
+    public function __construct(string $value)
     {
-        return $this->value === null;
+        $this->value = $value;
     }
 
-    public function isSame(ValueObject $object): bool
+    public function __toString(): string
     {
+        return $this->value;
+    }
+
+    public function isSame(ValueObjectInterface $object): bool
+    {
+        if (static::class !== get_class($object)) {
+            return FALSE;
+        }
+
         return $this->toNative() === $object->toNative();
     }
 
-    /**
-     * @param $native
-     *
-     * @return mixed|void
-     */
-    public function fromNative($native)
-    {
-        $this->value = $native;
-    }
-
-    /**
-     * @return string
-     */
     public function toNative(): string
     {
         return $this->value;
