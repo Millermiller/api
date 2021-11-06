@@ -1,0 +1,57 @@
+Scandinaver\Learning\Asset\Domain\Entity\Example:
+  type: entity
+  table: example
+  indexes:
+    card_id:
+      columns:
+        - card_id
+  id:
+    id:
+      type: integer
+      length: null
+      unique: false
+      nullable: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    text:
+      type: text
+      length: 65535
+      unique: false
+      nullable: false
+    value:
+      type: text
+      length: 65535
+      unique: false
+      nullable: false
+    createdAt:
+      type: datetime
+      length: null
+      unique: false
+      nullable: true
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      length: null
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    card:
+      targetEntity: Scandinaver\Learning\Asset\Domain\Entity\Card
+      cascade: [ "persist", "merge" ]
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: examples
+      joinColumns:
+        card_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: { }

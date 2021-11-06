@@ -14,25 +14,25 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Learn\Domain\Entity\Asset;
-use Scandinaver\Learn\Domain\Permission\Card;
-use Scandinaver\Learn\UI\Command\AddCardToAssetCommand;
-use Scandinaver\Learn\UI\Command\AddTermAndTranslateCommand;
-use Scandinaver\Learn\UI\Command\CreateAssetCommand;
-use Scandinaver\Learn\UI\Command\CreateTranslateCommand;
-use Scandinaver\Learn\UI\Command\DeleteAssetCommand;
-use Scandinaver\Learn\UI\Command\DeleteCardFromAssetCommand;
-use Scandinaver\Learn\UI\Command\EditTranslateCommand;
-use Scandinaver\Learn\UI\Command\UpdateAssetCommand;
-use Scandinaver\Learn\UI\Command\UploadAudioCommand;
-use Scandinaver\Learn\UI\Query\AssetForUserByTypeQuery;
-use Scandinaver\Learn\UI\Query\AssetsQuery;
-use Scandinaver\Learn\UI\Query\CardsOfAssetQuery;
-use Scandinaver\Learn\UI\Query\FindAudioQuery;
-use Scandinaver\Learn\UI\Query\GetAssetsByTypeQuery;
-use Scandinaver\Learn\UI\Query\GetExamplesForCardQuery;
-use Scandinaver\Learn\UI\Query\GetTranslatesByTermQuery;
-use Scandinaver\Learn\UI\Query\PersonalAssetsQuery;
+use Scandinaver\Learning\Asset\Domain\Entity\Asset;
+use Scandinaver\Learning\Asset\Domain\Permission\Card;
+use Scandinaver\Learning\Asset\UI\Command\AddCardToAssetCommand;
+use Scandinaver\Learning\Asset\UI\Command\AddTermAndTranslateCommand;
+use Scandinaver\Learning\Asset\UI\Command\CreateAssetCommand;
+use Scandinaver\Learning\Asset\UI\Command\CreateTranslateCommand;
+use Scandinaver\Learning\Asset\UI\Command\DeleteAssetCommand;
+use Scandinaver\Learning\Asset\UI\Command\DeleteCardFromAssetCommand;
+use Scandinaver\Learning\Asset\UI\Command\EditTranslateCommand;
+use Scandinaver\Learning\Asset\UI\Command\UpdateAssetCommand;
+use Scandinaver\Learning\Asset\UI\Command\UploadAudioCommand;
+use Scandinaver\Learning\Asset\UI\Query\AssetForUserByTypeQuery;
+use Scandinaver\Learning\Asset\UI\Query\AssetsQuery;
+use Scandinaver\Learning\Asset\UI\Query\CardsOfAssetQuery;
+use Scandinaver\Learning\Asset\UI\Query\FindAudioQuery;
+use Scandinaver\Learning\Asset\UI\Query\GetAssetsByTypeQuery;
+use Scandinaver\Learning\Asset\UI\Query\GetExamplesForCardQuery;
+use Scandinaver\Learning\Asset\UI\Query\GetTranslatesByTermQuery;
+use Scandinaver\Learning\Asset\UI\Query\PersonalAssetsQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -52,7 +52,7 @@ class AssetController extends Controller
      */
     public function index(HasLanguageRequest $request): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::VIEW);
+        Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
 
         return response()->json([
             'words'     => $this->commandBus->execute(new GetAssetsByTypeQuery($request->get('lang'), Asset::TYPE_WORDS)),
@@ -68,7 +68,7 @@ class AssetController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::SHOW, $id);
+        Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::SHOW, $id);
 
         return $this->execute(new CardsOfAssetQuery(Auth::user(), $id));
     }
@@ -81,7 +81,7 @@ class AssetController extends Controller
      */
     public function store(CreateAssetRequest $request): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::CREATE);
+        Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::CREATE);
 
         $data = $request->toArray();
 
@@ -97,7 +97,7 @@ class AssetController extends Controller
      */
     public function update(int $id, UpdateAssetRequest $request): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::UPDATE, $id);
+        Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::UPDATE, $id);
 
         return $this->execute(new UpdateAssetCommand(Auth::user(), $id, $request->toArray()));
     }
@@ -110,7 +110,7 @@ class AssetController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::DELETE, $id);
+        Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::DELETE, $id);
 
         return $this->execute(new DeleteAssetCommand($id), Response::HTTP_NO_CONTENT);
     }
@@ -225,7 +225,7 @@ class AssetController extends Controller
      */
     public function addCard(int $asset, int $card): JsonResponse
     {
-        Gate::authorize(\Scandinaver\Learn\Domain\Permission\Asset::ADD_CARD);
+        Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::ADD_CARD);
 
         return $this->execute(new AddCardToAssetCommand(Auth::user(), $asset, $card), Response::HTTP_CREATED);
     }

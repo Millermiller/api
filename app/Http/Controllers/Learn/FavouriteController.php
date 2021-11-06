@@ -9,9 +9,9 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Learn\Domain\Permission\Asset;
-use Scandinaver\Learn\UI\Command\CreateFavouriteCommand;
-use Scandinaver\Learn\UI\Command\DeleteFavouriteCommand;
+use Scandinaver\Learning\Asset\Domain\Permission\Asset;
+use Scandinaver\Learning\Asset\UI\Command\CreateFavouriteCommand;
+use Scandinaver\Learning\Asset\UI\Command\DeleteFavouriteCommand;
 
 /**
  * Class FavouriteController

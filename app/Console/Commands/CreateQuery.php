@@ -116,7 +116,7 @@ class CreateQuery extends GeneratorCommand
         $name = str_replace('\\', '/', $name);
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        return "{$path}src/{$this->getDefaultNamespace($name)}/{$this->domain}/{$this->queryPath}/{$name}Query.php";
+        return "{$path}src/{$this->domain}/{$this->queryPath}/{$name}Query.php";
     }
 
     /**
@@ -132,6 +132,7 @@ class CreateQuery extends GeneratorCommand
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
         $handlerClass     = $class . "Handler";
+        $domainNamespace  = str_replace('/', '\\', $this->domain);
 
         return str_replace([
             'DummyClass',
@@ -139,7 +140,7 @@ class CreateQuery extends GeneratorCommand
         ],
             [
                 $class,
-                "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Query\\$handlerClass",
+                "\\{$this->getDefaultNamespace($name)}\\$domainNamespace\\$handlerNamespace\\Query\\$handlerClass",
             ],
             $stub);
     }
@@ -154,7 +155,8 @@ class CreateQuery extends GeneratorCommand
     protected function getNamespace($name): string
     {
         $queryNamespace = str_replace('/', '\\', $this->queryPath);
+        $domainNamespace = str_replace('/', '\\', $this->domain);
 
-        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$queryNamespace";
+        return "{$this->getDefaultNamespace($name)}\\$domainNamespace\\$queryNamespace";
     }
 }

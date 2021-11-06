@@ -1,0 +1,77 @@
+Scandinaver\Learning\Translate\Domain\Entity\Passing:
+  type: entity
+  table: text__passing
+  indexes:
+    user_id:
+      columns:
+        - user_id
+    text_id:
+      columns:
+        - text_id
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    completed:
+      type: boolean
+      unique: false
+      nullable: false
+    percent:
+      type: integer
+      unique: false
+      nullable: false
+    data:
+      type: json
+      nullable: false
+    createdAt:
+      type: datetime
+      unique: false
+      nullable: false
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    subject:
+      targetEntity: Scandinaver\Learning\Translate\Domain\Entity\Text
+      cascade:
+        - persist
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: passings
+      joinColumns:
+        text_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    language:
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        language_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    user:
+      targetEntity: Scandinaver\User\Domain\Entity\User
+      cascade: {  }
+      fetch: LAZY
+      inversedBy: textPassings
+      joinColumns:
+        user_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: {  }

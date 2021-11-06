@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Puzzle\Domain\Entity\Puzzle;
+use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
@@ -46,7 +46,7 @@ class PuzzleControllerTest extends TestCase
      */
     public function testIndex(): void
     {
-        $permission = new Permission(\Scandinaver\Puzzle\Domain\Permission\Puzzle::VIEW);
+        $permission = new Permission(\Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle::VIEW);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -86,7 +86,7 @@ class PuzzleControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        $permission = new Permission(\Scandinaver\Puzzle\Domain\Permission\Puzzle::CREATE);
+        $permission = new Permission(\Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle::CREATE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -123,7 +123,7 @@ class PuzzleControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $permission = new Permission(\Scandinaver\Puzzle\Domain\Permission\Puzzle::DELETE);
+        $permission = new Permission(\Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle::DELETE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -159,7 +159,7 @@ class PuzzleControllerTest extends TestCase
      */
     public function testComplete(): void
     {
-        $permission = new Permission(\Scandinaver\Puzzle\Domain\Permission\Puzzle::COMPLETE);
+        $permission = new Permission(\Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle::COMPLETE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 

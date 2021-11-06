@@ -56,15 +56,16 @@ class RebuildEventsProvider extends GeneratorCommand
 
         $rootPath = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        $events = $this->files->files("$rootPath/src/Scandinaver/$this->domain/Domain/Event");
+        $events = $this->files->files("$rootPath/src/$this->domain/Domain/Event");
 
         $eventBindings = [];
 
+        $domainNamespace = Str::replace('/', '\\', $this->domain);
         foreach ($events as $event) {
             $class        = Str::replaceFirst('.php', '', $event->getFilename());
             $classHandler = "{$class}Listener";
 
-            $eventBindings[] = '\'Scandinaver\\' . $this->domain . '\Domain\Event\\' . $class . '\' => [' . PHP_EOL . "            " . '\'Scandinaver\\' . $this->domain . '\Domain\Event\Listener\\' . $classHandler . '\',' . PHP_EOL . "        " . '],';
+            $eventBindings[] = '\'Scandinaver\\' . $domainNamespace . '\Domain\Event\\' . $class . '\' => [' . PHP_EOL . "            " . '\'Scandinaver\\' . $domainNamespace . '\Domain\Event\Listener\\' . $classHandler . '\',' . PHP_EOL . "        " . '],';
         }
 
         $serviceprovider = $this->buildClass($name);
@@ -89,7 +90,7 @@ class RebuildEventsProvider extends GeneratorCommand
     {
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        return "{$path}src/Scandinaver/{$this->domain}/Application/Provider/{$name}.php";
+        return "{$path}src/{$this->domain}/Application/Provider/{$name}.php";
     }
 
     /**
@@ -102,8 +103,9 @@ class RebuildEventsProvider extends GeneratorCommand
     protected function getNamespace($name): string
     {
         $serviceProviderNamespace = str_replace('/', '\\', $this->serviceProviderPath);
+        $domainNamespace = Str::replace('/', '\\', $this->domain);
 
-        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$serviceProviderNamespace";
+        return "{$this->getDefaultNamespace($name)}\\$domainNamespace\\$serviceProviderNamespace";
     }
 
     /**

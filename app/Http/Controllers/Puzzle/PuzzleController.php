@@ -11,13 +11,13 @@ use App\Http\Requests\Puzzle\UpdatePuzzleRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Puzzle\Domain\Permission\Puzzle;
-use Scandinaver\Puzzle\UI\Command\CreatePuzzleCommand;
-use Scandinaver\Puzzle\UI\Command\DeletePuzzleCommand;
-use Scandinaver\Puzzle\UI\Command\PuzzleCompleteCommand;
-use Scandinaver\Puzzle\UI\Query\PuzzleQuery;
-use Scandinaver\Puzzle\UI\Query\PuzzlesQuery;
-use Scandinaver\Puzzle\UI\Query\UserPuzzlesQuery;
+use Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle;
+use Scandinaver\Learning\Puzzle\UI\Command\CreatePuzzleCommand;
+use Scandinaver\Learning\Puzzle\UI\Command\DeletePuzzleCommand;
+use Scandinaver\Learning\Puzzle\UI\Command\PuzzleCompleteCommand;
+use Scandinaver\Learning\Puzzle\UI\Query\PuzzleQuery;
+use Scandinaver\Learning\Puzzle\UI\Query\PuzzlesQuery;
+use Scandinaver\Learning\Puzzle\UI\Query\UserPuzzlesQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

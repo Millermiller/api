@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Entity\Passing;
+use Scandinaver\Learning\Asset\Domain\Entity\Passing;
 
 /** @var Factory $factory */
 $factory->define(Passing::class,

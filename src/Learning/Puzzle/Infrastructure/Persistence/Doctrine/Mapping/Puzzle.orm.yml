@@ -1,0 +1,59 @@
+Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle:
+  type: entity
+  table: puzzle
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    level:
+      type: integer
+      unique: false
+      nullable: false
+    createdAt:
+      type: datetime
+      unique: false
+      nullable: false
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  embedded:
+    text:
+      class: Scandinaver\Learning\Puzzle\Domain\Entity\PuzzleText
+      column: text_value
+    translate:
+      class: Scandinaver\Learning\Puzzle\Domain\Entity\PuzzleTranslate
+      column: translate_value
+  manyToMany:
+    users:
+      targetEntity: Scandinaver\User\Domain\Entity\User
+      cascade: { }
+      fetch: LAZY
+      mappedBy: puzzles
+      inversedBy: null
+      joinTable: { }
+      orderBy: null
+  manyToOne:
+    language:
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
+      cascade: { }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        language_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: { }

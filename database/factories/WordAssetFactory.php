@@ -3,8 +3,8 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Entity\Card;
-use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\Card;
+use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
 
 /** @var Factory $factory */
 $factory->define(WordAsset::class, function (Faker $faker, array $attributes) {

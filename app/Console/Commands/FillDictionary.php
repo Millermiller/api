@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
-use Scandinaver\Learn\Domain\Entity\Term;
-use Scandinaver\Learn\UI\Command\FillDictionaryCommand;
+use Scandinaver\Learning\Asset\Domain\Contract\Repository\TermRepositoryInterface;
+use Scandinaver\Learning\Asset\Domain\Entity\Term;
+use Scandinaver\Learning\Asset\UI\Command\FillDictionaryCommand;
 use Scandinaver\Shared\CommandBus;
 use Symfony\Component\Console\Helper\ProgressBar;
 

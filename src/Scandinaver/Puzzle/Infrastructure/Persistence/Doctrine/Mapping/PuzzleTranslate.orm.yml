@@ -1,4 +1,0 @@
-Scandinaver\Puzzle\Domain\Entity\PuzzleTranslate:
-  type: embeddable
-  fields:
-    value: { type: string }

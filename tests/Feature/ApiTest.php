@@ -4,7 +4,7 @@
 namespace Tests\Feature;
 
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
 use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 
@@ -40,13 +40,12 @@ class ApiTest extends TestCase
         ]);
     }
 
-    public function testIncorrectLanguageName()
-    {
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->get('/wronglanguagename/assets-mobile');
-        $response->assertStatus(404);
-    }
+   // public function testIncorrectLanguageName()
+   // {
+   //     $this->actingAs($this->user, 'api');
+   //     $response = $this->get('/wronglanguagename/assets-mobile');
+   //     $response->assertStatus(404);
+   // }
 
     /*
         public function testGetAssets()

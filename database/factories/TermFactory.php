@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Entity\Term;
+use Scandinaver\Learning\Asset\Domain\Entity\Term;
 
 /** @var Factory $factory */
 $factory->define(Term::class, function (Faker $faker, array $attributes) {

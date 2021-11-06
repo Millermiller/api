@@ -5,8 +5,8 @@ namespace Tests\Feature\Controllers\Learn;
 use Exception;
 use Mockery\MockInterface;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Learn\Domain\Entity\Passing;
-use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\Passing;
+use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\User\Domain\Entity\User;
@@ -53,13 +53,13 @@ class TestControllerTest extends TestCase
      */
     public function testIndex(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Test::GET_ALL_PASSINGS);
+        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Test::GET_ALL_PASSINGS);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(route('test:all',
             [
-                'language' => self::LANGUAGE_LETTER,
+                'lang' => self::LANGUAGE_LETTER,
             ]));
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
@@ -73,7 +73,7 @@ class TestControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Test::UPDATE_PASSING);
+        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Test::UPDATE_PASSING);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -94,7 +94,7 @@ class TestControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Test::DELETE_PASSING);
+        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Test::DELETE_PASSING);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -111,7 +111,7 @@ class TestControllerTest extends TestCase
      */
     public function testComplete(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Test::COMPLETE);
+        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Test::COMPLETE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 

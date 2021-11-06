@@ -3,10 +3,10 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Entity\Card;
-use Scandinaver\Learn\Domain\Entity\Example;
-use Scandinaver\Learn\Domain\Entity\Term;
-use Scandinaver\Learn\Domain\Entity\Translate;
+use Scandinaver\Learning\Asset\Domain\Entity\Card;
+use Scandinaver\Learning\Asset\Domain\Entity\Example;
+use Scandinaver\Learning\Asset\Domain\Entity\Term;
+use Scandinaver\Learning\Asset\Domain\Entity\Translate;
 
 /** @var Factory $factory */
 $factory->define(Card::class, function (Faker $faker, array $attributes) {

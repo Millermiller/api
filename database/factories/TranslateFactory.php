@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Entity\Translate;
+use Scandinaver\Learning\Asset\Domain\Entity\Translate;
 
 /** @var Factory $factory */
 $factory->define(Translate::class, function (Faker $faker, array $attributes) {
