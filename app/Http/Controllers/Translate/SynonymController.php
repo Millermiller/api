@@ -7,9 +7,9 @@ namespace App\Http\Controllers\Translate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Translate\CreateSynonymRequest;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Translate\UI\Command\CreateSynonymCommand;
-use Scandinaver\Translate\UI\Command\DeleteSynonymCommand;
-use Scandinaver\Translate\UI\Query\GetSynonymsQuery;
+use Scandinaver\Learning\Translate\UI\Command\CreateSynonymCommand;
+use Scandinaver\Learning\Translate\UI\Command\DeleteSynonymCommand;
+use Scandinaver\Learning\Translate\UI\Query\GetSynonymsQuery;
 
 /**
  * Class SynonymController

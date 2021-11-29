@@ -4,11 +4,11 @@
 namespace Tests\Feature\Controllers\Sub\Frontend;
 
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Learn\Domain\Entity\Asset;
-use Scandinaver\Learn\Domain\Entity\Card;
-use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
-use Scandinaver\Learn\Domain\Entity\Passing;
-use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\Asset;
+use Scandinaver\Learning\Asset\Domain\Entity\Card;
+use Scandinaver\Learning\Asset\Domain\Entity\FavouriteAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\Passing;
+use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
 use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;
 

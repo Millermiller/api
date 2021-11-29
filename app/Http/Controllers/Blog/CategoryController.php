@@ -43,7 +43,7 @@ class CategoryController extends Controller
      */
     public function show(int $categoryId): JsonResponse
     {
-        Gate::authorize(Category::SHOW, $categoryId);
+        //Gate::authorize(Category::SHOW, $categoryId);
 
         return $this->execute(new CategoryQuery($categoryId));
     }

@@ -13,11 +13,11 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Scandinaver\Learn\Domain\Permission\Card;
-use Scandinaver\Learn\UI\Command\CreateCardCommand;
-use Scandinaver\Learn\UI\Command\UpdateCardCommand;
-use Scandinaver\Learn\UI\Command\UploadCsvSentencesCommand;
-use Scandinaver\Learn\UI\Query\SearchCardQuery;
+use Scandinaver\Learning\Asset\Domain\Permission\Card;
+use Scandinaver\Learning\Asset\UI\Command\CreateCardCommand;
+use Scandinaver\Learning\Asset\UI\Command\UpdateCardCommand;
+use Scandinaver\Learning\Asset\UI\Command\UploadCsvSentencesCommand;
+use Scandinaver\Learning\Asset\UI\Query\SearchCardQuery;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 

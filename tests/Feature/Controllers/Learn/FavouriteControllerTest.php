@@ -3,13 +3,13 @@
 namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
-use Scandinaver\Common\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Learn\Domain\Entity\Card;
-use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
-use Scandinaver\Learn\Domain\Entity\Passing;
-use Scandinaver\Learn\Domain\Entity\WordAsset;
-use Scandinaver\Learn\Domain\Permission\Asset;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Learning\Asset\Domain\Entity\Card;
+use Scandinaver\Learning\Asset\Domain\Entity\FavouriteAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\Passing;
+use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Permission\Asset;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\User\Domain\Entity\User;
 use Tests\TestCase;

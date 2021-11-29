@@ -1,0 +1,106 @@
+Scandinaver\Learning\Translate\Domain\Entity\Text:
+  type: entity
+  table: text
+  indexes:
+    language_id:
+      columns:
+        - language_id
+    title:
+      columns:
+        - title
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    level:
+      type: integer
+      unique: false
+      nullable: false
+    title:
+      type: string
+      length: 255
+      unique: false
+      nullable: false
+    description:
+      type: text
+      unique: false
+      nullable: true
+    text:
+      type: text
+      unique: false
+      nullable: false
+    translate:
+      type: text
+      unique: false
+      nullable: false
+    published:
+      type: boolean
+      unique: false
+      nullable: false
+      options:
+        default: true
+    createdAt:
+      type: datetime
+      unique: false
+      nullable: false
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+    image:
+      type: string
+      length: 255
+      unique: false
+      nullable: true
+  manyToOne:
+    language:
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        language_id:
+          referencedColumnName: id
+          onDelete: CASCADE
+      orphanRemoval: false
+  oneToMany:
+    tooltips:
+      targetEntity: Scandinaver\Learning\Translate\Domain\Entity\Tooltip
+      cascade:
+        - persist
+      fetch: LAZY
+      mappedBy: text
+      inversedBy: null
+      orphanRemoval: true
+      orderBy: null
+    dictionary:
+      targetEntity: Scandinaver\Learning\Translate\Domain\Entity\DictionaryItem
+      cascade:
+        - persist
+      fetch: LAZY
+      mappedBy: text
+      orphanRemoval: true
+      orderBy: null
+    passings:
+      targetEntity: Scandinaver\Learning\Translate\Domain\Entity\Passing
+      cascade:
+        - remove
+      fetch: LAZY
+      mappedBy: subject
+      inversedBy: null
+      orphanRemoval: false
+      orderBy: null
+  lifecycleCallbacks: {  }

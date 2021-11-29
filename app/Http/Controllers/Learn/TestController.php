@@ -11,11 +11,11 @@ use App\Http\Requests\Learn\UpdatePassingRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Learn\Domain\Permission\Test;
-use Scandinaver\Learn\UI\Command\CompleteTestCommand;
-use Scandinaver\Learn\UI\Command\DeletePassingCommand;
-use Scandinaver\Learn\UI\Command\UpdatePassingCommand;
-use Scandinaver\Learn\UI\Query\GetAllPassingsQuery;
+use Scandinaver\Learning\Asset\Domain\Permission\Test;
+use Scandinaver\Learning\Asset\UI\Command\CompleteTestCommand;
+use Scandinaver\Learning\Asset\UI\Command\DeletePassingCommand;
+use Scandinaver\Learning\Asset\UI\Command\UpdatePassingCommand;
+use Scandinaver\Learning\Asset\UI\Query\GetAllPassingsQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

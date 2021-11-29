@@ -78,7 +78,7 @@ class CreateCommand extends GeneratorCommand
         $name = str_replace('\\', '/', $name);
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        return "{$path}src/{$this->getDefaultNamespace($name)}/{$this->domain}/{$this->commandPath}/{$name}Command.php";
+        return "{$path}src/{$this->domain}/{$this->commandPath}/{$name}Command.php";
     }
 
     /**
@@ -121,6 +121,7 @@ class CreateCommand extends GeneratorCommand
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
         $handlerClass     = $class . "Handler";
+        $domainNamespace  = str_replace('/', '\\', $this->domain);
 
         return str_replace([
             'DummyClass',
@@ -128,7 +129,7 @@ class CreateCommand extends GeneratorCommand
         ],
             [
                 $class,
-                "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass",
+                "\\{$this->getDefaultNamespace($name)}\\$domainNamespace\\$handlerNamespace\\Command\\$handlerClass",
             ],
             $stub);
     }
@@ -143,7 +144,8 @@ class CreateCommand extends GeneratorCommand
     protected function getNamespace($name): string
     {
         $commandNamespace = str_replace('/', '\\', $this->commandPath);
+        $domainNamespace = str_replace('/', '\\', $this->domain);
 
-        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$commandNamespace";
+        return "{$this->getDefaultNamespace($name)}\\$domainNamespace\\$commandNamespace";
     }
 }

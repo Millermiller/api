@@ -55,14 +55,12 @@ class PostControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response        = $this->get(route('post:all'));
-        $decodedResponse = json_decode($response->getContent());
+        $decodedResponse = json_decode($response->getContent(), TRUE);
 
         self::assertCount($this->postCount, $decodedResponse);
 
         $response->assertJsonStructure(
-            [
-                \Tests\Responses\Post::response(),
-            ]
+                \Tests\Responses\PostCollection::response(),
         );
     }
 
@@ -86,7 +84,7 @@ class PostControllerTest extends TestCase
 
         $response->assertJsonFragment(
             [
-                'id' => $testPostId,
+                'id' => (string)$testPostId,
             ]
         );
     }

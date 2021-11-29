@@ -8,12 +8,12 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Learn\Domain\Contract\Repository\AssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\SentenceAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Contract\Repository\WordAssetRepositoryInterface;
-use Scandinaver\Learn\Domain\Entity\Asset;
-use Scandinaver\Learn\Domain\Entity\SentenceAsset;
-use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learning\Asset\Domain\Contract\Repository\SentenceAssetRepositoryInterface;
+use Scandinaver\Learning\Asset\Domain\Contract\Repository\WordAssetRepositoryInterface;
+use Scandinaver\Learning\Asset\Domain\Entity\Asset;
+use Scandinaver\Learning\Asset\Domain\Entity\SentenceAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
 use Scandinaver\User\Domain\Entity\{User};
 use Tests\TestCase;
 

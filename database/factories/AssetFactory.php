@@ -4,14 +4,15 @@ namespace Database\Factories;
 
 use Faker\Generator as Faker;
 use LaravelDoctrine\ORM\Testing\Factory;
-use Scandinaver\Learn\Domain\Entity\Asset;
+use Scandinaver\Learning\Asset\Domain\Entity\Asset;
+use Scandinaver\Learning\Asset\Domain\Entity\Card;
 
 /** @var Factory $factory */
 $factory->define(Asset::class, function (Faker $faker, array $attributes) {
 
     static $level = 1;
 
-    $cards = entity(\Scandinaver\Learn\Domain\Entity\Card::class, 2)->create(['language' => $attributes['language']])->toArray();
+    $cards = entity(Card::class, 2)->create(['language' => $attributes['language']])->toArray();
 
     return [
       //  'id' => random_int(1, 999),

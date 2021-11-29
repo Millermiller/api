@@ -4,10 +4,10 @@ namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Learn\Domain\Entity\Card;
-use Scandinaver\Learn\Domain\Entity\FavouriteAsset;
-use Scandinaver\Learn\Domain\Entity\Passing;
-use Scandinaver\Learn\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\Card;
+use Scandinaver\Learning\Asset\Domain\Entity\FavouriteAsset;
+use Scandinaver\Learning\Asset\Domain\Entity\Passing;
+use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\User\Domain\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,7 +62,7 @@ class CardControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Card::CREATE);
+        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Card::CREATE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -85,7 +85,7 @@ class CardControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $permission = new Permission(\Scandinaver\Learn\Domain\Permission\Card::UPDATE);
+        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Card::UPDATE);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 

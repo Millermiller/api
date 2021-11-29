@@ -6,13 +6,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\HasLanguageRequest;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
-use Scandinaver\Learn\UI\Query\AssetsCountByLanguageQuery;
-use Scandinaver\Learn\UI\Query\AssetsCountQuery;
-use Scandinaver\Learn\UI\Query\AudioCountByLanguageQuery;
-use Scandinaver\Learn\UI\Query\TextsCountByLanguageQuery;
-use Scandinaver\Learn\UI\Query\TextsCountQuery;
-use Scandinaver\Learn\UI\Query\TermsCountByLanguageQuery;
-use Scandinaver\Learn\UI\Query\TermsCountQuery;
+use Scandinaver\Learning\Asset\UI\Query\AssetsCountByLanguageQuery;
+use Scandinaver\Learning\Asset\UI\Query\AssetsCountQuery;
+use Scandinaver\Learning\Asset\UI\Query\AudioCountByLanguageQuery;
+use Scandinaver\Learning\Asset\UI\Query\TextsCountByLanguageQuery;
+use Scandinaver\Learning\Asset\UI\Query\TextsCountQuery;
+use Scandinaver\Learning\Asset\UI\Query\TermsCountByLanguageQuery;
+use Scandinaver\Learning\Asset\UI\Query\TermsCountQuery;
 use Scandinaver\User\UI\Query\UsersQuery;
 
 /**

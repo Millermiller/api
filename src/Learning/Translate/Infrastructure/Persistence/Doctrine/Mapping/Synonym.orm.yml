@@ -1,0 +1,49 @@
+Scandinaver\Learning\Translate\Domain\Entity\Synonym:
+  type: entity
+  table: text__synonym
+  indexes:
+    word_id:
+      columns:
+        - dictionary_item_id
+        - value
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    value:
+      type: string
+      length: 255
+      unique: false
+      nullable: false
+    createdAt:
+      type: datetime
+      unique: false
+      nullable: false
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    word:
+      targetEntity: Scandinaver\Learning\Translate\Domain\Entity\DictionaryItem
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: synonyms
+      joinColumns:
+        dictionary_item_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: {  }

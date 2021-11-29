@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use Elasticsearch\Client;
 use Illuminate\Console\Command;
-use Scandinaver\Learn\Domain\Contract\Repository\TermRepositoryInterface;
-use Scandinaver\Learn\Domain\Entity\Word;
+use Scandinaver\Learning\Asset\Domain\Contract\Repository\TermRepositoryInterface;
+use Scandinaver\Learning\Asset\Domain\Entity\Term;
 
 /**
  * Class ReindexElastic
@@ -30,7 +30,7 @@ class ReindexElastic extends Command
 
     private Client $elasticsearch;
 
-    private TermRepositoryInterface $wordRepository;
+    private TermRepositoryInterface $termRepository;
 
     /**
      * Create a new command instance.
@@ -44,7 +44,7 @@ class ReindexElastic extends Command
 
         $this->elasticsearch = $elasticsearch;
 
-        $this->wordRepository = $wordRepository;
+        $this->termRepository = $wordRepository;
     }
 
     /**
@@ -54,8 +54,8 @@ class ReindexElastic extends Command
     {
         $this->info('Indexing all articles. This might take a while...');
 
-        /** @var Word[] $words */
-        $words = $this->wordRepository->findAll();
+        /** @var Term[] $words */
+        $words = $this->termRepository->findAll();
 
         foreach ($words as $word) {
             $this->elasticsearch->index([

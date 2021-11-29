@@ -45,14 +45,12 @@ class IntroControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response        = $this->get(route('intro:all'));
-        $decodedResponse = json_decode($response->getContent());
+        $decodedResponse = json_decode($response->getContent(), TRUE);
 
-        self::assertCount($this->introNumber, $decodedResponse);
+        self::assertCount($this->introNumber, $decodedResponse['data']);
 
         $response->assertJsonStructure(
-            [
-                \Tests\Responses\Intro::response(),
-            ]
+                \Tests\Responses\IntroCollection::response(),
         );
     }
 
@@ -125,7 +123,7 @@ class IntroControllerTest extends TestCase
 
         $response->assertJsonFragment(
             [
-                'id' => $testIntroId,
+                'id' => (string)$testIntroId,
             ]
         );
     }

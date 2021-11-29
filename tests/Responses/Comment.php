@@ -4,6 +4,8 @@
 namespace Tests\Responses;
 
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class Comment
  *
@@ -12,12 +14,27 @@ namespace Tests\Responses;
 class Comment implements ResponseInterface
 {
 
+    #[ArrayShape([
+        'data' => "array",
+    ])]
     public static function response(): array
     {
         return [
-            'id',
-            'text',
-            'user' => User::response(),
+            'data' => [
+                'id',
+                'type',
+                'attributes' => [
+                    'text',
+                ],
+                "relationships" => [
+                    "user" => [
+                        "data" => [
+                            "type",
+                            "id",
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

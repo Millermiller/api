@@ -15,6 +15,7 @@ return [
     |
     */
     'default'  => env('LOG_CHANNEL', 'stack'),
+    'deprecations' => env('LOG_DEPRECATIONS_CHANNEL', 'stack'),
     /*
     |--------------------------------------------------------------------------
     | Log Channels

@@ -93,7 +93,7 @@ class CreateEvent extends GeneratorCommand
         $name = str_replace('\\', '/', $name);
         $path = Str::replaceFirst('app', '', $this->laravel['path']);
 
-        return "{$path}src/{$this->getDefaultNamespace($name)}/{$this->domain}/{$this->eventPath}/{$name}.php";
+        return "{$path}src/{$this->domain}/{$this->eventPath}/{$name}.php";
     }
 
     /**
@@ -106,8 +106,9 @@ class CreateEvent extends GeneratorCommand
     protected function getNamespace($name): string
     {
         $eventNamespace = str_replace('/', '\\', $this->eventPath);
+        $domainNamespace = str_replace('/', '\\', $this->domain);
 
-        return "{$this->getDefaultNamespace($name)}\\$this->domain\\$eventNamespace";
+        return "{$this->getDefaultNamespace($name)}\\$domainNamespace\\$eventNamespace";
     }
 
     /**
@@ -123,12 +124,13 @@ class CreateEvent extends GeneratorCommand
         $class            = str_replace($this->getNamespace($name) . '\\', '', $name);
         $handlerNamespace = str_replace('/', '\\', 'Application/Handler');
         $handlerClass     = str_replace('Command', 'Handler', $class);
+        $domainNamespace  = str_replace('/', '\\', $this->domain);
 
         return str_replace([
             'DummyClass',
             'DummyHandlerClass',
         ],
-            [$class, "\\{$this->getDefaultNamespace($name)}\\$this->domain\\$handlerNamespace\\Command\\$handlerClass"],
+            [$class, "\\{$this->getDefaultNamespace($name)}\\$domainNamespace\\$handlerNamespace\\Command\\$handlerClass"],
             $stub);
     }
 }

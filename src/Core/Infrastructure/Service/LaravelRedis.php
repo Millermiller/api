@@ -1,0 +1,80 @@
+<?php
+
+
+namespace Scandinaver\Core\Infrastructure\Service;
+
+use Illuminate\Support\Facades\Redis;
+use Scandinaver\Core\Domain\Contract\RedisInterface;
+
+/**
+ * Class LaravelRedis
+ *
+ * @package Scandinaver\Common\Infrastructure\Service
+ */
+class LaravelRedis implements RedisInterface
+{
+
+    /**
+     * @param  string  $key
+     * @param  string  $data
+     */
+    public function set(string $key, string $data)
+    {
+        Redis::connection()->set($key, $data);
+    }
+
+    public function get(string $key): ?string
+    {
+        return Redis::connection()->get($key);
+    }
+
+    /**
+     * @param  string  $key
+     * @param  string  $field
+     * @param  string  $value
+     */
+    public function hset(string $key, string $field, string $value)
+    {
+        Redis::connection()->hset($key, $field, $value);
+    }
+
+    /**
+     * @param  string  $key
+     * @param  string  $field
+     *
+     * @return mixed|void
+     */
+    public function hdel(string $key, string $field)
+    {
+        Redis::connection()->hdel($key, $field);
+    }
+
+    public function hget(string $key, string $field): ?string
+    {
+        return Redis::connection()->hget($key, $field);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function keys()
+    {
+        return Redis::connection()->keys('*');
+    }
+
+    /**
+     * @return array
+     */
+    public function all(): array
+    {
+        $result = [];
+
+        $keys = $this->keys();
+
+        foreach ($keys as $key) {
+            $result[$key] = Redis::connection()->hgetall($key);
+        }
+
+        return $result;
+    }
+}
