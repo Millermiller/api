@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Resources;
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Blog\Domain\Entity\Category;
 
@@ -14,6 +15,7 @@ use Scandinaver\Blog\Domain\Entity\Category;
 class CategoryTransformer extends TransformerAbstract
 {
 
+    #[ArrayShape(['id' => "int", 'title' => "string"])]
     public function transform(Category $category): array
     {
         return [

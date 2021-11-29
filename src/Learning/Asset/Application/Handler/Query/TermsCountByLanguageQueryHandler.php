@@ -4,8 +4,8 @@
 namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 
 use Scandinaver\Learning\Asset\UI\Query\TermCountByLanguageQuery;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class TermsCountByLanguageQueryHandler
@@ -14,6 +14,7 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class TermsCountByLanguageQueryHandler extends AbstractHandler
 {
+
     public function __construct()
     {
         parent::__construct();

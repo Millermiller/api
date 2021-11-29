@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Role

@@ -4,9 +4,11 @@
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\Common\Domain\Permission\Log;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
 use Scandinaver\Common\UI\Query\LogQuery;
@@ -22,14 +24,18 @@ class LogController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
-     * @throws AuthorizationException
+     * @throws AuthorizationException|JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Log::VIEW);
 
-        return $this->execute(new LogsQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new LogsQuery($params));
     }
 
     /**

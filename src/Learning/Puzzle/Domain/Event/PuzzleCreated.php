@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Puzzle\Domain\Event;
 
 use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 
 /**
  * Class PuzzleCreatedEvent

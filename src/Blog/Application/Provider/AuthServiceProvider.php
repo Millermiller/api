@@ -8,7 +8,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Scandinaver\Blog\Domain\Permission\Category;
 use Scandinaver\Blog\Domain\Permission\Comment;
 use Scandinaver\Blog\Domain\Permission\Post;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\User\Domain\Entity\User;
 
 /**
@@ -49,7 +49,7 @@ class AuthServiceProvider extends ServiceProvider
         /* COMMENT */
         Gate::define(Comment::VIEW, fn(?UserInterface $user) => $user === NULL || $user->can(Comment::VIEW));
 
-        Gate::define(Comment::SHOW, fn(?UserInterface $user, int $id) => $user->can(Comment::SHOW));
+        Gate::define(Comment::SHOW, fn(?UserInterface $user, int $id) => $user === NULL || $user->can(Comment::SHOW));
 
         Gate::define(Comment::CREATE, fn(UserInterface $user) => $user->can(Comment::CREATE));
 

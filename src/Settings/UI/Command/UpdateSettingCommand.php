@@ -3,26 +3,22 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Settings\Application\Handler\Command\UpdateSettingCommandHandler;
 
 /**
  * Class UpdateSettingCommand
  *
  * @package Scandinaver\Settings\UI\Command
- *
- * @see \Scandinaver\Settings\Application\Handler\Command\UpdateSettingCommandHandler
  */
+#[Command(UpdateSettingCommandHandler::class)]
 class UpdateSettingCommand implements CommandInterface
 {
-    private int $id;
 
-    private array $data;
-
-    public function __construct(int $id, array $data)
+    public function __construct(private int $id, private array $data)
     {
-        $this->id = $id;
-        $this->data = $data;
     }
 
     public function getId(): int

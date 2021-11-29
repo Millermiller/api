@@ -4,7 +4,8 @@
 namespace Scandinaver\User\UI\Resource;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use League\Fractal\Resource\{Collection, Primitive};
+use JetBrains\PhpStorm\ArrayShape;
+use League\Fractal\Resource\{Collection};
 use League\Fractal\TransformerAbstract;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
@@ -20,6 +21,15 @@ use Scandinaver\User\Domain\Entity\User;
 class UserTransformer extends TransformerAbstract
 {
 
+    protected $availableIncludes = [
+        'roles',
+        'permissions',
+    ];
+
+    protected $defaultIncludes = [
+
+    ];
+
     private AvatarServiceInterface $avatarService;
 
     /**
@@ -30,35 +40,35 @@ class UserTransformer extends TransformerAbstract
         $this->avatarService = app()->make(AvatarServiceInterface::class);
     }
 
-    protected $availableIncludes = [
-        'roles',
-        'permissions',
-    ];
 
-    protected $defaultIncludes = [
-        'avatar',
-        'permissionsSimple'
-    ];
-
+    #[ArrayShape([
+        'id'                => "int",
+        'login'             => "string",
+        'email'             => "string",
+        'active'            => "bool",
+        'active_to'         => "string",
+        'permissionsSimple' => "string[]",
+        'avatar'            => "null|string",
+    ])]
     public function transform(User $user): array
     {
         return [
-            'id'        => $user->getId(),
-            'login'     => $user->getLogin(),
-            'email'     => $user->getEmail(),
-            'active'    => $user->isActive(),
-            'active_to' => $user->getRaisedTo(),
+            'id'                => $user->getId(),
+            'login'             => $user->getLogin(),
+            'email'             => $user->getEmail(),
+            'active'            => $user->isActive(),
+            'active_to'         => $user->getRaisedTo()->format('Y-m-d H:i:s'),
+            'permissionsSimple' => $user->getAllPermissions()->map(fn(Permission $permission) => $permission->getSlug())->toArray(),
+            'avatar'            => $this->getAvatar($user),
         ];
     }
 
-    public function includePermissionsSimple(User $user): Primitive
-    {
-        $permissions = $user->getAllPermissions();
-
-        $permissionsList = $permissions->map(fn(Permission $permission) => $permission->getSlug());
-
-        return $this->primitive($permissionsList->toArray());
-    }
+    //public function includePermissionsSimple(User $user): Primitive
+    //{
+    //    $permissions = $user->getAllPermissions();
+    //    $permissionsList = $permissions->map(fn(Permission $permission) => $permission->getSlug());
+    //    return $this->primitive($permissionsList->toArray());
+    //}
 
     public function includeRoles(User $user): Collection
     {
@@ -74,14 +84,14 @@ class UserTransformer extends TransformerAbstract
         return $this->collection($permissions, new PermissionTransformer());
     }
 
-    public function includeAvatar(User $user): Primitive
+    private function getAvatar(User $user): ?string
     {
         $photo = $user->getPhoto();
 
         if ($photo === NULL) {
-            return $this->primitive($this->avatarService->getAvatar($user));
+            return $this->avatarService->getAvatar($user);
         }
 
-        return $this->primitive(asset('/uploads/u/' . $photo));
+        return NULL;
     }
 }

@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learning\Asset\Domain\DTO;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Entity\ExampleDTO;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class CardDTO

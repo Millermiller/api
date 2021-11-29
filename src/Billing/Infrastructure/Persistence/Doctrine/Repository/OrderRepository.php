@@ -4,7 +4,7 @@
 namespace Scandinaver\Billing\Infrastructure\Persistence\Doctrine\Repository;
 
 use Scandinaver\Billing\Domain\Contract\Repository\OrderRepositoryInterface;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class OrderRepository

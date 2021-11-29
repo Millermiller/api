@@ -3,26 +3,22 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\FillDictionaryCommandHandler;
 
 /**
  * Class FillDictionaryCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\FillDictionaryCommandHandler
  */
+#[Command(FillDictionaryCommandHandler::class)]
 class FillDictionaryCommand implements CommandInterface
 {
-    private string $language;
 
-    private int $termId;
-
-    public function __construct(string $language, int $termId)
+    public function __construct(private string $language, private int $termId)
     {
-        $this->language = $language;
-        $this->termId     = $termId;
     }
 
     public function getLanguage(): string

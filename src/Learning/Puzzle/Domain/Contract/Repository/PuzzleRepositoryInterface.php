@@ -3,10 +3,10 @@
 
 namespace Scandinaver\Learning\Puzzle\Domain\Contract\Repository;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface PuzzleRepositoryInterface

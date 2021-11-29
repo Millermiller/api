@@ -3,15 +3,16 @@
 
 namespace Scandinaver\Blog\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Blog\Application\Handler\Query\CommentsQueryHandler;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
  * Class CommentsQuery
  *
  * @package Scandinaver\Blog\UI\Query
- *
- * @see     \Scandinaver\Blog\Application\Handler\Query\CommentsQueryHandler
  */
+#[Query(CommentsQueryHandler::class)]
 class CommentsQuery implements QueryInterface
 {
 

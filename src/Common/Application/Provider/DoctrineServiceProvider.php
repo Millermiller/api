@@ -17,7 +17,7 @@ use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\IntroRepos
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\LanguageRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\LogRepository;
 use Scandinaver\Common\Infrastructure\Persistence\Doctrine\Repository\FeedbackRepository;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Class DoctrineServiceProvider

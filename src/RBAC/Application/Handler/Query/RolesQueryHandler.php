@@ -7,8 +7,8 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\RolesQuery;
 use Scandinaver\RBAC\UI\Resource\RoleTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class RolesQueryHandler
@@ -18,17 +18,13 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class RolesQueryHandler extends AbstractHandler
 {
 
-    private RBACService $service;
-
-    public function __construct(RBACService $service)
+    public function __construct(private RBACService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  RolesQuery|BaseCommandInterface  $query
+     * @param  RolesQuery|  $query
      */
     public function handle(BaseCommandInterface $query): void
     {

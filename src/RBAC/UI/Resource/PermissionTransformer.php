@@ -4,6 +4,8 @@
 namespace Scandinaver\RBAC\UI\Resource;
 
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\RBAC\Domain\Entity\Permission;
@@ -20,6 +22,13 @@ class PermissionTransformer extends TransformerAbstract
         'group',
     ];
 
+    #[Pure]
+    #[ArrayShape([
+        'id'          => "int",
+        'name'        => "string",
+        'slug'        => "string",
+        'description' => "null|string",
+    ])]
     public function transform(Permission $permission): array
     {
         return [

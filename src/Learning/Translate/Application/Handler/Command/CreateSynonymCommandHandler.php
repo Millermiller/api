@@ -5,11 +5,11 @@ namespace Scandinaver\Learning\Translate\Application\Handler\Command;
 
 use Exception;
 use League\Fractal\Resource\Item;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Learning\Translate\Domain\Service\TextService;
 use Scandinaver\Learning\Translate\UI\Command\CreateSynonymCommand;
 use Scandinaver\Learning\Translate\UI\Resource\SynonymTransformer;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateSynonymCommandHandler
@@ -19,20 +19,17 @@ use Scandinaver\Learning\Translate\UI\Resource\SynonymTransformer;
 class CreateSynonymCommandHandler extends AbstractHandler
 {
 
-    private TextService $textService;
-
-    public function __construct(TextService $textService)
+    public function __construct(private TextService $textService)
     {
         parent::__construct();
-        $this->textService = $textService;
     }
 
     /**
-     * @param  CreateSynonymCommand|BaseCommandInterface  $command
+     * @param  CreateSynonymCommand  $command
      *
      * @throws Exception
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $synonym = $this->textService->createSynonym($command->buildDTO());
 

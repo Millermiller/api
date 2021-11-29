@@ -5,7 +5,7 @@ namespace Scandinaver\Learning\Translate\Domain\DTO;
 
 use App\Helpers\StringHelper;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Translate\Domain\Entity\Sentence;
 
 /**

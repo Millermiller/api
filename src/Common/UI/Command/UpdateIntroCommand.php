@@ -3,26 +3,22 @@
 
 namespace Scandinaver\Common\UI\Command;
 
+use Scandinaver\Common\Application\Handler\Command\UpdateIntroCommandHandler;
 use Scandinaver\Common\Domain\DTO\IntroDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateIntroCommand
  *
  * @package Scandinaver\Common\UI\Command
- * @see     \Scandinaver\Common\Application\Handler\Command\UpdateIntroCommandHandler
  */
+#[Command(UpdateIntroCommandHandler::class)]
 class UpdateIntroCommand implements CommandInterface
 {
 
-    private int $introId;
-    private array $data;
-
-    public function __construct(int $introId, array $data)
+    public function __construct(private int $introId, private array $data)
     {
-        $this->introId = $introId;
-        $this->data    = $data;
     }
 
     public function getIntroId(): int
@@ -30,7 +26,7 @@ class UpdateIntroCommand implements CommandInterface
         return $this->introId;
     }
 
-    public function buildDTO(): DTO
+    public function buildDTO(): IntroDTO
     {
         return IntroDTO::fromArray($this->data);
     }

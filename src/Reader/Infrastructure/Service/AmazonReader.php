@@ -8,7 +8,7 @@ use Aws\Polly\PollyClient;
 use GuzzleHttp\Psr7\Stream;
 use Scandinaver\Common\Domain\Contract\HashInterface;
 use Scandinaver\Common\Domain\Contract\RedisInterface;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;

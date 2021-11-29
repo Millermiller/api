@@ -3,27 +3,23 @@
 
 namespace Scandinaver\Billing\UI\Command;
 
+use Scandinaver\Billing\Application\Handler\Command\UpdateOrderCommandHandler;
 use Scandinaver\Billing\Domain\DTO\OrderDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateOrderCommand
  *
  * @package Scandinaver\Billing\UI\Command
- *
- * @see \Scandinaver\Billing\Application\Handler\Command\UpdateOrderCommandHandler
  */
+#[Command(UpdateOrderCommandHandler::class)]
 class UpdateOrderCommand implements CommandInterface
 {
 
-    private int $id;
-    private array $data;
-
-    public function __construct(int $id, array $data)
+    public function __construct(private int $id, private array $data)
     {
 
-        $this->id = $id;
-        $this->data = $data;
     }
 
     public function getId(): int

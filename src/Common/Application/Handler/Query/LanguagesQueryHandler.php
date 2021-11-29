@@ -7,8 +7,8 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\UI\Query\LanguagesQuery;
 use Scandinaver\Common\UI\Resource\LanguageTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class LanguagesQueryHandler
@@ -17,26 +17,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class LanguagesQueryHandler extends AbstractHandler
 {
-    private LanguageService $languageService;
 
-    /**
-     * LanguagesHandler constructor.
-     *
-     * @param  LanguageService  $languageService
-     */
-    public function __construct(LanguageService $languageService)
+    public function __construct(private LanguageService $service)
     {
         parent::__construct();
-
-        $this->languageService = $languageService;
     }
 
     /**
-     * @param  LanguagesQuery|BaseCommandInterface  $query
+     * @param  LanguagesQuery  $query
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $languages = $this->languageService->all($query->getUser());
+        $languages = $this->service->all($query->getUser());
 
         $this->resource = new Collection($languages, new LanguageTransformer());
     }

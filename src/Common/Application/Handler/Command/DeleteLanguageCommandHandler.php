@@ -6,8 +6,9 @@ namespace Scandinaver\Common\Application\Handler\Command;
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\UI\Command\DeleteLanguageCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 
 /**
  * Class DeleteLanguageCommandHandler
@@ -17,21 +18,19 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class DeleteLanguageCommandHandler extends AbstractHandler
 {
 
-    private LanguageService $languageService;
-
-    public function __construct(LanguageService $languageService)
+    public function __construct(private LanguageService $service)
     {
         parent::__construct();
-
-        $this->languageService = $languageService;
     }
 
     /**
-     * @param  DeleteLanguageCommand|BaseCommandInterface  $command
+     * @param  DeleteLanguageCommand  $command
+     *
+     * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $this->languageService->deleteLanguage($command->getId());
+        $this->service->deleteLanguage($command->getId());
 
         $this->resource = new NullResource();
     }

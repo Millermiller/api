@@ -42,14 +42,12 @@ class LogControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response        = $this->get(route('log.index'));
-        $decodedResponse = json_decode($response->getContent());
+        $decodedResponse = json_decode($response->getContent(), TRUE);
 
-        self::assertCount($this->logsNumber, $decodedResponse);
+        self::assertCount($this->logsNumber, $decodedResponse['data']);
 
         $response->assertJsonStructure(
-            [
-                \Tests\Responses\Log::response(),
-            ]
+            \Tests\Responses\LogCollection::response(),
         );
     }
 

@@ -8,8 +8,8 @@ use Scandinaver\RBAC\Domain\Exception\PermissionNotFoundException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionQuery;
 use Scandinaver\RBAC\UI\Resource\PermissionTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class PermissionQueryHandler
@@ -19,17 +19,13 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class PermissionQueryHandler extends AbstractHandler
 {
 
-    private RBACService $service;
-
-    public function __construct(RBACService $service)
+    public function __construct(private RBACService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  PermissionQuery|BaseCommandInterface  $query
+     * @param  PermissionQuery  $query
      *
      * @throws PermissionNotFoundException
      */

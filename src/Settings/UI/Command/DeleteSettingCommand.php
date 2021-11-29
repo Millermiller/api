@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Settings\Application\Handler\Command\DeleteSettingCommandHandler;
 
 /**
  * Class DeleteSettingCommand
  *
  * @package Scandinaver\Settings\UI\Command
- *
- * @see \Scandinaver\Settings\Application\Handler\Command\DeleteSettingCommandHandler
  */
+#[Command(DeleteSettingCommandHandler::class)]
 class DeleteSettingCommand implements CommandInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

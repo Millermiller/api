@@ -3,7 +3,7 @@
 
 namespace App\Helpers;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 
 /**
  * Class Auth

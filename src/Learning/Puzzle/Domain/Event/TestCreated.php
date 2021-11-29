@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Puzzle\Domain\Event;
 
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 
 /**
  * Class TestCreated

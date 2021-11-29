@@ -4,12 +4,11 @@
 namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
-use League\Fractal\Resource\Primitive;
 use Scandinaver\Learning\Asset\UI\Query\AssetsCountQuery;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Translate\Domain\Service\TextService;
+use Scandinaver\Learning\Translate\Domain\Service\TextService;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
+
 
 /**
  * Class TextsCountQueryHandler
@@ -18,17 +17,14 @@ use Scandinaver\Translate\Domain\Service\TextService;
  */
 class TextsCountQueryHandler extends AbstractHandler
 {
-    private TextService $textService;
 
-    public function __construct(TextService $textService)
+    public function __construct(private TextService $textService)
     {
         parent::__construct();
-
-        $this->textService = $textService;
     }
 
     /**
-     * @param  AssetsCountQuery|BaseCommandInterface  $query
+     * @param  AssetsCountQuery  $query
      */
     public function handle(BaseCommandInterface $query): void
     {

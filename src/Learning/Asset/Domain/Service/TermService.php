@@ -11,7 +11,7 @@ use Scandinaver\Learning\Asset\Domain\Contract\Repository\TranslateRepositoryInt
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\TermRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Entity\Translate;
 use Scandinaver\Learning\Asset\Domain\Entity\Term;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 
 /**
  * Class TermService

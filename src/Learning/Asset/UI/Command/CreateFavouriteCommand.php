@@ -3,27 +3,23 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\CreateFavouriteCommandHandler;
 
 /**
  * Class CreateFavouriteCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CreateFavouriteCommandHandler
  */
+#[Command(CreateFavouriteCommandHandler::class)]
 class CreateFavouriteCommand implements CommandInterface
 {
-    private UserInterface $user;
 
-    private int $card;
-
-    public function __construct(UserInterface $user, int $card)
+    public function __construct(private UserInterface $user, private int $card)
     {
-        $this->user = $user;
-        $this->card = $card;
     }
 
     public function getUser(): UserInterface

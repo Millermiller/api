@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Contract\Repository;
 
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface TermRepositoryInterface

@@ -3,13 +3,13 @@
 
 namespace Scandinaver\Blog\Domain\Service;
 
-use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
+use JetBrains\PhpStorm\ArrayShape;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
+use Scandinaver\Blog\Domain\Entity\Post;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
-use Scandinaver\Blog\Domain\Entity\Post;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
@@ -20,20 +20,10 @@ use Scandinaver\User\Domain\Exception\UserNotFoundException;
 class BlogService implements BaseServiceInterface
 {
 
-    private PostRepositoryInterface $postRepository;
-
-    private CategoryRepositoryInterface $categoryRepository;
-
-    private PostFactory $postFactory;
-
     public function __construct(
-        PostRepositoryInterface $postRepository,
-        CategoryRepositoryInterface $categoryRepository,
-        PostFactory $postFactory
+        private PostRepositoryInterface $postRepository,
+        private PostFactory $postFactory
     ) {
-        $this->postRepository     = $postRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->postFactory        = $postFactory;
     }
 
     public function all(): array

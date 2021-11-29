@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Command\DeletePostCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeletePostCommandHandler
@@ -18,23 +18,19 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class DeletePostCommandHandler extends AbstractHandler
 {
 
-    private BlogService $blogService;
-
-    public function __construct(BlogService $blogService)
+    public function __construct(private BlogService $service)
     {
         parent::__construct();
-
-        $this->blogService = $blogService;
     }
 
     /**
-     * @param  DeletePostCommand|BaseCommandInterface  $command
+     * @param  DeletePostCommand  $command
      *
      * @throws PostNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $this->blogService->deletePost($command->getPostId());
+        $this->service->deletePost($command->getPostId());
 
         $this->resource = new NullResource();
     }

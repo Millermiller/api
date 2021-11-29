@@ -6,8 +6,8 @@ namespace Scandinaver\Common\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class AbstractLearnItem

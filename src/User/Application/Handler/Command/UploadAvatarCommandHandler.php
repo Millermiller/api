@@ -5,8 +5,8 @@ namespace Scandinaver\User\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
 use Scandinaver\Common\Domain\Service\FileService;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\User\UI\Command\UploadAvatarCommand;
 
 /**
@@ -17,19 +17,15 @@ use Scandinaver\User\UI\Command\UploadAvatarCommand;
 class UploadAvatarCommandHandler extends AbstractHandler
 {
 
-    private FileService $service;
-
-    public function __construct(FileService $service)
+    public function __construct(private FileService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  UploadAvatarCommand|BaseCommandInterface  $command
+     * @param  UploadAvatarCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $path = $this->service->uploadAvatar($command->getUser(), $command->getPhoto());
 

@@ -4,13 +4,11 @@
 namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 
 use League\Fractal\Resource\Item;
-use League\Fractal\Resource\Primitive;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 use Scandinaver\Learning\Asset\UI\Query\AssetsCountQuery;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class AssetsCountQueryHandler
@@ -19,17 +17,14 @@ use Scandinaver\Shared\Contract\CommandInterface;
  */
 class AssetsCountQueryHandler extends AbstractHandler
 {
-    private AssetService $assetService;
 
-    public function __construct(AssetService $assetService)
+    public function __construct(private AssetService $assetService)
     {
         parent::__construct();
-
-        $this->assetService = $assetService;
     }
 
     /**
-     * @param  AssetsCountQuery|BaseCommandInterface  $query
+     * @param  AssetsCountQuery  $query
      *
      * @throws LanguageNotFoundException
      */

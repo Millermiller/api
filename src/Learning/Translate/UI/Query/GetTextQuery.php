@@ -3,21 +3,21 @@
 
 namespace Scandinaver\Learning\Translate\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Learning\Translate\Application\Handler\Query\GetTextQueryHandler;
 
 /**
  * Class GetTextQuery
  *
- * @see     \Scandinaver\Translate\Application\Handler\Query\GetTextQueryHandler
- * @package Scandinaver\Translate\UI\Query
+ * @package Scandinaver\Learning\Translate\UI\Query
  */
+#[Query(GetTextQueryHandler::class)]
 class GetTextQuery implements QueryInterface
 {
-    private int $text;
 
-    public function __construct(int $text)
+    public function __construct(private int $text)
     {
-        $this->text = $text;
     }
 
     public function getText(): int

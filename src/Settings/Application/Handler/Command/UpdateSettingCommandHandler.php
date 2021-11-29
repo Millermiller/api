@@ -8,8 +8,8 @@ use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Command\UpdateSettingCommand;
 use Scandinaver\Settings\UI\Resource\SettingTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateSettingCommandHandler
@@ -19,21 +19,17 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class UpdateSettingCommandHandler extends AbstractHandler
 {
 
-    private SettingsService $settingsService;
-
-    public function __construct(SettingsService $settingsService)
+    public function __construct(private SettingsService $settingsService)
     {
         parent::__construct();
-
-        $this->settingsService = $settingsService;
     }
 
     /**
-     * @param  UpdateSettingCommand|BaseCommandInterface  $command
+     * @param  UpdateSettingCommand  $command
      *
      * @throws SettingNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $setting = $this->settingsService->updateSetting($command->getId(), $command->getData());
 

@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Domain\Contract\Repository;
 
 use Scandinaver\Blog\Domain\Entity\Comment;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface CommentRepositoryInterface

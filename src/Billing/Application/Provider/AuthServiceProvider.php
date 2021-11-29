@@ -5,7 +5,7 @@ namespace Scandinaver\Billing\Application\Provider;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Billing\Domain\Permission\Order;
 use Scandinaver\Billing\Domain\Permission\Payment;
 use Scandinaver\Billing\Domain\Permission\Plan;

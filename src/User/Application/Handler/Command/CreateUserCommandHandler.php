@@ -5,8 +5,8 @@ namespace Scandinaver\User\Application\Handler\Command;
 
 use Exception;
 use League\Fractal\Resource\Item;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Command\CreateUserCommand;
 use Scandinaver\User\UI\Resource\UserTransformer;
@@ -19,21 +19,17 @@ use Scandinaver\User\UI\Resource\UserTransformer;
 class CreateUserCommandHandler extends AbstractHandler
 {
 
-    private UserService $service;
-
-    public function __construct(UserService $service)
+    public function __construct(private UserService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  CreateUserCommand|BaseCommandInterface  $command
+     * @param  CreateUserCommand  $command
      *
      * @throws Exception
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $user = $this->service->registration($command->buildDTO());
 

@@ -8,8 +8,8 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 use Scandinaver\Learning\Asset\UI\Query\AssetsQuery;
 use Scandinaver\Learning\Asset\UI\Resource\AssetTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class AssetsQueryHandler
@@ -18,17 +18,14 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class AssetsQueryHandler extends AbstractHandler
 {
-    private AssetService $assetService;
 
-    public function __construct(AssetService $assetService)
+    public function __construct(private AssetService $assetService)
     {
         parent::__construct();
-
-        $this->assetService = $assetService;
     }
 
     /**
-     * @param  AssetsQuery|BaseCommandInterface  $query
+     * @param  AssetsQuery  $query
      *
      * @throws Exception
      */

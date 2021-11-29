@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Billing\Application\Handler\Query;
 
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 use Scandinaver\Billing\UI\Query\PlanQuery;
 
 /**

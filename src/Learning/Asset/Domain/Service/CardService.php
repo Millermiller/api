@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\CardRepositoryInterface;
@@ -30,7 +30,7 @@ use Scandinaver\Learning\Asset\Domain\Entity\Card;
 use Scandinaver\Learning\Asset\Domain\Entity\Example;
 use Scandinaver\Learning\Asset\Domain\Entity\Translate;
 use Scandinaver\Learning\Asset\Domain\Entity\Term;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 use Storage;
 
 /**
@@ -219,7 +219,7 @@ class CardService implements BaseServiceInterface
     /**
      * @param  int  $id
      *
-     * @return Collection|Example[]
+     * @return array<Example>
      * @throws CardNotFoundException
      */
     public function getExamples(int $id): array

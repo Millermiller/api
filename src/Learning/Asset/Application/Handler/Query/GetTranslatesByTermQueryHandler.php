@@ -7,8 +7,8 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\Learning\Asset\Domain\Service\TermService;
 use Scandinaver\Learning\Asset\UI\Query\GetTranslatesByTermQuery;
 use Scandinaver\Learning\Asset\UI\Resource\TranslateTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class GetTranslatesByWordHandler
@@ -17,17 +17,14 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class GetTranslatesByTermQueryHandler extends AbstractHandler
 {
-    private TermService $termService;
 
-    public function __construct(TermService $termService)
+    public function __construct(private TermService $termService)
     {
         parent::__construct();
-
-        $this->termService = $termService;
     }
 
     /**
-     * @param  GetTranslatesByTermQuery|BaseCommandInterface  $query
+     * @param  GetTranslatesByTermQuery  $query
      */
     public function handle(BaseCommandInterface $query): void
     {

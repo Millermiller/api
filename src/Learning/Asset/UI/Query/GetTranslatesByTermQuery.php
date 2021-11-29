@@ -3,22 +3,21 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Learning\Asset\Application\Handler\Query\GetTranslatesByTermQueryHandler;
 
 /**
  * Class GetTranslatesByTermQuery
  *
  * @package Scandinaver\Learn\UI\Query
- *
- * @see     \Scandinaver\Learn\Application\Handler\Query\GetTranslatesByTermQueryHandler
  */
+#[Query(GetTranslatesByTermQueryHandler::class)]
 class GetTranslatesByTermQuery implements QueryInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

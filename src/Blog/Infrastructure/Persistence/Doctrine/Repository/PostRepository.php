@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Infrastructure\Persistence\Doctrine\Repository;
 
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class PostRepository

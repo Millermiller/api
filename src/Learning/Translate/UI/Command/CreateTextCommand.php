@@ -3,25 +3,22 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Learning\Translate\Application\Handler\Command\CreateTextCommandHandler;
 use Scandinaver\Learning\Translate\Domain\DTO\TextDTO;
 
 /**
  * Class CreateTextCommand
  *
- * @package Scandinaver\Translate\UI\Command
- *
- * @see     \Scandinaver\Translate\Application\Handler\Command\CreateTextCommandHandler
+ * @package Scandinaver\Learning\Translate\UI\Command
  */
+#[Command(CreateTextCommandHandler::class)]
 class CreateTextCommand implements CommandInterface
 {
 
-    private array $data;
-
-    public function __construct(array $data)
+    public function __construct(private array $data)
     {
-        $this->data = $data;
     }
 
     public function buildDTO(): TextDTO

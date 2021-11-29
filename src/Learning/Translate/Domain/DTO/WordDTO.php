@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Translate\Domain\DTO;
 
 
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class WordDTO

@@ -4,10 +4,10 @@
 namespace Scandinaver\Learning\Asset\Infrastructure\Persistence\Doctrine\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Entity\{Asset, Passing};
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class ResultRepository

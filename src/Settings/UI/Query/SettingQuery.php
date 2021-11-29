@@ -3,22 +3,21 @@
 
 namespace Scandinaver\Settings\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Settings\Application\Handler\Query\SettingQueryHandler;
 
 /**
  * Class SettingQuery
  *
  * @package Scandinaver\Settings\UI\Query
- *
- * @see \Scandinaver\Settings\Application\Handler\Query\SettingQueryHandler
  */
+#[Query(SettingQueryHandler::class)]
 class SettingQuery implements QueryInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

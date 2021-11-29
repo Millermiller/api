@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Entity;
 
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class ExampleDTO

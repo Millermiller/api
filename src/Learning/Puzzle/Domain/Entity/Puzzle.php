@@ -4,13 +4,12 @@
 namespace Scandinaver\Learning\Puzzle\Domain\Entity;
 
 use DateTime;
-use Scandinaver\Common\Domain\Contract\LearnItemInterface;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\LearnItemInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\HasLevel;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Puzzle\Domain\Event\PuzzleCreated;
-use Scandinaver\Shared\AggregateRoot;
-use Scandinaver\Shared\EventTrait;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Puzzle
@@ -19,7 +18,6 @@ use Scandinaver\Shared\EventTrait;
  */
 class Puzzle extends AggregateRoot implements LearnItemInterface
 {
-    use EventTrait;
     use HasLevel;
 
     private int $id;

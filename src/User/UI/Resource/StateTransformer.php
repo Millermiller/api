@@ -3,6 +3,8 @@
 
 namespace Scandinaver\User\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
@@ -29,9 +31,11 @@ class StateTransformer extends TransformerAbstract
         'puzzles',
         'intro',
         'languages',
-        'currentLanguage'
+        'currentLanguage',
     ];
 
+    #[Pure]
+    #[ArrayShape(['site' => "string"])]
     public function transform(State $stateDTO): array
     {
         return [

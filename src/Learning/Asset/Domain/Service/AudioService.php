@@ -12,8 +12,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\AudioFileCantParsedException;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Exception\TermNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Entity\Term;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class AudioService

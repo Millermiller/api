@@ -3,24 +3,22 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\RBAC\Application\Handler\Command\DeleteRoleCommandHandler;
 
 /**
  * Class DeleteRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
- *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\DeleteRoleCommandHandler
  */
+#[Command(DeleteRoleCommandHandler::class)]
 class DeleteRoleCommand implements CommandInterface
 {
 
-    private int $id;
-
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

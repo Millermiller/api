@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Blog\Domain\DTO;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class PostDTO

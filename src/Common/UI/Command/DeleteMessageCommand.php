@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Common\Application\Handler\Command\DeleteMessageCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class DeleteMessageCommand
  *
  * @package Scandinaver\Common\UI\Command
- *
- * @see     \Scandinaver\Common\Application\Handler\Command\DeleteMessageCommandHandler
  */
+#[Command(DeleteMessageCommandHandler::class)]
 class DeleteMessageCommand implements CommandInterface
 {
-    private int $messageId;
 
-    public function __construct(int $messageId)
+    public function __construct(private int $messageId)
     {
-        $this->messageId = $messageId;
     }
 
     public function getMessageId(): int

@@ -3,18 +3,20 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Translate\Application\Handler\Command\UpdateDescriptionCommandHandler;
 
 /**
  * Class UpdateDescriptionCommand
  *
- * @package Scandinaver\Translate\UI\Command
- *
- * @see     \Scandinaver\Translate\Application\Handler\Command\UpdateDescriptionCommandHandler
+ * @package Scandinaver\Learning\Translate\UI\Command
  */
+#[Command(UpdateDescriptionCommandHandler::class)]
 class UpdateDescriptionCommand implements CommandInterface
 {
+
     private int $text;
 
     public function __construct(int $text)

@@ -6,11 +6,10 @@ namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\CardService;
-use Scandinaver\Learning\Asset\UI\Resource\CardTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Learning\Asset\UI\Query\SearchCardQuery;
+use Scandinaver\Learning\Asset\UI\Resource\CardTransformer;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class SearchCardQueryHandler
@@ -19,17 +18,14 @@ use Scandinaver\Learning\Asset\UI\Query\SearchCardQuery;
  */
 class SearchCardQueryHandler extends AbstractHandler
 {
-    private CardService $service;
 
-    public function __construct(CardService $service)
+    public function __construct(private CardService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  SearchCardQuery|BaseCommandInterface  $query
+     * @param  SearchCardQuery  $query
      *
      * @throws LanguageNotFoundException
      */

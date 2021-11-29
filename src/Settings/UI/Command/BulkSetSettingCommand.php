@@ -3,18 +3,22 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Settings\Application\Handler\Command\BulkSetSettingCommandHandler;
 
 /**
  * Class BulkSetSettingCommand
  *
  * @package Scandinaver\Settings\UI\Command
  *
- * @see \Scandinaver\Settings\Application\Handler\Command\BulkSetSettingCommandHandler
+ * @see     \Scandinaver\Settings\Application\Handler\Command\BulkSetSettingCommandHandler
  */
+#[Command(BulkSetSettingCommandHandler::class)]
 class BulkSetSettingCommand implements CommandInterface
 {
+
     private array $data;
 
     public function __construct(array $data)

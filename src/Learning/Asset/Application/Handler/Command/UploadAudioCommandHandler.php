@@ -8,8 +8,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\TermNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\AudioService;
 use Scandinaver\Learning\Asset\UI\Command\UploadAudioCommand;
 use Scandinaver\Learning\Asset\UI\Resource\TermTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UploadAudioCommandHandler
@@ -18,21 +18,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class UploadAudioCommandHandler extends AbstractHandler
 {
-    private AudioService $audioService;
 
-    public function __construct(AudioService $audioService)
+    public function __construct(private AudioService $audioService)
     {
         parent::__construct();
-
-        $this->audioService = $audioService;
     }
 
     /**
-     * @param  UploadAudioCommand|BaseCommandInterface  $command
+     * @param  UploadAudioCommand  $command
      *
      * @throws TermNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $term = $this->audioService->upload($command->getTermId(), $command->getFile());
 

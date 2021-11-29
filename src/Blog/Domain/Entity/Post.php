@@ -8,9 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Blog\Domain\Event\PostCreated;
 use Scandinaver\Blog\Domain\Event\PostDeleted;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Post

@@ -3,16 +3,17 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Blog\Application\Handler\Command\DeleteCategoryCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class DeleteCategoryCommand
  *
  * @package Scandinaver\Blog\UI\Command
- *
- * @see     \Scandinaver\Blog\Application\Handler\Command\DeleteCategoryHandler
  */
+#[Command(DeleteCategoryCommandHandler::class)]
 class DeleteCategoryCommand implements CommandInterface
 {
 

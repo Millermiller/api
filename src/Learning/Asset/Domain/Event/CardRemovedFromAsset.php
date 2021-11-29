@@ -5,7 +5,7 @@ namespace Scandinaver\Learning\Asset\Domain\Event;
 
 use Scandinaver\Learning\Asset\Domain\Entity\Asset;
 use Scandinaver\Learning\Asset\Domain\Entity\Card;
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 
 /**
  * Class CardRemovedFromAsset

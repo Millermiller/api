@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Service;
 
-use Scandinaver\Common\Infrastructure\Service\Container;
+use Scandinaver\Core\Infrastructure\Service\Container;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Entity\Card;

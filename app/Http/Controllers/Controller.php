@@ -9,8 +9,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Scandinaver\Shared\{CommandBus, Contract\BaseCommandInterface};
 use Psr\Log\LoggerInterface;
+use Scandinaver\Core\Domain\CommandBus;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -29,24 +30,12 @@ class Controller extends BaseController
 
     private LoggerInterface $logger;
 
-    /**
-     * Controller constructor.
-     *
-     * @param  CommandBus       $commandBus
-     * @param  LoggerInterface  $logger
-     */
     public function __construct(CommandBus $commandBus, LoggerInterface $logger)
     {
         $this->commandBus = $commandBus;
         $this->logger = $logger;
     }
 
-    /**
-     * @param  BaseCommandInterface  $command
-     * @param  int                   $code
-     *
-     * @return JsonResponse
-     */
     protected function execute(BaseCommandInterface $command, int $code = 200): JsonResponse
     {
         try {

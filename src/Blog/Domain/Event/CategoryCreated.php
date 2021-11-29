@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\Domain\Event;
 
 use Scandinaver\Blog\Domain\Entity\Category;
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 
 /**
  * Class CategoryCreated

@@ -5,7 +5,7 @@ namespace Scandinaver\Learning\Asset\Application\Provider;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Learning\Asset\Domain\Permission\Asset;
 use Scandinaver\Learning\Asset\Domain\Permission\Card;
 use Scandinaver\Learning\Asset\Domain\Permission\Test;

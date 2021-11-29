@@ -8,8 +8,8 @@ use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Command\UpdateIntroCommand;
 use Scandinaver\Common\UI\Resource\IntroTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateIntroCommandHandler
@@ -19,21 +19,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class UpdateIntroCommandHandler extends AbstractHandler
 {
 
-    private IntroService $service;
-
-    public function __construct(IntroService $service)
+    public function __construct(private IntroService $service)
     {
         parent::__construct();
 
-        $this->service = $service;
     }
 
     /**
-     * @param  UpdateIntroCommand|BaseCommandInterface  $command
+     * @param  UpdateIntroCommand  $command
      *
      * @throws IntroNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $intro = $this->service->update($command->getIntroId(), $command->buildDTO());
 

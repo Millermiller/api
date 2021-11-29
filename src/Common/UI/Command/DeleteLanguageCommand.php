@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Common\Application\Handler\Command\DeleteLanguageCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class DeleteLanguageCommand
  *
  * @package Scandinaver\Common\UI\Command
- *
- * @see \Scandinaver\Common\Application\Handler\Command\DeleteLanguageCommandHandler
  */
+#[Command(DeleteLanguageCommandHandler::class)]
 class DeleteLanguageCommand implements CommandInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

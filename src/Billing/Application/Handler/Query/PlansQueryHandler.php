@@ -6,8 +6,8 @@ namespace Scandinaver\Billing\Application\Handler\Query;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Billing\Domain\Service\PlanService;
 use Scandinaver\Billing\UI\Resource\PlanTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 use Scandinaver\Billing\UI\Query\PlansQuery;
 
 /**

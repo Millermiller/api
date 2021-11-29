@@ -39,12 +39,10 @@ class CategoryControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response        = $this->get(route('category:all'));
-        $decodedResponse = json_decode($response->getContent());
-        self::assertCount($this->categoryCount, $decodedResponse);
+        $decodedResponse = json_decode($response->getContent(), TRUE);
+        self::assertCount($this->categoryCount, $decodedResponse['data']);
         $response->assertJsonStructure(
-            [
-                \Tests\Responses\Category::response(),
-            ]
+                \Tests\Responses\CategoryCollection::response()
         );
     }
 
@@ -53,7 +51,7 @@ class CategoryControllerTest extends TestCase
      */
     public function testShow(): void
     {
-        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::SHOW);
+        $permission = entity(Permission::class, 1)->create(['name' => \Scandinaver\Blog\Domain\Permission\Category::SHOW]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -66,7 +64,7 @@ class CategoryControllerTest extends TestCase
 
         $response->assertJsonFragment(
             [
-                'id' => $testCategoryId,
+                'id' => (string)$testCategoryId,
             ]
         );
     }
@@ -76,7 +74,7 @@ class CategoryControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::CREATE);
+        $permission = entity(Permission::class, 1)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Category::CREATE]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -102,7 +100,7 @@ class CategoryControllerTest extends TestCase
      */
     public function testCreateDuplicate(): void
     {
-        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::CREATE);
+        $permission = entity(Permission::class, 1)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Category::CREATE]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -122,7 +120,7 @@ class CategoryControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::UPDATE);
+        $permission = entity(Permission::class, 1)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Category::UPDATE]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -150,9 +148,9 @@ class CategoryControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::DELETE);
+        $permission = entity(Permission::class, 1)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Category::DELETE]);
         $this->user->allow($permission);
-        $permission = new Permission(\Scandinaver\Blog\Domain\Permission\Category::SHOW);
+        $permission = entity(Permission::class, 1)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Category::SHOW]);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');

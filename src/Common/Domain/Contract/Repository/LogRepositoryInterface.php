@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Common\Domain\Contract\Repository;
 
-use Scandinaver\Common\Domain\Entity\Log;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface LogRepositoryInterface
  *
- * @extends BaseRepositoryInterface<Log>
+ * @extends BaseRepositoryInterface<\Scandinaver\Common\Domain\Entity\Log>
+ *
  * @package Scandinaver\Common\Domain\Contract
  */
 interface LogRepositoryInterface extends BaseRepositoryInterface

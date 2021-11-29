@@ -5,8 +5,8 @@ namespace Scandinaver\User\Application\Handler\Query;
 
 use Exception;
 use League\Fractal\Resource\Item;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Query\GetStateQuery;
 use Scandinaver\User\UI\Resource\StateTransformer;
@@ -29,7 +29,7 @@ class GetStateQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetStateQuery|BaseCommandInterface  $query
+     * @param  GetStateQuery  $query
      *
      * @throws Exception
      */

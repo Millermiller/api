@@ -4,11 +4,12 @@
 namespace Scandinaver\Learning\Puzzle\Application\Handler\Query;
 
 use League\Fractal\Resource\Collection;
+use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Learning\Puzzle\UI\Query\UserPuzzlesQuery;
 use Scandinaver\Learning\Puzzle\UI\Resource\PuzzleTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class UserPuzzlesQueryHandler
@@ -17,17 +18,16 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class UserPuzzlesQueryHandler extends AbstractHandler
 {
-    private PuzzleService $puzzleService;
 
-    public function __construct(PuzzleService $puzzleService)
+    public function __construct(private PuzzleService $puzzleService)
     {
         parent::__construct();
-
-        $this->puzzleService = $puzzleService;
     }
 
     /**
-     * @param  UserPuzzlesQuery|BaseCommandInterface  $query
+     * @param  UserPuzzlesQuery  $query
+     *
+     * @throws LanguageNotFoundException
      */
     public function handle(BaseCommandInterface $query): void
     {

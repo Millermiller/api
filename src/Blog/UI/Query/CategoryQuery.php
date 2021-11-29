@@ -3,23 +3,21 @@
 
 namespace Scandinaver\Blog\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Blog\Application\Handler\Query\CategoryQueryHandler;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
  * Class CategoryQuery
  *
  * @package Scandinaver\Blog\UI\Query
- *
- * @see     \Scandinaver\Blog\Application\Handler\Query\CategoryHandler
  */
+#[Query(CategoryQueryHandler::class)]
 class CategoryQuery implements QueryInterface
 {
 
-    private int $id;
-
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

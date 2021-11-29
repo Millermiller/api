@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\UI\Resource;
 
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Common\Domain\Entity\Feedback;
 
@@ -15,6 +16,12 @@ use Scandinaver\Common\Domain\Entity\Feedback;
 class FeedbackTransformer extends TransformerAbstract
 {
 
+    #[ArrayShape([
+        'id'        => "int",
+        'name'      => "string",
+        'message'   => "string",
+        'createdAt' => "string",
+    ])]
     public function transform(Feedback $feedback): array
     {
         return [

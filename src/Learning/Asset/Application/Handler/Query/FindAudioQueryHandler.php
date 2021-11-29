@@ -8,8 +8,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\TermNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\AudioService;
 use Scandinaver\Learning\Asset\UI\Query\FindAudioQuery;
 use Scandinaver\Learning\Asset\UI\Resource\TermTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class FindAudioQueryHandler
@@ -18,17 +18,14 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class FindAudioQueryHandler extends AbstractHandler
 {
-    private AudioService $audioService;
 
-    public function __construct(AudioService $audioService)
+    public function __construct(private AudioService $audioService)
     {
         parent::__construct();
-
-        $this->audioService = $audioService;
     }
 
     /**
-     * @param  FindAudioQuery|BaseCommandInterface  $query
+     * @param  FindAudioQuery  $query
      *
      * @throws TermNotFoundException
      */

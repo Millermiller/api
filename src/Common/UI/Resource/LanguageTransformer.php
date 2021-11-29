@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Common\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Common\Domain\Entity\Language;
 
@@ -14,6 +15,15 @@ use Scandinaver\Common\Domain\Entity\Language;
 class LanguageTransformer extends TransformerAbstract
 {
 
+    #[ArrayShape([
+        'id'          => "int",
+        'title'       => "string",
+        'description' => "null|string",
+        'letter'      => "string",
+        'flag'        => "string",
+        'image'       => "string",
+        'active'      => "bool",
+    ])]
     public function transform(Language $languageDTO): array
     {
         return [
@@ -23,7 +33,7 @@ class LanguageTransformer extends TransformerAbstract
             'letter'      => $languageDTO->getLetter(),
             'flag'        => asset($languageDTO->getFlag()),
             'image'       => asset($languageDTO->getImage()),
-            'active'      => $languageDTO->isActive()
+            'active'      => $languageDTO->isActive(),
         ];
     }
 }

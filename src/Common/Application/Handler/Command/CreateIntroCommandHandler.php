@@ -7,8 +7,8 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
 use Scandinaver\Common\UI\Resource\IntroTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateIntroCommandHandler
@@ -17,21 +17,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class CreateIntroCommandHandler extends AbstractHandler
 {
-    private IntroService $introService;
 
-    public function __construct(IntroService $introService)
+    public function __construct(private IntroService $service)
     {
         parent::__construct();
-
-        $this->introService = $introService;
     }
 
     /**
-     * @param  CreateIntroCommand|BaseCommandInterface  $command
+     * @param  CreateIntroCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $intro = $this->introService->create($command->buildDTO());
+        $intro = $this->service->create($command->buildDTO());
 
         $this->resource = new Item($intro, new IntroTransformer());
     }

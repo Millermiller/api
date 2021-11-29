@@ -37,15 +37,13 @@ class LanguageControllerTest extends TestCase
     public function testIndex(): void
     {
         $response        = $this->get(route('languages:all'));
-        $decodedResponse = json_decode($response->getContent());
+        $decodedResponse = json_decode($response->getContent(), TRUE);
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
-        self::assertCount($this->languagesNumber, $decodedResponse);
+        self::assertCount($this->languagesNumber, $decodedResponse['data']);
 
         $response->assertJsonStructure(
-            [
-                \Tests\Responses\Language::response(),
-            ]
+                \Tests\Responses\LanguageCollection::response(),
         );
     }
 

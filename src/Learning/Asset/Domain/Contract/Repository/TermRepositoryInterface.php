@@ -5,7 +5,7 @@ namespace Scandinaver\Learning\Asset\Domain\Contract\Repository;
 
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Entity\Term;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface TermRepositoryInterface

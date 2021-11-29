@@ -3,24 +3,22 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\RBAC\Application\Handler\Command\CreatePermissionCommandHandler;
 use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreatePermissionGroupCommand
  *
  * @package Scandinaver\RBAC\UI\Command
- *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\CreatePermissionGroupCommandHandler
  */
+#[Command(CreatePermissionCommandHandler::class)]
 class CreatePermissionGroupCommand implements CommandInterface
 {
 
-    private array $data;
-
-    public function __construct(array $data)
+    public function __construct(private array $data)
     {
-        $this->data = $data;
     }
 
     public function buildDTO(): PermissionGroupDTO

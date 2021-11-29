@@ -8,8 +8,8 @@ use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Query\IntroQuery;
 use Scandinaver\Common\UI\Resource\IntroTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class IntroQueryHandler
@@ -18,28 +18,20 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class IntroQueryHandler extends AbstractHandler
 {
-    private IntroService $introService;
 
-    /**
-     * MessagesHandler constructor.
-     *
-     * @param  IntroService  $introService
-     */
-    public function __construct(IntroService $introService)
+    public function __construct(private IntroService $service)
     {
         parent::__construct();
-
-        $this->introService = $introService;
     }
 
     /**
-     * @param  IntroQuery|BaseCommandInterface  $query
+     * @param  IntroQuery  $query
      *
      * @throws IntroNotFoundException
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $intro = $this->introService->one($query->getId());
+        $intro = $this->service->one($query->getId());
 
         $this->resource = new Item($intro, new IntroTransformer());
     }

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Billing\Domain\Contract\Repository;
 
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 use Scandinaver\Billing\Domain\Entity\Plan;
 
 /**

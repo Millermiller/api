@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Blog\UI\Resources;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Blog\Domain\Entity\Comment;
@@ -20,6 +22,8 @@ class CommentTransformer extends TransformerAbstract
         'user',
     ];
 
+    #[Pure]
+    #[ArrayShape(['id' => "int", 'text' => "null|string"])]
     public function transform(Comment $comment): array
     {
         return [

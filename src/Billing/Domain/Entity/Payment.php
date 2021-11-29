@@ -5,8 +5,8 @@ namespace Scandinaver\Billing\Domain\Entity;
 
 use DateTime;
 use Ramsey\Uuid\UuidInterface;
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\UuidTrait;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\UuidTrait;
 
 /**
  * Class Payment

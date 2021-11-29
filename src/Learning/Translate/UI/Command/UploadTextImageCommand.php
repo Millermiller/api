@@ -4,33 +4,27 @@
 namespace Scandinaver\Learning\Translate\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Translate\Application\Handler\Command\UploadTextImageCommandHandler;
 
 /**
  * Class UploadTextImageCommand
  *
- * @package Scandinaver\Translate\UI\Command
- *
- * @see \Scandinaver\Translate\Application\Handler\Command\UploadTextImageCommandHandler
+ * @package Scandinaver\Learning\Translate\UI\Command
  */
+#[Command(UploadTextImageCommandHandler::class)]
 class UploadTextImageCommand implements CommandInterface
 {
 
-    private int $id;
-
-    private UploadedFile $photo;
-
-    public function __construct(int $id, UploadedFile $photo)
+    public function __construct(private int $id, private UploadedFile $photo)
     {
-        $this->id = $id;
-
-        $this->photo = $photo;
     }
 
     public function buildDTO(): DTO
     {
-         // TODO: Implement buildDTO() method.
+        // TODO: Implement buildDTO() method.
     }
 
 

@@ -62,5 +62,6 @@ Scandinaver\Learning\Asset\Domain\Entity\Translate:
       joinColumns:
         language_id:
           referencedColumnName: id
+          onDelete: CASCADE
       orphanRemoval: false
   lifecycleCallbacks: { }

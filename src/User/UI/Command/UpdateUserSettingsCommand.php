@@ -3,29 +3,23 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
-use Scandinaver\User\Domain\Entity\User;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\User\Application\Handler\Command\UpdateUserSettingsCommandHandler;
 
 /**
  * Class UpdateUserSettingsCommand
  *
  * @package Scandinaver\User\UI\Command
- *
- * @see     \Scandinaver\User\Application\Handler\Command\UpdateUserSettingsCommandHandler
  */
+#[Command(UpdateUserSettingsCommandHandler::class)]
 class UpdateUserSettingsCommand implements CommandInterface
 {
 
-    private UserInterface $user;
-
-    private array $data;
-
-    public function __construct(UserInterface $user, array $data)
+    public function __construct(private UserInterface $user, private array $data)
     {
-        $this->user = $user;
-        $this->data = $data;
     }
 
     public function getUser(): UserInterface

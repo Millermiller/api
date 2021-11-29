@@ -4,14 +4,19 @@
 namespace Scandinaver\User\Domain\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\QueryException;
+use Event;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\DispatcherInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
@@ -20,13 +25,14 @@ use Scandinaver\Learning\Asset\Domain\Entity\{Asset, FavouriteAsset, PersonalAss
 use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 use Scandinaver\Learning\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 use Scandinaver\Learning\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Learning\Translate\Domain\Service\TextService;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
 use Scandinaver\User\Domain\DTO\State;
 use Scandinaver\User\Domain\DTO\UserDTO;
+use Scandinaver\User\Domain\Event\Notifications\UserCreatedNotification;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Entity\{User};
 
@@ -69,6 +75,8 @@ class UserService implements BaseServiceInterface
 
     private UserFactory $userFactory;
 
+    private DispatcherInterface $dispatcher;
+
     public function __construct(AssetRepositoryInterface $assetRepository,
                                 FavouriteAssetRepositoryInterface $favouriteAssetRepository,
                                 PersonalAssetRepositoryInterface $personalAssetRepository,
@@ -82,7 +90,8 @@ class UserService implements BaseServiceInterface
                                 LanguageService $languageService,
                                 AvatarServiceInterface $avatarService,
                                 IntroService $introService,
-                                UserFactory $userFactory)
+                                UserFactory $userFactory,
+                                DispatcherInterface $dispatcher)
     {
         $this->userRepository           = $userRepository;
         $this->languageRepository       = $languageRepository;
@@ -98,6 +107,7 @@ class UserService implements BaseServiceInterface
         $this->avatarService            = $avatarService;
         $this->roleRepository           = $roleRepository;
         $this->userFactory              = $userFactory;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -130,6 +140,14 @@ class UserService implements BaseServiceInterface
     public function all(): array
     {
         return $this->userRepository->findAll();
+    }
+
+    /**
+     * @throws QueryException
+     */
+    public function paginate(RequestParametersComposition $params): LengthAwarePaginator
+    {
+        return $this->userRepository->getData($params);
     }
 
     /**
@@ -169,6 +187,8 @@ class UserService implements BaseServiceInterface
         }
 
         $this->userRepository->save($user);
+
+        UserCreatedNotification::dispatch($user);
 
         $isLoggedIn = Auth::check();
         if ($isLoggedIn === FALSE) {

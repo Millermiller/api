@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Puzzle\Domain\Entity;
 
-use Scandinaver\Shared\StringValueObject;
+use Scandinaver\Core\Domain\StringValueObject;
 
 /**
  * Class PuzzleText
@@ -12,5 +12,6 @@ use Scandinaver\Shared\StringValueObject;
  */
 class PuzzleText extends StringValueObject
 {
+
     protected string $value;
 }

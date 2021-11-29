@@ -3,7 +3,9 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\RBAC\Application\Handler\Query\PermissionQueryHandler;
 
 /**
  * Class PermissionQuery
@@ -12,14 +14,12 @@ use Scandinaver\Shared\Contract\QueryInterface;
  *
  * @see     \Scandinaver\RBAC\Application\Handler\Query\PermissionQueryHandler
  */
+#[Query(PermissionQueryHandler::class)]
 class PermissionQuery implements QueryInterface
 {
 
-    private int $id;
-
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

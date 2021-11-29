@@ -3,27 +3,22 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\RBAC\Application\Handler\Command\UpdateRoleCommandHandler;
 
 /**
  * Class UpdateRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
- *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\UpdateRoleCommandHandler
  */
+#[Command(UpdateRoleCommandHandler::class)]
 class UpdateRoleCommand implements CommandInterface
 {
 
-    private int $id;
-
-    private array $data;
-
-    public function __construct(int $id, array $data)
+    public function __construct(private int $id, private array $data)
     {
-        $this->id   = $id;
-        $this->data = $data;
     }
 
     public function getData(): array

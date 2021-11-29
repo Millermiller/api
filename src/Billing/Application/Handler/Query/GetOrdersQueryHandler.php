@@ -6,8 +6,8 @@ namespace Scandinaver\Billing\Application\Handler\Query;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Billing\Domain\Service\OrderService;
 use Scandinaver\Billing\UI\Resource\OrderTransformer;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
 use Scandinaver\Billing\UI\Query\GetOrdersQuery;
 
 /**

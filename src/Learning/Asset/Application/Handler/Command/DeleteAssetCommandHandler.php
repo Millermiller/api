@@ -8,8 +8,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Learning\Asset\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\{AssetService};
 use Scandinaver\Learning\Asset\UI\Command\DeleteAssetCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeleteAssetCommandHandler
@@ -18,22 +18,19 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class DeleteAssetCommandHandler extends AbstractHandler
 {
-    protected AssetService $assetService;
 
-    public function __construct(AssetService $assetService)
+    public function __construct(protected AssetService $assetService)
     {
         parent::__construct();
-
-        $this->assetService = $assetService;
     }
 
     /**
-     * @param  DeleteAssetCommand|BaseCommandInterface  $command
+     * @param  DeleteAssetCommand  $command
      *
      * @throws BindingResolutionException
      * @throws AssetNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->assetService->delete($command->getAsset());
 

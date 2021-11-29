@@ -40,7 +40,7 @@ class LanguageDeletedListener
     {
         $language = $event->getLanguage();
 
-        $this->assetService->removeByLanguage($language);
+        // $this->assetService->removeByLanguage($language);
 
         $this->logger->info('Language {title} deleted',
             [

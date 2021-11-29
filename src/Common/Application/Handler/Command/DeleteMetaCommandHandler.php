@@ -4,8 +4,9 @@
 namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\UI\Command\DeleteMetaCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeleteMetaCommandHandler
@@ -22,7 +23,7 @@ class DeleteMetaCommandHandler extends AbstractHandler
     /**
      * @param  DeleteMetaCommand|BaseCommandInterface  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         // TODO: Implement handle() method.
     }

@@ -3,17 +3,19 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Learning\Asset\Application\Handler\Query\TermsCountQueryHandler;
 
 /**
  * Class TermsCountQuery
  *
  * @package Scandinaver\Learn\UI\Query
- *
- * @see     \Scandinaver\Learn\Application\Handler\Query\TermsCountQueryHandler
  */
+#[Query(TermsCountQueryHandler::class)]
 class TermsCountQuery implements QueryInterface
 {
+
     public function __construct()
     {
     }

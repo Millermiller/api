@@ -3,29 +3,27 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Common\Application\Handler\Command\DeleteLogCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class DeleteLogCommand
  *
  * @package Scandinaver\Common\UI\Command
- *
- * @see     \Scandinaver\Common\Application\Handler\Command\DeleteLogCommandHandler
  */
+#[Command(DeleteLogCommandHandler::class)]
 class DeleteLogCommand implements CommandInterface
 {
 
-    private int $logId;
-
-    public function __construct(int $logId)
+    public function __construct(private int $id)
     {
-        $this->logId = $logId;
     }
 
-    public function getLogId(): int
+    public function getId(): int
     {
-        return $this->logId;
+        return $this->id;
     }
 
     public function buildDTO(): DTO

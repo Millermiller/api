@@ -3,29 +3,22 @@
 
 namespace Scandinaver\Reader\UI\Query;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Reader\Application\Handler\Query\ReadQueryHandler;
 
 /**
  * Class ReadQuery
  *
  * @package Scandinaver\Reader\UI\Query
- *
- * @see     \Scandinaver\Reader\Application\Handler\Query\ReadQueryHandler
  */
+#[Query(ReadQueryHandler::class)]
 class ReadQuery implements QueryInterface
 {
-    private string $text;
 
-    private UserInterface $user;
-
-    private string $language;
-
-    public function __construct(UserInterface $user, string $language, string $text)
+    public function __construct(private UserInterface $user, private string $language, private string $text)
     {
-        $this->text     = $text;
-        $this->user     = $user;
-        $this->language = $language;
     }
 
     public function getText(): string

@@ -3,8 +3,8 @@
 
 namespace Scandinaver\User\Domain\Contract\Repository;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface UserRepositoryInterface

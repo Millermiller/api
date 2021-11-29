@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\Domain\Contract\Service;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 
 /**
  * Interface AvatarServiceInterface

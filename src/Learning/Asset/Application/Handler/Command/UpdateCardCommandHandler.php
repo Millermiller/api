@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Learning\Asset\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\CardService;
 use Scandinaver\Learning\Asset\UI\Command\UpdateCardCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateCardCommandHandler
@@ -17,21 +17,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class UpdateCardCommandHandler extends AbstractHandler
 {
-    private CardService $cardService;
 
-    public function __construct(CardService $cardService)
+    public function __construct(private CardService $cardService)
     {
         parent::__construct();
-
-        $this->cardService = $cardService;
     }
 
     /**
-     * @param  UpdateCardCommand|BaseCommandInterface  $command
+     * @param  UpdateCardCommand  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->cardService->updateCard($command->getCardId(), $command->buildDTO());
 

@@ -3,30 +3,26 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\CompleteTestCommandHandler;
 
 /**
  * Class SaveTestResultCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CompleteTestCommandHandler
  */
+#[Command(CompleteTestCommandHandler::class)]
 class CompleteTestCommand implements CommandInterface
 {
-    private UserInterface $user;
 
-    private int $asset;
-
-    private array $data;
-
-    public function __construct(UserInterface $user, int $asset, array $data)
-    {
-        $this->user  = $user;
-        $this->asset = $asset;
-        $this->data  = $data;
+    public function __construct(
+        private UserInterface $user,
+        private int $asset,
+        private array $data
+    ) {
     }
 
     public function getUser(): UserInterface

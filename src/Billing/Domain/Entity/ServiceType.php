@@ -3,8 +3,7 @@
 
 namespace Scandinaver\Billing\Domain\Entity;
 
-
-use Scandinaver\Shared\StringValueObject;
+use Scandinaver\Core\Domain\StringValueObject;
 
 /**
  * Class ServiceType

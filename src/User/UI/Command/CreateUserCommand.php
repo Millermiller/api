@@ -3,28 +3,22 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\User\Application\Handler\Command\CreateUserCommandHandler;
 use Scandinaver\User\Domain\DTO\UserDTO;
 
 /**
  * Class CreateUserCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\CreateUserCommandHandler
  * @package Scandinaver\User\UI\Command
  */
+#[Command(CreateUserCommandHandler::class)]
 class CreateUserCommand implements CommandInterface
 {
 
-    private array $data;
-
-    /**
-     * CreateUserCommand constructor.
-     *
-     * @param  array  $data
-     */
-    public function __construct(array $data)
+    public function __construct(private array $data)
     {
-        $this->data = $data;
     }
 
     public function getData(): array

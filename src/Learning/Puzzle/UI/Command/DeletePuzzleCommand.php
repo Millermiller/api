@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Learning\Puzzle\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Puzzle\Application\Handler\Command\DeletePuzzleCommandHandler;
 
 /**
  * Class DeletePuzzleCommand
  *
  * @package Scandinaver\Puzzle\UI\Command
- *
- * @see     \Scandinaver\Puzzle\Application\Handler\Command\DeletePuzzleCommandHandler
  */
+#[Command(DeletePuzzleCommandHandler::class)]
 class DeletePuzzleCommand implements CommandInterface
 {
-    private int $puzzle;
 
-    public function __construct(int $puzzle)
+    public function __construct(private int $puzzle)
     {
-        $this->puzzle = $puzzle;
     }
 
     public function getPuzzle(): int

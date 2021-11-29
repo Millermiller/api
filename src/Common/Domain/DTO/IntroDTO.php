@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Common\Domain\DTO;
 
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class IntroDTO

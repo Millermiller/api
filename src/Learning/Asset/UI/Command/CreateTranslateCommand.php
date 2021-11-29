@@ -3,34 +3,31 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Learning\Asset\Domain\Contract\Repository\CardRepositoryInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\CreateTranslateCommandHandler;
 
 /**
  * Class CreateTranslateCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\CreateTranslateCommandHandler
  */
+#[Command(CreateTranslateCommandHandler::class)]
 class CreateTranslateCommand implements CommandInterface
 {
+
     private int $card_id;
 
     private string $text;
 
     private string $value;
 
-    private CardRepositoryInterface $cardRepository;
-
     public function __construct(int $card_id, array $data)
     {
         $this->card_id = $card_id;
         $this->text    = $data['text'];
         $this->value   = $data['value'];
-
-        $this->cardRepository = app()->make('CardRepositoryInterface');
     }
 
     public function getCard(): int

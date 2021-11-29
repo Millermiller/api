@@ -8,8 +8,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\CardService;
 use Scandinaver\Learning\Asset\UI\Command\CreateCardCommand;
 use Scandinaver\Learning\Asset\UI\Resource\CardTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateCardCommandHandler
@@ -18,23 +18,20 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class CreateCardCommandHandler extends AbstractHandler
 {
-    private CardService $service;
 
-    public function __construct(CardService $service)
+    public function __construct(private CardService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  CreateCardCommand|BaseCommandInterface  $command
+     * @param  CreateCardCommand  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $card =  $this->service->createCard(
+        $card = $this->service->createCard(
             $command->getUser(),
             $command->getLanguage(),
             $command->getWord(),

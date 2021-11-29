@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Settings\Application\Handler\Command\CreateSettingCommandHandler;
 use Scandinaver\Settings\Domain\DTO\SettingDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
 
 /**
  * Class CreateSettingCommand
  *
  * @package Scandinaver\Settings\UI\Command
- *
- * @see \Scandinaver\Settings\Application\Handler\Command\CreateSettingCommandHandler
  */
+#[Command(CreateSettingCommandHandler::class)]
 class CreateSettingCommand implements CommandInterface
 {
-    private array $data;
 
-    public function __construct(array $data)
+    public function __construct(private array $data)
     {
-        $this->data = $data;
     }
 
     public function getData(): array

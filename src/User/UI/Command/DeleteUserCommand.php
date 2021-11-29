@@ -3,23 +3,24 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\User\Application\Handler\Command\DeleteUserCommandHandler;
 
 /**
  * Class DeleteUserCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\DeleteUserCommandHandler
  * @package Scandinaver\User\UI\Command
  */
+#[Command(DeleteUserCommandHandler::class)]
 class DeleteUserCommand implements CommandInterface
 {
 
-    private int $id;
 
-    public function __construct(int $user)
+    public function __construct(private int $id)
     {
-        $this->id = $user;
+
     }
 
     public function getUser(): int

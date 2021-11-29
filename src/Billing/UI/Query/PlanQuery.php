@@ -3,22 +3,21 @@
 
 namespace Scandinaver\Billing\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Billing\Application\Handler\Query\PlanQueryHandler;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
  * Class PlanQuery
  *
- * @see     \Scandinaver\Billing\Application\Handler\Query\PlanQueryHandler
  * @package Scandinaver\Billing\UI\Query
  */
+#[Query(PlanQueryHandler::class)]
 class PlanQuery implements QueryInterface
 {
 
-    private int $id;
-
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

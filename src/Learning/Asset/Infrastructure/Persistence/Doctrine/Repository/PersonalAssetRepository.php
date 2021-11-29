@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\Infrastructure\Persistence\Doctrine\Repository;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 

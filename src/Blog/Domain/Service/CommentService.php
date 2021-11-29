@@ -9,7 +9,7 @@ use Scandinaver\Blog\Domain\DTO\CommentDTO;
 use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Entity\Comment;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**

@@ -8,8 +8,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\CardService;
 use Scandinaver\Learning\Asset\UI\Command\CreateTranslateCommand;
 use Scandinaver\Learning\Asset\UI\Resource\ExampleTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateTranslateCommandHandler
@@ -18,21 +18,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class CreateTranslateCommandHandler extends AbstractHandler
 {
-    private CardService $cardService;
 
-    public function __construct(CardService $cardService)
+    public function __construct(private CardService $cardService)
     {
         parent::__construct();
-
-        $this->cardService = $cardService;
     }
 
     /**
-     * @param  CreateTranslateCommand|BaseCommandInterface  $command
+     * @param  CreateTranslateCommand  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $example = $this->cardService->addExample($command->getCard(), $command->getText(), $command->getValue());
 

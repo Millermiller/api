@@ -8,8 +8,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\CardService;
 use Scandinaver\Learning\Asset\UI\Query\CardsOfAssetQuery;
 use Scandinaver\Learning\Asset\UI\Resource\AssetTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class CardsOfAssetQueryHandler
@@ -18,17 +18,14 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class CardsOfAssetQueryHandler extends AbstractHandler
 {
-    protected CardService $cardService;
 
-    public function __construct(CardService $cardService)
+    public function __construct(protected CardService $cardService)
     {
         parent::__construct();
-
-        $this->cardService = $cardService;
     }
 
     /**
-     * @param  CardsOfAssetQuery|BaseCommandInterface  $query
+     * @param  CardsOfAssetQuery  $query
      *
      * @throws AssetNotFoundException
      */

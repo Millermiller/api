@@ -3,11 +3,11 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Contract\Repository;
 
-use Scandinaver\Common\Domain\Contract\Repository\CountableRepositoryInterface;
-use Scandinaver\Common\Domain\Contract\Repository\HasLevelRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\CountableRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\HasLevelRepositoryInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Entity\Asset;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface AssetRepositoryInterface

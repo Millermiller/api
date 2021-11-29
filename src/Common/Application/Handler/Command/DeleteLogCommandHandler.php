@@ -6,8 +6,8 @@ namespace Scandinaver\Common\Application\Handler\Command;
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\UI\Command\DeleteLogCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeleteLogCommandHandler
@@ -16,21 +16,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class DeleteLogCommandHandler extends AbstractHandler
 {
-    private LogRepositoryInterface $logRepository;
-
-    public function __construct(LogRepositoryInterface $logRepository)
+    //TODO: refactor
+    public function __construct(private LogRepositoryInterface $logRepository)
     {
         parent::__construct();
-
-        $this->logRepository = $logRepository;
     }
 
     /**
-     * @param  DeleteLogCommand|BaseCommandInterface  $command
+     * @param  DeleteLogCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $log = $this->logRepository->find($command->getLogId());
+        $log = $this->logRepository->find($command->getId());
         $this->logRepository->delete($log);
 
         $this->resource = new NullResource();

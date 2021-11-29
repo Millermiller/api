@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
+use Doctrine\ORM\Query\QueryException;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
-use Scandinaver\Common\Domain\Entity\Log;
 use Scandinaver\Common\UI\Query\LogsQuery;
 use Scandinaver\Common\UI\Resource\LogTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class LogsQueryHandler
@@ -18,23 +19,25 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class LogsQueryHandler extends AbstractHandler
 {
-    private LogRepositoryInterface $logRepository;
 
-    public function __construct(LogRepositoryInterface $logRepository)
+    //TODO: refactor
+    public function __construct(private LogRepositoryInterface $logRepository)
     {
         parent::__construct();
-
-        $this->logRepository = $logRepository;
     }
 
     /**
-     * @param  LogsQuery|BaseCommandInterface  $query
+     * @param  LogsQuery  $query
+     *
+     * @throws QueryException
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $logs = $this->logRepository->findAll();
+        $data = $this->logRepository->getData($query->getParameters());
 
         $this->fractal->parseExcludes(['owner.roles', 'owner.permissions']);
-        $this->resource = new Collection($logs, new LogTransformer());
+        $this->resource = new Collection($data->items(), new LogTransformer());
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

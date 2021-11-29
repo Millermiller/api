@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\CardService;
 use Scandinaver\Learning\Asset\UI\Command\UploadCsvSentencesCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UploadCsvSentencesCommandHandler
@@ -18,21 +18,17 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class UploadCsvSentencesCommandHandler extends AbstractHandler
 {
 
-    private CardService $service;
-
-    public function __construct(CardService $service)
+    public function __construct(private CardService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  UploadCsvSentencesCommand|BaseCommandInterface  $command
+     * @param  UploadCsvSentencesCommand  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->service->uploadCsvSentences($command->getLanguage(), $command->getFile());
 

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\Infrastructure\Persistence\Doctrine\Repository;
 
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 use Scandinaver\Learning\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 
 /**

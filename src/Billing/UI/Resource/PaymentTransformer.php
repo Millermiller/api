@@ -4,6 +4,7 @@
 namespace Scandinaver\Billing\UI\Resource;
 
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Billing\Domain\Entity\Payment;
 
@@ -19,6 +20,12 @@ class PaymentTransformer extends TransformerAbstract
 
     ];
 
+    #[ArrayShape([
+        'id'         => "\Ramsey\Uuid\UuidInterface",
+        'amount'     => "\Ramsey\Uuid\UuidInterface",
+        'data'       => "array",
+        'created_at' => "string",
+    ])]
     public function transform(Payment $payment): array
     {
         return [

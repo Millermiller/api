@@ -3,25 +3,22 @@
 
 namespace Scandinaver\Learning\Puzzle\UI\Query;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Learning\Puzzle\Application\Handler\Query\UserPuzzlesQueryHandler;
 
 /**
  * Class UserPuzzlesQuery
  *
- * @see     \Scandinaver\Puzzle\Application\Handler\Query\UserPuzzlesQueryHandler
  * @package Scandinaver\Puzzle\UI\Query
  */
+#[Query(UserPuzzlesQueryHandler::class)]
 class UserPuzzlesQuery implements QueryInterface
 {
-    private UserInterface $user;
 
-    private string $language;
-
-    public function __construct(string $language, UserInterface $user)
+    public function __construct(private string $language, private UserInterface $user)
     {
-        $this->user     = $user;
-        $this->language = $language;
     }
 
     public function getUser(): UserInterface

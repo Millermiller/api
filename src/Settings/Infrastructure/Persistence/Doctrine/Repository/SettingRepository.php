@@ -4,7 +4,7 @@
 namespace Scandinaver\Settings\Infrastructure\Persistence\Doctrine\Repository;
 
 use Scandinaver\Settings\Domain\Contract\Repository\SettingRepositoryInterface;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class SettingRepository

@@ -3,6 +3,8 @@
 
 namespace Tests\Responses;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class Intro
  *
@@ -11,16 +13,23 @@ namespace Tests\Responses;
 class Intro implements ResponseInterface
 {
 
+    #[ArrayShape(['data' => "array"])]
     public static function response(): array
     {
         return [
-            'id',
-            'page',
-            'target',
-            'content',
-            'position',
-            'headerText',
-            'sort',
+            'data' => [
+                'id',
+                'type',
+                'attributes' => [
+                    'page',
+                    'target',
+                    'content',
+                    'position',
+                    'headerText',
+                    'sort',
+                ]
+            ]
+
         ];
     }
 }

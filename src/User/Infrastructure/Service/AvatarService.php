@@ -7,7 +7,7 @@ use Exception;
 use Image;
 use Intervention\Image\Constraint;
 use Laravolt\Avatar\Avatar;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
 
 /**

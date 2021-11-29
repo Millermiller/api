@@ -28,7 +28,7 @@ class LanguageCreatedListener
     {
         $language = $event->getLanguage();
 
-        $this->assetService->createDefaultAssets($language);
+      //  $this->assetService->createDefaultAssets($language);
 
         $this->logger->info('language {title} created',
             [

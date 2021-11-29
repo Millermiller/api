@@ -4,6 +4,8 @@
 namespace Scandinaver\Learning\Asset\Application\Provider;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Scandinaver\Learning\Asset\Application\Subscriber\LanguageEventsSubscriber;
+use Scandinaver\Learning\Asset\Application\Subscriber\UserEventsSubscriber;
 
 /**
  * Class EventServiceProvider
@@ -39,4 +41,9 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
     }
+
+    protected $subscribe = [
+        UserEventsSubscriber::class,
+        LanguageEventsSubscriber::class,
+    ];
 }

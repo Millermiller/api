@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\Domain\DTO;
 
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class RoleDTO

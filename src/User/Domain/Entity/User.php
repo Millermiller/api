@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Exception;
 use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\RBAC\Domain\Entity\{Permission, Role};
 use Scandinaver\Billing\Domain\Entity\Order;
@@ -16,7 +16,7 @@ use Scandinaver\Learning\Asset\Domain\Entity\Asset;
 use Scandinaver\Learning\Asset\Domain\Entity\Passing;
 use Scandinaver\Learning\Asset\Domain\Entity\FavouriteAsset;
 use Scandinaver\Learning\Translate\Domain\Entity\Text;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\AggregateRoot;
 use Scandinaver\Learning\Translate\Domain\Entity\Passing as TranslateResult;
 use Scandinaver\User\Domain\Event\UserCreated;
 use Scandinaver\User\Domain\Event\UserDeleted;
@@ -79,12 +79,12 @@ class User extends AggregateRoot implements UserInterface,
     /**
      * @var Collection | Permission[]
      */
-    private Collection $permissions;
+    private Collection|array $permissions;
 
     /**
      * @var Collection | Order[]
      */
-    private Collection $orders;
+    private Collection|array $orders;
 
     public function __construct()
     {

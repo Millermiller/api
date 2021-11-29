@@ -6,8 +6,8 @@ namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 use League\Fractal\Resource\Item;
 use Scandinaver\Learning\Asset\Domain\Service\TermService;
 use Scandinaver\Learning\Asset\UI\Query\TermsCountQuery;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class TermsCountQueryHandler
@@ -16,22 +16,19 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class TermsCountQueryHandler extends AbstractHandler
 {
-    private TermService $termService;
 
-    public function __construct(TermService $termService)
+    public function __construct(private TermService $termService)
     {
         parent::__construct();
-
-        $this->termService = $termService;
     }
 
     /**
-     * @param  TermsCountQuery|BaseCommandInterface  $query
+     * @param  TermsCountQuery  $query
      */
     public function handle(BaseCommandInterface $query): void
     {
         $count = $this->termService->count();
 
-        $this->resource =new Item($count, fn($data) => ['count' => $data]);
+        $this->resource = new Item($count, fn($data) => ['count' => $data]);
     }
 }

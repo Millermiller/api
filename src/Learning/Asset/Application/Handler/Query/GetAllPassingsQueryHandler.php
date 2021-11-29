@@ -6,11 +6,10 @@ namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\TestService;
-use Scandinaver\Learning\Asset\UI\Resource\PassingTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
 use Scandinaver\Learning\Asset\UI\Query\GetAllPassingsQuery;
+use Scandinaver\Learning\Asset\UI\Resource\PassingTransformer;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class GetAllPassingsQueryHandler
@@ -19,17 +18,14 @@ use Scandinaver\Learning\Asset\UI\Query\GetAllPassingsQuery;
  */
 class GetAllPassingsQueryHandler extends AbstractHandler
 {
-    private TestService $service;
 
-    public function __construct(TestService $service)
+    public function __construct(private TestService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  GetAllPassingsQuery|BaseCommandInterface  $query
+     * @param  GetAllPassingsQuery  $query
      *
      * @throws LanguageNotFoundException
      */

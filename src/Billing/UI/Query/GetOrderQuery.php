@@ -3,23 +3,21 @@
 
 namespace Scandinaver\Billing\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Billing\Application\Handler\Query\GetOrderQueryHandler;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
  * Class GetOrderQuery
  *
  * @package Scandinaver\Billing\UI\Query
- *
- * @see \Scandinaver\Billing\Application\Handler\Query\GetOrderQueryHandler
  */
+#[Query(GetOrderQueryHandler::class)]
 class GetOrderQuery implements QueryInterface
 {
 
-    private int $id;
-
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

@@ -7,8 +7,8 @@ use League\Fractal\Resource\Item;
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\UI\Query\LogQuery;
 use Scandinaver\Common\UI\Resource\LogTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class LogQueryHandler
@@ -17,17 +17,16 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class LogQueryHandler extends AbstractHandler
 {
-    private LogRepositoryInterface $logRepository;
 
-    public function __construct(LogRepositoryInterface $logRepository)
+    //TODO: refactor
+    public function __construct(private LogRepositoryInterface $logRepository)
     {
         parent::__construct();
 
-        $this->logRepository = $logRepository;
     }
 
     /**
-     * @param  LogQuery|BaseCommandInterface  $query
+     * @param  LogQuery  $query
      */
     public function handle(BaseCommandInterface $query): void
     {

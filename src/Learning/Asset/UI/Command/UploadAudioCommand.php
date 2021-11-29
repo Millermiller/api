@@ -4,26 +4,22 @@
 namespace Scandinaver\Learning\Asset\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\UploadAudioCommandHandler;
 
 /**
  * Class UploadAudioCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UploadAudioCommandHandler
  */
+#[Command(UploadAudioCommandHandler::class)]
 class UploadAudioCommand implements CommandInterface
 {
-    private int $termId;
 
-    private UploadedFile $file;
-
-    public function __construct(int $termId, UploadedFile $file)
+    public function __construct(private int $termId, private UploadedFile $file)
     {
-        $this->termId = $termId;
-        $this->file = $file;
     }
 
     public function getTermId(): int

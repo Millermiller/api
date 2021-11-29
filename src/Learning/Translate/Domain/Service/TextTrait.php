@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\Domain\Service;
 
-use Scandinaver\Common\Infrastructure\Service\Container;
+use Scandinaver\Core\Infrastructure\Service\Container;
 use Scandinaver\Learning\Translate\Domain\Contract\Repository\TextRepositoryInterface;
 use Scandinaver\Learning\Translate\Domain\Exception\TextNotFoundException;
 use Scandinaver\Learning\Translate\Domain\Entity\Text;

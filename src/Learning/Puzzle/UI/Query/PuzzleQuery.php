@@ -3,22 +3,21 @@
 
 namespace Scandinaver\Learning\Puzzle\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Learning\Puzzle\Application\Handler\Query\PuzzleQueryHandler;
 
 /**
  * Class PuzzleQuery
  *
  * @package Scandinaver\Puzzle\UI\Query
- *
- * @see     \Scandinaver\Puzzle\Application\Handler\Query\PuzzleQueryHandler
  */
+#[Query(PuzzleQueryHandler::class)]
 class PuzzleQuery implements QueryInterface
 {
-    private int $puzzle;
 
-    public function __construct(int $puzzle)
+    public function __construct(private int $puzzle)
     {
-        $this->puzzle = $puzzle;
     }
 
     public function getPuzzle(): int

@@ -3,24 +3,23 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\User\Application\Handler\Command\LogoutCommandHandler;
 
 /**
  * Class LogoutCommand
  *
- * @see     \Scandinaver\User\Application\Handler\Command\LogoutCommandHandler
  * @package Scandinaver\User\UI\Command
  */
+#[Command(LogoutCommandHandler::class)]
 class LogoutCommand implements CommandInterface
 {
 
-    private UserInterface $user;
-
-    public function __construct(UserInterface $user)
+    public function __construct(private UserInterface $user)
     {
-        $this->user = $user;
     }
 
     public function getUser(): UserInterface

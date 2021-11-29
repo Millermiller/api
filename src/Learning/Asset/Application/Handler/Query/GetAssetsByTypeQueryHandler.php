@@ -9,8 +9,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 use Scandinaver\Learning\Asset\UI\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learning\Asset\UI\Resource\AssetTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class GetAssetsByTypeQueryHandler
@@ -19,17 +19,14 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class GetAssetsByTypeQueryHandler extends AbstractHandler
 {
-    private AssetService $assetService;
 
-    public function __construct(AssetService $assetService)
+    public function __construct(private AssetService $assetService)
     {
         parent::__construct();
-
-        $this->assetService = $assetService;
     }
 
     /**
-     * @param  GetAssetsByTypeQuery|BaseCommandInterface  $query
+     * @param  GetAssetsByTypeQuery  $query
      *
      * @throws LanguageNotFoundException
      * @throws BindingResolutionException

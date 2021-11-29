@@ -4,6 +4,7 @@
 namespace Scandinaver\Common\UI\Resource;
 
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Common\Domain\Entity\Log;
@@ -16,10 +17,18 @@ use Scandinaver\User\UI\Resource\UserTransformer;
  */
 class LogTransformer extends TransformerAbstract
 {
+
     protected $defaultIncludes = [
-        'owner'
+        'owner',
     ];
 
+    #[ArrayShape([
+        'id'         => "int",
+        'message'    => "string",
+        'level'      => "string",
+        'extra'      => "array|null",
+        'created_at' => "string",
+    ])]
     public function transform(Log $log): array
     {
         return [
@@ -31,13 +40,14 @@ class LogTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeOwner(Log $log): ?Item
+    public function includeOwner(Log $log): \League\Fractal\Resource\NullResource|Item
     {
         $owner = $log->getOwner();
 
         if ($owner !== NULL) {
             return $this->item($owner, new UserTransformer());
         }
-         return NULL;
+
+        return $this->null();
     }
 }

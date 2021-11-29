@@ -3,14 +3,14 @@
 
 namespace Scandinaver\Learning\Puzzle\Domain\Service;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Learning\Puzzle\Domain\DTO\PuzzleDTO;
 use Scandinaver\Learning\Puzzle\Domain\Exception\PuzzleNotFoundException;
 use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 
 /**
  * Class PuzzleService

@@ -4,7 +4,7 @@
 namespace Scandinaver\RBAC\Domain\Contract\Repository;
 
 use Scandinaver\RBAC\Domain\Entity\Permission;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface PermissionRepositoryInterface

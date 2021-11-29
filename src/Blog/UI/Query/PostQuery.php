@@ -3,23 +3,21 @@
 
 namespace Scandinaver\Blog\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Blog\Application\Handler\Query\PostQueryHandler;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
  * Class PostQuery
  *
  * @package Scandinaver\Blog\UI\Query
- *
- * @see     \Scandinaver\Blog\Application\Handler\Query\PostHandler
  */
+#[Query(PostQueryHandler::class)]
 class PostQuery implements QueryInterface
 {
 
-    private int $id;
-
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

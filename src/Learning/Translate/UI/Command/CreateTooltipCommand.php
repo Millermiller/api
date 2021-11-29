@@ -3,18 +3,20 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Translate\Application\Handler\Command\CreateTooltipCommandHandler;
 
 /**
  * Class CreateTooltipCommand
  *
- * @package Scandinaver\Translate\UI\Command
- *
- * @see     \Scandinaver\Translate\Application\Handler\Command\CreateTooltipCommandHandler
+ * @package Scandinaver\Learning\Translate\UI\Command
  */
+#[Command(CreateTooltipCommandHandler::class)]
 class CreateTooltipCommand implements CommandInterface
 {
+
     public function __construct()
     {
     }

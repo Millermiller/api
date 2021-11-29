@@ -3,27 +3,22 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleCommandHandler;
 
 /**
  * Class AttachPermissionToRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
- *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleCommandHandler
  */
+#[Command(AttachPermissionToRoleCommandHandler::class)]
 class AttachPermissionToRoleCommand implements CommandInterface
 {
 
-    private int $roleId;
-
-    private int $permissionId;
-
-    public function __construct(int $roleId, int $permissionId)
+    public function __construct(private int $roleId, private int $permissionId)
     {
-        $this->roleId       = $roleId;
-        $this->permissionId = $permissionId;
     }
 
     public function getRoleId(): int

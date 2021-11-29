@@ -6,8 +6,8 @@ namespace Scandinaver\Learning\Asset\Application\Handler\Command;
 use League\Fractal\Resource\NullResource;
 use Scandinaver\Learning\Asset\Domain\Service\TermService;
 use Scandinaver\Learning\Asset\UI\Command\AddTermAndTranslateCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class AddTermAndTranslateCommandHandler
@@ -16,21 +16,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class AddTermAndTranslateCommandHandler extends AbstractHandler
 {
-    private TermService $termService;
 
-    public function __construct(TermService $termService)
+    public function __construct(private TermService $service)
     {
         parent::__construct();
-
-        $this->termService = $termService;
     }
 
     /**
-     * @param  AddTermAndTranslateCommand|BaseCommandInterface  $command
+     * @param  AddTermAndTranslateCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $this->termService->create(
+        $this->service->create(
             config('app.lang'),
             $command->getWord(),
             $command->getIssentence(),

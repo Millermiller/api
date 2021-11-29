@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Learning\Puzzle\Domain\Exception\PuzzleNotFoundException;
 use Scandinaver\Learning\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Learning\Puzzle\UI\Command\DeletePuzzleCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeletePuzzleCommandHandler
@@ -17,21 +17,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class DeletePuzzleCommandHandler extends AbstractHandler
 {
-    private PuzzleService $puzzleService;
 
-    public function __construct(PuzzleService $puzzleService)
+    public function __construct(private PuzzleService $puzzleService)
     {
         parent::__construct();
-
-        $this->puzzleService = $puzzleService;
     }
 
     /**
-     * @param  DeletePuzzleCommand|BaseCommandInterface  $command
+     * @param  DeletePuzzleCommand  $command
      *
      * @throws PuzzleNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->puzzleService->delete($command->getPuzzle());
 

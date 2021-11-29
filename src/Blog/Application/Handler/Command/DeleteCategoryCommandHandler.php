@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Command\DeleteCategoryCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeleteCategoryCommandHandler
@@ -18,21 +18,17 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class DeleteCategoryCommandHandler extends AbstractHandler
 {
 
-    private CategoryService $service;
-
-    public function __construct(CategoryService $service)
+    public function __construct(private CategoryService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  DeleteCategoryCommand|BaseCommandInterface  $command
+     * @param  DeleteCategoryCommand  $command
      *
      * @throws CategoryNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->service->delete($command->getCategoryId());
 

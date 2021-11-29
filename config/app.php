@@ -201,7 +201,6 @@ return [
         Scandinaver\Learning\Asset\Application\Provider\EventServiceProvider::class,
         Scandinaver\Learning\Asset\Application\Provider\AuthServiceProvider::class,
         Scandinaver\Common\Application\Provider\DoctrineServiceProvider::class,
-        Scandinaver\Common\Application\Provider\CommonServiceProvider::class,
         Scandinaver\Common\Application\Provider\AuthServiceProvider::class,
         Scandinaver\Common\Application\Provider\EventServiceProvider::class,
         Scandinaver\User\Application\Provider\DoctrineServiceProvider::class,
@@ -222,6 +221,10 @@ return [
         Scandinaver\Billing\Application\Provider\DoctrineServiceProvider::class,
         Scandinaver\Billing\Application\Provider\EventServiceProvider::class,
         Scandinaver\Billing\Application\Provider\BillingServiceProvider::class,
+        Scandinaver\Core\Application\Provider\CoreServiceProvider::class,
+        Scandinaver\Statistic\Application\Provider\DoctrineServiceProvider::class,
+        Scandinaver\Statistic\Application\Provider\EventServiceProvider::class,
+        Scandinaver\Statistic\Application\Provider\StatisticServiceProvider::class,
     ],
 
     /*

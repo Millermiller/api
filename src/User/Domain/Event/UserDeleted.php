@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\Domain\Event;
 
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 use Scandinaver\User\Domain\Entity\User;
 
 /**

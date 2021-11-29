@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Learning\Asset\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Learning\Asset\Domain\Entity\Term;
 
@@ -13,11 +15,9 @@ use Scandinaver\Learning\Asset\Domain\Entity\Term;
  */
 class TermTransformer extends TransformerAbstract
 {
-    /**
-     * @param  Term  $term
-     *
-     * @return array
-     */
+
+    #[Pure]
+    #[ArrayShape(['id' => "int", 'value' => "string"])]
     public function transform(Term $term): array
     {
         return [

@@ -3,22 +3,21 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Learning\Asset\Application\Handler\Query\FindAudioQueryHandler;
 
 /**
  * Class FindAudioQuery
  *
  * @package Scandinaver\Learn\UI\Query
- *
- * @see     \Scandinaver\Learn\Application\Handler\Query\FindAudioQueryHandler
  */
+#[Query(FindAudioQueryHandler::class)]
 class FindAudioQuery implements QueryInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

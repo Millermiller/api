@@ -7,7 +7,7 @@ use DateTime;
 use Scandinaver\Blog\Domain\Event\CategoryCreated;
 use Scandinaver\Blog\Domain\Event\CategoryDeleted;
 use Scandinaver\Blog\Domain\Event\CategoryNameUpdated;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Category
@@ -29,7 +29,7 @@ class Category extends AggregateRoot
     {
         $this->title = $name;
 
-        $this->pushEvent(new CategoryCreated($this));
+        // $this->pushEvent(new CategoryCreated($this));
     }
 
     public function getId(): int

@@ -4,7 +4,7 @@
 namespace Scandinaver\RBAC\Domain\Entity;
 
 use DateTime;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Permission

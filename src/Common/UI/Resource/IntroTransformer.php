@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Common\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Common\Domain\Entity\Intro;
 
@@ -14,6 +16,17 @@ use Scandinaver\Common\Domain\Entity\Intro;
 class IntroTransformer extends TransformerAbstract
 {
 
+    #[Pure]
+    #[ArrayShape([
+        'id'         => "int",
+        'page'       => "string",
+        'target'     => "null|string",
+        'content'    => "null|string",
+        'position'   => "null|string",
+        'headerText' => "null|string",
+        'sort'       => "int|null",
+        'active'     => "bool",
+    ])]
     public function transform(Intro $intro): array
     {
         return [

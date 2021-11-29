@@ -4,6 +4,8 @@
 namespace Scandinaver\Learning\Translate\UI\Resource;
 
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Learning\Translate\Domain\Entity\DictionaryItem;
@@ -15,10 +17,19 @@ use Scandinaver\Learning\Translate\Domain\Entity\DictionaryItem;
  */
 class DictionaryItemTransformer extends TransformerAbstract
 {
+
     protected $defaultIncludes = [
-        'synonyms'
+        'synonyms',
     ];
 
+    #[Pure]
+    #[ArrayShape([
+        'id'          => "int|null",
+        'text'        => "string",
+        'value'       => "null|string",
+        'sentenceNum' => "int",
+        'coordinates' => "array",
+    ])]
     public function transform(DictionaryItem $dictionaryItem): array
     {
         return [

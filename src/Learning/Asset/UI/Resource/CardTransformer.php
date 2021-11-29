@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Learning\Asset\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
@@ -15,17 +17,16 @@ use Scandinaver\Learning\Asset\Domain\Entity\Card;
  */
 class CardTransformer extends TransformerAbstract
 {
+
     protected $defaultIncludes = [
         'term',
         'translate',
         'examples',
     ];
 
-    /**
-     * @param  Card  $card
-     *
-     * @return array
-     */
+
+    #[Pure]
+    #[ArrayShape(['id' => "int", 'favourite' => "bool"])]
     public function transform(Card $card): array
     {
         return [

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;

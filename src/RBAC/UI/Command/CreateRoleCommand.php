@@ -3,17 +3,17 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\RBAC\Application\Handler\Command\CreateRoleCommandHandler;
 use Scandinaver\RBAC\Domain\DTO\RoleDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class CreateRoleCommand
  *
  * @package Scandinaver\RBAC\UI\Command
- *
- * @see     \Scandinaver\RBAC\Application\Handler\Command\CreateRoleCommandHandler
  */
+#[Command(CreateRoleCommandHandler::class)]
 class CreateRoleCommand implements CommandInterface
 {
 

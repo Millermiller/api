@@ -3,27 +3,22 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Learning\Translate\Application\Handler\Command\UpdateTextCommandHandler;
 use Scandinaver\Learning\Translate\Domain\DTO\TextDTO;
 
 /**
  * Class UpdateTextCommand
  *
- * @package Scandinaver\Translate\UI\Command
- *
- * @see     \Scandinaver\Translate\Application\Handler\Command\UpdateTextCommandHandler
+ * @package Scandinaver\Learning\Translate\UI\Command
  */
+#[Command(UpdateTextCommandHandler::class)]
 class UpdateTextCommand implements CommandInterface
 {
 
-    private int $id;
-
-    private array $data;
-
-    public function __construct(int $id, array $data)
+    public function __construct(private int $id, private array $data)
     {
-        $this->id   = $id;
-        $this->data = $data;
     }
 
 

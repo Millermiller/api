@@ -5,7 +5,7 @@ namespace Scandinaver\Common\Application\Provider;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Permission\{Intro, Language, Log, Message};
 use Scandinaver\User\Domain\Entity\User;
 

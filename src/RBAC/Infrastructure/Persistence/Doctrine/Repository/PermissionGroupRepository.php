@@ -4,7 +4,7 @@
 namespace Scandinaver\RBAC\Infrastructure\Persistence\Doctrine\Repository;
 
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class PermissionGroupRepository

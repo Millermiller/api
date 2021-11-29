@@ -8,8 +8,8 @@ use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
 use Scandinaver\Blog\UI\Resources\CommentTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
@@ -20,21 +20,17 @@ use Scandinaver\User\Domain\Exception\UserNotFoundException;
 class CreateCommentCommandHandler extends AbstractHandler
 {
 
-    private CommentService $service;
-
-    public function __construct(CommentService $service)
+    public function __construct(private CommentService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  CreateCommentCommand|BaseCommandInterface  $command
+     * @param  CreateCommentCommand  $command
      *
      * @throws PostNotFoundException|UserNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $comment = $this->service->create($command->buildDTO());
 

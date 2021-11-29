@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Learning\Asset\Domain\Entity\Passing;
@@ -15,16 +16,20 @@ use Scandinaver\User\UI\Resource\UserTransformer;
  */
 class PassingTransformer extends TransformerAbstract
 {
+
     protected $defaultIncludes = [
         'user',
         'asset',
     ];
 
-    /**
-     * @param  Passing  $passing
-     *
-     * @return array
-     */
+
+    #[ArrayShape([
+        'id'        => "int",
+        'percent'   => "int",
+        'completed' => "bool",
+        'time'      => "int",
+        'errors'    => "array",
+    ])]
     public function transform(Passing $passing): array
     {
         return [

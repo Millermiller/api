@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Reader\Domain\Contract\Service;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 
 /**
  * Interface ReaderInterface

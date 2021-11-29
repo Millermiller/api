@@ -4,10 +4,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use JsonMapper_Exception;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\User\Domain\Permission\User;
 use Scandinaver\User\UI\Command\CreateUserCommand;
@@ -25,18 +27,20 @@ class UserController extends Controller
 {
 
     /**
-     * @param  Request  $request
+     * @param  FilteringRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(Request $request): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(User::VIEW);
 
         $includes = $request->get('includes', []);
+        $params = $request->getRequestParameters();
 
-        return $this->execute(new UsersQuery($includes));
+        return $this->execute(new UsersQuery($includes, $params));
     }
 
     /**

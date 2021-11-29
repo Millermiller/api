@@ -3,30 +3,26 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\UpdateCardCommandHandler;
 use Scandinaver\Learning\Asset\Domain\DTO\CardDTO;
-use Scandinaver\Learning\Asset\Domain\DTO\TranslateDTO;
 use Scandinaver\Learning\Asset\Domain\DTO\TermDTO;
+use Scandinaver\Learning\Asset\Domain\DTO\TranslateDTO;
 use Scandinaver\Learning\Asset\Domain\Entity\ExampleDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
 
 /**
  * Class UpdateCardCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UpdateCardCommandHandler
  */
+#[Command(UpdateCardCommandHandler::class)]
 class UpdateCardCommand implements CommandInterface
 {
-    private int $cardId;
 
-    private array $data;
-
-    public function __construct(int $cardId, array $data)
+    public function __construct(private int $cardId, private array $data)
     {
-        $this->cardId = $cardId;
-        $this->data = $data;
     }
 
     public function getCardId(): int

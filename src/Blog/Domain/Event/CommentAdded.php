@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\Domain\Event;
 
 use Scandinaver\Blog\Domain\Entity\Comment;
 use Scandinaver\Blog\Domain\Entity\Post;
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 
 /**
  * Class CommentAdded

@@ -3,30 +3,23 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\UpdateAssetCommandHandler;
 
 /**
  * Class CreateAssetCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UpdateAssetCommandHandler
  */
+#[Command(UpdateAssetCommandHandler::class)]
 class UpdateAssetCommand implements CommandInterface
 {
-    private UserInterface $user;
 
-    private array $data;
-
-    private int $asset;
-
-    public function __construct(UserInterface $user, int $asset, array $data)
+    public function __construct(private UserInterface $user, private int $asset, private array $data)
     {
-        $this->user  = $user;
-        $this->data  = $data;
-        $this->asset = $asset;
     }
 
     public function getUser(): UserInterface

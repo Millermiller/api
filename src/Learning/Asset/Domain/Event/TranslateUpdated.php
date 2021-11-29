@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Asset\Domain\Event;
 
 use Scandinaver\Learning\Asset\Domain\Entity\Translate;
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 
 /**
  * Class TranslateUpdated

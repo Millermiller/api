@@ -6,8 +6,8 @@ namespace Scandinaver\Blog\Domain\Entity;
 use DateTime;
 use Scandinaver\Blog\Domain\Event\CommentAdded;
 use Scandinaver\Blog\Domain\Event\CommentDeleted;
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Comment

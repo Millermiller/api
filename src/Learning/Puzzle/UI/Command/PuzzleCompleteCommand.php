@@ -3,26 +3,23 @@
 
 namespace Scandinaver\Learning\Puzzle\UI\Command;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Puzzle\Application\Handler\Command\PuzzleCompleteCommandHandler;
 
 /**
  * Class PuzzleCompleteCommand
  *
- * @see     \Scandinaver\Puzzle\Application\Handler\Command\PuzzleCompleteCommandHandler
  * @package Scandinaver\Puzzle\Application\Command
  */
+#[Command(PuzzleCompleteCommandHandler::class)]
 class PuzzleCompleteCommand implements CommandInterface
 {
-    private UserInterface $user;
 
-    private int $puzzle;
-
-    public function __construct(UserInterface $user, int $puzzle)
+    public function __construct(private UserInterface $user, private int $puzzle)
     {
-        $this->user   = $user;
-        $this->puzzle = $puzzle;
     }
 
     public function getUser(): UserInterface

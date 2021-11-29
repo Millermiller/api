@@ -3,12 +3,12 @@
 
 namespace Scandinaver\Settings\Domain\Service;
 
-use Scandinaver\Common\Domain\Contract\RedisInterface;
+use Scandinaver\Core\Domain\Contract\RedisInterface;
 use Scandinaver\Settings\Domain\Contract\Repository\SettingRepositoryInterface;
 use Scandinaver\Settings\Domain\DTO\SettingDTO;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Settings\Domain\Entity\Setting;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 
 /**
  * Class SettingsService

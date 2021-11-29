@@ -5,7 +5,7 @@ namespace Scandinaver\RBAC\Application\Provider;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\RBAC\Domain\Permission\Permission;
 use Scandinaver\RBAC\Domain\Permission\PermissionGroup;
 use Scandinaver\RBAC\Domain\Permission\Role;

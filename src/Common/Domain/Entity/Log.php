@@ -4,8 +4,8 @@
 namespace Scandinaver\Common\Domain\Entity;
 
 use DateTime;
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Log

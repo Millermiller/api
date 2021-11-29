@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Common\Application\Handler\Command\DeleteIntroCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class DeleteIntroCommand
  *
  * @package Scandinaver\Common\UI\Command
- *
- * @see     \Scandinaver\Common\Application\Handler\Command\DeleteIntroHandler
  */
+#[Command(DeleteIntroCommandHandler::class)]
 class DeleteIntroCommand implements CommandInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

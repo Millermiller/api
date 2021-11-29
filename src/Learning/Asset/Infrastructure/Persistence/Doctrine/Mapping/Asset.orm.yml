@@ -83,6 +83,7 @@ Scandinaver\Learning\Asset\Domain\Entity\Asset:
       joinColumns:
         language_id:
           referencedColumnName: id
+          onDelete: CASCADE
       orphanRemoval: false
     owner:
       targetEntity: Scandinaver\User\Domain\Entity\User

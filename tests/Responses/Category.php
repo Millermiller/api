@@ -14,8 +14,13 @@ class Category implements ResponseInterface
     public static function response(): array
     {
         return [
-            'id',
-            'title',
+            'data' => [
+                'type',
+                'id',
+                'attributes' => [
+                    'title'
+                ]
+            ],
         ];
     }
 }

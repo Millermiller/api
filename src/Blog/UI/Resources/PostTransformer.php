@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\UI\Resources;
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
@@ -26,6 +27,15 @@ class PostTransformer extends TransformerAbstract
         'category',
     ];
 
+    #[ArrayShape([
+        'id'             => "int",
+        'title'          => "null|string",
+        'content'        => "null|string",
+        'views'          => "int",
+        'status'         => "int",
+        'comment_status' => "int",
+        'created_at'     => "string",
+    ])]
     public function transform(Post $post): array
     {
         return [
@@ -41,22 +51,20 @@ class PostTransformer extends TransformerAbstract
 
     public function includeUser(Post $post): Item
     {
-        $user = $post->getUser();
-
-        return $this->item($user, new UserTransformer());
+        return $this->item($post->getUser(), new UserTransformer(), 'user');
     }
 
     public function includeComments(Post $post): Collection
     {
         $comments = $post->getComments();
 
-        return $this->collection($comments, new CommentTransformer());
+        return $this->collection($comments, new CommentTransformer(), 'comments');
     }
 
     public function includeCategory(Post $post): Item
     {
         $category = $post->getCategory();
 
-        return $this->item($category, new CategoryTransformer());
+        return $this->item($category, new CategoryTransformer(), 'category');
     }
 }

@@ -4,8 +4,8 @@
 namespace Scandinaver\Common\Application\Handler\Command;
 
 use Scandinaver\Common\UI\Command\UpdateMessageCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateMessageCommandHandler
@@ -20,9 +20,9 @@ class UpdateMessageCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateMessageCommand|BaseCommandInterface  $command
+     * @param  UpdateMessageCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         // TODO: Implement handle() method.
     }

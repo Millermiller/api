@@ -3,32 +3,22 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Settings\Application\Handler\Command\SetSettingCommandHandler;
 
 /**
  * Class SetSettingCommand
  *
  * @package Scandinaver\Settings\UI\Command
- *
- * @see \Scandinaver\Settings\Application\Handler\Command\SetSettingCommandHandler
  */
+#[Command(SetSettingCommandHandler::class)]
 class SetSettingCommand implements CommandInterface
 {
-    private int $id;
 
-    private $value;
-
-    /**
-     * SetSettingCommand constructor.
-     *
-     * @param  int  $id
-     * @param  mixed  $value
-     */
-    public function __construct(int $id, $value)
+    public function __construct(private int $id, private $value)
     {
-        $this->id = $id;
-        $this->value = $value;
     }
 
     public function getId(): int
@@ -36,10 +26,7 @@ class SetSettingCommand implements CommandInterface
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }

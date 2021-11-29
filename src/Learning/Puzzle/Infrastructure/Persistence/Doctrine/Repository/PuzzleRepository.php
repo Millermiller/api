@@ -4,11 +4,11 @@
 namespace Scandinaver\Learning\Puzzle\Infrastructure\Persistence\Doctrine\Repository;
 
 use Doctrine\ORM\{OptimisticLockException, ORMException};
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class PuzzleRepository

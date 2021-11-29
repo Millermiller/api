@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Asset\Infrastructure\Persistence\Doctrine\Repository;
 
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\CardRepositoryInterface;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class CardRepository

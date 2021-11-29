@@ -8,8 +8,8 @@ use Scandinaver\RBAC\Domain\Exception\PermissionGroupDublicateException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
 use Scandinaver\RBAC\UI\Resource\PermissionGroupTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreatePermissionGroupCommandHandler
@@ -19,21 +19,17 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class CreatePermissionGroupCommandHandler extends AbstractHandler
 {
 
-    private RBACService $service;
-
-    public function __construct(RBACService $service)
+    public function __construct(private RBACService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  CreatePermissionGroupCommand|BaseCommandInterface  $command
+     * @param  CreatePermissionGroupCommand  $command
      *
      * @throws PermissionGroupDublicateException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $permissionGroup = $this->service->createPermissionGroup($command->buildDTO());
 

@@ -8,7 +8,7 @@ use Doctrine\ORM\ORMException;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Psr\Log\LoggerInterface;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
@@ -21,8 +21,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\CardAlreadyAddedException;
 use Scandinaver\Learning\Asset\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Entity\{Asset, FavouriteAsset, PersonalAsset, SentenceAsset, WordAsset};
-use Scandinaver\Shared\Contract\BaseServiceInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\DTO;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 
 /**
@@ -434,16 +434,18 @@ class AssetService implements BaseServiceInterface
     }
 
     /**
-     * @param  Language  $language
+     * @param  int  $languageId
      *
+     * use $languageId instead of entity because we pass it through queue
+     * and entity manager dont know nothing about this
+     *
+     * @throws LanguageNotFoundException
      * @throws Exception
      */
-    public function createDefaultAssets(Language $language): void
+    public function createDefaultAssets(int $languageId): void
     {
-        $users   = $this->userRepository->findAll();
-        $manager = app('em');
-        $manager->getConnection()->beginTransaction();
-
+        $users    = $this->userRepository->findAll();
+        $language = $this->getLanguageById($languageId);
         try {
             foreach ($users as $user) {
                 $favourite = new FavouriteAsset($language);
@@ -451,9 +453,7 @@ class AssetService implements BaseServiceInterface
                 $user->addPersonalAsset($favourite);
                 $this->assetRepository->save($favourite);
             }
-            $manager->getConnection()->commit();
         } catch (Exception $e) {
-            $manager->getConnection()->rollBack();
             $this->logger->error($e->getMessage());
             throw $e;
         }

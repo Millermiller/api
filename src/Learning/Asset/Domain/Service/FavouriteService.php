@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Service;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learning\Asset\Domain\{Exception\CardAlreadyAddedException, Exception\CardNotFoundException};
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;

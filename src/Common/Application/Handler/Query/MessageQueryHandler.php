@@ -5,8 +5,8 @@ namespace Scandinaver\Common\Application\Handler\Query;
 
 use Scandinaver\Common\Domain\Service\MessageService;
 use Scandinaver\Common\UI\Query\MessageQuery;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class MessageQueryHandler
@@ -16,17 +16,14 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class MessageQueryHandler extends AbstractHandler
 {
 
-    private MessageService $messageService;
-
-    public function __construct(MessageService $messageService)
+    public function __construct(private MessageService $service)
     {
         parent::__construct();
 
-        $this->messageService = $messageService;
     }
 
     /**
-     * @param  MessageQuery|BaseCommandInterface  $query
+     * @param  MessageQuery  $query
      *
      */
     public function handle(BaseCommandInterface $query): void

@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Common\Application\Handler\Query\LanguagesQueryHandler;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
  * Class LanguagesQuery
  *
- * @see     \Scandinaver\Common\Application\Handler\Query\LanguagesQueryHandler
  * @package Scandinaver\Common\UI\Query
  */
+#[Query(LanguagesQueryHandler::class)]
 class LanguagesQuery implements QueryInterface
 {
 
-    private ?UserInterface $user;
-
-    public function __construct(?UserInterface $user)
+    public function __construct(private ?UserInterface $user)
     {
-        $this->user = $user;
     }
 
     public function getUser(): ?UserInterface

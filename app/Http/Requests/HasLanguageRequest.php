@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class HasLanguageRequest
@@ -14,6 +15,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class HasLanguageRequest extends FormRequest
 {
 
+    #[ArrayShape(['lang' => "string"])]
     public function rules(): array
     {
         return [
@@ -21,6 +23,7 @@ class HasLanguageRequest extends FormRequest
         ];
     }
 
+    #[ArrayShape(['lang.required' => "string"])]
     public function messages(): array
     {
         return [

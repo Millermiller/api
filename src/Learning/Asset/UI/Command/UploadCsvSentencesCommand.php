@@ -4,26 +4,22 @@
 namespace Scandinaver\Learning\Asset\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\UploadCsvSentencesCommandHandler;
 
 /**
  * Class UploadCsvSentencesCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\UploadCsvSentencesCommandHandler
  */
+#[Command(UploadCsvSentencesCommandHandler::class)]
 class UploadCsvSentencesCommand implements CommandInterface
 {
-    private string $language;
 
-    private UploadedFile $file;
-
-    public function __construct(string $language, UploadedFile $file)
+    public function __construct(private string $language, private UploadedFile $file)
     {
-        $this->language = $language;
-        $this->file     = $file;
     }
 
     public function getLanguage(): string

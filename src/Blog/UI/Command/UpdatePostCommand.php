@@ -3,17 +3,18 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
+use Scandinaver\Blog\Application\Handler\Command\UpdatePostCommandHandler;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdatePostCommand
  *
  * @package Scandinaver\Blog\UI\Command
- *
- * @see     \Scandinaver\Blog\Application\Handler\Command\UpdatePostHandler
  */
+#[Command(UpdatePostCommandHandler::class)]
 class UpdatePostCommand implements CommandInterface
 {
 

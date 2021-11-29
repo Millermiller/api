@@ -4,6 +4,7 @@
 namespace Scandinaver\Billing\UI\Resource;
 
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 use Scandinaver\Billing\Domain\Entity\Order;
@@ -20,9 +21,10 @@ class OrderTransformer extends TransformerAbstract
     protected $defaultIncludes = [
         'user',
         'payment',
-        'service'
+        'service',
     ];
 
+    #[ArrayShape(['id' => "\Ramsey\Uuid\UuidInterface", 'created_at' => "string"])]
     public function transform(Order $order): array
     {
         return [

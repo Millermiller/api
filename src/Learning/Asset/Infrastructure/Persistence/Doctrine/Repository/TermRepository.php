@@ -7,7 +7,7 @@ use Doctrine\ORM\{NonUniqueResultException, NoResultException};
 use Doctrine\ORM\Query\Expr\Join;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\TermRepositoryInterface;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class TermRepository

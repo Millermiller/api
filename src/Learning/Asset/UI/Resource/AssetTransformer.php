@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Primitive;
@@ -17,6 +18,7 @@ use Scandinaver\Learning\Asset\Domain\Entity\Asset;
  */
 class AssetTransformer extends TransformerAbstract
 {
+
     protected $availableIncludes = [
         'cards',
         'active',
@@ -26,14 +28,17 @@ class AssetTransformer extends TransformerAbstract
 
     protected $defaultIncludes = [
         'language',
-        'bestResult'
+       // 'bestResult', //TODO: think about optional includes
     ];
 
-    /**
-     * @param  Asset  $asset
-     *
-     * @return array
-     */
+
+    #[ArrayShape([
+        'id'    => "int",
+        'type'  => "int",
+        'title' => "string",
+        'level' => "int",
+        'count' => "int",
+    ])]
     public function transform(Asset $asset): array
     {
         return [
@@ -81,6 +86,7 @@ class AssetTransformer extends TransformerAbstract
         if ($bestResult === NULL) {
             return $this->primitive(0);
         }
+
         return $this->primitive($bestResult->getPercent());
     }
 }

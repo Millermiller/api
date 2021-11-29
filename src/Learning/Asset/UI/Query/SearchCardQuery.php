@@ -3,17 +3,19 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Learning\Asset\Application\Handler\Query\SearchCardQueryHandler;
 
 /**
  * Class SearchCardQuery
  *
  * @package Scandinaver\Learn\UI\Query
- *
- * @see     \Scandinaver\Learn\Application\Handler\Query\SearchCardQueryHandler
  */
+#[Query(SearchCardQueryHandler::class)]
 class SearchCardQuery implements QueryInterface
 {
+
     private string $language;
 
     private ?string $query;

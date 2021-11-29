@@ -3,24 +3,22 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Blog\Application\Handler\Command\DeletePostCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class DeletePostCommand
  *
  * @package Scandinaver\Blog\UI\Command
- *
- * @see     \Scandinaver\Blog\Application\Handler\Command\DeletePostHandler
  */
+#[Command(DeletePostCommandHandler::class)]
 class DeletePostCommand implements CommandInterface
 {
 
-    private int $postId;
-
-    public function __construct(int $postId)
+    public function __construct(private int $postId)
     {
-        $this->postId = $postId;
     }
 
     public function getPostId(): int

@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\Learning\Asset\Domain\Exception\PassingNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\TestService;
 use Scandinaver\Learning\Asset\UI\Command\DeletePassingCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeletePassingCommandHandler
@@ -17,21 +17,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class DeletePassingCommandHandler extends AbstractHandler
 {
-    private TestService $service;
 
-    public function __construct(TestService $service)
+    public function __construct(private TestService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  DeletePassingCommand|BaseCommandInterface  $command
+     * @param  DeletePassingCommand  $command
      *
      * @throws PassingNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->service->deletePassing($command->getId());
 

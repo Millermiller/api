@@ -6,7 +6,7 @@ namespace Scandinaver\Common\Domain\Entity;
 use LaravelDoctrine\ORM\Contracts\UrlRoutable;
 use Scandinaver\Common\Domain\Event\LanguageCreated;
 use Scandinaver\Common\Domain\Event\LanguageDeleted;
-use Scandinaver\Shared\AggregateRoot;
+use Scandinaver\Core\Domain\AggregateRoot;
 
 /**
  * Class Language

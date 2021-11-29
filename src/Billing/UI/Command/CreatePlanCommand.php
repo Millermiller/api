@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Billing\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Billing\Application\Handler\Command\CreatePlanCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class CreatePlanCommand
  *
- * @see     \Scandinaver\Billing\Application\Handler\Command\CreatePlanCommandHandler
  * @package Scandinaver\Billing\UI\Command
  */
+#[Command(CreatePlanCommandHandler::class)]
 class CreatePlanCommand implements CommandInterface
 {
 
-    private array $data;
-
-    public function __construct(array $data)
+    public function __construct(private array $data)
     {
-        $this->data = $data;
     }
 
     public function getData(): array

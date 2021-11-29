@@ -35,9 +35,9 @@ class ApiTest extends TestCase
     public function testLanguages()
     {
         $response = $this->get(route('languages:all'));
-        $response->assertJsonStructure([
-            \Tests\Responses\Language::response()
-        ]);
+        $response->assertJsonStructure(
+            \Tests\Responses\LanguageCollection::response()
+        );
     }
 
    // public function testIncorrectLanguageName()

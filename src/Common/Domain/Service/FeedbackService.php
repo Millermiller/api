@@ -7,7 +7,7 @@ use Exception;
 use Scandinaver\Common\Domain\Contract\Repository\FeedbackRepositoryInterface;
 use Scandinaver\Common\Domain\DTO\FeedbackDTO;
 use Scandinaver\Common\Domain\Entity\Feedback;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 
 /**
  * Class FeedbackService

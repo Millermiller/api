@@ -8,8 +8,8 @@ use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Query\PostQuery;
 use Scandinaver\Blog\UI\Resources\PostTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class PostQueryHandler
@@ -19,26 +19,22 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class PostQueryHandler extends AbstractHandler
 {
 
-    private BlogService $blogService;
-
-    public function __construct(BlogService $blogService)
+    public function __construct(private BlogService $service)
     {
         parent::__construct();
-
-        $this->blogService = $blogService;
     }
 
     /**
-     * @param  PostQuery|BaseCommandInterface  $query
+     * @param  PostQuery $query
      *
      * @throws PostNotFoundException
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $post = $this->blogService->one($query->getId());
+        $post = $this->service->one($query->getId());
 
         $this->fractal->parseIncludes('comments');
 
-        $this->resource = new Item($post, new PostTransformer());
+        $this->resource = new Item($post, new PostTransformer(), 'post');
     }
 } 

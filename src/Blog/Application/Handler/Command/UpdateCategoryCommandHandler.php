@@ -8,8 +8,8 @@ use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Command\UpdateCategoryCommand;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateCategoryCommandHandler
@@ -19,23 +19,19 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class UpdateCategoryCommandHandler extends AbstractHandler
 {
 
-    private CategoryService $categoryService;
-
-    public function __construct(CategoryService $categoryService)
+    public function __construct(private CategoryService $service)
     {
         parent::__construct();
-
-        $this->categoryService = $categoryService;
     }
 
     /**
-     * @param  UpdateCategoryCommand|BaseCommandInterface  $command
+     * @param  UpdateCategoryCommand  $command
      *
      * @throws CategoryNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $category = $this->categoryService->update($command->getCategoryId(), $command->buildDTO());
+        $category = $this->service->update($command->getCategoryId(), $command->buildDTO());
 
         $this->resource = new Item($category, new CategoryTransformer());
     }

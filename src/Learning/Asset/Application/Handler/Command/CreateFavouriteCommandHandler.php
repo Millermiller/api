@@ -8,8 +8,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\CardAlreadyAddedException;
 use Scandinaver\Learning\Asset\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\{FavouriteService};
 use Scandinaver\Learning\Asset\UI\Command\CreateFavouriteCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateFavouriteCommandHandler
@@ -18,24 +18,21 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class CreateFavouriteCommandHandler extends AbstractHandler
 {
-    protected FavouriteService $favouriteService;
 
-    public function __construct(FavouriteService $favouriteService)
+    public function __construct(protected FavouriteService $service)
     {
         parent::__construct();
-
-        $this->favouriteService = $favouriteService;
     }
 
     /**
-     * @param  CreateFavouriteCommand|BaseCommandInterface  $command
+     * @param  CreateFavouriteCommand  $command
      *
      * @throws CardAlreadyAddedException
      * @throws CardNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $this->favouriteService->create($command->getUser(), $command->getCard());
+        $this->service->create($command->getUser(), $command->getCard());
 
         $this->resource = new NullResource();
     }

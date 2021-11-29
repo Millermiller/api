@@ -6,8 +6,8 @@ namespace Scandinaver\Reader\Application\Handler\Query;
 use League\Fractal\Resource\Item;
 use Scandinaver\Reader\Domain\Contract\Service\ReaderInterface;
 use Scandinaver\Reader\UI\Query\ReadQuery;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class ReadQueryHandler
@@ -16,17 +16,14 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class ReadQueryHandler extends AbstractHandler
 {
-    private ReaderInterface $reader;
 
-    public function __construct(ReaderInterface $reader)
+    public function __construct(private ReaderInterface $reader)
     {
         parent::__construct();
-
-        $this->reader = $reader;
     }
 
     /**
-     * @param  ReadQuery|BaseCommandInterface  $query
+     * @param  ReadQuery  $query
      */
     public function handle(BaseCommandInterface $query): void
     {

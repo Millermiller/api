@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\Domain\Event;
 
 use Scandinaver\Common\Domain\Entity\Language;
-use Scandinaver\Shared\DomainEvent;
+use Scandinaver\Core\Domain\Contract\DomainEvent;
 
 /**
  * Class LanguageCreated

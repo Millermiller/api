@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Service;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Exception\AssetNotFoundException;
@@ -12,7 +12,7 @@ use Scandinaver\Learning\Asset\Domain\Exception\PassingNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Entity\Passing;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
 use Scandinaver\Settings\Domain\Service\SettingsService;
-use Scandinaver\Shared\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 
 /**
  * Class TestService

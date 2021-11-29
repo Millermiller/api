@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Translate\Domain\Service;
 
 use Exception;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 use Scandinaver\Learning\Translate\Domain\DTO\SynonymDTO;
 use Scandinaver\Learning\Translate\Domain\Entity\Synonym;
 use Scandinaver\Learning\Translate\Domain\Entity\DictionaryItem;

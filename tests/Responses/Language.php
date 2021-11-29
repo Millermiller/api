@@ -3,6 +3,8 @@
 
 namespace Tests\Responses;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class Language
  *
@@ -11,13 +13,24 @@ namespace Tests\Responses;
 class Language implements ResponseInterface
 {
 
+    #[ArrayShape([
+        'data' => "array",
+    ])]
     public static function response(): array
     {
         return [
-            'id',
-            'title',
-            'flag',
-            'letter',
+            'data' => [
+                'id',
+                'type',
+                'attributes' => [
+                    'title',
+                    'description',
+                    'letter',
+                    'flag',
+                    'image',
+                    'active',
+                ],
+            ],
         ];
     }
 }

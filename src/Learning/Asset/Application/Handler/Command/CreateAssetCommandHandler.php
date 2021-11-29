@@ -5,12 +5,11 @@ namespace Scandinaver\Learning\Asset\Application\Handler\Command;
 
 use Exception;
 use League\Fractal\Resource\Item;
-use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learning\Asset\Domain\Service\{AssetService, CardService};
+use Scandinaver\Learning\Asset\Domain\Service\{AssetService};
 use Scandinaver\Learning\Asset\UI\Command\CreateAssetCommand;
 use Scandinaver\Learning\Asset\UI\Resource\AssetTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateAssetCommandHandler
@@ -19,26 +18,20 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class CreateAssetCommandHandler extends AbstractHandler
 {
-    protected CardService $cardService;
 
-    protected AssetService $assetService;
-
-    public function __construct(AssetService $assetService, CardService $cardService)
+    public function __construct(protected AssetService $service)
     {
         parent::__construct();
-
-        $this->assetService = $assetService;
-        $this->cardService = $cardService;
     }
 
     /**
-     * @param  CreateAssetCommand|BaseCommandInterface  $command
+     * @param  CreateAssetCommand  $command
      *
      * @throws Exception
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $asset = $this->assetService->create($command->getUser(), $command->buildDTO());
+        $asset = $this->service->create($command->getUser(), $command->buildDTO());
 
         $this->fractal->parseIncludes('cards');
 

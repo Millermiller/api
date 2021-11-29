@@ -4,7 +4,7 @@
 namespace Scandinaver\Billing\Infrastructure\Persistence\Doctrine\Repository;
 
 use Doctrine\ORM\{NonUniqueResultException, NoResultException};
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 use Scandinaver\Billing\Domain\Contract\Repository\PlanRepositoryInterface;
 use Scandinaver\Billing\Domain\Entity\Plan;
 

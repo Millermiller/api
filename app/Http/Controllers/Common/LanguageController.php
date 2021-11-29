@@ -80,8 +80,6 @@ class LanguageController extends Controller
     {
         Gate::authorize(Language::DELETE, $id);
 
-        $this->execute(new DeleteLanguageCommand($id), Response::HTTP_NO_CONTENT);
-
-        return response()->json(NULL, 204);
+        return $this->execute(new DeleteLanguageCommand($id), Response::HTTP_NO_CONTENT);
     }
 }

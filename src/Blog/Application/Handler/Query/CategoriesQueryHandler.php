@@ -7,8 +7,8 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoriesQuery;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class CategoriesQueryHandler
@@ -18,17 +18,13 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class CategoriesQueryHandler extends AbstractHandler
 {
 
-    private CategoryService $service;
-
-    public function __construct(CategoryService $service)
+    public function __construct(private CategoryService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  CategoriesQuery|BaseCommandInterface  $command
+     * @param  CategoriesQuery  $command
      *
      * @return void
      */

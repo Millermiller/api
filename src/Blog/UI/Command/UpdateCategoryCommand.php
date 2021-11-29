@@ -3,27 +3,22 @@
 
 namespace Scandinaver\Blog\UI\Command;
 
+use Scandinaver\Blog\Application\Handler\Command\UpdateCategoryCommandHandler;
 use Scandinaver\Blog\Domain\DTO\CategoryDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateCategoryCommand
  *
  * @package Scandinaver\Blog\UI\Command
- *
- * @see     \Scandinaver\Blog\Application\Handler\Command\UpdateCategoryHandler
  */
+#[Command(UpdateCategoryCommandHandler::class)]
 class UpdateCategoryCommand implements CommandInterface
 {
 
-    private int $categoryId;
-
-    private array $data;
-
-    public function __construct(int $categoryId, array $data)
+    public function __construct(private int $categoryId, private array $data)
     {
-        $this->categoryId = $categoryId;
-        $this->data       = $data;
     }
 
     public function getData(): array

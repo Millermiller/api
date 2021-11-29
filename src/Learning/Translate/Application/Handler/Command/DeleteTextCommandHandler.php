@@ -4,11 +4,11 @@
 namespace Scandinaver\Learning\Translate\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Learning\Translate\Domain\Exception\TextNotFoundException;
 use Scandinaver\Learning\Translate\Domain\Service\TextService;
 use Scandinaver\Learning\Translate\UI\Command\DeleteTextCommand;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeleteTextCommandHandler
@@ -18,21 +18,17 @@ use Scandinaver\Learning\Translate\UI\Command\DeleteTextCommand;
 class DeleteTextCommandHandler extends AbstractHandler
 {
 
-    private TextService $textService;
-
-    public function __construct(TextService $textService)
+    public function __construct(private TextService $textService)
     {
         parent::__construct();
-
-        $this->textService = $textService;
     }
 
     /**
-     * @param  DeleteTextCommand|BaseCommandInterface  $command
+     * @param  DeleteTextCommand  $command
      *
      * @throws TextNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->textService->deleteText($command->getId());
 

@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\UI\Resource;
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Primitive;
@@ -17,15 +18,26 @@ use Scandinaver\Learning\Translate\Domain\Entity\Text;
  */
 class TextTransformer extends TransformerAbstract
 {
+
     protected $defaultIncludes = [
         'language',
         'tooltips',
         'image',
         'dictionary',
         'text',
-        'translate'
+        'translate',
     ];
 
+    #[ArrayShape([
+        'id'          => "int",
+        'title'       => "string",
+        'level'       => "int",
+        'description' => "null|string",
+        'count'       => "int",
+        'published'   => "bool",
+        'available'   => "bool",
+        'active'      => "bool",
+    ])]
     public function transform(Text $text): array
     {
         return [
@@ -36,7 +48,7 @@ class TextTransformer extends TransformerAbstract
             'count'       => $text->getTranslates()->count(),
             'published'   => $text->isPublished(),
             'available'   => TRUE,
-            'active'      => TRUE
+            'active'      => TRUE,
         ];
     }
 

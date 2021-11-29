@@ -4,8 +4,9 @@
 namespace Scandinaver\Billing\UI\Resource;
 
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use League\Fractal\TransformerAbstract;
-use Scandinaver\Billing\Domain\Entity\Payment;
 use Scandinaver\Billing\Domain\Entity\Service;
 
 /**
@@ -20,11 +21,16 @@ class ServiceTransformer extends TransformerAbstract
 
     ];
 
+    #[Pure]
+    #[ArrayShape([
+        'id'   => "\Ramsey\Uuid\UuidInterface",
+        'type' => "\Scandinaver\Billing\Domain\Entity\ServiceType",
+    ])]
     public function transform(Service $service): array
     {
         return [
             'id'   => $service->getId(),
-            'type' => $service->getType()
+            'type' => $service->getType(),
         ];
     }
 }

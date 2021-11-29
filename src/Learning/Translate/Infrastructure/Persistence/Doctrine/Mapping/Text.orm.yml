@@ -74,6 +74,7 @@ Scandinaver\Learning\Translate\Domain\Entity\Text:
       joinColumns:
         language_id:
           referencedColumnName: id
+          onDelete: CASCADE
       orphanRemoval: false
   oneToMany:
     tooltips:

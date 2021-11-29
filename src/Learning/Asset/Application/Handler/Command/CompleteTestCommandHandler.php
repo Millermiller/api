@@ -8,8 +8,8 @@ use Scandinaver\Learning\Asset\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\TestService;
 use Scandinaver\Learning\Asset\UI\Command\CompleteTestCommand;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CompleteTestCommandHandler
@@ -18,24 +18,21 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
  */
 class CompleteTestCommandHandler extends AbstractHandler
 {
-    private TestService $testService;
 
-    public function __construct(TestService $testService)
+    public function __construct(private TestService $service)
     {
         parent::__construct();
-
-        $this->testService = $testService;
     }
 
     /**
-     * @param  CompleteTestCommand|BaseCommandInterface  $command
+     * @param  CompleteTestCommand  $command
      *
      * @throws AssetNotFoundException
      * @throws SettingNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $this->testService->savePassing(
+        $this->service->savePassing(
             $command->getUser(),
             $command->getAsset(),
             $command->getData()

@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Translate\Domain\Entity;
 
 use DateTime;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\AbstractPassing;
 use Scandinaver\Common\Domain\Entity\Language;
 

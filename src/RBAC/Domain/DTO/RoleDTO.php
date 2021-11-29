@@ -4,7 +4,7 @@
 namespace Scandinaver\RBAC\Domain\DTO;
 
 use Scandinaver\RBAC\Domain\Entity\Role;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class RoleDTO

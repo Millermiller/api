@@ -5,7 +5,7 @@ namespace Scandinaver\Learning\Asset\Domain\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\Collection;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 
 /**
  * Class Term

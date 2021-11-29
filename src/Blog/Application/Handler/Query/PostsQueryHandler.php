@@ -7,8 +7,8 @@ use League\Fractal\Resource\Collection;
 use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Query\PostsQuery;
 use Scandinaver\Blog\UI\Resources\PostTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class PostsQueryHandler
@@ -18,23 +18,20 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class PostsQueryHandler extends AbstractHandler
 {
 
-    private BlogService $blogService;
-
-    public function __construct(BlogService $blogService)
+    public function __construct(private BlogService $service)
     {
         parent::__construct();
-
-        $this->blogService = $blogService;
     }
 
     /**
-     * @param  PostsQuery|BaseCommandInterface  $query
+     * @param  PostsQuery $query
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $posts = $this->blogService->all();
+        $posts = $this->service->all();
 
-        $this->resource = new Collection($posts, new PostTransformer());
         $this->fractal->parseIncludes('comments');
+
+        $this->resource = new Collection($posts, new PostTransformer(), 'post');
     }
 } 

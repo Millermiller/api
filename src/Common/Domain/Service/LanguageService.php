@@ -4,9 +4,12 @@
 namespace Scandinaver\Common\Domain\Service;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Common\Domain\Event\Notifications\LanguageCreatedNotification;
+use Scandinaver\Common\Domain\Event\Notifications\LanguageDeletedNotification;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\DTO\LanguageDTO;
 use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 
 /**
  * Class LanguageService
@@ -73,7 +76,7 @@ class LanguageService
 
         $this->languageRepository->save($language);
 
-        //TODO: implements creating favourite assets and other events
+        LanguageCreatedNotification::dispatch($language);
 
         return $language;
     }
@@ -83,6 +86,7 @@ class LanguageService
      * @param  array  $data
      *
      * @return Language
+     * @throws LanguageNotFoundException
      */
     public function updateLanguage(int $id, array $data): Language
     {
@@ -110,11 +114,15 @@ class LanguageService
 
     /**
      * @param  int  $id
+     *
+     * @throws LanguageNotFoundException
      */
     public function deleteLanguage(int $id): void
     {
         $language = $this->getLanguageByid($id);
 
         $this->languageRepository->delete($language);
+
+        LanguageDeletedNotification::dispatch($language);
     }
 }

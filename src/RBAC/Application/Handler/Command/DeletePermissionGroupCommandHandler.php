@@ -7,8 +7,8 @@ use League\Fractal\Resource\NullResource;
 use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Command\DeletePermissionGroupCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeletePermissionGroupCommandHandler
@@ -18,21 +18,17 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class DeletePermissionGroupCommandHandler extends AbstractHandler
 {
 
-    private RBACService $service;
-
-    public function __construct(RBACService $service)
+    public function __construct(private RBACService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  DeletePermissionGroupCommand|BaseCommandInterface  $command
+     * @param  DeletePermissionGroupCommand  $command
      *
      * @throws PermissionGroupNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->service->deletePermissionGroup($command->getId());
 

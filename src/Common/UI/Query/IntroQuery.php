@@ -3,20 +3,21 @@
 
 namespace Scandinaver\Common\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Common\Application\Handler\Query\IntroQueryHandler;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
  * Class IntroQuery
  *
  * @package Scandinaver\Common\UI\Query
  */
+#[Query(IntroQueryHandler::class)]
 class IntroQuery implements QueryInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

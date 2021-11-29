@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Asset\Domain\Contract\Repository;
 
 use Scandinaver\Learning\Asset\Domain\Entity\Translate;
-use Scandinaver\Shared\Contract\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 
 /**
  * Interface TranslateRepositoryInterface

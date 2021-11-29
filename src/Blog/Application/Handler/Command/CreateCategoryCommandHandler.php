@@ -8,8 +8,8 @@ use Scandinaver\Blog\Domain\Exception\CategoryDuplicateException;
 use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
 use Scandinaver\Blog\UI\Resources\CategoryTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateCategoryCommandHandler
@@ -19,21 +19,17 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class CreateCategoryCommandHandler extends AbstractHandler
 {
 
-    private CategoryService $service;
-
-    public function __construct(CategoryService $service)
+    public function __construct(private CategoryService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  CreateCategoryCommand|BaseCommandInterface  $command
+     * @param  CreateCategoryCommand  $command
      *
      * @throws CategoryDuplicateException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $category = $this->service->create($command->buildDTO());
 

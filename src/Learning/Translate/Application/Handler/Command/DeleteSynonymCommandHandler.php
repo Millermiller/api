@@ -5,10 +5,10 @@ namespace Scandinaver\Learning\Translate\Application\Handler\Command;
 
 use Exception;
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Learning\Translate\Domain\Service\TextService;
 use Scandinaver\Learning\Translate\UI\Command\DeleteSynonymCommand;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeleteSynonymCommandHandler
@@ -18,20 +18,17 @@ use Scandinaver\Learning\Translate\UI\Command\DeleteSynonymCommand;
 class DeleteSynonymCommandHandler extends AbstractHandler
 {
 
-    private TextService $textService;
-
-    public function __construct(TextService $textService)
+    public function __construct(private TextService $textService)
     {
         parent::__construct();
-        $this->textService = $textService;
     }
 
     /**
-     * @param  DeleteSynonymCommand|BaseCommandInterface  $command
+     * @param  DeleteSynonymCommand  $command
      *
      * @throws Exception
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $this->textService->deleteSynonym($command->getId());
 

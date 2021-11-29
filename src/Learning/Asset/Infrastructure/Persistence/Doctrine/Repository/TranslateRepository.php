@@ -5,7 +5,7 @@ namespace Scandinaver\Learning\Asset\Infrastructure\Persistence\Doctrine\Reposit
 
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\TranslateRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Entity\Translate;
-use Scandinaver\Shared\BaseRepository;
+use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
 
 /**
  * Class TranslateRepository

@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Billing\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Billing\Application\Handler\Command\DeletePlanCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class DeletePlanCommand
  *
- * @see     \Scandinaver\Billing\Application\Handler\Command\DeletePlanCommandHandler
  * @package Scandinaver\Billing\UI\Command
  */
+#[Command(DeletePlanCommandHandler::class)]
 class DeletePlanCommand implements CommandInterface
 {
 
-    private int $id;
-
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
     public function buildDTO(): DTO
     {

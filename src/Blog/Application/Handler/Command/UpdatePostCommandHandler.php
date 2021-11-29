@@ -9,8 +9,8 @@ use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Command\UpdatePostCommand;
 use Scandinaver\Blog\UI\Resources\PostTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
@@ -21,23 +21,19 @@ use Scandinaver\User\Domain\Exception\UserNotFoundException;
 class UpdatePostCommandHandler extends AbstractHandler
 {
 
-    private BlogService $blogService;
-
-    public function __construct(BlogService $blogService)
+    public function __construct(private BlogService $blogService)
     {
         parent::__construct();
-
-        $this->blogService = $blogService;
     }
 
     /**
-     * @param  UpdatePostCommand|BaseCommandInterface  $command
+     * @param  UpdatePostCommand  $command
      *
      * @throws PostNotFoundException
      * @throws CategoryNotFoundException
      * @throws UserNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         $post = $this->blogService->updatePost($command->getPostId(), $command->buildDTO());
 

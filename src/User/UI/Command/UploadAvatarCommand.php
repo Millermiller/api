@@ -4,28 +4,23 @@
 namespace Scandinaver\User\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\User\Application\Handler\Command\UploadAvatarCommandHandler;
 
 /**
  * Class UploadAvatarCommand
  *
  * @package Scandinaver\User\UI\Command
- *
- * @see     \Scandinaver\User\Application\Handler\Command\UploadAvatarCommandHandler
  */
+#[Command(UploadAvatarCommandHandler::class)]
 class UploadAvatarCommand implements CommandInterface
 {
 
-    private UploadedFile $photo;
-
-    private UserInterface $user;
-
-    public function __construct(UserInterface $user, UploadedFile $photo)
+    public function __construct(private UserInterface $user, private UploadedFile $photo)
     {
-        $this->photo = $photo;
-        $this->user  = $user;
     }
 
     public function getPhoto(): UploadedFile

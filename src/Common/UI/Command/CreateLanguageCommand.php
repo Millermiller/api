@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Common\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Common\Application\Handler\Command\CreateLanguageCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class CreateLanguageCommand
  *
  * @package Scandinaver\Common\UI\Command
- *
- * @see \Scandinaver\Common\Application\Handler\Command\CreateLanguageCommandHandler
  */
+#[Command(CreateLanguageCommandHandler::class)]
 class CreateLanguageCommand implements CommandInterface
 {
-    private array $data;
 
-    public function __construct(array $data)
+    public function __construct(private array $data)
     {
-        $this->data = $data;
     }
 
     public function getData(): array

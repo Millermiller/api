@@ -3,15 +3,16 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\RBAC\Application\Handler\Query\PermissionsQueryHandler;
 
 /**
  * Class PermissionsQuery
  *
  * @package Scandinaver\RBAC\UI\Query
- *
- * @see     \Scandinaver\RBAC\Application\Handler\Query\PermissionsQueryHandler
  */
+#[Query(PermissionsQueryHandler::class)]
 class PermissionsQuery implements QueryInterface
 {
 

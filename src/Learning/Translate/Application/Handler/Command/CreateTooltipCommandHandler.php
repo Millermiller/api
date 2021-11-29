@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Learning\Translate\Application\Handler\Command;
 
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Learning\Translate\UI\Command\CreateTooltipCommand;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class CreateTooltipCommandHandler
@@ -21,9 +21,9 @@ class CreateTooltipCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateTooltipCommand|BaseCommandInterface  $command
+     * @param  CreateTooltipCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         // TODO: Implement handle() method.
     }

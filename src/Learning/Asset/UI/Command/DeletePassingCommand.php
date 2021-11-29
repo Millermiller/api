@@ -3,23 +3,22 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Application\Handler\Command\DeletePassingCommandHandler;
 
 /**
  * Class DeletePassingCommand
  *
  * @package Scandinaver\Learn\UI\Command
- *
- * @see     \Scandinaver\Learn\Application\Handler\Command\DeletePassingCommandHandler
  */
+#[Command(DeletePassingCommandHandler::class)]
 class DeletePassingCommand implements CommandInterface
 {
-    private int $id;
 
-    public function __construct(int $id)
+    public function __construct(private int $id)
     {
-        $this->id = $id;
     }
 
     public function getId(): int

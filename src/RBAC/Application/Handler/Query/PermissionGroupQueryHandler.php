@@ -8,8 +8,8 @@ use Scandinaver\RBAC\Domain\Exception\PermissionGroupNotFoundException;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionGroupQuery;
 use Scandinaver\RBAC\UI\Resource\PermissionGroupTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class PermissionGroupQueryHandler
@@ -19,17 +19,13 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class PermissionGroupQueryHandler extends AbstractHandler
 {
 
-    private RBACService $service;
-
-    public function __construct(RBACService $service)
+    public function __construct(private RBACService $service)
     {
         parent::__construct();
-
-        $this->service = $service;
     }
 
     /**
-     * @param  PermissionGroupQuery|BaseCommandInterface  $query
+     * @param  PermissionGroupQuery  $query
      *
      * @throws PermissionGroupNotFoundException
      */

@@ -3,18 +3,19 @@
 
 namespace Scandinaver\Billing\UI\Command;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
+use Scandinaver\Billing\Application\Handler\Command\CreateOrderCommandHandler;
+use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Billing\Domain\DTO\OrderDTO;
-use Scandinaver\Shared\Contract\CommandInterface;
-use Scandinaver\Shared\DTO;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\DTO;
 
 /**
  * Class CreateOrderCommand
  *
  * @package Scandinaver\Billing\UI\Command
- *
- * @see \Scandinaver\Billing\Application\Handler\Command\CreateOrderCommandHandler
  */
+#[Command(CreateOrderCommandHandler::class)]
 class CreateOrderCommand implements CommandInterface
 {
 

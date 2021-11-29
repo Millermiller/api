@@ -3,14 +3,13 @@
 
 namespace Scandinaver\Learning\Translate\Application\Handler\Query;
 
-use Doctrine\DBAL\Driver\Exception;
 use League\Fractal\Resource\Item;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Learning\Translate\Domain\Exception\TextNotFoundException;
 use Scandinaver\Learning\Translate\Domain\Service\TextService;
 use Scandinaver\Learning\Translate\UI\Query\GetTextQuery;
 use Scandinaver\Learning\Translate\UI\Resource\TextTransformer;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 
 /**
  * Class GetTextQueryHandler
@@ -20,19 +19,15 @@ use Scandinaver\Learning\Translate\UI\Resource\TextTransformer;
 class GetTextQueryHandler extends AbstractHandler
 {
 
-    private TextService $textService;
-
-    public function __construct(TextService $textService)
+    public function __construct(private TextService $textService)
     {
         parent::__construct();
-
-        $this->textService = $textService;
     }
 
     /**
-     * @param  GetTextQuery|BaseCommandInterface  $query
+     * @param  GetTextQuery  $query
      *
-     * @throws TextNotFoundException|Exception
+     * @throws TextNotFoundException
      */
     public function handle(BaseCommandInterface $query): void
     {

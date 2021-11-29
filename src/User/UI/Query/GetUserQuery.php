@@ -3,26 +3,22 @@
 
 namespace Scandinaver\User\UI\Query;
 
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\User\Application\Handler\Query\GetUserQueryHandler;
 
 /**
  * Class GetUserQuery
  *
- * @see     \Scandinaver\User\Application\Handler\Query\GetUserQueryHandler
  * @package Scandinaver\User\UI\Query
  */
+#[Query(GetUserQueryHandler::class)]
 class GetUserQuery implements QueryInterface
 {
 
-    private UserInterface $user;
-
-    private array $includes;
-
-    public function __construct(UserInterface $user, array $includes = [])
+    public function __construct(private UserInterface $user, private array $includes = [])
     {
-        $this->user = $user;
-        $this->includes = $includes;
     }
 
     public function getUser(): UserInterface

@@ -3,9 +3,9 @@
 
 namespace Scandinaver\Learning\Translate\Application\Handler\Command;
 
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
 use Scandinaver\Learning\Translate\UI\Command\UpdateDescriptionCommand;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class UpdateDescriptionCommandHandler
@@ -21,9 +21,9 @@ class UpdateDescriptionCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateDescriptionCommand|BaseCommandInterface  $command
+     * @param  UpdateDescriptionCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
         // TODO: Implement handle() method.
     }

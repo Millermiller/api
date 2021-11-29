@@ -4,11 +4,9 @@
 namespace Scandinaver\Common\Application\Handler\Command;
 
 use League\Fractal\Resource\NullResource;
-use Scandinaver\Common\Domain\Exception\MessageNotFoundException;
-use Scandinaver\Common\Domain\Service\MessageService;
 use Scandinaver\Common\UI\Command\DeleteMessageCommand;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
  * Class DeleteMessageCommandHandler
@@ -18,23 +16,18 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class DeleteMessageCommandHandler extends AbstractHandler
 {
 
-    private MessageService $messageService;
-
-    public function __construct(MessageService $messageService)
+    public function __construct(private MessageService $service)
     {
         parent::__construct();
 
-        $this->messageService = $messageService;
     }
 
     /**
-     * @param  DeleteMessageCommand|BaseCommandInterface  $command
-     *
-     * @throws MessageNotFoundException
+     * @param  DeleteMessageCommand  $command
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $this->messageService->delete($command->getMessageId());
+        $this->service->delete($command->getMessageId());
 
         $this->resource = new NullResource();
     }

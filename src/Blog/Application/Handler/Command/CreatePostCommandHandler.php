@@ -8,8 +8,9 @@ use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Command\CreatePostCommand;
 use Scandinaver\Blog\UI\Resources\PostTransformer;
-use Scandinaver\Shared\AbstractHandler;
-use Scandinaver\Shared\Contract\BaseCommandInterface;
+use Scandinaver\Core\Domain\AbstractHandler;
+use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
  * Class CreatePostCommandHandler
@@ -19,23 +20,19 @@ use Scandinaver\Shared\Contract\BaseCommandInterface;
 class CreatePostCommandHandler extends AbstractHandler
 {
 
-    private BlogService $blogService;
-
-    public function __construct(BlogService $blogService)
+    public function __construct(private BlogService $service)
     {
         parent::__construct();
-
-        $this->blogService = $blogService;
     }
 
     /**
-     * @param  CreatePostCommand|BaseCommandInterface  $command
+     * @param  CreatePostCommand  $command
      *
-     * @throws CategoryNotFoundException
+     * @throws CategoryNotFoundException|UserNotFoundException
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(CommandInterface $command): void
     {
-        $post = $this->blogService->create($command->buildDTO());
+        $post = $this->service->create($command->buildDTO());
 
         $this->fractal->parseIncludes('comments');
 

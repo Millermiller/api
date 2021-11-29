@@ -1,0 +1,68 @@
+Scandinaver\Statistic\Domain\Entity\Item:
+  type: entity
+  table: statistic
+  indexes:
+    id:
+      columns:
+        - id
+    language:
+      columns:
+        - language_id
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    type:
+      type: string
+      length: 255
+      unique: false
+      nullable: false
+    value:
+      type: integer
+      length: 11
+      unique: false
+      nullable: true
+    data:
+      type: json
+      nullable: true
+    createdAt:
+      type: datetime
+      unique: false
+      nullable: false
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      unique: false
+      nullable: true
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    language:
+      targetEntity: Scandinaver\Common\Domain\Entity\Language
+      cascade: { }
+      fetch: LAZY
+      mappedBy: language
+      joinColumns:
+        language_id:
+          referencedColumnName: id
+          onDelete: CASCADE
+      orphanRemoval: false
+    user:
+      targetEntity: Scandinaver\User\Domain\Entity\User
+      cascade: { }
+      fetch: LAZY
+      inversedBy: statistic
+      joinColumns:
+        user_id:
+          referencedColumnName: id
+          onDelete: CASCADE
+      orphanRemoval: false
