@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Blog\Domain\Service;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Blog\Domain\Contract\Repository\CommentRepositoryInterface;
-use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\CommentDTO;
 use Scandinaver\Blog\Domain\Exception\CommentNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Blog\Domain\Entity\Comment;
 use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
@@ -20,25 +21,15 @@ use Scandinaver\User\Domain\Exception\UserNotFoundException;
 class CommentService implements BaseServiceInterface
 {
 
-    private CommentRepositoryInterface $commentRepository;
-
-    private PostRepositoryInterface $postRepository;
-
-    private CommentFactory $commentFactory;
-
     public function __construct(
-        CommentRepositoryInterface $commentRepository,
-        PostRepositoryInterface $postRepository,
-        CommentFactory $commentFactory
+        private CommentRepositoryInterface $commentRepository,
+        private CommentFactory $commentFactory
     ) {
-        $this->commentRepository = $commentRepository;
-        $this->postRepository    = $postRepository;
-        $this->commentFactory    = $commentFactory;
     }
 
-    public function all(): array
+    public function all(RequestParametersComposition $params): LengthAwarePaginator
     {
-        return $this->commentRepository->findAll();
+        return $this->commentRepository->getData($params);
     }
 
     /**

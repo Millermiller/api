@@ -47,6 +47,6 @@ class PermissionTransformer extends TransformerAbstract
             return NULL;
         }
 
-        return $this->item($permissionGroup, new PermissionGroupTransformer());
+        return $this->item($permissionGroup, new PermissionGroupTransformer(), 'permissionsGroups');
     }
 }

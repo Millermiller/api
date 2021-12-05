@@ -98,20 +98,21 @@ class AssetControllerTest extends TestCase
      */
     public function testIndex(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response = $this->get(route('asset:all', ['lang' => self::LANGUAGE_LETTER]));
 
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
-
-        $response->assertJsonStructure(
-            [
-                'words'     => [\Tests\Responses\Asset::responseWithoutCards()],
-                'sentences' => [\Tests\Responses\Asset::responseWithoutCards()],
-            ]
-        );
+        $response->assertStatus(JsonResponse::HTTP_OK)
+                 ->assertJsonStructure(
+                     [
+                         'words'     => \Tests\Responses\Asset::responseWithoutCards(),
+                         'sentences' => \Tests\Responses\Asset::responseWithoutCards(),
+                     ]
+                 );
     }
 
     /**
@@ -119,7 +120,9 @@ class AssetControllerTest extends TestCase
      */
     public function testShow(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::SHOW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::SHOW,
+        ]);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');
@@ -129,7 +132,7 @@ class AssetControllerTest extends TestCase
         );
 
         $response->assertJsonStructure(
-            \Tests\Responses\Asset::response()
+            \Tests\Responses\Asset::singleResponse()
         );
     }
 
@@ -138,32 +141,25 @@ class AssetControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::CREATE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::CREATE,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->post(route('asset:store'),
+        $testTitle = 'TEST CREATE ASSET';
+
+        $this->post(route('asset:store'),
             [
                 'language' => 'is',
-                'title'    => 'TEST CREATE ASSET',
+                'title'    => $testTitle,
                 'level'    => 2,
                 'type'     => Asset::TYPE_WORDS,
                 'basic'    => TRUE,
-            ]);
-
-        $response->assertJsonStructure(
-            [
-                'id',
-                'title',
-                'level',
-                'language',
-                'count',
-                'cards',
-            ]
-        );
-
-        $data = $response->decodeResponseJson();
-        static::assertEquals('TEST CREATE ASSET', $data['title']);
+            ])
+             ->assertStatus(JsonResponse::HTTP_CREATED)
+             ->assertJsonStructure(\Tests\Responses\Asset::singleResponse())
+             ->assertJsonFragment(['title' => $testTitle]);
     }
 
     /**
@@ -171,28 +167,27 @@ class AssetControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::UPDATE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::UPDATE,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->put(
-            route(
-                'asset:update',
-                [
-                    'id'    => $this->asset->getId(),
-                    'type'  => Asset::TYPE_WORDS,
-                    'level' => 2,
-                ]
-            ),
+        $testTitle = 'TEST UPDATE ASSET';
+
+        $response = $this->put(route('asset:update',
             [
-                'title' => 'TEST UPDATE ASSET',
-            ]
-        );
+                'id'    => $this->asset->getId(),
+                'type'  => Asset::TYPE_WORDS,
+                'level' => 2,
+            ]),
+            [
+                'title' => $testTitle,
+            ]);
 
-        $response->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards());
-
-        $data = $response->decodeResponseJson();
-        static::assertEquals('TEST UPDATE ASSET', $data['title']);
+        $response->assertStatus(JsonResponse::HTTP_OK);
+        $response->assertJsonStructure(\Tests\Responses\Asset::singleResponseWithoutCards());
+        $response->assertJsonFragment(['title' => $testTitle]);
     }
 
     /**
@@ -200,14 +195,19 @@ class AssetControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::DELETE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::DELETE,
+        ]);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route('asset:destroy', ['id' => $this->asset->getId()]));
-
-        static::assertEquals(204, $response->getStatusCode());
+        $this->delete(route('asset:destroy',
+            [
+                'id' => $this->asset->getId(),
+            ]
+        ))
+             ->assertStatus(JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**
@@ -215,15 +215,19 @@ class AssetControllerTest extends TestCase
      */
     public function testGetWordsAssets(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('asset:words', ['language' => self::LANGUAGE_LETTER]));
-
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
-
-        $response->assertJsonStructure([\Tests\Responses\Asset::responseWithoutCards()]);
+        $this->get(route('asset:words',
+            [
+                'language' => self::LANGUAGE_LETTER,
+            ]
+        ))
+             ->assertStatus(JsonResponse::HTTP_OK)
+             ->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards());
     }
 
     /**
@@ -231,15 +235,19 @@ class AssetControllerTest extends TestCase
      */
     public function testGetSentencesAssets(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('asset:sentences', ['language' => self::LANGUAGE_LETTER]));
-
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
-
-        $response->assertJsonStructure([\Tests\Responses\Asset::responseWithoutCards()]);
+        $this->get(route('asset:sentences',
+            [
+                'language' => self::LANGUAGE_LETTER,
+            ]
+        ))
+             ->assertStatus(JsonResponse::HTTP_OK)
+             ->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards());
     }
 
     /**
@@ -247,24 +255,27 @@ class AssetControllerTest extends TestCase
      */
     public function testGetPersonalAssets(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('asset:personal', ['lang' => self::LANGUAGE_LETTER]));
-
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
-
-        $response->assertJsonStructure([\Tests\Responses\Asset::responseWithoutCards()]);
-
-        $data = $response->decodeResponseJson();
-        self::assertEquals($this->personalAsset->getTitle(), $data[0]['title']);
-        self::assertEquals(Asset::TYPE_PERSONAL, $data[0]['type']);
+        $this->get(route('asset:personal', ['lang' => self::LANGUAGE_LETTER]))
+             ->assertStatus(JsonResponse::HTTP_OK)
+             ->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards())
+             ->assertJsonFragment(['title' => $this->personalAsset->getTitle()])
+             ->assertJsonFragment(['type' => Asset::TYPE_PERSONAL]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testFindAudio(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -279,7 +290,15 @@ class AssetControllerTest extends TestCase
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
-        $response->assertJsonStructure(['id', 'value']);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'type',
+                'attributes' => [
+                    'value',
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -289,7 +308,9 @@ class AssetControllerTest extends TestCase
      */
     public function testShowValues(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -317,19 +338,19 @@ class AssetControllerTest extends TestCase
      */
     public function testShowExamples(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->get(route('asset:examples',
+        $this->get(route('asset:examples',
                 [
                     'card' => $this->card->getId(),
                 ])
-        );
-
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
-
-        $response->assertJsonStructure([\Tests\Responses\Example::response()]);
+        )
+             ->assertStatus(JsonResponse::HTTP_OK)
+             ->assertJsonStructure(\Tests\Responses\Example::collectionResponse());
     }
 
     /**
@@ -361,19 +382,20 @@ class AssetControllerTest extends TestCase
      */
     public function testAddCard(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Asset::ADD_CARD);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::ADD_CARD,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->post(route(
+        $this->post(route(
             'asset:card:add',
             [
                 'asset' => $this->asset->getId(),
                 'card'  => $this->card->getId(),
             ]
-        ));
-
-        self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+        ))
+             ->assertStatus(JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -381,19 +403,20 @@ class AssetControllerTest extends TestCase
      */
     public function testRemoveCard(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Card::DELETE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Card::DELETE,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response = $this->delete(route(
+        $this->delete(route(
             'asset:card:remove',
             [
                 'asset' => $this->asset->getId(),
                 'card'  => $this->card->getId(),
             ]
-        ));
-
-        self::assertEquals(JsonResponse::HTTP_NO_CONTENT, $response->getStatusCode());
+        ))
+             ->assertStatus(JsonResponse::HTTP_NO_CONTENT);
     }
 
     /**

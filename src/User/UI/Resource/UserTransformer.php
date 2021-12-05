@@ -74,14 +74,14 @@ class UserTransformer extends TransformerAbstract
     {
         $roles = $user->getRoles();
 
-        return $this->collection($roles, new RoleTransformer());
+        return $this->collection($roles, new RoleTransformer(), 'roles');
     }
 
     public function includePermissions(User $user): Collection
     {
         $permissions = $user->getAllPermissions();
 
-        return $this->collection($permissions, new PermissionTransformer());
+        return $this->collection($permissions, new PermissionTransformer(), 'permissions');
     }
 
     private function getAvatar(User $user): ?string

@@ -42,7 +42,7 @@ class CategoryControllerTest extends TestCase
         $decodedResponse = json_decode($response->getContent(), TRUE);
         self::assertCount($this->categoryCount, $decodedResponse['data']);
         $response->assertJsonStructure(
-                \Tests\Responses\CategoryCollection::response()
+                \Tests\Responses\Category::collectionResponse()
         );
     }
 
@@ -59,7 +59,7 @@ class CategoryControllerTest extends TestCase
         $response       = $this->get(route('category:show', ['categoryId' => $testCategoryId]));
 
         $response->assertJsonStructure(
-            \Tests\Responses\Category::response()
+            \Tests\Responses\Category::singleResponse()
         );
 
         $response->assertJsonFragment(
@@ -85,7 +85,7 @@ class CategoryControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Category::response()
+            \Tests\Responses\Category::singleResponse()
         );
 
         $response->assertJsonFragment(
@@ -134,7 +134,7 @@ class CategoryControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Category::response()
+            \Tests\Responses\Category::singleResponse()
         );
         $response->assertJsonFragment(
             [

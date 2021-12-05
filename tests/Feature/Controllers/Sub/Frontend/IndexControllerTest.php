@@ -20,30 +20,15 @@ use Tests\TestCase;
 class IndexControllerTest extends TestCase
 {
 
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
-    /**
-     * @var WordAsset
-     */
-    private $wordasset;
+    private WordAsset $wordasset;
 
-    /**
-     * @var Asset
-     */
-    private $favouriteAsset;
+    private Asset $favouriteAsset;
 
-    /**
-     * @var Card
-     */
-    private $card;
+    private Card $card;
 
-    /**
-     * @var Card
-     */
-    private $favouriteCard;
+    private Card $favouriteCard;
 
     protected function setUp(): void
     {
@@ -81,7 +66,7 @@ class IndexControllerTest extends TestCase
 
         $response = $this->get(route('user-info', ['domain' => 'is']));
 
-        $response->assertJsonStructure(['id', 'login', 'avatar', 'email', 'active', 'active_to']);
+        $response->assertJsonStructure(\Tests\Responses\User::singleResponse());
     }
 
     public function testInfo()

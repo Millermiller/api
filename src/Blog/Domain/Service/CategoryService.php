@@ -3,12 +3,14 @@
 
 namespace Scandinaver\Blog\Domain\Service;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Blog\Domain\Contract\Repository\CategoryRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\CategoryDTO;
+use Scandinaver\Blog\Domain\Entity\Category;
 use Scandinaver\Blog\Domain\Exception\CategoryDuplicateException;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
-use Scandinaver\Blog\Domain\Entity\Category;
 use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 
 /**
  * Class CategoryService
@@ -18,21 +20,20 @@ use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
 class CategoryService implements BaseServiceInterface
 {
 
-    private CategoryRepositoryInterface $categoryRepo;
-
-    private CategoryFactory $categoryFactory;
-
     public function __construct(
-        CategoryRepositoryInterface $categoryRepo,
-        CategoryFactory $categoryFactory
+        private CategoryRepositoryInterface $categoryRepository,
+        private CategoryFactory $categoryFactory
     ) {
-        $this->categoryRepo    = $categoryRepo;
-        $this->categoryFactory = $categoryFactory;
     }
 
-    public function all(): array
+    /**
+     * @param  RequestParametersComposition  $params
+     *
+     * @return LengthAwarePaginator
+     */
+    public function all(RequestParametersComposition $params): LengthAwarePaginator
     {
-        return $this->categoryRepo->findAll();
+        return $this->categoryRepository->getData($params);
     }
 
     /**
@@ -54,7 +55,7 @@ class CategoryService implements BaseServiceInterface
      */
     private function getCategory(int $id): Category
     {
-        $category = $this->categoryRepo->find($id);
+        $category = $this->categoryRepository->find($id);
 
         if ($category === NULL) {
             throw new CategoryNotFoundException();
@@ -73,7 +74,7 @@ class CategoryService implements BaseServiceInterface
     {
         $category = $this->categoryFactory->fromDTO($categoryDTO);
 
-        $isDuplicate = $this->categoryRepo->findOneBy([
+        $isDuplicate = $this->categoryRepository->findOneBy([
             'title' => $category->getTitle(),
         ]);
 
@@ -81,7 +82,7 @@ class CategoryService implements BaseServiceInterface
             throw new CategoryDuplicateException();
         }
 
-        $this->categoryRepo->save($category);
+        $this->categoryRepository->save($category);
 
         return $category;
     }
@@ -99,7 +100,7 @@ class CategoryService implements BaseServiceInterface
 
         $category->setTitle($categoryDTO->getTitle());
 
-        $this->categoryRepo->save($category);
+        $this->categoryRepository->save($category);
 
         return $category;
     }
@@ -112,6 +113,6 @@ class CategoryService implements BaseServiceInterface
     public function delete(int $id): void
     {
         $category = $this->getCategory($id);
-        $this->categoryRepo->delete($category);
+        $this->categoryRepository->delete($category);
     }
 }

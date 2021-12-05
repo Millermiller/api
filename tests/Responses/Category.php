@@ -3,6 +3,8 @@
 
 namespace Tests\Responses;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class Category
  *
@@ -11,7 +13,8 @@ namespace Tests\Responses;
 class Category implements ResponseInterface
 {
 
-    public static function response(): array
+    #[ArrayShape(['data' => "array"])]
+    public static function singleResponse(): array
     {
         return [
             'data' => [
@@ -20,6 +23,22 @@ class Category implements ResponseInterface
                 'attributes' => [
                     'title'
                 ]
+            ],
+        ];
+    }
+
+    #[ArrayShape(['data' => "array[]"])]
+    public static function collectionResponse(): array
+    {
+        return [
+            'data' => [
+                '*' => [
+                    'type',
+                    'id',
+                    'attributes' => [
+                        'title',
+                    ],
+                ],
             ],
         ];
     }

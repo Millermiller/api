@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Settings\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Settings\Domain\Service\SettingsService;
 use Scandinaver\Settings\UI\Query\SettingsQuery;
@@ -28,8 +29,10 @@ class SettingsQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $settings = $this->settingsService->all();
+        $data = $this->settingsService->all($query->getParameters());
 
-        $this->resource = new Collection($settings, new SettingTransformer());
+        $this->resource = new Collection($data->items(), new SettingTransformer());
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

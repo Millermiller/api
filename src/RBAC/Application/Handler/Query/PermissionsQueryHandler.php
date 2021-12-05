@@ -3,6 +3,7 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\PermissionsQuery;
@@ -28,10 +29,12 @@ class PermissionsQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $permissions = $this->service->getAllPermissions();
+        $data = $this->service->getAllPermissions($query->getParameters());
 
         $this->fractal->parseIncludes('group');
 
-        $this->resource = new Collection($permissions, new PermissionTransformer());
+        $this->resource = new Collection($data->items(), new PermissionTransformer(), 'permissions');
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

@@ -11,7 +11,7 @@ namespace Tests\Responses;
 class UserWithRBAC implements ResponseInterface
 {
 
-    public static function response(): array
+    public static function singleResponse(): array
     {
         return [
             'id',
@@ -30,5 +30,10 @@ class UserWithRBAC implements ResponseInterface
             'permissions',
 
         ];
+    }
+
+    public static function collectionResponse(): array
+    {
+        // TODO: Implement collectionResponse() method.
     }
 }

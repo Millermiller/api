@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Blog\Domain\Contract\Repository;
 
-use Scandinaver\Blog\Domain\Entity\Comment;
 use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
+use Scandinaver\Core\Domain\Contract\Repository\FilterableRepositoryInterface;
 
 /**
  * Interface CommentRepositoryInterface
@@ -12,7 +12,7 @@ use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
  * @extends BaseRepositoryInterface<Comment>
  * @package Scandinaver\Blog\Domain\Contract\Repository
  */
-interface CommentRepositoryInterface extends BaseRepositoryInterface
+interface CommentRepositoryInterface extends BaseRepositoryInterface, FilterableRepositoryInterface
 {
 
 }

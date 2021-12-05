@@ -5,6 +5,7 @@ namespace Scandinaver\RBAC\UI\Query;
 
 use Scandinaver\Core\Domain\Attribute\Query;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Core\Domain\FilteringQuery;
 use Scandinaver\RBAC\Application\Handler\Query\RolesQueryHandler;
 
 /**
@@ -13,11 +14,7 @@ use Scandinaver\RBAC\Application\Handler\Query\RolesQueryHandler;
  * @package Scandinaver\RBAC\UI\Query
  */
 #[Query(RolesQueryHandler::class)]
-class RolesQuery implements QueryInterface
+class RolesQuery extends FilteringQuery implements QueryInterface
 {
 
-    public function __construct()
-    {
-
-    }
 }

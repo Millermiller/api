@@ -11,7 +11,7 @@ namespace Tests\Responses;
 class Passing implements ResponseInterface
 {
 
-    public static function response(): array
+    public static function singleResponse(): array
     {
         return [
             'id',
@@ -22,5 +22,10 @@ class Passing implements ResponseInterface
             'user' => User::response(),
             'asset' => Asset::responseWithoutCards()
         ];
+    }
+
+    public static function collectionResponse(): array
+    {
+        // TODO: Implement collectionResponse() method.
     }
 }

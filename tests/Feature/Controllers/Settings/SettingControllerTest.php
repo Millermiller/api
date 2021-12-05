@@ -39,18 +39,18 @@ class SettingControllerTest extends TestCase
     public function testIndex(): void
     {
         $permission = entity(Permission::class)->create([
-            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::VIEW
+            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::VIEW,
         ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
         $response        = $this->get(route('settings:all'));
-        $decodedResponse = json_decode($response->getContent());
-        self::assertCount($this->settingsCount, $decodedResponse);
+        $decodedResponse = json_decode($response->getContent(), TRUE);
+
+        self::assertCount($this->settingsCount, $decodedResponse['data']);
+
         $response->assertJsonStructure(
-            [
-                \Tests\Responses\Setting::response(),
-            ]
+            \Tests\Responses\Setting::collectionResponse(),
         );
     }
 
@@ -60,7 +60,7 @@ class SettingControllerTest extends TestCase
     public function testShow(): void
     {
         $permission = entity(Permission::class)->create([
-            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::SHOW
+            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::SHOW,
         ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
@@ -68,12 +68,11 @@ class SettingControllerTest extends TestCase
         $response = $this->get(
             route('settings:show', ['id' => $this->settings->first()->getId()])
         );
-        $response->assertJsonStructure(\Tests\Responses\Setting::response());
-        $response->assertJsonFragment(
-            [
-                'id' => $this->settings->first()->getId(),
-            ]
-        );
+
+        $response->assertJsonStructure(\Tests\Responses\Setting::singleResponse())
+                 ->assertJsonFragment([
+                     'id' => (string)$this->settings->first()->getId(),
+                 ]);
     }
 
     /**
@@ -82,7 +81,7 @@ class SettingControllerTest extends TestCase
     public function testDestroy(): void
     {
         $permission = entity(Permission::class)->create([
-            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::DELETE
+            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::DELETE,
         ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
@@ -111,7 +110,7 @@ class SettingControllerTest extends TestCase
     public function testStore(): void
     {
         $permission = entity(Permission::class)->create([
-            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::CREATE
+            'slug' => \Scandinaver\Settings\Domain\Permission\Settings::CREATE,
         ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
@@ -122,7 +121,6 @@ class SettingControllerTest extends TestCase
 
         //TODO: implement redis mock
         self::assertEquals(TRUE, TRUE);
-
         /*
         $response = $this->post(
           route(

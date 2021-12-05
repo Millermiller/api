@@ -17,7 +17,7 @@ class Post implements ResponseInterface
         'data'     => "array",
         'included' => "\string[][]",
     ])]
-    public static function response(): array
+    public static function singleResponse(): array
     {
         return [
             'data'     => [
@@ -49,6 +49,56 @@ class Post implements ResponseInterface
                             '*' => [
                                 "type",
                                 "id",
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'included' => [
+                '*' => [
+                    'type',
+                    'id',
+                    'attributes',
+                ],
+            ],
+        ];
+    }
+
+    #[ArrayShape(['data' => "array[]", 'included' => "\string[][]"])]
+    public static function collectionResponse(): array
+    {
+        return [
+            'data'     => [
+                '*' => [
+                    'type',
+                    'id',
+                    'attributes'    => [
+                        'title',
+                        'content',
+                        'views',
+                        'status',
+                        'comment_status',
+                        'created_at',
+                    ],
+                    'relationships' => [
+                        'user' => [
+                            'data' => [
+                                "type",
+                                "id",
+                            ],
+                        ],
+                        'category' => [
+                            'data' => [
+                                "type",
+                                "id",
+                            ],
+                        ],
+                        'comments' => [
+                            'data' => [
+                                '*' => [
+                                    "type",
+                                    "id",
+                                ],
                             ],
                         ],
                     ],

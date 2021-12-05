@@ -4,7 +4,9 @@
 namespace Scandinaver\RBAC\Domain\Service;
 
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionGroupRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\PermissionRepositoryInterface;
 use Scandinaver\RBAC\Domain\Contract\Repository\RoleRepositoryInterface;
@@ -61,19 +63,19 @@ class RBACService
     }
 
 
-    public function getAllRoles(): array
+    public function getAllRoles(RequestParametersComposition $parameters): LengthAwarePaginator
     {
-        return $this->roleRepository->findAll();
+        return $this->roleRepository->getData($parameters);
     }
 
-    public function getAllPermissions(): array
+    public function getAllPermissions(RequestParametersComposition $parameters): LengthAwarePaginator
     {
-        return $this->permissionRepository->findAll();
+        return $this->permissionRepository->getData($parameters);
     }
 
-    public function getAllPermissionGroups(): array
+    public function getAllPermissionGroups(RequestParametersComposition $parameters): LengthAwarePaginator
     {
-        return $this->permissionGroupRepository->findAll();
+        return $this->permissionGroupRepository->getData($parameters);
     }
 
     /**

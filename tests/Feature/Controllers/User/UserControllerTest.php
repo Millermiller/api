@@ -42,12 +42,12 @@ class UserControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $response        = $this->get(route('user:all'));
-        $decodedResponse = json_decode($response->getContent());
-        self::assertCount($this->userCount + 1, $decodedResponse);
+        $decodedResponse = json_decode($response->getContent(), TRUE);
+
+        self::assertCount($this->userCount + 1, $decodedResponse['data']);
+
         $response->assertJsonStructure(
-            [
-                \Tests\Responses\User::response(),
-            ]
+            \Tests\Responses\User::collectionResponse(),
         );
     }
 
@@ -65,7 +65,7 @@ class UserControllerTest extends TestCase
         $response = $this->get(route('user:show', ['id' => 1]));
 
         $response->assertJsonStructure(
-            \Tests\Responses\User::response()
+            \Tests\Responses\User::singleResponse()
         );
         $response->assertJsonFragment(
             [
@@ -108,7 +108,7 @@ class UserControllerTest extends TestCase
 
 
         $response->assertJsonStructure(
-            \Tests\Responses\User::response()
+            \Tests\Responses\User::singleResponse()
         );
         $response->assertJsonFragment(
             [

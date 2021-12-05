@@ -3,6 +3,8 @@
 
 namespace Tests\Responses;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class User
  *
@@ -11,15 +13,63 @@ namespace Tests\Responses;
 class User implements ResponseInterface
 {
 
-    public static function response(): array
+    #[ArrayShape(['data' => "array"])]
+    public static function singleResponse(): array
     {
         return [
-            'id',
-            'login',
-            'avatar',
-            'email',
-            'active',
-            'active_to'
+            'data' => [
+                'id',
+                'type',
+                'attributes'    => [
+                    'login',
+                    'email',
+                    'active',
+                    'active_to',
+                    'permissionsSimple',
+                    'avatar',
+                ],
+                // 'relationships' => [
+                //     'roles' => [
+                //         'data' => [
+                //             '*' => [
+                //                 'id',
+                //                 'type',
+                //             ],
+                //         ],
+                //     ],
+                // ],
+            ],
+        ];
+    }
+
+    #[ArrayShape(['data' => "array[]"])]
+    public static function collectionResponse(): array
+    {
+        return [
+            'data' => [
+                '*' => [
+                    'id',
+                    'type',
+                    'attributes'    => [
+                        'login',
+                        'email',
+                        'active',
+                        'active_to',
+                        'permissionsSimple',
+                        'avatar',
+                    ],
+                    'relationships' => [
+                        'roles' => [
+                            'data' => [
+                                '*' => [
+                                    'id',
+                                    'type',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

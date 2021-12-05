@@ -36,7 +36,7 @@ class ApiTest extends TestCase
     {
         $response = $this->get(route('languages:all'));
         $response->assertJsonStructure(
-            \Tests\Responses\LanguageCollection::response()
+            \Tests\Responses\Language::collectionResponse()
         );
     }
 

@@ -6,9 +6,11 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\CreateIntroRequest;
 use App\Http\Requests\Common\UpdateIntroRequest;
+use App\Http\Requests\FilteringRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\Common\Domain\Permission\Intro;
 use Scandinaver\Common\UI\Command\CreateIntroCommand;
 use Scandinaver\Common\UI\Command\DeleteIntroCommand;
@@ -30,14 +32,19 @@ class IntroController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Intro::VIEW);
 
-        return $this->execute(new IntrosQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new IntrosQuery($params));
     }
 
     /**

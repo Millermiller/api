@@ -3,6 +3,8 @@
 
 namespace Tests\Responses;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class Card
  *
@@ -11,7 +13,8 @@ namespace Tests\Responses;
 class Card implements ResponseInterface
 {
 
-    public static function response(): array
+    #[ArrayShape([0 => "string", 1 => "string", 'term' => "string[]", 'translate' => "string[]", 4 => "string"])]
+    public static function singleResponse(): array
     {
         return [
             'id',
@@ -26,5 +29,10 @@ class Card implements ResponseInterface
             ],
             'examples'
         ];
+    }
+
+    public static function collectionResponse(): array
+    {
+        // TODO: Implement collectionResponse() method.
     }
 }

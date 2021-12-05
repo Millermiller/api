@@ -43,7 +43,7 @@ class LanguageControllerTest extends TestCase
         self::assertCount($this->languagesNumber, $decodedResponse['data']);
 
         $response->assertJsonStructure(
-                \Tests\Responses\LanguageCollection::response(),
+                \Tests\Responses\Language::collectionResponse(),
         );
     }
 
@@ -77,7 +77,7 @@ class LanguageControllerTest extends TestCase
         self::assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Language::response()
+            \Tests\Responses\Language::singleResponse()
         );
 
         $response->assertJsonFragment(

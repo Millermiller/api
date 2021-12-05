@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Blog\Domain\Service\CommentService;
 use Scandinaver\Blog\UI\Query\CommentsQuery;
@@ -28,8 +29,10 @@ class CommentsQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $comments = $this->service->all();
+        $data = $this->service->all($query->getParameters());
 
-        $this->resource = new Collection($comments, new CommentTransformer());
+        $this->resource = new Collection($data->items(), new CommentTransformer());
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

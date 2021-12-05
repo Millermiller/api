@@ -16,7 +16,7 @@ class Language implements ResponseInterface
     #[ArrayShape([
         'data' => "array",
     ])]
-    public static function response(): array
+    public static function singleResponse(): array
     {
         return [
             'data' => [
@@ -29,6 +29,27 @@ class Language implements ResponseInterface
                     'flag',
                     'image',
                     'active',
+                ],
+            ],
+        ];
+    }
+
+    #[ArrayShape(['data' => "array[]"])]
+    public static function collectionResponse(): array
+    {
+        return [
+            'data' => [
+                '*' => [
+                    'id',
+                    'type',
+                    'attributes' => [
+                        'title',
+                        'description',
+                        'letter',
+                        'flag',
+                        'image',
+                        'active',
+                    ],
                 ],
             ],
         ];

@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Blog\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Blog\Domain\Service\CategoryService;
 use Scandinaver\Blog\UI\Query\CategoriesQuery;
@@ -24,14 +25,16 @@ class CategoriesQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CategoriesQuery  $command
+     * @param  CategoriesQuery  $query
      *
      * @return void
      */
-    public function handle(BaseCommandInterface $command): void
+    public function handle(BaseCommandInterface $query): void
     {
-        $categories = $this->service->all();
+        $data = $this->service->all($query->getParameters());
 
-        $this->resource = new Collection($categories, new CategoryTransformer());
+        $this->resource = new Collection($data->items(), new CategoryTransformer(), 'category');
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 }

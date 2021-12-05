@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\Settings\BulkSetValueRequest;
 use App\Http\Requests\Settings\CreateSettingRequest;
 use App\Http\Requests\Settings\SetValueRequest;
@@ -12,6 +13,7 @@ use App\Http\Requests\Settings\UpdateSettingRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\Settings\Domain\Permission\Settings;
 use Scandinaver\Settings\UI\Command\BulkSetSettingCommand;
 use Scandinaver\Settings\UI\Command\CreateSettingCommand;
@@ -31,14 +33,19 @@ class SettingsController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Settings::VIEW);
 
-        return $this->execute(new SettingsQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new SettingsQuery($params));
     }
 
     /**

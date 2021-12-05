@@ -5,6 +5,8 @@ namespace Scandinaver\Settings\UI\Query;
 
 use Scandinaver\Core\Domain\Attribute\Query;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Core\Domain\FilteringQuery;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Settings\Application\Handler\Query\SettingsQueryHandler;
 
 /**
@@ -13,11 +15,7 @@ use Scandinaver\Settings\Application\Handler\Query\SettingsQueryHandler;
  * @package Scandinaver\Settings\UI\Query
  */
 #[Query(SettingsQueryHandler::class)]
-class SettingsQuery implements QueryInterface
+class SettingsQuery extends FilteringQuery implements QueryInterface
 {
 
-    public function __construct()
-    {
-
-    }
 }

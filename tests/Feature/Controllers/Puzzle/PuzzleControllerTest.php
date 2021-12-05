@@ -25,10 +25,7 @@ class PuzzleControllerTest extends TestCase
 
     private User $user;
 
-    /**
-     * @var Collection|Puzzle[]
-     */
-    private Collection $puzzles;
+    private Collection|array $puzzles;
 
     protected function setUp(): void
     {
@@ -56,9 +53,8 @@ class PuzzleControllerTest extends TestCase
             ]
         ));
 
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
-
-        $response->assertJsonStructure([\Tests\Responses\Puzzle::response()]);
+        $response->assertStatus(JsonResponse::HTTP_OK)
+                 ->assertJsonStructure(\Tests\Responses\Puzzle::collectionResponse());
     }
 
     /**
@@ -86,7 +82,9 @@ class PuzzleControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle::CREATE);
+        $permission = entity(Permission::class)->create([
+            'slug' => \Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle::CREATE,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -151,11 +149,11 @@ class PuzzleControllerTest extends TestCase
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
-        $response->assertJsonStructure([\Tests\Responses\Puzzle::response()]);
+        $response->assertJsonStructure(\Tests\Responses\Puzzle::collectionResponse());
     }
 
     /**
-     * TODO: implement
+     * @throws Exception
      */
     public function testComplete(): void
     {

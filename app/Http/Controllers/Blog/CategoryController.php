@@ -6,8 +6,10 @@ namespace App\Http\Controllers\Blog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Blog\CreateCategoryRequest;
 use App\Http\Requests\Blog\UpdateCategoryRequest;
+use App\Http\Requests\FilteringRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use JsonMapper_Exception;
 use Illuminate\Http\{JsonResponse};
 use Scandinaver\Blog\Domain\Permission\Category;
 use Scandinaver\Blog\UI\Command\CreateCategoryCommand;
@@ -25,14 +27,19 @@ class CategoryController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Category::VIEW);
 
-        return $this->execute(new CategoriesQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new CategoriesQuery($params));
     }
 
     /**
@@ -43,7 +50,7 @@ class CategoryController extends Controller
      */
     public function show(int $categoryId): JsonResponse
     {
-        //Gate::authorize(Category::SHOW, $categoryId);
+        Gate::authorize(Category::SHOW, $categoryId);
 
         return $this->execute(new CategoryQuery($categoryId));
     }

@@ -14,7 +14,7 @@ class Intro implements ResponseInterface
 {
 
     #[ArrayShape(['data' => "array"])]
-    public static function response(): array
+    public static function singleResponse(): array
     {
         return [
             'data' => [
@@ -29,6 +29,28 @@ class Intro implements ResponseInterface
                     'sort',
                 ]
             ]
+
+        ];
+    }
+
+    #[ArrayShape(['data' => "array[]"])]
+    public static function collectionResponse(): array
+    {
+        return [
+            'data' => [
+                '*' => [
+                    'id',
+                    'type',
+                    'attributes' => [
+                        'page',
+                        'target',
+                        'content',
+                        'position',
+                        'headerText',
+                        'sort',
+                    ],
+                ],
+            ],
 
         ];
     }

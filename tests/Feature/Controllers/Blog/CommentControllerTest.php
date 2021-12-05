@@ -53,7 +53,7 @@ class CommentControllerTest extends TestCase
         $decodedResponse = json_decode($response->getContent(), TRUE);
         self::assertCount($this->commentCount, $decodedResponse['data']);
         $response->assertJsonStructure(
-            \Tests\Responses\CommentCollection::response(),
+            \Tests\Responses\Comment::collectionResponse(),
         );
     }
 
@@ -72,7 +72,7 @@ class CommentControllerTest extends TestCase
         $response      = $this->get(route('comment:show', ['commentId' => $testCommentId]));
 
         $response->assertJsonStructure(
-            \Tests\Responses\Comment::response()
+            \Tests\Responses\Comment::singleResponse()
         );
 
         $response->assertJsonFragment(
@@ -104,7 +104,7 @@ class CommentControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Comment::response()
+            \Tests\Responses\Comment::singleResponse()
         );
 
         $response->assertJsonFragment(
@@ -136,7 +136,7 @@ class CommentControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Comment::response()
+            \Tests\Responses\Comment::singleResponse()
         );
 
         $response->assertJsonFragment(

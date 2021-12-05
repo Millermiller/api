@@ -28,7 +28,7 @@ class GetUserQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetUserQuery|BaseCommandInterface  $query
+     * @param  GetUserQuery|$query
      */
     public function handle(BaseCommandInterface $query): void
     {

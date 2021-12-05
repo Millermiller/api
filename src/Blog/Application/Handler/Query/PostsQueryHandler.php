@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Blog\Application\Handler\Query;
 
+use Doctrine\ORM\Query\QueryException;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Blog\Domain\Service\BlogService;
 use Scandinaver\Blog\UI\Query\PostsQuery;
@@ -24,14 +26,18 @@ class PostsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PostsQuery $query
+     * @param  PostsQuery  $query
+     *
+     * @throws QueryException
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $posts = $this->service->all();
+        $data = $this->service->all($query->getParameters());
 
         $this->fractal->parseIncludes('comments');
 
-        $this->resource = new Collection($posts, new PostTransformer(), 'post');
+        $this->resource = new Collection($data->items(), new PostTransformer(), 'post');
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

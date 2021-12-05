@@ -3,11 +3,13 @@
 
 namespace Scandinaver\Common\Domain\Service;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Common\Domain\Contract\Repository\IntroRepositoryInterface;
 use Scandinaver\Common\Domain\DTO\IntroDTO;
 use Scandinaver\Common\Domain\Exception\IntroNotFoundException;
 use Scandinaver\Common\Domain\Entity\Intro;
 use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 
 /**
  * Class IntroService
@@ -29,9 +31,9 @@ class IntroService implements BaseServiceInterface
         $this->introRepository = $introRepository;
     }
 
-    public function all(): array
+    public function all(RequestParametersComposition $params): LengthAwarePaginator
     {
-        return $this->introRepository->findAll();
+        return $this->introRepository->getData($params);
     }
 
     /**

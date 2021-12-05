@@ -4,10 +4,12 @@
 namespace App\Http\Controllers\RBAC;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\RBAC\CreateRoleRequest;
 use App\Http\Requests\RBAC\UpdateRoleRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use JsonMapper_Exception;
 use Illuminate\Http\{JsonResponse};
 use Scandinaver\RBAC\Domain\Permission\Role;
 use Scandinaver\RBAC\UI\Command\AttachPermissionToRoleCommand;
@@ -27,14 +29,19 @@ class RoleController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Role::VIEW);
 
-        return $this->execute(new RolesQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new RolesQuery($params));
     }
 
     /**

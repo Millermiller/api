@@ -3,7 +3,9 @@
 
 namespace Scandinaver\Settings\Domain\Service;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Core\Domain\Contract\RedisInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Settings\Domain\Contract\Repository\SettingRepositoryInterface;
 use Scandinaver\Settings\Domain\DTO\SettingDTO;
 use Scandinaver\Settings\Domain\Exception\SettingNotFoundException;
@@ -31,9 +33,9 @@ class SettingsService implements BaseServiceInterface
         $this->redisClient = $redisClient;
     }
 
-    public function all(): array
+    public function all(RequestParametersComposition $params): LengthAwarePaginator
     {
-        return $this->settingRepository->findAll();
+        return $this->settingRepository->getData($params);
     }
 
     /**

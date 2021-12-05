@@ -3,6 +3,7 @@
 
 namespace Scandinaver\RBAC\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\RBAC\Domain\Service\RBACService;
 use Scandinaver\RBAC\UI\Query\RolesQuery;
@@ -24,12 +25,14 @@ class RolesQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  RolesQuery|  $query
+     * @param  RolesQuery  $query
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $roles = $this->service->getAllRoles();
+        $data = $this->service->getAllRoles($query->getParameters());
 
-        $this->resource = new Collection($roles, new RoleTransformer());
+        $this->resource = new Collection($data->items(), new RoleTransformer(), 'roles');
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

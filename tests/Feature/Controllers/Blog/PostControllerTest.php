@@ -60,7 +60,7 @@ class PostControllerTest extends TestCase
         self::assertCount($this->postCount, $decodedResponse);
 
         $response->assertJsonStructure(
-                \Tests\Responses\PostCollection::response(),
+            \Tests\Responses\Post::collectionResponse(),
         );
     }
 
@@ -79,7 +79,7 @@ class PostControllerTest extends TestCase
         $response   = $this->get(route('post:show', ['postId' => $testPostId]));
 
         $response->assertJsonStructure(
-            \Tests\Responses\Post::response()
+            \Tests\Responses\Post::singleResponse()
         );
 
         $response->assertJsonFragment(
@@ -105,7 +105,7 @@ class PostControllerTest extends TestCase
         $testPostContent = 'TESTCONTENT';
         $testPostTitle   = 'TESTTITLE';
 
-        $response = $this->post(
+        $this->post(
             route('post:create'),
             [
                 'category'       => $this->category->getId(),
@@ -115,20 +115,15 @@ class PostControllerTest extends TestCase
                 'comment_status' => 1,
                 'anonse'         => $testPostContent,
             ]
-        );
-
-        self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
-
-        $response->assertJsonStructure(
-            \Tests\Responses\Post::response()
-        );
-
-        $response->assertJsonFragment(
-            [
-                'content' => $testPostContent,
-                'title'   => $testPostTitle,
-            ]
-        );
+        )
+             ->assertStatus(JsonResponse::HTTP_CREATED)
+             ->assertJsonStructure(\Tests\Responses\Post::singleResponse())
+             ->assertJsonFragment(
+                 [
+                     'content' => $testPostContent,
+                     'title'   => $testPostTitle,
+                 ]
+             );
     }
 
     /**
@@ -149,19 +144,19 @@ class PostControllerTest extends TestCase
         $response = $this->put(
             route('post:update', ['postId' => $this->post->first()->getId()]),
             [
-                'title'    => $testPostTitle,
-                'content'  => $testPostContent,
-                'category' => 1,
-                'status'   => 1,
+                'title'          => $testPostTitle,
+                'content'        => $testPostContent,
+                'category'       => 1,
+                'status'         => 1,
                 'comment_status' => 1,
-                'anonse'   => $testPostAnonce,
+                'anonse'         => $testPostAnonce,
             ]
         );
 
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Post::response()
+            \Tests\Responses\Post::singleResponse()
         );
 
         $response->assertJsonFragment(

@@ -4,10 +4,12 @@
 namespace App\Http\Controllers\RBAC;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\RBAC\CreatePermissionGroupRequest;
 use App\Http\Requests\RBAC\UpdatePermissionGroupRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use JsonMapper_Exception;
 use Illuminate\Http\{JsonResponse};
 use Scandinaver\RBAC\Domain\Permission\PermissionGroup;
 use Scandinaver\RBAC\UI\Command\CreatePermissionGroupCommand;
@@ -26,14 +28,19 @@ class PermissionGroupController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(PermissionGroup::VIEW);
 
-        return $this->execute(new PermissionGroupsQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new PermissionGroupsQuery($params));
     }
 
     /**

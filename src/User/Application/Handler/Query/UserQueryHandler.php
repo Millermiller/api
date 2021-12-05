@@ -29,7 +29,7 @@ class UserQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  UserQuery|BaseCommandInterface  $query
+     * @param  UserQuery  $query
      *
      * @throws UserNotFoundException
      */
@@ -42,6 +42,6 @@ class UserQueryHandler extends AbstractHandler
             $this->fractal->parseIncludes('roles');
         }
 
-        $this->resource = new Item($user, new UserTransformer());
+        $this->resource = new Item($user, new UserTransformer(), 'users');
     }
 } 

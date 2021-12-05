@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Common\Domain\Service\IntroService;
 use Scandinaver\Common\UI\Query\IntrosQuery;
@@ -28,8 +29,10 @@ class IntrosQueryHandler extends AbstractHandler
      */
     public function handle(BaseCommandInterface $query): void
     {
-        $intros = $this->service->all();
+        $data = $this->service->all($query->getParameters());
 
-        $this->resource = new Collection($intros, new IntroTransformer());
+        $this->resource = new Collection($data->items(), new IntroTransformer());
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 }

@@ -4,11 +4,13 @@
 namespace App\Http\Controllers\RBAC;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\RBAC\CreatePermissionRequest;
 use App\Http\Requests\RBAC\UpdatePermissionRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\RBAC\Domain\Permission\Permission;
 use Scandinaver\RBAC\UI\Command\CreatePermissionCommand;
 use Scandinaver\RBAC\UI\Command\DeletePermissionCommand;
@@ -26,14 +28,19 @@ class PermissionController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Permission::VIEW);
 
-        return $this->execute(new PermissionsQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new PermissionsQuery($params));
     }
 
     /**

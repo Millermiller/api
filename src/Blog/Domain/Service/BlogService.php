@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Blog\Domain\Service;
 
+use Doctrine\ORM\Query\QueryException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use JetBrains\PhpStorm\ArrayShape;
 use Scandinaver\Blog\Domain\Contract\Repository\PostRepositoryInterface;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
@@ -10,6 +12,7 @@ use Scandinaver\Blog\Domain\Entity\Post;
 use Scandinaver\Blog\Domain\Exception\CategoryNotFoundException;
 use Scandinaver\Blog\Domain\Exception\PostNotFoundException;
 use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 
 /**
@@ -26,9 +29,15 @@ class BlogService implements BaseServiceInterface
     ) {
     }
 
-    public function all(): array
+    /**
+     * @param  RequestParametersComposition  $params
+     *
+     * @return LengthAwarePaginator
+     * @throws QueryException
+     */
+    public function all(RequestParametersComposition $params): LengthAwarePaginator
     {
-        return $this->postRepository->findAll();
+        return $this->postRepository->getData($params);
     }
 
     /**

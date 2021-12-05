@@ -50,7 +50,7 @@ class IntroControllerTest extends TestCase
         self::assertCount($this->introNumber, $decodedResponse['data']);
 
         $response->assertJsonStructure(
-                \Tests\Responses\IntroCollection::response(),
+                \Tests\Responses\Intro::collectionResponse(),
         );
     }
 
@@ -88,7 +88,7 @@ class IntroControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Intro::response()
+            \Tests\Responses\Intro::singleResponse()
         );
 
         $response->assertJsonFragment(
@@ -118,7 +118,7 @@ class IntroControllerTest extends TestCase
         $response    = $this->get(route('intro:show', ['id' => $testIntroId]));
 
         $response->assertJsonStructure(
-            \Tests\Responses\Intro::response()
+            \Tests\Responses\Intro::singleResponse()
         );
 
         $response->assertJsonFragment(
@@ -162,7 +162,7 @@ class IntroControllerTest extends TestCase
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure(
-            \Tests\Responses\Intro::response()
+            \Tests\Responses\Intro::singleResponse()
         );
 
         $response->assertJsonFragment(

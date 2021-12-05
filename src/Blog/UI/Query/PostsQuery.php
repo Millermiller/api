@@ -6,6 +6,7 @@ namespace Scandinaver\Blog\UI\Query;
 use Scandinaver\Blog\Application\Handler\Query\PostsQueryHandler;
 use Scandinaver\Core\Domain\Attribute\Query;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Core\Domain\FilteringQuery;
 
 /**
  * Class PostsQuery
@@ -13,10 +14,7 @@ use Scandinaver\Core\Domain\Contract\QueryInterface;
  * @package Scandinaver\Blog\UI\Query
  */
 #[Query(PostsQueryHandler::class)]
-class PostsQuery implements QueryInterface
+class PostsQuery extends FilteringQuery implements QueryInterface
 {
 
-    public function __construct()
-    {
-    }
 }

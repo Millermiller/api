@@ -47,7 +47,7 @@ class LogControllerTest extends TestCase
         self::assertCount($this->logsNumber, $decodedResponse['data']);
 
         $response->assertJsonStructure(
-            \Tests\Responses\LogCollection::response(),
+            \Tests\Responses\Log::collectionResponse(),
         );
     }
 
@@ -65,7 +65,7 @@ class LogControllerTest extends TestCase
         $response = $this->get(route('log.show', ['log' => 1]));
 
         $response->assertJsonStructure(
-            \Tests\Responses\Log::response()
+            \Tests\Responses\Log::singleResponse()
         );
     }
 

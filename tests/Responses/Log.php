@@ -17,7 +17,7 @@ class Log implements ResponseInterface
         'data'     => "array",
         'included' => "\string[][]",
     ])]
-    public static function response(): array
+    public static function singleResponse(): array
     {
         return [
             'data'     => [
@@ -34,6 +34,40 @@ class Log implements ResponseInterface
                         "data" => [
                             "type",
                             "id",
+                        ],
+                    ],
+                ],
+            ],
+            'included' => [
+                '*' => [
+                    'type',
+                    'id',
+                    'attributes',
+                ],
+            ],
+        ];
+    }
+
+    #[ArrayShape(['data' => "array[]", 'included' => "\string[][]"])]
+    public static function collectionResponse(): array
+    {
+        return [
+            'data' => [
+                '*' => [
+                    'id',
+                    'type',
+                    'attributes'    => [
+                        'message',
+                        'level',
+                        'extra',
+                        'created_at',
+                    ],
+                    "relationships" => [
+                        "owner" => [
+                            "data" => [
+                                "type",
+                                "id",
+                            ],
                         ],
                     ],
                 ],

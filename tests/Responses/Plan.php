@@ -7,7 +7,7 @@ namespace Tests\Responses;
 class Plan implements ResponseInterface
 {
 
-    public static function response(): array
+    public static function singleResponse(): array
     {
         return [
             'id',
@@ -15,5 +15,10 @@ class Plan implements ResponseInterface
             'period',
             'cost',
         ];
+    }
+
+    public static function collectionResponse(): array
+    {
+        // TODO: Implement collectionResponse() method.
     }
 }

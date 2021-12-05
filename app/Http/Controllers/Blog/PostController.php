@@ -7,8 +7,10 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Blog\CreatePostRequest;
 use App\Http\Requests\Blog\UpdatePostRequest;
+use App\Http\Requests\FilteringRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use JsonMapper_Exception;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Support\Str;
 use Scandinaver\Blog\Domain\Permission\Post;
@@ -28,14 +30,19 @@ class PostController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Post::VIEW);
 
-        return $this->execute(new PostsQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new PostsQuery($params));
     }
 
     /**

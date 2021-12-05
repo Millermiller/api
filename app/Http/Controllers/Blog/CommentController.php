@@ -7,9 +7,11 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Blog\CreateCommentRequest;
 use App\Http\Requests\Blog\UpdateCommentRequest;
+use App\Http\Requests\FilteringRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\Blog\Domain\Permission\Comment;
 use Scandinaver\Blog\UI\Command\CreateCommentCommand;
 use Scandinaver\Blog\UI\Command\DeleteCommentCommand;
@@ -26,14 +28,19 @@ class CommentController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Comment::VIEW);
 
-        return $this->execute(new CommentsQuery());
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new CommentsQuery($params));
     }
 
     /**
