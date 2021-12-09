@@ -25,11 +25,11 @@ class UserPuzzlesQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  UserPuzzlesQuery  $query
+     * @param  BaseCommandInterface|UserPuzzlesQuery  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|UserPuzzlesQuery $query): void
     {
         $puzzles = $this->puzzleService->getForUser($query->getLanguage(), $query->getUser());
 

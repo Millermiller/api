@@ -22,10 +22,7 @@ class UpdateUserSettingsCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  UpdateUserSettingsCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateUserSettingsCommand $command): void
     {
         $this->service->updateUserInfo($command->getUser(), $command->getData());
 

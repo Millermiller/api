@@ -24,11 +24,11 @@ class UpdatePassingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdatePassingCommand  $command
+     * @param  CommandInterface|UpdatePassingCommand  $command
      *
      * @throws PassingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdatePassingCommand $command): void
     {
         $this->service->updatePassing($command->getId(), $command->getData());
 

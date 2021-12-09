@@ -24,9 +24,10 @@ class LogoutCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  LogoutCommand  $command
+     * TODO: refactor
+     * @param  CommandInterface|LogoutCommand  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|LogoutCommand $command): void
     {
         setcookie('authfrontend._token.local', FALSE, time() - 1000, '/', '.' . config('app.DOMAIN'));
 

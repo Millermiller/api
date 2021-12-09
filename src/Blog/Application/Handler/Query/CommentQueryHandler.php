@@ -25,11 +25,9 @@ class CommentQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CommentQuery $query
-     *
      * @throws CommentNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|CommentQuery $query): void
     {
         $comment = $this->service->one($query->getId());
 

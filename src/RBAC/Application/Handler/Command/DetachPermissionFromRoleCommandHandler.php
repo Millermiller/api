@@ -25,12 +25,12 @@ class DetachPermissionFromRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DetachPermissionFromRoleCommand  $command
+     * @param  CommandInterface|DetachPermissionFromRoleCommand  $command
      *
      * @throws PermissionNotFoundException
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DetachPermissionFromRoleCommand $command): void
     {
         $this->service->detachPermissionFromRole($command->getRoleId(), $command->getPermissionId());
 

@@ -29,8 +29,6 @@ class AddCardToAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  AddCardToAssetCommand  $command
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws BindingResolutionException
@@ -38,7 +36,7 @@ class AddCardToAssetCommandHandler extends AbstractHandler
      * @throws CardAlreadyAddedException
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|AddCardToAssetCommand $command): void
     {
         $this->service->addCard(
             $command->getUser(),

@@ -22,10 +22,7 @@ class AddTermAndTranslateCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  AddTermAndTranslateCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|AddTermAndTranslateCommand $command): void
     {
         $this->service->create(
             config('app.lang'),

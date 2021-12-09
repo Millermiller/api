@@ -25,11 +25,11 @@ class UpdateAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateAssetCommand  $command
+     * @param  CommandInterface|UpdateAssetCommand  $command
      *
      * @throws AssetNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateAssetCommand $command): void
     {
         $asset = $this->assetService->updateAsset($command->getUser(), $command->getAsset(), $command->getData());
 

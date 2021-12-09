@@ -25,11 +25,9 @@ class PostQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PostQuery $query
-     *
      * @throws PostNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|PostQuery $query): void
     {
         $post = $this->service->one($query->getId());
 

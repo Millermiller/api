@@ -25,11 +25,11 @@ class GetAllPassingsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetAllPassingsQuery  $query
+     * @param  BaseCommandInterface|GetAllPassingsQuery  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetAllPassingsQuery $query): void
     {
         $passings = $this->service->allByLanguage($query->getLanguage());
 

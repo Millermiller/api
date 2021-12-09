@@ -24,11 +24,9 @@ class DeletePostCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeletePostCommand  $command
-     *
      * @throws PostNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeletePostCommand $command): void
     {
         $this->service->deletePost($command->getPostId());
 

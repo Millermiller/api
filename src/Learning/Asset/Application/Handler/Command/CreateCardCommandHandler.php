@@ -25,11 +25,11 @@ class CreateCardCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateCardCommand  $command
+     * @param  CommandInterface|CreateCardCommand  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateCardCommand $command): void
     {
         $card = $this->service->createCard(
             $command->getUser(),

@@ -22,10 +22,7 @@ class UploadAvatarCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  UploadAvatarCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UploadAvatarCommand $command): void
     {
         $path = $this->service->uploadAvatar($command->getUser(), $command->getPhoto());
 

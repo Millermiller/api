@@ -24,11 +24,11 @@ class DeletePuzzleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeletePuzzleCommand  $command
+     * @param  CommandInterface|DeletePuzzleCommand  $command
      *
      * @throws PuzzleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeletePuzzleCommand $command): void
     {
         $this->puzzleService->delete($command->getPuzzle());
 

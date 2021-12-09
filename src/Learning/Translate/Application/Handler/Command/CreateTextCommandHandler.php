@@ -4,6 +4,7 @@
 namespace Scandinaver\Learning\Translate\Application\Handler\Command;
 
 use League\Fractal\Resource\Item;
+use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Translate\Domain\Service\TextService;
 use Scandinaver\Learning\Translate\UI\Command\CreateTextCommand;
 use Scandinaver\Learning\Translate\UI\Resource\TextTransformer;
@@ -24,9 +25,11 @@ class CreateTextCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateTextCommand  $command
+     * @param  CommandInterface|CreateTextCommand  $command
+     *
+     * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateTextCommand $command): void
     {
         $text = $this->textService->createText($command->buildDTO());
 

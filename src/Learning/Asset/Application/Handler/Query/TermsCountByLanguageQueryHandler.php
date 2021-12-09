@@ -20,9 +20,7 @@ class TermsCountByLanguageQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  TermCountByLanguageQuery|BaseCommandInterface  $query
-     */
+
     public function handle(BaseCommandInterface $query): void
     {
         // TODO: Implement handle() method.

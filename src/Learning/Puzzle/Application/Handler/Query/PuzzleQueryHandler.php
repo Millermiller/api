@@ -21,9 +21,9 @@ class PuzzleQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PuzzleQuery  $query
+     * @param  BaseCommandInterface|PuzzleQuery  $query
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|PuzzleQuery $query): void
     {
         // TODO: Implement handle() method.
     }

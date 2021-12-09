@@ -22,10 +22,7 @@ class DeleteMessageCommandHandler extends AbstractHandler
 
     }
 
-    /**
-     * @param  DeleteMessageCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteMessageCommand $command): void
     {
         $this->service->delete($command->getMessageId());
 

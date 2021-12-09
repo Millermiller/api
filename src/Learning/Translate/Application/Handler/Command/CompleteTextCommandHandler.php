@@ -24,11 +24,11 @@ class CompleteTextCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CompleteTextCommand  $command
+     * @param  CommandInterface|CompleteTextCommand  $command
      *
      * @throws TextNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CompleteTextCommand $command): void
     {
         $this->textService->giveNextLevel($command->getUser(), $command->getText());
 

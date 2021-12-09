@@ -24,11 +24,11 @@ class DeleteSynonymCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteSynonymCommand  $command
+     * @param  CommandInterface|DeleteSynonymCommand  $command
      *
      * @throws Exception
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteSynonymCommand $command): void
     {
         $this->textService->deleteSynonym($command->getId());
 

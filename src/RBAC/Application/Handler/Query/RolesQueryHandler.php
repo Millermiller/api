@@ -24,10 +24,7 @@ class RolesQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  RolesQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|RolesQuery $query): void
     {
         $data = $this->service->getAllRoles($query->getParameters());
 

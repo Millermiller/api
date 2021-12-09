@@ -24,11 +24,11 @@ class DeleteTextCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteTextCommand  $command
+     * @param  CommandInterface|DeleteTextCommand  $command
      *
      * @throws TextNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteTextCommand $command): void
     {
         $this->textService->deleteText($command->getId());
 

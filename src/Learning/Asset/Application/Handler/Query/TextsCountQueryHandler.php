@@ -24,9 +24,9 @@ class TextsCountQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AssetsCountQuery  $query
+     * @param  BaseCommandInterface|AssetsCountQuery  $query
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|AssetsCountQuery $query): void
     {
         $count = $this->textService->count();
 

@@ -25,11 +25,9 @@ class CategoryQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CategoryQuery $query
-     *
      * @throws CategoryNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|CategoryQuery $query): void
     {
         $category = $this->service->one($query->getId());
 

@@ -25,11 +25,11 @@ class LoginCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  LoginCommand  $command
+     * @param  CommandInterface|LoginCommand  $command
      *
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|LoginCommand $command): void
     {
         $user = $this->userService->login($command->getCredentials());
 

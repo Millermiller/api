@@ -25,12 +25,12 @@ class CreateFavouriteCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateFavouriteCommand  $command
+     * @param  CommandInterface|CreateFavouriteCommand  $command
      *
      * @throws CardAlreadyAddedException
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateFavouriteCommand $command): void
     {
         $this->service->create($command->getUser(), $command->getCard());
 

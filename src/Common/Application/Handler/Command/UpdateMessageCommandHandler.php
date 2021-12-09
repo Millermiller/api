@@ -19,10 +19,7 @@ class UpdateMessageCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  UpdateMessageCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateMessageCommand $command): void
     {
         // TODO: Implement handle() method.
     }

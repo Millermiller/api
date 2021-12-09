@@ -25,11 +25,11 @@ class CreateRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateRoleCommand  $command
+     * @param  CommandInterface|CreateRoleCommand  $command
      *
      * @throws RoleDublicateException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateRoleCommand $command): void
     {
         $role = $this->service->createRole($command->buildDTO());
 

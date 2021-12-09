@@ -24,11 +24,9 @@ class DeleteLanguageCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteLanguageCommand  $command
-     *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteLanguageCommand $command): void
     {
         $this->service->deleteLanguage($command->getId());
 

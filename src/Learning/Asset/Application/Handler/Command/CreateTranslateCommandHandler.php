@@ -25,11 +25,11 @@ class CreateTranslateCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateTranslateCommand  $command
+     * @param  CommandInterface|CreateTranslateCommand  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateTranslateCommand $command): void
     {
         $example = $this->cardService->addExample($command->getCard(), $command->getText(), $command->getValue());
 

@@ -23,10 +23,7 @@ class MessagesQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  MessagesQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|MessagesQuery $query): void
     {
         $feedbacks = $this->service->all();
 

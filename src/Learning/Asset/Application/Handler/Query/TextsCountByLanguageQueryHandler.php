@@ -21,9 +21,9 @@ class TextsCountByLanguageQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  TextsCountByLanguageQuery  $query
+     * @param  BaseCommandInterface|TextsCountByLanguageQuery  $query
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|TextsCountByLanguageQuery $query): void
     {
         // TODO: Implement handle() method.
     }

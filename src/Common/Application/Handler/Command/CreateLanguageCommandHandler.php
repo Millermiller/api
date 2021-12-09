@@ -23,10 +23,7 @@ class CreateLanguageCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param CreateLanguageCommand $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateLanguageCommand $command): void
     {
         $language = $this->service->createLanguage($command->getData());
 

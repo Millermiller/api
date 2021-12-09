@@ -26,12 +26,12 @@ class CreatePermissionCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreatePermissionCommand  $command
+     * @param  CommandInterface|CreatePermissionCommand  $command
      *
      * @throws PermissionDublicateException
      * @throws PermissionGroupNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreatePermissionCommand $command): void
     {
         $permission = $this->service->createPermission($command->buildDTO());
 

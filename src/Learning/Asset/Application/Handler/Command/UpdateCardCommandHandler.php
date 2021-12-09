@@ -24,11 +24,11 @@ class UpdateCardCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateCardCommand  $command
+     * @param  CommandInterface|UpdateCardCommand  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateCardCommand $command): void
     {
         $this->cardService->updateCard($command->getCardId(), $command->buildDTO());
 

@@ -25,11 +25,9 @@ class DeleteIntroCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteIntroCommand  $command
-     *
      * @throws IntroNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteIntroCommand $command): void
     {
         $this->service->delete($command->getId());
 

@@ -25,11 +25,11 @@ class PermissionGroupQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PermissionGroupQuery  $query
+     * @param  BaseCommandInterface|PermissionGroupQuery  $query
      *
      * @throws PermissionGroupNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|PermissionGroupQuery $query): void
     {
         $permissionGroup = $this->service->getPermissionGroup($query->getId());
 

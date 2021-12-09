@@ -24,11 +24,11 @@ class DeletePermissionGroupCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeletePermissionGroupCommand  $command
+     * @param  CommandInterface|DeletePermissionGroupCommand  $command
      *
      * @throws PermissionGroupNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeletePermissionGroupCommand $command): void
     {
         $this->service->deletePermissionGroup($command->getId());
 

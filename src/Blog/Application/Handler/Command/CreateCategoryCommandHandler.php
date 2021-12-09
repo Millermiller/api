@@ -25,11 +25,9 @@ class CreateCategoryCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateCategoryCommand  $command
-     *
      * @throws CategoryDuplicateException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateCategoryCommand $command): void
     {
         $category = $this->service->create($command->buildDTO());
 

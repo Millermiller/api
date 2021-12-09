@@ -25,11 +25,11 @@ class SetSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  SetSettingCommand  $command
+     * @param  CommandInterface|SetSettingCommand  $command
      *
      * @throws SettingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|SetSettingCommand $command): void
     {
         $setting = $this->settingsService->setValue($command->getId(), $command->getValue());
 

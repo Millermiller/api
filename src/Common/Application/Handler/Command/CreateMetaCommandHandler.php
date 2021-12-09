@@ -19,10 +19,7 @@ class CreateMetaCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  CreateMetaCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateMetaCommand $command): void
     {
         // TODO: Implement handle() method.
     }

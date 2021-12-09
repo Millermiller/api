@@ -25,11 +25,11 @@ class UpdateUserCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateUserCommand  $command
+     * @param  CommandInterface|UpdateUserCommand  $command
      *
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateUserCommand $command): void
     {
         $user = $this->userService->updateUser($command->getUser(), $command->getData());
 

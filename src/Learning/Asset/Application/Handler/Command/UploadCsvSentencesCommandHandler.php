@@ -24,11 +24,11 @@ class UploadCsvSentencesCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UploadCsvSentencesCommand  $command
+     * @param  CommandInterface|UploadCsvSentencesCommand  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UploadCsvSentencesCommand $command): void
     {
         $this->service->uploadCsvSentences($command->getLanguage(), $command->getFile());
 

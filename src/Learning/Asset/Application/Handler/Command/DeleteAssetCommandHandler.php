@@ -25,12 +25,12 @@ class DeleteAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteAssetCommand  $command
+     * @param  CommandInterface|DeleteAssetCommand  $command
      *
-     * @throws BindingResolutionException
      * @throws AssetNotFoundException
+     * @throws BindingResolutionException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteAssetCommand $command): void
     {
         $this->assetService->delete($command->getAsset());
 

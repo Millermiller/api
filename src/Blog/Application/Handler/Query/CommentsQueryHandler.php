@@ -24,10 +24,7 @@ class CommentsQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  CommentsQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|CommentsQuery $query): void
     {
         $data = $this->service->all($query->getParameters());
 

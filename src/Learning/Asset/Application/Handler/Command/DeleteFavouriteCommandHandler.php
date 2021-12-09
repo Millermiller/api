@@ -24,11 +24,11 @@ class DeleteFavouriteCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteFavouriteCommand  $command
+     * @param  CommandInterface|DeleteFavouriteCommand  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteFavouriteCommand $command): void
     {
         $this->favouriteService->delete($command->getUser(), $command->getCard());
 

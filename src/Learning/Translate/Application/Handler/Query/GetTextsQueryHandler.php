@@ -25,11 +25,11 @@ class GetTextsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetTextsQuery  $query
+     * @param  BaseCommandInterface|GetTextsQuery  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetTextsQuery $query): void
     {
         $texts = $this->textService->getAllByLanguage($query->getLanguage());
 

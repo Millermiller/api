@@ -22,10 +22,7 @@ class ReadQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  ReadQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|ReadQuery $query): void
     {
         $path = $this->reader->read($query->getUser(), $query->getLanguage(), $query->getText());
 

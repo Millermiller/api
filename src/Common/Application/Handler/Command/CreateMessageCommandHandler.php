@@ -23,10 +23,7 @@ class CreateMessageCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  CreateMessageCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateMessageCommand $command): void
     {
         $feedback = $this->service->create($command->buildDTO());
 

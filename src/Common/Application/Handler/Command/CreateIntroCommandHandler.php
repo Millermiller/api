@@ -23,10 +23,7 @@ class CreateIntroCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  CreateIntroCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateIntroCommand $command): void
     {
         $intro = $this->service->create($command->buildDTO());
 

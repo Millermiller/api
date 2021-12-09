@@ -24,11 +24,11 @@ class UploadTextImageCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UploadTextImageCommand  $command
+     * @param  CommandInterface|UploadTextImageCommand  $command
      *
      * @throws TextNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UploadTextImageCommand $command): void
     {
         $path = $this->textService->saveImage($command->getId(), $command->getPhoto());
 

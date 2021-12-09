@@ -24,11 +24,11 @@ class CreatePuzzleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreatePuzzleCommand  $command
+     * @param  CommandInterface|CreatePuzzleCommand  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreatePuzzleCommand $command): void
     {
         $this->puzzleService->create($command->buildDTO());
 

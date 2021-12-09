@@ -24,11 +24,11 @@ class DeleteUserCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteUserCommand  $command
+     * @param  CommandInterface|DeleteUserCommand  $command
      *
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteUserCommand $command): void
     {
         $this->userService->delete($command->getUser());
 

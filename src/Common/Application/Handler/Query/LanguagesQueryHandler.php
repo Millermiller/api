@@ -23,10 +23,7 @@ class LanguagesQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  LanguagesQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|LanguagesQuery $query): void
     {
         $languages = $this->service->all($query->getUser());
 

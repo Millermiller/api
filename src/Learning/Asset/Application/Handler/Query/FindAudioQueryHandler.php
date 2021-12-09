@@ -25,11 +25,11 @@ class FindAudioQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  FindAudioQuery  $query
+     * @param  BaseCommandInterface|FindAudioQuery  $query
      *
      * @throws TermNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|FindAudioQuery $query): void
     {
         $term = $this->audioService->parse($query->getId());
 

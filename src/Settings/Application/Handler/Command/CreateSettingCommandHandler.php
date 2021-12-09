@@ -24,9 +24,9 @@ class CreateSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateSettingCommand  $command
+     * @param  CommandInterface|CreateSettingCommand  $command
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateSettingCommand $command): void
     {
         $setting = $this->settingsService->createSetting($command->buildDTO());
 

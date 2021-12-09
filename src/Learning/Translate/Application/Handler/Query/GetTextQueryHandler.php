@@ -25,11 +25,11 @@ class GetTextQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetTextQuery  $query
+     * @param  BaseCommandInterface|GetTextQuery  $query
      *
      * @throws TextNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetTextQuery $query): void
     {
         $text = $this->textService->prepareText($query->getText());
 

@@ -22,10 +22,7 @@ class DeleteLogCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  DeleteLogCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteLogCommand $command): void
     {
         $log = $this->logRepository->find($command->getId());
         $this->logRepository->delete($log);

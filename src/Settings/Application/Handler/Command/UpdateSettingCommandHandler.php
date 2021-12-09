@@ -25,11 +25,11 @@ class UpdateSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateSettingCommand  $command
+     * @param  CommandInterface|UpdateSettingCommand  $command
      *
      * @throws SettingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateSettingCommand $command): void
     {
         $setting = $this->settingsService->updateSetting($command->getId(), $command->getData());
 

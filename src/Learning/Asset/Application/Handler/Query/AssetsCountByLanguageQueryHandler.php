@@ -20,10 +20,7 @@ class AssetsCountByLanguageQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  AssetsCountByLanguageQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|AssetsCountByLanguageQuery $query): void
     {
         // TODO: Implement handle() method.
     }

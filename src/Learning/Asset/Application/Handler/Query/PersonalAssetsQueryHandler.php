@@ -25,11 +25,11 @@ class PersonalAssetsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PersonalAssetsQuery  $query
+     * @param  BaseCommandInterface|PersonalAssetsQuery  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|PersonalAssetsQuery $query): void
     {
         $assetDTOs = $this->assetService->getPersonalAssets($query->getLanguage(), $query->getUser());
 

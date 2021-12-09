@@ -26,11 +26,9 @@ class PostsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PostsQuery  $query
-     *
      * @throws QueryException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|PostsQuery $query): void
     {
         $data = $this->service->all($query->getParameters());
 

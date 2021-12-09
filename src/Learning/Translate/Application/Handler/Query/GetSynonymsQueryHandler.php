@@ -23,10 +23,7 @@ class GetSynonymsQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  GetSynonymsQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetSynonymsQuery $query): void
     {
         $synonyms = $this->textService->getSynonymsByWordId($query->getId());
 

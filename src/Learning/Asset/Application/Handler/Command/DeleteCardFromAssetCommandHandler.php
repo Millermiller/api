@@ -25,12 +25,12 @@ class DeleteCardFromAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteCardFromAssetCommand  $command
+     * @param  CommandInterface|DeleteCardFromAssetCommand  $command
      *
      * @throws AssetNotFoundException
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteCardFromAssetCommand $command): void
     {
         $this->assetService->removeCard($command->getAsset(), $command->getCard());
 

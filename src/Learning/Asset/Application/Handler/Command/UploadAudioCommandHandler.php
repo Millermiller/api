@@ -25,11 +25,11 @@ class UploadAudioCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UploadAudioCommand  $command
+     * @param  CommandInterface|UploadAudioCommand  $command
      *
      * @throws TermNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UploadAudioCommand $command): void
     {
         $term = $this->audioService->upload($command->getTermId(), $command->getFile());
 

@@ -22,10 +22,7 @@ class AudioCountQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  AudioCountQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|AudioCountQuery $query): void
     {
         $count = $this->audioService->count();
 

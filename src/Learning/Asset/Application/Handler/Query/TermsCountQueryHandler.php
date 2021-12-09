@@ -22,10 +22,7 @@ class TermsCountQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  TermsCountQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|TermsCountQuery $query): void
     {
         $count = $this->termService->count();
 

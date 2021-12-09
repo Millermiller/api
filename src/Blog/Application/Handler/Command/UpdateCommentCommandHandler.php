@@ -25,11 +25,9 @@ class UpdateCommentCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateCommentCommand  $command
-     *
      * @throws CommentNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateCommentCommand $command): void
     {
         $comment = $this->service->update($command->getCommentId(), $command->buildDTO());
 

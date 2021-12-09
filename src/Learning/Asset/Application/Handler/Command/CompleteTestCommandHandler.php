@@ -25,12 +25,10 @@ class CompleteTestCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CompleteTestCommand  $command
-     *
      * @throws AssetNotFoundException
      * @throws SettingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CompleteTestCommand $command): void
     {
         $this->service->savePassing(
             $command->getUser(),

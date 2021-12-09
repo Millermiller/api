@@ -26,11 +26,10 @@ class CreatePostCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreatePostCommand  $command
-     *
-     * @throws CategoryNotFoundException|UserNotFoundException
+     * @throws CategoryNotFoundException
+     * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreatePostCommand $command): void
     {
         $post = $this->service->create($command->buildDTO());
 

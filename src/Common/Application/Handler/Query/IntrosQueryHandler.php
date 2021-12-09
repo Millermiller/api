@@ -24,10 +24,7 @@ class IntrosQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  IntrosQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|IntrosQuery $query): void
     {
         $data = $this->service->all($query->getParameters());
 

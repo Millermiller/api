@@ -19,10 +19,7 @@ class CreateOrderCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param CreateOrderCommand|CommandInterface $command
-     */
-    public function handle($command): void
+    public function handle(CreateOrderCommand|CommandInterface $command): void
     {
         // TODO: Implement handle() method.
     }

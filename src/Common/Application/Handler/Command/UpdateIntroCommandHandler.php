@@ -26,11 +26,9 @@ class UpdateIntroCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateIntroCommand  $command
-     *
      * @throws IntroNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateIntroCommand $command): void
     {
         $intro = $this->service->update($command->getIntroId(), $command->buildDTO());
 

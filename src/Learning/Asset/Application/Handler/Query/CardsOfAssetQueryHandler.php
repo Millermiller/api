@@ -25,11 +25,11 @@ class CardsOfAssetQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  CardsOfAssetQuery  $query
+     * @param  BaseCommandInterface|CardsOfAssetQuery  $query
      *
      * @throws AssetNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|CardsOfAssetQuery $query): void
     {
         $data = $this->cardService->getCards($query->getUser(), $query->getAsset());
 

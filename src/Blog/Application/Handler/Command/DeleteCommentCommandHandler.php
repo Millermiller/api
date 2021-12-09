@@ -24,11 +24,9 @@ class DeleteCommentCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteCommentCommand  $command
-     *
      * @throws CommentNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteCommentCommand $command): void
     {
         $this->service->delete($command->getCommentId());
 

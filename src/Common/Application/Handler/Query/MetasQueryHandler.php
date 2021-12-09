@@ -20,10 +20,7 @@ class MetasQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  MetasQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|MetasQuery $query): void
     {
         // TODO: Implement handle() method.
     }

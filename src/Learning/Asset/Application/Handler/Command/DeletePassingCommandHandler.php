@@ -24,11 +24,11 @@ class DeletePassingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeletePassingCommand  $command
+     * @param  CommandInterface|DeletePassingCommand  $command
      *
      * @throws PassingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeletePassingCommand $command): void
     {
         $this->service->deletePassing($command->getId());
 

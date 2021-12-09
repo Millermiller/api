@@ -25,11 +25,11 @@ class GetExamplesForCardQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetExamplesForCardQuery  $query
+     * @param  BaseCommandInterface|GetExamplesForCardQuery  $query
      *
      * @throws CardNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetExamplesForCardQuery $query): void
     {
         $examples = $this->cardService->getExamples($query->getCard());
 

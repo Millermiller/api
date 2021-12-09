@@ -24,12 +24,7 @@ class CategoriesQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  CategoriesQuery  $query
-     *
-     * @return void
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|CategoriesQuery $query): void
     {
         $data = $this->service->all($query->getParameters());
 

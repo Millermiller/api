@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 
-use Exception;
 use League\Fractal\Resource\Collection;
+use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 use Scandinaver\Learning\Asset\UI\Query\AssetsQuery;
 use Scandinaver\Learning\Asset\UI\Resource\AssetTransformer;
@@ -25,11 +25,11 @@ class AssetsQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AssetsQuery  $query
+     * @param  BaseCommandInterface|AssetsQuery  $query
      *
-     * @throws Exception
+     * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|AssetsQuery $query): void
     {
         $assetDTOs = $this->assetService->getAssetsForApp($query->getLanguage(), $query->getUser());
 

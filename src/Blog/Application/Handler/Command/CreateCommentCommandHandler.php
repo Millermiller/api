@@ -26,11 +26,9 @@ class CreateCommentCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateCommentCommand  $command
-     *
      * @throws PostNotFoundException|UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateCommentCommand $command): void
     {
         $comment = $this->service->create($command->buildDTO());
 

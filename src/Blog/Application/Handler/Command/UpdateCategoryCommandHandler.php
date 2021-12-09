@@ -25,11 +25,9 @@ class UpdateCategoryCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateCategoryCommand  $command
-     *
      * @throws CategoryNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateCategoryCommand $command): void
     {
         $category = $this->service->update($command->getCategoryId(), $command->buildDTO());
 

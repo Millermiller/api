@@ -25,11 +25,11 @@ class CreateSynonymCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateSynonymCommand  $command
+     * @param  CommandInterface|CreateSynonymCommand  $command
      *
      * @throws Exception
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateSynonymCommand $command): void
     {
         $synonym = $this->textService->createSynonym($command->buildDTO());
 

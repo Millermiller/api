@@ -25,11 +25,9 @@ class IntroQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  IntroQuery  $query
-     *
      * @throws IntroNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|IntroQuery $query): void
     {
         $intro = $this->service->one($query->getId());
 

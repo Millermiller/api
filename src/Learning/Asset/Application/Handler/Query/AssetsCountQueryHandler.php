@@ -24,11 +24,11 @@ class AssetsCountQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  AssetsCountQuery  $query
+     * @param  BaseCommandInterface|AssetsCountQuery  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|AssetsCountQuery $query): void
     {
         $count = $this->assetService->count($query->getLanguage());
 

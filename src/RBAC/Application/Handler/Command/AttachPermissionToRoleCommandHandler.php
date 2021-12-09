@@ -25,12 +25,12 @@ class AttachPermissionToRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  AttachPermissionToRoleCommand  $command
+     * @param  CommandInterface|AttachPermissionToRoleCommand  $command
      *
      * @throws PermissionNotFoundException
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|AttachPermissionToRoleCommand $command): void
     {
         $this->service->attachPermissionToRole($command->getRoleId(), $command->getPermissionId());
 

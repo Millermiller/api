@@ -24,11 +24,11 @@ class EditTranslateCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  EditTranslateCommand  $command
+     * @param  CommandInterface|EditTranslateCommand  $command
      *
      * @throws CardNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|EditTranslateCommand $command): void
     {
         $this->cardService->editTranslate($command->getTranslate(), $command->getText());
 

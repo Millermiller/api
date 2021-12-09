@@ -25,11 +25,11 @@ class SettingQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  SettingQuery  $query
+     * @param  BaseCommandInterface|SettingQuery  $query
      *
      * @throws SettingNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|SettingQuery $query): void
     {
         $setting = $this->settingsService->one($query->getId());
 

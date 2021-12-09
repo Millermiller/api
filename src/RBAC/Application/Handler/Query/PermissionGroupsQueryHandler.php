@@ -24,10 +24,7 @@ class PermissionGroupsQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  PermissionGroupsQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|PermissionGroupsQuery $query): void
     {
         $data = $this->service->getAllPermissionGroups($query->getParameters());
 

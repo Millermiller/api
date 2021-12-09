@@ -22,10 +22,8 @@ class AudioCountByLanguageQueryHandler extends AbstractHandler
 
     /**
      * @param  AudioCountByLanguageQuery|BaseCommandInterface  $query
-     *
-     * @inheritDoc
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|AudioCountByLanguageQuery $query): void
     {
         // TODO: Implement handle() method.
     }

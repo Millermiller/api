@@ -24,11 +24,11 @@ class FillDictionaryCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  FillDictionaryCommand  $command
+     * @param  CommandInterface|FillDictionaryCommand  $command
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|FillDictionaryCommand $command): void
     {
         $this->cardService->fillDictionary($command->getLanguage(), $command->getTermId());
 

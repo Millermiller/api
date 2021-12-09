@@ -24,11 +24,11 @@ class BulkSetSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  BulkSetSettingCommand  $command
+     * @param  CommandInterface|BulkSetSettingCommand  $command
      *
      * @throws SettingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|BulkSetSettingCommand $command): void
     {
         $this->settingsService->bulkSetValue($command->getData());
 

@@ -20,10 +20,7 @@ class CreateTooltipCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  CreateTooltipCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateTooltipCommand $command): void
     {
         // TODO: Implement handle() method.
     }

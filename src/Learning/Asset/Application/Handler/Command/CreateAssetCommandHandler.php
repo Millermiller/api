@@ -25,11 +25,9 @@ class CreateAssetCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateAssetCommand  $command
-     *
      * @throws Exception
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateAssetCommand $command): void
     {
         $asset = $this->service->create($command->getUser(), $command->buildDTO());
 

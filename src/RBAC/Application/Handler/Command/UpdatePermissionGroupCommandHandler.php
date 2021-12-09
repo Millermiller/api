@@ -26,11 +26,12 @@ class UpdatePermissionGroupCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdatePermissionGroupCommand  $command
+     * @param  CommandInterface|UpdatePermissionGroupCommand  $command
      *
-     * @throws PermissionGroupNotFoundException|PermissionGroupDublicateException
+     * @throws PermissionGroupDublicateException
+     * @throws PermissionGroupNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdatePermissionGroupCommand $command): void
     {
         $permissionGroup = $this->service->updatePermissionGroup($command->getId(), $command->getData());
 

@@ -24,11 +24,11 @@ class DeleteSettingCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteSettingCommand  $command
+     * @param  CommandInterface|DeleteSettingCommand  $command
      *
      * @throws SettingNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteSettingCommand $command): void
     {
         $this->settingsService->deleteSetting($command->getId());
 

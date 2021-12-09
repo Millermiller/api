@@ -25,11 +25,11 @@ class RoleQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  RoleQuery  $query
+     * @param  BaseCommandInterface|RoleQuery  $query
      *
      * @throws RoleNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|RoleQuery $query): void
     {
         $role = $this->service->getRole($query->getId());
 

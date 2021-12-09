@@ -24,9 +24,9 @@ class GetTranslatesByTermQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetTranslatesByTermQuery  $query
+     * @param  BaseCommandInterface|GetTranslatesByTermQuery  $query
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetTranslatesByTermQuery $query): void
     {
         $translates = $this->termService->getTranslates($query->getId());
 

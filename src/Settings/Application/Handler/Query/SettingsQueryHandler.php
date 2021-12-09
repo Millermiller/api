@@ -24,10 +24,7 @@ class SettingsQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  SettingsQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|SettingsQuery $query): void
     {
         $data = $this->settingsService->all($query->getParameters());
 

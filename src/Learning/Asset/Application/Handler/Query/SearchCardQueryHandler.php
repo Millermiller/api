@@ -25,11 +25,11 @@ class SearchCardQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  SearchCardQuery  $query
+     * @param  BaseCommandInterface|SearchCardQuery  $query
      *
      * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|SearchCardQuery $query): void
     {
         $cards = $this->service->search($query->getLanguage(), $query->getQuery(), $query->getIsSentence());
 

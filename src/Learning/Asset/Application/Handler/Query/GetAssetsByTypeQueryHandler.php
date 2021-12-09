@@ -26,12 +26,12 @@ class GetAssetsByTypeQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  GetAssetsByTypeQuery  $query
+     * @param  BaseCommandInterface|GetAssetsByTypeQuery  $query
      *
-     * @throws LanguageNotFoundException
      * @throws BindingResolutionException
+     * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetAssetsByTypeQuery $query): void
     {
         $assets = $this->assetService->getAssets($query->getLanguage(), $query->getType());
 

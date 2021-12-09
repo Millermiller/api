@@ -25,10 +25,7 @@ class LogQueryHandler extends AbstractHandler
 
     }
 
-    /**
-     * @param  LogQuery  $query
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|LogQuery $query): void
     {
         $log = $this->logRepository->find($query->getLogId());
 

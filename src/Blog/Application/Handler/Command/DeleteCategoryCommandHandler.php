@@ -24,11 +24,9 @@ class DeleteCategoryCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteCategoryCommand  $command
-     *
      * @throws CategoryNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteCategoryCommand $command): void
     {
         $this->service->delete($command->getCategoryId());
 

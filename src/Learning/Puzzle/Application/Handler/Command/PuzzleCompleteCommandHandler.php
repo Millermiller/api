@@ -24,11 +24,11 @@ class PuzzleCompleteCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  PuzzleCompleteCommand  $command
+     * @param  CommandInterface|PuzzleCompleteCommand  $command
      *
      * @throws PuzzleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|PuzzleCompleteCommand $command): void
     {
         $this->puzzleService->completed($command->getUser(), $command->getPuzzle());
 

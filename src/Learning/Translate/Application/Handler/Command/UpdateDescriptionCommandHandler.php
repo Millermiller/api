@@ -20,10 +20,7 @@ class UpdateDescriptionCommandHandler extends AbstractHandler
         parent::__construct();
     }
 
-    /**
-     * @param  UpdateDescriptionCommand  $command
-     */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateDescriptionCommand $command): void
     {
         // TODO: Implement handle() method.
     }

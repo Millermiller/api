@@ -26,12 +26,12 @@ class UpdatePermissionCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdatePermissionCommand  $command
+     * @param  CommandInterface|UpdatePermissionCommand  $command
      *
-     * @throws PermissionNotFoundException
      * @throws PermissionGroupNotFoundException
+     * @throws PermissionNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdatePermissionCommand $command): void
     {
         $permission = $this->service->updatePermission($command->getId(), $command->getData());
 

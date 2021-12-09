@@ -26,11 +26,12 @@ class UpdateTextCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateTextCommand  $command
+     * @param  CommandInterface|UpdateTextCommand  $command
      *
-     * @throws TextNotFoundException|SynonymAlreadyExistsException
+     * @throws SynonymAlreadyExistsException
+     * @throws TextNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateTextCommand $command): void
     {
         $text = $this->textService->updateText($command->getId(), $command->buildDTO());
 

@@ -25,11 +25,11 @@ class CreateUserCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  CreateUserCommand  $command
+     * @param  CommandInterface|CreateUserCommand  $command
      *
      * @throws Exception
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|CreateUserCommand $command): void
     {
         $user = $this->service->registration($command->buildDTO());
 

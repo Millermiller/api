@@ -24,11 +24,11 @@ class DeleteRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeleteRoleCommand  $command
+     * @param  CommandInterface|DeleteRoleCommand  $command
      *
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeleteRoleCommand $command): void
     {
         $this->service->deleteRole($command->getId());
 

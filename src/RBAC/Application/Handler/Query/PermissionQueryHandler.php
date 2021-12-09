@@ -25,11 +25,11 @@ class PermissionQueryHandler extends AbstractHandler
     }
 
     /**
-     * @param  PermissionQuery  $query
+     * @param  BaseCommandInterface|PermissionQuery  $query
      *
      * @throws PermissionNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|PermissionQuery $query): void
     {
         $permission = $this->service->getPermission($query->getId());
 

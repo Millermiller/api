@@ -22,11 +22,7 @@ class MessageQueryHandler extends AbstractHandler
 
     }
 
-    /**
-     * @param  MessageQuery  $query
-     *
-     */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|MessageQuery $query): void
     {
         // TODO: implement messages
         // return $this->messageService->one($query->getId());

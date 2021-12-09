@@ -25,11 +25,11 @@ class UpdateRoleCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdateRoleCommand  $command
+     * @param  CommandInterface|UpdateRoleCommand  $command
      *
      * @throws RoleNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdateRoleCommand $command): void
     {
         $role = $this->service->updateRole($command->getId(), $command->getData());
 

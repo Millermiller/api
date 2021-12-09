@@ -24,11 +24,11 @@ class DeletePermissionCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  DeletePermissionCommand  $command
+     * @param  CommandInterface|DeletePermissionCommand  $command
      *
      * @throws PermissionNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|DeletePermissionCommand $command): void
     {
         $this->service->deletePermission($command->getId());
 

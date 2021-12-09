@@ -27,13 +27,11 @@ class UpdatePostCommandHandler extends AbstractHandler
     }
 
     /**
-     * @param  UpdatePostCommand  $command
-     *
      * @throws PostNotFoundException
      * @throws CategoryNotFoundException
      * @throws UserNotFoundException
      */
-    public function handle(CommandInterface $command): void
+    public function handle(CommandInterface|UpdatePostCommand $command): void
     {
         $post = $this->blogService->updatePost($command->getPostId(), $command->buildDTO());
 
