@@ -14,18 +14,62 @@ class Passing implements ResponseInterface
     public static function singleResponse(): array
     {
         return [
-            'id',
-            'percent',
-            'completed',
-            'time',
-            'errors',
-            'user' => User::response(),
-            'asset' => Asset::responseWithoutCards()
+            'data' => [
+                'type',
+                'id',
+                'attributes'    => [
+                    'percent',
+                    'completed',
+                    'time',
+                    'errors',
+                ],
+                'relationships' => [
+                    'user'  => [
+                        'data' => [
+                            'id',
+                            'type',
+                        ],
+                    ],
+                    'asset' => [
+                        'data' => [
+                            'id',
+                            'type',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
     public static function collectionResponse(): array
     {
-        // TODO: Implement collectionResponse() method.
+        return [
+            'data' => [
+                '*' => [
+                    'type',
+                    'id',
+                    'attributes'    => [
+                        'percent',
+                        'completed',
+                        'time',
+                        'errors',
+                    ],
+                    'relationships' => [
+                        'user'  => [
+                            'data' => [
+                                'id',
+                                'type',
+                            ],
+                        ],
+                        'asset' => [
+                            'data' => [
+                                'id',
+                                'type',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }

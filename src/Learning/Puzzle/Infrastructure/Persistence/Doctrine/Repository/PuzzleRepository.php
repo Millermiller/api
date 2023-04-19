@@ -3,12 +3,16 @@
 
 namespace Scandinaver\Learning\Puzzle\Infrastructure\Persistence\Doctrine\Repository;
 
-use Doctrine\ORM\{OptimisticLockException, ORMException};
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
+use Doctrine\ORM\{OptimisticLockException, ORMException, Query\QueryException};
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
 use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseRepository;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * Class PuzzleRepository
@@ -17,6 +21,8 @@ use Scandinaver\Core\Infrastructure\Persistence\Doctrine\Repository\BaseReposito
  */
 class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterface
 {
+    use PaginatesFromParams;
+
     public function getByLanguage(Language $language): array
     {
         $q = $this->createQueryBuilder('puzzle');
@@ -48,5 +54,22 @@ class PuzzleRepository extends BaseRepository implements PuzzleRepositoryInterfa
     {
         //$user->addPuzzle($puzzle);
        // $this->_em->flush();
+    }
+
+    /**
+     * @param  RequestParametersComposition  $parameters
+     *
+     * @return LengthAwarePaginator
+     * @throws QueryException
+     */
+    public function getData(RequestParametersComposition $parameters): LengthAwarePaginator
+    {
+        $mainQueryBuilder = $this->_em->createQueryBuilder();
+        $mainQueryBuilder->from($this->getEntityName(), 'puzzle')
+                         ->select($mainQueryBuilder->getAllAliases())
+                         ->innerJoin('puzzle.language',  'language', Expr\Join::WITH)
+                         ->addCriteria($parameters->buildCriteria($mainQueryBuilder->getAllAliases()));
+
+        return $this->paginate($mainQueryBuilder->getQuery(), $parameters->getLimit(), $parameters->getPage());
     }
 }

@@ -22,7 +22,7 @@ class AssetDeletedListener
     public function handle(AssetDeleted $event): void
     {
         $this->logger->info(
-            'Словарь {assetname} удален',
+            'Словарь удален: {assetname}',
             [
                 'assetname' => $event->getAsset()->getTitle(),
             ]

@@ -57,7 +57,7 @@ class PostControllerTest extends TestCase
         $response        = $this->get(route('post:all'));
         $decodedResponse = json_decode($response->getContent(), TRUE);
 
-        self::assertCount($this->postCount, $decodedResponse);
+        self::assertCount($this->postCount, $decodedResponse['data']);
 
         $response->assertJsonStructure(
             \Tests\Responses\Post::collectionResponse(),

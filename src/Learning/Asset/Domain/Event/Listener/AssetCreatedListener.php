@@ -23,7 +23,7 @@ class AssetCreatedListener
     public function handle(AssetCreated $event): void
     {
         $this->logger->info(
-            'Создан словарь {assetname}',
+            'Словарь создан: {assetname}',
             [
                 'assetname' => $event->getAsset()->getTitle(),
             ]

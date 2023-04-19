@@ -76,7 +76,9 @@ class FavouriteControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $permission = new Permission(Asset::DELETE_FAVOURITE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => Asset::DELETE_FAVOURITE,
+        ]);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');
@@ -94,7 +96,9 @@ class FavouriteControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        $permission = new Permission(Asset::CREATE_FAVOURITE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => Asset::CREATE_FAVOURITE,
+        ]);
         $this->user->allow($permission);
 
         $this->actingAs($this->user, 'api');

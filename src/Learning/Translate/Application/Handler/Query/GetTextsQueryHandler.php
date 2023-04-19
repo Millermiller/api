@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learning\Translate\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Translate\Domain\Service\TextService;
 use Scandinaver\Learning\Translate\UI\Query\GetTextsQuery;
 use Scandinaver\Learning\Translate\UI\Resource\TextTransformer;
@@ -27,12 +27,13 @@ class GetTextsQueryHandler extends AbstractHandler
     /**
      * @param  BaseCommandInterface|GetTextsQuery  $query
      *
-     * @throws LanguageNotFoundException
      */
     public function handle(BaseCommandInterface|GetTextsQuery $query): void
     {
-        $texts = $this->textService->getAllByLanguage($query->getLanguage());
+        $data = $this->textService->paginate($query->getParameters());
 
-        $this->resource = new Collection($texts, new TextTransformer());
+        $this->resource = new Collection($data->items(), new TextTransformer(), 'text');
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

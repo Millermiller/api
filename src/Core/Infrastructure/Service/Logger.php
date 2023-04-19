@@ -3,13 +3,14 @@
 
 namespace Scandinaver\Core\Infrastructure\Service;
 
-use App\Helpers\Auth;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use Exception;
 use Illuminate\Support\Env;
 use Psr\Log\{LoggerInterface, LoggerTrait};
 use Scandinaver\Common\Domain\Contract\Repository\LogRepositoryInterface;
 use Scandinaver\Common\Domain\Entity\Log;
+use Throwable;
 
 /**
  * Class Logger
@@ -31,16 +32,31 @@ class Logger implements LoggerInterface
      * @param  mixed   $level
      * @param  string  $message
      * @param  array   $context
-     *
+     * TODO: refactor. Use Monolog
+     * @throws ORMException
      */
     public function log($level, $message, array $context = [])
     {
-        $user = Auth::user();
+        $manager = app('em');
 
-        $log = new Log($user, $level, $message, $context, $context);
+        $manager = $manager->create(
+            $manager->getConnection(),
+            $manager->getConfiguration()
+        );
+
+        if (array_key_exists('exception', $context)) {
+            /** @var Throwable $exception */
+            $exception = $context['exception'];
+            $trace[] = $exception->getTraceAsString();
+        } else {
+            $trace = $context;
+        }
+
+        $log = new Log(NULL, $level, $message, $trace, $trace);
 
         try {
-            $this->logRepository->save($log);
+            $manager->persist($log);
+            $manager->flush($log);
         } catch (Exception $e) {
 
                 \Illuminate\Support\Facades\Log::error($message, $context);
@@ -58,7 +74,7 @@ class Logger implements LoggerInterface
                 $trace = [];
                 if (is_array($context)) {
                     foreach ($context as $item) {
-                        if ($item instanceof \Exception) {
+                        if (is_object($item) && method_exists($item, 'getTraceAsString')) {
                             $trace[] = $item->getTraceAsString();
                         }
                     }

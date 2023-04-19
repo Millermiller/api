@@ -29,7 +29,7 @@ class ClearElasticIndex extends Command
         $this->info('Removing...');
 
         $this->elasticsearch->indices()->delete([
-            'index' => 'words_index',
+            'index' => 'terms_index',
         ]);
 
         $this->info('Done...');

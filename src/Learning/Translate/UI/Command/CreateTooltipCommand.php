@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Translate\Application\Handler\Command\CreateTooltipCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Translate\Application\Handler\Command\CreateTooltipComm
  *
  * @package Scandinaver\Learning\Translate\UI\Command
  */
-#[Command(CreateTooltipCommandHandler::class)]
+#[Handler(CreateTooltipCommandHandler::class)]
 class CreateTooltipCommand implements CommandInterface
 {
 

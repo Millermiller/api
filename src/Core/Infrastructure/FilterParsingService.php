@@ -37,8 +37,8 @@ class FilterParsingService
 
         if (array_key_exists('logic', $filterInput) && 'or' === $filterInput['logic']) {
             $filterValue = [];
-            $filterConfigurationMain = new FilterConfiguration($filterInput['filters'][0]['field'], 'in');
-            foreach ($filterInput['filters'] as $filter) {
+            $filterConfigurationMain = new FilterConfiguration($filterInput['filter'][0]['field'], 'in');
+            foreach ($filterInput['filter'] as $filter) {
                 $filterConfiguration = $this->buildOne($filter);
                 $filterValue[] = $filterConfiguration->getValue();
             }

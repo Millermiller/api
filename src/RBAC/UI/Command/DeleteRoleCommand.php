@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\RBAC\Application\Handler\Command\DeleteRoleCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\RBAC\Application\Handler\Command\DeleteRoleCommandHandler;
  *
  * @package Scandinaver\RBAC\UI\Command
  */
-#[Command(DeleteRoleCommandHandler::class)]
+#[Handler(DeleteRoleCommandHandler::class)]
 class DeleteRoleCommand implements CommandInterface
 {
 

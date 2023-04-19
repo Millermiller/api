@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Entity;
 
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Class PersonalAsset
@@ -11,10 +13,15 @@ namespace Scandinaver\Learning\Asset\Domain\Entity;
  */
 class PersonalAsset extends Asset
 {
-    public function getType(): int
+    public function __construct(string $title, Language $language)
     {
-        return Asset::TYPE_PERSONAL;
+        $this->type = AssetType::PERSONAL;
+
+        parent::__construct($title, $language);
     }
 
-    protected int $category = Asset::TYPE_PERSONAL;
+    public function getType(): AssetType
+    {
+        return AssetType::PERSONAL;
+    }
 }

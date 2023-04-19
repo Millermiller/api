@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\Application\Subscriber;
 
+use Doctrine\DBAL\ConnectionException;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,7 +21,7 @@ use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 class LanguageEventsSubscriber implements ShouldQueue
 {
 
-    public function __construct(private AssetService $assetService)
+    public function __construct(private readonly AssetService $assetService)
     {
     }
 
@@ -41,12 +42,13 @@ class LanguageEventsSubscriber implements ShouldQueue
      *
      * @throws BindingResolutionException
      * @throws LanguageNotFoundException
+     * @throws ConnectionException
      */
     public function handleLanguageDeleted(LanguageDeletedNotification $event): void
     {
-      //  $language = $event->getLanguage();
+        $language = $event->getLanguage();
 
-      //  $this->assetService->removeByLanguage($language);
+        $this->assetService->removeByLanguage($language->getId());
     }
 
     public function subscribe(Dispatcher $events): void

@@ -41,7 +41,9 @@ class UserControllerTest extends TestCase
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
-        $response        = $this->get(route('user:all'));
+        $response        = $this->get(route('user:all', [
+            'includes' => ['roles']
+        ]));
         $decodedResponse = json_decode($response->getContent(), TRUE);
 
         self::assertCount($this->userCount + 1, $decodedResponse['data']);
@@ -69,7 +71,7 @@ class UserControllerTest extends TestCase
         );
         $response->assertJsonFragment(
             [
-                'id' => 1,
+                'id' => "1",
             ]
         );
     }

@@ -13,21 +13,38 @@ use JetBrains\PhpStorm\ArrayShape;
 class Card implements ResponseInterface
 {
 
-    #[ArrayShape([0 => "string", 1 => "string", 'term' => "string[]", 'translate' => "string[]", 4 => "string"])]
     public static function singleResponse(): array
     {
         return [
-            'id',
-            'favourite',
-            'term'      => [
+            'data' => [
                 'id',
-                'value',
+                'type',
+                'attributes'    => [
+                    'favourite',
+                ],
+                'relationships' => [
+                    'term' => [
+                        'data' => [
+                            'id',
+                            'type',
+                        ],
+                    ],
+                    'translate'    => [
+                        'data' => [
+                            'id',
+                            'type',
+                        ],
+                    ],
+                    'example' => [
+                        'data' => [
+                            '*' => [
+                                'id',
+                                'type',
+                            ],
+                        ],
+                    ]
+                ],
             ],
-            'translate' => [
-                'id',
-                'value',
-            ],
-            'examples'
         ];
     }
 

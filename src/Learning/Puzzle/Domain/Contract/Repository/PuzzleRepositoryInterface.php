@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learning\Puzzle\Domain\Contract\Repository;
 
+use Scandinaver\Core\Domain\Contract\Repository\FilterableRepositoryInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
@@ -14,7 +15,7 @@ use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
  * @extends BaseRepositoryInterface<Puzzle>
  * @package Scandinaver\Puzzle\Domain\Contract
  */
-interface PuzzleRepositoryInterface extends BaseRepositoryInterface
+interface PuzzleRepositoryInterface extends BaseRepositoryInterface, FilterableRepositoryInterface
 {
 
     /**

@@ -3,10 +3,11 @@
 
 namespace Scandinaver\User\Application\Handler\Query;
 
-use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use League\Fractal\Resource\Item;
 use Scandinaver\Core\Domain\AbstractHandler;
 use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
+use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\User\Domain\Service\UserService;
 use Scandinaver\User\UI\Query\GetStateQuery;
 use Scandinaver\User\UI\Resource\StateTransformer;
@@ -19,34 +20,22 @@ use Scandinaver\User\UI\Resource\StateTransformer;
 class GetStateQueryHandler extends AbstractHandler
 {
 
-    protected UserService $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(protected UserService $userService)
     {
         parent::__construct();
-
-        $this->userService = $userService;
     }
 
     /**
-     * @param  GetStateQuery  $query
+     * @param  BaseCommandInterface|GetStateQuery  $query
      *
-     * @throws Exception
+     * @throws BindingResolutionException
+     * @throws LanguageNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|GetStateQuery $query): void
     {
         $stateDTO = $this->userService->getState($query->getUser(), $query->getLanguage());
 
-        $this->resource = new Item($stateDTO, new StateTransformer());
-
-        $this->fractal->parseIncludes([
-            'words.active',
-            'words.available',
-            'words.completed',
-            'sentences.active',
-            'sentences.available',
-            'sentences.completed',
-        ]);
+        $this->resource = new Item($stateDTO, new StateTransformer(), 'state');
 
         $this->fractal->parseExcludes([
             'texts.text',

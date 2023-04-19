@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\User\Application\Handler\Query\UsersQueryHandler;
@@ -13,7 +13,7 @@ use Scandinaver\User\Application\Handler\Query\UsersQueryHandler;
  *
  * @package Scandinaver\User\UI\Query
  */
-#[Query(UsersQueryHandler::class)]
+#[Handler(UsersQueryHandler::class)]
 class UserStateQuery implements QueryInterface
 {
 

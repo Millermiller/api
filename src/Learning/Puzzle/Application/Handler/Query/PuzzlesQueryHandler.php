@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learning\Puzzle\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Puzzle\Domain\Service\PuzzleService;
 use Scandinaver\Learning\Puzzle\UI\Query\PuzzlesQuery;
 use Scandinaver\Learning\Puzzle\UI\Resource\PuzzleTransformer;
@@ -26,13 +26,13 @@ class PuzzlesQueryHandler extends AbstractHandler
 
     /**
      * @param  BaseCommandInterface|PuzzlesQuery  $query
-     *
-     * @throws LanguageNotFoundException
      */
     public function handle(BaseCommandInterface|PuzzlesQuery $query): void
     {
-        $puzzles = $this->puzzleService->allByLanguage($query->getLanguage());
+        $data = $this->puzzleService->paginate($query->getParameters());
 
-        $this->resource = new Collection($puzzles, new PuzzleTransformer());
+        $this->resource = new Collection($data->items(), new PuzzleTransformer());
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Asset\Application\Handler\Command\DeleteAssetCommandHandler;
 
@@ -13,17 +14,22 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\DeleteAssetCommandHan
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(DeleteAssetCommandHandler::class)]
+#[Handler(DeleteAssetCommandHandler::class)]
 class DeleteAssetCommand implements CommandInterface
 {
 
-    public function __construct(private int $asset)
+    public function __construct(private readonly UserInterface $user, private readonly string $asset)
     {
     }
 
-    public function getAsset(): int
+    public function getAsset(): string
     {
         return $this->asset;
+    }
+
+    public function getUser(): UserInterface
+    {
+        return $this->user;
     }
 
     public function buildDTO(): DTO

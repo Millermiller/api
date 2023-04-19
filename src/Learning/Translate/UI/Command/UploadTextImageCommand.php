@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Translate\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Translate\Application\Handler\Command\UploadTextImageCommandHandler;
@@ -14,7 +14,7 @@ use Scandinaver\Learning\Translate\Application\Handler\Command\UploadTextImageCo
  *
  * @package Scandinaver\Learning\Translate\UI\Command
  */
-#[Command(UploadTextImageCommandHandler::class)]
+#[Handler(UploadTextImageCommandHandler::class)]
 class UploadTextImageCommand implements CommandInterface
 {
 

@@ -13,10 +13,5 @@ use Scandinaver\Core\Domain\Contract\UserInterface;
 interface AvatarServiceInterface
 {
 
-    /**
-     * @param  UserInterface  $user
-     *
-     * @return mixed
-     */
     public function getAvatar(UserInterface $user): string;
 }

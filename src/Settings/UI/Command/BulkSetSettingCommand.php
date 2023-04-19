@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Settings\Application\Handler\Command\BulkSetSettingCommandHandler;
@@ -15,7 +15,7 @@ use Scandinaver\Settings\Application\Handler\Command\BulkSetSettingCommandHandle
  *
  * @see     \Scandinaver\Settings\Application\Handler\Command\BulkSetSettingCommandHandler
  */
-#[Command(BulkSetSettingCommandHandler::class)]
+#[Handler(BulkSetSettingCommandHandler::class)]
 class BulkSetSettingCommand implements CommandInterface
 {
 

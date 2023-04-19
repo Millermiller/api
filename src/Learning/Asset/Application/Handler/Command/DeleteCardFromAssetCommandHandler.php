@@ -32,7 +32,7 @@ class DeleteCardFromAssetCommandHandler extends AbstractHandler
      */
     public function handle(CommandInterface|DeleteCardFromAssetCommand $command): void
     {
-        $this->assetService->removeCard($command->getAsset(), $command->getCard());
+        $this->assetService->removeCard($command->getUser(), $command->getAsset(), $command->getCard());
 
         $this->resource = new NullResource();
     }

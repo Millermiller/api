@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Entity;
 
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Class SentenceAsset
@@ -11,10 +13,15 @@ namespace Scandinaver\Learning\Asset\Domain\Entity;
  */
 class SentenceAsset extends Asset
 {
-    public function getType(): int
+    public function __construct(string $title, Language $language)
     {
-        return Asset::TYPE_SENTENCES;
+        $this->type = AssetType::SENTENCES;
+
+        parent::__construct($title, $language);
     }
 
-    protected int $category = Asset::TYPE_SENTENCES;
+    public function getType(): AssetType
+    {
+        return AssetType::SENTENCES;
+    }
 }

@@ -21,12 +21,12 @@ use Scandinaver\User\Domain\Entity\User;
 class UserTransformer extends TransformerAbstract
 {
 
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'roles',
         'permissions',
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 

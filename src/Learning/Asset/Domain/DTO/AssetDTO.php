@@ -7,6 +7,7 @@ use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Entity\Asset;
 use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Class AssetDTO
@@ -45,9 +46,9 @@ class AssetDTO extends DTO
         $this->id = $id;
     }
 
-    public function getType(): int
+    public function getType(): AssetType
     {
-        return $this->type;
+        return AssetType::from($this->type);
     }
 
     public function setType(int $type): void
@@ -67,7 +68,7 @@ class AssetDTO extends DTO
 
     public function isBasic(): bool
     {
-        return $this->type !== Asset::TYPE_PERSONAL;
+        return $this->type !== AssetType::PERSONAL->value;
     }
 
     public function getLanguage(): Language
@@ -142,7 +143,7 @@ class AssetDTO extends DTO
         $assetDTO->setId($data['id'] ?? NULL);
         $assetDTO->setTitle($data['title']);
         $assetDTO->setType($data['type']);
-        $assetDTO->setLevel($data['level']);
+        $assetDTO->setLevel($data['level'] ?? NULL);
         $assetDTO->setLanguageLetter($data['language']);
 
         return $assetDTO;

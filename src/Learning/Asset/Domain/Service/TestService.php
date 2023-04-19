@@ -3,8 +3,11 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Service;
 
+use Doctrine\ORM\Query\QueryException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
@@ -70,14 +73,23 @@ class TestService implements BaseServiceInterface
     }
 
     /**
-     * @param  UserInterface   $user
-     * @param  int    $asset
-     * @param  array  $data
+     * @throws QueryException
+     */
+    public function paginate(RequestParametersComposition $params): LengthAwarePaginator
+    {
+        return $this->passingRepository->getData($params);
+    }
+
+    /**
+     * @param  UserInterface  $user
+     * @param  string         $asset
+     * @param  array          $data
      *
      * @return Passing
-     * @throws AssetNotFoundException|SettingNotFoundException
+     * @throws AssetNotFoundException
+     * @throws SettingNotFoundException
      */
-    public function savePassing(UserInterface $user, int $asset, array $data): Passing
+    public function savePassing(UserInterface $user, string $asset, array $data): Passing
     {
         $asset = $this->getAsset($asset);
 

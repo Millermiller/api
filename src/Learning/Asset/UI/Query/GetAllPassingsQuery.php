@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Application\Handler\Query\GetAllPassingsQueryHandler;
 
 /**
@@ -12,16 +13,25 @@ use Scandinaver\Learning\Asset\Application\Handler\Query\GetAllPassingsQueryHand
  *
  * @package Scandinaver\Learn\UI\Query
  */
-#[Query(GetAllPassingsQueryHandler::class)]
+#[Handler(GetAllPassingsQueryHandler::class)]
 class GetAllPassingsQuery implements QueryInterface
 {
 
-    public function __construct(private string $language)
+    public function __construct(
+        private readonly array                        $includes,
+        private readonly RequestParametersComposition $parameters
+    )
     {
     }
 
-    public function getLanguage(): string
+    public function getIncludes(): array
     {
-        return $this->language;
+        return $this->includes;
     }
+
+    public function getParameters(): RequestParametersComposition
+    {
+        return $this->parameters;
+    }
+
 }

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Learning\Translate\Application\Handler\Command\CreateSynonymCommandHandler;
 use Scandinaver\Learning\Translate\Domain\DTO\SynonymDTO;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Translate\Domain\DTO\SynonymDTO;
  *
  * @package Scandinaver\Learning\Translate\UI\Command
  */
-#[Command(CreateSynonymCommandHandler::class)]
+#[Handler(CreateSynonymCommandHandler::class)]
 class CreateSynonymCommand implements CommandInterface
 {
 

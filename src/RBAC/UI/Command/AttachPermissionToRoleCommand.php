@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\RBAC\Application\Handler\Command\AttachPermissionToRoleCommandHa
  *
  * @package Scandinaver\RBAC\UI\Command
  */
-#[Command(AttachPermissionToRoleCommandHandler::class)]
+#[Handler(AttachPermissionToRoleCommandHandler::class)]
 class AttachPermissionToRoleCommand implements CommandInterface
 {
 

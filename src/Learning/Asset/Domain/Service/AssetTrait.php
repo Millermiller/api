@@ -15,13 +15,14 @@ use Scandinaver\Learning\Asset\Domain\Entity\Asset;
  */
 trait AssetTrait
 {
+
     /**
-     * @param  int  $id
+     * @param  string  $id
      *
      * @return Asset
      * @throws AssetNotFoundException
      */
-    private function getAsset(int $id): Asset
+    private function getAsset(string $id): Asset
     {
         $repository = Container::getInstance()->get(AssetRepositoryInterface::class);
 

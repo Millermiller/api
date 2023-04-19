@@ -3,26 +3,32 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Service;
 
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\DBAL\ConnectionException;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Psr\Log\LoggerInterface;
-use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
+use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Domain\DTO;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PassingRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\DTO\AssetDTO;
+use Scandinaver\Learning\Asset\Domain\Entity\{Asset, FavouriteAsset, PersonalAsset, SentenceAsset, WordAsset};
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
+use Scandinaver\Learning\Asset\Domain\Event\Notifications\AssetCreatedNotification;
+use Scandinaver\Learning\Asset\Domain\Event\Notifications\AssetDeletedNotification;
+use Scandinaver\Learning\Asset\Domain\Event\Notifications\CardAddedToAssetNotification;
+use Scandinaver\Learning\Asset\Domain\Event\Notifications\CardRemovedFromAssetNotification;
 use Scandinaver\Learning\Asset\Domain\Exception\AssetNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Exception\CardAlreadyAddedException;
 use Scandinaver\Learning\Asset\Domain\Exception\CardNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
-use Scandinaver\Learning\Asset\Domain\Entity\{Asset, FavouriteAsset, PersonalAsset, SentenceAsset, WordAsset};
-use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
-use Scandinaver\Core\Domain\DTO;
 use Scandinaver\User\Domain\Contract\Repository\UserRepositoryInterface;
 
 /**
@@ -52,13 +58,13 @@ class AssetService implements BaseServiceInterface
     private AssetFactory $assetFactory;
 
     public function __construct(
-        PassingRepositoryInterface $passingRepository,
-        AssetRepositoryInterface $assetRepository,
+        PassingRepositoryInterface       $passingRepository,
+        AssetRepositoryInterface         $assetRepository,
         PersonalAssetRepositoryInterface $personalAssetRepository,
-        UserRepositoryInterface $userRepository,
-        LoggerInterface $logger,
-        LanguageService $languageService,
-        AssetFactory $assetFactory
+        UserRepositoryInterface          $userRepository,
+        LoggerInterface                  $logger,
+        LanguageService                  $languageService,
+        AssetFactory                     $assetFactory
     ) {
         $this->passingRepository       = $passingRepository;
         $this->assetRepository         = $assetRepository;
@@ -66,7 +72,7 @@ class AssetService implements BaseServiceInterface
         $this->userRepository          = $userRepository;
         $this->logger                  = $logger;
         $this->languageService         = $languageService;
-        $this->assetFactory = $assetFactory;
+        $this->assetFactory            = $assetFactory;
     }
 
     /**
@@ -82,9 +88,14 @@ class AssetService implements BaseServiceInterface
         return $this->assetRepository->getCountByLanguage($language);
     }
 
+    public function paginate(RequestParametersComposition $params): LengthAwarePaginator
+    {
+        return $this->assetRepository->getData($params);
+    }
+
     /**
      * @param  UserInterface  $user
-     * @param  AssetDTO $assetDTO
+     * @param  AssetDTO       $assetDTO
      *
      * @return Asset
      * @throws Exception
@@ -99,30 +110,35 @@ class AssetService implements BaseServiceInterface
 
         $this->assetRepository->save($asset);
 
+        AssetCreatedNotification::dispatch($asset->getId(), $user->getId());
+
         return $asset;
     }
 
     /**
-     * @param  int  $id
+     * @param  UserInterface  $user
+     * @param  string         $id
      *
      * @throws AssetNotFoundException
      * @throws BindingResolutionException
      */
-    public function delete(int $id): void
+    public function delete(UserInterface $user, string $id): void
     {
         $asset      = $this->getAsset($id);
         $repository = AssetRepositoryFactory::getByType($asset->getType());
         $repository->delete($asset);
+
+        AssetDeletedNotification::dispatch($id, $user->getId());
     }
 
     /**
-     * @param  string  $language
-     * @param  int     $type
+     * @param  string     $language
+     * @param  AssetType  $type
      *
      * @return array
      * @throws LanguageNotFoundException|BindingResolutionException
      */
-    public function getAssets(string $language, int $type): array
+    public function getAssets(string $language, AssetType $type): array
     {
         $language   = $this->getLanguage($language);
         $repository = AssetRepositoryFactory::getByType($type);
@@ -133,12 +149,13 @@ class AssetService implements BaseServiceInterface
     /**
      * @param  string         $language
      * @param  UserInterface  $user
-     * @param  int            $type
+     * @param  AssetType      $type
      *
-     * @return array|Asset[]
-     * @throws LanguageNotFoundException|BindingResolutionException
+     * @return array
+     * @throws BindingResolutionException
+     * @throws LanguageNotFoundException
      */
-    public function getAssetsByType(string $language, UserInterface $user, int $type): array
+    public function getAssetsByType(string $language, UserInterface $user, AssetType $type): array
     {
         $language = $this->getLanguage($language);
 
@@ -172,7 +189,7 @@ class AssetService implements BaseServiceInterface
      * @param  string         $language
      * @param  UserInterface  $user
      *
-     * @return array|Asset[]
+     * @return array
      * @throws LanguageNotFoundException
      */
     public function getPersonalAssets(string $language, UserInterface $user): array
@@ -202,120 +219,31 @@ class AssetService implements BaseServiceInterface
 
     /**
      * @param  UserInterface  $user
-     * @param  int            $id
+     * @param  string         $id
      * @param  array          $data
      *
      * @return Asset
      * @throws AssetNotFoundException
      */
-    public function updateAsset(UserInterface $user, int $id, array $data): Asset
+    public function updateAsset(UserInterface $user, string $id, array $data): Asset
     {
-        $asset      = $this->getAsset($id);
+        $asset = $this->getAsset($id);
 
         $payloadData = [ //TODO: implement language
             'title' => $data['title'],
-            'type'  => $data['type'],
+            'type'  => AssetType::from((int)$data['type']),
             'level' => $data['level'],
         ];
+
+        if (TRUE === array_key_exists('sorting', $data)) {
+            $asset->setSorting($data['sorting']);
+        }
 
         $asset = $this->assetRepository->update($asset, $payloadData);
 
         $asset->setBestResult($asset->getBestResultForUser($user));
 
         return $asset;
-    }
-
-    /**
-     * @param  string         $language
-     * @param  UserInterface  $user
-     *
-     * @return array
-     * @throws LanguageNotFoundException
-     */
-    public function getAssetsForApp(string $language, UserInterface $user): array
-    {
-        $language = $this->getLanguage($language);
-
-        $assets = [];
-
-        $activeArray  = $this->passingRepository->getActiveIds($user, $language);
-        $personalData = $user->getCreatedAssets($language);
-        $publicData   = $this->assetRepository->getPublicAssets($language);
-
-        $data = $publicData + $personalData;
-
-        $counter = [
-            Asset::TYPE_WORDS     => 0,
-            Asset::TYPE_SENTENCES => 0,
-            Asset::TYPE_PERSONAL  => 0,
-            Asset::TYPE_FAVORITES => 0,
-        ];
-
-        foreach ($data as $item) {
-            $cards = [];
-
-            /** @var Asset $item */
-            foreach ($item->getCards() as $card) {
-                $term = $card->getTerm();
-
-                if ($term === NULL) {
-                    continue;
-                }
-
-                $cards[] = [
-                    'id'       => $card->getId(),
-                    'value'     => $term->getValue(),
-                    'translate'    => preg_replace(
-                        '/^(\d\\)\s)/',
-                        '',
-                        $card->getTranslate()->getValue()
-                    ),
-                    'asset_id' => $item->getId(),
-                    'examples' => $card->getExamples()->map(
-                        fn($example) => [
-                            'id'      => $example->getId(),
-                            'card_id' => $example->getCard()->getId(),
-                            'text'    => $example->getText(),
-                            'value'   => $example->getValue(),
-                        ]
-                    )->toArray(),
-                ];
-            }
-
-            $asset = [
-                'id'     => $item->getId(),
-                'active' => in_array($item->getId(), $activeArray),
-                'count'  => $item->getCards()->count(),
-                'result' => 0,
-                'level'  => $item->getLevel(),
-                'title'  => $item->getTitle(),
-                'type'   => $item->getType(),
-                'cards'  => $cards,
-            ];
-
-            $counter[$item->getType()] = $counter[$item->getType()] + 1;
-
-            if ((in_array(
-                        $item->getType(),
-                        [Asset::TYPE_WORDS, Asset::TYPE_SENTENCES]
-                    )
-                    && $counter[$item->getType()] < 10)
-                || $user->isRaising()
-                || in_array(
-                    $item->getType(),
-                    [Asset::TYPE_FAVORITES, Asset::TYPE_PERSONAL]
-                )
-            ) {
-                $asset['available'] = TRUE;
-            }
-            else {
-                $asset['available'] = FALSE;
-            }
-
-            $assets[] = $asset;
-        }
-
-        return $assets;
     }
 
     public function all(): array
@@ -330,17 +258,15 @@ class AssetService implements BaseServiceInterface
 
     /**
      * @param  UserInterface  $user
-     * @param  int            $asset
+     * @param  string         $asset
      * @param  int            $card
      *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws BindingResolutionException
      * @throws AssetNotFoundException
-     * @throws CardNotFoundException
+     * @throws BindingResolutionException
      * @throws CardAlreadyAddedException
+     * @throws CardNotFoundException
      */
-    public function addCard(UserInterface $user, int $asset, int $card): void
+    public function addCard(UserInterface $user, string $asset, int $card): void
     {
         $asset = $this->getAsset($asset);
         $card  = $this->getCard($card);
@@ -350,41 +276,48 @@ class AssetService implements BaseServiceInterface
         $asset->addCard($card);
 
         $repository->save($asset);
+
+        CardAddedToAssetNotification::dispatch($asset->getId(), $user->getId(), $card->getId());
     }
 
     /**
-     * @param  int  $asset
-     * @param  int  $card
+     * @param  UserInterface  $user
+     * @param  string         $asset
+     * @param  int            $card
      *
      * @throws AssetNotFoundException
      * @throws CardNotFoundException
      */
-    public function removeCard(int $asset, int $card): void
+    public function removeCard(UserInterface $user, string $asset, int $card): void
     {
         $asset = $this->getAsset($asset);
         $card  = $this->getCard($card);
 
         $asset->removeCard($card);
         $this->assetRepository->save($asset);
+
+        CardRemovedFromAssetNotification::dispatch($asset->getId(), $user->getId(), $card->getId());
     }
 
     /**
-     * @param  Language  $language
+     * @param  int  $languageId
      *
      * @throws BindingResolutionException
      * @throws LanguageNotFoundException
-     * @throws Exception
+     * @throws ConnectionException
      */
-    public function removeByLanguage(Language $language): void
+    public function removeByLanguage(int $languageId): void
     {
+        $language = $this->getLanguageById($languageId);
+
         /** @var WordAsset[] $wordAssets */
-        $wordAssets = $this->getAssets($language->getLetter(), Asset::TYPE_WORDS);
+        $wordAssets = $this->getAssets($language->getLetter(), AssetType::WORDS);
         /** @var SentenceAsset[] $wordAssets */
-        $sentenceAssets = $this->getAssets($language->getLetter(), Asset::TYPE_SENTENCES);
+        $sentenceAssets = $this->getAssets($language->getLetter(), AssetType::SENTENCES);
         /** @var PersonalAsset[] $wordAssets */
-        $personalAssets = $this->getAssets($language->getLetter(), Asset::TYPE_PERSONAL);
+        $personalAssets = $this->getAssets($language->getLetter(), AssetType::PERSONAL);
         /** @var FavouriteAsset[] $wordAssets */
-        $favouriteAssets = $this->getAssets($language->getLetter(), Asset::TYPE_FAVORITES);
+        $favouriteAssets = $this->getAssets($language->getLetter(), AssetType::FAVORITES);
 
         $manager = app('em');
         $manager->getConnection()->beginTransaction();
@@ -419,7 +352,7 @@ class AssetService implements BaseServiceInterface
         $languages = $this->languageService->all($user);
 
         foreach ($languages as $language) {
-            $assets = $user->getPersonalAssets($language);
+            $assets         = $user->getPersonalAssets($language);
             $favouriteAsset = $user->getFavouriteAsset($language);
 
             if ($favouriteAsset !== NULL) {

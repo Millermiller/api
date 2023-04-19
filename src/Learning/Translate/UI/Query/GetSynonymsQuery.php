@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Learning\Translate\Application\Handler\Query\GetSynonymsQueryHandler;
 
@@ -12,7 +12,7 @@ use Scandinaver\Learning\Translate\Application\Handler\Query\GetSynonymsQueryHan
  *
  * @package Scandinaver\Learning\Translate\UI\Query
  */
-#[Query(GetSynonymsQueryHandler::class)]
+#[Handler(GetSynonymsQueryHandler::class)]
 class GetSynonymsQuery implements QueryInterface
 {
 

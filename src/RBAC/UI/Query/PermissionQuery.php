@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\RBAC\Application\Handler\Query\PermissionQueryHandler;
 
@@ -14,7 +14,7 @@ use Scandinaver\RBAC\Application\Handler\Query\PermissionQueryHandler;
  *
  * @see     \Scandinaver\RBAC\Application\Handler\Query\PermissionQueryHandler
  */
-#[Query(PermissionQueryHandler::class)]
+#[Handler(PermissionQueryHandler::class)]
 class PermissionQuery implements QueryInterface
 {
 

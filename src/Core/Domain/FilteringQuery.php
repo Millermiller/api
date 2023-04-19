@@ -12,7 +12,7 @@ use Scandinaver\Core\Infrastructure\RequestParametersComposition;
  */
 class FilteringQuery
 {
-    public function __construct(private RequestParametersComposition $parameters)
+    public function __construct(private readonly RequestParametersComposition $parameters)
     {
     }
 

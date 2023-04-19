@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use Elasticsearch\Client;
+use EntityManager;
 use Illuminate\Console\Command;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\TermRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Entity\Term;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
  * Class ReindexElastic
@@ -52,20 +54,49 @@ class ReindexElastic extends Command
      */
     public function handle(): void
     {
-        $this->info('Indexing all articles. This might take a while...');
+        $this->info('Indexing all terms. This might take a while...');
 
-        /** @var Term[] $words */
-        $words = $this->termRepository->findAll();
+        $totalRecords = $this->termRepository->count([]);
 
-        foreach ($words as $word) {
-            $this->elasticsearch->index([
-                'index' => $word->searchableAs(),
-                'id'    => $word->getId(),
-                'body'  => $word->toSearchableArray(),
-            ]);
+        $this->info('Terms find: ' . $totalRecords);
 
-            $this->output->write('.');
+        $totalProcessed = 0;
+        $processing = TRUE;
+        $numberOfRecordsPerPage = 1000;
+
+        $bar = $this->output->createProgressBar($totalRecords);
+        $bar->setRedrawFrequency(1);
+        ProgressBar::setFormatDefinition('custom', ' %current%/%max% [%bar%] -- %percent:3s%% | %memory:6s% | %term% ');
+        $bar->setFormat('custom');
+
+        while ($processing) {
+            $query = EntityManager::createQuery('SELECT t FROM Scandinaver\Learning\Asset\Domain\Entity\Term t')
+                                   ->setMaxResults($numberOfRecordsPerPage)
+                                   ->setFirstResult($totalProcessed);
+
+            $iterableResult = $query->toIterable();
+
+            /** @var Term $term */
+            foreach ($iterableResult as $term) {
+                $totalProcessed++;
+
+                $this->elasticsearch->index([
+                    'index' => $term->searchableAs(),
+                    'id'    => $term->getId(),
+                    'body'  => $term->toSearchableArray(),
+                ]);
+
+                $bar->setMessage($term->getValue(), 'term');
+                $bar->advance();
+
+                // $this->output->write('.');
+
+                if ($totalProcessed === $totalRecords) {
+                    break;
+                }
+            }
         }
+
         $this->info('\nDone!');
     }
 }

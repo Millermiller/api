@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Settings\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Settings\Application\Handler\Query\SettingQueryHandler;
 
@@ -12,7 +12,7 @@ use Scandinaver\Settings\Application\Handler\Query\SettingQueryHandler;
  *
  * @package Scandinaver\Settings\UI\Query
  */
-#[Query(SettingQueryHandler::class)]
+#[Handler(SettingQueryHandler::class)]
 class SettingQuery implements QueryInterface
 {
 

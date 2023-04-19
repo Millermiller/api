@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Asset\Application\Handler\Command\AddTermAndTranslateCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\AddTermAndTranslateCo
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(AddTermAndTranslateCommandHandler::class)]
+#[Handler(AddTermAndTranslateCommandHandler::class)]
 class AddTermAndTranslateCommand implements CommandInterface
 {
 

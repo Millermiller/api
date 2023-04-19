@@ -20,21 +20,17 @@ use Scandinaver\User\UI\Resource\UserTransformer;
 class UsersQueryHandler extends AbstractHandler
 {
 
-    private UserService $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
         parent::__construct();
-
-        $this->userService = $userService;
     }
 
     /**
-     * @param  UsersQuery  $query
+     * @param  BaseCommandInterface|UsersQuery  $query
      *
      * @throws QueryException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|UsersQuery $query): void
     {
         $data = $this->userService->paginate($query->getParameters());
 

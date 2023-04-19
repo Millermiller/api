@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\UI\Command;
 
 use Scandinaver\Common\Application\Handler\Command\UpdateLanguageCommandHandler;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 
@@ -13,7 +13,7 @@ use Scandinaver\Core\Domain\DTO;
  *
  * @package Scandinaver\Common\UI\Command
  */
-#[Command(UpdateLanguageCommandHandler::class)]
+#[Handler(UpdateLanguageCommandHandler::class)]
 class UpdateLanguageCommand implements CommandInterface
 {
 

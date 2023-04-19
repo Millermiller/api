@@ -51,7 +51,7 @@ class CategoryControllerTest extends TestCase
      */
     public function testShow(): void
     {
-        $permission = entity(Permission::class, 1)->create(['name' => \Scandinaver\Blog\Domain\Permission\Category::SHOW]);
+        $permission = entity(Permission::class, 1)->create(['slug' => \Scandinaver\Blog\Domain\Permission\Category::SHOW]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 

@@ -4,7 +4,7 @@
 namespace Scandinaver\User\Domain\Exception;
 
 use Exception;
-use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class UserNotFoundException
@@ -14,7 +14,7 @@ use Illuminate\Http\JsonResponse;
 class UserNotFoundException extends Exception
 {
 
-    protected $code = JsonResponse::HTTP_NOT_FOUND;
+    protected $code = Response::HTTP_NOT_FOUND;
 
     protected $message = 'User not found';
 }

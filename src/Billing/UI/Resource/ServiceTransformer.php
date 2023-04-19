@@ -17,7 +17,7 @@ use Scandinaver\Billing\Domain\Entity\Service;
 class ServiceTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 

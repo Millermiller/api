@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Core\Domain;
 
+use Ramsey\Uuid\UuidInterface;
 use Scandinaver\Core\Domain\Contract\DomainEvent;
 use Scandinaver\Core\Domain\Contract\EqualInterface;
 
@@ -15,7 +16,7 @@ abstract class AggregateRoot implements EqualInterface
 {
     private array $domainEvents = [];
 
-    abstract public function getId(): int;
+    abstract public function getId(): int | UuidInterface;
 
     public function isEqualTo(EqualInterface $to): bool
     {

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Learning\Asset\Application\Handler\Query\FindAudioQueryHandler;
 
@@ -12,7 +12,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Query\FindAudioQueryHandler;
  *
  * @package Scandinaver\Learn\UI\Query
  */
-#[Query(FindAudioQueryHandler::class)]
+#[Handler(FindAudioQueryHandler::class)]
 class FindAudioQuery implements QueryInterface
 {
 

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Reader\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Learning\Asset\Domain\Entity\Card;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Reader\Application\Handler\Query\ReadCardQueryHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Reader\Application\Handler\Query\ReadCardQueryHandler;
  *
  * @package Scandinaver\Reader\UI\Query
  */
-#[Query(ReadCardQueryHandler::class)]
+#[Handler(ReadCardQueryHandler::class)]
 class ReadCardQuery implements QueryInterface
 {
 

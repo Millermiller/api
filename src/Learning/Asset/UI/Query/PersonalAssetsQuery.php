@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Learning\Asset\Application\Handler\Query\PersonalAssetsQueryHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Query\PersonalAssetsQueryHand
  *
  * @package Scandinaver\Learn\UI\Query
  */
-#[Query(PersonalAssetsQueryHandler::class)]
+#[Handler(PersonalAssetsQueryHandler::class)]
 class PersonalAssetsQuery implements QueryInterface
 {
 

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Asset\Application\Handler\Command\UpdatePassingCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\UpdatePassingCommandH
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(UpdatePassingCommandHandler::class)]
+#[Handler(UpdatePassingCommandHandler::class)]
 class UpdatePassingCommand implements CommandInterface
 {
 

@@ -3,8 +3,11 @@
 
 namespace Scandinaver\Statistic\Domain\Service;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Statistic\Domain\Contract\ItemRepositoryInterface;
+use Scandinaver\Statistic\Domain\DTO\StatisticItemDTO;
 use Scandinaver\Statistic\Domain\Entity\Item;
 
 /**
@@ -16,14 +19,21 @@ class StatisticService
 {
 
     public function __construct(
-        private ItemRepositoryInterface $itemRepository
+        private readonly ItemRepositoryInterface $itemRepository
     ) {
     }
 
-    public function create(string $type, UserInterface $user, ?int $value, ?array $data): Item
+    public function create(StatisticItemDTO $dto): Item
     {
-        $item = new Item($type, $user, $value, $data);
+        $item = StatisticItemFactory::fromDTO($dto);
 
         $this->itemRepository->save($item);
+
+        return $item;
+    }
+
+    public function paginate(RequestParametersComposition $params): LengthAwarePaginator
+    {
+        return $this->itemRepository->getData($params);
     }
 }

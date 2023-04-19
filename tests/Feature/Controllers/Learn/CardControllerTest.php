@@ -62,7 +62,9 @@ class CardControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Card::CREATE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Card::CREATE,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -73,11 +75,11 @@ class CardControllerTest extends TestCase
         ]));
 
         self::assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
-        $response->assertJsonStructure(\Tests\Responses\Card::response());
+        $response->assertJsonStructure(\Tests\Responses\Card::singleResponse());
 
         $data = $response->decodeResponseJson();
-        self::assertEquals('MY_WORD', $data['term']['value']);
-        self::assertEquals('MY_TRANSLATE', $data['translate']['value']);
+        self::assertEquals('MY_WORD', $data['included'][0]['attributes']['value']);
+        self::assertEquals('MY_TRANSLATE', $data['included'][1]['attributes']['value']);
     }
 
     /**
@@ -85,7 +87,9 @@ class CardControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Card::UPDATE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Card::UPDATE,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -98,7 +102,7 @@ class CardControllerTest extends TestCase
                 'id' => $this->card->getTranslate()->getId(),
                 'value' => $this->card->getTranslate()->getValue()
             ],
-            'word' => [
+            'term' => [
                 'id' => $this->card->getTerm()->getId(),
                 'value' => $this->card->getTerm()->getValue()
             ]

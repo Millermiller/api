@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
@@ -14,7 +14,7 @@ use Scandinaver\User\Application\Handler\Command\LogoutCommandHandler;
  *
  * @package Scandinaver\User\UI\Command
  */
-#[Command(LogoutCommandHandler::class)]
+#[Handler(LogoutCommandHandler::class)]
 class LogoutCommand implements CommandInterface
 {
 

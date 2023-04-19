@@ -4,6 +4,9 @@
 namespace Scandinaver\Statistic\Application\Provider;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Scandinaver\Statistic\Application\Subscriber\AssetEventsSubscriber;
+use Scandinaver\Statistic\Application\Subscriber\PuzzleEventsSubscriber;
+use Scandinaver\Statistic\Application\Subscriber\UserEventsSubscriber;
 
 /**
  * Class EventServiceProvider
@@ -18,17 +21,12 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-        'Scandinaver\Statistic\Domain\Event\Test' => [
-            'Scandinaver\Statistic\Domain\Event\Listener\TestListener',
-        ],
+
     ];
 
     protected $subscribe = [
-        
+        AssetEventsSubscriber::class,
+        UserEventsSubscriber::class,
+        PuzzleEventsSubscriber::class,
     ];
-
-    public function boot()
-    {
-        parent::boot();
-    }
 }

@@ -162,7 +162,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         LaravelDoctrine\ORM\DoctrineServiceProvider::class,
         LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
-        LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
+       // LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
         /*
@@ -178,7 +178,7 @@ return [
         // App\Provider\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
+      //  LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
 
         /*

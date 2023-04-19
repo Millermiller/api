@@ -16,8 +16,8 @@ use Scandinaver\Core\Domain\AggregateRoot;
  */
 abstract class AbstractLearnItem extends AggregateRoot
 {
-    /** @var Collection<int, AbstractPassing>|AbstractPassing[] */
-    protected Collection $passings;
+    /** @var AbstractPassing[]|Collection<int, AbstractPassing> */
+    protected Collection|array $passings;
 
     protected bool $active = FALSE;
 

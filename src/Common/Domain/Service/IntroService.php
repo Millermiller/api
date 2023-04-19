@@ -21,11 +21,6 @@ class IntroService implements BaseServiceInterface
 
     private IntroRepositoryInterface $introRepository;
 
-    /**
-     * IntroService constructor.
-     *
-     * @param  IntroRepositoryInterface  $introRepository
-     */
     public function __construct(IntroRepositoryInterface $introRepository)
     {
         $this->introRepository = $introRepository;
@@ -57,11 +52,6 @@ class IntroService implements BaseServiceInterface
             ]);
     }
 
-    /**
-     * @param  IntroDTO  $introDTO
-     *
-     * @return Intro
-     */
     public function create(IntroDTO $introDTO): Intro
     {
         $intro = IntroFactory::fromDTO($introDTO);

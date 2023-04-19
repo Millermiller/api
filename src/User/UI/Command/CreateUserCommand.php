@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\User\Application\Handler\Command\CreateUserCommandHandler;
 use Scandinaver\User\Domain\DTO\UserDTO;
@@ -13,7 +13,7 @@ use Scandinaver\User\Domain\DTO\UserDTO;
  *
  * @package Scandinaver\User\UI\Command
  */
-#[Command(CreateUserCommandHandler::class)]
+#[Handler(CreateUserCommandHandler::class)]
 class CreateUserCommand implements CommandInterface
 {
 

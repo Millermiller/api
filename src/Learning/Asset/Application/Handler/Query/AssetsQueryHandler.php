@@ -3,8 +3,8 @@
 
 namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 use Scandinaver\Learning\Asset\UI\Query\AssetsQuery;
 use Scandinaver\Learning\Asset\UI\Resource\AssetTransformer;
@@ -19,20 +19,22 @@ use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 class AssetsQueryHandler extends AbstractHandler
 {
 
-    public function __construct(private AssetService $assetService)
+    public function __construct(private readonly AssetService $assetService)
     {
         parent::__construct();
     }
 
     /**
      * @param  BaseCommandInterface|AssetsQuery  $query
-     *
-     * @throws LanguageNotFoundException
      */
     public function handle(BaseCommandInterface|AssetsQuery $query): void
     {
-        $assetDTOs = $this->assetService->getAssetsForApp($query->getLanguage(), $query->getUser());
+        $data = $this->assetService->paginate($query->getParameters());
 
-        $this->resource = new Collection($assetDTOs, new AssetTransformer());
+        $this->resource = new Collection($data->items(), new AssetTransformer());
+
+        $this->fractal->parseIncludes('cards');
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 }

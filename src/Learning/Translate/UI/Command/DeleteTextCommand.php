@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Translate\Application\Handler\Command\DeleteTextCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Translate\Application\Handler\Command\DeleteTextCommand
  *
  * @package Scandinaver\Learning\Translate\UI\Command
  */
-#[Command(DeleteTextCommandHandler::class)]
+#[Handler(DeleteTextCommandHandler::class)]
 class DeleteTextCommand implements CommandInterface
 {
 

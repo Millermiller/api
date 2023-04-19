@@ -20,7 +20,8 @@ use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\FavouriteAssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\PersonalAssetRepositoryInterface;
-use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException; //TODO: move
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
+use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;//TODO: move
 use Scandinaver\Learning\Asset\Domain\Entity\{Asset, FavouriteAsset, PersonalAsset};
 use Scandinaver\Learning\Asset\Domain\Service\AssetService;
 use Scandinaver\Learning\Puzzle\Domain\Service\PuzzleService;
@@ -33,6 +34,7 @@ use Scandinaver\User\Domain\Contract\Service\AvatarServiceInterface;
 use Scandinaver\User\Domain\DTO\State;
 use Scandinaver\User\Domain\DTO\UserDTO;
 use Scandinaver\User\Domain\Event\Notifications\UserCreatedNotification;
+use Scandinaver\User\Domain\Event\Notifications\UserVisitedNotification;
 use Scandinaver\User\Domain\Exception\UserNotFoundException;
 use Scandinaver\User\Domain\Entity\{User};
 
@@ -232,10 +234,10 @@ class UserService implements BaseServiceInterface
 
         $stateDTO->setSite(config('app.MAIN_SITE'));
 
-        $wordAssets = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_WORDS);
+        $wordAssets = $this->assetService->getAssetsByType($language->getLetter(), $user, AssetType::WORDS);
         $stateDTO->setWordsAssets($wordAssets);
 
-        $sentencesAssets = $this->assetService->getAssetsByType($language->getLetter(), $user, Asset::TYPE_SENTENCES);
+        $sentencesAssets = $this->assetService->getAssetsByType($language->getLetter(), $user, AssetType::SENTENCES);
         $stateDTO->setSentencesAssets($sentencesAssets);
 
         $stateDTO->setPersonalAssets($personalAssets);
@@ -260,6 +262,8 @@ class UserService implements BaseServiceInterface
 
     public function getInfo(UserInterface $user): UserInterface
     {
+        UserVisitedNotification::dispatch($user->getId());
+
         return \App\Helpers\Auth::user();
     }
 

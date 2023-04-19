@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\UI\Command;
 
 use Scandinaver\Blog\Application\Handler\Command\CreatePostCommandHandler;
 use Scandinaver\Blog\Domain\DTO\PostDTO;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 
@@ -14,7 +14,7 @@ use Scandinaver\Core\Domain\Contract\CommandInterface;
  *
  * @package Scandinaver\Blog\UI\Command
  */
-#[Command(CreatePostCommandHandler::class)]
+#[Handler(CreatePostCommandHandler::class)]
 class CreatePostCommand implements CommandInterface
 {
 

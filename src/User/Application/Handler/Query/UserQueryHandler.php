@@ -19,21 +19,17 @@ use Scandinaver\User\UI\Resource\UserTransformer;
 class UserQueryHandler extends AbstractHandler
 {
 
-    private UserService $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
         parent::__construct();
-
-        $this->userService = $userService;
     }
 
     /**
-     * @param  UserQuery  $query
+     * @param  BaseCommandInterface|UserQuery  $query
      *
      * @throws UserNotFoundException
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|UserQuery $query): void
     {
         $user = $this->userService->one($query->getUserId());
 

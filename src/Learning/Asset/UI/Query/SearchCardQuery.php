@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Learning\Asset\Application\Handler\Query\SearchCardQueryHandler;
 
@@ -12,7 +12,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Query\SearchCardQueryHandler;
  *
  * @package Scandinaver\Learn\UI\Query
  */
-#[Query(SearchCardQueryHandler::class)]
+#[Handler(SearchCardQueryHandler::class)]
 class SearchCardQuery implements QueryInterface
 {
 

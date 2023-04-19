@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
@@ -14,11 +14,11 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\UpdateAssetCommandHan
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(UpdateAssetCommandHandler::class)]
+#[Handler(UpdateAssetCommandHandler::class)]
 class UpdateAssetCommand implements CommandInterface
 {
 
-    public function __construct(private UserInterface $user, private int $asset, private array $data)
+    public function __construct(private UserInterface $user, private string $asset, private array $data)
     {
     }
 
@@ -33,9 +33,9 @@ class UpdateAssetCommand implements CommandInterface
     }
 
     /**
-     * @return int|mixed
+     * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): mixed
     {
         return $this->data['level'] ? $this->data['level'] : 0;
     }
@@ -45,7 +45,7 @@ class UpdateAssetCommand implements CommandInterface
         return $this->data;
     }
 
-    public function getAsset(): int
+    public function getAsset(): string
     {
         return $this->asset;
     }

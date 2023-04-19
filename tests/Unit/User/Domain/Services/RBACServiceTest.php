@@ -4,6 +4,8 @@ namespace Tests\Unit\User\Domain\Services;
 
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\RBAC\Domain\DTO\PermissionDTO;
 use Scandinaver\RBAC\Domain\DTO\RoleDTO;
 use Scandinaver\RBAC\Domain\Exception\PermissionDublicateException;
@@ -48,9 +50,11 @@ class RBACServiceTest extends TestCase
 
     public function testGetAllRoles()
     {
-        $roles = $this->service->getAllRoles();
+        $parameters = new RequestParametersComposition();
 
-        static::assertIsArray($roles);
+        $roles = $this->service->getAllRoles($parameters);
+
+        static::assertInstanceOf(LengthAwarePaginator::class, $roles);
     }
 
     /**

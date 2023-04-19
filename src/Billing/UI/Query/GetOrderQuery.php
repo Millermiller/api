@@ -4,7 +4,7 @@
 namespace Scandinaver\Billing\UI\Query;
 
 use Scandinaver\Billing\Application\Handler\Query\GetOrderQueryHandler;
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
@@ -12,7 +12,7 @@ use Scandinaver\Core\Domain\Contract\QueryInterface;
  *
  * @package Scandinaver\Billing\UI\Query
  */
-#[Query(GetOrderQueryHandler::class)]
+#[Handler(GetOrderQueryHandler::class)]
 class GetOrderQuery implements QueryInterface
 {
 

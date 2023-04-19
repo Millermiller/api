@@ -7,9 +7,11 @@ use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\CreateLanguageRequest;
 use App\Http\Requests\Common\UpdateLanguageRequest;
+use App\Http\Requests\FilteringRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\Common\Domain\Permission\Language;
 use Scandinaver\Common\UI\Command\CreateLanguageCommand;
 use Scandinaver\Common\UI\Command\DeleteLanguageCommand;
@@ -26,14 +28,17 @@ class LanguageController extends Controller
 {
 
     /**
+     * @param  FilteringRequest  $request
+     *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Language::VIEW);
 
-        return $this->execute(new LanguagesQuery(auth('api')->user()));
+        return $this->execute(new LanguagesQuery($request->getRequestParameters()));
     }
 
     /**

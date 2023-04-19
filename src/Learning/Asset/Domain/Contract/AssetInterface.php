@@ -6,6 +6,7 @@ namespace Scandinaver\Learning\Asset\Domain\Contract;
 
 use Doctrine\Common\Collections\Collection;
 use Scandinaver\Learning\Asset\Domain\Entity\Card;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Interface AssetInterface
@@ -14,21 +15,14 @@ use Scandinaver\Learning\Asset\Domain\Entity\Card;
  */
 interface AssetInterface
 {
-    public function getType(): int;
+    public function getType(): AssetType;
 
+    /**
+     * @return Collection<int, Card>
+     */
     public function getCards(): Collection;
 
-    /**
-     * @param  Card  $card
-     *
-     * @return mixed
-     */
-    public function addCard(Card $card);
+    public function addCard(Card $card): void;
 
-    /**
-     * @param  Card  $card
-     *
-     * @return mixed
-     */
-    public function removeCard(Card $card);
+    public function removeCard(Card $card): void;
 }

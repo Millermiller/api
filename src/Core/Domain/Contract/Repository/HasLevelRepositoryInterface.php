@@ -26,14 +26,14 @@ interface HasLevelRepositoryInterface
     /**
      * @param  Language  $language
      *
-     * @return T
+     * @return T|null
      */
-    public function getLastLevel(Language $language): LearnItemInterface;
+    public function getLastLevel(Language $language): ?LearnItemInterface;
 
     /**
-     * @param  T  $entity
+     * @param  LearnItemInterface  $entity
      *
-     * @return T
+     * @return LearnItemInterface|null
      */
     public function getNextLevel(LearnItemInterface $entity): ?LearnItemInterface;
 }

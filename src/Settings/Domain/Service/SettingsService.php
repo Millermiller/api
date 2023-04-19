@@ -52,10 +52,10 @@ class SettingsService implements BaseServiceInterface
     /**
      * @param  string  $slug
      *
-     * @return mixed|null
+     * @return mixed
      * @throws SettingNotFoundException
      */
-    public function getSettingValue(string $slug)
+    public function getSettingValue(string $slug): mixed
     {
         $cached = $this->redisClient->hget('settings', $slug);
 

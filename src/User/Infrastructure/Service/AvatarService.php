@@ -4,6 +4,7 @@
 namespace Scandinaver\User\Infrastructure\Service;
 
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Image;
 use Intervention\Image\Constraint;
 use Laravolt\Avatar\Avatar;
@@ -20,6 +21,9 @@ class AvatarService implements AvatarServiceInterface
 
     private Avatar $service;
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function __construct()
     {
         $this->service = app()->make('avatar');
@@ -28,7 +32,7 @@ class AvatarService implements AvatarServiceInterface
     /**
      * @param  UserInterface  $user
      *
-     * @return mixed|void
+     * @return string
      */
     public function getAvatar(UserInterface $user): string
     {

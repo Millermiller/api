@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
@@ -14,7 +14,7 @@ use Scandinaver\Learning\Translate\Application\Handler\Command\CompleteTextComma
  *
  * @package Scandinaver\Learning\Translate\UI\Command
  */
-#[Command(CompleteTextCommandHandler::class)]
+#[Handler(CompleteTextCommandHandler::class)]
 class CompleteTextCommand implements CommandInterface
 {
 

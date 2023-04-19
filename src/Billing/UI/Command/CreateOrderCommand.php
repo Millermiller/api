@@ -4,7 +4,7 @@
 namespace Scandinaver\Billing\UI\Command;
 
 use Scandinaver\Billing\Application\Handler\Command\CreateOrderCommandHandler;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Billing\Domain\DTO\OrderDTO;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
@@ -15,7 +15,7 @@ use Scandinaver\Core\Domain\DTO;
  *
  * @package Scandinaver\Billing\UI\Command
  */
-#[Command(CreateOrderCommandHandler::class)]
+#[Handler(CreateOrderCommandHandler::class)]
 class CreateOrderCommand implements CommandInterface
 {
 

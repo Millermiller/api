@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Translate;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\HasLanguageRequest;
 use App\Http\Requests\Translate\CreateTextRequest;
 use App\Http\Requests\Translate\UpdateTextRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use JsonMapper_Exception;
 use Illuminate\Http\{JsonResponse, Request};
 use Scandinaver\Learning\Translate\Domain\Permission\Text;
 use Scandinaver\Learning\Translate\UI\Command\CompleteTextCommand;
@@ -37,18 +39,19 @@ class TextController extends Controller
 {
 
     /**
-     * @param  HasLanguageRequest  $request
+     * @param  FilteringRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
+     * @throws JsonMapper_Exception
      */
-    public function index(HasLanguageRequest $request): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Text::VIEW);
 
-        $language = $request->get('lang');
+        $params = $request->getRequestParameters();
 
-        return $this->execute(new GetTextsQuery($language));
+        return $this->execute(new GetTextsQuery($params));
     }
 
     /**

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Asset\Application\Handler\Command\FillDictionaryCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\FillDictionaryCommand
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(FillDictionaryCommandHandler::class)]
+#[Handler(FillDictionaryCommandHandler::class)]
 class FillDictionaryCommand implements CommandInterface
 {
 

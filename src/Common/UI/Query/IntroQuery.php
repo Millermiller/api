@@ -4,7 +4,7 @@
 namespace Scandinaver\Common\UI\Query;
 
 use Scandinaver\Common\Application\Handler\Query\IntroQueryHandler;
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
@@ -12,7 +12,7 @@ use Scandinaver\Core\Domain\Contract\QueryInterface;
  *
  * @package Scandinaver\Common\UI\Query
  */
-#[Query(IntroQueryHandler::class)]
+#[Handler(IntroQueryHandler::class)]
 class IntroQuery implements QueryInterface
 {
 

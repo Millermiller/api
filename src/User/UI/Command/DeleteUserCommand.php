@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\User\Application\Handler\Command\DeleteUserCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\User\Application\Handler\Command\DeleteUserCommandHandler;
  *
  * @package Scandinaver\User\UI\Command
  */
-#[Command(DeleteUserCommandHandler::class)]
+#[Handler(DeleteUserCommandHandler::class)]
 class DeleteUserCommand implements CommandInterface
 {
 

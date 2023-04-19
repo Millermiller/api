@@ -37,8 +37,8 @@ trait ApiRequestParsingTrait
 
         $filterParsingService = new FilterParsingService();
         $filterConfigurations = [];
-        if (array_key_exists('filters', $queryParams)) {
-            $filterConfigurations = $filterParsingService->parse($queryParams['filters']);
+        if (array_key_exists('filter', $queryParams)) {
+            $filterConfigurations = $filterParsingService->parse($queryParams['filter']);
         }
 
         $result->setFilter($filterConfigurations);

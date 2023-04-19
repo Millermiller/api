@@ -5,11 +5,13 @@ namespace Scandinaver\Learning\Translate\Domain\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Translate\Domain\Contract\Repository\ResultRepositoryInterface;
 use Scandinaver\Learning\Translate\Domain\Contract\Repository\SynonymRepositoryInterface;
@@ -69,6 +71,16 @@ class TextService
     public function count(): int
     {
         return $this->textRepository->count([]);
+    }
+
+    /**
+     * @param  RequestParametersComposition  $params
+     *
+     * @return LengthAwarePaginator
+     */
+    public function paginate(RequestParametersComposition $params): LengthAwarePaginator
+    {
+        return $this->textRepository->getData($params);
     }
 
     /**

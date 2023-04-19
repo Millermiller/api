@@ -11,7 +11,9 @@ use Attribute;
  * @package Scandinaver\Core\Domain\Attribute
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-class CommandHandler
+class Handler
 {
-
+    public function __construct(public string $handlerClass)
+    {
+    }
 }

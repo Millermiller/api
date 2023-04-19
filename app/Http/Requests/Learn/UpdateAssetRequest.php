@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Learn;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class UpdateAssetRequest
@@ -12,6 +13,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateAssetRequest extends FormRequest
 {
 
+    #[ArrayShape(['title' => "string"])]
     public function rules(): array
     {
         return [

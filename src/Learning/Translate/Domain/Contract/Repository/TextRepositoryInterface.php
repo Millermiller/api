@@ -3,6 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\Domain\Contract\Repository;
 
+use Scandinaver\Core\Domain\Contract\Repository\FilterableRepositoryInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Core\Domain\Contract\Repository\CountableRepositoryInterface;
@@ -16,7 +17,7 @@ use Scandinaver\Learning\Translate\Domain\Entity\Text;
  * @extends BaseRepositoryInterface<Text>
  * @package Scandinaver\Translate\Domain\Contract\Repository
  */
-interface TextRepositoryInterface extends BaseRepositoryInterface, CountableRepositoryInterface, HasLevelRepositoryInterface
+interface TextRepositoryInterface extends BaseRepositoryInterface, CountableRepositoryInterface, HasLevelRepositoryInterface, FilterableRepositoryInterface
 {
     /**
      * @param  UserInterface  $user

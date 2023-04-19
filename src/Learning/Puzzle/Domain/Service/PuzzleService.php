@@ -3,11 +3,14 @@
 
 namespace Scandinaver\Learning\Puzzle\Domain\Service;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Puzzle\Domain\Contract\Repository\PuzzleRepositoryInterface;
 use Scandinaver\Learning\Puzzle\Domain\DTO\PuzzleDTO;
+use Scandinaver\Learning\Puzzle\Domain\Event\PuzzleCompletedNotification;
 use Scandinaver\Learning\Puzzle\Domain\Exception\PuzzleNotFoundException;
 use Scandinaver\Learning\Puzzle\Domain\Entity\Puzzle;
 use Scandinaver\Core\Domain\Contract\BaseServiceInterface;
@@ -35,6 +38,11 @@ class PuzzleService implements BaseServiceInterface
     public function one(int $id): Puzzle
     {
         return $this->puzzleRepository->find($id);
+    }
+
+    public function paginate(RequestParametersComposition $params): LengthAwarePaginator
+    {
+        return $this->puzzleRepository->getData($params);
     }
 
     /**
@@ -103,6 +111,8 @@ class PuzzleService implements BaseServiceInterface
 
         //todo: refactor
         $this->puzzleRepository->addForUser($user, $puzzle);
+
+        PuzzleCompletedNotification::dispatch($puzzle->getId(), $user->getId());
     }
 
     /**

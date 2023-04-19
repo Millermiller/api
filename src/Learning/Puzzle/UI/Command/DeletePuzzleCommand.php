@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Puzzle\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Puzzle\Application\Handler\Command\DeletePuzzleCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Puzzle\Application\Handler\Command\DeletePuzzleCommandH
  *
  * @package Scandinaver\Puzzle\UI\Command
  */
-#[Command(DeletePuzzleCommandHandler::class)]
+#[Handler(DeletePuzzleCommandHandler::class)]
 class DeletePuzzleCommand implements CommandInterface
 {
 

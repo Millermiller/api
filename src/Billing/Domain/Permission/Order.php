@@ -8,7 +8,7 @@ namespace Scandinaver\Billing\Domain\Permission;
  *
  * @package Scandinaver\Billing\Domain\Permission
  */
-class Order
+enum Order: string
 {
     public const VIEW     = 'view-orders';
     public const SHOW     = 'show-order';

@@ -54,7 +54,7 @@ class ElasticSearchService implements SearchInterface
         foreach($result['hits']['hits'] as $item) {
             $id = (int) $item['_id'];
             $cards += $this->cardRepository->findBy([
-                'value' => $id
+                'term' => $id
             ]);
         }
 

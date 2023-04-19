@@ -3,8 +3,9 @@
 
 namespace Scandinaver\Learning\Asset\Application\Handler\Query;
 
+use Doctrine\ORM\Query\QueryException;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
-use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 use Scandinaver\Learning\Asset\Domain\Service\TestService;
 use Scandinaver\Learning\Asset\UI\Query\GetAllPassingsQuery;
 use Scandinaver\Learning\Asset\UI\Resource\PassingTransformer;
@@ -27,12 +28,14 @@ class GetAllPassingsQueryHandler extends AbstractHandler
     /**
      * @param  BaseCommandInterface|GetAllPassingsQuery  $query
      *
-     * @throws LanguageNotFoundException
+     * @throws QueryException
      */
     public function handle(BaseCommandInterface|GetAllPassingsQuery $query): void
     {
-        $passings = $this->service->allByLanguage($query->getLanguage());
+        $data = $this->service->paginate($query->getParameters());
 
-        $this->resource = new Collection($passings, new PassingTransformer());
+        $this->resource = new Collection($data->items(), new PassingTransformer());
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 } 

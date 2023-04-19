@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HasLanguageRequest;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\Learn\TestCompleteRequest;
 use App\Http\Requests\Learn\UpdatePassingRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\Learning\Asset\Domain\Permission\Test;
 use Scandinaver\Learning\Asset\UI\Command\CompleteTestCommand;
 use Scandinaver\Learning\Asset\UI\Command\DeletePassingCommand;
@@ -27,16 +28,19 @@ class TestController extends Controller
 {
 
     /**
-     * @param  HasLanguageRequest  $request
+     * @param  FilteringRequest  $request
      *
      * @return JsonResponse
-     * @throws AuthorizationException
+     * @throws AuthorizationException|JsonMapper_Exception
      */
-    public function index(HasLanguageRequest $request): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Test::GET_ALL_PASSINGS);
 
-        return $this->execute(new GetAllPassingsQuery($request->get('lang')));
+        $includes = $request->get('includes', []);
+        $params   = $request->getRequestParameters();
+
+        return $this->execute(new GetAllPassingsQuery($includes, $params));
     }
 
     /**
@@ -70,12 +74,12 @@ class TestController extends Controller
 
     /**
      * @param  TestCompleteRequest  $request
-     * @param  int                  $assetId
+     * @param  string               $assetId
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function complete(TestCompleteRequest $request, int $assetId): JsonResponse
+    public function complete(TestCompleteRequest $request, string $assetId): JsonResponse
     {
         Gate::authorize(Test::COMPLETE, $assetId);
 

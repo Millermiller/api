@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Asset\Application\Handler\Command\UpdateCardCommandHandler;
@@ -17,7 +17,7 @@ use Scandinaver\Learning\Asset\Domain\Entity\ExampleDTO;
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(UpdateCardCommandHandler::class)]
+#[Handler(UpdateCardCommandHandler::class)]
 class UpdateCardCommand implements CommandInterface
 {
 
@@ -30,7 +30,7 @@ class UpdateCardCommand implements CommandInterface
         return $this->cardId;
     }
 
-    public function buildDTO(): DTO
+    public function buildDTO(): CardDTO
     {
         $cardDTO = new CardDTO();
 
@@ -42,7 +42,7 @@ class UpdateCardCommand implements CommandInterface
         }
 
         $cardDTO->setExamplesDTO($examplesDTO);
-        $cardDTO->setTermDTO(TermDTO::fromArray($this->data['word']));
+        $cardDTO->setTermDTO(TermDTO::fromArray($this->data['term']));
         $cardDTO->setTranslateDTO(TranslateDTO::fromArray($this->data['translate']));
         $cardDTO->setId($this->data['id']);
 

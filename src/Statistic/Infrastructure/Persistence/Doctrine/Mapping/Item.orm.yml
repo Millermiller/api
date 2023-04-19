@@ -17,9 +17,7 @@ Scandinaver\Statistic\Domain\Entity\Item:
         strategy: IDENTITY
   fields:
     type:
-      type: string
-      length: 255
-      unique: false
+      enumType: Scandinaver\Statistic\Domain\Enum\StatisticType::class
       nullable: false
     value:
       type: integer

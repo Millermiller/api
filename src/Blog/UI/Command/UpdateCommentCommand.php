@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\UI\Command;
 
 use Scandinaver\Blog\Application\Handler\Command\UpdateCommentCommandHandler;
 use Scandinaver\Blog\Domain\DTO\CommentDTO;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 
@@ -14,7 +14,7 @@ use Scandinaver\Core\Domain\Contract\CommandInterface;
  *
  * @package Scandinaver\Blog\UI\Command
  */
-#[Command(UpdateCommentCommandHandler::class)]
+#[Handler(UpdateCommentCommandHandler::class)]
 class UpdateCommentCommand implements CommandInterface
 {
 

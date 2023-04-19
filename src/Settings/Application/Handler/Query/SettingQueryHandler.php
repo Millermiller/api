@@ -19,7 +19,7 @@ use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 class SettingQueryHandler extends AbstractHandler
 {
 
-    public function __construct(private SettingsService $settingsService)
+    public function __construct(private readonly SettingsService $settingsService)
     {
         parent::__construct();
     }

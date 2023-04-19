@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Puzzle;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\HasLanguageRequest;
 use App\Http\Requests\Puzzle\CreatePuzzleRequest;
 use App\Http\Requests\Puzzle\UpdatePuzzleRequest;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use JsonMapper_Exception;
 use Scandinaver\Learning\Puzzle\Domain\Permission\Puzzle;
 use Scandinaver\Learning\Puzzle\UI\Command\CreatePuzzleCommand;
 use Scandinaver\Learning\Puzzle\UI\Command\DeletePuzzleCommand;
@@ -33,18 +35,16 @@ class PuzzleController extends Controller
 {
 
     /**
-     * @param  HasLanguageRequest  $request
+     * @param  FilteringRequest  $request
      *
      * @return JsonResponse
-     * @throws AuthorizationException
+     * @throws AuthorizationException|JsonMapper_Exception
      */
-    public function index(HasLanguageRequest $request): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(Puzzle::VIEW);
 
-        $language = $request->get('lang');
-
-        return $this->execute(new PuzzlesQuery($language));
+        return $this->execute(new PuzzlesQuery($request->getRequestParameters()));
     }
 
     /**

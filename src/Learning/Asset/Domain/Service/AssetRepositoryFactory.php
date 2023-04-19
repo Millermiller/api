@@ -4,8 +4,8 @@
 namespace Scandinaver\Learning\Asset\Domain\Service;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Scandinaver\Learning\Asset\Domain\Entity\Asset;
-use Scandinaver\Learning\Asset\Infrastructure\Persistence\Doctrine\Repository\AssetRepository;
+use Scandinaver\Learning\Asset\Domain\Contract\Repository\AssetRepositoryInterface;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Class AssetRepositoryFactory
@@ -15,22 +15,18 @@ use Scandinaver\Learning\Asset\Infrastructure\Persistence\Doctrine\Repository\As
 class AssetRepositoryFactory
 {
     /**
-     * @param  int  $type
+     * @param  AssetType  $type
      *
-     * @return AssetRepository
+     * @return AssetRepositoryInterface
      * @throws BindingResolutionException
      */
-    public static function getByType(int $type): AssetRepository
+    public static function getByType(AssetType $type): AssetRepositoryInterface
     {
-        switch ($type) {
-            case Asset::TYPE_PERSONAL:
-                return app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\PersonalAssetRepositoryInterface');
-            case Asset::TYPE_WORDS:
-                return app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\WordAssetRepositoryInterface');
-            case Asset::TYPE_SENTENCES:
-                return app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\SentenceAssetRepositoryInterface');
-            case Asset::TYPE_FAVORITES:
-                return app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\FavouriteAssetRepositoryInterface');
-        }
+        return match ($type) {
+            AssetType::PERSONAL  => app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\PersonalAssetRepositoryInterface'),
+            AssetType::WORDS     => app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\WordAssetRepositoryInterface'),
+            AssetType::SENTENCES => app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\SentenceAssetRepositoryInterface'),
+            AssetType::FAVORITES => app()->make('Scandinaver\Learning\Asset\Domain\Contract\Repository\FavouriteAssetRepositoryInterface'),
+        };
     }
 }

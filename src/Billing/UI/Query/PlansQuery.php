@@ -4,7 +4,7 @@
 namespace Scandinaver\Billing\UI\Query;
 
 use Scandinaver\Billing\Application\Handler\Query\PlansQueryHandler;
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
@@ -12,7 +12,7 @@ use Scandinaver\Core\Domain\Contract\QueryInterface;
  *
  * @package Scandinaver\Billing\UI\Query
  */
-#[Query(PlansQueryHandler::class)]
+#[Handler(PlansQueryHandler::class)]
 class PlansQuery implements QueryInterface
 {
 

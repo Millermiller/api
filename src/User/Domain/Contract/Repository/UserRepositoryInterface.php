@@ -15,10 +15,5 @@ use Scandinaver\Core\Domain\Contract\Repository\BaseRepositoryInterface;
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {
 
-    /**
-     * @param $string
-     *
-     * @return array
-     */
-    public function findByNameOrEmail($string): array;
+    public function findByNameOrEmail(string $string): array;
 }

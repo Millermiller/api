@@ -28,10 +28,6 @@ Route::group(
 
       Route::post('/audio',                      [AssetController::class, 'uploadAudio'])->name('audio:upload');
 
-      Route::get('/{language}/words',            [AssetController::class, 'getWordsAssets'])->name('words');//TODO: remove
-
-      Route::get('/{language}/sentences',        [AssetController::class, 'getSentencesAssets'])->name('sentences');//TODO: remove
-
       Route::get('/personal',                    [AssetController::class, 'testGetPersonalAssets'])->name('personal');
 
       Route::post('/card',                       [AssetController::class, 'addPair'])->name('pair:create');//TODO: remove

@@ -4,7 +4,6 @@
 namespace Scandinaver\Learning\Asset\Domain\Service;
 
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
-use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\TranslateRepositoryInterface;
@@ -40,18 +39,6 @@ class TermService implements BaseServiceInterface
         $this->termRepository      = $termRepository;
         $this->languageRepository  = $languageRepository;
         $this->cardRepository      = $cardRepository;
-    }
-
-    public function count(): int
-    {
-        return $this->termRepository->count([]);
-    }
-
-    public function countByLanguage(string $lang): int
-    {
-        $language = $this->languageRepository->find($lang);
-
-        return $this->termRepository->getCountByLanguage($language);
     }
 
     /**TODO: проверить

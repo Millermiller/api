@@ -17,13 +17,9 @@ use Scandinaver\User\UI\Query\UserStateQuery;
 class UserStateQueryHandler extends AbstractHandler
 {
 
-    protected UserService $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(protected UserService $userService)
     {
         parent::__construct();
-
-        $this->userService = $userService;
     }
 
     /**
@@ -31,7 +27,7 @@ class UserStateQueryHandler extends AbstractHandler
      *
      * @throws Exception
      */
-    public function handle(BaseCommandInterface $query): void
+    public function handle(BaseCommandInterface|UserStateQuery $query): void
     {
         $stateDTO = $this->userService->getState($query->getUser());
     }

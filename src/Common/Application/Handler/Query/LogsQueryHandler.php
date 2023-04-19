@@ -34,7 +34,7 @@ class LogsQueryHandler extends AbstractHandler
         $data = $this->logRepository->getData($query->getParameters());
 
         $this->fractal->parseExcludes(['owner.roles', 'owner.permissions']);
-        $this->resource = new Collection($data->items(), new LogTransformer());
+        $this->resource = new Collection($data->items(), new LogTransformer(), 'logs');
 
         $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }

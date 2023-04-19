@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\RBAC\Application\Handler\Command\CreatePermissionGroupCommandHandler;
 use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
@@ -13,7 +13,7 @@ use Scandinaver\RBAC\Domain\DTO\PermissionGroupDTO;
  *
  * @package Scandinaver\RBAC\UI\Command
  */
-#[Command(CreatePermissionGroupCommandHandler::class)]
+#[Handler(CreatePermissionGroupCommandHandler::class)]
 class CreatePermissionGroupCommand implements CommandInterface
 {
 

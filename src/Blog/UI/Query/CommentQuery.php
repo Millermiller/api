@@ -4,7 +4,7 @@
 namespace Scandinaver\Blog\UI\Query;
 
 use Scandinaver\Blog\Application\Handler\Query\CommentQueryHandler;
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 
 /**
@@ -12,7 +12,7 @@ use Scandinaver\Core\Domain\Contract\QueryInterface;
  *
  * @package Scandinaver\Blog\UI\Query
  */
-#[Query(CommentQueryHandler::class)]
+#[Handler(CommentQueryHandler::class)]
 class CommentQuery implements QueryInterface
 {
 

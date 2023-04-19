@@ -17,7 +17,7 @@ use Scandinaver\RBAC\Domain\Entity\Role;
 class RoleTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'permissions',
     ];
 

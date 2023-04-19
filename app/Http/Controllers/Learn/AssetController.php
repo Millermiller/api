@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\HasLanguageRequest;
 use App\Http\Requests\Learn\CreateAssetRequest;
 use App\Http\Requests\Learn\UpdateAssetRequest;
 use Exception;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\{JsonResponse, Request};
-use Scandinaver\Common\Domain\Contract\UserInterface;
-use Scandinaver\Learning\Asset\Domain\Entity\Asset;
+use JsonMapper_Exception;
 use Scandinaver\Learning\Asset\Domain\Permission\Card;
 use Scandinaver\Learning\Asset\UI\Command\AddCardToAssetCommand;
 use Scandinaver\Learning\Asset\UI\Command\AddTermAndTranslateCommand;
@@ -25,11 +24,9 @@ use Scandinaver\Learning\Asset\UI\Command\DeleteCardFromAssetCommand;
 use Scandinaver\Learning\Asset\UI\Command\EditTranslateCommand;
 use Scandinaver\Learning\Asset\UI\Command\UpdateAssetCommand;
 use Scandinaver\Learning\Asset\UI\Command\UploadAudioCommand;
-use Scandinaver\Learning\Asset\UI\Query\AssetForUserByTypeQuery;
 use Scandinaver\Learning\Asset\UI\Query\AssetsQuery;
 use Scandinaver\Learning\Asset\UI\Query\CardsOfAssetQuery;
 use Scandinaver\Learning\Asset\UI\Query\FindAudioQuery;
-use Scandinaver\Learning\Asset\UI\Query\GetAssetsByTypeQuery;
 use Scandinaver\Learning\Asset\UI\Query\GetExamplesForCardQuery;
 use Scandinaver\Learning\Asset\UI\Query\GetTranslatesByTermQuery;
 use Scandinaver\Learning\Asset\UI\Query\PersonalAssetsQuery;
@@ -44,29 +41,26 @@ class AssetController extends Controller
 {
 
     /**
-     * @param  HasLanguageRequest  $request
+     * @param  FilteringRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
-     * @throws BindingResolutionException
+     * @throws JsonMapper_Exception
      */
-    public function index(HasLanguageRequest $request): JsonResponse
+    public function index(FilteringRequest $request): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW);
 
-        return response()->json([
-            'words'     => $this->commandBus->execute(new GetAssetsByTypeQuery($request->get('lang'), Asset::TYPE_WORDS)),
-            'sentences' => $this->commandBus->execute(new GetAssetsByTypeQuery($request->get('lang'), Asset::TYPE_SENTENCES)),
-        ]);
+        return $this->execute(new AssetsQuery($request->getRequestParameters(), Auth::user()));
     }
 
     /**
-     * @param  int  $id
+     * @param  string  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function show(int $id): JsonResponse
+    public function show(string $id): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::SHOW, $id);
 
@@ -89,13 +83,13 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  int                 $id
+     * @param  string              $id
      * @param  UpdateAssetRequest  $request
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(int $id, UpdateAssetRequest $request): JsonResponse
+    public function update(string $id, UpdateAssetRequest $request): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::UPDATE, $id);
 
@@ -103,36 +97,16 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  int  $id
+     * @param  string  $id
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(string $id): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::DELETE, $id);
 
-        return $this->execute(new DeleteAssetCommand($id), Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @param  string  $languageId
-     *
-     * @return JsonResponse
-     */
-    public function getWordsAssets(string $languageId): JsonResponse
-    {
-        return $this->execute(new AssetForUserByTypeQuery($languageId, Auth::user(), Asset::TYPE_WORDS));
-    }
-
-    /**
-     * @param  string  $languageId
-     *
-     * @return JsonResponse
-     */
-    public function getSentencesAssets(string $languageId): JsonResponse
-    {
-        return $this->execute(new AssetForUserByTypeQuery($languageId, Auth::user(), Asset::TYPE_SENTENCES));
+        return $this->execute(new DeleteAssetCommand(Auth::user(), $id), Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -217,13 +191,13 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  int  $asset
-     * @param  int  $card
+     * @param  string  $asset
+     * @param  int     $card
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function addCard(int $asset, int $card): JsonResponse
+    public function addCard(string $asset, int $card): JsonResponse
     {
         Gate::authorize(\Scandinaver\Learning\Asset\Domain\Permission\Asset::ADD_CARD);
 
@@ -231,13 +205,13 @@ class AssetController extends Controller
     }
 
     /**
-     * @param  int  $asset
-     * @param  int  $card
+     * @param  string  $asset
+     * @param  int     $card
      *
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function removeCard(int $asset, int $card): JsonResponse
+    public function removeCard(string $asset, int $card): JsonResponse
     {
         Gate::authorize(Card::DELETE, [$card, $asset]); //todo: change permission
 

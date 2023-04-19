@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
@@ -14,11 +14,11 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\AddCardToAssetCommand
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(AddCardToAssetCommandHandler::class)]
+#[Handler(AddCardToAssetCommandHandler::class)]
 class AddCardToAssetCommand implements CommandInterface
 {
 
-    public function __construct(private UserInterface $user, private int $asset, private int $card)
+    public function __construct(private UserInterface $user, private string $asset, private int $card)
     {
     }
 
@@ -27,7 +27,7 @@ class AddCardToAssetCommand implements CommandInterface
         return $this->user;
     }
 
-    public function getAsset(): int
+    public function getAsset(): string
     {
         return $this->asset;
     }

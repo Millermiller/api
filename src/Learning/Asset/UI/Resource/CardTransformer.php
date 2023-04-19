@@ -18,12 +18,11 @@ use Scandinaver\Learning\Asset\Domain\Entity\Card;
 class CardTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'term',
         'translate',
-        'examples',
+        'example',
     ];
-
 
     #[Pure]
     #[ArrayShape(['id' => "int", 'favourite' => "bool"])]
@@ -39,20 +38,20 @@ class CardTransformer extends TransformerAbstract
     {
         $term = $card->getTerm();
 
-        return $this->item($term, new TermTransformer());
+        return $this->item($term, new TermTransformer(), 'term');
     }
 
     public function includeTranslate(Card $card): Item
     {
         $translate = $card->getTranslate();
 
-        return $this->item($translate, new TranslateTransformer());
+        return $this->item($translate, new TranslateTransformer(), 'translate');
     }
 
-    public function includeExamples(Card $card): Collection
+    public function includeExample(Card $card): Collection
     {
         $examples = $card->getExamples();
 
-        return $this->collection($examples, new ExampleTransformer());
+        return $this->collection($examples, new ExampleTransformer(), 'example');
     }
 }

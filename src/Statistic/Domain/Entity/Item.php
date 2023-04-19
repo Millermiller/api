@@ -6,6 +6,7 @@ namespace Scandinaver\Statistic\Domain\Entity;
 use DateTime;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Core\Domain\Contract\UserInterface;
+use Scandinaver\Statistic\Domain\Enum\StatisticType;
 
 /**
  * Class Item
@@ -14,26 +15,7 @@ use Scandinaver\Core\Domain\Contract\UserInterface;
  */
 class Item
 {
-
-    public const ASSET            = 'ASSET_OPEN';
-    public const ASSET_CREATED    = 'ASSET_CREATED';
-    public const TEST_PASSED      = 'TEST_PASSED';
-    public const TEST_CORRECT     = 'TEST_CORRECT';
-    public const TEST_TIME        = 'TEST_TIME';
-    public const CARD_ADDED       = 'CARD_ADDED';
-    public const CARD_CREATED     = 'CARD_CREATED';
-    public const TRANSLATE_PASSED = 'TRANSLATE';
-    public const PUZZLE_PASSED    = 'PUZZLE_PASSED';
-
     private ?int $id = NULL;
-
-    private string $type;
-
-    private ?int $value;
-
-    private ?array $data;
-
-    private UserInterface $user;
 
     private Language $language;
 
@@ -41,26 +23,20 @@ class Item
 
     private ?DateTime $updatedAt;
 
-    public function __construct(string $type, UserInterface $user, ?int $value, ?array $data)
-    {
-        $this->type = $type;
-        $this->user = $user;
-        $this->value = $value;
-        $this->data = $data;
+    public function __construct(
+        private readonly StatisticType $type,
+        private readonly UserInterface $user,
+        private readonly ?int          $value,
+        private readonly ?array        $data
+    ) {
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getType(): string
+    public function getType(): StatisticType
     {
         return $this->type;
     }
@@ -78,5 +54,15 @@ class Item
     public function getData(): ?array
     {
         return $this->data;
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
     }
 }

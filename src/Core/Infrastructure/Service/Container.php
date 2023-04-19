@@ -38,7 +38,7 @@ class Container implements ContainerInterface
         return app($className);
     }
 
-    public function has(string $id)
+    public function has(string $id): bool
     {
         // TODO: Implement has() method.
     }

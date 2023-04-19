@@ -6,6 +6,7 @@ Route::group( [
   'as' => 'card:',
   'namespace' => 'App\Http\Controllers\Learn',
 ],  function () {
+    Route::get('/card',                     [CardController::class, 'index'])->name('all');
     Route::post('/card/create',             [CardController::class, 'store'])->name('create');
     Route::get('/card/search',              [CardController::class, 'search'])->name('search');
     Route::put('/card/{card}',              [CardController::class, 'update'])->name('update');

@@ -18,7 +18,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
 class OrderTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'user',
         'payment',
         'service',

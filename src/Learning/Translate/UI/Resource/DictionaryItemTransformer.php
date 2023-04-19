@@ -18,7 +18,7 @@ use Scandinaver\Learning\Translate\Domain\Entity\DictionaryItem;
 class DictionaryItemTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'synonyms',
     ];
 

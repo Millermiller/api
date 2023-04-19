@@ -33,7 +33,7 @@ class CardsOfAssetQueryHandler extends AbstractHandler
     {
         $data = $this->cardService->getCards($query->getUser(), $query->getAsset());
 
-        $this->resource = new Item($data, new AssetTransformer());
+        $this->resource = new Item($data, new AssetTransformer(), 'asset');
 
         $this->fractal->parseIncludes('cards');
     }

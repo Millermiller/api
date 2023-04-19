@@ -4,7 +4,7 @@
 namespace Scandinaver\Learning\Asset\UI\Command;
 
 use Illuminate\Http\UploadedFile;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Asset\Application\Handler\Command\UploadAudioCommandHandler;
@@ -14,7 +14,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\UploadAudioCommandHan
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(UploadAudioCommandHandler::class)]
+#[Handler(UploadAudioCommandHandler::class)]
 class UploadAudioCommand implements CommandInterface
 {
 

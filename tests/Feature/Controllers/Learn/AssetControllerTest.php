@@ -3,20 +3,20 @@
 namespace Tests\Feature\Controllers\Learn;
 
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Mockery\MockInterface;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\TranslateRepositoryInterface;
-use Scandinaver\Learning\Asset\Domain\Entity\Asset;
 use Scandinaver\Learning\Asset\Domain\Entity\Card;
 use Scandinaver\Learning\Asset\Domain\Entity\FavouriteAsset;
 use Scandinaver\Learning\Asset\Domain\Entity\Passing;
 use Scandinaver\Learning\Asset\Domain\Entity\PersonalAsset;
 use Scandinaver\Learning\Asset\Domain\Entity\SentenceAsset;
 use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 use Scandinaver\Learning\Asset\Domain\Service\AudioService;
 use Scandinaver\RBAC\Domain\Entity\Permission;
 use Scandinaver\User\Domain\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Throwable;
 
@@ -106,12 +106,9 @@ class AssetControllerTest extends TestCase
 
         $response = $this->get(route('asset:all', ['lang' => self::LANGUAGE_LETTER]));
 
-        $response->assertStatus(JsonResponse::HTTP_OK)
+        $response->assertStatus(Response::HTTP_OK)
                  ->assertJsonStructure(
-                     [
-                         'words'     => \Tests\Responses\Asset::responseWithoutCards(),
-                         'sentences' => \Tests\Responses\Asset::responseWithoutCards(),
-                     ]
+                     \Tests\Responses\Asset::responseWithoutCards()
                  );
     }
 
@@ -154,10 +151,10 @@ class AssetControllerTest extends TestCase
                 'language' => 'is',
                 'title'    => $testTitle,
                 'level'    => 2,
-                'type'     => Asset::TYPE_WORDS,
+                'type'     => AssetType::WORDS->value,
                 'basic'    => TRUE,
             ])
-             ->assertStatus(JsonResponse::HTTP_CREATED)
+             ->assertStatus(Response::HTTP_CREATED)
              ->assertJsonStructure(\Tests\Responses\Asset::singleResponse())
              ->assertJsonFragment(['title' => $testTitle]);
     }
@@ -178,14 +175,14 @@ class AssetControllerTest extends TestCase
         $response = $this->put(route('asset:update',
             [
                 'id'    => $this->asset->getId(),
-                'type'  => Asset::TYPE_WORDS,
+                'type'  => AssetType::WORDS->value,
                 'level' => 2,
             ]),
             [
                 'title' => $testTitle,
             ]);
 
-        $response->assertStatus(JsonResponse::HTTP_OK);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure(\Tests\Responses\Asset::singleResponseWithoutCards());
         $response->assertJsonFragment(['title' => $testTitle]);
     }
@@ -207,47 +204,7 @@ class AssetControllerTest extends TestCase
                 'id' => $this->asset->getId(),
             ]
         ))
-             ->assertStatus(JsonResponse::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testGetWordsAssets(): void
-    {
-        $permission = entity(Permission::class, 1)->create([
-            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
-        ]);
-        $this->user->allow($permission);
-        $this->actingAs($this->user, 'api');
-
-        $this->get(route('asset:words',
-            [
-                'language' => self::LANGUAGE_LETTER,
-            ]
-        ))
-             ->assertStatus(JsonResponse::HTTP_OK)
-             ->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testGetSentencesAssets(): void
-    {
-        $permission = entity(Permission::class, 1)->create([
-            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Asset::VIEW,
-        ]);
-        $this->user->allow($permission);
-        $this->actingAs($this->user, 'api');
-
-        $this->get(route('asset:sentences',
-            [
-                'language' => self::LANGUAGE_LETTER,
-            ]
-        ))
-             ->assertStatus(JsonResponse::HTTP_OK)
-             ->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards());
+             ->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -262,10 +219,10 @@ class AssetControllerTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $this->get(route('asset:personal', ['lang' => self::LANGUAGE_LETTER]))
-             ->assertStatus(JsonResponse::HTTP_OK)
+             ->assertStatus(Response::HTTP_OK)
              ->assertJsonStructure(\Tests\Responses\Asset::responseWithoutCards())
              ->assertJsonFragment(['title' => $this->personalAsset->getTitle()])
-             ->assertJsonFragment(['type' => Asset::TYPE_PERSONAL]);
+             ->assertJsonFragment(['category' => AssetType::PERSONAL->value]);
     }
 
     /**
@@ -288,7 +245,7 @@ class AssetControllerTest extends TestCase
 
         $response = $this->post(route('asset:forvo', ['id' => 1]));
 
-        self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
+        self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
 
         $response->assertJsonStructure([
             'data' => [
@@ -349,7 +306,7 @@ class AssetControllerTest extends TestCase
                     'card' => $this->card->getId(),
                 ])
         )
-             ->assertStatus(JsonResponse::HTTP_OK)
+             ->assertStatus(Response::HTTP_OK)
              ->assertJsonStructure(\Tests\Responses\Example::collectionResponse());
     }
 
@@ -395,7 +352,7 @@ class AssetControllerTest extends TestCase
                 'card'  => $this->card->getId(),
             ]
         ))
-             ->assertStatus(JsonResponse::HTTP_CREATED);
+             ->assertStatus(Response::HTTP_CREATED);
     }
 
     /**
@@ -416,7 +373,7 @@ class AssetControllerTest extends TestCase
                 'card'  => $this->card->getId(),
             ]
         ))
-             ->assertStatus(JsonResponse::HTTP_NO_CONTENT);
+             ->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**

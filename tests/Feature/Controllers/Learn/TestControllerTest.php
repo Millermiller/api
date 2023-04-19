@@ -64,7 +64,7 @@ class TestControllerTest extends TestCase
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
         $response->assertJsonStructure(
-            [\Tests\Responses\Passing::response()]
+            \Tests\Responses\Passing::collectionResponse()
         );
     }
 
@@ -73,7 +73,9 @@ class TestControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Test::UPDATE_PASSING);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Test::UPDATE_PASSING,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -94,7 +96,9 @@ class TestControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Test::DELETE_PASSING);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Test::DELETE_PASSING,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -111,7 +115,9 @@ class TestControllerTest extends TestCase
      */
     public function testComplete(): void
     {
-        $permission = new Permission(\Scandinaver\Learning\Asset\Domain\Permission\Test::COMPLETE);
+        $permission = entity(Permission::class, 1)->create([
+            'slug' => \Scandinaver\Learning\Asset\Domain\Permission\Test::COMPLETE,
+        ]);
         $this->user->allow($permission);
         $this->actingAs($this->user, 'api');
 
@@ -125,7 +131,7 @@ class TestControllerTest extends TestCase
 
         $response = $this->post(route('test:complete',
             [
-                'id' => $this->passing->getId(),
+                'id' => $this->passing->getSubject()->getId(),
             ]),
             [
                 'id'      => $this->passing->getId(),

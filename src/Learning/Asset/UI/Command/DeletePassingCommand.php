@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Learning\Asset\Application\Handler\Command\DeletePassingCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\DeletePassingCommandH
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(DeletePassingCommandHandler::class)]
+#[Handler(DeletePassingCommandHandler::class)]
 class DeletePassingCommand implements CommandInterface
 {
 

@@ -15,8 +15,9 @@ use Scandinaver\Core\Domain\AggregateRoot;
 class Setting extends AggregateRoot
 {
     const VALUE_KEY = 'value';
-
     const TYPE_KEY = 'type';
+    const NUMBER_TYPE = 'number';
+    const BOOLEAN_TYPE = 'boolean';
 
     private ?int $id;
 
@@ -57,11 +58,11 @@ class Setting extends AggregateRoot
     {
         $type = $this->data[self::TYPE_KEY];
 
-        if ($type === 'number') {
+        if ($type === self::NUMBER_TYPE) {
             return filter_var($this->data[self::VALUE_KEY], FILTER_VALIDATE_INT);
         }
 
-        if ($type === 'boolean') {
+        if ($type === self::BOOLEAN_TYPE) {
             return filter_var($this->data[self::VALUE_KEY], FILTER_VALIDATE_BOOLEAN);
         }
 

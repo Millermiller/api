@@ -44,7 +44,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
-        TrustProxies::class,
+        // TrustProxies::class,
         // \App\Http\Middleware\ShowDebug::class,
         Cors::class,
     ];

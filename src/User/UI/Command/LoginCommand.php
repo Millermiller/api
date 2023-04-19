@@ -3,7 +3,7 @@
 
 namespace Scandinaver\User\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\User\Application\Handler\Command\LoginCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\User\Application\Handler\Command\LoginCommandHandler;
  *
  * @package Scandinaver\User\UI\Command
  */
-#[Command(LoginCommandHandler::class)]
+#[Handler(LoginCommandHandler::class)]
 class LoginCommand implements CommandInterface
 {
 

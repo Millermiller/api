@@ -5,7 +5,7 @@ namespace Scandinaver\Common\UI\Command;
 
 use Scandinaver\Common\Application\Handler\Command\CreateMessageCommandHandler;
 use Scandinaver\Common\Domain\DTO\FeedbackDTO;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 
@@ -14,7 +14,7 @@ use Scandinaver\Core\Domain\Contract\CommandInterface;
  *
  * @package Scandinaver\Common\UI\Command
  */
-#[Command(CreateMessageCommandHandler::class)]
+#[Handler(CreateMessageCommandHandler::class)]
 class CreateMessageCommand implements CommandInterface
 {
 

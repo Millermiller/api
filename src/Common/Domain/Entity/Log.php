@@ -47,7 +47,7 @@ class Log extends AggregateRoot
     public function interpolate(): string
     {
         $replace = [];
-        foreach ($this->context as $key => $val) {
+        foreach ($this->extra as $key => $val) {
             $replace['{'.$key.'}'] = $val;
         }
 

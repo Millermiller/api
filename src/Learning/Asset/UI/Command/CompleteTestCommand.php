@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
@@ -14,13 +14,13 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\CompleteTestCommandHa
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(CompleteTestCommandHandler::class)]
+#[Handler(CompleteTestCommandHandler::class)]
 class CompleteTestCommand implements CommandInterface
 {
 
     public function __construct(
         private UserInterface $user,
-        private int $asset,
+        private string $asset,
         private array $data
     ) {
     }
@@ -30,7 +30,7 @@ class CompleteTestCommand implements CommandInterface
         return $this->user;
     }
 
-    public function getAsset(): int
+    public function getAsset(): string
     {
         return $this->asset;
     }

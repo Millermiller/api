@@ -54,6 +54,7 @@ Scandinaver\Learning\Asset\Domain\Entity\Passing:
       joinColumns:
         asset_id:
           referencedColumnName: id
+          onDelete: CASCADE
       orphanRemoval: false
     language:
       targetEntity: Scandinaver\Common\Domain\Entity\Language
@@ -72,5 +73,6 @@ Scandinaver\Learning\Asset\Domain\Entity\Passing:
       joinColumns:
         user_id:
           referencedColumnName: id
+          onDelete: CASCADE
       orphanRemoval: false
   lifecycleCallbacks: { }

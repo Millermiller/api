@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Puzzle\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Learning\Puzzle\Application\Handler\Query\UserPuzzlesQueryHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Learning\Puzzle\Application\Handler\Query\UserPuzzlesQueryHandle
  *
  * @package Scandinaver\Puzzle\UI\Query
  */
-#[Query(UserPuzzlesQueryHandler::class)]
+#[Handler(UserPuzzlesQueryHandler::class)]
 class UserPuzzlesQuery implements QueryInterface
 {
 

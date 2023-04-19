@@ -5,7 +5,7 @@ namespace Scandinaver\Common\UI\Command;
 
 use Scandinaver\Common\Application\Handler\Command\CreateIntroCommandHandler;
 use Scandinaver\Common\Domain\DTO\IntroDTO;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
@@ -13,7 +13,7 @@ use Scandinaver\Core\Domain\Contract\CommandInterface;
  *
  * @package Scandinaver\Common\UI\Command
  */
-#[Command(CreateIntroCommandHandler::class)]
+#[Handler(CreateIntroCommandHandler::class)]
 class CreateIntroCommand implements CommandInterface
 {
 

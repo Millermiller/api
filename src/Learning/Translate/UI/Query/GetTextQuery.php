@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Translate\UI\Query;
 
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\QueryInterface;
 use Scandinaver\Learning\Translate\Application\Handler\Query\GetTextQueryHandler;
 
@@ -12,7 +12,7 @@ use Scandinaver\Learning\Translate\Application\Handler\Query\GetTextQueryHandler
  *
  * @package Scandinaver\Learning\Translate\UI\Query
  */
-#[Query(GetTextQueryHandler::class)]
+#[Handler(GetTextQueryHandler::class)]
 class GetTextQuery implements QueryInterface
 {
 

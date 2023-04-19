@@ -3,6 +3,8 @@
 
 namespace Scandinaver\Common\Application\Handler\Query;
 
+use Doctrine\ORM\Query\QueryException;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use Scandinaver\Common\Domain\Service\LanguageService;
 use Scandinaver\Common\UI\Query\LanguagesQuery;
@@ -23,10 +25,17 @@ class LanguagesQueryHandler extends AbstractHandler
         parent::__construct();
     }
 
+    /**
+     * @param  BaseCommandInterface|LanguagesQuery  $query
+     *
+     * @throws QueryException
+     */
     public function handle(BaseCommandInterface|LanguagesQuery $query): void
     {
-        $languages = $this->service->all($query->getUser());
+        $data = $this->service->paginate($query->getParameters());
 
-        $this->resource = new Collection($languages, new LanguageTransformer());
+        $this->resource = new Collection($data->items(), new LanguageTransformer(), 'roles');
+
+        $this->resource->setPaginator(new IlluminatePaginatorAdapter($data));
     }
 }

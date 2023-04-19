@@ -38,6 +38,6 @@ class CreateCardCommandHandler extends AbstractHandler
             $command->getTranslate()
         );
 
-        $this->resource = new Item($card, new CardTransformer());
+        $this->resource = new Item($card, new CardTransformer(), 'card');
     }
 } 

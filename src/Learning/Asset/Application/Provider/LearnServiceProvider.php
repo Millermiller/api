@@ -37,7 +37,7 @@ class LearnServiceProvider extends ServiceProvider
 
         $this->app->bind(Client::class, function ($app) {
             return ClientBuilder::create()
-                                ->setHosts(['scandinaver_elastic:9200'])
+                                ->setHosts([config('elastic.hosts')])
                                 ->build();
         });
     }

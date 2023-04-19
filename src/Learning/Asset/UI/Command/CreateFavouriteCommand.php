@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Asset\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
@@ -14,7 +14,7 @@ use Scandinaver\Learning\Asset\Application\Handler\Command\CreateFavouriteComman
  *
  * @package Scandinaver\Learn\UI\Command
  */
-#[Command(CreateFavouriteCommandHandler::class)]
+#[Handler(CreateFavouriteCommandHandler::class)]
 class CreateFavouriteCommand implements CommandInterface
 {
 

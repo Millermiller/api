@@ -18,7 +18,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
 class LogTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'owner',
     ];
 

@@ -5,7 +5,7 @@ namespace Scandinaver\Blog\UI\Command;
 
 use Scandinaver\Blog\Application\Handler\Command\CreateCategoryCommandHandler;
 use Scandinaver\Blog\Domain\DTO\CategoryDTO;
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 
 /**
@@ -13,7 +13,7 @@ use Scandinaver\Core\Domain\Contract\CommandInterface;
  *
  * @package Scandinaver\Blog\UI\Command
  */
-#[Command(CreateCategoryCommandHandler::class)]
+#[Handler(CreateCategoryCommandHandler::class)]
 class CreateCategoryCommand implements CommandInterface
 {
 

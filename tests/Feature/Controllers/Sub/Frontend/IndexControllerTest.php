@@ -78,16 +78,6 @@ class IndexControllerTest extends TestCase
         $response->assertJsonStructure(['site']);
     }
 
-
-    public function testGetWords()
-    {
-        $this->actingAs($this->user, 'api');
-
-        $response = $this->get(route('asset:words', ['language' => 'is']));
-
-        $response->assertJsonStructure([['count', 'id', 'title', 'level', 'type']]);
-    }
-
     //public function testSentences()
     //{
     //    $this->actingAs($this->user, 'api');

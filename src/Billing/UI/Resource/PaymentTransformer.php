@@ -16,7 +16,7 @@ use Scandinaver\Billing\Domain\Entity\Payment;
 class PaymentTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
 
     ];
 

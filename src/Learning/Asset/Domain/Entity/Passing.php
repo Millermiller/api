@@ -4,6 +4,7 @@
 namespace Scandinaver\Learning\Asset\Domain\Entity;
 
 use DateTime;
+use JetBrains\PhpStorm\Pure;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\AbstractLearnItem;
 use Scandinaver\Common\Domain\Entity\AbstractPassing;
@@ -16,6 +17,7 @@ use Scandinaver\Common\Domain\Entity\Language;
  */
 class Passing extends AbstractPassing
 {
+    #[Pure]
     public function __construct(Asset $asset, UserInterface $user, bool $completed, array $data)
     {
         $this->subject   = $asset;

@@ -3,12 +3,15 @@
 
 namespace Scandinaver\Common\Domain\Service;
 
+use Doctrine\ORM\Query\QueryException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Scandinaver\Common\Domain\Contract\Repository\LanguageRepositoryInterface;
 use Scandinaver\Common\Domain\Event\Notifications\LanguageCreatedNotification;
 use Scandinaver\Common\Domain\Event\Notifications\LanguageDeletedNotification;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\DTO\LanguageDTO;
 use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Exception\LanguageNotFoundException;
 
 /**
@@ -21,16 +24,10 @@ class LanguageService
 
     use LanguageTrait;
 
-    private LanguageRepositoryInterface $languageRepository;
-
-    private FileService $fileService;
-
     public function __construct(
-        LanguageRepositoryInterface $languageRepository,
-        FileService                 $fileService
+        private LanguageRepositoryInterface $languageRepository,
+        private FileService $fileService
     ) {
-        $this->languageRepository = $languageRepository;
-        $this->fileService        = $fileService;
     }
 
     /**
@@ -51,6 +48,17 @@ class LanguageService
     public function one(int $id)
     {
         // TODO: Implement one() method.
+    }
+
+    /**
+     * @param  RequestParametersComposition  $parameters
+     *
+     * @return LengthAwarePaginator
+     * @throws QueryException
+     */
+    public function paginate(RequestParametersComposition $parameters): LengthAwarePaginator
+    {
+        return $this->languageRepository->getData($parameters);
     }
 
     public function createLanguage(array $data): Language

@@ -18,7 +18,7 @@ use Scandinaver\Learning\Translate\Domain\Entity\Synonym;
 class SynonymTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         // 'word'
     ];
 

@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\RBAC\Application\Handler\Command\UpdateRoleCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\RBAC\Application\Handler\Command\UpdateRoleCommandHandler;
  *
  * @package Scandinaver\RBAC\UI\Command
  */
-#[Command(UpdateRoleCommandHandler::class)]
+#[Handler(UpdateRoleCommandHandler::class)]
 class UpdateRoleCommand implements CommandInterface
 {
 

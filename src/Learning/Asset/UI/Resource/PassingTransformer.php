@@ -17,7 +17,7 @@ use Scandinaver\User\UI\Resource\UserTransformer;
 class PassingTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'user',
         'asset',
     ];
@@ -45,13 +45,13 @@ class PassingTransformer extends TransformerAbstract
     {
         $user = $passing->getUser();
 
-        return new Item($user, new UserTransformer());
+        return new Item($user, new UserTransformer(), 'user');
     }
 
     public function includeAsset(Passing $passing): Item
     {
         $asset = $passing->getSubject();
 
-        return new Item($asset, new AssetTransformer());
+        return new Item($asset, new AssetTransformer(), 'asset');
     }
 }

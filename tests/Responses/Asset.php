@@ -78,7 +78,7 @@ class Asset implements ResponseInterface
                     'id',
                     'type',
                     'attributes'    => [
-                        'type',
+                        'category',
                         'title',
                         'level',
                         'count',

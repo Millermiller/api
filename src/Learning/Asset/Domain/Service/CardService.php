@@ -5,11 +5,14 @@ namespace Scandinaver\Learning\Asset\Domain\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query\QueryException;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Service\LanguageTrait;
+use Scandinaver\Core\Infrastructure\RequestParametersComposition;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\AssetRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\CardRepositoryInterface;
 use Scandinaver\Learning\Asset\Domain\Contract\Repository\ExampleRepositoryInterface;
@@ -86,6 +89,11 @@ class CardService implements BaseServiceInterface
         $this->translater               = $translater;
         $this->searchService            = $searchService;
         $this->assetFactory             = $assetFactory;
+    }
+
+    public function paginate(RequestParametersComposition $params): LengthAwarePaginator
+    {
+        return $this->cardRepository->getData($params);
     }
 
     public function all(): array
@@ -189,12 +197,12 @@ class CardService implements BaseServiceInterface
 
     /**
      * @param  UserInterface  $user
-     * @param  int            $asset
+     * @param  string            $asset
      *
      * @return Asset
      * @throws AssetNotFoundException
      */
-    public function getCards(UserInterface $user, int $asset): Asset
+    public function getCards(UserInterface $user, string $asset): Asset
     {
         $asset    = $this->getAsset($asset);
 
@@ -386,7 +394,7 @@ class CardService implements BaseServiceInterface
      */
     public function search(string $language, ?string $query, bool $isSentence): array
     {
-        $language = $this->getLanguage($language);
+        $language = $this->getLanguageById($language);
 
         return $this->searchService->search($language, $query, $isSentence);
     }

@@ -19,34 +19,43 @@ use Scandinaver\Learning\Asset\Domain\Entity\Asset;
 class AssetTransformer extends TransformerAbstract
 {
 
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'cards',
         'active',
         'available',
         'completed',
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'language',
        // 'bestResult', //TODO: think about optional includes
     ];
 
-
     #[ArrayShape([
-        'id'    => "int",
-        'type'  => "int",
-        'title' => "string",
-        'level' => "int",
-        'count' => "int",
+        'id'         => "int",
+        'category'   => "int",
+        'title'      => "string",
+        'level'      => "int",
+        'count'      => "int",
+        'sorting'    => "string",
+        'active'     => "string",
+        'available'  => "string",
+        'completed'  => "string",
+        'result'     => "int",
     ])]
     public function transform(Asset $asset): array
     {
         return [
-            'id'    => $asset->getId(),
-            'type'  => $asset->getType(),
-            'title' => $asset->getTitle(),
-            'level' => $asset->getLevel(),
-            'count' => $asset->getCount(),
+            'id'         => $asset->getId(),
+            'category'   => $asset->getType()->value,
+            'title'      => $asset->getTitle(),
+            'level'      => $asset->getLevel(),
+            'count'      => $asset->getCount(),
+            'sorting'    => $asset->getSorting(),
+            'active'     => $asset->isActive(),
+            'available'  => $asset->isAvailable(),
+            'completed'  => $asset->isCompleted(),
+            'result'     => $asset->getBestResult()?->getPercent(),
         ];
     }
 
@@ -54,14 +63,14 @@ class AssetTransformer extends TransformerAbstract
     {
         $cards = $asset->getCards();
 
-        return $this->collection($cards, new CardTransformer());
+        return $this->collection($cards, new CardTransformer(), 'cards');
     }
 
     public function includeLanguage(Asset $asset): Item
     {
         $language = $asset->getLanguage();
 
-        return $this->item($language, new LanguageTransformer());
+        return $this->item($language, new LanguageTransformer(), 'language');
     }
 
     public function includeCompleted(Asset $asset): Primitive
@@ -71,7 +80,7 @@ class AssetTransformer extends TransformerAbstract
 
     public function includeActive(Asset $asset): Primitive
     {
-        return $this->primitive($asset->isActive());
+        return $this->primitive($asset->isActive(), NULL, 'active');
     }
 
     public function includeAvailable(Asset $asset): Primitive

@@ -3,19 +3,25 @@
 
 namespace Scandinaver\Learning\Asset\Domain\Entity;
 
-use Scandinaver\Learning\Asset\Domain\Contract\AssetInterface;
+use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Class WordAsset
  *
  * @package Scandinaver\Learn\Domain\Entity
  */
-class WordAsset extends Asset implements AssetInterface
+class WordAsset extends Asset
 {
-    public function getType(): int
+    public function __construct(string $title, Language $language)
     {
-        return Asset::TYPE_WORDS;
+        $this->type = AssetType::WORDS;
+
+        parent::__construct($title, $language);
     }
 
-    protected int $category = Asset::TYPE_WORDS;
+    public function getType(): AssetType
+    {
+        return AssetType::WORDS;
+    }
 }

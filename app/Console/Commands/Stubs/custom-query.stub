@@ -3,15 +3,15 @@
 
 namespace DummyNamespace;
 
-use Scandinaver\Shared\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Contract\QueryInterface;
+use Scandinaver\Core\Domain\Attribute\Handler;
 
 /**
  * Class DummyClass
  *
  * @package DummyNamespace
- *
- * @see DummyHandlerClass
  */
+#[Handler(DummyHandlerClass::class)]
 class DummyClass implements QueryInterface
 {
     public function __construct()

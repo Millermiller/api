@@ -3,7 +3,7 @@
 
 namespace Scandinaver\RBAC\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\RBAC\Application\Handler\Command\DeletePermissionCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\RBAC\Application\Handler\Command\DeletePermissionCommandHandler;
  *
  * @package Scandinaver\RBAC\UI\Command
  */
-#[Command(DeletePermissionCommandHandler::class)]
+#[Handler(DeletePermissionCommandHandler::class)]
 class DeletePermissionCommand implements CommandInterface
 {
 

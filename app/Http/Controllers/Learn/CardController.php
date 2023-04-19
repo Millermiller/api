@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Learn;
 
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilteringRequest;
 use App\Http\Requests\Learn\CreateCardRequest;
 use App\Http\Requests\Learn\UpdateCardRequest;
 use App\Http\Requests\Learn\SearchRequest;
@@ -13,10 +14,12 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use JsonMapper_Exception;
 use Scandinaver\Learning\Asset\Domain\Permission\Card;
 use Scandinaver\Learning\Asset\UI\Command\CreateCardCommand;
 use Scandinaver\Learning\Asset\UI\Command\UpdateCardCommand;
 use Scandinaver\Learning\Asset\UI\Command\UploadCsvSentencesCommand;
+use Scandinaver\Learning\Asset\UI\Query\GetCardsQuery;
 use Scandinaver\Learning\Asset\UI\Query\SearchCardQuery;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -29,9 +32,20 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class CardController extends Controller
 {
 
-    public function index()
+    /**
+     * @param  FilteringRequest  $request
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     * @throws JsonMapper_Exception
+     */
+    public function index(FilteringRequest $request): JsonResponse
     {
-        throw new HttpException('Not implemented');
+        // Gate::authorize(Card::VIEW); //TODO: set permissions
+
+        $params = $request->getRequestParameters();
+
+        return $this->execute(new GetCardsQuery($params));
     }
 
     public function show()

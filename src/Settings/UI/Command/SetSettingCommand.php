@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Settings\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\DTO;
 use Scandinaver\Settings\Application\Handler\Command\SetSettingCommandHandler;
@@ -13,7 +13,7 @@ use Scandinaver\Settings\Application\Handler\Command\SetSettingCommandHandler;
  *
  * @package Scandinaver\Settings\UI\Command
  */
-#[Command(SetSettingCommandHandler::class)]
+#[Handler(SetSettingCommandHandler::class)]
 class SetSettingCommand implements CommandInterface
 {
 

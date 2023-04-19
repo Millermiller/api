@@ -71,15 +71,16 @@ class Version20200627151711 extends AbstractMigration
 
         $this->addSql(
             'CREATE TABLE asset(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    id VARCHAR(255) NOT NULL,
                     title VARCHAR(255), 
                     basic VARCHAR(255),
                     type VARCHAR(255), 
                     category VARCHAR(255),
-                    level VARCHAR(255),
+                    level INT(10),
                     favorite VARCHAR(255),
                     language_id VARCHAR(255),
                     owner_id VARCHAR(255),
+                    sorting VARCHAR(255),
                     updated_at VARCHAR(255),
                     created_at VARCHAR(255),
                     deleted_at VARCHAR(255))');

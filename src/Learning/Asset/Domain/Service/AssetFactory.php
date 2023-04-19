@@ -10,6 +10,7 @@ use Scandinaver\Learning\Asset\Domain\Entity\Asset;
 use Scandinaver\Learning\Asset\Domain\Entity\PersonalAsset;
 use Scandinaver\Learning\Asset\Domain\Entity\SentenceAsset;
 use Scandinaver\Learning\Asset\Domain\Entity\WordAsset;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Class AssetFactory
@@ -33,47 +34,28 @@ class AssetFactory
         $languageId = $assetDTO->getLanguageLetter();
         $language = $this->getLanguage($languageId);
 
-        switch ($type) {
-            case Asset::TYPE_WORDS:
-                $asset = new WordAsset($assetDTO->getTitle(), $language);
-                break;
-            case Asset::TYPE_SENTENCES:
-                $asset = new SentenceAsset($assetDTO->getTitle(), $language);
-                break;
-            case Asset::TYPE_PERSONAL:
-                $asset = new PersonalAsset($assetDTO->getTitle(), $language);
-                break;
-            default:
-                throw new Exception('undefined type');
-        }
+        $asset = match ($type) {
+            AssetType::WORDS     => new WordAsset($assetDTO->getTitle(), $language),
+            AssetType::SENTENCES => new SentenceAsset($assetDTO->getTitle(), $language),
+            AssetType::PERSONAL  => new PersonalAsset($assetDTO->getTitle(), $language),
+            default              => throw new Exception('undefined type'),
+        };
 
 
         $asset->setLanguage($language);
 
         $asset->setOwner($assetDTO->getOwner());
-        $asset->setLevel($assetDTO->getLevel());
+
+        $isLevelSet = $assetDTO->getLevel() !== NULL;
+        if ($isLevelSet) {
+            $asset->setLevel($assetDTO->getLevel());
+        }
+        else {
+            $repository = AssetRepositoryFactory::getByType($type);
+            $level = $repository->getLastLevel($language)?->getLevel();
+            $asset->setLevel($level ?? 1);
+        }
 
         return $asset;
-    }
-
-    /**
-     * @param  Asset  $asset
-     *
-     * @return AssetDTO
-     */
-    public static function toDTO(Asset $asset): AssetDTO
-    {
-        $assetDTO = new AssetDTO();
-
-        $assetDTO->setId($asset->getId());
-        $assetDTO->setTitle($asset->getTitle());
-        $assetDTO->setType($asset->getType());
-        $assetDTO->setLevel($asset->getLevel());
-        $assetDTO->setLanguage($asset->getLanguage());
-
-        $cardsDTOs = $asset->getCards()->map(fn($card) => CardFactory::toDTO($card))->toArray();
-        $assetDTO->setCards($cardsDTOs);
-
-        return $assetDTO;
     }
 }

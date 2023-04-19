@@ -13,4 +13,6 @@ use Exception;
 class CardAlreadyAddedException extends Exception
 {
     protected $code = 400;
+
+    protected $message = 'Карточка уже добавлена';
 }

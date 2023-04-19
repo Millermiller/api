@@ -18,11 +18,11 @@ use Scandinaver\User\UI\Resource\UserTransformer;
 class PostTransformer extends TransformerAbstract
 {
 
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'comments',
     ];
 
-    protected $defaultIncludes = [
+    protected array $defaultIncludes = [
         'user',
         'category',
     ];

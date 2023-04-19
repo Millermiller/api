@@ -4,6 +4,7 @@
 namespace Scandinaver\Learning\Asset\Domain\Entity;
 
 use Scandinaver\Common\Domain\Entity\Language;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 
 /**
  * Class FavouriteAsset
@@ -12,16 +13,15 @@ use Scandinaver\Common\Domain\Entity\Language;
  */
 class FavouriteAsset extends Asset
 {
-    protected int $category = Asset::TYPE_FAVORITES;
-
     public function __construct(Language $language)
     {
+        $this->type = AssetType::FAVORITES;
+
         parent::__construct('Избранное', $language);
     }
 
-    public function getType(): int
+    public function getType(): AssetType
     {
-        return Asset::TYPE_FAVORITES;
+        return AssetType::FAVORITES;
     }
-
 }

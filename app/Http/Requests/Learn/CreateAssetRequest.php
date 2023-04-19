@@ -17,7 +17,7 @@ class CreateAssetRequest extends FormRequest
         return [
             'language'  => 'required',
             'title'     => 'required',
-            'level'     => 'required',
+             // 'level'     => 'required',
             'type'      => 'required'
         ];
     }

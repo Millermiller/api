@@ -364,25 +364,19 @@ class User extends AggregateRoot implements UserInterface,
         return $permissions;
     }
 
-    public function onDelete()
+    public function onDelete(): void
     {
         $this->pushEvent(new UserDeleted($this));
     }
 
-    /**
-     * @param  Passing  $passing
-     */
-    public function addAssetPassing(Passing $passing)
+    public function addAssetPassing(Passing $passing): void
     {
         if (!$this->assetPassings->contains($passing)) {
             $this->assetPassings->add($passing);
         }
     }
 
-    /**
-     * @param  TranslateResult  $result
-     */
-    public function addTextPassing(TranslateResult $result)
+    public function addTextPassing(TranslateResult $result): void
     {
         if (!$this->textPassings->contains($result)) {
             $this->textPassings->add($result);

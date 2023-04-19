@@ -36,7 +36,7 @@ Route::group(
   [
       'as' => 'category:',
       'namespace' => 'App\Http\Controllers\Blog',
-      'middleware' => [],
+      'middleware' => ['auth:api'],
   ],
   function () {
     Route::get('/category',               [CategoryController::class, 'index'])->name('all');

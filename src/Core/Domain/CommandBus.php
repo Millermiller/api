@@ -6,8 +6,7 @@ namespace Scandinaver\Core\Domain;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use ReflectionClass;
-use Scandinaver\Core\Domain\Attribute\Command;
-use Scandinaver\Core\Domain\Attribute\Query;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\BaseCommandInterface;
 use Throwable;
 
@@ -84,20 +83,13 @@ class CommandBus
     private function getHandlerClassByAttribute(BaseCommandInterface $command): string
     {
         $reflector = new \ReflectionClass($command);
-        $attributes = $reflector->getAttributes(Command::class);
+        $attributes = $reflector->getAttributes(Handler::class);
         foreach ($attributes as $attribute) {
-            /** @var Command $handler */
+            /** @var Handler $handler */
             $handler = $attribute->newInstance();
-            return $handler->commandHandlerClass;
+            return $handler->handlerClass;
         }
 
-        $attributes = $reflector->getAttributes(Query::class);
-        foreach ($attributes as $attribute) {
-            /** @var Query $handler */
-            $handler = $attribute->newInstance();
-            return $handler->queryHandlerClass;
-        }
-
-        throw new Exception('Attribute is not set for class'. Command::class);
+        throw new Exception('Attribute is not set for class'. Handler::class);
     }
 }

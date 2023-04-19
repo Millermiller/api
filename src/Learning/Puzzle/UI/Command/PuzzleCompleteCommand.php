@@ -3,7 +3,7 @@
 
 namespace Scandinaver\Learning\Puzzle\UI\Command;
 
-use Scandinaver\Core\Domain\Attribute\Command;
+use Scandinaver\Core\Domain\Attribute\Handler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Core\Domain\DTO;
@@ -14,7 +14,7 @@ use Scandinaver\Learning\Puzzle\Application\Handler\Command\PuzzleCompleteComman
  *
  * @package Scandinaver\Puzzle\Application\Command
  */
-#[Command(PuzzleCompleteCommandHandler::class)]
+#[Handler(PuzzleCompleteCommandHandler::class)]
 class PuzzleCompleteCommand implements CommandInterface
 {
 

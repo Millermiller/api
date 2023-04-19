@@ -10,6 +10,7 @@ use Scandinaver\Learning\Asset\Domain\Service\{AssetService};
 use Scandinaver\Learning\Asset\UI\Command\DeleteAssetCommand;
 use Scandinaver\Core\Domain\AbstractHandler;
 use Scandinaver\Core\Domain\Contract\CommandInterface;
+use Throwable;
 
 /**
  * Class DeleteAssetCommandHandler
@@ -29,10 +30,11 @@ class DeleteAssetCommandHandler extends AbstractHandler
      *
      * @throws AssetNotFoundException
      * @throws BindingResolutionException
+     * @throws Throwable
      */
     public function handle(CommandInterface|DeleteAssetCommand $command): void
     {
-        $this->assetService->delete($command->getAsset());
+        $this->assetService->delete($command->getUser(), $command->getAsset());
 
         $this->resource = new NullResource();
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Learn;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class UpdateCardRequest
@@ -12,6 +13,15 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateCardRequest extends FormRequest
 {
 
+    #[ArrayShape(['id'              => "string",
+                  'examples'        => "string",
+                  'translate'       => "string",
+                  'translate.id'    => "string",
+                  'translate.value' => "string",
+                  'term'            => "string",
+                  'term.id'         => "string",
+                  'term.value'      => "string"
+    ])]
     public function rules(): array
     {
         return [
@@ -20,9 +30,9 @@ class UpdateCardRequest extends FormRequest
             'translate'       => 'required',
             'translate.id'    => 'required',
             'translate.value' => 'required',
-            'word'            => 'required',
-            'word.id'         => 'required',
-            'word.value'      => 'required',
+            'term'            => 'required',
+            'term.id'         => 'required',
+            'term.value'      => 'required',
         ];
     }
 }

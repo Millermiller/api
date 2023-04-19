@@ -5,13 +5,15 @@ namespace Scandinaver\Learning\Asset\Domain\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
-use LaravelDoctrine\ORM\Contracts\UrlRoutable;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Scandinaver\Core\Domain\Contract\LearnItemInterface;
 use Scandinaver\Core\Domain\Contract\UserInterface;
 use Scandinaver\Common\Domain\Entity\AbstractLearnItem;
 use Scandinaver\Common\Domain\Entity\HasLevel;
 use Scandinaver\Common\Domain\Entity\Language;
 use Scandinaver\Learning\Asset\Domain\Contract\AssetInterface;
+use Scandinaver\Learning\Asset\Domain\Enum\AssetType;
 use Scandinaver\Learning\Asset\Domain\Event\AssetCreated;
 use Scandinaver\Learning\Asset\Domain\Event\AssetDeleted;
 use Scandinaver\Learning\Asset\Domain\Event\CardAddedToAsset;
@@ -23,23 +25,15 @@ use Scandinaver\Learning\Asset\Domain\Exception\CardAlreadyAddedException;
  *
  * @package Scandinaver\Learn\Domain\Entity
  */
-abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInterface, LearnItemInterface
+abstract class Asset extends AbstractLearnItem implements AssetInterface, LearnItemInterface
 {
     use HasLevel;
 
-    public const TYPE_WORDS = 1;
-
-    public const TYPE_SENTENCES = 2;
-
-    public const TYPE_PERSONAL = 3;
-
-    public const TYPE_FAVORITES = 4;
-
-    protected ?int $id;
+    protected ?UuidInterface $id = NULL;
 
     protected string $title;
 
-    protected int $type;
+    protected AssetType $type;
 
     protected DateTime $createdAt;
 
@@ -47,37 +41,27 @@ abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInte
 
     protected Language $language;
 
-    /** @var Collection<int, Card>|Card[]  */
-    protected Collection $cards;
+    /** @var Card[]|Collection<int, Card> */
+    protected Collection|array $cards;
 
     protected int $category;
 
     protected ?UserInterface $owner;
 
-    /**
-     * Asset constructor.
-     *
-     * @param  string    $title
-     * @param  Language  $language
-     */
-    public function __construct(
-        string $title,
-        Language $language
-    ) {
+    protected ?array $sorting = NULL;
+
+    public function __construct(string $title, Language $language)
+    {
         $this->title    = $title;
         $this->language = $language;
         $this->passings = new ArrayCollection();
         $this->cards    = new ArrayCollection();
-
+        $this->sorting  = [];
+        $this->category = $this->type->value;
         $this->pushEvent(new AssetCreated($this));
     }
 
-    public static function getRouteKeyName(): string
-    {
-        return 'id';
-    }
-
-    public function getId(): int
+    public function getId(): UuidInterface
     {
         return $this->id;
     }
@@ -93,21 +77,23 @@ abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInte
         $this->title = $title;
     }
 
-    public function setType(int $type): void
-    {
-        $this->type = $type;
-    }
-
     public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return Collection|Card[]
-     */
     public function getCards(): Collection
     {
+        $sorting = $this->sorting;
+        if ($sorting !== NULL) {
+            $sortedCollection = new ArrayCollection();
+            foreach ($sorting as $id) {
+                $card = $this->cards->filter(fn($item) => $item->getId() === (int) $id)->first();
+                $sortedCollection->add($card);
+            }
+
+            $this->cards = $sortedCollection;
+        }
         return $this->cards;
     }
 
@@ -119,10 +105,17 @@ abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInte
     public function addCard(Card $card): void
     {
         if ($this->cards->contains($card)) {
-            throw new CardAlreadyAddedException('Карточка уже добавлена');
+            throw new CardAlreadyAddedException();
         }
 
         $this->cards->add($card);
+
+        if ($this->sorting === NULL) {
+            $this->sorting = [$card->getId()];
+        } else {
+            $this->sorting[] = $card->getId();
+        }
+
         $this->pushEvent(new CardAddedToAsset($this, $card));
     }
 
@@ -131,6 +124,9 @@ abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInte
     {
         if ($this->cards->contains($card)) {
             $this->cards->removeElement($card);
+            if (($key = array_search($card->getId(), $this->sorting)) !== FALSE) {
+                unset($this->sorting[$key]);
+            }
             $this->pushEvent(new CardRemovedFromAsset($this, $card));
         }
     }
@@ -174,7 +170,7 @@ abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInte
 
     public function isFavorite(): bool
     {
-        return $this->getType() === Asset::TYPE_FAVORITES;
+        return $this->getType() === AssetType::FAVORITES;
     }
 
     public function getOwner(): ?UserInterface
@@ -195,5 +191,15 @@ abstract class Asset extends AbstractLearnItem implements UrlRoutable, AssetInte
     public function getCount(): int
     {
         return $this->cards->count();
+    }
+
+    public function getSorting(): ?array
+    {
+        return $this->sorting;
+    }
+
+    public function setSorting(?array $sorting): void
+    {
+        $this->sorting = array_map(fn($item) => (int)$item, $sorting);
     }
 }

@@ -21,11 +21,7 @@ class PasswordService
         $this->hasher = $hasher;
     }
 
-    /**
-     * @param  User  $user
-     * @param        $password
-     */
-    public function changePassword(User $user, $password)
+    public function changePassword(User $user, string $password)
     {
         $user->setPassword($this->hasher->make($password));
     }
